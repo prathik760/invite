@@ -1,0 +1,237 @@
+import type { TemplateConfig } from '@/types'
+
+export interface TemplateData {
+  id: string
+  name: string
+  description?: string
+  category?: string
+  config: TemplateConfig
+}
+
+const WEDDING_FIELDS: TemplateConfig['fields'] = [
+  { key: 'brideName', label: "Bride's Name", type: 'text', required: true, placeholder: 'Priya' },
+  { key: 'groomName', label: "Groom's Name", type: 'text', required: true, placeholder: 'Arjun' },
+  { key: 'date', label: 'Wedding Date', type: 'date', required: true },
+  { key: 'time', label: 'Ceremony Time', type: 'time', required: true },
+  { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'The Royal Palace' },
+  { key: 'venueAddress', label: 'Venue Address', type: 'text', placeholder: '12 MG Road, Bengaluru' },
+  { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+  { key: 'dressCode', label: 'Dress Code', type: 'text', placeholder: 'Traditional Indian Attire' },
+  { key: 'schedule', label: 'Event Schedule', type: 'textarea', placeholder: 'Baraat - 6:00 PM\nVarmala - 7:00 PM\nPheras - 8:00 PM' },
+  { key: 'galleryImages', label: 'Gallery Image URLs', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+  { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+  { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'With the blessings of our families, we joyfully invite you.' },
+]
+
+export const TEMPLATES: TemplateData[] = [
+  {
+    id: 'elegant-wedding',
+    name: 'Elegant Wedding',
+    description: 'Warm ivory & gold — a timeless, romantic Indian wedding invite.',
+    category: 'wedding',
+    config: {
+      fields: [
+        { key: 'brideName', label: "Bride's Name", type: 'text', required: true, placeholder: 'Emily' },
+        { key: 'groomName', label: "Groom's Name", type: 'text', required: true, placeholder: 'James' },
+        { key: 'date', label: 'Wedding Date', type: 'date', required: true },
+        { key: 'time', label: 'Ceremony Time', type: 'time', required: true },
+        { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'The Grand Ballroom' },
+        { key: 'venueAddress', label: 'Venue Address', type: 'text', placeholder: '123 Rose Garden Lane, New York' },
+        { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+        { key: 'dressCode', label: 'Dress Code', type: 'text', placeholder: 'Black Tie Optional' },
+        { key: 'schedule', label: 'Event Schedule', type: 'textarea', placeholder: 'Welcome drinks - 6:00 PM\nCeremony - 7:00 PM\nDinner - 8:30 PM' },
+        { key: 'galleryImages', label: 'Gallery Image URLs', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+        { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'Together with our families, we joyfully invite you.' },
+      ],
+      defaultData: {
+        brideName: 'Emily', groomName: 'James', date: '', time: '18:00',
+        venue: 'The Grand Ballroom', venueAddress: '123 Rose Garden Lane, New York', mapsUrl: '',
+        dressCode: 'Black Tie Optional', schedule: 'Welcome drinks - 6:00 PM\nCeremony - 7:00 PM\nDinner - 8:30 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=900&q=80',
+        musicUrl: '', message: 'Together with our families, we joyfully invite you to celebrate our wedding.',
+      },
+    },
+  },
+  {
+    id: 'cinematic-night',
+    name: 'Cinematic Night',
+    description: 'Dark, dramatic & cinematic — a bold film-noir wedding experience.',
+    category: 'wedding',
+    config: {
+      fields: WEDDING_FIELDS,
+      defaultData: {
+        brideName: 'Ananya', groomName: 'Vihaan', date: '', time: '19:30',
+        venue: 'The Imperial Ballroom', venueAddress: '5 Grand Avenue, Mumbai', mapsUrl: '',
+        dressCode: 'Black Tie', schedule: 'Cocktail Hour - 6:00 PM\nCeremony - 7:30 PM\nDinner & Dancing - 9:00 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=900&q=80',
+        musicUrl: '', message: 'Two souls, one beautiful story. Join us as we begin our forever.',
+      },
+    },
+  },
+  {
+    id: 'indian-wedding',
+    name: 'Shaadi — Indian Wedding',
+    description: 'Vibrant crimson & gold — a grand cinematic Indian wedding invite.',
+    category: 'wedding',
+    config: {
+      fields: WEDDING_FIELDS,
+      defaultData: {
+        brideName: 'Priya', groomName: 'Arjun', date: '', time: '18:30',
+        venue: 'The Leela Palace', venueAddress: '23 Old Airport Road, Bengaluru',
+        mapsUrl: '', dressCode: 'Indian Traditional / Ethnic',
+        schedule: 'Baraat Arrival - 6:00 PM\nVarmala Ceremony - 7:00 PM\nSaat Pheras - 8:00 PM\nDinner & Celebrations - 9:30 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1591604021695-0c69b7c05981?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1602673221577-0b56d7ce446b?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80',
+        musicUrl: '', message: 'With the blessings of the Almighty and our families, we invite you to witness our union.',
+      },
+    },
+  },
+  {
+    id: 'indian-engagement',
+    name: 'Mangni — Engagement',
+    description: 'Rose gold & plum — a romantic Indian ring ceremony invitation.',
+    category: 'engagement',
+    config: {
+      fields: [
+        { key: 'partner1Name', label: "Bride's Name", type: 'text', required: true, placeholder: 'Meera' },
+        { key: 'partner2Name', label: "Groom's Name", type: 'text', required: true, placeholder: 'Rohan' },
+        { key: 'date', label: 'Engagement Date', type: 'date', required: true },
+        { key: 'time', label: 'Ceremony Time', type: 'time', required: true },
+        { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'Taj Falaknuma Palace' },
+        { key: 'venueAddress', label: 'Venue Address', type: 'text', placeholder: 'Engine Bowli, Hyderabad' },
+        { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+        { key: 'dressCode', label: 'Dress Code', type: 'text', placeholder: 'Cocktail / Semi-Formal' },
+        { key: 'schedule', label: 'Event Schedule', type: 'textarea', placeholder: 'Welcome Drinks - 5:00 PM\nRing Exchange - 6:30 PM\nDinner - 8:00 PM' },
+        { key: 'galleryImages', label: 'Gallery Image URLs', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+        { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'Two hearts, one promise. Join us as we begin our journey.' },
+      ],
+      defaultData: {
+        partner1Name: 'Meera', partner2Name: 'Rohan', date: '', time: '17:00',
+        venue: 'Taj Falaknuma Palace', venueAddress: 'Engine Bowli, Hyderabad',
+        mapsUrl: '', dressCode: 'Cocktail / Semi-Formal',
+        schedule: 'Welcome Drinks - 5:00 PM\nRing Exchange Ceremony - 6:30 PM\nCelebration Dinner - 8:00 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1510077143771-1b6a4e2cde35?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=900&q=80',
+        message: 'Two hearts, one beautiful promise. Join us as we take our first step towards forever.',
+      },
+    },
+  },
+  {
+    id: 'indian-birthday',
+    name: 'Janamdin — Birthday',
+    description: 'Saffron & indigo — a vibrant Bollywood birthday celebration.',
+    category: 'birthday',
+    config: {
+      fields: [
+        { key: 'celebrantName', label: "Celebrant's Name", type: 'text', required: true, placeholder: 'Kavya' },
+        { key: 'age', label: 'Turning Age (optional)', type: 'text', placeholder: '25' },
+        { key: 'date', label: 'Birthday Date', type: 'date', required: true },
+        { key: 'time', label: 'Party Time', type: 'time', required: true },
+        { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'The Oberoi Grand' },
+        { key: 'venueAddress', label: 'Venue Address', type: 'text', placeholder: '15 Jawaharlal Nehru Road, Kolkata' },
+        { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+        { key: 'theme', label: 'Party Theme', type: 'text', placeholder: 'Bollywood Glam' },
+        { key: 'schedule', label: 'Party Schedule', type: 'textarea', placeholder: 'Cocktails - 7:00 PM\nDinner - 8:00 PM\nCake Cutting - 9:30 PM' },
+        { key: 'galleryImages', label: 'Gallery Image URLs', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+        { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: "Life's a party — come celebrate with me!" },
+      ],
+      defaultData: {
+        celebrantName: 'Kavya', age: '25', date: '', time: '19:00',
+        venue: 'The Oberoi Grand', venueAddress: '15 Jawaharlal Nehru Road, Kolkata',
+        mapsUrl: '', theme: 'Bollywood Glam',
+        schedule: 'Cocktail Hour - 7:00 PM\nDinner - 8:00 PM\nCake Cutting - 9:30 PM\nDance Floor Opens - 10:00 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=900&q=80',
+        musicUrl: '', message: "Life is a beautiful journey — come add sparkle to mine on my special day!",
+      },
+    },
+  },
+  {
+    id: 'griha-pravesh',
+    name: 'Griha Pravesh — House Warming',
+    description: 'Turmeric & terracotta — a sacred Griha Pravesh ceremony invite.',
+    category: 'housewarming',
+    config: {
+      fields: [
+        { key: 'hostNames', label: 'Host Names', type: 'text', required: true, placeholder: 'Sharma Family' },
+        { key: 'date', label: 'Ceremony Date', type: 'date', required: true },
+        { key: 'time', label: 'Muhurat Time', type: 'time', required: true },
+        { key: 'venue', label: 'New Home Address', type: 'text', required: true, placeholder: 'Flat 4B, Lotus Residency' },
+        { key: 'venueAddress', label: 'Full Address', type: 'text', placeholder: 'Sector 62, Noida, UP 201301' },
+        { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+        { key: 'pooja', label: 'Pooja / Muhurat Details', type: 'text', placeholder: 'Ganesh Pooja at 9:00 AM sharp' },
+        { key: 'schedule', label: 'Program Schedule', type: 'textarea', placeholder: 'Ganesh Pooja - 9:00 AM\nGriha Pravesh - 10:30 AM\nLunch Prasad - 1:00 PM' },
+        { key: 'galleryImages', label: 'Gallery Image URLs', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+        { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'With divine blessings, we warmly invite you to our new abode.' },
+      ],
+      defaultData: {
+        hostNames: 'The Sharma Family', date: '', time: '09:00',
+        venue: 'Flat 4B, Lotus Residency', venueAddress: 'Sector 62, Noida, UP 201301',
+        mapsUrl: '', pooja: 'Ganesh Pooja & Vastu Pooja at 9:00 AM',
+        schedule: 'Ganesh Pooja - 9:00 AM\nVastu Pooja - 10:00 AM\nGriha Pravesh Muhurat - 10:30 AM\nBhoomi Pooja & Lunch - 12:30 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80',
+        message: 'With the blessings of the Almighty, we humbly invite you to grace our new home.',
+      },
+    },
+  },
+  {
+    id: 'namakaran',
+    name: 'Namakaran — Naming Ceremony',
+    description: 'Soft gold & sky — a pure and blessed naming ceremony invite.',
+    category: 'naming',
+    config: {
+      fields: [
+        { key: 'babyName', label: "Baby's Name", type: 'text', required: true, placeholder: 'Aarav' },
+        { key: 'babyGender', label: 'Baby Gender (Boy/Girl)', type: 'text', placeholder: 'Boy' },
+        { key: 'parentNames', label: "Parents' Names", type: 'text', required: true, placeholder: 'Anjali & Suresh Kapoor' },
+        { key: 'date', label: 'Ceremony Date', type: 'date', required: true },
+        { key: 'time', label: 'Ceremony Time', type: 'time', required: true },
+        { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'Kapoor Residence' },
+        { key: 'venueAddress', label: 'Venue Address', type: 'text', placeholder: '7 Sunflower Society, Pune' },
+        { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+        { key: 'schedule', label: 'Program Schedule', type: 'textarea', placeholder: 'Satyanarayan Pooja - 10:00 AM\nNamakaran Ceremony - 11:30 AM\nLunch - 1:00 PM' },
+        { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'With joy in our hearts, we invite you to bless our little one.' },
+      ],
+      defaultData: {
+        babyName: 'Aarav', babyGender: 'Boy', parentNames: 'Anjali & Suresh Kapoor',
+        date: '', time: '10:00', venue: 'Kapoor Residence',
+        venueAddress: '7 Sunflower Society, Baner, Pune 411045', mapsUrl: '',
+        schedule: 'Satyanarayan Pooja - 10:00 AM\nNamakaran Ceremony - 11:30 AM\nBlessing Time - 12:30 PM\nLunch Prasad - 1:00 PM',
+        message: 'With immense joy in our hearts, we joyfully invite you to bless our little one with your love and presence.',
+      },
+    },
+  },
+  {
+    id: 'anniversary',
+    name: 'Saalgirah — Anniversary',
+    description: 'Deep wine & gold — an eternal anniversary celebration.',
+    category: 'anniversary',
+    config: {
+      fields: [
+        { key: 'coupleNames', label: "Couple's Names", type: 'text', required: true, placeholder: 'Sunita & Rajesh' },
+        { key: 'years', label: 'Years Together', type: 'text', placeholder: '25' },
+        { key: 'date', label: 'Anniversary Date', type: 'date', required: true },
+        { key: 'time', label: 'Event Time', type: 'time', required: true },
+        { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'ITC Grand Maratha' },
+        { key: 'venueAddress', label: 'Venue Address', type: 'text', placeholder: 'Sahar, Mumbai 400099' },
+        { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+        { key: 'dressCode', label: 'Dress Code', type: 'text', placeholder: 'Formal / Indian Ethnic' },
+        { key: 'schedule', label: 'Event Schedule', type: 'textarea', placeholder: 'Welcome - 7:00 PM\nDinner - 8:30 PM\nCake Cutting - 10:00 PM' },
+        { key: 'galleryImages', label: 'Gallery Image URLs', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+        { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'A journey of love, laughter and togetherness.' },
+      ],
+      defaultData: {
+        coupleNames: 'Sunita & Rajesh', years: '25', date: '', time: '19:00',
+        venue: 'ITC Grand Maratha', venueAddress: 'Sahar, Andheri East, Mumbai 400099',
+        mapsUrl: '', dressCode: 'Formal / Indian Ethnic',
+        schedule: 'Cocktail Reception - 7:00 PM\nGala Dinner - 8:30 PM\nCake Cutting - 10:00 PM\nDance & Celebrations - 10:30 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80',
+        musicUrl: '', message: 'Twenty-five years of love, laughter, and togetherness — and we are just getting started.',
+      },
+    },
+  },
+]
+
+export function getTemplateData(id: string): TemplateData | undefined {
+  return TEMPLATES.find((t) => t.id === id)
+}
