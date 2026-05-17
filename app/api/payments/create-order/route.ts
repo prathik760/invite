@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { getRazorpayClient, getPlanPrice } from '@/lib/razorpay'
 import type { PlanId } from '@/lib/plans'
+import { PLAN_MAP } from '@/lib/plans'
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null)
   const plan = body?.plan as PlanId | undefined
 
-  if (!plan || plan === 'free') {
+  if (!plan || plan === 'free' || !PLAN_MAP[plan]) {
     return NextResponse.json({ error: 'Invalid plan selected.' }, { status: 400 })
   }
 

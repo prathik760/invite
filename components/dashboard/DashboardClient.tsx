@@ -151,18 +151,24 @@ export default function DashboardClient({ user }: Props) {
   const approveWish = async (wishId: string) => {
     setApprovingId(wishId)
     try {
-      await fetch(`/api/wishes/${wishId}/approve`, { method: 'PATCH' })
+      const res = await fetch(`/api/wishes/${wishId}/approve`, { method: 'PATCH' })
+      if (!res.ok) throw new Error(`Server error ${res.status}`)
       setEvents(prev => prev.map(ev => ({ ...ev, wishes: ev.wishes.map(w => w.id === wishId ? { ...w, isApproved: true } : w) })))
       setNewWishIds(prev => { const n = new Set(prev); n.delete(wishId); return n })
+    } catch {
+      // Server rejected — leave state unchanged
     } finally { setApprovingId(null) }
   }
 
   const deleteWish = async (wishId: string) => {
     setApprovingId(wishId)
     try {
-      await fetch(`/api/wishes/${wishId}/approve`, { method: 'DELETE' })
+      const res = await fetch(`/api/wishes/${wishId}/approve`, { method: 'DELETE' })
+      if (!res.ok) throw new Error(`Server error ${res.status}`)
       setEvents(prev => prev.map(ev => ({ ...ev, wishes: ev.wishes.filter(w => w.id !== wishId) })))
       setNewWishIds(prev => { const n = new Set(prev); n.delete(wishId); return n })
+    } catch {
+      // Server rejected — leave state unchanged
     } finally { setApprovingId(null) }
   }
 

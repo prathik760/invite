@@ -42,6 +42,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
+  if (name.trim().length > 100) {
+    return NextResponse.json({ error: 'Name must be 100 characters or less' }, { status: 400 })
+  }
+  if (message.trim().length > 1000) {
+    return NextResponse.json({ error: 'Message must be 1000 characters or less' }, { status: 400 })
+  }
+
   try {
     const event = await prisma.event.findUnique({ where: { id: eventId } })
     if (!event) {

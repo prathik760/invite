@@ -1,28 +1,23 @@
 import type { Metadata } from 'next'
-import { Inter, Cormorant_Garamond, Great_Vibes } from 'next/font/google'
+import { Lora, Great_Vibes } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 
-const inter = Inter({
+// Sole typeface — Lora: warm contemporary serif with elegant readability at every size
+const cormorant = Lora({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-sans',
-  display: 'swap',
-})
-
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-display',
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
+// Script — exclusively for the "&" connector inside invitation cards
 const greatVibes = Great_Vibes({
   subsets: ['latin'],
   weight: ['400'],
-  variable: '--font-script',
+  variable: '--font-great-vibes',
   display: 'swap',
 })
 
@@ -72,8 +67,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${cormorant.variable} ${greatVibes.variable}`}>
-      <body className="bg-background text-foreground font-sans antialiased">
+    <html lang="en" className={`${cormorant.variable} ${greatVibes.variable}`}>
+      <body className="bg-background text-foreground font-body antialiased">
         <SessionProvider>{children}</SessionProvider>
         <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       </body>

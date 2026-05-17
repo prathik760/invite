@@ -24,11 +24,11 @@ const config: Config = {
         border: "#E8DCCD",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
-        heading: ["var(--font-sans)", "system-ui", "sans-serif"],
-        body: ["var(--font-sans)", "system-ui", "sans-serif"],
-        script: ["var(--font-script)", "cursive"],
+        sans: ["var(--font-cormorant)", "Georgia", "serif"],
+        display: ["var(--font-cormorant)", "Georgia", "serif"],
+        heading: ["var(--font-cormorant)", "Georgia", "serif"],
+        body: ["var(--font-cormorant)", "Georgia", "serif"],
+        script: ["var(--font-great-vibes)", "cursive"],
       },
       borderRadius: {
         xl: "0.75rem",

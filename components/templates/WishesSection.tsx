@@ -48,8 +48,8 @@ function HeartBurst() {
 }
 
 const PREVIEW_WISHES: WishRecord[] = [
-  { id: '1', name: 'Anjali & Vikram', message: 'Wishing you a lifetime of love, joy, and beautiful memories together! May your journey be filled with endless happiness.' },
-  { id: '2', name: 'The Mehta Family', message: 'May your love story be the most beautiful one ever written. Congratulations on your special day!' },
+  { id: '1', eventId: '__preview__', name: 'Anjali & Vikram', message: 'Wishing you a lifetime of love, joy, and beautiful memories together! May your journey be filled with endless happiness.', isApproved: true, createdAt: new Date().toISOString() },
+  { id: '2', eventId: '__preview__', name: 'The Mehta Family', message: 'May your love story be the most beautiful one ever written. Congratulations on your special day!', isApproved: true, createdAt: new Date().toISOString() },
 ]
 
 export default function WishesSection({ eventId }: WishesSectionProps) {

@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { verifyPaymentSignature } from '@/lib/razorpay'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
+import { PLAN_MAP } from '@/lib/plans'
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -16,6 +17,10 @@ export async function POST(req: NextRequest) {
 
   if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature || !plan) {
     return NextResponse.json({ error: 'Missing payment details.' }, { status: 400 })
+  }
+
+  if (!PLAN_MAP[plan as PlanId] || plan === 'free') {
+    return NextResponse.json({ error: 'Invalid plan.' }, { status: 400 })
   }
 
   const isValid = verifyPaymentSignature(razorpay_order_id, razorpay_payment_id, razorpay_signature)

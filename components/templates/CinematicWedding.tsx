@@ -440,7 +440,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: P
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.75, ease: BEZIER }}
             className="select-none my-1"
-            style={{ color: C.gold, fontSize: isPreview ? '1.6rem' : 'clamp(2.2rem,7vw,5.5rem)', fontFamily: 'var(--font-sans), system-ui, sans-serif' }}
+            style={{ color: C.gold, fontSize: isPreview ? '1.6rem' : 'clamp(2.2rem,7vw,5.5rem)', fontFamily: 'var(--font-cormorant), Georgia, serif' }}
             aria-hidden
           >
             &amp;

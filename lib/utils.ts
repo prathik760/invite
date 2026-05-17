@@ -15,8 +15,11 @@ export function generateSlug(prefix?: string): string {
 
 export function formatDate(dateString: string): string {
   if (!dateString) return ''
-  const [year, month, day] = dateString.split('-').map(Number)
+  const parts = dateString.split('-').map(Number)
+  if (parts.length !== 3 || parts.some(isNaN)) return ''
+  const [year, month, day] = parts
   const date = new Date(year, month - 1, day)
+  if (isNaN(date.getTime())) return ''
   return date.toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -27,7 +30,10 @@ export function formatDate(dateString: string): string {
 
 export function formatTime(timeString: string): string {
   if (!timeString) return ''
-  const [hours, minutes] = timeString.split(':').map(Number)
+  const parts = timeString.split(':').map(Number)
+  if (parts.length < 2 || parts.some(isNaN)) return ''
+  const [hours, minutes] = parts
+  if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return ''
   const period = hours >= 12 ? 'PM' : 'AM'
   const h = hours % 12 || 12
   return `${h}:${String(minutes).padStart(2, '0')} ${period}`

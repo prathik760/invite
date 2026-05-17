@@ -76,7 +76,7 @@ function TemplateCard({
   tpl: typeof TEMPLATES[number]
   isActive: boolean
   locked: boolean
-  req: ReturnType<typeof getRequiredPlan>
+  req: ReturnType<typeof getRequiredPlan> | null
   v: { icon: React.ReactNode; gradient: string; color: string; rgb: string }
   size: 'sm' | 'md'
   onClick: () => void

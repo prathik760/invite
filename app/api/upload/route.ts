@@ -43,8 +43,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Only audio files allowed for music' }, { status: 400 })
   }
 
+  if (typeof size !== 'number' || size <= 0) {
+    return NextResponse.json({ error: 'file size is required' }, { status: 400 })
+  }
+
   const maxBytes = isImage ? MAX_IMAGE_BYTES : MAX_AUDIO_BYTES
-  if (typeof size === 'number' && size > maxBytes) {
+  if (size > maxBytes) {
     const mb = Math.round(maxBytes / 1024 / 1024)
     return NextResponse.json({ error: `File too large — max ${mb} MB` }, { status: 413 })
   }

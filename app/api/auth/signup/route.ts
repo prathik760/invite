@@ -17,8 +17,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 })
   }
 
+  if (trimmedName && trimmedName.length > 100) {
+    return NextResponse.json({ error: 'Name must be 100 characters or less.' }, { status: 400 })
+  }
+
   if (String(password).length < 8) {
     return NextResponse.json({ error: 'Password must be at least 8 characters.' }, { status: 400 })
+  }
+
+  if (String(password).length > 72) {
+    return NextResponse.json({ error: 'Password must be 72 characters or less.' }, { status: 400 })
   }
 
   try {
