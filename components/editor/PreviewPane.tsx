@@ -20,7 +20,6 @@ const COMPONENTS: Record<string, React.ComponentType<{ data: Record<string, stri
   'anniversary': Anniversary,
 }
 
-const DARK_TEMPLATES = new Set(['cinematic-night', 'indian-wedding', 'indian-engagement', 'indian-birthday', 'griha-pravesh', 'namakaran', 'anniversary'])
 
 interface PreviewPaneProps {
   templateId: string
@@ -29,7 +28,6 @@ interface PreviewPaneProps {
 
 export default function PreviewPane({ templateId, data }: PreviewPaneProps) {
   const Component = COMPONENTS[templateId]
-  const isDark = DARK_TEMPLATES.has(templateId)
 
   return (
     // No padding wrapper — template renders edge-to-edge inside the phone screen
