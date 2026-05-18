@@ -38,7 +38,7 @@ function getEventNames(data: Record<string, string>): string | undefined {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const event = await prisma.event.findUnique({ where: { slug: params.slug } }).catch(async (err) => {
+  const event = await prisma.event.findUnique({ where: { slug: params.slug } }).catch(async (err: unknown) => {
     if (shouldUseLocalStore(err)) return getLocalEventBySlug(params.slug)
     throw err
   })
@@ -73,7 +73,7 @@ const TEMPLATE_COMPONENTS: Record<
 }
 
 export default async function EventPage({ params }: PageProps) {
-  const event = await prisma.event.findUnique({ where: { slug: params.slug } }).catch(async (err) => {
+  const event = await prisma.event.findUnique({ where: { slug: params.slug } }).catch(async (err: unknown) => {
     if (shouldUseLocalStore(err)) return getLocalEventBySlug(params.slug)
     throw err
   })
