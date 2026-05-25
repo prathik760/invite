@@ -8,6 +8,11 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: { slug: string } },
 ) {
+  // Block the internal sentinel event used for custom template requests
+  if (params.slug === '__custom-requests__') {
+    return NextResponse.json({ error: 'Event not found' }, { status: 404 })
+  }
+
   try {
     const event = await prisma.event.findUnique({
       where: { slug: params.slug },

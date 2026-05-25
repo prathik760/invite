@@ -3,6 +3,7 @@
 import { memo, useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { formatDate, formatTime } from '@/lib/utils'
+import { PortraitRow } from './PortraitRow'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -278,6 +279,8 @@ export default function NamingCeremony({ data, eventId, isPreview = false }: Pro
             {gender === 'Girl' ? 'Our Little Princess' : 'Our Little Prince'} is named
           </motion.p>
 
+          <PortraitRow data={data} dark={true} />
+
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.65, ease: BEZIER }}
             className="font-heading" style={{ fontSize: isPreview ? '2.8rem' : 'clamp(2rem,10vw,8rem)', lineHeight: 1.02, color: C.text, textShadow: `0 0 80px ${accentFaint.replace('0.1', '0.35')}`, letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {babyName}
@@ -399,7 +402,7 @@ export default function NamingCeremony({ data, eventId, isPreview = false }: Pro
         <PureDivider gender={gender} className="mb-7" />
         <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>{babyName} · {parentNames}</p>
         {formattedDate && <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(240,248,255,0.18)' }}>{formattedDate}</p>}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(240,248,255,0.12)' }}>Made with Invitely</p>
+        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(240,248,255,0.12)' }}>Made with ShareInvite</p>
       </footer>
     </div>
   )

@@ -3,6 +3,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { formatDate, formatTime } from '@/lib/utils'
+import { PortraitRow } from './PortraitRow'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -424,6 +425,8 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: P
             </motion.div>
           )}
 
+          <PortraitRow data={data} dark={true} />
+
           {/* Names */}
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
@@ -682,7 +685,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: P
           <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(242,238,230,0.18)' }}>{formattedDate}</p>
         )}
         <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(242,238,230,0.12)' }}>
-          Made with Invitely
+          Made with ShareInvite
         </p>
       </footer>
     </div>

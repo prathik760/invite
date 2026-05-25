@@ -8,9 +8,25 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/dashboard/'],
+        disallow: [
+          '/api/',
+          '/dashboard/',
+          '/auth/',
+          '/_next/',
+          '/e/__custom-requests__/',
+        ],
+      },
+      {
+        // Block AI training crawlers
+        userAgent: 'GPTBot',
+        disallow: ['/'],
+      },
+      {
+        userAgent: 'CCBot',
+        disallow: ['/'],
       },
     ],
     sitemap: `${APP_URL}/sitemap.xml`,
+    host: APP_URL,
   }
 }

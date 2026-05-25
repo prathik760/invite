@@ -6,19 +6,33 @@ import { generateSlug } from '@/lib/utils'
 import { getTemplateData } from '@/modules/templates/data'
 import { createLocalEvent, shouldUseLocalStore } from '@/lib/local-store'
 
+// Strip HTML tags from a string value to prevent stored XSS.
+// Safe for all text fields — URLs (mapsUrl, musicUrl) are left intact since they pass URL validation.
+function stripHtml(value: unknown): unknown {
+  if (typeof value !== 'string') return value
+  return value.replace(/<[^>]*>/g, '').trim()
+}
+
+function sanitizeData(data: Record<string, unknown>): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(data).map(([k, v]) => [k, stripHtml(v)]))
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null)
   const templateId = body?.templateId
   const data = body?.data
 
-  if (!templateId || !data || typeof data !== 'object') {
+  if (!templateId || typeof templateId !== 'string' || !data || typeof data !== 'object') {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
   const templateDef = getTemplateData(templateId)
   if (!templateDef) {
-    return NextResponse.json({ error: 'Template not found' }, { status: 404 })
+    // Return generic 400 — avoids leaking which templateIds are valid
+    return NextResponse.json({ error: 'Invalid template' }, { status: 400 })
   }
+
+  const sanitizedData = sanitizeData(data as Record<string, unknown>)
 
   // Attach userId if authenticated
   const session = await getServerSession(authOptions).catch(() => null)
@@ -36,13 +50,14 @@ export async function POST(req: NextRequest) {
       },
     })
 
+    const d = sanitizedData as Record<string, string>
     const prefix =
-      data.brideName && data.groomName ? `${data.brideName}-${data.groomName}` :
-      data.partner1Name && data.partner2Name ? `${data.partner1Name}-${data.partner2Name}` :
-      data.celebrantName ? data.celebrantName :
-      data.hostNames ? 'griha' :
-      data.babyName ? data.babyName :
-      data.coupleNames ? 'anniversary' :
+      d.brideName && d.groomName ? `${d.brideName}-${d.groomName}` :
+      d.partner1Name && d.partner2Name ? `${d.partner1Name}-${d.partner2Name}` :
+      d.celebrantName ? d.celebrantName :
+      d.hostNames ? 'griha' :
+      d.babyName ? d.babyName :
+      d.coupleNames ? 'anniversary' :
       undefined
 
     const slug = generateSlug(prefix)
@@ -51,7 +66,7 @@ export async function POST(req: NextRequest) {
       data: {
         slug,
         templateId,
-        data: data as object,
+        data: sanitizedData as object,
         ...(userId ? { userId } : {}),
       },
     })
@@ -59,7 +74,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ slug: event.slug, id: event.id }, { status: 201 })
   } catch (err) {
     if (shouldUseLocalStore(err)) {
-      const event = await createLocalEvent(templateId, data as Record<string, string>)
+      const event = await createLocalEvent(templateId, sanitizedData as Record<string, string>)
       console.warn('[POST /api/events] Database unreachable, created local dev event instead.')
       return NextResponse.json(
         { slug: event.slug, id: event.id, storage: 'local-dev' },

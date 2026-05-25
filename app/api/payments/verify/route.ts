@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
-import { verifyPaymentSignature } from '@/lib/razorpay'
+import { getRazorpayClient, verifyPaymentSignature, getPlanPrice } from '@/lib/razorpay'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
 import { PLAN_MAP } from '@/lib/plans'
@@ -23,13 +23,35 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid plan.' }, { status: 400 })
   }
 
+  // Verify HMAC signature — proves this payment_id + order_id combination is genuine
   const isValid = verifyPaymentSignature(razorpay_order_id, razorpay_payment_id, razorpay_signature)
   if (!isValid) {
     console.error('[verify] Signature mismatch for order', razorpay_order_id)
     return NextResponse.json({ error: 'Payment verification failed. Please contact support.' }, { status: 400 })
   }
 
+  // Fetch the order from Razorpay to verify the amount matches the claimed plan.
+  // Prevents a user from paying for "standard" but claiming "gold" in the body.
   try {
+    const razorpay = getRazorpayClient()
+    const order = await razorpay.orders.fetch(razorpay_order_id)
+    const expectedPaise = getPlanPrice(plan as PlanId)
+
+    if (Number(order.amount) !== expectedPaise) {
+      console.error(
+        `[verify] Amount mismatch — order: ${order.amount} paise, plan "${plan}" expects ${expectedPaise} paise`,
+      )
+      return NextResponse.json({ error: 'Payment amount does not match plan price.' }, { status: 400 })
+    }
+
+    // Idempotency — if this payment_id already activated a subscription, return success
+    const existing = await prisma.subscription.findFirst({
+      where: { razorpayPaymentId: razorpay_payment_id },
+    })
+    if (existing) {
+      return NextResponse.json({ success: true, plan: existing.plan })
+    }
+
     await prisma.subscription.upsert({
       where: { userId: session.user.id },
       update: {

@@ -26,8 +26,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'contentType is required' }, { status: 400 })
   }
 
-  if (folder !== 'gallery' && folder !== 'music') {
-    return NextResponse.json({ error: 'folder must be gallery or music' }, { status: 400 })
+  if (folder !== 'gallery' && folder !== 'music' && folder !== 'portraits') {
+    return NextResponse.json({ error: 'folder must be gallery, portraits, or music' }, { status: 400 })
   }
 
   const isImage = ALLOWED_IMAGE_TYPES.has(contentType)
@@ -36,8 +36,8 @@ export async function POST(req: NextRequest) {
   if (!isImage && !isAudio) {
     return NextResponse.json({ error: 'Unsupported file type' }, { status: 400 })
   }
-  if (folder === 'gallery' && !isImage) {
-    return NextResponse.json({ error: 'Only images allowed in gallery' }, { status: 400 })
+  if ((folder === 'gallery' || folder === 'portraits') && !isImage) {
+    return NextResponse.json({ error: 'Only images allowed in gallery/portraits' }, { status: 400 })
   }
   if (folder === 'music' && !isAudio) {
     return NextResponse.json({ error: 'Only audio files allowed for music' }, { status: 400 })

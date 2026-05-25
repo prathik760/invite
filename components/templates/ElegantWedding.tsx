@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { formatDate, formatTime } from '@/lib/utils'
 import WishesSection from './WishesSection'
+import { PortraitRow } from './PortraitRow'
 
 interface Props {
   data: Record<string, string>
@@ -390,6 +391,8 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Pro
               />
             </span>
           </motion.div>
+
+          <PortraitRow data={data} dark={false} />
 
           {/* Bride name */}
           <motion.h1
@@ -796,7 +799,7 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Pro
           style={{ fontSize: '10px', color: 'rgba(255,255,255,0.46)' }}
         >
           Made with love &nbsp;·&nbsp;{' '}
-          <span style={{ color: 'rgba(217,164,65,0.88)' }}>Invitely</span>
+          <span style={{ color: 'rgba(217,164,65,0.88)' }}>ShareInvite</span>
         </p>
         {!isPreview && (
           <Link

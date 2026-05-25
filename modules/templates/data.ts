@@ -10,7 +10,9 @@ export interface TemplateData {
 
 const WEDDING_FIELDS: TemplateConfig['fields'] = [
   { key: 'brideName', label: "Bride's Name", type: 'text', required: true, placeholder: 'Priya' },
+  { key: 'bridePhoto', label: "Bride's Photo", type: 'image', placeholder: '' },
   { key: 'groomName', label: "Groom's Name", type: 'text', required: true, placeholder: 'Arjun' },
+  { key: 'groomPhoto', label: "Groom's Photo", type: 'image', placeholder: '' },
   { key: 'date', label: 'Wedding Date', type: 'date', required: true },
   { key: 'time', label: 'Ceremony Time', type: 'time', required: true },
   { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'The Royal Palace' },
@@ -32,7 +34,9 @@ export const TEMPLATES: TemplateData[] = [
     config: {
       fields: [
         { key: 'brideName', label: "Bride's Name", type: 'text', required: true, placeholder: 'Emily' },
+        { key: 'bridePhoto', label: "Bride's Photo", type: 'image', placeholder: '' },
         { key: 'groomName', label: "Groom's Name", type: 'text', required: true, placeholder: 'James' },
+        { key: 'groomPhoto', label: "Groom's Photo", type: 'image', placeholder: '' },
         { key: 'date', label: 'Wedding Date', type: 'date', required: true },
         { key: 'time', label: 'Ceremony Time', type: 'time', required: true },
         { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'The Grand Ballroom' },
@@ -94,7 +98,9 @@ export const TEMPLATES: TemplateData[] = [
     config: {
       fields: [
         { key: 'partner1Name', label: "Bride's Name", type: 'text', required: true, placeholder: 'Meera' },
+        { key: 'partner1Photo', label: "Bride's Photo", type: 'image', placeholder: '' },
         { key: 'partner2Name', label: "Groom's Name", type: 'text', required: true, placeholder: 'Rohan' },
+        { key: 'partner2Photo', label: "Groom's Photo", type: 'image', placeholder: '' },
         { key: 'date', label: 'Engagement Date', type: 'date', required: true },
         { key: 'time', label: 'Ceremony Time', type: 'time', required: true },
         { key: 'venue', label: 'Venue Name', type: 'text', required: true, placeholder: 'Taj Falaknuma Palace' },
@@ -123,6 +129,7 @@ export const TEMPLATES: TemplateData[] = [
     config: {
       fields: [
         { key: 'celebrantName', label: "Celebrant's Name", type: 'text', required: true, placeholder: 'Kavya' },
+        { key: 'celebrantPhoto', label: "Celebrant's Photo", type: 'image', placeholder: '' },
         { key: 'age', label: 'Turning Age (optional)', type: 'text', placeholder: '25' },
         { key: 'date', label: 'Birthday Date', type: 'date', required: true },
         { key: 'time', label: 'Party Time', type: 'time', required: true },
@@ -153,6 +160,7 @@ export const TEMPLATES: TemplateData[] = [
     config: {
       fields: [
         { key: 'hostNames', label: 'Host Names', type: 'text', required: true, placeholder: 'Sharma Family' },
+        { key: 'hostPhoto', label: 'Family Photo', type: 'image', placeholder: '' },
         { key: 'date', label: 'Ceremony Date', type: 'date', required: true },
         { key: 'time', label: 'Muhurat Time', type: 'time', required: true },
         { key: 'venue', label: 'New Home Address', type: 'text', required: true, placeholder: 'Flat 4B, Lotus Residency' },
@@ -181,6 +189,7 @@ export const TEMPLATES: TemplateData[] = [
     config: {
       fields: [
         { key: 'babyName', label: "Baby's Name", type: 'text', required: true, placeholder: 'Aarav' },
+        { key: 'babyPhoto', label: "Baby's Photo", type: 'image', placeholder: '' },
         { key: 'babyGender', label: 'Baby Gender (Boy/Girl)', type: 'text', placeholder: 'Boy' },
         { key: 'parentNames', label: "Parents' Names", type: 'text', required: true, placeholder: 'Anjali & Suresh Kapoor' },
         { key: 'date', label: 'Ceremony Date', type: 'date', required: true },
@@ -201,6 +210,58 @@ export const TEMPLATES: TemplateData[] = [
     },
   },
   {
+    id: 'kgf-wedding',
+    name: 'KGF — Royal Empire Wedding',
+    description: 'Dark gold cinematic luxury — a legendary South Indian wedding invite inspired by the KGF universe.',
+    category: 'movie',
+    config: {
+      fields: [
+        ...WEDDING_FIELDS,
+        { key: 'coupleStory', label: 'Couple Love Story', type: 'textarea', placeholder: 'Their story began in gold and fire. Two hearts destined for each other, forged by fate…' },
+        { key: 'groomFamilyDetails', label: "Groom's Family Details", type: 'text', placeholder: "S/o Suryakumar & Kamala Devi · Bengaluru" },
+        { key: 'brideFamilyDetails', label: "Bride's Family Details", type: 'text', placeholder: "D/o Rajmohan & Lakshmi Devi · Chennai" },
+      ],
+      defaultData: {
+        groomName: 'Rocky', brideName: 'Reena', date: '', time: '19:00',
+        venue: 'Kolar Gold Palace', venueAddress: 'KGF Nagar, Kolar District, Karnataka',
+        mapsUrl: '', dressCode: 'Royal Indian Ethnic',
+        schedule: 'Baraat Procession - 6:00 PM\nVarmala Ceremony - 7:30 PM\nSaat Pheras - 8:30 PM\nRoyal Dinner & Celebrations - 10:00 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1591604021695-0c69b7c05981?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1602673221577-0b56d7ce446b?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80',
+        musicUrl: '',
+        message: 'From the depths of destiny, two souls rise to reign together. Your presence honours our legacy.',
+        coupleStory: 'Their story began in gold and fire. Two hearts destined for each other, forged by fate in the golden land — a love as powerful and eternal as the mountains themselves.',
+        groomFamilyDetails: 'S/o Suryakumar & Kamala Devi · Bengaluru',
+        brideFamilyDetails: 'D/o Rajmohan & Lakshmi Devi · Chennai',
+      },
+    },
+  },
+  {
+    id: 'royal-deco',
+    name: 'Royal Deco — Palace Edition',
+    description: 'Midnight navy & antique gold Art Deco — a retro palace wedding invitation fit for royalty.',
+    category: 'retro',
+    config: {
+      fields: [
+        ...WEDDING_FIELDS,
+        { key: 'coupleStory', label: 'Couple Love Story', type: 'textarea', placeholder: 'Their love was written in the stars long before they ever met…' },
+        { key: 'groomFamilyDetails', label: "Groom's Family Details", type: 'text', placeholder: 'S/o Ramesh & Savitri Devi · Mysuru' },
+        { key: 'brideFamilyDetails', label: "Bride's Family Details", type: 'text', placeholder: 'D/o Suresh & Padmavati Devi · Bengaluru' },
+      ],
+      defaultData: {
+        groomName: 'Arjun', brideName: 'Ananya', date: '', time: '18:30',
+        venue: 'The Royal Palace Banquet', venueAddress: 'Palace Road, Bengaluru, Karnataka 560001',
+        mapsUrl: '', dressCode: 'Royal Indian Ethnic / Black Tie',
+        schedule: 'Royal Reception - 6:00 PM\nVarmala Ceremony - 7:00 PM\nSaat Pheras - 8:00 PM\nGrand Dinner - 9:30 PM',
+        galleryImages: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80',
+        musicUrl: '',
+        message: 'Together with our families, we joyfully invite you to witness our union and share in our joy.',
+        coupleStory: 'Their love was written in the stars long before they ever met — two souls destined by fate, bound by gold, and united for eternity.',
+        groomFamilyDetails: 'S/o Ramesh & Savitri Devi · Mysuru',
+        brideFamilyDetails: 'D/o Suresh & Padmavati Devi · Bengaluru',
+      },
+    },
+  },
+  {
     id: 'anniversary',
     name: 'Saalgirah — Anniversary',
     description: 'Deep wine & gold — an eternal anniversary celebration.',
@@ -208,6 +269,7 @@ export const TEMPLATES: TemplateData[] = [
     config: {
       fields: [
         { key: 'coupleNames', label: "Couple's Names", type: 'text', required: true, placeholder: 'Sunita & Rajesh' },
+        { key: 'couplePhoto', label: "Couple's Photo", type: 'image', placeholder: '' },
         { key: 'years', label: 'Years Together', type: 'text', placeholder: '25' },
         { key: 'date', label: 'Anniversary Date', type: 'date', required: true },
         { key: 'time', label: 'Event Time', type: 'time', required: true },

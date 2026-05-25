@@ -30,7 +30,7 @@ function AuthBrandPanel() {
 
       <div className="relative">
         <Link href="/" className="font-display text-3xl tracking-wide text-white hover:opacity-80 transition-opacity">
-          Invitely
+          ShareInvite
         </Link>
         <p className="mt-1 text-[10px] tracking-[0.28em] uppercase" style={{ color: 'rgba(255,255,255,0.3)' }}>
           Digital Invitation Builder
@@ -140,7 +140,7 @@ export default function SignupPage() {
           {/* Logo — mobile only */}
           <div className="text-center mb-10 lg:hidden">
             <Link href="/" className="font-display text-3xl tracking-wide text-ink hover:opacity-70 transition-opacity">
-              Invitely
+              ShareInvite
             </Link>
             <div className="mt-1.5 text-xs tracking-[0.24em] uppercase text-muted">
               Digital Invitation Builder

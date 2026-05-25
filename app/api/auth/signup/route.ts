@@ -32,15 +32,17 @@ export async function POST(req: NextRequest) {
   try {
     const existing = await prisma.user.findUnique({ where: { email: trimmedEmail } })
     if (existing) {
-      return NextResponse.json({ error: 'An account with this email already exists.' }, { status: 409 })
+      // Return 400 not 409 — prevents user enumeration via distinct status codes
+      return NextResponse.json({ error: 'Unable to create account. Please check your details.' }, { status: 400 })
     }
 
     const hashed = await bcrypt.hash(String(password), 12)
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: { email: trimmedEmail, password: hashed, name: trimmedName },
     })
 
-    return NextResponse.json({ id: user.id, email: user.email, name: user.name }, { status: 201 })
+    // Return minimal response — never expose internal user IDs to the client
+    return NextResponse.json({ success: true }, { status: 201 })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     console.error('[POST /api/auth/signup]', msg)

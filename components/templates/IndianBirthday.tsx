@@ -3,6 +3,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { formatDate, formatTime } from '@/lib/utils'
+import { PortraitRow } from './PortraitRow'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -290,6 +291,8 @@ export default function IndianBirthday({ data, eventId, isPreview = false }: Pro
             Janamdin Mubarak Ho
           </motion.p>
 
+          <PortraitRow data={data} dark={true} />
+
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.55, ease: BEZIER }}
             className="font-heading" style={{ fontSize: isPreview ? '2.4rem' : 'clamp(2rem,9vw,7.5rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 80px rgba(255,140,0,0.22)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {celebrant}
@@ -433,7 +436,7 @@ export default function IndianBirthday({ data, eventId, isPreview = false }: Pro
         <FestiveDivider className="mb-7" />
         <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>{celebrant}{age ? ` · Turning ${age}` : ''}</p>
         {formattedDate && <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(255,248,240,0.18)' }}>{formattedDate}</p>}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(255,248,240,0.12)' }}>Made with Invitely</p>
+        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(255,248,240,0.12)' }}>Made with ShareInvite</p>
       </footer>
     </div>
   )

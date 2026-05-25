@@ -1,6 +1,7 @@
 'use client'
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { PortraitRow } from './PortraitRow'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { formatDate, formatTime } from '@/lib/utils'
 
@@ -358,6 +359,8 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Prop
             Shubh Vivah
           </motion.p>
 
+          <PortraitRow data={data} dark={true} />
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.5, ease: BEZIER }}
             className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,9vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(196,30,58,0.3)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
@@ -511,7 +514,7 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Prop
         <SpiceDivider className="mb-7" />
         <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>{brideName} &amp; {groomName}</p>
         {formattedDate && <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(250,240,230,0.18)' }}>{formattedDate}</p>}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(250,240,230,0.12)' }}>Made with Invitely</p>
+        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(250,240,230,0.12)' }}>Made with ShareInvite</p>
       </footer>
     </div>
   )

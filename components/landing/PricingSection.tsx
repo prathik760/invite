@@ -57,7 +57,7 @@ export default function PricingSection() {
         key: order.keyId,
         amount: order.amount,
         currency: order.currency,
-        name: 'Invitely',
+        name: 'ShareInvite',
         description: `${planId.charAt(0).toUpperCase() + planId.slice(1)} Plan`,
         order_id: order.orderId,
         prefill: {

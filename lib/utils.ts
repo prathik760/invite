@@ -1,6 +1,6 @@
 export function generateSlug(prefix?: string): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
-  const random = Array.from({ length: 8 }, () =>
+  const random = Array.from({ length: 12 }, () =>
     chars[Math.floor(Math.random() * chars.length)],
   ).join('')
   const base = prefix

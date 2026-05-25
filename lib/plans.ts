@@ -15,9 +15,9 @@ export interface Plan {
 
 // Templates assigned to each tier
 const FREE_TEMPLATES = ['elegant-wedding']
-const STANDARD_TEMPLATES = [...FREE_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran']
+const STANDARD_TEMPLATES = [...FREE_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran',]
 const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh']
-const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary'] // all 8
+const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'royal-deco'] // all 10
 
 export const PLANS: Plan[] = [
   {
@@ -36,7 +36,7 @@ export const PLANS: Plan[] = [
     badge: 'Most popular',
     description: 'More designs + music for a complete invitation experience.',
     templateIds: STANDARD_TEMPLATES,
-    features: ['4 templates (incl. Cinematic Night)', 'Background music player', 'Event schedule timeline', 'No Invitely branding'],
+    features: ['4 templates (incl. Cinematic Night)', 'Background music player', 'Event schedule timeline', 'No ShareInvite branding'],
     highlighted: true,
   },
   {
@@ -53,9 +53,9 @@ export const PLANS: Plan[] = [
     name: 'Gold',
     price: 1499,
     badge: 'Luxury',
-    description: 'Every template unlocked. The full Invitely experience.',
+    description: 'Every template unlocked. The full ShareInvite experience.',
     templateIds: GOLD_TEMPLATES,
-    features: ['All 8 premium templates', 'Anniversary cinematic invite', 'Custom slug support', '1-year page hosting'],
+    features: ['All 9 premium templates', 'KGF Royal Empire + Anniversary', 'Custom slug support', '1-year page hosting'],
   },
 ]
 

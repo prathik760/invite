@@ -3,6 +3,7 @@
 import { memo, useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { formatDate, formatTime } from '@/lib/utils'
+import { PortraitRow } from './PortraitRow'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -250,6 +251,8 @@ export default function HouseWarming({ data, eventId, isPreview = false }: Props
             Griha Pravesh Samaroh
           </motion.p>
 
+          <PortraitRow data={data} dark={true} />
+
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.55, ease: BEZIER }}
             className="font-heading" style={{ fontSize: isPreview ? '2rem' : 'clamp(1.9rem,8vw,6rem)', lineHeight: 1.1, color: C.text, textShadow: '0 0 70px rgba(255,143,0,0.2)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {hostNames}
@@ -388,7 +391,7 @@ export default function HouseWarming({ data, eventId, isPreview = false }: Props
         <DiyaDivider className="mb-7" />
         <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>{hostNames}</p>
         {formattedDate && <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(255,245,230,0.18)' }}>{formattedDate}</p>}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(255,245,230,0.12)' }}>Made with Invitely</p>
+        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(255,245,230,0.12)' }}>Made with ShareInvite</p>
       </footer>
     </div>
   )

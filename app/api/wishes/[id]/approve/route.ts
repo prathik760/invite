@@ -30,11 +30,11 @@ export async function PATCH(
     if (ownership === 'not_found') return NextResponse.json({ error: 'Wish not found' }, { status: 404 })
     if (ownership === 'forbidden') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
-    const wish = await prisma.wish.update({
+    await prisma.wish.update({
       where: { id: params.id },
       data: { isApproved: true },
     })
-    return NextResponse.json(wish)
+    return NextResponse.json({ ok: true })
   } catch (err) {
     if (shouldUseLocalStore(err)) {
       const wish = await approveLocalWish(params.id)

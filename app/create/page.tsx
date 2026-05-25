@@ -56,9 +56,19 @@ const TEMPLATE_VISUALS: Record<string, { icon: React.ReactNode; gradient: string
     gradient: 'linear-gradient(135deg, #8B0030 0%, #5C0020 100%)',
     color: '#8B0030', rgb: '139,0,48',
   },
+  'kgf-wedding': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 17C10 17 3 12.5 3 8C3 5.8 4.8 4 7 4C8.5 4 9.8 4.9 10 6C10.2 4.9 11.5 4 13 4C15.2 4 17 5.8 17 8C17 12.5 10 17 10 17Z" fill="currentColor" opacity="0.85" /><path d="M10 13C10 13 6 10 6 7.5C6 6.4 7.1 5.5 8.2 5.5C9 5.5 9.7 5.9 10 6.5C10.3 5.9 11 5.5 11.8 5.5C12.9 5.5 14 6.4 14 7.5C14 10 10 13 10 13Z" fill="currentColor" opacity="0.5" /></svg>,
+    gradient: 'linear-gradient(135deg, #FF5500 0%, #D4A017 45%, #040200 100%)',
+    color: '#D4A017', rgb: '212,160,23',
+  },
+  'royal-deco': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2l1.5 4.5H16l-3.7 2.7 1.4 4.3L10 11l-3.7 2.5 1.4-4.3L4 6.5h4.5L10 2z" stroke="currentColor" strokeWidth={1.4} strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #1A1540 0%, #C8902A 55%, #07050F 100%)',
+    color: '#C8902A', rgb: '200,144,42',
+  },
 }
 
-const DARK_TEMPLATES = new Set(['cinematic-night', 'indian-wedding', 'indian-engagement', 'indian-birthday', 'griha-pravesh', 'namakaran', 'anniversary'])
+const DARK_TEMPLATES = new Set(['cinematic-night', 'indian-wedding', 'indian-engagement', 'indian-birthday', 'griha-pravesh', 'namakaran', 'anniversary', 'kgf-wedding', 'royal-deco'])
 
 function Spinner() {
   return (
@@ -257,7 +267,7 @@ export default function CreatePage() {
   const [error, setError] = useState('')
   const [createdSlug, setCreatedSlug] = useState<string | null>(null)
   const [mobileTab, setMobileTab] = useState<'form' | 'preview'>('form')
-  const [userPlan, setUserPlan] = useState<PlanId>('free')
+  const [userPlan, setUserPlan] = useState<PlanId>('gold')
   const [upgradeTarget, setUpgradeTarget] = useState<{ templateId: string; templateName: string } | null>(null)
   const [paying, setPaying] = useState(false)
   const [showLoginPrompt, setShowLoginPrompt] = useState(false)
@@ -344,7 +354,7 @@ export default function CreatePage() {
         key: (order.keyId ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) as string,
         amount: order.amount as number,
         currency: order.currency ?? 'INR',
-        name: 'Invitely',
+        name: 'ShareInvite',
         description: `${PLANS.find(p => p.id === planId)?.name} Plan — One Time`,
         order_id: order.orderId as string,
         prefill: { email: session?.user?.email ?? undefined, name: session?.user?.name ?? undefined },
@@ -402,7 +412,7 @@ export default function CreatePage() {
       <header className="sticky top-[3px] z-40 h-14 sm:h-16 border-b border-border bg-background/95 backdrop-blur-xl flex items-center justify-between px-4 sm:px-6 shrink-0 gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <Link href="/" className="text-xl font-bold tracking-wide text-ink hover:opacity-75 transition-opacity shrink-0">
-            Invitely
+            ShareInvite
           </Link>
           {/* Step progress — shown at sm+ */}
           <div className="hidden sm:flex items-center gap-0 ml-2">

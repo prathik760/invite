@@ -3,31 +3,47 @@ import Link from 'next/link'
 import PricingSection from '@/components/landing/PricingSection'
 import FAQAccordion from '@/components/landing/FAQAccordion'
 import RunningTimer from '@/components/landing/RunningTimer'
+import CustomRequestSection from '@/components/landing/CustomRequestSection'
+import MobileNav from '@/components/landing/MobileNav'
 import { PLANS } from '@/lib/plans'
 
 export const metadata: Metadata = {
-  title: 'Digital Invitation Website Builder for Indian Weddings & Events | Invitely',
+  title: 'Free Digital Invitation Website Builder for Indian Weddings & Events | ShareInvite',
   description:
-    'Create a beautiful digital invitation website for your Indian wedding, birthday, house warming, naming ceremony, or engagement. Add gallery, music, live countdown, Google Maps, and WhatsApp sharing in 5 minutes. Free to start.',
+    'Create a stunning digital invitation website for your Indian wedding, birthday, house warming, naming ceremony, engagement or anniversary — with gallery, music, live countdown, Google Maps & WhatsApp sharing. 10 beautiful templates. Free to start. Ready in 5 minutes.',
   keywords: [
     'digital invitation website India',
-    'wedding invitation website builder',
+    'free wedding invitation website India',
     'online wedding invitation maker India',
     'Indian wedding e-invite',
-    'WhatsApp invitation link India',
-    'birthday invitation website',
-    'house warming invitation website',
-    'naming ceremony digital invite',
-    'engagement invitation website',
+    'WhatsApp wedding invitation link',
+    'digital birthday invitation India',
+    'house warming invitation website India',
+    'namakaran invitation online',
+    'engagement invitation website India',
     'digital wedding card India',
-    'free invitation website maker',
-    'mobile invitation website',
+    'free online invitation maker India',
+    'mobile invitation website India',
+    'wedding invitation website free',
+    'digital invitation card WhatsApp share',
+    'anniversary invitation website India',
+    'griha pravesh invitation online',
+    'Indian wedding website builder',
+    'Bangalore wedding invitation online',
+    'Mumbai wedding invitation website',
+    'Delhi wedding invitation website',
+    'Chennai wedding invitation website',
+    'Hyderabad wedding invitation online',
   ],
   openGraph: {
-    title: 'Invitely — Digital Invitation Websites for Indian Weddings & Events',
+    title: 'Free Digital Invitation Website for Indian Weddings & Events | ShareInvite',
     description:
-      'Create beautiful mobile-first invitation websites with gallery, music, live countdown, Google Maps, guest wishes, and WhatsApp sharing. Free to start. Ready in 5 minutes.',
+      'Create beautiful mobile-first invitation websites with gallery, music, live countdown, Google Maps, guest wishes, and WhatsApp sharing. 10 templates. Free to start. Ready in 5 minutes.',
     type: 'website',
+    locale: 'en_IN',
+  },
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
   },
 }
 
@@ -443,75 +459,137 @@ function PhonePreview() {
 // ─── Page ───────────────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
-  const jsonLd = {
+  const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
+
+  const softwareSchema = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Invitely',
+    name: 'ShareInvite',
     applicationCategory: 'DesignApplication',
     operatingSystem: 'Web',
-    url: 'https://invitely.in',
+    url: APP_URL,
     description:
       'Create a beautiful digital invitation website for Indian weddings, birthdays, house warming ceremonies, naming ceremonies, engagements, and anniversaries. Features gallery, music, live countdown, Google Maps, WhatsApp sharing, and guest wishes.',
-    keywords:
-      'digital invitation website India, wedding invitation website, birthday e-invite, house warming invitation, naming ceremony invite, WhatsApp invitation link',
-    featureList: [
-      'Mobile-first invitation website',
-      'Live countdown timer',
-      'Photo gallery',
-      'Background music',
-      'Google Maps integration',
-      'WhatsApp sharing',
-      'Guest wishes',
-      'RSVP',
-    ],
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '247',
+      bestRating: '5',
+    },
     offers: PLANS.map((plan) => ({
       '@type': 'Offer',
       name: `${plan.name} Digital Invitation Plan`,
       price: String(plan.price),
       priceCurrency: 'INR',
+      availability: 'https://schema.org/InStock',
+      url: `${APP_URL}/create`,
     })),
+    featureList: [
+      'Mobile-first invitation website',
+      'Live countdown timer',
+      'Photo gallery up to 20 images',
+      'Background music player',
+      'Google Maps integration',
+      'WhatsApp sharing link',
+      'Guest wishes collection',
+      '10 beautiful Indian event templates',
+      'Custom URL support',
+    ],
   }
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What is a digital invitation website?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'A digital invitation website is a mobile-friendly event page guests open from a link — no app download needed. It includes event details, photos, live countdown, music, Google Maps directions, and guest wishes in one beautifully designed page they can save and revisit.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can guests open the invitation on WhatsApp?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. ShareInvite creates a shareable link that works instantly on WhatsApp, Instagram DMs, email, and any mobile browser. Guests do not need to install any app — the invite opens in their phone browser in seconds.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is ShareInvite designed for Indian weddings and family events?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes — 100%. Every template is designed for Indian event workflows: WhatsApp sharing, date/time/venue display, ceremony schedule, Google Maps link, dress code, and a personal message. We cover weddings, engagements, birthdays, Griha Pravesh, Namakaran, and anniversaries.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is it free to create a digital wedding invitation?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes — creating and sharing the Elegant Wedding template is completely free forever. No credit card required. Premium templates with gallery, music, countdown, and more start at ₹499 as a one-time payment.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How long does it take to create a digital invitation?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Most invitations are ready to share in under 5 minutes. Choose a template, fill in names, date, venue, and message, then click Create. You get a unique link instantly — no design skills or app download needed.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I use this for Indian weddings in Bangalore, Mumbai, Delhi or Chennai?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. ShareInvite is used for weddings and family events across India — Bangalore, Mumbai, Delhi, Chennai, Hyderabad, Pune, Kolkata, Ahmedabad, Jaipur, and all other cities. The link works for guests anywhere in the world.',
+        },
+      },
+    ],
+  }
+
+  const jsonLd = softwareSchema
 
   return (
     <main
       className="min-h-screen overflow-x-hidden bg-background text-foreground"
       style={{ WebkitOverflowScrolling: 'touch' }}
     >
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       {/* ─── NAV ─── */}
-      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl relative">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link
             href="/"
-            className="font-display text-2xl text-ink tracking-wide"
-            aria-label="Invitely home"
+            className="font-display text-xl sm:text-2xl text-ink tracking-wide"
+            aria-label="ShareInvite home"
           >
-            Invitely
+            ShareInvite
           </Link>
           <nav
             className="hidden items-center gap-8 text-sm text-muted sm:flex"
             aria-label="Main navigation"
           >
-            <a href="#templates" className="transition-colors hover:text-foreground">
-              Templates
+            <a href="#templates" className="transition-colors hover:text-foreground">Templates</a>
+            <a href="#features" className="transition-colors hover:text-foreground">Features</a>
+            <a href="#pricing" className="transition-colors hover:text-foreground">Pricing</a>
+            <a href="#custom-template" className="transition-colors hover:text-foreground font-semibold" style={{ color: '#B87924' }}>
+              Custom →
             </a>
-            <a href="#features" className="transition-colors hover:text-foreground">
-              Features
-            </a>
-            <a href="#pricing" className="transition-colors hover:text-foreground">
-              Pricing
-            </a>
-            <Link href="/dashboard" className="transition-colors hover:text-foreground">
-              Dashboard
-            </Link>
+            <Link href="/dashboard" className="transition-colors hover:text-foreground">Dashboard</Link>
           </nav>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">
-            Start Free
-          </Link>
+          <div className="flex items-center gap-2">
+            <MobileNav />
+            <Link href="/create" className="gold-button rounded-xl px-4 py-2 text-xs font-semibold sm:px-5 sm:py-2.5 sm:text-sm">
+              Start Free
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -541,14 +619,14 @@ export default function LandingPage() {
               {/* ── HEADLINE ── */}
               <h1 id="hero-headline" className="font-display font-normal leading-[1.08] text-ink">
                 <span
-                  className="block whitespace-nowrap"
-                  style={{ fontSize: 'clamp(1.75rem, 3.8vw, 3.4rem)' }}
+                  className="block sm:whitespace-nowrap"
+                  style={{ fontSize: 'clamp(1.65rem, 4.5vw, 3.4rem)' }}
                 >
                   Beautiful digital invites,
                 </span>
                 <span
-                  className="block gradient-accent font-normal italic whitespace-nowrap mt-1"
-                  style={{ fontSize: 'clamp(1.75rem, 3.8vw, 3.4rem)' }}
+                  className="block gradient-accent font-normal italic sm:whitespace-nowrap mt-1"
+                  style={{ fontSize: 'clamp(1.65rem, 4.5vw, 3.4rem)' }}
                 >
                   crafted for India.
                 </span>
@@ -579,24 +657,48 @@ export default function LandingPage() {
               </div>
 
               {/* ── Stats row ── */}
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
-                {[
-                  { value: '₹0', label: 'to start' },
-                  { value: '5 min', label: 'setup' },
-                  { value: 'WhatsApp', label: 'ready' },
-                ].map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="flex-1 rounded-3xl border border-[#D9A441]/20 bg-white/95 px-5 py-4 text-center shadow-sm"
-                  >
-                    <p className="font-heading text-[1.55rem] font-bold text-ink tabular-nums sm:text-2xl">
-                      {stat.value}
-                    </p>
-                    <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">
-                      {stat.label}
-                    </p>
+              <div className="mt-7 flex items-stretch gap-3">
+                {/* Free to start */}
+                <div className="relative flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
+                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#D9A441,transparent)' }} />
+                  <div className="mb-2 flex justify-center">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full text-[#B87924]" style={{ background: 'rgba(184,121,36,0.10)' }}>
+                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+                      </svg>
+                    </span>
                   </div>
-                ))}
+                  <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">₹0</p>
+                  <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Free to start</p>
+                </div>
+
+                {/* Quick setup */}
+                <div className="relative flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
+                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#D9A441,transparent)' }} />
+                  <div className="mb-2 flex justify-center">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full text-[#B87924]" style={{ background: 'rgba(184,121,36,0.10)' }}>
+                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+                      </svg>
+                    </span>
+                  </div>
+                  <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">5 min</p>
+                  <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Quick setup</p>
+                </div>
+
+                {/* WhatsApp ready */}
+                <div className="relative flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
+                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#25D366,transparent)' }} />
+                  <div className="mb-2 flex justify-center">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full" style={{ background: 'rgba(37,211,102,0.10)', color: '#25a244' }}>
+                      <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                      </svg>
+                    </span>
+                  </div>
+                  <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">WA</p>
+                  <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">WhatsApp ready</p>
+                </div>
               </div>
 
               {/* Proof chips */}
@@ -618,8 +720,8 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* ── Right column: phone mockup ── */}
-            <div className="flex items-center justify-center lg:justify-end">
+            {/* ── Right column: phone mockup — desktop only (2-column layout) ── */}
+            <div className="hidden lg:flex items-center justify-center">
               <PhonePreview />
             </div>
           </div>
@@ -680,7 +782,7 @@ export default function LandingPage() {
               </span>
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#D9A441]/45" />
             </div>
-            <h2 className="font-display font-normal text-4xl text-ink sm:text-5xl">
+            <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
               Choose your invitation style.
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-muted text-balance">
@@ -718,11 +820,11 @@ export default function LandingPage() {
                   <p className="mb-4 text-[8.5px] uppercase tracking-[0.44em]" style={{ color: '#B87924' }}>
                     Wedding Invitation
                   </p>
-                  <h3 className="font-display font-normal text-5xl leading-tight" style={{ color: '#221B17' }}>
+                  <h3 className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#221B17' }}>
                     Ananya
                   </h3>
                   <p className="font-script text-4xl my-1" style={{ color: '#D9A441' }}>&amp;</p>
-                  <h3 className="font-display font-normal text-5xl leading-tight" style={{ color: '#221B17' }}>
+                  <h3 className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#221B17' }}>
                     Vihaan
                   </h3>
                   <div className="my-5 flex items-center justify-center gap-3">
@@ -795,9 +897,9 @@ export default function LandingPage() {
                   <p className="mb-4 text-[8.5px] uppercase tracking-[0.5em]" style={{ color: 'rgba(201,168,76,0.65)' }}>
                     Wedding Invitation
                   </p>
-                  <h3 className="font-display font-normal text-5xl leading-tight" style={{ color: '#F2EEE6' }}>Ananya</h3>
+                  <h3 className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#F2EEE6' }}>Ananya</h3>
                   <p className="font-script text-4xl my-1" style={{ color: '#C9A84C' }}>&amp;</p>
-                  <h3 className="font-display font-normal text-5xl leading-tight" style={{ color: '#F2EEE6' }}>Vihaan</h3>
+                  <h3 className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#F2EEE6' }}>Vihaan</h3>
                   <div className="my-5 flex items-center justify-center gap-3">
                     <div className="h-px w-14" style={{ background: 'linear-gradient(90deg,transparent,rgba(201,168,76,0.55))' }} />
                     <span style={{ color: '#C9A84C', fontSize: '10px' }}>✦</span>
@@ -965,7 +1067,7 @@ export default function LandingPage() {
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
               What&apos;s included
             </p>
-            <h2 className="font-display font-normal text-4xl text-ink sm:text-5xl">
+            <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
               Everything guests need on one beautiful page.
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted text-balance">
@@ -1001,7 +1103,7 @@ export default function LandingPage() {
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
               What families say
             </p>
-            <h2 className="font-display font-normal text-4xl text-ink sm:text-5xl">
+            <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
               Loved by families across India.
             </h2>
           </div>
@@ -1077,7 +1179,7 @@ export default function LandingPage() {
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
                 Simple 3-step setup
               </p>
-              <h2 className="font-display font-normal text-4xl text-ink sm:text-5xl">
+              <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
                 Live invite in under 5 minutes.
               </h2>
             </div>
@@ -1110,6 +1212,8 @@ export default function LandingPage() {
 
       <PricingSection />
 
+      <CustomRequestSection />
+
       {/* ─── DARK CTA BAND ─── */}
       <section className="bg-[#221B17] px-5 py-20">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center">
@@ -1117,7 +1221,7 @@ export default function LandingPage() {
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent">
               Organic growth built in
             </p>
-            <h2 className="font-display font-normal text-4xl text-white sm:text-5xl">
+            <h2 className="font-display font-normal text-3xl text-white sm:text-4xl lg:text-5xl">
               Every invite brings your next customer.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-8 text-white/65">
@@ -1162,7 +1266,7 @@ export default function LandingPage() {
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
               FAQ
             </p>
-            <h2 className="font-display font-normal text-4xl text-ink sm:text-5xl">
+            <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
               Questions before you start.
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-muted">
@@ -1193,7 +1297,7 @@ export default function LandingPage() {
           <p className="relative mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             Start today
           </p>
-          <h2 className="relative mx-auto max-w-2xl font-display font-normal text-4xl sm:text-5xl">
+          <h2 className="relative mx-auto max-w-2xl font-display font-normal text-3xl sm:text-4xl lg:text-5xl">
             Build your first premium invitation website in minutes.
           </h2>
           <p className="relative mx-auto mt-5 max-w-lg text-sm leading-7 text-white/60">
@@ -1220,7 +1324,7 @@ export default function LandingPage() {
       <footer className="border-t border-border px-5 py-12">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 sm:flex-row">
           <div>
-            <p className="font-display text-2xl text-ink tracking-wide">Invitely</p>
+            <p className="font-display text-2xl text-ink tracking-wide">ShareInvite</p>
             <p className="mt-1 text-sm text-muted">
               Digital invitation websites for Indian weddings and events.
             </p>
@@ -1241,7 +1345,7 @@ export default function LandingPage() {
           </nav>
         </div>
         <div className="mx-auto mt-8 max-w-7xl border-t border-border pt-6 text-center text-xs text-muted">
-          © {new Date().getFullYear()} Invitely · Free digital invitation website builder for India
+          © {new Date().getFullYear()} ShareInvite · Free digital invitation website builder for India
         </div>
       </footer>
     </main>

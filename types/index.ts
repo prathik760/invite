@@ -1,7 +1,7 @@
 export interface TemplateField {
   key: string
   label: string
-  type: 'text' | 'date' | 'time' | 'url' | 'textarea'
+  type: 'text' | 'date' | 'time' | 'url' | 'textarea' | 'image'
   required?: boolean
   placeholder?: string
 }

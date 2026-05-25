@@ -10,6 +10,8 @@ import IndianBirthday from '@/components/templates/IndianBirthday'
 import HouseWarming from '@/components/templates/HouseWarming'
 import NamingCeremony from '@/components/templates/NamingCeremony'
 import Anniversary from '@/components/templates/Anniversary'
+import KGFWedding from '@/components/templates/KGFWedding'
+import RoyalDeco from '@/components/templates/RoyalDeco'
 import FloatingShareBar from '@/components/ui/FloatingShareBar'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
 
@@ -53,7 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, type: 'website', url, siteName: 'Invitely' },
+    openGraph: { title, description, type: 'website', url, siteName: 'ShareInvite' },
     twitter: { card: 'summary', title, description },
   }
 }
@@ -70,9 +72,14 @@ const TEMPLATE_COMPONENTS: Record<
   'griha-pravesh': HouseWarming,
   'namakaran': NamingCeremony,
   'anniversary': Anniversary,
+  'kgf-wedding': KGFWedding,
+  'royal-deco': RoyalDeco,
 }
 
 export default async function EventPage({ params }: PageProps) {
+  // Block the internal sentinel slug used for custom template requests
+  if (params.slug === '__custom-requests__') notFound()
+
   const event = await prisma.event.findUnique({ where: { slug: params.slug } }).catch(async (err: unknown) => {
     if (shouldUseLocalStore(err)) return getLocalEventBySlug(params.slug)
     throw err

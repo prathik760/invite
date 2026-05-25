@@ -41,7 +41,7 @@ const EXT_MAP: Record<string, string> = {
   'audio/ogg': 'ogg',
 }
 
-export async function createPresignedUploadUrl(contentType: string, folder: 'gallery' | 'music') {
+export async function createPresignedUploadUrl(contentType: string, folder: 'gallery' | 'music' | 'portraits') {
   const bucket = process.env.R2_BUCKET_NAME!
   const publicBase = process.env.NEXT_PUBLIC_R2_PUBLIC_URL!.replace(/\/$/, '')
   const ext = EXT_MAP[contentType] ?? contentType.split('/')[1] ?? 'bin'

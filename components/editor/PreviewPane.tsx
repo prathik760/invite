@@ -8,6 +8,8 @@ import IndianBirthday from '@/components/templates/IndianBirthday'
 import HouseWarming from '@/components/templates/HouseWarming'
 import NamingCeremony from '@/components/templates/NamingCeremony'
 import Anniversary from '@/components/templates/Anniversary'
+import KGFWedding from '@/components/templates/KGFWedding'
+import RoyalDeco from '@/components/templates/RoyalDeco'
 
 const COMPONENTS: Record<string, React.ComponentType<{ data: Record<string, string>; isPreview?: boolean; eventId?: string }>> = {
   'elegant-wedding': ElegantWedding,
@@ -18,6 +20,8 @@ const COMPONENTS: Record<string, React.ComponentType<{ data: Record<string, stri
   'griha-pravesh': HouseWarming,
   'namakaran': NamingCeremony,
   'anniversary': Anniversary,
+  'kgf-wedding': KGFWedding,
+  'royal-deco': RoyalDeco,
 }
 
 

@@ -195,7 +195,7 @@ export default function DashboardClient({ user }: Props) {
       <header className="border-b border-border px-5 sm:px-6 h-16 flex items-center justify-between gap-4 sticky top-0 z-20 bg-background/95 backdrop-blur-xl">
         <div className="flex items-center gap-4 min-w-0">
           <Link href="/" className="font-heading text-xl text-ink hover:opacity-75 transition-opacity shrink-0">
-            Invitely
+            ShareInvite
           </Link>
           <div className="hidden sm:block h-5 w-px bg-border" />
           <p className="hidden sm:block text-sm font-medium text-muted truncate">Dashboard</p>

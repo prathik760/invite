@@ -9,15 +9,31 @@ const faqs = [
   },
   {
     question: 'Can guests open the invitation on WhatsApp?',
-    answer: 'Yes. Invitely creates a shareable link that works on WhatsApp, Instagram, email, and any mobile browser. Guests do not need to install an app — the invite opens instantly in their phone browser.',
+    answer: 'Yes. ShareInvite creates a shareable link that works on WhatsApp, Instagram, email, and any mobile browser. Guests do not need to install an app — the invite opens instantly in their phone browser.',
   },
   {
     question: 'Is this designed for Indian weddings and family events?',
-    answer: 'Yes. The product is built for Indian event workflows where families share invites on WhatsApp and guests need quick access to date, time, venue, maps, and ceremony details. All 8 templates are designed with Indian celebrations in mind.',
+    answer: 'Yes. The product is built for Indian event workflows where families share invites on WhatsApp and guests need quick access to date, time, venue, maps, and ceremony details. All 10 templates are designed for Indian celebrations — weddings, engagements, birthdays, Griha Pravesh, Namakaran, and anniversaries.',
   },
   {
     question: 'Which plan should I choose?',
-    answer: 'Start free to try the product with the Elegant Wedding template. Choose Standard for a complete invite without watermark. Pick Premium for gallery, music, and countdown. Choose Gold if you want a custom URL and a full year of hosting.',
+    answer: 'Start free to try the product with the Elegant Wedding template. Choose Standard for a complete invite without watermark. Pick Premium for gallery, music, and countdown. Choose Gold if you want a custom URL, bride & groom portraits, and a full year of hosting.',
+  },
+  {
+    question: 'How much does a digital invitation cost in India?',
+    answer: 'The Elegant Wedding template is completely free — no credit card, no expiry. Premium templates with gallery, music, live countdown, and bride & groom portraits start at ₹499 as a one-time payment. There are no monthly fees or hidden charges.',
+  },
+  {
+    question: 'Can I add bride and groom photos to the invitation?',
+    answer: 'Yes. Gold and Premium plans let you upload a portrait photo for the bride, groom, or both. The photos are displayed in a beautiful circular frame at the top of the invitation template, making it feel personal and warm.',
+  },
+  {
+    question: 'How do I share the invitation with family and friends?',
+    answer: 'After creating your invite, you get a unique link like shareinvite.in/e/your-name. Tap the WhatsApp share button on your invite to forward it to individual contacts or entire family groups in one go.',
+  },
+  {
+    question: 'Can I use this for events other than weddings?',
+    answer: 'Absolutely. ShareInvite has 10 templates covering weddings, engagements (Mangni), birthdays (Janamdin), house warmings (Griha Pravesh), naming ceremonies (Namakaran), and anniversaries. If you need a custom design for a different event, use the "Request Custom Template" section to describe your requirements.',
   },
 ]
 

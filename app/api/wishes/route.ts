@@ -38,8 +38,12 @@ export async function POST(req: NextRequest) {
   const name = body?.name
   const message = body?.message
 
-  if (!eventId || !name?.trim() || !message?.trim()) {
+  // Explicit type guards before calling .trim() — prevents crashes if client sends non-string values
+  if (!eventId || typeof name !== 'string' || typeof message !== 'string') {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+  }
+  if (!name.trim() || !message.trim()) {
+    return NextResponse.json({ error: 'Name and message cannot be empty' }, { status: 400 })
   }
 
   if (name.trim().length > 100) {

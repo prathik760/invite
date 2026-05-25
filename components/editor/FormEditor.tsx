@@ -21,7 +21,7 @@ const EXTRAS_KEYS = new Set(['message'])
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-async function uploadToR2(file: File, folder: 'gallery' | 'music'): Promise<string> {
+async function uploadToR2(file: File, folder: 'gallery' | 'music' | 'portraits'): Promise<string> {
   const res = await fetch('/api/upload', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -65,6 +65,7 @@ function serializeSchedule(rows: ScheduleRow[]): string {
 
 function groupFields(fields: TemplateField[]) {
   const people: TemplateField[] = []
+  const images: TemplateField[] = []
   const whenWhere: TemplateField[] = []
   let scheduleField: TemplateField | null = null
   let galleryField: TemplateField | null = null
@@ -75,11 +76,12 @@ function groupFields(fields: TemplateField[]) {
     if (f.key === 'schedule') scheduleField = f
     else if (f.key === 'galleryImages') galleryField = f
     else if (f.key === 'musicUrl') musicField = f
+    else if (f.type === 'image') images.push(f)
     else if (WHEN_WHERE_KEYS.has(f.key)) whenWhere.push(f)
     else if (EXTRAS_KEYS.has(f.key)) extras.push(f)
     else people.push(f)
   }
-  return { people, whenWhere, scheduleField, galleryField, musicField, extras }
+  return { people, images, whenWhere, scheduleField, galleryField, musicField, extras }
 }
 
 function getPeopleLabel(fields: TemplateField[]): string {
@@ -177,6 +179,99 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
     </div>
   )
 }
+
+// ─── Single image uploader (portrait photos) ─────────────────────────────────
+
+const SingleImageUploader = memo(function SingleImageUploader({
+  label, value, onChange,
+}: { label: string; value: string; onChange: (v: string) => void }) {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
+
+  const handleFile = useCallback(async (file: File | null | undefined) => {
+    if (!file || !file.type.startsWith('image/')) return
+    setUploading(true)
+    setUploadError('')
+    try {
+      const url = await uploadToR2(file, 'portraits')
+      onChange(url)
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Upload failed')
+    } finally { setUploading(false) }
+  }, [onChange])
+
+  const onDrop = async (e: React.DragEvent) => {
+    e.preventDefault()
+    await handleFile(e.dataTransfer.files?.[0])
+  }
+
+  if (value) {
+    return (
+      <div className="flex flex-col items-center gap-2">
+        <div className="relative">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={value}
+            alt={label}
+            className="w-20 h-20 rounded-full object-cover ring-2 ring-[#D9A441]/40 ring-offset-2"
+          />
+          <button
+            type="button"
+            onClick={() => onChange('')}
+            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors"
+            title="Remove photo"
+          >
+            <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <p className="text-[10px] text-muted/60 text-center">{label}</p>
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          className="text-[10px] font-medium px-2 py-1 rounded-lg border border-border hover:border-accent/40 text-muted hover:text-accent-strong transition-colors"
+        >
+          Change photo
+        </button>
+        <input ref={inputRef} type="file" accept="image/*" className="hidden"
+          onChange={e => handleFile(e.target.files?.[0])} />
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div
+        onDrop={onDrop}
+        onDragOver={e => e.preventDefault()}
+        onClick={() => !uploading && inputRef.current?.click()}
+        className="w-20 h-20 rounded-full border-2 border-dashed flex items-center justify-center transition-all select-none"
+        style={{
+          borderColor: '#E8DCCD',
+          background: 'rgba(255,248,241,0.5)',
+          cursor: uploading ? 'wait' : 'pointer',
+        }}
+      >
+        {uploading ? (
+          <svg className="w-5 h-5 animate-spin" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+          </svg>
+        ) : (
+          <svg className="w-6 h-6" style={{ color: 'rgba(44,32,28,0.25)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+          </svg>
+        )}
+      </div>
+      <p className="text-[10px] text-muted/60 text-center leading-tight">{label}<br /><span className="text-[9px]">Tap to upload</span></p>
+      {uploadError && <p className="text-[10px] font-medium" style={{ color: '#B96B70' }}>{uploadError}</p>}
+      <input ref={inputRef} type="file" accept="image/*" className="hidden"
+        onChange={e => handleFile(e.target.files?.[0])} />
+    </div>
+  )
+})
 
 // ─── Schedule editor ──────────────────────────────────────────────────────────
 
@@ -522,8 +617,20 @@ export default function FormEditor({ config, data, onChange, compact = false }: 
       )}
 
       {/* 1. People */}
-      {grouped.people.length > 0 && (
+      {(grouped.people.length > 0 || grouped.images.length > 0) && (
         <Section number={n()} label={peopleLabel}>
+          {grouped.images.length > 0 && (
+            <div className="flex justify-center gap-6 pb-3 border-b border-border/40 mb-1">
+              {grouped.images.map(field => (
+                <SingleImageUploader
+                  key={field.key}
+                  label={field.label}
+                  value={data[field.key] ?? ''}
+                  onChange={v => handleChange(field.key, v)}
+                />
+              ))}
+            </div>
+          )}
           <div className={grouped.people.length >= 2 ? 'grid grid-cols-2 gap-4' : 'space-y-4'}>
             {grouped.people.map(field => (
               <div key={field.key} className={grouped.people.length >= 2 && field.type === 'textarea' ? 'col-span-2' : ''}>

@@ -3,6 +3,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { formatDate, formatTime } from '@/lib/utils'
+import { PortraitRow } from './PortraitRow'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -307,6 +308,8 @@ export default function Anniversary({ data, eventId, isPreview = false }: Props)
             Saalgirah Mubarak
           </motion.p>
 
+          <PortraitRow data={data} dark={true} />
+
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.75, ease: BEZIER }}
             className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(1.9rem,8vw,6.5rem)', lineHeight: 1.08, color: C.text, textShadow: '0 0 70px rgba(139,0,48,0.28)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {coupleNames}
@@ -440,7 +443,7 @@ export default function Anniversary({ data, eventId, isPreview = false }: Props)
         <TimelessDivider className="mb-7" />
         <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>{coupleNames}{years ? ` · ${years} Years` : ''}</p>
         {formattedDate && <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(255,240,245,0.18)' }}>{formattedDate}</p>}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(255,240,245,0.12)' }}>Made with Invitely</p>
+        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(255,240,245,0.12)' }}>Made with ShareInvite</p>
       </footer>
     </div>
   )
