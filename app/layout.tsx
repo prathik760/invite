@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Lora, Great_Vibes } from 'next/font/google'
 import Script from 'next/script'
+// @ts-ignore
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 
@@ -20,7 +21,7 @@ const greatVibes = Great_Vibes({
 })
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || ''
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-T6G94KKL'
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -79,8 +80,8 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
   },
   icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: [{ url: '/logo.png', type: 'image/png' }],
+    apple: '/logo.png',
   },
 }
 

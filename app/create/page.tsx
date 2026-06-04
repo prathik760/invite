@@ -411,8 +411,10 @@ export default function CreatePage() {
       {/* ─── Header ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-[3px] z-40 h-14 sm:h-16 border-b border-border bg-background/95 backdrop-blur-xl flex items-center justify-between px-4 sm:px-6 shrink-0 gap-3">
         <div className="flex items-center gap-3 min-w-0">
-          <Link href="/" className="text-xl font-bold tracking-wide text-ink hover:opacity-75 transition-opacity shrink-0">
-            ShareInvite
+          <Link href="/" className="flex items-center gap-2 hover:opacity-75 transition-opacity shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="" className="h-8 w-8" aria-hidden="true" />
+            <span className="text-xl font-bold tracking-wide text-ink">ShareInvite</span>
           </Link>
           {/* Step progress — shown at sm+ */}
           <div className="hidden sm:flex items-center gap-0 ml-2">
@@ -638,6 +640,48 @@ export default function CreatePage() {
               </div>
             </div>
 
+            {/* ── How it works guide ── */}
+            <div className="mx-4 mt-4 rounded-2xl overflow-hidden"
+              style={{ border: '1px solid rgba(184,121,36,0.16)', background: 'rgba(184,121,36,0.04)' }}>
+              <div className="px-4 pt-4 pb-1">
+                <p className="text-[10px] font-bold uppercase tracking-[0.24em] mb-3" style={{ color: '#B87924' }}>
+                  How it works — 4 simple steps
+                </p>
+                <div className="space-y-3 pb-3">
+                  {([
+                    { n: 1, label: 'Choose a design above', sub: 'Pick the template that fits your occasion', active: !createdSlug },
+                    { n: 2, label: 'Scroll down & fill all details', sub: 'Names, date, venue, message and more below ↓', active: !createdSlug },
+                    { n: 3, label: 'Tap "Create Invite"', sub: 'Free plans are instant; premium plans unlock after payment', active: !createdSlug },
+                    { n: 4, label: 'Share the link on WhatsApp', sub: 'Your guests click it — no app download needed', active: false },
+                  ] as { n: number; label: string; sub: string; active: boolean }[]).map(step => (
+                    <div key={step.n} className="flex items-start gap-3">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full font-bold text-white"
+                        style={{ fontSize: '9px', background: step.active ? '#B87924' : 'rgba(44,32,28,0.15)' }}>
+                        {step.n}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold leading-snug" style={{ color: step.active ? '#221B17' : 'rgba(44,32,28,0.42)' }}>
+                          {step.label}
+                        </p>
+                        <p className="text-[10px] leading-snug mt-0.5" style={{ color: 'rgba(44,32,28,0.38)' }}>
+                          {step.sub}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Scroll nudge strip */}
+              <div className="flex items-center justify-center gap-1.5 py-2" style={{ background: 'rgba(184,121,36,0.08)', borderTop: '1px solid rgba(184,121,36,0.10)' }}>
+                <svg className="w-3 h-3 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} style={{ color: '#B87924' }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+                <p className="text-[10px] font-semibold" style={{ color: '#B87924' }}>
+                  Scroll down in the form to fill all event details
+                </p>
+              </div>
+            </div>
+
             {/* Upgrade nudge */}
             {userPlan === 'free' && (
               <div className="mx-4 mt-4 px-4 py-3 rounded-2xl flex items-center gap-2.5"
@@ -706,23 +750,23 @@ export default function CreatePage() {
                 }} />
 
               {/* iPhone shell */}
-              <div className="relative" style={{ width: 'min(288px, calc(100vw - 3.5rem))' }}>
-                <div className="rounded-[44px]"
-                  style={{
-                    background: '#1C1C1E',
-                    padding: '10px',
-                    boxShadow: isDark
-                      ? '0 60px 120px rgba(0,0,0,0.82), 0 0 0 1px rgba(255,255,255,0.07), inset 0 1px 0 rgba(255,255,255,0.09)'
-                      : '0 48px 96px rgba(0,0,0,0.24), 0 0 0 1px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.10)',
-                  }}>
+              <div className="relative" style={{ width: 'min(288px, calc(100vw - 3rem))' }}>
+                <div style={{
+                  borderRadius: 'clamp(30px, 12%, 44px)',
+                  background: '#1C1C1E',
+                  padding: '10px',
+                  boxShadow: isDark
+                    ? '0 60px 120px rgba(0,0,0,0.82), 0 0 0 1px rgba(255,255,255,0.07), inset 0 1px 0 rgba(255,255,255,0.09)'
+                    : '0 48px 96px rgba(0,0,0,0.24), 0 0 0 1px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.10)',
+                }}>
                   {/* Dynamic island */}
                   <div className="flex justify-center" style={{ height: '28px', marginBottom: '-28px', position: 'relative', zIndex: 10 }}>
                     <div style={{ marginTop: '8px', width: '88px', height: '22px', background: '#1C1C1E', borderRadius: '11px' }} />
                   </div>
 
                   {/* Screen */}
-                  <div className="rounded-[36px] overflow-hidden relative bg-white"
-                    style={{ height: 'min(590px, calc(100svh - 300px))' }}>
+                  <div className="overflow-hidden relative bg-white"
+                    style={{ borderRadius: 'clamp(22px, 10%, 36px)', height: 'min(590px, max(360px, calc(100dvh - 290px)))' }}>
                     <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
                       <PreviewPane templateId={selectedId} data={data} />
                     </div>
@@ -751,11 +795,11 @@ export default function CreatePage() {
                   </div>
                 </div>
 
-                {/* Side buttons */}
-                <div style={{ position: 'absolute', left: '-4px', top: '96px', width: '4px', height: '28px', background: '#2C2C2E', borderRadius: '2px 0 0 2px' }} />
-                <div style={{ position: 'absolute', left: '-4px', top: '136px', width: '4px', height: '44px', background: '#2C2C2E', borderRadius: '2px 0 0 2px' }} />
-                <div style={{ position: 'absolute', left: '-4px', top: '190px', width: '4px', height: '44px', background: '#2C2C2E', borderRadius: '2px 0 0 2px' }} />
-                <div style={{ position: 'absolute', right: '-4px', top: '148px', width: '4px', height: '60px', background: '#2C2C2E', borderRadius: '0 2px 2px 0' }} />
+                {/* Side buttons — only on wider shells */}
+                <div className="hidden sm:block" style={{ position: 'absolute', left: '-4px', top: '96px', width: '4px', height: '28px', background: '#2C2C2E', borderRadius: '2px 0 0 2px' }} />
+                <div className="hidden sm:block" style={{ position: 'absolute', left: '-4px', top: '136px', width: '4px', height: '44px', background: '#2C2C2E', borderRadius: '2px 0 0 2px' }} />
+                <div className="hidden sm:block" style={{ position: 'absolute', left: '-4px', top: '190px', width: '4px', height: '44px', background: '#2C2C2E', borderRadius: '2px 0 0 2px' }} />
+                <div className="hidden sm:block" style={{ position: 'absolute', right: '-4px', top: '148px', width: '4px', height: '60px', background: '#2C2C2E', borderRadius: '0 2px 2px 0' }} />
               </div>
             </div>
 
