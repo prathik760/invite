@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Lora, Great_Vibes } from 'next/font/google'
 import Script from 'next/script'
-// @ts-expect-error -- no type declarations for css imports
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 
