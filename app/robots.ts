@@ -1,29 +1,21 @@
 import { MetadataRoute } from 'next'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
+        allow: ['/'],
         disallow: [
           '/api/',
           '/dashboard/',
           '/auth/',
-          '/_next/',
+          '/admin/',
           '/e/__custom-requests__/',
+          '/*.json$',
         ],
-      },
-      {
-        // Block AI training crawlers
-        userAgent: 'GPTBot',
-        disallow: ['/'],
-      },
-      {
-        userAgent: 'CCBot',
-        disallow: ['/'],
       },
     ],
     sitemap: `${APP_URL}/sitemap.xml`,

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { WishRecord } from '@/types'
+import { seoEvents, trackEvent } from '@/lib/analytics'
 
 interface WishesSectionProps {
   eventId: string
@@ -83,6 +84,10 @@ export default function WishesSection({ eventId }: WishesSectionProps) {
       })
       if (!res.ok) throw new Error()
       setSubmitted(true)
+      trackEvent(seoEvents.rsvpSubmission, {
+        event_id: eventId,
+        response_type: 'wish',
+      })
       setName('')
       setMessage('')
     } catch {

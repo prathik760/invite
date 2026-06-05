@@ -1,73 +1,80 @@
 import type { Metadata } from 'next'
-import { Lora, Great_Vibes } from 'next/font/google'
+import localFont from 'next/font/local'
 import Script from 'next/script'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 
-const cormorant = Lora({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
+const cormorant = localFont({
+  src: './fonts/GeistVF.woff',
   variable: '--font-cormorant',
   display: 'swap',
+  preload: true,
 })
 
-const greatVibes = Great_Vibes({
-  subsets: ['latin'],
-  weight: ['400'],
+const greatVibes = localFont({
+  src: './fonts/GeistMonoVF.woff',
   variable: '--font-great-vibes',
   display: 'swap',
+  preload: false,
 })
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-T6G94KKL'
+const OG_IMAGE = `${APP_URL}/opengraph-image`
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: 'ShareInvite — Free Digital Invitation Website Builder for Indian Weddings & Events',
+    default: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
     template: '%s | ShareInvite',
   },
   description:
-    'Create a stunning digital invitation website for your Indian wedding, birthday, engagement, house warming, naming ceremony or anniversary. 10 templates. WhatsApp-ready link in 5 minutes. Free to start.',
+    'Create stunning digital wedding invitations, birthday invitations, engagement invitations, and event invites. Share instantly on WhatsApp with RSVP tracking.',
   keywords: [
-    'digital invitation website India',
-    'online wedding invitation India',
-    'free wedding invitation website',
-    'digital wedding card India',
-    'WhatsApp wedding invitation link',
-    'digital birthday invitation India',
-    'online invitation maker India',
+    'digital invitation maker',
+    'wedding invitation maker',
+    'online wedding card',
+    'digital wedding invitation',
+    'whatsapp invitation card',
+    'event invitation website',
+    'engagement invitation card',
+    'birthday invitation maker',
+    'housewarming invitation',
+    'online RSVP platform',
+    'digital invitation card India',
     'Indian wedding e-invite',
-    'house warming invitation online',
-    'namakaran invitation website',
-    'engagement invitation website India',
-    'anniversary invitation website',
-    'wedding invitation website free',
-    'digital invitation card WhatsApp',
+    'online invitation maker India',
+    'griha pravesh invitation',
+    'namakaran invitation',
+    'naming ceremony invitation',
+    'anniversary invitation online',
+    'corporate event invitation',
+    'baby shower invitation',
+    'free invitation website India',
   ],
   openGraph: {
-    title: 'ShareInvite — Free Digital Invitation Website Builder for Indian Weddings & Events',
+    title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
     description:
-      'Create a beautiful digital invitation website for your Indian wedding, birthday, house warming, naming ceremony, or engagement. WhatsApp-ready link in 5 minutes. Free to start.',
+      'Create stunning digital wedding invitations, birthday invitations, engagement invitations, and event invites. Share instantly on WhatsApp with RSVP tracking.',
     type: 'website',
     siteName: 'ShareInvite',
     url: APP_URL,
     locale: 'en_IN',
     images: [
       {
-        url: `${APP_URL}/og-image.jpg`,
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'ShareInvite — Digital Invitation Website Builder for Indian Weddings',
+        alt: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ShareInvite — Free Digital Invitation Website for Indian Weddings',
-    description: 'Beautiful digital invite websites — WhatsApp-ready in 5 minutes. Free to start.',
-    images: [`${APP_URL}/og-image.jpg`],
+    title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
+    description:
+      'Create stunning digital wedding invitations and share instantly on WhatsApp with RSVP tracking. Free to start.',
+    images: [OG_IMAGE],
   },
   robots: {
     index: true,

@@ -1,0 +1,80 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import JsonLd from '@/components/seo/JsonLd'
+import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
+import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
+
+export const metadata: Metadata = {
+  title: 'Digital Invitation Blog | Wedding, WhatsApp & RSVP Ideas',
+  description:
+    'Read ShareInvite guides for digital wedding invitations, WhatsApp invite ideas, RSVP tracking, birthday invitations, Griha Pravesh invites, baby showers, and Indian event trends.',
+  alternates: { canonical: absoluteUrl('/blog') },
+  openGraph: {
+    title: 'Digital Invitation Blog | ShareInvite',
+    description: 'Practical guides for Indian digital invitations, wedding trends, WhatsApp sharing, and online RSVP.',
+    type: 'website',
+    siteName: SITE_NAME,
+    url: absoluteUrl('/blog'),
+    images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: 'ShareInvite Blog' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Digital Invitation Blog | ShareInvite',
+    description: 'Guides for digital invitations, WhatsApp cards, and RSVP workflows.',
+    images: [DEFAULT_OG_IMAGE],
+  },
+}
+
+export default function BlogIndexPage() {
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <JsonLd id="blog-collection-jsonld" data={collectionPageJsonLd('ShareInvite Blog', metadata.description as string, absoluteUrl('/blog'))} />
+      <JsonLd
+        id="blog-breadcrumb-jsonld"
+        data={breadcrumbJsonLd([
+          { name: 'Home', url: absoluteUrl('/') },
+          { name: 'Blog', url: absoluteUrl('/blog') },
+        ])}
+      />
+      <header className="border-b border-border bg-white px-5 py-5">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
+          <Link href="/" className="font-display text-2xl text-ink">ShareInvite</Link>
+          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
+        </div>
+      </header>
+      <section className="px-5 py-14 text-center">
+        <div className="mx-auto max-w-4xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-strong">Invitation ideas</p>
+          <h1 className="mt-4 font-display text-4xl font-normal text-ink sm:text-6xl">Digital Invitation Blog</h1>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted">
+            SEO-ready draft articles for Indian weddings, birthdays, engagements, housewarming, baby showers, WhatsApp invitation cards, and online RSVP growth.
+          </p>
+        </div>
+      </section>
+      <section className="border-y border-border bg-white px-5 py-10">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="font-heading text-xl text-ink">Categories</h2>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {blogCategories.map((category) => (
+              <Link key={category} href={`/blog/category/${categorySlug(category)}`} className="rounded-full border border-border bg-background px-4 py-2 text-sm font-semibold text-muted hover:text-foreground">
+                {category}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="px-5 py-12">
+        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {blogDrafts.map((post) => (
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="rounded-lg border border-border bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-card">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong">{post.category}</p>
+              <h2 className="mt-3 font-heading text-xl text-ink">{post.title}</h2>
+              <p className="mt-3 text-sm leading-7 text-muted">{post.description}</p>
+              <p className="mt-5 text-xs font-semibold text-muted">Draft guide</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </main>
+  )
+}

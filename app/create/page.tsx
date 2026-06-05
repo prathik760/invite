@@ -9,6 +9,7 @@ import { TEMPLATES } from '@/modules/templates/data'
 import { PLANS, canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
 import FormEditor from '@/components/editor/FormEditor'
 import ShareBar from '@/components/ui/ShareBar'
+import { seoEvents, trackEvent } from '@/lib/analytics'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -297,6 +298,11 @@ export default function CreatePage() {
     setSelectedId(id)
     setData(tpl.config.defaultData)
     setError('')
+    trackEvent(seoEvents.templateView, {
+      template_id: tpl.id,
+      template_name: tpl.name,
+      template_category: tpl.category,
+    })
   }, [])
 
   const doCreate = async () => {
@@ -316,6 +322,12 @@ export default function CreatePage() {
       }
       const { slug } = await res.json() as { slug: string }
       setCreatedSlug(slug)
+      trackEvent(seoEvents.inviteCreation, {
+        template_id: selectedTemplate.id,
+        template_name: selectedTemplate.name,
+        template_category: selectedTemplate.category,
+        invite_slug: slug,
+      })
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong.')
     } finally { setLoading(false) }
@@ -390,7 +402,7 @@ export default function CreatePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, upgradeTarget])
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
   const shareUrl = createdSlug ? `${appUrl}/e/${createdSlug}` : ''
   const d = data
   const names =

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { seoEvents, trackEvent } from '@/lib/analytics'
 
 interface ShareBarProps {
   url: string
@@ -50,12 +51,20 @@ export default function ShareBar({ url, names }: ShareBarProps) {
     }
   }
 
+  const handleWhatsAppShare = () => {
+    trackEvent(seoEvents.whatsappShare, {
+      share_url: url,
+      invite_names: names,
+    })
+  }
+
   return (
     <div className="flex flex-col sm:flex-row gap-3 w-full">
       <a
         href={waHref}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={handleWhatsAppShare}
         className="flex-1 flex items-center justify-center gap-2.5 py-3.5 rounded-xl text-sm font-medium font-body transition-all active:scale-95"
         style={{
           background: 'rgba(37,211,102,0.08)',

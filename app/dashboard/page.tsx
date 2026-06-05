@@ -6,6 +6,7 @@ import DashboardClient from '@/components/dashboard/DashboardClient'
 export const metadata = {
   title: 'Dashboard — ShareInvite',
   robots: { index: false, follow: false },
+  alternates: { canonical: `${process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'}/dashboard` },
 }
 
 export default async function DashboardPage() {

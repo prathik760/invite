@@ -19,7 +19,7 @@ interface PageProps {
   params: { slug: string }
 }
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
 function getEventTitle(data: Record<string, string>): string {
   if (data.brideName && data.groomName) return `${data.brideName} & ${data.groomName} — Wedding Invitation`
@@ -55,8 +55,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, type: 'website', url, siteName: 'ShareInvite' },
-    twitter: { card: 'summary', title, description },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url,
+      siteName: 'ShareInvite',
+      images: [{ url: `${url}/opengraph-image`, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${url}/opengraph-image`],
+    },
   }
 }
 
@@ -107,6 +119,12 @@ export default async function EventPage({ params }: PageProps) {
         ...(data.venueAddress && { address: data.venueAddress }),
       },
     }),
+    organizer: {
+      '@type': 'Organization',
+      name: 'ShareInvite',
+      url: APP_URL,
+    },
+    image: [`${shareUrl}/opengraph-image`],
     url: shareUrl,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',

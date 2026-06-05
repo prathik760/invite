@@ -40,7 +40,7 @@ export function formatTime(timeString: string): string {
 }
 
 export function getAppUrl(): string {
-  return process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  return process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 }
 
 export function formatRelativeDate(dateString: string): string {

@@ -8,9 +8,9 @@ import MobileNav from '@/components/landing/MobileNav'
 import { PLANS } from '@/lib/plans'
 
 export const metadata: Metadata = {
-  title: 'Free Digital Invitation Website Builder for Indian Weddings & Events | ShareInvite',
+  title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
   description:
-    'Create a stunning digital invitation website for your Indian wedding, birthday, house warming, naming ceremony, engagement or anniversary — with gallery, music, live countdown, Google Maps & WhatsApp sharing. 10 beautiful templates. Free to start. Ready in 5 minutes.',
+    'Create stunning digital wedding invitations, birthday invitations, engagement invitations, and event invites. Share instantly on WhatsApp with RSVP tracking.',
   keywords: [
     'digital invitation website India',
     'free wedding invitation website India',
@@ -36,14 +36,16 @@ export const metadata: Metadata = {
     'Hyderabad wedding invitation online',
   ],
   openGraph: {
-    title: 'Free Digital Invitation Website for Indian Weddings & Events | ShareInvite',
+    title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
     description:
-      'Create beautiful mobile-first invitation websites with gallery, music, live countdown, Google Maps, guest wishes, and WhatsApp sharing. 10 templates. Free to start. Ready in 5 minutes.',
+      'Create stunning digital wedding invitations, birthday invitations, engagement invitations, and event invites. Share instantly on WhatsApp with RSVP tracking.',
     type: 'website',
     locale: 'en_IN',
+    url: process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in',
+    images: [{ url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'}/opengraph-image`, width: 1200, height: 630, alt: 'ShareInvite digital invitation maker' }],
   },
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+    canonical: process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in',
   },
 }
 
