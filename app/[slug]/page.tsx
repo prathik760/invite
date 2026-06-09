@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import StickyCTA from '@/components/seo/StickyCTA'
+import SiteFooter from '@/components/landing/SiteFooter'
 import { TEMPLATES } from '@/modules/templates/data'
 import {
   findLocationPage,
@@ -232,6 +233,7 @@ function LandingPage({ page }: { page: SeoPage }) {
           </Link>
         </div>
       </section>
+      <SiteFooter />
       <StickyCTA />
     </main>
   )
@@ -336,6 +338,7 @@ function LocationLandingPage({ page }: { page: LocationPage }) {
           </Link>
         </div>
       </section>
+      <SiteFooter />
       <StickyCTA />
     </main>
   )

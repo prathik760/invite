@@ -135,7 +135,7 @@ export default function PricingSection() {
                 {isFeatured && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                     <span
-                      className="rounded-full px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
+                      className="whitespace-nowrap rounded-full px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
                       style={{ background: 'linear-gradient(135deg,#B87924,#D9A441)', color: '#fff' }}
                     >
                       {plan.badge}

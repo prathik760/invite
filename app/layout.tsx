@@ -1,22 +1,8 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
 import Script from 'next/script'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
-
-const cormorant = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-cormorant',
-  display: 'swap',
-  preload: true,
-})
-
-const greatVibes = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-great-vibes',
-  display: 'swap',
-  preload: false,
-})
+import AnimateOnScroll from '@/components/AnimateOnScroll'
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-T6G94KKL'
@@ -71,6 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@shareinvite',
+    creator: '@shareinvite',
     title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
     description:
       'Create stunning digital wedding invitations and share instantly on WhatsApp with RSVP tracking. Free to start.',
@@ -86,8 +74,8 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
   },
   icons: {
-    icon: [{ url: '/logo.png', type: 'image/png' }],
-    apple: '/logo.png',
+    icon: [{ url: '/logo1.png', type: 'image/png' }],
+    apple: '/logo1.png',
   },
 }
 
@@ -96,7 +84,7 @@ const orgSchema = {
   '@type': 'Organization',
   name: 'ShareInvite',
   url: APP_URL,
-  logo: `${APP_URL}/logo.png`,
+  logo: `${APP_URL}/logo1.png`,
   description: 'Digital invitation website builder for Indian weddings, birthdays, and family events.',
   foundingDate: '2024',
   areaServed: { '@type': 'Country', name: 'India' },
@@ -119,16 +107,16 @@ const websiteSchema = {
   description: 'Digital invitation website builder for Indian weddings and events.',
   potentialAction: {
     '@type': 'SearchAction',
-    target: `${APP_URL}/create`,
+    target: `${APP_URL}/templates?q={search_term_string}`,
     'query-input': 'required name=search_term_string',
   },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${cormorant.variable} ${greatVibes.variable}`}>
+    <html lang="en-IN">
       <head>
-        <meta name="theme-color" content="#B87924" />
+        <meta name="theme-color" content="#7A3E4A" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
@@ -147,6 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             />
           </noscript>
         )}
+        <AnimateOnScroll />
         <SessionProvider>{children}</SessionProvider>
         {GTM_ID && (
           <Script

@@ -89,7 +89,7 @@ export default function FAQAccordion() {
                 {/* Answer — animated height via max-height trick */}
                 <div
                   className="overflow-hidden transition-all duration-300"
-                  style={{ maxHeight: isOpen ? '200px' : '0px', opacity: isOpen ? 1 : 0 }}
+                  style={{ maxHeight: isOpen ? '600px' : '0px', opacity: isOpen ? 1 : 0 }}
                 >
                   <p className="mt-3.5 text-sm leading-[1.85] text-muted pr-2">
                     {faq.answer}

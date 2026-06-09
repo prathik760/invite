@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import StickyCTA from '@/components/seo/StickyCTA'
+import SiteFooter from '@/components/landing/SiteFooter'
 import { TEMPLATES } from '@/modules/templates/data'
 import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
 
@@ -91,7 +92,7 @@ export default function TemplateSeoPage({ params }: Props) {
       />
       <header className="border-b border-border bg-white px-5 py-5">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <Link href="/" className="font-display text-2xl text-ink">ShareInvite</Link>
+          <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" /></Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Use Template</Link>
         </div>
       </header>
@@ -122,17 +123,32 @@ export default function TemplateSeoPage({ params }: Props) {
       </section>
       <section className="border-y border-border bg-white px-5 py-14">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display text-3xl font-normal text-ink">Template SEO details</h2>
+          <h2 className="font-display text-3xl font-normal text-ink">About this template</h2>
           <div className="mt-6 space-y-5 text-base leading-8 text-muted">
             <p>
-              This template has a clean SEO URL, canonical metadata, Product schema, and internal links to its category, homepage, and creation flow. It is designed for hosts who want a premium digital invitation card that can be sent on WhatsApp instead of a PDF or printed card.
+              {template.description} This template is built as a mobile-first digital invitation page designed for WhatsApp sharing across Indian family and social networks. Guests open the link in their browser without installing any app — and find all event details, venue, schedule, gallery, and a RSVP-ready interaction in one place.
             </p>
             <p>
-              The page supports important invitation information such as names, date, time, venue, Google Maps, schedule, gallery, music, and personal message. Guests can open the invite on mobile, read the event details, and share the same link with family members.
+              The {template.name} template supports all core invitation fields: event names, date and time, venue with full address, Google Maps link, ceremony schedule, dress code, photo gallery, background music, and a personal host message. Every field is optimised to display clearly on mobile screens even on slower connections.
+            </p>
+            <p>
+              Each published invite gets a unique shareable URL, proper Open Graph metadata for WhatsApp previews, a live countdown to the event date, and a guest wishes section where recipients can leave messages the host can approve before display. The same link can be forwarded to family groups, shared on Instagram, or embedded in email — no reprinting or resending required if details change.
             </p>
           </div>
         </div>
       </section>
+      <section className="px-5 py-12">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="font-display text-2xl font-normal text-ink mb-6">Other templates to explore</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Link href="/wedding-invitations" className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink hover:text-accent-strong">Digital wedding invitations →</Link>
+            <Link href="/whatsapp-invitation-maker" className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink hover:text-accent-strong">WhatsApp invitation maker →</Link>
+            <Link href="/templates" className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink hover:text-accent-strong">Browse all templates →</Link>
+            <Link href="/online-rsvp" className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink hover:text-accent-strong">Online RSVP platform →</Link>
+          </div>
+        </div>
+      </section>
+      <SiteFooter />
       <StickyCTA />
     </main>
   )

@@ -92,43 +92,6 @@ export const landingPages: SeoPage[] = [
     ],
   },
   {
-    slug: 'birthday-invititations',
-    title: 'Birthday Invitation Maker India | Digital Birthday Invites',
-    description:
-      'Create digital birthday invitations online with party details, photos, countdown, music, Google Maps, WhatsApp sharing, and guest wishes.',
-    h1: 'Birthday Invitation Maker for WhatsApp Invites',
-    primaryKeyword: 'birthday invitation maker',
-    occasion: 'birthday',
-    audience: 'parents, friends, event hosts, and families planning birthday celebrations',
-    templateLinks: ['indian-birthday'],
-    relatedLinks: [
-      { label: 'Birthday invitations', href: '/birthday-invitations' },
-      ...commonRelated,
-    ],
-    faqs: [
-      {
-        question: 'Can I make a birthday invitation card online?',
-        answer:
-          'Yes. ShareInvite creates a birthday invitation page with the celebrant name, age, date, venue, party theme, schedule, gallery, and WhatsApp sharing.',
-      },
-      {
-        question: 'Can I add music and photos to a birthday invite?',
-        answer:
-          'Yes. Premium birthday invitations can include a gallery and background music so the invite feels more personal than a static image card.',
-      },
-      {
-        question: 'Is this suitable for first birthdays and milestone birthdays?',
-        answer:
-          'Yes. The template works for first birthday, 18th, 21st, 25th, 50th, 60th, and family milestone parties.',
-      },
-      {
-        question: 'Can guests send birthday wishes?',
-        answer:
-          'Guests can submit wishes on the invitation page, and hosts can approve messages before showing them publicly.',
-      },
-    ],
-  },
-  {
     slug: 'birthday-invitations',
     title: 'Digital Birthday Invitations | Online Birthday Card Maker',
     description:

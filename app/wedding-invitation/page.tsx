@@ -87,7 +87,7 @@ export default function WeddingInvitationPage() {
       {/* Nav */}
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
-          <Link href="/" className="font-display text-2xl text-ink tracking-wide">ShareInvite</Link>
+          <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" /></Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
@@ -228,7 +228,7 @@ export default function WeddingInvitationPage() {
 
       {/* Footer */}
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
-        <Link href="/" className="font-display text-xl text-ink">ShareInvite</Link>
+        <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" /></Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>
         <div className="mt-4 flex justify-center gap-6">
           <Link href="/" className="hover:text-foreground transition-colors">Home</Link>

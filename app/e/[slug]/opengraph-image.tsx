@@ -37,22 +37,22 @@ export default async function Image({ params }: Props) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          background: '#FFF8F1',
-          color: '#221B17',
+          background: '#FFF9F2',
+          color: '#1F1A17',
           padding: 72,
           fontFamily: 'Georgia, serif',
         }}
       >
-        <div style={{ fontSize: 26, color: '#B87924', letterSpacing: 4, textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 26, color: '#7A3E4A', letterSpacing: 4, textTransform: 'uppercase' }}>
           ShareInvite
         </div>
         <div style={{ marginTop: 24, maxWidth: 900, fontSize: 84, lineHeight: 1.02 }}>
           {title}
         </div>
-        <div style={{ marginTop: 30, maxWidth: 760, fontSize: 32, lineHeight: 1.35, color: '#7E716B' }}>
+        <div style={{ marginTop: 30, maxWidth: 760, fontSize: 32, lineHeight: 1.35, color: '#706861' }}>
           {date} - {venue}
         </div>
-        <div style={{ marginTop: 46, fontSize: 26, color: '#2F766D' }}>
+        <div style={{ marginTop: 46, fontSize: 26, color: '#2E6F64' }}>
           Open invitation, view venue, and send wishes
         </div>
       </div>

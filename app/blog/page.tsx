@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import JsonLd from '@/components/seo/JsonLd'
+import SiteFooter from '@/components/landing/SiteFooter'
 import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
 
@@ -38,7 +39,7 @@ export default function BlogIndexPage() {
       />
       <header className="border-b border-border bg-white px-5 py-5">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link href="/" className="font-display text-2xl text-ink">ShareInvite</Link>
+          <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" /></Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
@@ -47,7 +48,7 @@ export default function BlogIndexPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-strong">Invitation ideas</p>
           <h1 className="mt-4 font-display text-4xl font-normal text-ink sm:text-6xl">Digital Invitation Blog</h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted">
-            SEO-ready draft articles for Indian weddings, birthdays, engagements, housewarming, baby showers, WhatsApp invitation cards, and online RSVP growth.
+            Practical guides on creating digital invitations for Indian weddings, birthdays, engagements, housewarming ceremonies, baby showers, WhatsApp invitation cards, and online RSVP.
           </p>
         </div>
       </section>
@@ -68,13 +69,14 @@ export default function BlogIndexPage() {
           {blogDrafts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} className="rounded-lg border border-border bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-card">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong">{post.category}</p>
-              <h2 className="mt-3 font-heading text-xl text-ink">{post.title}</h2>
+              <h3 className="mt-3 font-heading text-xl text-ink">{post.title}</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{post.description}</p>
-              <p className="mt-5 text-xs font-semibold text-muted">Draft guide</p>
+              <p className="mt-5 text-xs font-semibold text-[#B87924]">Read guide →</p>
             </Link>
           ))}
         </div>
       </section>
+      <SiteFooter />
     </main>
   )
 }

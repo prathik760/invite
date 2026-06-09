@@ -106,28 +106,39 @@ export default async function EventPage({ params }: PageProps) {
   const shareUrl = `${APP_URL}/e/${event.slug}`
   const names = getEventNames(data)
 
+  const startDate = data.date && data.time
+    ? `${data.date}T${data.time}:00+05:30`
+    : data.date || undefined
+
+  const hostName = names || data.hostNames || data.parentNames || 'Event Host'
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: getEventTitle(data),
     description: data.message || `You are cordially invited to join us for a special celebration.`,
-    ...(data.date && { startDate: data.date }),
+    ...(startDate && { startDate }),
     ...(data.venue && {
       location: {
         '@type': 'Place',
         name: data.venue,
-        ...(data.venueAddress && { address: data.venueAddress }),
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: data.venueAddress || data.venue,
+          addressCountry: 'IN',
+        },
       },
     }),
     organizer: {
-      '@type': 'Organization',
-      name: 'ShareInvite',
-      url: APP_URL,
+      '@type': 'Person',
+      name: hostName,
     },
     image: [`${shareUrl}/opengraph-image`],
     url: shareUrl,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    isAccessibleForFree: false,
+    inLanguage: 'en-IN',
   }
 
   return (

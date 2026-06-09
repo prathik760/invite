@@ -7,7 +7,8 @@ const NAV_LINKS = [
   { href: '#templates', label: 'Templates' },
   { href: '#features', label: 'Features' },
   { href: '#pricing', label: 'Pricing' },
-  { href: '#custom-template', label: 'Custom →', accent: true },
+  { href: '/blog', label: 'Blog', isLink: true },
+  { href: '#custom-template', label: 'Custom', accent: true },
   { href: '/dashboard', label: 'Dashboard', isLink: true },
 ]
 
@@ -33,45 +34,59 @@ export default function MobileNav() {
     <>
       {/* Hamburger / Close button — only on mobile */}
       <button
-        className="sm:hidden flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-border/30"
+        className="relative z-[60] flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-border/30 sm:hidden"
         onClick={() => setOpen(o => !o)}
         aria-label={open ? 'Close menu' : 'Open menu'}
         aria-expanded={open}
       >
-        {open ? (
-          <svg className="h-5 w-5 text-ink" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <svg className="h-5 w-5 text-ink" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        )}
+        <span
+          className="flex h-5 w-5 flex-col items-center justify-center gap-[5px] transition-all"
+          aria-hidden
+        >
+          <span
+            className="block h-[1.8px] w-5 rounded-full bg-ink transition-all duration-200 origin-center"
+            style={open ? { transform: 'translateY(6.8px) rotate(45deg)' } : {}}
+          />
+          <span
+            className="block h-[1.8px] w-5 rounded-full bg-ink transition-all duration-200"
+            style={open ? { opacity: 0, transform: 'scaleX(0)' } : {}}
+          />
+          <span
+            className="block h-[1.8px] w-5 rounded-full bg-ink transition-all duration-200 origin-center"
+            style={open ? { transform: 'translateY(-6.8px) rotate(-45deg)' } : {}}
+          />
+        </span>
       </button>
 
-      {/* Mobile menu panel — slides in from header bottom */}
       {open && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop — fixed so it covers full screen below header */}
           <div
-            className="fixed inset-0 top-16 z-40 bg-black/20 backdrop-blur-sm sm:hidden"
+            className="fixed inset-0 z-40 bg-black/25 backdrop-blur-sm sm:hidden"
+            style={{ top: '64px' }}
             onClick={close}
             aria-hidden
           />
 
-          {/* Menu panel */}
+          {/* Menu panel — fixed so overflow-x-hidden on parent can't clip it */}
           <div
-            className="absolute left-0 right-0 top-full z-50 border-b border-border bg-background/98 px-4 py-3 shadow-card-md sm:hidden"
-            style={{ backdropFilter: 'blur(20px)' }}
+            className="fixed inset-x-0 z-50 border-b border-border shadow-card-md sm:hidden"
+            style={{
+              top: '64px',
+              background: 'rgba(248,245,240,0.98)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              animation: 'mobileNavSlide 0.18s ease',
+            }}
           >
-            <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
+            <nav className="mx-auto flex max-w-7xl flex-col gap-0.5 px-4 py-3" aria-label="Mobile navigation">
               {NAV_LINKS.map(item =>
                 item.isLink ? (
                   <Link
                     key={item.href}
                     href={item.href}
                     onClick={close}
-                    className="flex items-center rounded-xl px-4 py-3 text-sm font-semibold text-muted transition-colors hover:bg-border/30 hover:text-foreground"
+                    className="flex items-center rounded-xl px-4 py-3 text-sm font-semibold text-muted transition-colors hover:bg-border/40 hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -80,8 +95,8 @@ export default function MobileNav() {
                     key={item.href}
                     href={item.href}
                     onClick={close}
-                    className="flex items-center rounded-xl px-4 py-3 text-sm font-semibold transition-colors hover:bg-border/30"
-                    style={item.accent ? { color: '#B87924' } : { color: 'var(--color-muted)' }}
+                    className="flex items-center rounded-xl px-4 py-3 text-sm font-semibold transition-colors hover:bg-border/40"
+                    style={item.accent ? { color: '#7A3E4A' } : { color: 'var(--muted)' }}
                   >
                     {item.label}
                   </a>
@@ -102,6 +117,13 @@ export default function MobileNav() {
           </div>
         </>
       )}
+
+      <style>{`
+        @keyframes mobileNavSlide {
+          from { opacity: 0; transform: translateY(-6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </>
   )
 }

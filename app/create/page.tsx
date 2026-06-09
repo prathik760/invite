@@ -425,8 +425,7 @@ export default function CreatePage() {
         <div className="flex items-center gap-3 min-w-0">
           <Link href="/" className="flex items-center gap-2 hover:opacity-75 transition-opacity shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.svg" alt="" className="h-8 w-8" aria-hidden="true" />
-            <span className="text-xl font-bold tracking-wide text-ink">ShareInvite</span>
+            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" />
           </Link>
           {/* Step progress — shown at sm+ */}
           <div className="hidden sm:flex items-center gap-0 ml-2">

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import JsonLd from '@/components/seo/JsonLd'
+import SiteFooter from '@/components/landing/SiteFooter'
 import { TEMPLATES } from '@/modules/templates/data'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
 
@@ -40,7 +41,7 @@ export default function TemplatesIndexPage() {
       />
       <header className="border-b border-border bg-white px-5 py-5">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link href="/" className="font-display text-2xl text-ink">ShareInvite</Link>
+          <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" /></Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
@@ -74,6 +75,7 @@ export default function TemplatesIndexPage() {
           ))}
         </div>
       </section>
+      <SiteFooter />
     </main>
   )
 }
