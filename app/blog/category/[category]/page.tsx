@@ -53,7 +53,7 @@ export default function BlogCategoryPage({ params }: Props) {
       />
       <header className="border-b border-border bg-white px-5 py-5">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" /></Link>
+          <Link href="/" className="flex items-center gap-2.5"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" /><span className="font-display text-xl text-ink tracking-wide">ShareInvite</span></Link>
           <Link href="/blog" className="rounded-xl border border-border px-5 py-2.5 text-sm font-semibold text-muted">All Posts</Link>
         </div>
       </header>
