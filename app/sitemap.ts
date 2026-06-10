@@ -55,6 +55,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(c => entry(`/birthday-invitation/${c}`, 0.80)),
     ...['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(c => entry(`/engagement-invitation/${c}`, 0.80)),
     entry('/templates', 0.88, 'weekly'),
+    entry('/partners', 0.75),
+    entry('/press', 0.72),
     entry('/blog', 0.82, 'weekly'),
     ...landingPages.map((page) => entry(`/${page.slug}`, 0.9)),
     ...locationPages.map((page) => entry(`/${page.slug}`, 0.84)),

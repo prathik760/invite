@@ -1,14 +1,12 @@
 import Link from 'next/link'
 
 const eventPages = [
-  { label: 'Wedding Invitations', href: '/wedding-invitations' },
-  { label: 'Engagement Invitations', href: '/engagement-invitations' },
-  { label: 'Birthday Invitations', href: '/birthday-invitations' },
-  { label: 'Anniversary Invitations', href: '/anniversary-invitations' },
-  { label: 'Griha Pravesh Invitations', href: '/griha-pravesh-invitations' },
-  { label: 'Baby Shower Invitations', href: '/baby-shower-invitations' },
-  { label: 'Naming Ceremony Invitations', href: '/naming-ceremony-invitations' },
-  { label: 'Corporate Event Invitations', href: '/corporate-event-invitations' },
+  { label: 'Wedding Invitations', href: '/wedding-invitation' },
+  { label: 'Engagement Invitations', href: '/engagement-invitation' },
+  { label: 'Birthday Invitations', href: '/birthday-invitation' },
+  { label: 'Griha Pravesh Invitations', href: '/griha-pravesh-invitation' },
+  { label: 'Namakaran Invitations', href: '/namakaran-invitation' },
+  { label: 'All Digital Invitations', href: '/digital-invitation' },
 ]
 
 const toolPages = [
@@ -16,16 +14,18 @@ const toolPages = [
   { label: 'Online RSVP Platform', href: '/online-rsvp' },
   { label: 'Digital Invitation Templates', href: '/templates' },
   { label: 'Create Invitation', href: '/create' },
+  { label: 'Partner with Us', href: '/partners' },
+  { label: 'Press & Media', href: '/press' },
 ]
 
 const locationPages = [
-  { label: 'Digital Invitations Bangalore', href: '/digital-invitations-bangalore' },
-  { label: 'Digital Invitations Mumbai', href: '/digital-invitations-mumbai' },
-  { label: 'Digital Invitations Delhi', href: '/digital-invitations-delhi' },
-  { label: 'Digital Invitations Hyderabad', href: '/digital-invitations-hyderabad' },
-  { label: 'Digital Invitations Chennai', href: '/digital-invitations-chennai' },
-  { label: 'Digital Invitations Pune', href: '/digital-invitations-pune' },
-  { label: 'Digital Invitations Kolkata', href: '/digital-invitations-kolkata' },
+  { label: 'Wedding Invitations Bengaluru', href: '/wedding-invitation/bengaluru' },
+  { label: 'Wedding Invitations Mumbai', href: '/wedding-invitation/mumbai' },
+  { label: 'Wedding Invitations Delhi', href: '/wedding-invitation/delhi' },
+  { label: 'Wedding Invitations Hyderabad', href: '/wedding-invitation/hyderabad' },
+  { label: 'Birthday Invitations Chennai', href: '/birthday-invitation/chennai' },
+  { label: 'Birthday Invitations Pune', href: '/birthday-invitation/pune' },
+  { label: 'Engagement Invitations Kolkata', href: '/engagement-invitation/kolkata' },
 ]
 
 const blogLinks = [
@@ -44,7 +44,10 @@ export default function SiteFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" /></Link>
+            <Link href="/" className="flex items-center gap-2.5">
+              <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" />
+              <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
+            </Link>
             <p className="mt-3 text-sm leading-7 text-muted">
               Create beautiful digital invitation websites for Indian weddings, birthdays, and family events. Share instantly on WhatsApp with RSVP tracking.
             </p>
