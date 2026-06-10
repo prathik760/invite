@@ -76,10 +76,33 @@ export type BlogDraft = {
   status: 'draft'
 }
 
+function buildDescription(title: string, keyword: string, category: BlogCategory): string {
+  switch (category) {
+    case 'Wedding':
+      return `Complete guide to ${keyword} for Indian families. Covers templates, wording, WhatsApp sharing, muhurat timings, and what to include for a beautiful digital wedding invitation.`
+    case 'Engagement':
+      return `Practical guide to ${keyword} for Indian ceremonies. Covers what to include in a digital engagement invite, ring ceremony wording, WhatsApp sharing tips, and RSVP.`
+    case 'Birthday':
+      return `Everything you need to know about ${keyword}. Themes, schedule, wording ideas, WhatsApp sharing, and how to create a digital birthday invitation in under 5 minutes.`
+    case 'Housewarming':
+      return `Step-by-step guide to ${keyword}. Learn what to include — muhurat time, pooja schedule, Google Maps — and how to share your Griha Pravesh invite on WhatsApp.`
+    case 'Baby Shower':
+      return `Complete guide to ${keyword}. Covers what to write, how to personalise for Godh Bharai or Seemantham, and how to share with family on WhatsApp for free.`
+    case 'Invitation Ideas':
+      return `Creative and practical ideas for ${keyword}. Indian families share their best wording, design, and WhatsApp sharing tips for memorable digital invitations.`
+    case 'Wedding Trends':
+      return `Latest trends in ${keyword}. Explore what modern Indian couples are choosing for design, typography, music, and digital sharing in the current wedding season.`
+    case 'Digital Invitations':
+      return `In-depth look at ${keyword}. Covers best practices for Indian events — mobile design, WhatsApp sharing, RSVP, Google Maps, and what to include for any occasion.`
+    default:
+      return `A practical ShareInvite guide to ${keyword} for Indian families — covering design, wording, WhatsApp sharing, and RSVP for any occasion.`
+  }
+}
+
 export const blogDrafts: BlogDraft[] = draftTitles.map((item, index) => ({
   ...item,
   slug: slugify(item.title),
-  description: `${item.title} - a practical ShareInvite guide for Indian hosts who want modern, mobile-first digital invitation pages with WhatsApp sharing and RSVP-ready guest journeys.`,
+  description: buildDescription(item.title, item.keyword, item.category),
   date: `2026-05-${String((index % 28) + 1).padStart(2, '0')}`,
   status: 'draft',
 }))
