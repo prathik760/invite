@@ -77,7 +77,16 @@ const TEMPLATES = [
   { name: 'Royal Deco — Palace Edition', desc: 'Midnight navy & antique gold Art Deco', badge: 'Gold', badgeColor: '#C9A84C' },
 ]
 
-const CITIES = ['Bangalore', 'Mumbai', 'Delhi', 'Chennai', 'Hyderabad', 'Pune', 'Kolkata', 'Ahmedabad', 'Jaipur', 'Surat', 'Lucknow', 'Kochi']
+const CITIES: { slug: string; label: string }[] = [
+  { slug: 'bengaluru', label: 'Bengaluru' },
+  { slug: 'mumbai', label: 'Mumbai' },
+  { slug: 'delhi', label: 'Delhi' },
+  { slug: 'hyderabad', label: 'Hyderabad' },
+  { slug: 'chennai', label: 'Chennai' },
+  { slug: 'pune', label: 'Pune' },
+  { slug: 'kolkata', label: 'Kolkata' },
+  { slug: 'ahmedabad', label: 'Ahmedabad' },
+]
 
 export default function WeddingInvitationPage() {
   return (
@@ -187,10 +196,10 @@ export default function WeddingInvitationPage() {
             Families from every city use ShareInvite to create and share their digital wedding invitation
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            {CITIES.map(city => (
-              <span key={city} className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground">
-                {city}
-              </span>
+            {CITIES.map(c => (
+              <Link key={c.slug} href={`/wedding-invitation/${c.slug}`} className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-[#D9A441]/60 hover:bg-white">
+                {c.label}
+              </Link>
             ))}
           </div>
         </div>

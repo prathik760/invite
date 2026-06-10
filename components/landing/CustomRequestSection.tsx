@@ -100,9 +100,13 @@ export default function CustomRequestSection() {
             {/* Social proof */}
             <div className="mt-10 flex items-center gap-3 rounded-2xl border border-[#D9A441]/22 bg-white/70 px-5 py-4">
               <div className="flex -space-x-2 shrink-0">
-                {['https://i.pravatar.cc/40?img=12', 'https://i.pravatar.cc/40?img=25', 'https://i.pravatar.cc/40?img=33'].map((src, i) => (
+                {[
+                  { src: 'https://i.pravatar.cc/40?img=12', label: 'ShareInvite customer' },
+                  { src: 'https://i.pravatar.cc/40?img=25', label: 'ShareInvite customer' },
+                  { src: 'https://i.pravatar.cc/40?img=33', label: 'ShareInvite customer' },
+                ].map(({ src, label }, i) => (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img key={i} src={src} alt="" width={32} height={32}
+                  <img key={i} src={src} alt={label} width={32} height={32}
                     className="h-8 w-8 rounded-full ring-2 ring-white object-cover" />
                 ))}
               </div>

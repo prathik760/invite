@@ -11,7 +11,7 @@ const OG_IMAGE = `${APP_URL}/opengraph-image`
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
+    default: 'Free Digital Wedding Invitations India | ShareInvite',
     template: '%s | ShareInvite',
   },
   description:

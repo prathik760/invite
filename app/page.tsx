@@ -371,13 +371,13 @@ function PhonePreview() {
               </p>
 
               {/* Couple names — large and commanding */}
-              <h2 className="mt-2 font-display font-normal" style={{ fontSize: '2.35rem', lineHeight: 0.87, color: '#FAF3EB', textShadow: '0 2px 32px rgba(201,153,60,0.22), 0 0 64px rgba(201,153,60,0.1)' }}>
+              <p className="mt-2 font-display font-normal" style={{ fontSize: '2.35rem', lineHeight: 0.87, color: '#FAF3EB', textShadow: '0 2px 32px rgba(201,153,60,0.22), 0 0 64px rgba(201,153,60,0.1)' }}>
                 Ananya
-              </h2>
+              </p>
               <p className="font-script" style={{ fontSize: '1.7rem', color: '#C9993C', lineHeight: 1.05, filter: 'drop-shadow(0 0 8px rgba(201,153,60,0.4))' }}>&amp;</p>
-              <h2 className="font-display font-normal" style={{ fontSize: '2.35rem', lineHeight: 0.87, color: '#FAF3EB', textShadow: '0 2px 32px rgba(201,153,60,0.22), 0 0 64px rgba(201,153,60,0.1)' }}>
+              <p className="font-display font-normal" style={{ fontSize: '2.35rem', lineHeight: 0.87, color: '#FAF3EB', textShadow: '0 2px 32px rgba(201,153,60,0.22), 0 0 64px rgba(201,153,60,0.1)' }}>
                 Vihaan
-              </h2>
+              </p>
 
               <p className="mt-2 text-[7px] italic" style={{ color: 'rgba(250,243,235,0.3)', letterSpacing: '0.03em' }}>
                 Together with their families
@@ -691,7 +691,7 @@ export default function LandingPage() {
                   className="block"
                   style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
                 >
-                  Beautiful digital invites,
+                  Beautiful digital invitations,
                 </span>
                 <span
                   className="block gradient-accent font-normal italic mt-1"
@@ -703,9 +703,9 @@ export default function LandingPage() {
 
               {/* Sub-copy — keyword-rich, natural sentence */}
               <p className="hero-anim-1 mt-4 max-w-[480px] text-sm leading-[1.85] text-muted sm:text-base">
-                Create a stunning digital invitation website for your Indian wedding, birthday,
-                house warming, naming ceremony or engagement with gallery, music, live
-                countdown, Google Maps, and WhatsApp sharing. Ready in 5 minutes.
+                Create beautiful digital invitations, crafted for Indian weddings, birthdays,
+                engagements, house warming and naming ceremonies. Share a WhatsApp link with
+                gallery, music, live countdown, Google Maps, and online RSVP. Ready in 5 minutes.
               </p>
 
               {/* CTA row */}
@@ -834,9 +834,9 @@ export default function LandingPage() {
                     <p className="mt-1.5 text-[8px] font-semibold uppercase tracking-[0.48em]" style={{ color: '#C9993C', opacity: 0.8 }}>Wedding Invitation</p>
 
                     {/* Couple names */}
-                    <h3 className="mt-2.5 font-display font-normal leading-[0.9]" style={{ color: '#F5EEE6', fontSize: 'clamp(1.9rem,7vw,2.6rem)', textShadow: '0 0 32px rgba(201,153,60,0.28)' }}>Ananya</h3>
+                    <p className="mt-2.5 font-display font-normal leading-[0.9]" style={{ color: '#F5EEE6', fontSize: 'clamp(1.9rem,7vw,2.6rem)', textShadow: '0 0 32px rgba(201,153,60,0.28)' }}>Ananya</p>
                     <p className="font-script" style={{ fontSize: '2.1rem', color: '#C9993C', lineHeight: 0.95 }}>&amp;</p>
-                    <h3 className="font-display font-normal leading-[0.9]" style={{ color: '#F5EEE6', fontSize: 'clamp(1.9rem,7vw,2.6rem)', textShadow: '0 0 32px rgba(201,153,60,0.28)' }}>Vihaan</h3>
+                    <p className="font-display font-normal leading-[0.9]" style={{ color: '#F5EEE6', fontSize: 'clamp(1.9rem,7vw,2.6rem)', textShadow: '0 0 32px rgba(201,153,60,0.28)' }}>Vihaan</p>
 
                     {/* Date & time pill */}
                     <div className="mt-3 inline-flex items-center gap-2 rounded-full px-4 py-1.5" style={{ background: 'rgba(201,153,60,0.1)', border: '1px solid rgba(201,153,60,0.28)' }}>
@@ -1017,13 +1017,13 @@ export default function LandingPage() {
                   <p className="mb-4 text-[8.5px] uppercase tracking-[0.44em]" style={{ color: '#B87924' }}>
                     Wedding Invitation
                   </p>
-                  <h3 className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#221B17' }}>
+                  <p className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#221B17' }}>
                     Ananya
-                  </h3>
+                  </p>
                   <p className="font-script text-4xl my-1" style={{ color: '#D9A441' }}>&amp;</p>
-                  <h3 className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#221B17' }}>
+                  <p className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#221B17' }}>
                     Vihaan
-                  </h3>
+                  </p>
                   <div className="my-5 flex items-center justify-center gap-3">
                     <div className="h-px w-14" style={{ background: 'linear-gradient(90deg,transparent,rgba(184,121,36,0.45))' }} />
                     <span style={{ color: 'rgba(184,121,36,0.65)', fontSize: '10px' }}>✦</span>
@@ -1100,9 +1100,9 @@ export default function LandingPage() {
                   <p className="mb-4 text-[8.5px] uppercase tracking-[0.5em]" style={{ color: 'rgba(201,168,76,0.65)' }}>
                     Wedding Invitation
                   </p>
-                  <h3 className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#F2EEE6' }}>Ananya</h3>
+                  <p className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#F2EEE6' }}>Ananya</p>
                   <p className="font-script text-4xl my-1" style={{ color: '#C9A84C' }}>&amp;</p>
-                  <h3 className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#F2EEE6' }}>Vihaan</h3>
+                  <p className="font-display font-normal text-4xl sm:text-5xl leading-tight" style={{ color: '#F2EEE6' }}>Vihaan</p>
                   <div className="my-5 flex items-center justify-center gap-3">
                     <div className="h-px w-14" style={{ background: 'linear-gradient(90deg,transparent,rgba(201,168,76,0.55))' }} />
                     <span style={{ color: '#C9A84C', fontSize: '10px' }}>✦</span>
@@ -1182,12 +1182,12 @@ export default function LandingPage() {
                     <p className="mb-2 text-[7.5px] uppercase tracking-[0.44em]" style={{ color: tpl.labelColor }}>
                       {tpl.eventType}
                     </p>
-                    <h3
+                    <p
                       className="font-display font-normal text-[1.7rem] italic leading-tight"
                       style={{ color: tpl.nameColor }}
                     >
                       {tpl.sampleName}
-                    </h3>
+                    </p>
                     <p className="font-script text-xl mt-1" style={{ color: tpl.accent }}>
                       {tpl.sampleSub}
                     </p>
