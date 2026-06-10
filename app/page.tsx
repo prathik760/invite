@@ -1499,42 +1499,49 @@ export default function LandingPage() {
       </section>
 
       {/* ─── SOCIAL PROOF BAND ─── */}
-      <section className="border-y border-border bg-white px-5 py-14">
+      <section className="px-5 py-20 sm:py-28" style={{ background: '#FCF7F1' }}>
         <div className="mx-auto max-w-5xl">
-          <div className="mb-10 text-center" data-animate>
+          <div className="mb-12 text-center" data-animate>
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">Trusted by Indian families</p>
-            <h2 className="mt-3 font-display font-normal text-3xl text-ink sm:text-4xl">
+            <h2 className="mt-3 font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
               Celebrations shared across India
             </h2>
           </div>
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 text-center" data-animate>
+
+          {/* Stat cards */}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4" data-animate>
             {([
               { stat: '10,000+', label: 'Invitations created' },
-              { stat: '8', label: 'Cities with city pages' },
-              { stat: '15+', label: 'Event types supported' },
-              { stat: '5 min', label: 'Average creation time' },
+              { stat: '8', label: 'Cities covered' },
+              { stat: '15+', label: 'Event types' },
+              { stat: '5 min', label: 'Avg. creation time' },
             ] as const).map(item => (
-              <div key={item.label}>
-                <p className="font-display text-4xl text-ink sm:text-5xl">{item.stat}</p>
-                <p className="mt-2 text-sm text-muted">{item.label}</p>
+              <div
+                key={item.label}
+                className="rounded-2xl border border-[#E8DCCD] bg-white px-4 py-7 text-center shadow-sm"
+              >
+                <p className="font-display text-3xl text-ink sm:text-4xl">{item.stat}</p>
+                <p className="mt-2 text-xs font-medium text-muted">{item.label}</p>
               </div>
             ))}
           </div>
-          <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center" data-animate>
+
+          {/* CTA links */}
+          <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center" data-animate>
             <a
               href="https://www.instagram.com/shareinvite.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-2xl border border-border bg-background px-6 py-4 text-sm font-semibold text-ink shadow-sm transition-all hover:shadow-md"
+              className="flex items-center gap-2.5 rounded-full border border-[#E8DCCD] bg-white px-6 py-3 text-sm font-semibold text-ink shadow-sm transition-all hover:border-[#D9A441]/60 hover:shadow-md"
             >
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+              <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
               </svg>
-              Follow @shareinvite.in on Instagram
+              Follow @shareinvite.in
             </a>
             <Link
               href="/partners"
-              className="flex items-center gap-2 rounded-2xl border border-border bg-background px-6 py-4 text-sm font-semibold text-ink shadow-sm transition-all hover:shadow-md"
+              className="flex items-center gap-2.5 rounded-full border border-[#E8DCCD] bg-white px-6 py-3 text-sm font-semibold text-ink shadow-sm transition-all hover:border-[#D9A441]/60 hover:shadow-md"
             >
               <span>🤝</span>
               Wedding planner? Partner with us
@@ -1544,7 +1551,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── FINAL CTA ─── */}
-      <section className="px-5 pb-20">
+      <section className="px-5 py-20">
         <div
           className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl px-8 py-16 text-center text-white shadow-card-md sm:px-16 sm:py-20"
           data-animate="scale"
