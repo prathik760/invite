@@ -133,6 +133,24 @@ export default function BirthdayInvitationPage() {
         </div>
       </section>
 
+      {/* City links */}
+      <section className="border-t border-border bg-white px-5 py-12">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-4">Birthday invitations by city</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(city => (
+              <Link
+                key={city}
+                href={`/birthday-invitation/${city}`}
+                className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground capitalize hover:border-[#D9A441]/50 transition-colors"
+              >
+                {city.charAt(0).toUpperCase() + city.slice(1)}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Make the birthday unforgettable</h2>
@@ -144,13 +162,17 @@ export default function BirthdayInvitationPage() {
       </section>
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
-        <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" /></Link>
+        <Link href="/" className="flex items-center justify-center gap-2">
+          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" />
+          <span className="font-display text-lg text-ink">ShareInvite</span>
+        </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>
-        <div className="mt-4 flex justify-center gap-6">
+        <div className="mt-4 flex flex-wrap justify-center gap-4">
           <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
           <Link href="/create" className="hover:text-foreground transition-colors">Create</Link>
           <Link href="/wedding-invitation" className="hover:text-foreground transition-colors">Wedding</Link>
-          <Link href="/digital-invitation" className="hover:text-foreground transition-colors">Digital Invites</Link>
+          <Link href="/engagement-invitation" className="hover:text-foreground transition-colors">Engagement</Link>
+          <Link href="/digital-invitation" className="hover:text-foreground transition-colors">All Events</Link>
         </div>
       </footer>
     </main>

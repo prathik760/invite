@@ -31,11 +31,11 @@ export const metadata: Metadata = {
 }
 
 const OCCASIONS = [
-  { name: 'Wedding', href: '/wedding-invitation', desc: '5 templates · Free to Gold', emoji: '💍' },
-  { name: 'Engagement', href: '/create', desc: 'Mangni ceremony invite', emoji: '💝' },
-  { name: 'Birthday', href: '/birthday-invitation', desc: 'Bollywood-style party invite', emoji: '🎂' },
-  { name: 'House Warming', href: '/create', desc: 'Griha Pravesh ceremony', emoji: '🏡' },
-  { name: 'Naming Ceremony', href: '/create', desc: 'Namakaran celebration', emoji: '🌸' },
+  { name: 'Wedding', href: '/wedding-invitation', desc: 'Muhurat, schedule & Google Maps', emoji: '💍' },
+  { name: 'Engagement', href: '/engagement-invitation', desc: 'Roka · Sagai · Nishchayathartham', emoji: '💝' },
+  { name: 'Birthday', href: '/birthday-invitation', desc: 'Party invite with countdown & wishes', emoji: '🎂' },
+  { name: 'Griha Pravesh', href: '/griha-pravesh-invitation', desc: 'Housewarming pooja schedule', emoji: '🏡' },
+  { name: 'Namakaran', href: '/namakaran-invitation', desc: 'Baby naming ceremony invite', emoji: '🌸' },
   { name: 'Anniversary', href: '/create', desc: 'Milestone celebration invite', emoji: '❤️' },
 ]
 

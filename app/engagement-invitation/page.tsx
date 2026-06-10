@@ -226,15 +226,37 @@ export default function EngagementInvitationPage() {
         </div>
       </section>
 
+      {/* City links */}
+      <section className="border-t border-border bg-white px-5 py-12">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-4">Engagement invitations by city</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(city => (
+              <Link
+                key={city}
+                href={`/engagement-invitation/${city}`}
+                className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground capitalize hover:border-[#D9A441]/50 transition-colors"
+              >
+                {city.charAt(0).toUpperCase() + city.slice(1)}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
-        <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto mx-auto" /></Link>
+        <Link href="/" className="flex items-center justify-center gap-2">
+          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" />
+          <span className="font-display text-lg text-ink">ShareInvite</span>
+        </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>
-        <div className="mt-4 flex justify-center gap-6">
+        <div className="mt-4 flex flex-wrap justify-center gap-4">
           <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
           <Link href="/create" className="hover:text-foreground transition-colors">Create</Link>
           <Link href="/wedding-invitation" className="hover:text-foreground transition-colors">Wedding</Link>
           <Link href="/birthday-invitation" className="hover:text-foreground transition-colors">Birthday</Link>
+          <Link href="/griha-pravesh-invitation" className="hover:text-foreground transition-colors">Griha Pravesh</Link>
           <Link href="/digital-invitation" className="hover:text-foreground transition-colors">All Events</Link>
         </div>
       </footer>
