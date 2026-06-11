@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { RingIcon, HeartIcon, CakeIcon, HomeIcon, FlowerIcon, UsersIcon } from '@/components/ui/Icons'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -31,12 +32,12 @@ export const metadata: Metadata = {
 }
 
 const OCCASIONS = [
-  { name: 'Wedding', href: '/wedding-invitation', desc: 'Muhurat, schedule & Google Maps', emoji: '💍' },
-  { name: 'Engagement', href: '/engagement-invitation', desc: 'Roka · Sagai · Nishchayathartham', emoji: '💝' },
-  { name: 'Birthday', href: '/birthday-invitation', desc: 'Party invite with countdown & wishes', emoji: '🎂' },
-  { name: 'Griha Pravesh', href: '/griha-pravesh-invitation', desc: 'Housewarming pooja schedule', emoji: '🏡' },
-  { name: 'Namakaran', href: '/namakaran-invitation', desc: 'Baby naming ceremony invite', emoji: '🌸' },
-  { name: 'Anniversary', href: '/create', desc: 'Milestone celebration invite', emoji: '❤️' },
+  { name: 'Wedding', href: '/wedding-invitation', desc: 'Muhurat, schedule & Google Maps', icon: <RingIcon /> },
+  { name: 'Engagement', href: '/engagement-invitation', desc: 'Roka · Sagai · Nishchayathartham', icon: <HeartIcon /> },
+  { name: 'Birthday', href: '/birthday-invitation', desc: 'Party invite with countdown & wishes', icon: <CakeIcon /> },
+  { name: 'Griha Pravesh', href: '/griha-pravesh-invitation', desc: 'Housewarming pooja schedule', icon: <HomeIcon /> },
+  { name: 'Namakaran', href: '/namakaran-invitation', desc: 'Baby naming ceremony invite', icon: <FlowerIcon /> },
+  { name: 'Anniversary', href: '/create', desc: 'Milestone celebration invite', icon: <UsersIcon /> },
 ]
 
 const faqSchema = {
@@ -86,7 +87,7 @@ export default function DigitalInvitationPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" />
+            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -126,7 +127,7 @@ export default function DigitalInvitationPage() {
             {OCCASIONS.map(o => (
               <Link key={o.name} href={o.href}
                 className="group rounded-2xl border border-border bg-background p-6 shadow-sm hover:shadow-card hover:-translate-y-1 transition-all duration-200 flex items-center gap-4">
-                <span className="text-4xl shrink-0">{o.emoji}</span>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{o.icon}</div>
                 <div>
                   <h3 className="font-heading text-lg text-ink group-hover:text-accent-strong transition-colors">{o.name}</h3>
                   <p className="text-xs text-muted mt-0.5">{o.desc}</p>
@@ -163,7 +164,7 @@ export default function DigitalInvitationPage() {
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" />
+          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

@@ -12,6 +12,7 @@ import NamingCeremony from '@/components/templates/NamingCeremony'
 import Anniversary from '@/components/templates/Anniversary'
 import KGFWedding from '@/components/templates/KGFWedding'
 import RoyalDeco from '@/components/templates/RoyalDeco'
+import LuxuryWedding from '@/components/templates/LuxuryWedding'
 import FloatingShareBar from '@/components/ui/FloatingShareBar'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
 
@@ -86,6 +87,7 @@ const TEMPLATE_COMPONENTS: Record<
   'anniversary': Anniversary,
   'kgf-wedding': KGFWedding,
   'royal-deco': RoyalDeco,
+  'luxury-wedding': LuxuryWedding,
 }
 
 export default async function EventPage({ params }: PageProps) {

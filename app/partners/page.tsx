@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { BuildingIcon, CameraIcon, LaptopIcon, PaletteIcon, PenIcon, BanknoteIcon, BarChartIcon, ZapIcon, PhoneIcon, AwardIcon } from '@/components/ui/Icons'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -25,32 +26,32 @@ export const metadata: Metadata = {
 
 const partnerTypes = [
   {
-    icon: '💒',
+    icon: <BuildingIcon />,
     title: 'Wedding Planners',
     desc: 'Add a digital invitation to every wedding package you offer. Your clients get a beautiful invite website; you earn commission on every subscription they purchase.',
   },
   {
-    icon: '📸',
+    icon: <CameraIcon />,
     title: 'Photographers & Videographers',
     desc: 'Recommend ShareInvite as part of your pre-wedding service. Couples who book pre-wedding shoots are the exact audience who want a premium digital invitation.',
   },
   {
-    icon: '🏨',
+    icon: <BuildingIcon />,
     title: 'Venues & Hotels',
     desc: 'Banquet venues and hotels in India can partner to offer ShareInvite invitations to their event clients. A complete package from booking to guest invitation.',
   },
   {
-    icon: '🎨',
+    icon: <PaletteIcon />,
     title: 'Graphic Designers',
     desc: 'If you design wedding stationery, add a digital invitation to your offering. ShareInvite makes it easy to deliver a live invite page without building anything from scratch.',
   },
   {
-    icon: '💻',
+    icon: <LaptopIcon />,
     title: 'Web & Tech Freelancers',
     desc: 'Recommend ShareInvite to clients who ask for a wedding or event website. It is faster to set up than a custom build and earns you a recurring referral income.',
   },
   {
-    icon: '✍️',
+    icon: <PenIcon />,
     title: 'Wedding Bloggers & Influencers',
     desc: 'Share your unique affiliate link with your audience. Every Indian wedding content creator can earn from recommending a product their audience actively needs.',
   },
@@ -69,7 +70,7 @@ export default function PartnersPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" />
+            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -93,7 +94,7 @@ export default function PartnersPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href={`mailto:partners@shareinvite.in?subject=Partner Programme Application`}
+              href={`mailto:shareinvite123@gmail.com?subject=Partner Programme Application`}
               className="gold-button rounded-full px-10 py-4 text-base font-semibold"
             >
               Apply to Partner →
@@ -129,7 +130,7 @@ export default function PartnersPage() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {partnerTypes.map(p => (
               <div key={p.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="text-3xl mb-3">{p.icon}</div>
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{p.icon}</div>
                 <h3 className="font-heading text-lg text-ink mb-2">{p.title}</h3>
                 <p className="text-sm text-muted leading-6">{p.desc}</p>
               </div>
@@ -168,15 +169,15 @@ export default function PartnersPage() {
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: '💸', title: '20% commission', desc: 'Earn 20% on every paid ShareInvite subscription your clients purchase through your referral link.' },
-              { icon: '📊', title: 'Partner dashboard', desc: 'Track clicks, conversions, and earnings in real time from your personalised partner dashboard.' },
-              { icon: '🎨', title: 'Marketing materials', desc: 'Get branded graphics, copy, and email templates to share ShareInvite with your clients professionally.' },
-              { icon: '🚀', title: 'Early access', desc: 'Partners get early access to new features and templates before they are released to the public.' },
-              { icon: '📞', title: 'Priority support', desc: 'A dedicated partner support channel — WhatsApp and email — with a faster response SLA.' },
-              { icon: '🏅', title: 'Co-promotion', desc: 'Active partners are featured in ShareInvite\'s social channels and blog — additional exposure for your business.' },
+              { icon: <BanknoteIcon />, title: '20% commission', desc: 'Earn 20% on every paid ShareInvite subscription your clients purchase through your referral link.' },
+              { icon: <BarChartIcon />, title: 'Partner dashboard', desc: 'Track clicks, conversions, and earnings in real time from your personalised partner dashboard.' },
+              { icon: <PaletteIcon />, title: 'Marketing materials', desc: 'Get branded graphics, copy, and email templates to share ShareInvite with your clients professionally.' },
+              { icon: <ZapIcon />, title: 'Early access', desc: 'Partners get early access to new features and templates before they are released to the public.' },
+              { icon: <PhoneIcon />, title: 'Priority support', desc: 'A dedicated partner support channel — WhatsApp and email — with a faster response SLA.' },
+              { icon: <AwardIcon />, title: 'Co-promotion', desc: 'Active partners are featured in ShareInvite\'s social channels and blog — additional exposure for your business.' },
             ].map(f => (
               <div key={f.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="text-3xl mb-3">{f.icon}</div>
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
                 <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
                 <p className="text-sm text-muted leading-6">{f.desc}</p>
               </div>
@@ -193,13 +194,13 @@ export default function PartnersPage() {
           </h2>
           <p className="text-muted text-sm mb-7 max-w-md mx-auto">
             Send us a quick note at{' '}
-            <a href="mailto:partners@shareinvite.in" className="text-accent-strong hover:underline">
-              partners@shareinvite.in
+            <a href="mailto:shareinvite123@gmail.com" className="text-accent-strong hover:underline">
+              shareinvite123@gmail.com
             </a>{' '}
             with your name, business type, and how you work with Indian families planning events. We will get back to you within 48 hours.
           </p>
           <a
-            href="mailto:partners@shareinvite.in?subject=Partner Programme Application"
+            href="mailto:shareinvite123@gmail.com?subject=Partner Programme Application"
             className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold"
           >
             Apply Now →
@@ -209,7 +210,7 @@ export default function PartnersPage() {
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" />
+          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

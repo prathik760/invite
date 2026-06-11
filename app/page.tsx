@@ -6,17 +6,24 @@ import CustomRequestSection from '@/components/landing/CustomRequestSection'
 import MobileNav from '@/components/landing/MobileNav'
 import StickyMobileCTA from '@/components/landing/StickyMobileCTA'
 import { PLANS } from '@/lib/plans'
+import { UsersIcon } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
-  title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
+  title: 'Free Digital Invitation Maker for Indian Weddings & Events | ShareInvite',
   description:
-    'Create stunning digital wedding invitations, birthday invitations, engagement invitations, and event invites. Share instantly on WhatsApp with RSVP tracking.',
+    'Create free digital wedding invitations, birthday invitations, engagement & house warming e-invites. Share a WhatsApp link instantly with RSVP, gallery, countdown & Google Maps. Ready in 5 minutes.',
   keywords: [
-    'digital invitation website India',
+    'digital invitation maker',
+    'free digital invitation maker India',
+    'online invitation card maker',
+    'digital wedding invitation maker India',
     'free wedding invitation website India',
     'online wedding invitation maker India',
     'Indian wedding e-invite',
     'WhatsApp wedding invitation link',
+    'e-invitation WhatsApp',
+    'shaadi card online',
+    'wedding card design online India',
     'digital birthday invitation India',
     'house warming invitation website India',
     'namakaran invitation online',
@@ -29,6 +36,7 @@ export const metadata: Metadata = {
     'anniversary invitation website India',
     'griha pravesh invitation online',
     'Indian wedding website builder',
+    'online shaadi invitation card',
     'Bangalore wedding invitation online',
     'Mumbai wedding invitation website',
     'Delhi wedding invitation website',
@@ -637,7 +645,7 @@ export default function LandingPage() {
             aria-label="ShareInvite home"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" />
+            <img src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
             <span className="font-display text-xl sm:text-2xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <nav
@@ -665,7 +673,7 @@ export default function LandingPage() {
       {/* ─── HERO ─── */}
       <section
         aria-labelledby="hero-headline"
-        className="relative flex min-h-[100dvh] flex-col overflow-hidden bg-[#FCF7F1] px-5 pt-4 pb-6 sm:pt-8 sm:pb-10 lg:min-h-[calc(100dvh-4rem)]"
+        className="relative flex min-h-[100dvh] flex-col overflow-hidden bg-[#FCF7F1] px-5 pt-10 pb-6 sm:pt-16 sm:pb-10 lg:min-h-[calc(100dvh-4rem)]"
       >
         {/* Background atmosphere */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_12%,rgba(250,232,202,0.35),transparent_22%),radial-gradient(circle_at_88%_16%,rgba(217,164,65,0.16),transparent_26%),radial-gradient(circle_at_50%_108%,rgba(255,255,255,0.96),transparent_40%)]" />
@@ -692,13 +700,13 @@ export default function LandingPage() {
                   className="block"
                   style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
                 >
-                  Beautiful digital invitations,
+                  Free Digital Invitation Maker
                 </span>
                 <span
                   className="block gradient-accent font-normal italic mt-1"
                   style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
                 >
-                  crafted for India.
+                  for Indian Weddings &amp; Events
                 </span>
               </h1>
 
@@ -1543,7 +1551,7 @@ export default function LandingPage() {
               href="/partners"
               className="flex items-center gap-2.5 rounded-full border border-[#E8DCCD] bg-white px-6 py-3 text-sm font-semibold text-ink shadow-sm transition-all hover:border-[#D9A441]/60 hover:shadow-md"
             >
-              <span>🤝</span>
+              <UsersIcon className="h-4 w-4" />
               Wedding planner? Partner with us
             </Link>
           </div>
@@ -1604,7 +1612,7 @@ export default function LandingPage() {
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-2.5 mb-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" />
+                <img src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
                 <p className="font-display text-2xl text-ink tracking-wide">ShareInvite</p>
               </div>
               <p className="text-sm leading-6" style={{ color: '#4A3B35' }}>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { RingIcon, CalendarIcon, ClockIcon, CameraIcon, MusicIcon, MessageIcon, ClipboardIcon, ShareIcon } from '@/components/ui/Icons'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -71,14 +72,14 @@ const faqSchema = {
 }
 
 const FEATURES = [
-  { icon: '💍', title: 'Couple Names & Families', desc: 'Display both families\' names in the traditional Indian format — with beautiful typography.' },
-  { icon: '📅', title: 'Ceremony Date & Time', desc: 'Exact date, time, and venue with full address and one-tap Google Maps directions.' },
-  { icon: '⏱', title: 'Live Countdown Timer', desc: 'A live ticking countdown builds excitement as the big day approaches.' },
-  { icon: '📸', title: 'Pre-Engagement Gallery', desc: 'Upload couple photos to make the invite personal and memorable.' },
-  { icon: '🎵', title: 'Background Music', desc: 'Set a romantic song to play softly as guests view the invitation.' },
-  { icon: '💬', title: 'Guest Wishes', desc: 'Collect blessings and congratulations from guests directly on the page.' },
-  { icon: '📋', title: 'Event Schedule', desc: 'List Roka, ring ceremony, family functions, and dinner in a clear timeline.' },
-  { icon: '📲', title: 'WhatsApp Sharing', desc: 'One tap to send the invite to hundreds of guests across family groups.' },
+  { icon: <RingIcon />, title: 'Couple Names & Families', desc: 'Display both families\' names in the traditional Indian format — with beautiful typography.' },
+  { icon: <CalendarIcon />, title: 'Ceremony Date & Time', desc: 'Exact date, time, and venue with full address and one-tap Google Maps directions.' },
+  { icon: <ClockIcon />, title: 'Live Countdown Timer', desc: 'A live ticking countdown builds excitement as the big day approaches.' },
+  { icon: <CameraIcon />, title: 'Pre-Engagement Gallery', desc: 'Upload couple photos to make the invite personal and memorable.' },
+  { icon: <MusicIcon />, title: 'Background Music', desc: 'Set a romantic song to play softly as guests view the invitation.' },
+  { icon: <MessageIcon />, title: 'Guest Wishes', desc: 'Collect blessings and congratulations from guests directly on the page.' },
+  { icon: <ClipboardIcon />, title: 'Event Schedule', desc: 'List Roka, ring ceremony, family functions, and dinner in a clear timeline.' },
+  { icon: <ShareIcon />, title: 'WhatsApp Sharing', desc: 'One tap to send the invite to hundreds of guests across family groups.' },
 ]
 
 const CEREMONIES = [
@@ -98,7 +99,7 @@ export default function EngagementInvitationPage() {
       {/* Nav */}
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
-          <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" /></Link>
+          <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /></Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
@@ -163,7 +164,7 @@ export default function EngagementInvitationPage() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {FEATURES.map(f => (
               <div key={f.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="text-3xl mb-3">{f.icon}</div>
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
                 <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
                 <p className="text-sm text-muted leading-6">{f.desc}</p>
               </div>
@@ -247,7 +248,7 @@ export default function EngagementInvitationPage() {
       {/* Footer */}
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" />
+          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

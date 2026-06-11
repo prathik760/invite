@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { CakeIcon, ClockIcon, MapPinIcon, CameraIcon, MusicIcon, SparklesIcon } from '@/components/ui/Icons'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -67,7 +68,7 @@ export default function BirthdayInvitationPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" />
+            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -105,15 +106,15 @@ export default function BirthdayInvitationPage() {
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: '🎂', title: 'Celebrant Name & Age', desc: "Display the birthday person's name and milestone age beautifully." },
-              { icon: '⏱', title: 'Live Countdown', desc: 'A ticking timer to the party — guests check it to stay excited.' },
-              { icon: '📍', title: 'Venue + Google Maps', desc: 'Venue name, address, and a one-tap directions button.' },
-              { icon: '📸', title: 'Photo Gallery', desc: "Upload the birthday person's photos for a personal, warm invite." },
-              { icon: '🎵', title: 'Favourite Song', desc: 'Play their favourite party track when guests open the invite.' },
-              { icon: '🎉', title: 'Party Schedule', desc: 'Cocktails, cake cutting, games — a clear timeline for guests.' },
+              { icon: <CakeIcon />, title: 'Celebrant Name & Age', desc: "Display the birthday person's name and milestone age beautifully." },
+              { icon: <ClockIcon />, title: 'Live Countdown', desc: 'A ticking timer to the party — guests check it to stay excited.' },
+              { icon: <MapPinIcon />, title: 'Venue + Google Maps', desc: 'Venue name, address, and a one-tap directions button.' },
+              { icon: <CameraIcon />, title: 'Photo Gallery', desc: "Upload the birthday person's photos for a personal, warm invite." },
+              { icon: <MusicIcon />, title: 'Favourite Song', desc: 'Play their favourite party track when guests open the invite.' },
+              { icon: <SparklesIcon />, title: 'Party Schedule', desc: 'Cocktails, cake cutting, games — a clear timeline for guests.' },
             ].map(f => (
               <div key={f.title} className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-                <div className="text-3xl mb-3">{f.icon}</div>
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
                 <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
                 <p className="text-sm text-muted leading-6">{f.desc}</p>
               </div>
@@ -166,7 +167,7 @@ export default function BirthdayInvitationPage() {
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" />
+          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

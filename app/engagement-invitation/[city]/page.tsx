@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { RingIcon, MapPinIcon, ClipboardIcon, ClockIcon, MessageIcon, ShareIcon } from '@/components/ui/Icons'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -148,7 +149,7 @@ export default async function CityEngagementPage({ params }: { params: Promise<{
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" />
+            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -204,15 +205,15 @@ export default async function CityEngagementPage({ params }: { params: Promise<{
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: '💍', title: 'Couple Names & Photos', desc: 'Showcase the couple beautifully with names, photos, and a heartfelt introduction.' },
-              { icon: '📍', title: `${info.display} Venue Map`, desc: `Add the ${info.display} venue address with a Google Maps link — guests get one-tap directions.` },
-              { icon: '📋', title: 'Ceremony Schedule', desc: 'List the ring exchange, family blessings, dinner, and entertainment times in a clear programme.' },
-              { icon: '⏳', title: 'Live Countdown', desc: 'A countdown to the ceremony builds excitement for the couple and all guests.' },
-              { icon: '💬', title: 'Guest Wishes', desc: 'Let family and friends leave congratulations and blessings on the invitation itself.' },
-              { icon: '📲', title: 'WhatsApp Sharing', desc: 'Forward the invite link to all family groups in one tap — no app download for guests.' },
+              { icon: <RingIcon />, title: 'Couple Names & Photos', desc: 'Showcase the couple beautifully with names, photos, and a heartfelt introduction.' },
+              { icon: <MapPinIcon />, title: `${info.display} Venue Map`, desc: `Add the ${info.display} venue address with a Google Maps link — guests get one-tap directions.` },
+              { icon: <ClipboardIcon />, title: 'Ceremony Schedule', desc: 'List the ring exchange, family blessings, dinner, and entertainment times in a clear programme.' },
+              { icon: <ClockIcon />, title: 'Live Countdown', desc: 'A countdown to the ceremony builds excitement for the couple and all guests.' },
+              { icon: <MessageIcon />, title: 'Guest Wishes', desc: 'Let family and friends leave congratulations and blessings on the invitation itself.' },
+              { icon: <ShareIcon />, title: 'WhatsApp Sharing', desc: 'Forward the invite link to all family groups in one tap — no app download for guests.' },
             ].map(f => (
               <div key={f.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="text-3xl mb-3">{f.icon}</div>
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
                 <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
                 <p className="text-sm text-muted leading-6">{f.desc}</p>
               </div>
@@ -251,7 +252,7 @@ export default async function CityEngagementPage({ params }: { params: Promise<{
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" />
+          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

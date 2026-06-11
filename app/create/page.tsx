@@ -67,6 +67,11 @@ const TEMPLATE_VISUALS: Record<string, { icon: React.ReactNode; gradient: string
     gradient: 'linear-gradient(135deg, #1A1540 0%, #C8902A 55%, #07050F 100%)',
     color: '#C8902A', rgb: '200,144,42',
   },
+  'luxury-wedding': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 3c0 0-3 2.5-3 5.5a3 3 0 006 0C13 5.5 10 3 10 3z" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round" /><path d="M5 15.5c0-2.5 2.2-4 5-4s5 1.5 5 4" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #F9F4EA 0%, #C9A44D 60%, #B07878 100%)',
+    color: '#C9A44D', rgb: '201,164,77',
+  },
 }
 
 const DARK_TEMPLATES = new Set(['cinematic-night', 'indian-wedding', 'indian-engagement', 'indian-birthday', 'griha-pravesh', 'namakaran', 'anniversary', 'kgf-wedding', 'royal-deco'])
@@ -425,7 +430,7 @@ export default function CreatePage() {
         <div className="flex items-center gap-3 min-w-0">
           <Link href="/" className="flex items-center gap-2 hover:opacity-75 transition-opacity shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" />
+            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
           </Link>
           {/* Step progress — shown at sm+ */}
           <div className="hidden sm:flex items-center gap-0 ml-2">

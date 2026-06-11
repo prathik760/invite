@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { RingIcon, CalendarIcon, ClockIcon, MusicIcon, CameraIcon, MessageIcon, ClipboardIcon, ShirtIcon, ShareIcon } from '@/components/ui/Icons'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -97,7 +98,7 @@ export default function WeddingInvitationPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" />
+            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -138,18 +139,18 @@ export default function WeddingInvitationPage() {
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: '💍', title: 'Bride & Groom Names', desc: 'Beautiful typography designed for Indian names with script "&" connector.' },
-              { icon: '📅', title: 'Date, Time & Venue', desc: 'Ceremony details with full address and one-tap Google Maps directions.' },
-              { icon: '⏱', title: 'Live Countdown Timer', desc: 'A ticking countdown to the wedding moment — creates excitement for guests.' },
-              { icon: '🎵', title: 'Background Music', desc: 'Upload your favourite song to play softly as guests view the invite.' },
-              { icon: '📸', title: 'Photo Gallery', desc: 'Upload pre-wedding photos for a personal, emotional touch.' },
-              { icon: '💬', title: 'Guest Wishes', desc: 'Collect heartfelt messages from guests directly on the invitation page.' },
-              { icon: '📋', title: 'Ceremony Schedule', desc: 'Baraat, Varmala, Saat Pheras, Reception — everything in a clear timeline.' },
-              { icon: '👗', title: 'Dress Code', desc: 'Display attire expectations so guests come dressed right.' },
-              { icon: '📲', title: 'WhatsApp Share Button', desc: 'One tap to forward the invite to your entire family and friend groups.' },
+              { icon: <RingIcon />, title: 'Bride & Groom Names', desc: 'Beautiful typography designed for Indian names with script "&" connector.' },
+              { icon: <CalendarIcon />, title: 'Date, Time & Venue', desc: 'Ceremony details with full address and one-tap Google Maps directions.' },
+              { icon: <ClockIcon />, title: 'Live Countdown Timer', desc: 'A ticking countdown to the wedding moment — creates excitement for guests.' },
+              { icon: <MusicIcon />, title: 'Background Music', desc: 'Upload your favourite song to play softly as guests view the invite.' },
+              { icon: <CameraIcon />, title: 'Photo Gallery', desc: 'Upload pre-wedding photos for a personal, emotional touch.' },
+              { icon: <MessageIcon />, title: 'Guest Wishes', desc: 'Collect heartfelt messages from guests directly on the invitation page.' },
+              { icon: <ClipboardIcon />, title: 'Ceremony Schedule', desc: 'Baraat, Varmala, Saat Pheras, Reception — everything in a clear timeline.' },
+              { icon: <ShirtIcon />, title: 'Dress Code', desc: 'Display attire expectations so guests come dressed right.' },
+              { icon: <ShareIcon />, title: 'WhatsApp Share Button', desc: 'One tap to forward the invite to your entire family and friend groups.' },
             ].map(f => (
               <div key={f.title} className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-                <div className="text-3xl mb-3">{f.icon}</div>
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
                 <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
                 <p className="text-sm text-muted leading-6">{f.desc}</p>
               </div>
@@ -241,7 +242,7 @@ export default function WeddingInvitationPage() {
       {/* Footer */}
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" />
+          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

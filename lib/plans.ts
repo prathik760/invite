@@ -17,7 +17,7 @@ export interface Plan {
 const FREE_TEMPLATES = ['elegant-wedding']
 const STANDARD_TEMPLATES = [...FREE_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran',]
 const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh']
-const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'royal-deco'] // all 10
+const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'royal-deco', 'luxury-wedding']
 
 export const PLANS: Plan[] = [
   {
