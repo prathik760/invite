@@ -5,9 +5,9 @@ import { ClockIcon, MapPinIcon, ClipboardIcon, CameraIcon, MessageIcon, ParkingI
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Digital Griha Pravesh Invitation Free | Housewarming E-Invite India | ShareInvite',
+  title: 'Free Griha Pravesh Invitation — Digital Housewarming E-Invite | ShareInvite',
   description:
-    'Create a beautiful digital Griha Pravesh invitation in minutes. Share the muhurat time, pooja schedule, and Google Maps on WhatsApp. Free to start. No app needed.',
+    'Free digital Griha Pravesh invitation for India. Share muhurat time, pooja schedule & Google Maps on WhatsApp. No app needed. Ready in 5 minutes.',
   keywords: [
     'digital Griha Pravesh invitation',
     'online housewarming invitation India free',
@@ -134,10 +134,10 @@ export default function GrihaPraveshInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            Works for every regional housewarming tradition
+            Griha Pravesh Invitations for Every Regional Housewarming Tradition
           </h2>
           <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            The ceremony has different names across India — one digital invitation works for all
+            Griha Pravesh, Ghar Pravesh, Gruhapravesham, Vastu Puja — one free digital invitation works for all regional traditions
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CEREMONY_NAMES.map(c => (
@@ -159,7 +159,7 @@ export default function GrihaPraveshInvitationPage() {
       <section className="px-5 py-16">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            Everything your Griha Pravesh invitation needs
+            What&apos;s Included in Your Digital Griha Pravesh Invitation
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {FEATURES.map(f => (
@@ -177,7 +177,7 @@ export default function GrihaPraveshInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-5xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Create your Griha Pravesh invite in 3 steps
+            How to Create a Free Griha Pravesh Digital Invitation
           </h2>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
@@ -199,7 +199,7 @@ export default function GrihaPraveshInvitationPage() {
       <section className="px-5 py-16">
         <div className="mx-auto max-w-3xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Frequently asked questions
+            Griha Pravesh Digital Invitation — FAQ
           </h2>
           <div className="space-y-4">
             {faqSchema.mainEntity.map((faq, i) => (
@@ -216,7 +216,7 @@ export default function GrihaPraveshInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Ready to create your Griha Pravesh invitation?
+            Create Your Free Griha Pravesh Invitation
           </h2>
           <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes. Loved by Indian families.</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">

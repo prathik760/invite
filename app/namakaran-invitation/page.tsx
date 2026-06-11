@@ -5,9 +5,9 @@ import { PersonIcon, ClockIcon, MapPinIcon, CameraIcon, ClipboardIcon, MessageIc
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Digital Namakaran Invitation Free | Naming Ceremony E-Invite India | ShareInvite',
+  title: 'Free Namakaran Invitation — Baby Naming Ceremony E-Invite India | ShareInvite',
   description:
-    'Create a beautiful digital Namakaran invitation for your baby\'s naming ceremony in minutes. WhatsApp-ready link, ceremony schedule, Google Maps & guest blessings. Free to start.',
+    'Free digital Namakaran invitation for India. WhatsApp link with ceremony schedule, Google Maps & blessings section. Share baby\'s first photos. Ready in 5 minutes.',
   keywords: [
     'digital namakaran invitation',
     'naming ceremony invitation online free',
@@ -134,10 +134,10 @@ export default function NamakaranInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            Works for every Indian naming ceremony tradition
+            Namakaran Invitations for Every Indian Baby Naming Tradition
           </h2>
           <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Different names across regions — one digital invitation works for all
+            Namakaran, Naamkaran, Cradle Ceremony, Namakarana — one free digital invitation works for every regional baby naming tradition
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CEREMONY_NAMES.map(c => (
@@ -159,7 +159,7 @@ export default function NamakaranInvitationPage() {
       <section className="px-5 py-16">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            Everything your Namakaran invitation needs
+            What&apos;s Included in Your Digital Namakaran Invitation
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {FEATURES.map(f => (
@@ -177,7 +177,7 @@ export default function NamakaranInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-5xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Create your Namakaran invite in 3 steps
+            How to Create a Free Digital Namakaran Invitation
           </h2>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
@@ -199,7 +199,7 @@ export default function NamakaranInvitationPage() {
       <section className="px-5 py-16">
         <div className="mx-auto max-w-3xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Frequently asked questions
+            Namakaran Invitation — Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqSchema.mainEntity.map((faq, i) => (
@@ -216,7 +216,7 @@ export default function NamakaranInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Ready to create your Namakaran invitation?
+            Create Your Free Digital Namakaran Invitation
           </h2>
           <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes.</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">

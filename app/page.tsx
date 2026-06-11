@@ -985,7 +985,7 @@ export default function LandingPage() {
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#D9A441]/45" />
             </div>
             <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-              Choose your invitation style.
+              Indian Wedding &amp; Event Invitation Templates
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-muted text-balance">
               From timeless ivory weddings to vibrant Indian ceremonies — every template is
@@ -1267,7 +1267,7 @@ export default function LandingPage() {
               What&apos;s included
             </p>
             <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-              Everything guests need on one beautiful page.
+              What&apos;s Included in Your Digital Invitation
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted text-balance">
               A premium invite should do more than show date and venue. It should guide guests,
@@ -1305,7 +1305,7 @@ export default function LandingPage() {
               What families say
             </p>
             <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-              Loved by families across India.
+              Loved by Indian Families Across 8 Cities
             </h2>
             <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-[#D9A441]/25 bg-white px-5 py-2.5 shadow-sm">
               <StarRating />
@@ -1392,7 +1392,7 @@ export default function LandingPage() {
                 Simple 3-step setup
               </p>
               <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-                Live invite in under 5 minutes.
+                Create Your Digital Invitation in 5 Minutes
               </h2>
             </div>
             <Link
@@ -1481,7 +1481,7 @@ export default function LandingPage() {
               FAQ
             </p>
             <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-              Questions before you start.
+              Digital Invitation — Frequently Asked Questions
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-muted">
               Everything you need to know about creating your first digital invitation.
@@ -1497,7 +1497,7 @@ export default function LandingPage() {
           <div className="mb-12 text-center" data-animate>
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">Trusted by Indian families</p>
             <h2 className="mt-3 font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-              Celebrations shared across India
+              Trusted by 10,000+ Indian Families
             </h2>
           </div>
 

@@ -5,9 +5,9 @@ import { CakeIcon, ClockIcon, MapPinIcon, CameraIcon, MusicIcon, SparklesIcon } 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Digital Birthday Invitation Website Free | Online Birthday E-Invite India | ShareInvite',
+  title: 'Free Digital Birthday Invitation India | ShareInvite',
   description:
-    'Create a stunning digital birthday invitation website in minutes. Bollywood-themed templates, live countdown, WhatsApp-ready link, photo gallery & more. Free to create. No app needed.',
+    'Free digital birthday invitation for India. Festive templates with live countdown, WhatsApp link, photo gallery & favourite song. No app needed. Ready in 5 minutes.',
   keywords: [
     'digital birthday invitation India free',
     'online birthday invitation India',
@@ -87,8 +87,7 @@ export default function BirthdayInvitationPage() {
             <span className="gradient-accent italic">Website for India</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a festive digital birthday invitation website in 5 minutes.
-            Bollywood-inspired Janamdin template with countdown, gallery, music & WhatsApp sharing.
+            Create a festive digital birthday invitation in 5 minutes. Indian birthday templates with live countdown, photo gallery, favourite song &amp; one-tap WhatsApp sharing. Free to start.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
@@ -102,7 +101,7 @@ export default function BirthdayInvitationPage() {
       <section className="px-5 py-16 border-y border-border bg-white">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            What your birthday invitation includes
+            What&apos;s Included in Your Digital Birthday Invitation
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
@@ -125,7 +124,7 @@ export default function BirthdayInvitationPage() {
 
       <section className="px-5 py-16">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Frequently asked questions</h2>
+          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Digital Birthday Invitation — FAQ</h2>
           <div className="space-y-4">
             {faqSchema.mainEntity.map((faq, i) => (
               <div key={i} className="rounded-2xl border border-border bg-white p-6">
@@ -157,7 +156,7 @@ export default function BirthdayInvitationPage() {
 
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Make the birthday unforgettable</h2>
+          <h2 className="font-display font-normal text-3xl text-ink mb-4">Create a Memorable Digital Birthday Invitation</h2>
           <p className="text-muted text-sm mb-7">Free to create · No credit card · WhatsApp-ready in 5 minutes</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Birthday Invite Free →

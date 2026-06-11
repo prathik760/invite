@@ -5,9 +5,9 @@ import { RingIcon, CalendarIcon, ClockIcon, CameraIcon, MusicIcon, MessageIcon, 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Digital Engagement Invitation Online Free | Mangni E-Invite India | ShareInvite',
+  title: 'Free Mangni & Roka Engagement Invitation India | ShareInvite',
   description:
-    'Create a beautiful digital engagement invitation website for your Mangni or Roka ceremony in minutes. WhatsApp-ready link, live countdown, Google Maps, photo gallery & guest wishes. Free to start.',
+    'Free digital engagement invitation for Mangni, Roka & Sagai ceremonies in India. WhatsApp link with countdown, Google Maps, photo gallery & guest wishes. Ready in 5 minutes.',
   keywords: [
     'digital engagement invitation India',
     'online engagement invitation free',
@@ -134,10 +134,10 @@ export default function EngagementInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            Works for every Indian engagement ceremony
+            Digital Invitations for Mangni, Roka &amp; Sagai Ceremonies
           </h2>
           <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Different names, same celebration — create the perfect digital invite for your regional engagement tradition
+            Mangni, Roka, Sagai, Nishchayathartham — one free digital engagement invitation works for every Indian tradition
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CEREMONIES.map(c => (
@@ -159,7 +159,7 @@ export default function EngagementInvitationPage() {
       <section className="px-5 py-16">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            Everything your engagement invitation needs
+            What&apos;s Included in Your Digital Engagement Invitation
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {FEATURES.map(f => (
@@ -177,7 +177,7 @@ export default function EngagementInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-5xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Create your engagement invite in 3 steps
+            How to Create a Free Digital Engagement Invitation
           </h2>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
@@ -199,7 +199,7 @@ export default function EngagementInvitationPage() {
       <section className="px-5 py-16">
         <div className="mx-auto max-w-3xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Frequently asked questions
+            Engagement Invitation — Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqSchema.mainEntity.map((faq, i) => (
@@ -216,7 +216,7 @@ export default function EngagementInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Ready to create your engagement invite?
+            Create Your Free Digital Engagement Invitation
           </h2>
           <p className="text-muted text-sm mb-7">
             Free to start. WhatsApp-ready in 5 minutes. Loved by Indian families.

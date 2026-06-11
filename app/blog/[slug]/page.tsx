@@ -6,6 +6,7 @@ import StickyCTA from '@/components/seo/StickyCTA'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { blogDrafts, categorySlug, findBlogPost, type BlogCategory } from '@/content/blog'
 import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
+import { blogArticles } from '@/content/blog-articles'
 
 type Props = { params: { slug: string } }
 
@@ -464,7 +465,7 @@ export default function BlogPostPage({ params }: Props) {
   const post = findBlogPost(params.slug)
   if (!post) notFound()
 
-  const content = buildPostContent(post.keyword, post.category)
+  const content = blogArticles[post.slug] ?? buildPostContent(post.keyword, post.category)
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
@@ -565,6 +566,76 @@ export default function BlogPostPage({ params }: Props) {
             </Link>
           ))}
         </div>
+
+        {/* Wording guides */}
+        {(() => {
+          const wordingGuides: Record<string, { label: string; href: string }[]> = {
+            Wedding: [
+              { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+              { label: 'Create free wedding invitation', href: '/wedding-invitation' },
+            ],
+            Engagement: [
+              { label: 'Engagement invitation wording guide', href: '/engagement-invitation-wording' },
+              { label: 'Create free engagement invitation', href: '/engagement-invitation' },
+            ],
+            Birthday: [
+              { label: 'Birthday invitation wording guide', href: '/birthday-invitation-wording' },
+              { label: 'Create free birthday invitation', href: '/birthday-invitation' },
+            ],
+            Housewarming: [
+              { label: 'Griha Pravesh invitation wording guide', href: '/griha-pravesh-invitation-wording' },
+              { label: 'Create free Griha Pravesh invitation', href: '/griha-pravesh-invitation' },
+            ],
+            'Baby Shower': [
+              { label: 'Baby shower invitation wording guide', href: '/baby-shower-invitation-wording' },
+              { label: 'Create free digital invitation', href: '/create' },
+            ],
+            'Invitation Ideas': [
+              { label: 'Namakaran invitation wording guide', href: '/namakaran-invitation-wording' },
+              { label: 'Browse invitation templates', href: '/templates' },
+            ],
+            'Wedding Trends': [
+              { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+              { label: 'Browse wedding templates', href: '/templates' },
+            ],
+            'Digital Invitations': [
+              { label: 'Free digital invitation maker', href: '/digital-invitation' },
+              { label: 'Browse invitation templates', href: '/templates' },
+            ],
+          }
+          const guides = wordingGuides[post.category] ?? []
+          if (guides.length === 0) return null
+          return (
+            <div className="mt-8 flex flex-wrap gap-3">
+              {guides.map(link => (
+                <Link key={link.href} href={link.href} className="rounded-full border border-[#D9A441]/40 bg-[#FFFBF5] px-4 py-2 text-sm font-semibold text-accent-strong hover:bg-[#FFF4E5] transition-colors">
+                  {link.label} →
+                </Link>
+              ))}
+            </div>
+          )
+        })()}
+
+        {/* Related articles */}
+        {(() => {
+          const relatedPosts = blogDrafts
+            .filter(p => p.category === post.category && p.slug !== post.slug)
+            .slice(0, 3)
+          if (relatedPosts.length === 0) return null
+          return (
+            <div className="mt-12 border-t border-border pt-10">
+              <h2 className="font-heading text-xl text-ink mb-6">Related Articles</h2>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {relatedPosts.map(rp => (
+                  <Link key={rp.slug} href={`/blog/${rp.slug}`} className="rounded-xl border border-border bg-white p-5 hover:shadow-sm transition-shadow">
+                    <p className="text-xs font-semibold uppercase tracking-[0.15em] text-accent-strong mb-2">{rp.category}</p>
+                    <p className="font-heading text-base text-ink leading-snug">{rp.title}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )
+        })()}
 
         {/* CTA */}
         <div className="mt-10 rounded-2xl border border-[#E8DCCD] bg-[#FFF9F2] p-7 text-center">

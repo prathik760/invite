@@ -5,9 +5,9 @@ import { RingIcon, HeartIcon, CakeIcon, HomeIcon, FlowerIcon, UsersIcon } from '
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Digital Invitation Website Free India | Online E-Invite Maker | ShareInvite',
+  title: 'Free Online Invitation Maker India | Wedding, Birthday & More | ShareInvite',
   description:
-    'Create beautiful digital invitation websites for any Indian occasion — wedding, birthday, house warming, naming ceremony, engagement, anniversary. WhatsApp-ready link in 5 minutes. Free to start.',
+    'Free digital invitation maker for India. Create wedding, birthday, Griha Pravesh, Namakaran & engagement invitations. WhatsApp-ready link in 5 minutes.',
   keywords: [
     'digital invitation website India',
     'online invitation maker India free',
@@ -106,8 +106,7 @@ export default function DigitalInvitationPage() {
             <span className="gradient-accent italic">for Every Indian Occasion</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Wedding, birthday, house warming, naming ceremony, engagement, anniversary —
-            create a beautiful digital invitation website for any family occasion in 5 minutes.
+            Create a free digital invitation for any Indian occasion — wedding, birthday, Griha Pravesh, Namakaran, engagement, or anniversary. WhatsApp-ready in 5 minutes.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
@@ -121,7 +120,7 @@ export default function DigitalInvitationPage() {
       <section className="px-5 py-16 border-y border-border bg-white">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            One platform for every Indian celebration
+            Free Digital Invitation Templates for Every Indian Occasion
           </h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {OCCASIONS.map(o => (
@@ -140,7 +139,7 @@ export default function DigitalInvitationPage() {
 
       <section className="px-5 py-16">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Frequently asked questions</h2>
+          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Free Digital Invitation Maker — Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqSchema.mainEntity.map((faq, i) => (
               <div key={i} className="rounded-2xl border border-border bg-white p-6">
@@ -154,7 +153,7 @@ export default function DigitalInvitationPage() {
 
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Start creating your digital invitation</h2>
+          <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Free Digital Invitation Today</h2>
           <p className="text-muted text-sm mb-7">Free to start · WhatsApp-ready · No credit card needed</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Digital Invitation →
