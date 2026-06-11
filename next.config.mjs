@@ -11,6 +11,16 @@ const nextConfig = {
       { protocol: 'https', hostname: '**.r2.cloudflarestorage.com' },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.shareinvite.in' }],
+        destination: 'https://shareinvite.in/:path*',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {

@@ -53,8 +53,7 @@ export default function SiteFooter() {
             </p>
             <Link
               href="/create"
-              className="mt-5 inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white"
-              style={{ background: 'linear-gradient(135deg, #B87924, #D9A441)' }}
+              className="gold-button mt-5 inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold"
             >
               Start Free →
             </Link>

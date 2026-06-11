@@ -9,9 +9,9 @@ import { PLANS } from '@/lib/plans'
 import { UsersIcon } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
-  title: 'Free Digital Invitation Maker for Indian Weddings & Events | ShareInvite',
+  title: 'Free Digital Invitation Maker India | ShareInvite',
   description:
-    'Create free digital wedding invitations, birthday invitations, engagement & house warming e-invites. Share a WhatsApp link instantly with RSVP, gallery, countdown & Google Maps. Ready in 5 minutes.',
+    'Free digital wedding invitation maker for India. Share a WhatsApp link with RSVP, gallery, live countdown & Google Maps. Ready in 5 minutes.',
   keywords: [
     'digital invitation maker',
     'free digital invitation maker India',
@@ -649,7 +649,7 @@ export default function LandingPage() {
             <span className="font-display text-xl sm:text-2xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <nav
-            className="hidden items-center gap-6 text-sm text-muted sm:flex"
+            className="hidden items-center gap-6 text-sm text-muted lg:flex"
             aria-label="Main navigation"
           >
             <a href="#templates" className="transition-colors hover:text-foreground">Templates</a>
@@ -663,7 +663,7 @@ export default function LandingPage() {
           </nav>
           <div className="flex items-center gap-2">
             <MobileNav />
-            <Link href="/create" className="gold-button rounded-xl px-4 py-2.5 text-xs font-semibold sm:px-5 sm:py-2.5 sm:text-sm">
+            <Link href="/create" className="gold-button rounded-xl px-4 py-2.5 text-xs font-semibold lg:px-5 lg:py-2.5 lg:text-sm">
               Start Free
             </Link>
           </div>
@@ -695,18 +695,18 @@ export default function LandingPage() {
                 </div>
 
                 {/* ── HEADLINE ── */}
-                <h1 id="hero-headline" className="hero-anim-0 font-display font-normal leading-[1.08] text-ink">
+                <h1 id="hero-headline" className="hero-anim-0 font-display font-normal leading-[1.1] text-ink">
                   <span
                     className="block"
-                    style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
+                    style={{ fontSize: 'clamp(2.1rem, 5vw, 3.75rem)' }}
                   >
                     Free Digital Invitation
                   </span>
                   <span
-                    className="block gradient-accent font-normal italic mt-1"
-                    style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
+                    className="block gradient-accent font-normal italic"
+                    style={{ fontSize: 'clamp(2.1rem, 5vw, 3.75rem)' }}
                   >
-                    for Indian Weddings &amp; Events
+                    Maker for India
                   </span>
                 </h1>
 
@@ -739,67 +739,52 @@ export default function LandingPage() {
                 </div>
                 <p className="mt-2 text-[11px] text-muted">No credit card required · Free forever plan available</p>
 
-                {/* ── Stats row ── */}
-                <div className="mt-7 flex items-stretch gap-3">
-                  {/* Free to start */}
-                  <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
-                    <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#D9A441,transparent)' }} />
-                    <div className="mb-2 flex justify-center">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full text-[#B87924]" style={{ background: 'rgba(184,121,36,0.10)' }}>
-                        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
-                        </svg>
-                      </span>
+                {/* ── Stats + proof ── */}
+                <div className="mt-8 flex flex-col gap-4">
+
+                  {/* Frosted stat strip */}
+                  <div
+                    className="inline-flex self-start overflow-hidden rounded-2xl"
+                    style={{
+                      background: 'rgba(255,255,255,0.65)',
+                      border: '1px solid rgba(184,121,36,0.16)',
+                      boxShadow: '0 1px 0 rgba(255,255,255,0.9) inset, 0 4px 20px rgba(184,121,36,0.05)',
+                    }}
+                  >
+                    <div className="flex flex-col items-center px-5 py-4">
+                      <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">₹0</span>
+                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>Free to start</span>
                     </div>
-                    <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">₹0</p>
-                    <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Free to start</p>
+                    <div className="my-3.5 w-px" style={{ background: 'rgba(184,121,36,0.14)' }} />
+                    <div className="flex flex-col items-center px-5 py-4">
+                      <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">5 min</span>
+                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>Quick setup</span>
+                    </div>
+                    <div className="my-3.5 w-px" style={{ background: 'rgba(184,121,36,0.14)' }} />
+                    <div className="flex flex-col items-center px-5 py-4">
+                      <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">10k+</span>
+                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>Invites created</span>
+                    </div>
                   </div>
 
-                  {/* Quick setup */}
-                  <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
-                    <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#D9A441,transparent)' }} />
-                    <div className="mb-2 flex justify-center">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full text-[#B87924]" style={{ background: 'rgba(184,121,36,0.10)' }}>
-                        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+                  {/* Proof line — checkmark items */}
+                  <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+                    {[
+                      'No app required',
+                      '8 event types',
+                      'Free forever plan',
+                      'Built for India',
+                    ].map((item) => (
+                      <span key={item} className="flex items-center gap-1.5 text-[11px] font-medium" style={{ color: '#7A6455' }}>
+                        <svg viewBox="0 0 9 9" className="h-3 w-3 shrink-0" fill="none">
+                          <circle cx="4.5" cy="4.5" r="3.8" stroke="#2F766D" strokeWidth="0.75" opacity="0.6" />
+                          <path d="M2.8 4.5l1.3 1.3 2.6-2.6" stroke="#2F766D" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
+                        {item}
                       </span>
-                    </div>
-                    <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">5 min</p>
-                    <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Quick setup</p>
+                    ))}
                   </div>
 
-                  {/* WhatsApp ready */}
-                  <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
-                    <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#25D366,transparent)' }} />
-                    <div className="mb-2 flex justify-center">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full" style={{ background: 'rgba(37,211,102,0.10)', color: '#25a244' }}>
-                        <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                        </svg>
-                      </span>
-                    </div>
-                    <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">10k+</p>
-                    <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Invites created</p>
-                  </div>
-                </div>
-
-                {/* Proof chips */}
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {[
-                    'No app required',
-                    '8 event templates',
-                    'Free to start',
-                    'Built for India',
-                  ].map((chip) => (
-                    <span
-                      key={chip}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-foreground shadow-sm"
-                    >
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-                      {chip}
-                    </span>
-                  ))}
                 </div>
               </div>
 

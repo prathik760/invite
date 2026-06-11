@@ -6,7 +6,7 @@ import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'Digital Invitation Blog | Wedding, WhatsApp & RSVP Ideas',
+  title: 'Wedding Invitation Ideas & Tips | ShareInvite Blog',
   description:
     'Read ShareInvite guides for digital wedding invitations, WhatsApp invite ideas, RSVP tracking, birthday invitations, Griha Pravesh invites, baby showers, and Indian event trends.',
   alternates: { canonical: absoluteUrl('/blog') },

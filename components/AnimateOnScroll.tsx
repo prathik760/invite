@@ -7,6 +7,13 @@ export default function AnimateOnScroll() {
   const pathname = usePathname()
 
   useEffect(() => {
+    // Clear stale is-visible from any previous visit to this route so
+    // all [data-animate] elements replay their entrance animation.
+    // Done before the RAF so there's no paint with them hidden.
+    document.querySelectorAll('[data-animate]').forEach((el) => {
+      el.classList.remove('is-visible')
+    })
+
     let io: IntersectionObserver | null = null
     const rafId = requestAnimationFrame(() => {
       const els = Array.from(document.querySelectorAll<Element>('[data-animate]'))
@@ -30,7 +37,7 @@ export default function AnimateOnScroll() {
             }
           })
         },
-        { threshold: 0.08, rootMargin: '0px 0px -56px 0px' },
+        { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
       )
 
       els

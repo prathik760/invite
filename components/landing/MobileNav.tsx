@@ -18,7 +18,7 @@ export default function MobileNav() {
 
   // Close menu on resize to sm+
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 640px)')
+    const mq = window.matchMedia('(min-width: 1024px)')
     const handler = (e: MediaQueryListEvent) => { if (e.matches) setOpen(false) }
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
@@ -34,7 +34,7 @@ export default function MobileNav() {
     <>
       {/* Hamburger / Close button — only on mobile */}
       <button
-        className="relative z-[60] flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-border/30 sm:hidden"
+        className="relative z-[60] flex h-10 w-10 items-center justify-center rounded-xl transition-colors hover:bg-border/30 lg:hidden"
         onClick={() => setOpen(o => !o)}
         aria-label={open ? 'Close menu' : 'Open menu'}
         aria-expanded={open}
@@ -62,7 +62,7 @@ export default function MobileNav() {
         <>
           {/* Backdrop — fixed so it covers full screen below header */}
           <div
-            className="fixed inset-0 z-40 bg-black/25 backdrop-blur-sm sm:hidden"
+            className="fixed inset-0 z-40 bg-black/25 backdrop-blur-sm lg:hidden"
             style={{ top: '64px' }}
             onClick={close}
             aria-hidden
@@ -70,7 +70,7 @@ export default function MobileNav() {
 
           {/* Menu panel — fixed so overflow-x-hidden on parent can't clip it */}
           <div
-            className="fixed inset-x-0 z-50 border-b border-border shadow-card-md sm:hidden"
+            className="fixed inset-x-0 z-50 border-b border-border shadow-card-md lg:hidden"
             style={{
               top: '64px',
               background: 'rgba(248,245,240,0.98)',
