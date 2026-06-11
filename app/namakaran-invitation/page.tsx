@@ -119,7 +119,7 @@ export default function NamakaranInvitationPage() {
             <span className="gradient-accent italic">Naming Ceremony · Cradle Ceremony</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital Namakaran invitation for your baby's naming ceremony in minutes. Share the muhurat time, ceremony schedule, venue map, and the baby's first photos — all from one WhatsApp link. Free to start.
+            Create a beautiful digital Namakaran invitation for your baby&apos;s naming ceremony in minutes. Share the muhurat time, ceremony schedule, venue map, and the baby&apos;s first photos — all from one WhatsApp link. Free to start.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">

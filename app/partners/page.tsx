@@ -90,7 +90,7 @@ export default function PartnersPage() {
             <span className="gradient-accent italic">with ShareInvite</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Join India's leading digital invitation platform as a partner. Recommend ShareInvite to your clients and earn 20% commission on every subscription. Built for wedding planners, photographers, venue managers, and event professionals.
+            Join India&apos;s leading digital invitation platform as a partner. Recommend ShareInvite to your clients and earn 20% commission on every subscription. Built for wedding planners, photographers, venue managers, and event professionals.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a

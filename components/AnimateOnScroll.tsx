@@ -8,9 +8,7 @@ export default function AnimateOnScroll() {
 
   useEffect(() => {
     let io: IntersectionObserver | null = null
-    let rafId: number
-
-    rafId = requestAnimationFrame(() => {
+    const rafId = requestAnimationFrame(() => {
       const els = Array.from(document.querySelectorAll<Element>('[data-animate]'))
 
       // Pre-mark elements already in viewport so they are never hidden
@@ -45,8 +43,8 @@ export default function AnimateOnScroll() {
       io?.disconnect()
       document.body.classList.remove('js-animate')
     }
-  // Re-run on every route change — new page = new DOM elements to observe
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Re-run on every route change — new page = new DOM elements to observe
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   return null

@@ -681,265 +681,265 @@ export default function LandingPage() {
         <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col py-2 lg:py-6">
           {/* ── Vertically centered content ── */}
           <div className="flex flex-1 items-center">
-          <div className="grid w-full items-center gap-8 lg:grid-cols-2 lg:gap-16">
+            <div className="grid w-full items-center gap-8 lg:grid-cols-2 lg:gap-16">
 
-            {/* ── Left column: all copy ── */}
-            <div className="flex flex-col items-start">
+              {/* ── Left column: all copy ── */}
+              <div className="flex flex-col items-start">
 
-              {/* Trust badge */}
-              <div className="hero-anim-3 mb-5 inline-flex items-center gap-2.5 rounded-full border border-[#D9A441]/35 bg-white/80 px-4 py-2 shadow-card">
-                <StarRating />
-                <span className="text-xs font-semibold text-accent-strong">
-                  4.2 · 247+ families · Trusted across India
-                </span>
-              </div>
-
-              {/* ── HEADLINE ── */}
-              <h1 id="hero-headline" className="hero-anim-0 font-display font-normal leading-[1.08] text-ink">
-                <span
-                  className="block"
-                  style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
-                >
-                  Free Digital Invitation Maker
-                </span>
-                <span
-                  className="block gradient-accent font-normal italic mt-1"
-                  style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
-                >
-                  for Indian Weddings &amp; Events
-                </span>
-              </h1>
-
-              {/* Sub-copy — keyword-rich, natural sentence */}
-              <p className="hero-anim-1 mt-4 max-w-[480px] text-sm leading-[1.85] text-muted sm:text-base">
-                Create beautiful digital invitations, crafted for Indian weddings, birthdays,
-                engagements, house warming and naming ceremonies. Share a WhatsApp link with
-                gallery, music, live countdown, Google Maps, and online RSVP. Ready in 5 minutes.
-              </p>
-
-              {/* CTA row */}
-              <div className="hero-anim-2 mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Link
-                  href="/create"
-                  className="gold-button inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-offset-2"
-                  aria-label="Create your free digital invitation website"
-                >
-                  Create Free Invitation
-                </Link>
-                <a
-                  href="#pricing"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-full border px-8 py-4 text-sm font-semibold transition hover:-translate-y-0.5"
-                  style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: 'rgba(122,62,74,0.05)' }}
-                >
-                  See pricing
-                  <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </a>
-              </div>
-              <p className="mt-2 text-[11px] text-muted">No credit card required · Free forever plan available</p>
-
-              {/* ── Stats row ── */}
-              <div className="mt-7 flex items-stretch gap-3">
-                {/* Free to start */}
-                <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
-                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#D9A441,transparent)' }} />
-                  <div className="mb-2 flex justify-center">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full text-[#B87924]" style={{ background: 'rgba(184,121,36,0.10)' }}>
-                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
-                      </svg>
-                    </span>
-                  </div>
-                  <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">₹0</p>
-                  <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Free to start</p>
-                </div>
-
-                {/* Quick setup */}
-                <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
-                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#D9A441,transparent)' }} />
-                  <div className="mb-2 flex justify-center">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full text-[#B87924]" style={{ background: 'rgba(184,121,36,0.10)' }}>
-                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
-                      </svg>
-                    </span>
-                  </div>
-                  <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">5 min</p>
-                  <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Quick setup</p>
-                </div>
-
-                {/* WhatsApp ready */}
-                <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
-                  <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#25D366,transparent)' }} />
-                  <div className="mb-2 flex justify-center">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full" style={{ background: 'rgba(37,211,102,0.10)', color: '#25a244' }}>
-                      <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                      </svg>
-                    </span>
-                  </div>
-                  <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">10k+</p>
-                  <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Invites created</p>
-                </div>
-              </div>
-
-              {/* Proof chips */}
-              <div className="mt-5 flex flex-wrap gap-2">
-                {[
-                  'No app required',
-                  '8 event templates',
-                  'Free to start',
-                  'Built for India',
-                ].map((chip) => (
-                  <span
-                    key={chip}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-foreground shadow-sm"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-                    {chip}
+                {/* Trust badge */}
+                <div className="hero-anim-3 mb-5 inline-flex items-center gap-2.5 rounded-full border border-[#D9A441]/35 bg-white/80 px-4 py-2 shadow-card">
+                  <StarRating />
+                  <span className="text-xs font-semibold text-accent-strong">
+                    4.2 · 247+ families · Trusted across India
                   </span>
-                ))}
+                </div>
+
+                {/* ── HEADLINE ── */}
+                <h1 id="hero-headline" className="hero-anim-0 font-display font-normal leading-[1.08] text-ink">
+                  <span
+                    className="block"
+                    style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
+                  >
+                    Free Digital Invitation
+                  </span>
+                  <span
+                    className="block gradient-accent font-normal italic mt-1"
+                    style={{ fontSize: 'clamp(1.75rem, 4.5vw, 3.4rem)' }}
+                  >
+                    for Indian Weddings &amp; Events
+                  </span>
+                </h1>
+
+                {/* Sub-copy — keyword-rich, natural sentence */}
+                <p className="hero-anim-1 mt-4 max-w-[480px] text-sm leading-[1.85] text-muted sm:text-base">
+                  Create beautiful digital invitations, crafted for Indian weddings, birthdays,
+                  engagements, house warming and naming ceremonies. Share a WhatsApp link with
+                  gallery, music, live countdown, Google Maps, and online RSVP. Ready in 5 minutes.
+                </p>
+
+                {/* CTA row */}
+                <div className="hero-anim-2 mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Link
+                    href="/create"
+                    className="gold-button inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-offset-2"
+                    aria-label="Create your free digital invitation website"
+                  >
+                    Create Free Invitation
+                  </Link>
+                  <a
+                    href="#pricing"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-full border px-8 py-4 text-sm font-semibold transition hover:-translate-y-0.5"
+                    style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: 'rgba(122,62,74,0.05)' }}
+                  >
+                    See pricing
+                    <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </a>
+                </div>
+                <p className="mt-2 text-[11px] text-muted">No credit card required · Free forever plan available</p>
+
+                {/* ── Stats row ── */}
+                <div className="mt-7 flex items-stretch gap-3">
+                  {/* Free to start */}
+                  <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
+                    <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#D9A441,transparent)' }} />
+                    <div className="mb-2 flex justify-center">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full text-[#B87924]" style={{ background: 'rgba(184,121,36,0.10)' }}>
+                        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+                        </svg>
+                      </span>
+                    </div>
+                    <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">₹0</p>
+                    <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Free to start</p>
+                  </div>
+
+                  {/* Quick setup */}
+                  <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
+                    <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#D9A441,transparent)' }} />
+                    <div className="mb-2 flex justify-center">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full text-[#B87924]" style={{ background: 'rgba(184,121,36,0.10)' }}>
+                        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
+                        </svg>
+                      </span>
+                    </div>
+                    <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">5 min</p>
+                    <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Quick setup</p>
+                  </div>
+
+                  {/* WhatsApp ready */}
+                  <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl border border-[#D9A441]/20 bg-white/95 px-3 py-3.5 text-center shadow-sm sm:px-5 sm:py-4">
+                    <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg,transparent,#25D366,transparent)' }} />
+                    <div className="mb-2 flex justify-center">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full" style={{ background: 'rgba(37,211,102,0.10)', color: '#25a244' }}>
+                        <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                        </svg>
+                      </span>
+                    </div>
+                    <p className="font-heading text-lg font-bold text-ink sm:text-xl lg:text-2xl">10k+</p>
+                    <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted">Invites created</p>
+                  </div>
+                </div>
+
+                {/* Proof chips */}
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {[
+                    'No app required',
+                    '8 event templates',
+                    'Free to start',
+                    'Built for India',
+                  ].map((chip) => (
+                    <span
+                      key={chip}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-foreground shadow-sm"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
+                      {chip}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* ── Mobile invitation preview card — shown only below lg ── */}
-            <div className="hero-anim-4 lg:hidden mt-2">
-              <div
-                className="relative mx-auto overflow-hidden rounded-3xl max-w-sm"
-                style={{ background: 'linear-gradient(180deg,#2C0D1A 0%,#180A10 60%,#0F0608 100%)', border: '1px solid rgba(201,153,60,0.22)', boxShadow: '0 20px 60px rgba(122,62,74,0.25)' }}
-              >
-                {/* Gold top accent line */}
-                <div className="h-px w-full" style={{ background: 'linear-gradient(90deg,transparent,#C9993C 40%,#C9993C 60%,transparent)' }} />
+              {/* ── Mobile invitation preview card — shown only below lg ── */}
+              <div className="hero-anim-4 lg:hidden mt-2">
+                <div
+                  className="relative mx-auto overflow-hidden rounded-3xl max-w-sm"
+                  style={{ background: 'linear-gradient(180deg,#2C0D1A 0%,#180A10 60%,#0F0608 100%)', border: '1px solid rgba(201,153,60,0.22)', boxShadow: '0 20px 60px rgba(122,62,74,0.25)' }}
+                >
+                  {/* Gold top accent line */}
+                  <div className="h-px w-full" style={{ background: 'linear-gradient(90deg,transparent,#C9993C 40%,#C9993C 60%,transparent)' }} />
 
-                <div className="relative overflow-hidden px-6 py-7 text-center">
-                  {/* Radial glow */}
-                  <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 85% 50% at 50% 0%,rgba(122,62,74,0.35),transparent 65%)' }} />
+                  <div className="relative overflow-hidden px-6 py-7 text-center">
+                    {/* Radial glow */}
+                    <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 85% 50% at 50% 0%,rgba(122,62,74,0.35),transparent 65%)' }} />
 
-                  <div className="relative">
-                    {/* Top ornament */}
-                    <div className="flex items-center justify-center">
-                      <svg width="130" height="18" viewBox="0 0 130 18" fill="none">
-                        <line x1="0" y1="9" x2="46" y2="9" stroke="url(#mc-gl)" strokeWidth="0.6" />
-                        <circle cx="65" cy="9" r="4" stroke="#C9993C" strokeWidth="0.8" opacity="0.65" />
-                        <circle cx="65" cy="9" r="1.8" fill="#C9993C" opacity="0.5" />
-                        <circle cx="54" cy="9" r="1.8" stroke="#C9993C" strokeWidth="0.6" opacity="0.38" />
-                        <circle cx="76" cy="9" r="1.8" stroke="#C9993C" strokeWidth="0.6" opacity="0.38" />
-                        <line x1="84" y1="9" x2="130" y2="9" stroke="url(#mc-gr)" strokeWidth="0.6" />
-                        <defs>
-                          <linearGradient id="mc-gl" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
-                            <stop offset="0%" stopColor="#C9993C" stopOpacity="0" />
-                            <stop offset="100%" stopColor="#C9993C" stopOpacity="0.6" />
-                          </linearGradient>
-                          <linearGradient id="mc-gr" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
-                            <stop offset="0%" stopColor="#C9993C" stopOpacity="0.6" />
-                            <stop offset="100%" stopColor="#C9993C" stopOpacity="0" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                    </div>
+                    <div className="relative">
+                      {/* Top ornament */}
+                      <div className="flex items-center justify-center">
+                        <svg width="130" height="18" viewBox="0 0 130 18" fill="none">
+                          <line x1="0" y1="9" x2="46" y2="9" stroke="url(#mc-gl)" strokeWidth="0.6" />
+                          <circle cx="65" cy="9" r="4" stroke="#C9993C" strokeWidth="0.8" opacity="0.65" />
+                          <circle cx="65" cy="9" r="1.8" fill="#C9993C" opacity="0.5" />
+                          <circle cx="54" cy="9" r="1.8" stroke="#C9993C" strokeWidth="0.6" opacity="0.38" />
+                          <circle cx="76" cy="9" r="1.8" stroke="#C9993C" strokeWidth="0.6" opacity="0.38" />
+                          <line x1="84" y1="9" x2="130" y2="9" stroke="url(#mc-gr)" strokeWidth="0.6" />
+                          <defs>
+                            <linearGradient id="mc-gl" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+                              <stop offset="0%" stopColor="#C9993C" stopOpacity="0" />
+                              <stop offset="100%" stopColor="#C9993C" stopOpacity="0.6" />
+                            </linearGradient>
+                            <linearGradient id="mc-gr" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+                              <stop offset="0%" stopColor="#C9993C" stopOpacity="0.6" />
+                              <stop offset="100%" stopColor="#C9993C" stopOpacity="0" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                      </div>
 
-                    {/* Label */}
-                    <p className="mt-1.5 text-[8px] font-semibold uppercase tracking-[0.48em]" style={{ color: '#C9993C', opacity: 0.8 }}>Wedding Invitation</p>
+                      {/* Label */}
+                      <p className="mt-1.5 text-[8px] font-semibold uppercase tracking-[0.48em]" style={{ color: '#C9993C', opacity: 0.8 }}>Wedding Invitation</p>
 
-                    {/* Couple names */}
-                    <p className="mt-2.5 font-display font-normal leading-[0.9]" style={{ color: '#F5EEE6', fontSize: 'clamp(1.9rem,7vw,2.6rem)', textShadow: '0 0 32px rgba(201,153,60,0.28)' }}>Ananya</p>
-                    <p className="font-script" style={{ fontSize: '2.1rem', color: '#C9993C', lineHeight: 0.95 }}>&amp;</p>
-                    <p className="font-display font-normal leading-[0.9]" style={{ color: '#F5EEE6', fontSize: 'clamp(1.9rem,7vw,2.6rem)', textShadow: '0 0 32px rgba(201,153,60,0.28)' }}>Vihaan</p>
+                      {/* Couple names */}
+                      <p className="mt-2.5 font-display font-normal leading-[0.9]" style={{ color: '#F5EEE6', fontSize: 'clamp(1.9rem,7vw,2.6rem)', textShadow: '0 0 32px rgba(201,153,60,0.28)' }}>Ananya</p>
+                      <p className="font-script" style={{ fontSize: '2.1rem', color: '#C9993C', lineHeight: 0.95 }}>&amp;</p>
+                      <p className="font-display font-normal leading-[0.9]" style={{ color: '#F5EEE6', fontSize: 'clamp(1.9rem,7vw,2.6rem)', textShadow: '0 0 32px rgba(201,153,60,0.28)' }}>Vihaan</p>
 
-                    {/* Date & time pill */}
-                    <div className="mt-3 inline-flex items-center gap-2 rounded-full px-4 py-1.5" style={{ background: 'rgba(201,153,60,0.1)', border: '1px solid rgba(201,153,60,0.28)' }}>
-                      <svg className="h-3 w-3 shrink-0" fill="none" stroke="#C9993C" strokeWidth={2} viewBox="0 0 24 24">
-                        <rect x="3" y="4" width="18" height="18" rx="2" />
-                        <line x1="16" y1="2" x2="16" y2="6" />
-                        <line x1="8" y1="2" x2="8" y2="6" />
-                        <line x1="3" y1="10" x2="21" y2="10" />
-                      </svg>
-                      <span className="text-[9px] font-semibold tracking-widest" style={{ color: '#C9993C' }}>Saturday, 12 April 2025 · 7:00 PM</span>
-                    </div>
+                      {/* Date & time pill */}
+                      <div className="mt-3 inline-flex items-center gap-2 rounded-full px-4 py-1.5" style={{ background: 'rgba(201,153,60,0.1)', border: '1px solid rgba(201,153,60,0.28)' }}>
+                        <svg className="h-3 w-3 shrink-0" fill="none" stroke="#C9993C" strokeWidth={2} viewBox="0 0 24 24">
+                          <rect x="3" y="4" width="18" height="18" rx="2" />
+                          <line x1="16" y1="2" x2="16" y2="6" />
+                          <line x1="8" y1="2" x2="8" y2="6" />
+                          <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                        <span className="text-[9px] font-semibold tracking-widest" style={{ color: '#C9993C' }}>Saturday, 12 April 2025 · 7:00 PM</span>
+                      </div>
 
-                    {/* Venue chip */}
-                    <div className="mt-2.5 inline-flex items-center gap-2 rounded-full px-4 py-1.5" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(201,153,60,0.18)' }}>
-                      <svg className="h-3 w-3 shrink-0" fill="none" stroke="#C9993C" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm4.5 0c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                      </svg>
-                      <span className="text-[9.5px] font-medium" style={{ color: 'rgba(245,238,230,0.75)' }}>The Royal Orchid · Bengaluru</span>
-                    </div>
+                      {/* Venue chip */}
+                      <div className="mt-2.5 inline-flex items-center gap-2 rounded-full px-4 py-1.5" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(201,153,60,0.18)' }}>
+                        <svg className="h-3 w-3 shrink-0" fill="none" stroke="#C9993C" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm4.5 0c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                        <span className="text-[9.5px] font-medium" style={{ color: 'rgba(245,238,230,0.75)' }}>The Royal Orchid · Bengaluru</span>
+                      </div>
 
-                    {/* Ceremony schedule */}
-                    <div className="mt-4 rounded-xl px-4 py-3 text-left" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,153,60,0.14)' }}>
-                      <p className="text-[7px] font-semibold uppercase tracking-[0.32em]" style={{ color: 'rgba(201,153,60,0.65)' }}>Ceremony Schedule</p>
-                      <div className="mt-2 space-y-2">
-                        {([
-                          ['6:00 PM', 'Baraat & Varmala'],
-                          ['7:30 PM', 'Saat Pheras'],
-                          ['9:00 PM', 'Reception & Dinner'],
-                        ] as [string, string][]).map(([time, event]) => (
-                          <div key={time} className="flex items-center gap-2.5">
-                            <div className="h-1.5 w-1.5 rounded-full shrink-0" style={{ background: '#C9993C', opacity: 0.6 }} />
-                            <span className="text-[9.5px] font-semibold tabular-nums" style={{ color: '#C9993C', minWidth: '46px' }}>{time}</span>
-                            <span className="text-[9.5px]" style={{ color: 'rgba(245,238,230,0.65)' }}>{event}</span>
+                      {/* Ceremony schedule */}
+                      <div className="mt-4 rounded-xl px-4 py-3 text-left" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,153,60,0.14)' }}>
+                        <p className="text-[7px] font-semibold uppercase tracking-[0.32em]" style={{ color: 'rgba(201,153,60,0.65)' }}>Ceremony Schedule</p>
+                        <div className="mt-2 space-y-2">
+                          {([
+                            ['6:00 PM', 'Baraat & Varmala'],
+                            ['7:30 PM', 'Saat Pheras'],
+                            ['9:00 PM', 'Reception & Dinner'],
+                          ] as [string, string][]).map(([time, event]) => (
+                            <div key={time} className="flex items-center gap-2.5">
+                              <div className="h-1.5 w-1.5 rounded-full shrink-0" style={{ background: '#C9993C', opacity: 0.6 }} />
+                              <span className="text-[9.5px] font-semibold tabular-nums" style={{ color: '#C9993C', minWidth: '46px' }}>{time}</span>
+                              <span className="text-[9.5px]" style={{ color: 'rgba(245,238,230,0.65)' }}>{event}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Google Maps button */}
+                      <div
+                        className="mt-3 rounded-xl py-3 text-[10.5px] font-semibold text-white"
+                        style={{ background: 'linear-gradient(135deg, #7A3E4A 0%, #B88A44 100%)', boxShadow: '0 6px 20px rgba(122,62,74,0.35)' }}
+                      >
+                        Open Google Maps ↗
+                      </div>
+
+                      {/* WhatsApp share row */}
+                      <div
+                        className="mt-2 flex items-center justify-center gap-2 rounded-xl py-2.5"
+                        style={{ background: 'rgba(37,211,102,0.07)', border: '1px solid rgba(37,211,102,0.18)' }}
+                      >
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="#25a244">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        <p className="text-[9.5px] font-semibold" style={{ color: '#2da14e' }}>Share on WhatsApp</p>
+                      </div>
+
+                      {/* Template features grid */}
+                      <div className="mt-3 grid grid-cols-4 gap-1.5">
+                        {['Gallery', 'Music', 'RSVP', 'Wishes'].map((label) => (
+                          <div key={label} className="flex flex-col items-center rounded-xl py-2.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,153,60,0.14)' }}>
+                            {label === 'Gallery' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9993C" strokeWidth={1.8}><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 15l-5-5L5 21" /></svg>}
+                            {label === 'Music' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9993C" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></svg>}
+                            {label === 'RSVP' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9993C" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                            {label === 'Wishes' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9993C" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
+                            <p className="mt-1.5 text-[7px] font-semibold uppercase tracking-[0.1em]" style={{ color: 'rgba(245,238,230,0.45)' }}>{label}</p>
                           </div>
                         ))}
                       </div>
-                    </div>
 
-                    {/* Google Maps button */}
-                    <div
-                      className="mt-3 rounded-xl py-3 text-[10.5px] font-semibold text-white"
-                      style={{ background: 'linear-gradient(135deg, #7A3E4A 0%, #B88A44 100%)', boxShadow: '0 6px 20px rgba(122,62,74,0.35)' }}
-                    >
-                      Open Google Maps ↗
-                    </div>
+                      {/* Bottom ornament */}
+                      <div className="mt-4 flex items-center justify-center gap-2">
+                        <div className="h-px w-12" style={{ background: 'linear-gradient(90deg,transparent,rgba(201,153,60,0.45))' }} />
+                        <span style={{ color: 'rgba(201,153,60,0.4)', fontSize: '8px' }}>✦</span>
+                        <div className="h-px w-12" style={{ background: 'linear-gradient(270deg,transparent,rgba(201,153,60,0.45))' }} />
+                      </div>
 
-                    {/* WhatsApp share row */}
-                    <div
-                      className="mt-2 flex items-center justify-center gap-2 rounded-xl py-2.5"
-                      style={{ background: 'rgba(37,211,102,0.07)', border: '1px solid rgba(37,211,102,0.18)' }}
-                    >
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#25a244">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                      </svg>
-                      <p className="text-[9.5px] font-semibold" style={{ color: '#2da14e' }}>Share on WhatsApp</p>
-                    </div>
-
-                    {/* Template features grid */}
-                    <div className="mt-3 grid grid-cols-4 gap-1.5">
-                      {['Gallery', 'Music', 'RSVP', 'Wishes'].map((label) => (
-                        <div key={label} className="flex flex-col items-center rounded-xl py-2.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,153,60,0.14)' }}>
-                          {label === 'Gallery' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9993C" strokeWidth={1.8}><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 15l-5-5L5 21" /></svg>}
-                          {label === 'Music' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9993C" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></svg>}
-                          {label === 'RSVP' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9993C" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
-                          {label === 'Wishes' && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9993C" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
-                          <p className="mt-1.5 text-[7px] font-semibold uppercase tracking-[0.1em]" style={{ color: 'rgba(245,238,230,0.45)' }}>{label}</p>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Bottom ornament */}
-                    <div className="mt-4 flex items-center justify-center gap-2">
-                      <div className="h-px w-12" style={{ background: 'linear-gradient(90deg,transparent,rgba(201,153,60,0.45))' }} />
-                      <span style={{ color: 'rgba(201,153,60,0.4)', fontSize: '8px' }}>✦</span>
-                      <div className="h-px w-12" style={{ background: 'linear-gradient(270deg,transparent,rgba(201,153,60,0.45))' }} />
-                    </div>
-
-                    {/* Footer badges */}
-                    <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
-                      <span className="rounded-full px-2.5 py-0.5 text-[8px] font-semibold" style={{ background: 'rgba(201,153,60,0.12)', color: '#C9993C', border: '1px solid rgba(201,153,60,0.25)' }}>Elegant Wedding</span>
-                      <span className="rounded-full px-2.5 py-0.5 text-[8px] font-semibold" style={{ background: 'rgba(46,111,100,0.15)', color: '#4fa898', border: '1px solid rgba(46,111,100,0.3)' }}>Free</span>
-                      <span className="rounded-full px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.08em]" style={{ background: 'rgba(122,62,74,0.15)', color: '#C9993C', border: '1px solid rgba(122,62,74,0.28)' }}>Most Popular</span>
+                      {/* Footer badges */}
+                      <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
+                        <span className="rounded-full px-2.5 py-0.5 text-[8px] font-semibold" style={{ background: 'rgba(201,153,60,0.12)', color: '#C9993C', border: '1px solid rgba(201,153,60,0.25)' }}>Elegant Wedding</span>
+                        <span className="rounded-full px-2.5 py-0.5 text-[8px] font-semibold" style={{ background: 'rgba(46,111,100,0.15)', color: '#4fa898', border: '1px solid rgba(46,111,100,0.3)' }}>Free</span>
+                        <span className="rounded-full px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.08em]" style={{ background: 'rgba(122,62,74,0.15)', color: '#C9993C', border: '1px solid rgba(122,62,74,0.28)' }}>Most Popular</span>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <p className="mt-2.5 text-center text-xs text-muted">Your invitation will look like this ↑</p>
               </div>
-              <p className="mt-2.5 text-center text-xs text-muted">Your invitation will look like this ↑</p>
-            </div>
 
-            {/* ── Right column: phone mockup — desktop only (2-column layout) ── */}
-            <div className="hero-anim-4 hidden lg:flex items-center justify-center">
-              <PhonePreview />
+              {/* ── Right column: phone mockup — desktop only (2-column layout) ── */}
+              <div className="hero-anim-4 hidden lg:flex items-center justify-center">
+                <PhonePreview />
+              </div>
             </div>
-          </div>
 
           </div>{/* end centering wrapper */}
 
