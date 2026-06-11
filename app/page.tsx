@@ -681,7 +681,7 @@ export default function LandingPage() {
         <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col py-2 lg:py-6">
           {/* ── Vertically centered content ── */}
           <div className="flex flex-1 items-center">
-            <div className="grid w-full items-center gap-8 lg:grid-cols-2 lg:gap-16">
+            <div className="grid w-full items-center gap-8 md:grid-cols-2 md:gap-10 lg:gap-16">
 
               {/* ── Left column: all copy ── */}
               <div className="flex flex-col items-start">
@@ -1184,7 +1184,7 @@ export default function LandingPage() {
                     >
                       {tpl.sampleName}
                     </p>
-                    <p className="font-script text-xl mt-1" style={{ color: tpl.accent }}>
+                    <p className="font-display font-light italic text-lg mt-1 leading-snug" style={{ color: tpl.accent }}>
                       {tpl.sampleSub}
                     </p>
                     <div
