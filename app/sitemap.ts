@@ -1,12 +1,16 @@
 import { MetadataRoute } from 'next'
-import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
-import { landingPages, locationPages } from '@/content/seo-pages'
+import { blogDrafts } from '@/content/blog'
+import { landingPages } from '@/content/seo-pages'
 import { TEMPLATES } from '@/modules/templates/data'
-import { SITE_URL, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
+import { SITE_URL, templateSeoSlug } from '@/lib/seo'
 
 const now = new Date()
 
-function entry(path: string, priority: number, changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] = 'monthly') {
+function entry(
+  path: string,
+  priority: number,
+  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] = 'monthly',
+): MetadataRoute.Sitemap[number] {
   return {
     url: `${SITE_URL}${path}`,
     lastModified: now,
@@ -15,64 +19,97 @@ function entry(path: string, priority: number, changeFrequency: MetadataRoute.Si
   }
 }
 
+// Only include user events that have real engagement signals:
+// either the host paid (isPaid=true) or guests left approved wishes.
+// Cap at 300 to avoid crawl budget dilution.
 async function getPublicInviteEntries(): Promise<MetadataRoute.Sitemap> {
   if (!process.env.DATABASE_URL) return []
 
   try {
     const { prisma } = await import('@/lib/db')
     const events = await prisma.event.findMany({
-      where: { slug: { not: '__custom-requests__' } },
+      where: {
+        slug: { not: '__custom-requests__' },
+        OR: [
+          { isPaid: true },
+          { wishes: { some: { isApproved: true } } },
+        ],
+      },
       select: { slug: true, createdAt: true },
       orderBy: { createdAt: 'desc' },
-      take: 5000,
+      take: 300,
     })
 
     return events.map((event) => ({
       url: `${SITE_URL}/e/${event.slug}`,
       lastModified: event.createdAt,
-      changeFrequency: 'weekly',
-      priority: 0.7,
+      changeFrequency: 'weekly' as const,
+      priority: 0.5,
     }))
   } catch {
     return []
   }
 }
 
+// Cities with genuinely unique content in their city-specific pages.
+// Wedding and Griha Pravesh pages have 2+ unique paragraphs + local traditions → keep indexed.
+// Birthday and Engagement city pages are thin (1 sentence unique) → excluded from sitemap + noindexed at the page level.
+const INDEXED_CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 'pune', 'kolkata', 'ahmedabad']
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const templateCategories = Array.from(new Set(TEMPLATES.map((template) => template.category || 'digital')))
   const publicInvites = await getPublicInviteEntries()
 
   return [
-    entry('', 1, 'weekly'),
+    // ─── Tier 1: Core product pages ───────────────────────────────────────────
+    entry('', 1.0, 'weekly'),
     entry('/create', 0.95, 'weekly'),
-    entry('/digital-invitation', 0.9),
-    entry('/wedding-invitation', 0.9),
-    entry('/engagement-invitation', 0.88),
-    entry('/birthday-invitation', 0.85),
-    entry('/griha-pravesh-invitation', 0.84),
-    entry('/namakaran-invitation', 0.84),
-    entry('/anniversary-invitation', 0.84),
-    entry('/wedding-invitation-wording', 0.88, 'monthly'),
-    entry('/engagement-invitation-wording', 0.86, 'monthly'),
-    entry('/birthday-invitation-wording', 0.86, 'monthly'),
-    entry('/griha-pravesh-invitation-wording', 0.85, 'monthly'),
-    entry('/namakaran-invitation-wording', 0.85, 'monthly'),
-    entry('/baby-shower-invitation-wording', 0.84, 'monthly'),
-    ...['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(c => entry(`/wedding-invitation/${c}`, 0.82)),
-    ...['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(c => entry(`/birthday-invitation/${c}`, 0.80)),
-    ...['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(c => entry(`/engagement-invitation/${c}`, 0.80)),
-    ...['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(c => entry(`/griha-pravesh-invitation/${c}`, 0.78)),
-    ...['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(c => entry(`/namakaran-invitation/${c}`, 0.76)),
-    entry('/templates', 0.88, 'weekly'),
-    entry('/partners', 0.75),
-    entry('/press', 0.72),
-    entry('/blog', 0.82, 'weekly'),
-    ...landingPages.map((page) => entry(`/${page.slug}`, 0.9)),
-    ...locationPages.map((page) => entry(`/${page.slug}`, 0.84)),
-    ...TEMPLATES.map((template) => entry(`/templates/${templateSeoSlug(template.id)}`, 0.82)),
-    ...templateCategories.map((category) => entry(`/templates/category/${templateCategorySlug(category)}`, 0.76)),
-    ...blogDrafts.map((post) => entry(`/blog/${post.slug}`, 0.72)),
-    ...blogCategories.map((category) => entry(`/blog/category/${categorySlug(category)}`, 0.68)),
+    entry('/templates', 0.90, 'weekly'),
+    entry('/blog', 0.85, 'weekly'),
+
+    // ─── Tier 2: Main category landing pages ──────────────────────────────────
+    entry('/digital-invitation', 0.88),
+    entry('/wedding-invitation', 0.88),
+    entry('/engagement-invitation', 0.84),
+    entry('/birthday-invitation', 0.82),
+    entry('/griha-pravesh-invitation', 0.80),
+    entry('/namakaran-invitation', 0.78),
+    entry('/anniversary-invitation', 0.78),
+
+    // ─── Tier 3: SEO landing pages (occasion-focused, unique content) ─────────
+    // These are the /[slug] pages from landingPages in seo-pages.ts.
+    // Each has unique occasion-specific body copy and FAQs — worth indexing.
+    ...landingPages.map((page) => entry(`/${page.slug}`, 0.76)),
+
+    // ─── Tier 4: City pages with substantial unique content ───────────────────
+    // Wedding city pages: 2 full unique paragraphs + traditions + venues per city.
+    ...INDEXED_CITIES.map((c) => entry(`/wedding-invitation/${c}`, 0.72)),
+    // Griha Pravesh city pages: 2 full unique paragraphs + traditions per city.
+    ...INDEXED_CITIES.map((c) => entry(`/griha-pravesh-invitation/${c}`, 0.70)),
+
+    // Birthday/Engagement city pages are intentionally excluded here.
+    // They are also noindexed at the page level until content is substantially improved.
+
+    // ─── Tier 5: Wording guides (high-value informational content) ────────────
+    entry('/wedding-invitation-wording', 0.74, 'monthly'),
+    entry('/engagement-invitation-wording', 0.72, 'monthly'),
+    entry('/birthday-invitation-wording', 0.72, 'monthly'),
+    entry('/griha-pravesh-invitation-wording', 0.70, 'monthly'),
+    entry('/namakaran-invitation-wording', 0.70, 'monthly'),
+    entry('/baby-shower-invitation-wording', 0.68, 'monthly'),
+
+    // ─── Tier 6: Individual template pages ────────────────────────────────────
+    ...TEMPLATES.map((template) => entry(`/templates/${templateSeoSlug(template.id)}`, 0.65)),
+
+    // ─── Tier 7: Blog posts (unique editorial content) ────────────────────────
+    ...blogDrafts.map((post) => entry(`/blog/${post.slug}`, 0.65)),
+
+    // ─── Tier 8: Supporting pages ─────────────────────────────────────────────
+    entry('/partners', 0.55),
+    entry('/press', 0.55),
+
+    // ─── Tier 9: Quality-gated user-created invitation pages ──────────────────
+    // Only paid events or events with approved guest wishes are included.
+    // Capped at 300 to preserve crawl budget for higher-value pages.
     ...publicInvites,
   ]
 }

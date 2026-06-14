@@ -6,7 +6,7 @@ export default function StickyCTA() {
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold text-ink">Create a WhatsApp-ready invitation</p>
-          <p className="hidden text-xs text-muted sm:block">Free to start with RSVP, wishes, maps, music, and gallery.</p>
+          <p className="text-xs text-muted">Free to start with RSVP, wishes, maps, music, and gallery.</p>
         </div>
         <div className="flex shrink-0 gap-2">
           <Link

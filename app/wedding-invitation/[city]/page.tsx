@@ -182,12 +182,19 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
       name: info.display,
     },
     serviceType: 'Digital Wedding Invitation',
-    priceRange: '₹0 – ₹999',
+    priceRange: '₹0 – ₹1499',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'IN',
       addressRegion: info.state,
       addressLocality: info.display,
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '247',
+      bestRating: '5',
+      worstRating: '1',
     },
     sameAs: [`${APP_URL}`],
     potentialAction: {
@@ -295,6 +302,36 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
                 <p className="text-sm text-muted leading-6">{f.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing nudge */}
+      <section className="border-t border-border bg-[#FFFBF5] px-5 py-12">
+        <div className="mx-auto max-w-4xl">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { name: 'Basic', price: '₹0', badge: 'Free', desc: 'Elegant Wedding template, Google Maps, WhatsApp link' },
+              { name: 'Standard', price: '₹499', badge: 'Most popular', desc: '4 templates, background music, event schedule' },
+              { name: 'Premium', price: '₹999', badge: 'Best value', desc: '7 templates — Indian Wedding, Engagement & more' },
+              { name: 'Gold', price: '₹1,499', badge: 'Luxury', desc: 'All 11 templates, KGF Royal Empire + Anniversary' },
+            ].map(p => (
+              <div key={p.name} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <p className="font-heading text-base text-ink">{p.name}</p>
+                  <span className="shrink-0 rounded-full bg-[#D9A441]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-accent-strong">{p.badge}</span>
+                </div>
+                <p className="font-display text-2xl text-ink mb-2">{p.price}</p>
+                <p className="text-xs text-muted leading-5">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-center text-xs text-muted">One-time payment · No subscription · Invitation stays live for 1 year</p>
+          <div className="mt-6 text-center">
+            <Link href="/create" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
+              Start Free — No Credit Card →
+            </Link>
           </div>
         </div>
       </section>

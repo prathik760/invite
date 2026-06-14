@@ -41,10 +41,17 @@ function getEventNames(data: Record<string, string>): string | undefined {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const event = await prisma.event.findUnique({ where: { slug: params.slug } }).catch(async (err: unknown) => {
-    if (shouldUseLocalStore(err)) return getLocalEventBySlug(params.slug)
-    throw err
-  })
+  // Include wish count so we can make an indexing quality decision without a second query.
+  const event = await prisma.event
+    .findUnique({
+      where: { slug: params.slug },
+      include: { _count: { select: { wishes: true } } },
+    })
+    .catch(async (err: unknown) => {
+      if (shouldUseLocalStore(err)) return getLocalEventBySlug(params.slug)
+      throw err
+    })
+
   if (!event) return { title: 'Invitation Not Found' }
 
   const data = event.data as Record<string, string>
@@ -52,9 +59,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = data.message || `You are cordially invited. Join us for a special celebration.`
   const url = `${APP_URL}/e/${params.slug}`
 
+  // Quality gate: index only events that have real engagement signals.
+  // - isPaid: host invested in the invitation → genuine event.
+  // - wishes ≥ 2: at least two guests interacted → real audience.
+  // All other events (empty drafts, test slugs, unused invites) stay noindexed
+  // to prevent thin UGC from diluting site-wide quality signals.
+  const wishCount = '_count' in event ? (event as { _count: { wishes: number } })._count.wishes : 0
+  const isPaid = 'isPaid' in event ? (event as { isPaid: boolean }).isPaid : false
+  const shouldIndex = isPaid || wishCount >= 2
+
   return {
     title,
     description,
+    robots: shouldIndex
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
     alternates: { canonical: url },
     openGraph: {
       title,

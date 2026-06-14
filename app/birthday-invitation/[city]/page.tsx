@@ -76,6 +76,10 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   return {
     title,
     description,
+    // Noindexed until each city page has substantially unique content (2+ paragraphs,
+    // city-specific traditions, pricing context). Currently only one sentence differs
+    // per city — thin enough to harm site quality signals if indexed.
+    robots: { index: false, follow: true },
     keywords: [
       `digital birthday invitation ${info.display}`,
       `online birthday invitation ${info.display}`,

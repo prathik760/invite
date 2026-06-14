@@ -523,6 +523,17 @@ export default function BlogPostPage({ params }: Props) {
           ))}
         </div>
 
+        {/* Inline CTA — mid-article conversion nudge */}
+        <div className="mt-10 flex items-center justify-between gap-4 rounded-2xl border border-[#D9A441]/35 bg-[#FFFBF5] px-6 py-5">
+          <div className="min-w-0">
+            <p className="font-heading text-base text-ink">Create your invitation in 5 minutes</p>
+            <p className="mt-1 text-xs text-muted">Free to start · WhatsApp-ready link · No app for guests</p>
+          </div>
+          <Link href="/create" className="gold-button shrink-0 rounded-full px-5 py-2.5 text-xs font-semibold">
+            Start Free →
+          </Link>
+        </div>
+
         {/* Quick checklist */}
         <div className="mt-10 rounded-lg border border-border bg-white p-6">
           <h2 className="font-heading text-xl text-ink">Quick checklist</h2>

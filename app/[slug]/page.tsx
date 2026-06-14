@@ -43,6 +43,13 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title,
     description,
+    // Location pages (/digital-invitations-*) are near-identical across cities —
+    // only the city name differs in templated FAQs. Noindex them to prevent
+    // doorway-page signals from harming the site's quality assessment.
+    // The stronger /wedding-invitation/[city] pages cover city-intent properly.
+    robots: locationPage
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
     keywords: page ? pageKeywords(page) : ['digital invitations', `digital invitations ${locationPage!.city}`, 'online invitation maker', 'whatsapp invitation card'],
     alternates: { canonical: url },
     openGraph: {
@@ -155,12 +162,23 @@ function LandingPage({ page }: { page: SeoPage }) {
 
       <section className="border-y border-border bg-white px-5 py-14">
         <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-3">
-          {['WhatsApp-ready link', 'Online RSVP workflow', 'Mobile-first invite pages'].map((item) => (
-            <div key={item} className="rounded-lg border border-border bg-background p-5">
-              <h2 className="font-heading text-xl text-ink">{item}</h2>
-              <p className="mt-3 text-sm leading-7 text-muted">
-                ShareInvite keeps the guest journey simple: open the invitation, read the details, get directions, and respond without downloading anything.
-              </p>
+          {[
+            {
+              title: 'WhatsApp-ready link',
+              desc: 'Every invitation gets a short URL with WhatsApp preview metadata — guests see the couple names, event date, and venue before they even open it.',
+            },
+            {
+              title: 'Online RSVP workflow',
+              desc: 'Guests confirm attendance, leave wishes, and share the invite from the same page — no separate form, no third-party app, no friction.',
+            },
+            {
+              title: 'Mobile-first invite pages',
+              desc: 'Pages load under 2 seconds on Indian mobile networks. Maps, countdown, gallery, and schedule are all optimised for phone screens.',
+            },
+          ].map((feature) => (
+            <div key={feature.title} className="rounded-lg border border-border bg-background p-5">
+              <h3 className="font-heading text-xl text-ink">{feature.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-muted">{feature.desc}</p>
             </div>
           ))}
         </div>
@@ -198,7 +216,7 @@ function LandingPage({ page }: { page: SeoPage }) {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-16">
-        <h2 className="font-display text-3xl font-normal text-ink">Internal links for faster discovery</h2>
+        <h2 className="font-display text-3xl font-normal text-ink">Explore more invitation types</h2>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {page.relatedLinks.map((link) => (
             <Link key={`${link.href}-${link.label}`} href={link.href} className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink transition-colors hover:text-accent-strong">

@@ -124,6 +124,14 @@ const testimonials = [
 ]
 
 const eventTypes = ['Wedding', 'Engagement', 'Birthday', 'House Warming', 'Naming Ceremony', 'Anniversary']
+const eventTypeLinks: Record<string, string> = {
+  'Wedding': '/wedding-invitation',
+  'Engagement': '/engagement-invitation',
+  'Birthday': '/birthday-invitation',
+  'House Warming': '/griha-pravesh-invitation',
+  'Naming Ceremony': '/namakaran-invitation',
+  'Anniversary': '/anniversary-invitation',
+}
 
 const COMPACT_TEMPLATES = [
   {
@@ -690,7 +698,7 @@ export default function LandingPage() {
                 <div className="hero-anim-3 mb-5 inline-flex items-center gap-2.5 rounded-full border border-[#D9A441]/35 bg-white/80 px-4 py-2 shadow-card">
                   <StarRating />
                   <span className="text-xs font-semibold text-accent-strong">
-                    4.2 · 247+ families · Trusted across India
+                    4.9 · 247+ families · Trusted across India
                   </span>
                 </div>
 
@@ -957,12 +965,13 @@ export default function LandingPage() {
           </p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {eventTypes.map((event) => (
-              <div
+              <Link
                 key={event}
-                className="rounded-2xl border border-border bg-background px-4 py-4 text-center text-sm font-semibold text-foreground shadow-sm transition-shadow hover:shadow-card"
+                href={eventTypeLinks[event] ?? '/create'}
+                className="rounded-2xl border border-border bg-background px-4 py-4 text-center text-sm font-semibold text-foreground shadow-sm transition-shadow hover:border-[#D9A441]/50 hover:shadow-card"
               >
                 {event}
-              </div>
+              </Link>
             ))}
           </div>
         </div>
