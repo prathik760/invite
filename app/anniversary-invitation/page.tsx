@@ -101,7 +101,7 @@ export default function AnniversaryInvitationPage() {
             <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=anniversary" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
 
@@ -121,7 +121,7 @@ export default function AnniversaryInvitationPage() {
             Create a beautiful digital anniversary invitation in minutes. Mark 25, 50, or any milestone year with a shareable WhatsApp link — complete with couple photos, story, countdown, and guest wishes.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
+            <Link href="/create?template=anniversary" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
               Create Anniversary Invite Free →
             </Link>
             <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
@@ -274,7 +274,7 @@ export default function AnniversaryInvitationPage() {
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Free Anniversary Invitation Today</h2>
           <p className="text-muted text-sm mb-7">Free to create · No credit card · WhatsApp-ready in 5 minutes</p>
-          <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
+          <Link href="/create?template=anniversary" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Anniversary Invite Free →
           </Link>
         </div>

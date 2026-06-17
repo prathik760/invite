@@ -78,7 +78,7 @@ export default function GrihaPraveshInvitationWordingPage() {
             <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=griha-pravesh" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
 
@@ -98,7 +98,7 @@ export default function GrihaPraveshInvitationWordingPage() {
             20+ ready-to-copy Griha Pravesh invitation messages for WhatsApp — formal, short, bilingual, and regional variants for Gruhapravesham and Ghar Pravesh ceremonies.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
+            <Link href="/create?template=griha-pravesh" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
               Create Griha Pravesh Invite Free →
             </Link>
             <span className="text-sm text-muted">No credit card · WhatsApp-ready link</span>
@@ -440,7 +440,7 @@ Your presence and blessings would make this occasion truly auspicious.`}</Wordin
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Griha Pravesh Invitation</h2>
           <p className="text-muted text-sm mb-7">Free to create · Muhurat time, map &amp; pooja schedule · WhatsApp-ready in 5 minutes</p>
-          <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
+          <Link href="/create?template=griha-pravesh" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Griha Pravesh Invite Free →
           </Link>
         </div>

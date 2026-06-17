@@ -100,7 +100,7 @@ export default function EngagementInvitationPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /></Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=indian-engagement" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
 
@@ -122,7 +122,7 @@ export default function EngagementInvitationPage() {
             Ready in 5 minutes. Free to start.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
+            <Link href="/create?template=indian-engagement" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
               Create Free Engagement Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · Live in 5 minutes</span>
@@ -245,7 +245,7 @@ export default function EngagementInvitationPage() {
           </div>
           <p className="mt-6 text-center text-xs text-muted">One-time payment · No subscription · Invitation stays live for 1 year</p>
           <div className="mt-6 text-center">
-            <Link href="/create" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
+            <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
               Start Free — Upgrade Anytime →
             </Link>
           </div>
@@ -278,7 +278,7 @@ export default function EngagementInvitationPage() {
           <p className="text-muted text-sm mb-7">
             Free to start. WhatsApp-ready in 5 minutes. Loved by Indian families.
           </p>
-          <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
+          <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Engagement Invite Free →
           </Link>
         </div>

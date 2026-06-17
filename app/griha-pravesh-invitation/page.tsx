@@ -102,7 +102,7 @@ export default function GrihaPraveshInvitationPage() {
             <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=griha-pravesh" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
 
@@ -122,7 +122,7 @@ export default function GrihaPraveshInvitationPage() {
             Create a beautiful digital Griha Pravesh invitation in minutes. Share the muhurat time, full pooja schedule, new address with Google Maps, and family blessings — all from one WhatsApp link. Free to start.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
+            <Link href="/create?template=griha-pravesh" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
               Create Free Griha Pravesh Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
@@ -219,7 +219,7 @@ export default function GrihaPraveshInvitationPage() {
             Create Your Free Griha Pravesh Invitation
           </h2>
           <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes. Loved by Indian families.</p>
-          <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
+          <Link href="/create?template=griha-pravesh" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Griha Pravesh Invite Free →
           </Link>
         </div>

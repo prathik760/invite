@@ -461,10 +461,24 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
   }
 }
 
+const CATEGORY_TEMPLATE: Record<string, string> = {
+  'Wedding': 'elegant-wedding',
+  'Wedding Trends': 'elegant-wedding',
+  'Engagement': 'indian-engagement',
+  'Birthday': 'indian-birthday',
+  'Housewarming': 'griha-pravesh',
+  'Namakaran': 'namakaran',
+  'Invitation Ideas': 'namakaran',
+  'Baby Shower': 'namakaran',
+  'Digital Invitations': 'elegant-wedding',
+  'Anniversary': 'anniversary',
+}
+
 export default function BlogPostPage({ params }: Props) {
   const post = findBlogPost(params.slug)
   if (!post) notFound()
 
+  const createHref = `/create?template=${CATEGORY_TEMPLATE[post.category] ?? 'elegant-wedding'}`
   const content = blogArticles[post.slug] ?? buildPostContent(post.keyword, post.category)
 
   const faqJsonLd = {
@@ -495,7 +509,7 @@ export default function BlogPostPage({ params }: Props) {
             <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
+          <Link href={createHref} className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
       <article className="mx-auto max-w-3xl px-5 py-14">
@@ -529,7 +543,7 @@ export default function BlogPostPage({ params }: Props) {
             <p className="font-heading text-base text-ink">Create your invitation in 5 minutes</p>
             <p className="mt-1 text-xs text-muted">Free to start · WhatsApp-ready link · No app for guests</p>
           </div>
-          <Link href="/create" className="gold-button shrink-0 rounded-full px-5 py-2.5 text-xs font-semibold">
+          <Link href={createHref} className="gold-button shrink-0 rounded-full px-5 py-2.5 text-xs font-semibold">
             Start Free →
           </Link>
         </div>
@@ -652,7 +666,7 @@ export default function BlogPostPage({ params }: Props) {
         <div className="mt-10 rounded-2xl border border-[#E8DCCD] bg-[#FFF9F2] p-7 text-center">
           <p className="font-heading text-lg text-ink">Ready to create your invitation?</p>
           <p className="mt-2 text-sm text-muted">Choose a template, fill in your details, and share on WhatsApp in under 5 minutes.</p>
-          <Link href="/create" className="gold-button mt-5 inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
+          <Link href={createHref} className="gold-button mt-5 inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
             Create Free Invitation →
           </Link>
         </div>

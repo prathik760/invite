@@ -101,7 +101,7 @@ export default function WeddingInvitationPage() {
             <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=elegant-wedding" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
 
@@ -123,7 +123,7 @@ export default function WeddingInvitationPage() {
             Your guests get directions, event schedule, photos, and more.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
+            <Link href="/create?template=elegant-wedding" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
               Create Free Wedding Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
@@ -183,7 +183,7 @@ export default function WeddingInvitationPage() {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Link href="/create" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
+            <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
               Choose a template & start free →
             </Link>
           </div>
@@ -240,7 +240,7 @@ export default function WeddingInvitationPage() {
           </div>
           <p className="mt-6 text-center text-xs text-muted">One-time payment · No subscription · Invitation stays live for 1 year</p>
           <div className="mt-6 text-center">
-            <Link href="/create" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
+            <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
               Start Free — Upgrade Anytime →
             </Link>
           </div>
@@ -290,7 +290,7 @@ export default function WeddingInvitationPage() {
             Create Your Free Digital Wedding Invitation
           </h2>
           <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes.</p>
-          <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
+          <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Wedding Invite Free →
           </Link>
         </div>
