@@ -22,7 +22,7 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title: `${post.title} | ShareInvite Blog`,
     description: post.description,
-    keywords: [post.keyword, 'digital invitation', 'online invitation maker', 'whatsapp invitation card', 'online RSVP'],
+    robots: { index: post.slug in blogArticles, follow: true },
     alternates: { canonical: url },
     openGraph: {
       title: post.title,

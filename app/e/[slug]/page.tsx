@@ -41,11 +41,18 @@ function getEventNames(data: Record<string, string>): string | undefined {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // Include wish count so we can make an indexing quality decision without a second query.
+  // Block the sentinel slug before hitting the DB — the page component returns notFound()
+  // for this slug, so its robots meta should also be noindex to prevent any mismatch.
+  if (params.slug === '__custom-requests__') {
+    return { robots: { index: false, follow: false } }
+  }
+
+  // Count only APPROVED wishes — raw submission count is not a quality signal because
+  // anyone can submit wishes without host review. This must match the sitemap query.
   const event = await prisma.event
     .findUnique({
       where: { slug: params.slug },
-      include: { _count: { select: { wishes: true } } },
+      include: { _count: { select: { wishes: { where: { isApproved: true } } } } },
     })
     .catch(async (err: unknown) => {
       if (shouldUseLocalStore(err)) return getLocalEventBySlug(params.slug)
@@ -56,17 +63,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const data = event.data as Record<string, string>
   const title = getEventTitle(data)
-  const description = data.message || `You are cordially invited. Join us for a special celebration.`
+  const description = data.message
+    ?? `${title}${data.venue ? ` at ${data.venue}` : ''}${data.date ? ` on ${data.date}` : ''}. RSVP and view details on ShareInvite.`
   const url = `${APP_URL}/e/${params.slug}`
 
-  // Quality gate: index only events that have real engagement signals.
+  // Quality gate: index only events with real engagement.
   // - isPaid: host invested in the invitation → genuine event.
-  // - wishes ≥ 2: at least two guests interacted → real audience.
-  // All other events (empty drafts, test slugs, unused invites) stay noindexed
-  // to prevent thin UGC from diluting site-wide quality signals.
-  const wishCount = '_count' in event ? (event as { _count: { wishes: number } })._count.wishes : 0
+  // - approvedWishes ≥ 2: at least two guests were approved → real audience.
+  const approvedWishCount = '_count' in event ? (event as { _count: { wishes: number } })._count.wishes : 0
   const isPaid = 'isPaid' in event ? (event as { isPaid: boolean }).isPaid : false
-  const shouldIndex = isPaid || wishCount >= 2
+  const shouldIndex = isPaid || approvedWishCount >= 2
 
   return {
     title,
@@ -158,7 +164,7 @@ export default async function EventPage({ params }: PageProps) {
     url: shareUrl,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    isAccessibleForFree: false,
+    isAccessibleForFree: true,
     inLanguage: 'en-IN',
   }
 

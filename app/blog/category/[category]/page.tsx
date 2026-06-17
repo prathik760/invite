@@ -17,7 +17,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!category) return {}
   const url = absoluteUrl(`/blog/category/${params.category}`)
   const title = `${category} Invitation Ideas | ShareInvite Blog`
-  const description = `Read ShareInvite drafts and guides for ${category.toLowerCase()} invitations, WhatsApp sharing, RSVP workflows, and digital invitation growth.`
+  const description = `Tips, ideas, and guides for ${category.toLowerCase()} invitations — WhatsApp sharing, wording samples, RSVP, and digital invitation inspiration for Indian families.`
 
   return {
     title,
@@ -61,7 +61,7 @@ export default function BlogCategoryPage({ params }: Props) {
         <div className="mx-auto max-w-7xl">
           <h1 className="font-display text-4xl font-normal text-ink sm:text-5xl">{category} Invitation Ideas</h1>
           <p className="mt-4 max-w-2xl text-base leading-8 text-muted">
-            Draft guides and internal-linking content for {category.toLowerCase()} invitation keywords, templates, and conversion journeys.
+            Ideas, wording samples, and practical guides for {category.toLowerCase()} invitations — from what to write to how to share on WhatsApp.
           </p>
           <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (

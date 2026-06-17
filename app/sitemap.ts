@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { blogDrafts } from '@/content/blog'
+import { blogArticles } from '@/content/blog-articles'
 import { landingPages } from '@/content/seo-pages'
 import { TEMPLATES } from '@/modules/templates/data'
 import { SITE_URL, templateSeoSlug } from '@/lib/seo'
@@ -19,9 +20,24 @@ function entry(
   }
 }
 
-// Only include user events that have real engagement signals:
-// either the host paid (isPaid=true) or guests left approved wishes.
-// Cap at 300 to avoid crawl budget dilution.
+// Slugs to exclude from the landingPages spread:
+// - gallery pages are already listed explicitly in Tier 2b with correct priorities
+// - naming-ceremony-invitations 301-redirects to /namakaran-invitation; a sitemap
+//   must never list a URL that redirects (GSC flags it as "Page with redirect")
+const SKIP_LANDING_SLUGS = new Set([
+  'wedding-invitations',
+  'engagement-invitations',
+  'birthday-invitations',
+  'anniversary-invitations',
+  'griha-pravesh-invitations',
+  'naming-ceremony-invitations',
+])
+
+// Quality-gated user invite pages.
+// Gate matches the page-level robots decision in app/e/[slug]/page.tsx:
+//   index = isPaid OR totalWishCount >= 2
+// Using >= 2 (not just "any approved wish") prevents single test-wish events
+// from leaking through. Fetch 600, post-filter, then cap at 300.
 async function getPublicInviteEntries(): Promise<MetadataRoute.Sitemap> {
   if (!process.env.DATABASE_URL) return []
 
@@ -35,17 +51,29 @@ async function getPublicInviteEntries(): Promise<MetadataRoute.Sitemap> {
           { wishes: { some: { isApproved: true } } },
         ],
       },
-      select: { slug: true, createdAt: true },
+      select: {
+        slug: true,
+        createdAt: true,
+        isPaid: true,
+        _count: { select: { wishes: { where: { isApproved: true } } } },
+      },
       orderBy: { createdAt: 'desc' },
-      take: 300,
+      take: 600,
     })
 
-    return events.map((event) => ({
-      url: `${SITE_URL}/e/${event.slug}`,
-      lastModified: event.createdAt,
-      changeFrequency: 'weekly' as const,
-      priority: 0.5,
-    }))
+    return events
+      .filter((event) => {
+        const isPaid = (event as { isPaid: boolean }).isPaid
+        const wishCount = (event as { _count: { wishes: number } })._count.wishes
+        return isPaid || wishCount >= 2
+      })
+      .slice(0, 300)
+      .map((event) => ({
+        url: `${SITE_URL}/e/${event.slug}`,
+        lastModified: event.createdAt,
+        changeFrequency: 'weekly' as const,
+        priority: 0.5,
+      }))
   } catch {
     return []
   }
@@ -85,7 +113,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ─── Tier 3: SEO landing pages (occasion-focused, unique content) ─────────
     // These are the /[slug] pages from landingPages in seo-pages.ts.
     // Each has unique occasion-specific body copy and FAQs — worth indexing.
-    ...landingPages.map((page) => entry(`/${page.slug}`, 0.76)),
+    ...landingPages
+      .filter((page) => !SKIP_LANDING_SLUGS.has(page.slug))
+      .map((page) => entry(`/${page.slug}`, 0.76)),
 
     // ─── Tier 4: City pages with substantial unique content ───────────────────
     // Wedding city pages: 2 full unique paragraphs + traditions + venues per city.
@@ -107,8 +137,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ─── Tier 6: Individual template pages ────────────────────────────────────
     ...TEMPLATES.map((template) => entry(`/templates/${templateSeoSlug(template.id)}`, 0.65)),
 
-    // ─── Tier 7: Blog posts (unique editorial content) ────────────────────────
-    ...blogDrafts.map((post) => entry(`/blog/${post.slug}`, 0.65)),
+    // ─── Tier 7: Blog posts — only hand-written articles, not auto-generated fallbacks ──
+    ...blogDrafts
+      .filter((post) => post.slug in blogArticles)
+      .map((post) => entry(`/blog/${post.slug}`, 0.65)),
 
     // ─── Tier 8: Supporting pages ─────────────────────────────────────────────
     entry('/partners', 0.55),
