@@ -102,7 +102,7 @@ export default function NamakaranInvitationPage() {
             <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=namakaran" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
 
@@ -122,7 +122,7 @@ export default function NamakaranInvitationPage() {
             Create a beautiful digital Namakaran invitation for your baby&apos;s naming ceremony in minutes. Share the muhurat time, ceremony schedule, venue map, and the baby&apos;s first photos — all from one WhatsApp link. Free to start.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
+            <Link href="/create?template=namakaran" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
               Create Free Namakaran Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
@@ -219,7 +219,7 @@ export default function NamakaranInvitationPage() {
             Create Your Free Digital Namakaran Invitation
           </h2>
           <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes.</p>
-          <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
+          <Link href="/create?template=namakaran" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Namakaran Invite Free →
           </Link>
         </div>

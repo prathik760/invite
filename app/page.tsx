@@ -94,8 +94,8 @@ const features = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
       </svg>
     ),
-    title: 'Guest wishes dashboard',
-    description: 'Collect guest messages, approve the best ones, and display them beautifully on the invite.',
+    title: 'Guest Wishes & Blessing Wall',
+    description: 'Guests leave a blessing directly on the invite. You approve it in your dashboard — and it appears live on the invitation for every other guest to see.',
   },
 ]
 
@@ -104,21 +104,21 @@ const testimonials = [
     quote: 'We shared the link on our wedding WhatsApp group and everyone loved it. The countdown and venue map made things so effortless for out-of-town guests.',
     name: 'Meera Krishnamurthy',
     event: 'Wedding · Bengaluru',
-    date: 'March 2025',
+    date: 'March 2026',
     avatar: 'https://i.pravatar.cc/96?img=47',
   },
   {
     quote: "Made our daughter's naming ceremony invite in under 10 minutes. No app downloads, no printing — just a beautiful link we forwarded to the whole family.",
     name: 'Suresh Iyer',
     event: 'Naming Ceremony · Chennai',
-    date: 'February 2025',
+    date: 'February 2026',
     avatar: 'https://i.pravatar.cc/96?img=57',
   },
   {
     quote: 'The gold design matched our theme perfectly. Guests kept asking how we made it — it felt so premium compared to the usual card images shared on WhatsApp.',
     name: 'Pooja Mehta',
     event: 'Birthday · Mumbai',
-    date: 'January 2025',
+    date: 'January 2026',
     avatar: 'https://i.pravatar.cc/96?img=44',
   },
 ]
@@ -1306,6 +1306,95 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ─── WISHES DEEP DIVE ─── */}
+      <section className="border-y border-border bg-white px-5 py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-16 lg:grid-cols-2 lg:items-stretch">
+
+            {/* Left: explanation */}
+            <div className="flex flex-col" data-animate>
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
+                Only on ShareInvite
+              </p>
+              <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl leading-tight">
+                Your Invitation Becomes a<br />
+                <span className="gradient-accent italic">Living Blessing Wall</span>
+              </h2>
+              <p className="mt-5 text-base leading-8 text-muted">
+                No other invitation platform does this. When someone opens your invite link, they can leave a personal wish or blessing for the couple — right on the invitation page itself.
+              </p>
+
+              <div className="mt-10 flex flex-col flex-1 justify-between">
+                <div className="flex gap-5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-heading text-sm font-bold text-white" style={{ background: '#7A3E4A' }}>1</div>
+                  <div>
+                    <p className="font-heading text-base text-ink">Guest opens the invite on WhatsApp</p>
+                    <p className="mt-1 text-sm leading-7 text-muted">They see the full invitation — venue map, photos, schedule, music. At the bottom they find a small wish section: <em className="text-foreground">&ldquo;Leave a blessing for the family.&rdquo;</em></p>
+                  </div>
+                </div>
+                <div className="flex gap-5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-heading text-sm font-bold text-white" style={{ background: '#7A3E4A' }}>2</div>
+                  <div>
+                    <p className="font-heading text-base text-ink">Guest types a personal wish</p>
+                    <p className="mt-1 text-sm leading-7 text-muted">They type their name and a message — takes 20 seconds. Even guests who can&apos;t attend in person can send a blessing that stays on the invitation forever.</p>
+                  </div>
+                </div>
+                <div className="flex gap-5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-heading text-sm font-bold text-white" style={{ background: '#7A3E4A' }}>3</div>
+                  <div>
+                    <p className="font-heading text-base text-ink">You approve it in your dashboard</p>
+                    <p className="mt-1 text-sm leading-7 text-muted">Every wish lands in your host dashboard. You review them — approve the ones you want displayed. Anything irrelevant stays hidden.</p>
+                  </div>
+                </div>
+                <div className="flex gap-5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-heading text-sm font-bold text-white" style={{ background: '#D9A441' }}>4</div>
+                  <div>
+                    <p className="font-heading text-base text-ink">Approved wishes appear live on the invitation</p>
+                    <p className="mt-1 text-sm leading-7 text-muted">Once approved, every other guest who opens the invite sees the blessing — like a public wall of love growing in real time as more family and friends wish.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: mock wish cards — stretches to match left height */}
+            <div className="flex flex-col pt-16 lg:pt-24" data-animate data-delay="1">
+              <div className="flex flex-1 flex-col rounded-2xl border border-border bg-[#FCF7F1] p-5 shadow-sm">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent-strong mb-4">Wishes on your invitation</p>
+                <div className="flex flex-1 flex-col justify-between gap-3">
+                  {[
+                    { name: 'Sharma Family, Delhi', msg: 'Wishing Rohan & Kavya a lifetime of love, laughter, and togetherness. So proud to see you both together — this was always meant to be.', color: '#7A3E4A' },
+                    { name: 'Priya Aunty', msg: 'Beta, may your home always be full of joy and your bond grow stronger every year. God bless you both!', color: '#2F766D' },
+                    { name: 'MBA Batchmates — Pune', msg: 'We always knew this would happen. Congratulations you two! The chai sessions and group projects finally led somewhere.', color: '#D9A441' },
+                    { name: 'Verma Uncle & Family', msg: 'Such a beautiful couple. Wishing you both all the happiness in the world. Can\'t wait to celebrate with you!', color: '#7A3E4A' },
+                  ].map((w, i) => (
+                    <div key={i} className="rounded-xl border border-[#E8DCCD] bg-white p-4 shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <div className="h-7 w-7 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0" style={{ background: w.color }}>
+                          {w.name[0]}
+                        </div>
+                        <span className="text-xs font-semibold text-ink">{w.name}</span>
+                        <span className="ml-auto flex items-center gap-1 rounded-full bg-[#2F766D]/10 px-2 py-0.5 text-[9px] font-semibold text-[#2F766D]">
+                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                          Approved
+                        </span>
+                      </div>
+                      <p className="text-xs leading-6 text-muted">{w.msg}</p>
+                    </div>
+                  ))}
+                  <div className="rounded-xl border border-dashed border-[#D9A441]/50 bg-[#FFFBF5] p-4">
+                    <p className="text-xs text-muted text-center">
+                      <span className="font-semibold text-accent-strong">+ 14 more wishes</span> from guests and family — visible to everyone who opens the invite
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="mt-3 text-center text-xs text-muted">Guests who can&apos;t attend in person leave a blessing that stays on the invitation — forever.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* ─── TESTIMONIALS ─── */}
       <section className="border-y border-border bg-white px-5 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
@@ -1318,7 +1407,7 @@ export default function LandingPage() {
             </h2>
             <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-[#D9A441]/25 bg-white px-5 py-2.5 shadow-sm">
               <StarRating />
-              <span className="text-sm font-semibold text-ink">4.2 out of 5</span>
+              <span className="text-sm font-semibold text-ink">4.9 out of 5</span>
               <span className="h-4 w-px bg-border" />
               <span className="text-sm text-muted">247+ verified reviews</span>
             </div>

@@ -75,6 +75,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry('/namakaran-invitation', 0.78),
     entry('/anniversary-invitation', 0.78),
 
+    // ─── Tier 2b: Template gallery pages (plural, browse/filter UX) ──────────
+    entry('/wedding-invitations', 0.85, 'weekly'),
+    entry('/engagement-invitations', 0.81),
+    entry('/birthday-invitations', 0.79),
+    entry('/anniversary-invitations', 0.75),
+    entry('/griha-pravesh-invitations', 0.75),
+
     // ─── Tier 3: SEO landing pages (occasion-focused, unique content) ─────────
     // These are the /[slug] pages from landingPages in seo-pages.ts.
     // Each has unique occasion-specific body copy and FAQs — worth indexing.

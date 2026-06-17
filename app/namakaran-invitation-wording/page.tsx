@@ -193,6 +193,24 @@ RSVP: [Phone Number]`}</WordingCard>
         </div>
       </section>
 
+      {/* CTA strip after baby boy messages */}
+      <section className="px-5 py-12 bg-[#FFF9F2] border-b border-border">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-[#D9A441]/30 bg-white p-8 flex flex-col sm:flex-row items-center gap-6 shadow-sm">
+          <div className="flex-1">
+            <p className="font-heading text-lg text-ink mb-1">Skip the plain WhatsApp text</p>
+            <p className="text-sm text-muted leading-7">
+              A digital Namakaran invitation does everything a WhatsApp message cannot — baby photos that load properly, a venue pin guests can tap to navigate, background music, and a guest wishes section where guests leave blessings directly on the invite.
+            </p>
+          </div>
+          <Link
+            href="/create?template=namakaran"
+            className="gold-button shrink-0 rounded-xl px-7 py-3.5 text-sm font-semibold whitespace-nowrap"
+          >
+            Create Namakaran Invite Free →
+          </Link>
+        </div>
+      </section>
+
       {/* Section 2: Baby Girl */}
       <section className="px-5 py-16 border-b border-border bg-white">
         <div className="mx-auto max-w-3xl">
@@ -412,6 +430,67 @@ Please join us for these precious first blessings.`}</WordingCard>
         </div>
       </section>
 
+      {/* What's inside a digital Namakaran invitation */}
+      <section className="px-5 py-16 border-b border-border bg-[#FFF9F2]">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">What a Digital Namakaran Invitation Includes</h2>
+          <p className="text-sm text-muted leading-7 mb-10">
+            A WhatsApp message tells guests the date and time. A ShareInvite digital invitation tells them everything — and lets them respond with a blessing.
+          </p>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-white p-6 shadow-sm">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(217,164,65,0.12)' }}>
+                <svg className="w-5 h-5" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+              </div>
+              <h3 className="font-heading text-base text-ink mb-2">Baby Photo Gallery</h3>
+              <p className="text-sm text-muted leading-6">Upload hospital homecoming photos and first-days-at-home pictures. Guests see the baby before they arrive — the invite feels personal and warm, not just a date reminder.</p>
+            </div>
+            <div className="rounded-2xl border border-border bg-white p-6 shadow-sm">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(217,164,65,0.12)' }}>
+                <svg className="w-5 h-5" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+                </svg>
+              </div>
+              <h3 className="font-heading text-base text-ink mb-2">Background Music</h3>
+              <p className="text-sm text-muted leading-6">Add a bhajan, a lullaby, or a family favourite that plays softly when guests open the invite. Small detail, big impression — nobody expects music in an invitation link.</p>
+            </div>
+            <div className="rounded-2xl border border-border bg-white p-6 shadow-sm">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(217,164,65,0.12)' }}>
+                <svg className="w-5 h-5" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+              </div>
+              <h3 className="font-heading text-base text-ink mb-2">Venue Map</h3>
+              <p className="text-sm text-muted leading-6">Google Maps pinned to the exact gate or entrance. Guests tap once and navigate directly — especially useful for ceremonies at home addresses in residential areas where guests might get confused.</p>
+            </div>
+            <div className="rounded-2xl border border-border bg-white p-6 shadow-sm" style={{ borderColor: 'rgba(217,164,65,0.4)' }}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: 'rgba(217,164,65,0.12)' }}>
+                <svg className="w-5 h-5" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>
+              </div>
+              <h3 className="font-heading text-base text-ink mb-2">Guest Wishes — The Blessing Wall</h3>
+              <p className="text-sm text-muted leading-6">
+                This is what makes ShareInvite different. When a guest opens the invitation, they can leave a blessing for the baby directly on the page. You see all wishes in your dashboard. Approve the ones you love, and they appear on the invitation for every other guest to see — &ldquo;Sharma Family: Wishing Baby Aryan a blessed and joyful life.&rdquo;
+              </p>
+              <p className="text-xs text-muted mt-2">Family members who can&apos;t attend can still be part of the celebration with a blessing that stays on the invite permanently.</p>
+            </div>
+          </div>
+          <div className="mt-8 text-center">
+            <Link
+              href="/create?template=namakaran"
+              className="gold-button inline-flex items-center rounded-full px-10 py-4 text-base font-semibold"
+            >
+              Create Your Namakaran Invitation Free →
+            </Link>
+            <p className="mt-3 text-xs text-muted">No credit card required · WhatsApp-ready link in minutes</p>
+          </div>
+        </div>
+      </section>
+
       {/* Related Links */}
       <section className="px-5 py-14 border-b border-border bg-white">
         <div className="mx-auto max-w-3xl">
@@ -429,7 +508,7 @@ Please join us for these precious first blessings.`}</WordingCard>
             <Link href="/blog/namakaran-invitation-ideas-for-baby-boys" className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors">
               Namakaran invitation ideas for baby boys →
             </Link>
-            <Link href="/create" className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors">
+            <Link href="/create?template=namakaran" className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors">
               Create Namakaran invitation free →
             </Link>
           </div>

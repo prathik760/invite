@@ -279,6 +279,18 @@ export default function CreatePage() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false)
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const tplParam = params.get('template')
+    if (tplParam) {
+      const tpl = TEMPLATES.find(t => t.id === tplParam)
+      if (tpl) {
+        setSelectedId(tpl.id)
+        setData(tpl.config.defaultData)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     if (!session) return
     fetch('/api/user/subscription')
       .then(r => r.json())

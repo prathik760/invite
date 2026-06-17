@@ -130,7 +130,7 @@ export default function TemplateSeoPage({ params }: Props) {
       <header className="border-b border-border bg-white px-5 py-5">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /></Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Use Template</Link>
+          <Link href={`/create?template=${template.id}`} className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Use Template</Link>
         </div>
       </header>
       <section className="px-5 py-14">
@@ -149,7 +149,7 @@ export default function TemplateSeoPage({ params }: Props) {
               <span className="text-xs text-muted">· {plan.name} plan · No subscription</span>
             </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/create" className="gold-button rounded-full px-9 py-4 text-center text-base font-semibold">Create Invitation</Link>
+              <Link href={`/create?template=${template.id}`} className="gold-button rounded-full px-9 py-4 text-center text-base font-semibold">Create Invitation</Link>
               <Link href="/templates" className="rounded-full border border-border bg-white px-9 py-4 text-center text-base font-semibold text-ink">All Templates</Link>
             </div>
           </div>

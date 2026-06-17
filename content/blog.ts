@@ -13,7 +13,7 @@ export const blogCategories = [
 
 export type BlogCategory = (typeof blogCategories)[number]
 
-const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string }> = [
+const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string }> = [
   { title: 'Best Digital Wedding Invitation Templates in India', category: 'Wedding', keyword: 'digital wedding invitation templates India' },
   { title: 'How To Create A WhatsApp Wedding Invitation', category: 'Wedding', keyword: 'WhatsApp wedding invitation' },
   { title: 'Digital Wedding Invitation Vs Printed Cards', category: 'Digital Invitations', keyword: 'digital wedding invitation vs printed cards' },
@@ -64,6 +64,13 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'Housewarming Pooja Schedule Invitation Guide', category: 'Housewarming', keyword: 'housewarming pooja schedule invitation' },
   { title: 'Engagement Invitation Checklist For Families', category: 'Engagement', keyword: 'engagement invitation checklist' },
   { title: 'Digital Invitation Trends For Indian Events', category: 'Wedding Trends', keyword: 'digital invitation trends India' },
+  {
+    title: 'My College Friend Got Engaged — His WhatsApp Digital Invitation Left Everyone Speechless',
+    category: 'Engagement',
+    keyword: 'digital engagement invitation WhatsApp India',
+    date: '2026-02-14',
+    description: 'A real story about a college friend\'s surprise engagement — and how a digital WhatsApp invitation on ShareInvite impressed the entire friend group and both families at a fraction of what anyone expected to pay.',
+  },
 ]
 
 export type BlogDraft = {
@@ -100,10 +107,12 @@ function buildDescription(title: string, keyword: string, category: BlogCategory
 }
 
 export const blogDrafts: BlogDraft[] = draftTitles.map((item, index) => ({
-  ...item,
   slug: slugify(item.title),
-  description: buildDescription(item.title, item.keyword, item.category),
-  date: `2026-05-${String((index % 28) + 1).padStart(2, '0')}`,
+  title: item.title,
+  category: item.category,
+  keyword: item.keyword,
+  description: item.description ?? buildDescription(item.title, item.keyword, item.category),
+  date: item.date ?? `2026-05-${String((index % 28) + 1).padStart(2, '0')}`,
   status: 'draft',
 }))
 

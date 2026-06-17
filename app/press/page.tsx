@@ -24,7 +24,8 @@ export const metadata: Metadata = {
 }
 
 const facts = [
-  { label: 'Founded', value: '2024' },
+  { label: 'Founded', value: '2026' },
+  { label: 'Founder', value: 'Prathik Thelkar' },
   { label: 'Headquarters', value: 'India' },
   { label: 'Focus market', value: 'Indian weddings & events' },
   { label: 'Invitation types', value: 'Wedding, Engagement, Birthday, Griha Pravesh, Namakaran & more' },
@@ -86,13 +87,13 @@ export default function PressPage() {
           <h2 className="font-display font-normal text-3xl text-ink mb-6">About ShareInvite</h2>
           <div className="space-y-5 text-base leading-8 text-muted">
             <p>
-              ShareInvite is an Indian digital invitation platform that lets families create beautiful invitation websites for weddings, engagements, birthdays, Griha Pravesh, Namakaran, and other life events — and share them instantly on WhatsApp.
+              ShareInvite was founded in 2026 by <strong className="text-ink font-semibold">Prathik Thelkar</strong> with one straightforward observation: Indian families were spending thousands on printed wedding cards while the link they actually shared with guests was a blurry WhatsApp image. There had to be a better way.
             </p>
             <p>
-              Indian families have long relied on printed cards and image files to share event invitations. ShareInvite replaces both with a live, interactive invitation page that includes Google Maps directions, a ceremony schedule, a photo gallery, background music, a countdown timer, and guest wishes — all from a single shareable link.
+              ShareInvite is an Indian digital invitation platform that lets families create beautiful invitation websites for weddings, engagements, birthdays, Griha Pravesh, Namakaran, and all life events — and share them instantly on WhatsApp. One link. Everything guests need: venue map, ceremony schedule, photo gallery, background music, countdown, and a wishes section where family can leave blessings.
             </p>
             <p>
-              The platform is designed specifically for the Indian market: WhatsApp-first sharing, regional ceremony name support (Roka, Mangni, Nishchayathartham, Griha Pravesh, Gruhapravesham, Godh Bharai, Namakaran, and more), multilingual support, and mobile-optimised invitation pages that load fast on Indian network conditions.
+              The platform is built specifically for the Indian market: WhatsApp-first sharing, regional ceremony name support (Roka, Mangni, Nishchayathartham, Griha Pravesh, Gruhapravesham, Godh Bharai, Namakaran, and more), and mobile-optimised pages that load quickly across Indian network conditions. Prathik built ShareInvite after watching families navigate the gap between how much care went into planning a celebration and how little that showed in the way invitations were shared.
             </p>
           </div>
         </div>
