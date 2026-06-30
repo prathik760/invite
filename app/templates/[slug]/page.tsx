@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -129,7 +130,7 @@ export default function TemplateSeoPage({ params }: Props) {
       />
       <header className="border-b border-border bg-white px-5 py-5">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <Link href="/"><img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /></Link>
+          <Link href="/"><Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /></Link>
           <Link href={`/create?template=${template.id}`} className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Use Template</Link>
         </div>
       </header>

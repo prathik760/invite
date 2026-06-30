@@ -88,9 +88,18 @@ export const metadata: Metadata = {
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${APP_URL}/#organization`,
   name: 'ShareInvite',
   url: APP_URL,
-  logo: `${APP_URL}/logo1.png`,
+  logo: {
+    '@type': 'ImageObject',
+    '@id': `${APP_URL}/#logo`,
+    url: `${APP_URL}/logo1.png`,
+    contentUrl: `${APP_URL}/logo1.png`,
+    width: 512,
+    height: 512,
+    caption: 'ShareInvite',
+  },
   description: 'Digital invitation website builder for Indian weddings, birthdays, and family events.',
   foundingDate: '2024',
   areaServed: { '@type': 'Country', name: 'India' },
@@ -108,12 +117,17 @@ const orgSchema = {
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${APP_URL}/#website`,
   name: 'ShareInvite',
   url: APP_URL,
   description: 'Digital invitation website builder for Indian weddings and events.',
+  publisher: { '@id': `${APP_URL}/#organization` },
   potentialAction: {
     '@type': 'SearchAction',
-    target: `${APP_URL}/templates?q={search_term_string}`,
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${APP_URL}/templates?q={search_term_string}`,
+    },
     'query-input': 'required name=search_term_string',
   },
 }

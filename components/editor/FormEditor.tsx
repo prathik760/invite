@@ -10,6 +10,8 @@ interface FormEditorProps {
   data: Record<string, string>
   onChange: (data: Record<string, string>) => void
   compact?: boolean
+  /** When provided, only the specified section groups are rendered */
+  sections?: Array<'people' | 'details' | 'enrich'>
 }
 
 interface ScheduleRow { id: string; name: string; time: string }
@@ -560,7 +562,8 @@ const MusicUploader = memo(function MusicUploader({ initial, onChange }: { initi
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export default function FormEditor({ config, data, onChange, compact = false }: FormEditorProps) {
+export default function FormEditor({ config, data, onChange, compact = false, sections }: FormEditorProps) {
+  const show = (group: 'people' | 'details' | 'enrich') => !sections || sections.includes(group)
   const handleChange = useCallback((key: string, value: string) => {
     onChange({ ...data, [key]: value })
   }, [data, onChange])
@@ -617,7 +620,7 @@ export default function FormEditor({ config, data, onChange, compact = false }: 
       )}
 
       {/* 1. People */}
-      {(grouped.people.length > 0 || grouped.images.length > 0) && (
+      {show('people') && (grouped.people.length > 0 || grouped.images.length > 0) && (
         <Section number={n()} label={peopleLabel}>
           {grouped.images.length > 0 && (
             <div className="flex justify-center gap-6 pb-3 border-b border-border/40 mb-1">
@@ -642,7 +645,7 @@ export default function FormEditor({ config, data, onChange, compact = false }: 
       )}
 
       {/* 2. When & Where */}
-      {grouped.whenWhere.length > 0 && (
+      {show('details') && grouped.whenWhere.length > 0 && (
         <Section number={n()} label="When &amp; Where" hint="Date, time, location, and dress expectations.">
           <div className="space-y-4">
             {/* Date + Time side by side */}
@@ -669,28 +672,28 @@ export default function FormEditor({ config, data, onChange, compact = false }: 
       )}
 
       {/* 3. Event Schedule */}
-      {grouped.scheduleField && (
+      {show('details') && grouped.scheduleField && (
         <Section number={n()} label="Event Schedule" hint="Build your event timeline — each row is one moment.">
           <ScheduleEditor initial={data['schedule'] ?? ''} onChange={v => handleChange('schedule', v)} />
         </Section>
       )}
 
       {/* 4. Photo Gallery */}
-      {grouped.galleryField && (
+      {show('enrich') && grouped.galleryField && (
         <Section number={n()} label="Photo Gallery" hint="Add beautiful photos that appear in the invitation slideshow.">
           <GalleryUploader initial={data['galleryImages'] ?? ''} onChange={v => handleChange('galleryImages', v)} />
         </Section>
       )}
 
       {/* 5. Background Music */}
-      {grouped.musicField && (
+      {show('enrich') && grouped.musicField && (
         <Section number={n()} label="Background Music" hint="A song that plays softly as guests view the invite.">
           <MusicUploader initial={data['musicUrl'] ?? ''} onChange={v => handleChange('musicUrl', v)} />
         </Section>
       )}
 
       {/* 6. Personal Note */}
-      {grouped.extras.map(field => (
+      {show('enrich') && grouped.extras.map(field => (
         <Section key={field.key} number={n()} label="Personal Note" hint="A heartfelt message from you to your guests.">
           <div>
             <textarea

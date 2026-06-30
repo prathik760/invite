@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -70,11 +71,11 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   const info = CITIES[city]
   if (!info) return {}
 
-  const title = `Digital Birthday Invitation in ${info.display} | Free Online Birthday E-Invite | ShareInvite`
-  const description = `Create a beautiful digital birthday invitation for your ${info.display} party in 5 minutes. WhatsApp-ready link, live countdown, Google Maps, photo gallery & guest wishes. Free to start.`
+  const ogTitle = `Digital Birthday Invitation in ${info.display} | ShareInvite`
+  const description = `Create a digital birthday invitation for your ${info.display} party — WhatsApp link with countdown, Google Maps & photo gallery. Free to start.`
 
   return {
-    title,
+    title: { absolute: ogTitle },
     description,
     // Noindexed until each city page has substantially unique content (2+ paragraphs,
     // city-specific traditions, pricing context). Currently only one sentence differs
@@ -92,7 +93,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     ],
     alternates: { canonical: `${APP_URL}/birthday-invitation/${city}` },
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       type: 'website',
       locale: 'en_IN',
@@ -144,7 +145,7 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -247,7 +248,7 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

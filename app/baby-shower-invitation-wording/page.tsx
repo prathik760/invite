@@ -1,10 +1,14 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import WordingCopyCard from '@/components/wording/WordingCopyCard'
+import MidPageCTA from '@/components/wording/MidPageCTA'
+import StickyCTA from '@/components/wording/StickyCTA'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Baby Shower & Godh Bharai Invitation Wording India | ShareInvite',
+  title: { absolute: 'Baby Shower & Godh Bharai Invitation Wording | ShareInvite' },
   description:
     '20+ baby shower invitation messages for India — Godh Bharai, Seemantham, modern baby shower. WhatsApp-ready wording. Free digital invite.',
   alternates: { canonical: `${APP_URL}/baby-shower-invitation-wording` },
@@ -56,16 +60,6 @@ const faqSchema = {
   ],
 }
 
-function WordingCard({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl border border-border bg-[#FFFBF5] p-5 my-4 relative">
-      <span className="absolute top-3 right-3 rounded-full bg-[#D9A441]/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#7A5C1E]">
-        Copy
-      </span>
-      <p className="text-sm text-foreground leading-7 pr-16 whitespace-pre-line">{children}</p>
-    </div>
-  )
-}
 
 export default function BabyShowerInvitationWordingPage() {
   return (
@@ -75,12 +69,13 @@ export default function BabyShowerInvitationWordingPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
+      <StickyCTA href="/create" text="Create Free Baby Shower Invite →" />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
@@ -115,7 +110,7 @@ export default function BabyShowerInvitationWordingPage() {
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">1. Traditional North Indian formal</h3>
-          <WordingCard>{`With the blessings of our family and the grace of the Almighty,
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`With the blessings of our family and the grace of the Almighty,
 we joyfully invite you to the
 
 Godh Bharai Ceremony
@@ -130,20 +125,20 @@ A ladies-only ceremony with puja, shagun, and lunch.
 Your blessings for the soon-to-arrive little one are our greatest joy.
 
 — [Host Family Names]
-RSVP: [Phone Number]`}</WordingCard>
+RSVP: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Simple WhatsApp group message</h3>
-          <WordingCard>{`[Mother-to-be's Name]'s Godh Bharai is here!
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`[Mother-to-be's Name]'s Godh Bharai is here!
 
 Date: [Date] at [Time]
 Venue: [Venue, City]
 
 Come bless her and the little one on the way 💛
 Ladies, please do join us!
-Details & map 👉 [Digital Invite Link]`}</WordingCard>
+Details & map 👉 [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Joint family hosted — both sets of parents named</h3>
-          <WordingCard>{`[Maternal Grandmother's Name] & [Maternal Grandfather's Name]
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`[Maternal Grandmother's Name] & [Maternal Grandfather's Name]
 along with
 [Paternal Grandmother's Name] & [Paternal Grandfather's Name]
 
@@ -157,10 +152,10 @@ Venue: [Address, City]
 
 Puja | Godh Bharai ritual | Lunch
 Your presence and blessings would make this day truly special.
-RSVP: [Phone Number]`}</WordingCard>
+RSVP: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">4. With dress code note — yellow / green traditional</h3>
-          <WordingCard>{`The wait is almost over — and we are celebrating!
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`The wait is almost over — and we are celebrating!
 
 Godh Bharai for [Mother-to-be's Name]
 
@@ -171,10 +166,10 @@ Dress code: Yellow & Green traditional attire preferred 💛
 (or any festive colour you love)
 
 Ladies only | Puja, shagun & lunch
-RSVP to [Name] at [Phone Number]`}</WordingCard>
+RSVP to [Name] at [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">5. Bilingual Hindi / English</h3>
-          <WordingCard>{`गोद भराई का मंगल अवसर!
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`गोद भराई का मंगल अवसर!
 
 [Mother-to-be's Name] की गोद भराई पर आप सभी को सादर आमंत्रित किया जाता है।
 
@@ -184,9 +179,22 @@ RSVP to [Name] at [Phone Number]`}</WordingCard>
 पूजा, गोद भराई रस्म और भोजन — सभी महिलाओं का स्वागत है।
 
 Godh Bharai celebration — ladies, please join us with your blessings!
-Invite & map: [Digital Invite Link]`}</WordingCard>
+Invite & map: [Digital Invite Link]`}</WordingCopyCard>
         </div>
       </section>
+
+      {/* MidPage CTA 1 */}
+      <div className="px-5">
+        <div className="mx-auto max-w-3xl">
+          <MidPageCTA
+            headline="Those [Digital Invite Link] placeholders? Replace them with one tap to Google Maps."
+            body="Each message above has a [Digital Invite Link] slot. That's a real page on ShareInvite — with venue address, Google Maps, and RSVP built in. Create yours free."
+            features={['Venue address + Google Maps pin', 'RSVP so you know headcount', 'Ceremony schedule included', 'WhatsApp-ready in 5 minutes']}
+            ctaHref="/create"
+            ctaText="Create Baby Shower Invite Free →"
+          />
+        </div>
+      </div>
 
       {/* Section 2: Seemantham */}
       <section className="px-5 py-16 border-b border-border bg-white">
@@ -197,7 +205,7 @@ Invite & map: [Digital Invite Link]`}</WordingCard>
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">1. Tamil Seemantham formal</h3>
-          <WordingCard>{`With the blessings of Sri [Family Deity],
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`With the blessings of Sri [Family Deity],
 [Host Family Name(s)]
 cordially invite you to the
 
@@ -212,10 +220,10 @@ Venue: [Venue Name, Address, City]
 
 Puja | Seemantham ritual | Lunch follows
 We seek your blessings for the mother and child.
-RSVP: [Phone Number]`}</WordingCard>
+RSVP: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Telugu Seemantham</h3>
-          <WordingCard>{`Sri [Kula Devata] Thiruvadigale Saranam
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`Sri [Kula Devata] Thiruvadigale Saranam
 
 [Father-in-law's Name] & [Mother-in-law's Name]
 along with
@@ -230,10 +238,10 @@ Muhurtam: [Time] on [Date]
 Venue: [Venue, Address, City]
 
 Satyanarayan Puja — [Time] | Seemantham — [Time] | Lunch — [Time]
-Your presence and blessings are our joy.`}</WordingCard>
+Your presence and blessings are our joy.`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Simple English for non-Telugu / Tamil guests</h3>
-          <WordingCard>{`[Mother-to-be's Name]'s Baby Blessing Ceremony (Seemantham)
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`[Mother-to-be's Name]'s Baby Blessing Ceremony (Seemantham)
 
 Date: [Date] at [Time]
 Venue: [Venue, Address, City]
@@ -243,13 +251,13 @@ All are welcome to join for the puja and lunch.
 Ladies traditionally participate in the main ceremony.
 
 RSVP: [Phone Number]
-Details & map: [Digital Invite Link]`}</WordingCard>
+Details & map: [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Short WhatsApp message with link</h3>
-          <WordingCard>{`[Mother-to-be's Name]'s Seemantham is on [Date]!
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`[Mother-to-be's Name]'s Seemantham is on [Date]!
 Time: [Time] | Venue: [Venue, City]
 Puja + lunch — ladies, please join us 🙏
-Full invite & map 👉 [Digital Invite Link]`}</WordingCard>
+Full invite & map 👉 [Digital Invite Link]`}</WordingCopyCard>
         </div>
       </section>
 
@@ -262,7 +270,7 @@ Full invite & map 👉 [Digital Invite Link]`}</WordingCard>
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">1. English modern — themed</h3>
-          <WordingCard>{`A little one is on the way — and we're celebrating!
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`A little one is on the way — and we're celebrating!
 
 Baby Shower for [Mother-to-be's Name]
 
@@ -273,10 +281,10 @@ Theme: [Little Prince / Little Princess / Jungle / Stars & Moon / etc.]
 Games, cake, gifts, and lots of love!
 
 RSVP by [Date] to [Name] at [Phone Number]
-Full invite: [Digital Invite Link]`}</WordingCard>
+Full invite: [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Co-ed baby shower — both genders</h3>
-          <WordingCard>{`[Mother-to-be's Name] & [Father-to-be's Name]
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`[Mother-to-be's Name] & [Father-to-be's Name]
 are expecting — and you're invited to celebrate!
 
 Co-ed Baby Shower
@@ -285,10 +293,10 @@ Venue: [Venue, Address]
 
 Everyone welcome — games, food, and baby predictions!
 RSVP to [Phone Number] by [Date]
-Invite: [Digital Invite Link]`}</WordingCard>
+Invite: [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Intimate home gathering</h3>
-          <WordingCard>{`We're keeping it small and sweet — just our closest people.
+          <WordingCopyCard ctaHref="/baby-shower-invitations">{`We're keeping it small and sweet — just our closest people.
 
 A baby shower for [Mother-to-be's Name]
 at [Host's Name]'s home
@@ -297,9 +305,22 @@ Date: [Date] | Time: [Time]
 Address: [Full Address, City]
 
 Limited seats — please RSVP to [Phone Number] by [Date].
-Gifts optional — your presence is the present!`}</WordingCard>
+Gifts optional — your presence is the present!`}</WordingCopyCard>
         </div>
       </section>
+
+      {/* MidPage CTA 2 */}
+      <div className="px-5">
+        <div className="mx-auto max-w-3xl">
+          <MidPageCTA
+            headline="Stop typing the address twice. Send a link — guests RSVP, you get the headcount."
+            body="Know exactly how many people are coming before the event. No more vague confirmations with 3 yes replies and 7 no-shows. A digital invite with RSVP tracks it all."
+            features={['Real RSVP with name and count', 'Automated reminder 1 day before', 'WhatsApp share in one tap', 'Free plan — no credit card']}
+            ctaHref="/create"
+            ctaText="Create Free Baby Shower Invite →"
+          />
+        </div>
+      </div>
 
       {/* Section 4: Tone Matching */}
       <section className="px-5 py-16 border-b border-border bg-white">
@@ -426,7 +447,7 @@ Gifts optional — your presence is the present!`}</WordingCard>
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

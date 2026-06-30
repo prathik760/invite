@@ -1,10 +1,13 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import MidPageCTA from '@/components/wording/MidPageCTA'
+import StickyCTA from '@/components/wording/StickyCTA'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Engagement & Roka Invitation Wording India | ShareInvite',
+  title: { absolute: 'Engagement & Roka Invitation Wording India | ShareInvite' },
   description:
     '25+ engagement invitation messages for Roka, Sagai, Mangni & ring ceremony. Copy-ready wording for WhatsApp. Free digital invite included.',
   keywords: [
@@ -74,7 +77,7 @@ export default function EngagementInvitationWordingPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create?template=indian-engagement" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -188,6 +191,24 @@ export default function EngagementInvitationWordingPage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* Mid-page CTA 1 */}
+      <section className="px-5 py-2 border-b border-border bg-white">
+        <div className="mx-auto max-w-4xl">
+          <MidPageCTA
+            headline="Make your engagement announcement as beautiful as the moment"
+            body="A WhatsApp text disappears in the chat. A digital invite link can be reopened any time — guests check the venue map, confirm the ring ceremony time, and RSVP without calling you."
+            features={[
+              'Ring ceremony schedule & timeline',
+              'Couple photos & gallery',
+              'Tap-to-open Google Maps',
+              'RSVP — track who confirmed',
+            ]}
+            ctaHref="/engagement-invitation"
+            ctaText="Create Engagement Invite Free →"
+          />
         </div>
       </section>
 
@@ -316,6 +337,24 @@ export default function EngagementInvitationWordingPage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* Mid-page CTA 2 */}
+      <section className="px-5 py-2 border-b border-border">
+        <div className="mx-auto max-w-4xl">
+          <MidPageCTA
+            headline="One link. Every guest. All the details — without the phone calls."
+            body="Create a digital engagement invite once. Share the same link across family groups, friend circles, and office colleagues. Everyone sees the updated details; you answer zero repeated questions."
+            features={[
+              'One link works for all groups',
+              'Update details without resharing',
+              'No app install for guests',
+              'Free to create and share',
+            ]}
+            ctaHref="/engagement-invitation"
+            ctaText="Get Your Engagement Invite Link →"
+          />
         </div>
       </section>
 
@@ -463,9 +502,11 @@ export default function EngagementInvitationWordingPage() {
         </div>
       </section>
 
+      <StickyCTA href="/engagement-invitation" text="Create Engagement Invite Free →" />
+
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import PricingSection from '@/components/landing/PricingSection'
@@ -5,13 +6,14 @@ import FAQAccordion from '@/components/landing/FAQAccordion'
 import CustomRequestSection from '@/components/landing/CustomRequestSection'
 import MobileNav from '@/components/landing/MobileNav'
 import StickyMobileCTA from '@/components/landing/StickyMobileCTA'
+import { DemoPreviewArea, DemoViewButton } from '@/components/landing/DemoTrigger'
 import { PLANS } from '@/lib/plans'
 import { UsersIcon } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
-  title: 'Free Digital Invitation Maker India | ShareInvite',
+  title: { absolute: 'Free Digital Invitation Maker for India | ShareInvite' },
   description:
-    'Free digital wedding invitation maker for India. Share a WhatsApp link with RSVP, gallery, live countdown & Google Maps. Ready in 5 minutes.',
+    'Create digital invitations for Indian weddings, birthdays & events. Share a WhatsApp link with RSVP, photo gallery & live countdown. Free plan available.',
   keywords: [
     'digital invitation maker',
     'free digital invitation maker India',
@@ -136,9 +138,10 @@ const eventTypeLinks: Record<string, string> = {
 const COMPACT_TEMPLATES = [
   {
     id: 'indian-birthday',
+    demoHref: '/demo/indian-birthday',
     name: 'Janamdin — Birthday',
     tagline: 'Festive cinematic',
-    plan: { label: 'Standard', color: '#B87924', bg: 'rgba(184,121,36,0.14)', border: '1px solid rgba(184,121,36,0.3)' },
+    plan: { label: 'Starter', price: '₹299', color: '#B87924', bg: 'rgba(184,121,36,0.14)', border: '1px solid rgba(184,121,36,0.3)' },
     eventType: 'Birthday Invitation',
     sampleName: 'Arjun',
     sampleSub: 'Turns 25',
@@ -155,9 +158,10 @@ const COMPACT_TEMPLATES = [
   },
   {
     id: 'namakaran',
+    demoHref: '/demo/namakaran',
     name: 'Namakaran Ceremony',
     tagline: 'Celestial naming ritual',
-    plan: { label: 'Standard', color: '#B87924', bg: 'rgba(184,121,36,0.14)', border: '1px solid rgba(184,121,36,0.3)' },
+    plan: { label: 'Starter', price: '₹299', color: '#B87924', bg: 'rgba(184,121,36,0.14)', border: '1px solid rgba(184,121,36,0.3)' },
     eventType: 'Naming Ceremony',
     sampleName: 'Aarav',
     sampleSub: "Baby's First Name",
@@ -174,9 +178,10 @@ const COMPACT_TEMPLATES = [
   },
   {
     id: 'indian-wedding',
+    demoHref: '/demo/indian-wedding',
     name: 'Shaadi — Indian Wedding',
     tagline: 'Rich traditional ceremony',
-    plan: { label: 'Premium', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
+    plan: { label: 'Pro', price: '₹599', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
     eventType: 'Indian Wedding',
     sampleName: 'Priya & Rahul',
     sampleSub: 'Sacred Union',
@@ -193,9 +198,10 @@ const COMPACT_TEMPLATES = [
   },
   {
     id: 'indian-engagement',
+    demoHref: '/demo/indian-engagement',
     name: 'Mangni — Engagement',
     tagline: 'Romantic rose ceremony',
-    plan: { label: 'Premium', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
+    plan: { label: 'Pro', price: '₹599', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
     eventType: 'Engagement Ceremony',
     sampleName: 'Isha & Dev',
     sampleSub: 'The Beginning',
@@ -212,9 +218,10 @@ const COMPACT_TEMPLATES = [
   },
   {
     id: 'griha-pravesh',
+    demoHref: '/demo/griha-pravesh',
     name: 'Griha Pravesh',
     tagline: 'Auspicious housewarming',
-    plan: { label: 'Premium', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
+    plan: { label: 'Pro', price: '₹599', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
     eventType: 'House Warming',
     sampleName: 'The Mehta Family',
     sampleSub: 'New Beginnings',
@@ -231,9 +238,10 @@ const COMPACT_TEMPLATES = [
   },
   {
     id: 'anniversary',
+    demoHref: '/demo/anniversary',
     name: 'Saalgirah — Anniversary',
     tagline: 'Cinematic love story',
-    plan: { label: 'Gold', color: '#C9A84C', bg: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.3)' },
+    plan: { label: 'All Access', price: '₹999', color: '#C9A84C', bg: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.3)' },
     eventType: 'Anniversary',
     sampleName: 'Meera & Vivek',
     sampleSub: '25 Years Together',
@@ -653,7 +661,7 @@ export default function LandingPage() {
             aria-label="ShareInvite home"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
             <span className="font-display text-xl sm:text-2xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <nav
@@ -662,7 +670,7 @@ export default function LandingPage() {
           >
             <a href="#templates" className="transition-colors hover:text-foreground">Templates</a>
             <a href="#features" className="transition-colors hover:text-foreground">Features</a>
-            <a href="#pricing" className="transition-colors hover:text-foreground">Pricing</a>
+            <Link href="/pricing" className="transition-colors hover:text-foreground">Pricing</Link>
             <Link href="/blog" className="transition-colors hover:text-foreground">Blog</Link>
             <a href="#custom-template" className="transition-colors hover:text-foreground">
               Custom
@@ -698,7 +706,7 @@ export default function LandingPage() {
                 <div className="hero-anim-3 mb-5 inline-flex items-center gap-2.5 rounded-full border border-[#D9A441]/35 bg-white/80 px-4 py-2 shadow-card">
                   <StarRating />
                   <span className="text-xs font-semibold text-accent-strong">
-                    4.9 · 247+ families · Trusted across India
+                    4.9 · 10,000+ invitations · Trusted across 8 cities
                   </span>
                 </div>
 
@@ -708,21 +716,22 @@ export default function LandingPage() {
                     className="block"
                     style={{ fontSize: 'clamp(2.1rem, 5vw, 3.75rem)' }}
                   >
-                    Free Digital Invitation
+                    Digital Invitations for
                   </span>
                   <span
                     className="block gradient-accent font-normal italic"
                     style={{ fontSize: 'clamp(2.1rem, 5vw, 3.75rem)' }}
                   >
-                    Maker for India
+                    Indian Weddings &amp; Events
                   </span>
                 </h1>
 
-                {/* Sub-copy — keyword-rich, natural sentence */}
+                {/* Sub-copy — lead with WhatsApp differentiator, then features */}
                 <p className="hero-anim-1 mt-4 max-w-[480px] text-sm leading-[1.85] text-muted sm:text-base">
-                  Create beautiful digital invitations, crafted for Indian weddings, birthdays,
-                  engagements, house warming and naming ceremonies. Share a WhatsApp link with
-                  gallery, music, live countdown, Google Maps, and online RSVP. Ready in 5 minutes.
+                  Share a beautiful invite link on WhatsApp — no app download needed for guests.
+                  Includes gallery, music, live countdown, Google Maps, and online RSVP.
+                  Crafted for Indian weddings, birthdays, Griha Pravesh and naming ceremonies.
+                  Ready in 5 minutes.
                 </p>
 
                 {/* CTA row */}
@@ -734,8 +743,8 @@ export default function LandingPage() {
                   >
                     Create Free Invitation
                   </Link>
-                  <a
-                    href="#pricing"
+                  <Link
+                    href="/pricing"
                     className="inline-flex items-center justify-center gap-1.5 rounded-full border px-8 py-4 text-sm font-semibold transition hover:-translate-y-0.5"
                     style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: 'rgba(122,62,74,0.05)' }}
                   >
@@ -743,7 +752,7 @@ export default function LandingPage() {
                     <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
-                  </a>
+                  </Link>
                 </div>
                 <p className="mt-2 text-[11px] text-muted">No credit card required · Free forever plan available</p>
 
@@ -997,7 +1006,7 @@ export default function LandingPage() {
               Indian Wedding &amp; Event Invitation Templates
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-muted text-balance">
-              From timeless ivory weddings to vibrant Indian ceremonies — every template is
+              From timeless ivory weddings to vibrant Indian ceremonies every template is
               fully customisable with your photos, music, and personal message.
             </p>
           </div>
@@ -1010,9 +1019,11 @@ export default function LandingPage() {
               {/* Top accent line */}
               <div className="h-0.5 w-full" style={{ background: 'linear-gradient(90deg, transparent, #D9A441, transparent)' }} />
 
-              <div
+              <DemoPreviewArea
+                templateId="elegant-wedding"
                 className="relative overflow-hidden px-8 py-14 text-center"
                 style={{ background: 'linear-gradient(180deg,#FFF8F1 0%,#FBF5EE 100%)' }}
+                ariaLabel="View live demo — Elegant Wedding"
               >
                 <div
                   className="pointer-events-none absolute inset-0"
@@ -1045,7 +1056,7 @@ export default function LandingPage() {
                     The Royal Orchid · Bengaluru
                   </div>
                 </div>
-              </div>
+              </DemoPreviewArea>
 
               <div className="flex items-center justify-between gap-4 border-t border-[#EDE0CE] bg-white px-7 py-5">
                 <div>
@@ -1055,7 +1066,7 @@ export default function LandingPage() {
                       className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em]"
                       style={{ background: 'rgba(47,118,109,0.1)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.25)' }}
                     >
-                      Free
+                      Free · ₹0
                     </span>
                     <span
                       className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em]"
@@ -1066,12 +1077,20 @@ export default function LandingPage() {
                   </div>
                   <p className="text-sm text-muted">Warm ivory &amp; gold — timeless romance</p>
                 </div>
-                <Link
-                  href="/create"
-                  className="gold-button shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold"
-                >
-                  Use this →
-                </Link>
+                <div className="flex items-center gap-2 shrink-0">
+                  <DemoViewButton
+                    templateId="elegant-wedding"
+                    accent="#B87924"
+                    className="flex items-center justify-center gap-1.5 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-85"
+                    style={{ background: 'rgba(184,121,36,0.10)', border: '1px solid rgba(184,121,36,0.28)', color: '#B87924' }}
+                  />
+                  <Link
+                    href="/create"
+                    className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold"
+                  >
+                    Use this →
+                  </Link>
+                </div>
               </div>
             </article>
 
@@ -1083,7 +1102,12 @@ export default function LandingPage() {
               {/* Top accent line */}
               <div className="h-0.5 w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.7), transparent)' }} />
 
-              <div className="relative overflow-hidden px-8 py-14 text-center" style={{ background: '#08080F' }}>
+              <DemoPreviewArea
+                templateId="cinematic-night"
+                className="relative overflow-hidden px-8 py-14 text-center"
+                style={{ background: '#08080F' }}
+                ariaLabel="View live demo — Cinematic Night"
+              >
                 {[...Array(26)].map((_, i) => (
                   <div
                     key={i}
@@ -1124,7 +1148,7 @@ export default function LandingPage() {
                     The Imperial Ballroom · Mumbai
                   </div>
                 </div>
-              </div>
+              </DemoPreviewArea>
 
               <div
                 className="flex items-center justify-between gap-4 border-t px-7 py-5"
@@ -1137,18 +1161,26 @@ export default function LandingPage() {
                       className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em]"
                       style={{ background: 'rgba(184,121,36,0.14)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)' }}
                     >
-                      Standard
+                      Starter · ₹299
                     </span>
                   </div>
                   <p className="text-sm" style={{ color: 'rgba(242,238,230,0.42)' }}>Dark &amp; dramatic — bold film-noir</p>
                 </div>
-                <Link
-                  href="/create"
-                  className="shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
-                  style={{ background: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.35)', color: '#C9A84C' }}
-                >
-                  Use this →
-                </Link>
+                <div className="flex items-center gap-2 shrink-0">
+                  <DemoViewButton
+                    templateId="cinematic-night"
+                    accent="#C9A84C"
+                    className="flex items-center justify-center gap-1.5 shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
+                    style={{ background: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.35)', color: '#C9A84C' }}
+                  />
+                  <Link
+                    href="/create"
+                    className="shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
+                    style={{ background: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.35)', color: '#C9A84C' }}
+                  >
+                    Use this →
+                  </Link>
+                </div>
               </div>
             </article>
           </div>
@@ -1177,10 +1209,12 @@ export default function LandingPage() {
                 {/* Top accent line */}
                 <div className="h-0.5 w-full" style={{ background: `linear-gradient(90deg, transparent, ${tpl.accent}80, transparent)` }} />
 
-                {/* Preview */}
-                <div
-                  className="relative overflow-hidden px-6 py-10 text-center"
+                {/* Preview — click to view live demo */}
+                <DemoPreviewArea
+                  templateId={tpl.id}
+                  className="block relative overflow-hidden px-6 py-10 text-center"
                   style={{ background: tpl.bg }}
+                  ariaLabel={`View live demo — ${tpl.name}`}
                 >
                   <div className="pointer-events-none absolute inset-0" style={{ background: tpl.glow }} />
                   <div className="relative">
@@ -1206,7 +1240,7 @@ export default function LandingPage() {
                       {tpl.sampleVenue}
                     </div>
                   </div>
-                </div>
+                </DemoPreviewArea>
 
                 {/* Card footer */}
                 <div
@@ -1226,26 +1260,37 @@ export default function LandingPage() {
                         {tpl.tagline}
                       </p>
                     </div>
-                    <span
-                      className="shrink-0 mt-0.5 rounded-full px-2 py-0.5 text-[8px] font-bold uppercase tracking-[0.08em]"
-                      style={{ background: tpl.plan.bg, color: tpl.plan.color, border: tpl.plan.border }}
-                    >
-                      {tpl.plan.label}
-                    </span>
+                    <div className="shrink-0 mt-0.5 flex flex-col items-end gap-0.5">
+                      <span
+                        className="rounded-full px-2 py-0.5 text-[8px] font-bold uppercase tracking-[0.08em]"
+                        style={{ background: tpl.plan.bg, color: tpl.plan.color, border: tpl.plan.border }}
+                      >
+                        {tpl.plan.label}
+                      </span>
+                      <span
+                        className="text-[9px] font-semibold tabular-nums"
+                        style={{ color: tpl.plan.color }}
+                      >
+                        {tpl.plan.price}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* CTA */}
-                  <Link
-                    href="/create"
-                    className="mt-3.5 flex w-full items-center justify-center rounded-xl py-2.5 text-[11.5px] font-semibold transition-all hover:opacity-85"
-                    style={{
-                      background: `${tpl.accent}20`,
-                      border: `1px solid ${tpl.accent}40`,
-                      color: tpl.accent,
-                    }}
-                  >
-                    Use this template →
-                  </Link>
+                  {/* CTAs */}
+                  <div className="mt-3.5 grid grid-cols-2 gap-2">
+                    <DemoViewButton templateId={tpl.id} accent={tpl.accent} />
+                    <Link
+                      href="/create"
+                      className="flex items-center justify-center rounded-xl py-2.5 text-[11px] font-semibold transition-all hover:opacity-85"
+                      style={{
+                        background: `${tpl.accent}22`,
+                        border: `1px solid ${tpl.accent}42`,
+                        color: tpl.accent,
+                      }}
+                    >
+                      Use this →
+                    </Link>
+                  </div>
                 </div>
               </article>
             ))}
@@ -1695,7 +1740,7 @@ export default function LandingPage() {
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-2.5 mb-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
+                <Image src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
                 <p className="font-display text-2xl text-ink tracking-wide">ShareInvite</p>
               </div>
               <p className="text-sm leading-6" style={{ color: '#4A3B35' }}>
@@ -1735,7 +1780,7 @@ export default function LandingPage() {
               <p className="text-[10px] font-bold uppercase tracking-[0.24em] mb-1" style={{ color: '#B87924' }}>Quick Links</p>
               {[
                 { href: '#features', label: 'Features', internal: false },
-                { href: '#pricing', label: 'Pricing', internal: false },
+                { href: '/pricing', label: 'Pricing', internal: true },
                 { href: '/templates', label: 'All Templates', internal: true },
                 { href: '/create', label: 'Create Invite', internal: true },
                 { href: '/dashboard', label: 'Dashboard', internal: true },

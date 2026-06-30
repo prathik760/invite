@@ -1,10 +1,14 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import WordingCopyCard from '@/components/wording/WordingCopyCard'
+import MidPageCTA from '@/components/wording/MidPageCTA'
+import StickyCTA from '@/components/wording/StickyCTA'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Birthday Invitation Wording & Messages India | ShareInvite',
+  title: { absolute: 'Birthday Invitation Wording & Messages India | ShareInvite' },
   description:
     '25+ birthday invitation messages for WhatsApp — kids first birthday, adult milestones, surprise party. Copy-ready. Free digital invite.',
   alternates: { canonical: `${APP_URL}/birthday-invitation-wording` },
@@ -56,16 +60,6 @@ const faqSchema = {
   ],
 }
 
-function WordingCard({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl border border-border bg-[#FFFBF5] p-5 my-4 relative">
-      <span className="absolute top-3 right-3 rounded-full bg-[#D9A441]/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#7A5C1E]">
-        Copy
-      </span>
-      <p className="text-sm text-foreground leading-7 pr-16">{children}</p>
-    </div>
-  )
-}
 
 export default function BirthdayInvitationWordingPage() {
   return (
@@ -75,7 +69,7 @@ export default function BirthdayInvitationWordingPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create?template=indian-birthday" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -115,7 +109,7 @@ export default function BirthdayInvitationWordingPage() {
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">1. Traditional Indian — with family blessings</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             With the blessings of our elders and the grace of God, we joyfully announce that our little one is turning ONE!{'\n\n'}
             Join us for the birthday celebration of{'\n'}
             Baby [Child&apos;s Name]{'\n\n'}
@@ -124,18 +118,18 @@ export default function BirthdayInvitationWordingPage() {
             Venue: [Venue Name &amp; Address]{'\n\n'}
             Your presence and blessings will make this day truly special for our family.{'\n\n'}
             — [Father&apos;s Name] &amp; [Mother&apos;s Name]
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Simple WhatsApp short message</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             [Child&apos;s Name] is turning 1! 🎂{'\n\n'}
             Join us to celebrate on [Date] at [Time].{'\n'}
             Venue: [Venue, City]{'\n\n'}
             Do come and shower [him/her] with your love and blessings!
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Theme party invitation</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             Our little [Theme] star is turning ONE!{'\n\n'}
             We are celebrating the first birthday of{'\n'}
             [Child&apos;s Name]{'\n'}
@@ -146,10 +140,10 @@ export default function BirthdayInvitationWordingPage() {
             Dress code: [Theme colours / optional]{'\n\n'}
             Come, celebrate, and make memories with us!{'\n'}
             — [Mother&apos;s Name] &amp; [Father&apos;s Name]
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Formal English — both parents named</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             [Father&apos;s Full Name] and [Mother&apos;s Full Name]{'\n'}
             joyfully invite you to celebrate{'\n'}
             the First Birthday of their beloved child{'\n\n'}
@@ -159,10 +153,10 @@ export default function BirthdayInvitationWordingPage() {
             Venue: [Venue Name], [Address], [City]{'\n\n'}
             Kindly grace the occasion with your blessings.{'\n'}
             RSVP: [Phone Number]
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">5. Bilingual — Hindi + English</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             हमारे प्यारे [बच्चे का नाम] का पहला जन्मदिन!{'\n\n'}
             आप सभी से अनुरोध है कि अपने आशीर्वाद और स्नेह के साथ हमारे घर पधारें।{'\n\n'}
             तारीख: [Date]{'\n'}
@@ -170,7 +164,7 @@ export default function BirthdayInvitationWordingPage() {
             स्थान: [Venue, City]{'\n\n'}
             Our little one turns 1 — join us for the celebration!{'\n'}
             — [Father&apos;s Name] &amp; [Mother&apos;s Name]
-          </WordingCard>
+          </WordingCopyCard>
         </div>
       </section>
 
@@ -183,37 +177,37 @@ export default function BirthdayInvitationWordingPage() {
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">18th Birthday</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             [Name] is officially 18!{'\n\n'}
             Join us as we celebrate this milestone birthday{'\n'}
             on [Date] at [Time].{'\n'}
             Venue: [Venue &amp; Address]{'\n\n'}
             Come be part of the moment [Name] steps into adulthood.{'\n'}
             — The [Family Name] Family
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">21st Birthday</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             21 years of making our lives better!{'\n\n'}
             Please join us for [Name]&apos;s 21st Birthday Celebration{'\n\n'}
             Date: [Date]{'\n'}
             Time: [Time]{'\n'}
             Venue: [Venue, Address]{'\n\n'}
             Dinner and dancing to follow. RSVP by [Date] to [Phone].
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">30th Birthday</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             Thirty, flirty, and thriving!{'\n\n'}
             Help us celebrate [Name]&apos;s 30th Birthday{'\n'}
             on [Date] at [Time].{'\n'}
             Venue: [Venue &amp; Address]{'\n\n'}
             Come with your best memories and your dancing shoes.{'\n'}
             RSVP: [Phone / WhatsApp Number]
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">50th Birthday — children hosting for parent</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             Fifty years of love, wisdom, and grace —{'\n'}
             [Parent&apos;s Name] turns 50!{'\n\n'}
             We, [Child 1&apos;s Name] and [Child 2&apos;s Name], invite you{'\n'}
@@ -222,10 +216,10 @@ export default function BirthdayInvitationWordingPage() {
             Time: [Time] onwards{'\n'}
             Venue: [Venue, Address]{'\n\n'}
             Please join us to shower [him/her] with your blessings and love.
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">60th Birthday — children hosting</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             With immense gratitude and joy, we invite you to celebrate{'\n'}
             the 60th Birthday of our beloved{'\n'}
             [Parent&apos;s Full Name]{'\n\n'}
@@ -235,7 +229,25 @@ export default function BirthdayInvitationWordingPage() {
             Your presence and blessings would be the greatest gift.{'\n\n'}
             Warmly,{'\n'}
             [Son/Daughter&apos;s Name] &amp; Family
-          </WordingCard>
+          </WordingCopyCard>
+        </div>
+      </section>
+
+      {/* Mid-page CTA 1 */}
+      <section className="px-5 py-2 border-b border-border">
+        <div className="mx-auto max-w-3xl">
+          <MidPageCTA
+            headline="Your guests deserve more than a WhatsApp text"
+            body="A plain message tells them the date. A digital invite shows them the venue on a map, counts down the days, plays a song, and lets them RSVP — all from a single link you paste into any group."
+            features={[
+              'Live countdown to the birthday',
+              'Photo gallery & background music',
+              'Tap-to-open Google Maps',
+              'RSVP — see who is coming',
+            ]}
+            ctaHref="/birthday-invitation"
+            ctaText="Create Birthday Invite Free →"
+          />
         </div>
       </section>
 
@@ -248,7 +260,7 @@ export default function BirthdayInvitationWordingPage() {
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">1. Classic surprise party</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             ⚠️ SURPRISE! Please don&apos;t tell [Name]! ⚠️{'\n\n'}
             We are throwing a surprise birthday party for [Name]!{'\n\n'}
             Date: [Date]{'\n'}
@@ -256,10 +268,10 @@ export default function BirthdayInvitationWordingPage() {
             Venue: [Venue &amp; Address]{'\n\n'}
             [Name] will arrive at [Time]. Please be seated and quiet before then!{'\n'}
             RSVP: [Organiser&apos;s Name] — [Phone Number]
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Surprise at a restaurant</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             🤫 Keep it a secret — we&apos;re surprising [Name]!{'\n\n'}
             We&apos;ve told [Name] it&apos;s just a casual dinner.{'\n'}
             The real plan: a full surprise birthday celebration!{'\n\n'}
@@ -268,10 +280,10 @@ export default function BirthdayInvitationWordingPage() {
             [Name] will arrive around [Time]{'\n\n'}
             Coordinate with [Contact Name] on [Phone] for seating.{'\n'}
             Please do not post anything on social media until after the reveal!
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Surprise with outstation family</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             The biggest surprise of [Name]&apos;s [Age]th birthday?{'\n'}
             The whole family is flying in!{'\n\n'}
             We are coordinating a surprise gathering — [Name] has no idea.{'\n\n'}
@@ -281,7 +293,7 @@ export default function BirthdayInvitationWordingPage() {
             Please keep this completely secret. Coordinate travel plans with{'\n'}
             [Organiser&apos;s Name] at [Phone Number].{'\n'}
             SURPRISE! 🎉
-          </WordingCard>
+          </WordingCopyCard>
         </div>
       </section>
 
@@ -294,37 +306,55 @@ export default function BirthdayInvitationWordingPage() {
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">Kids birthday group post</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             [Child&apos;s Name] turns [Age] on [Date]!{'\n'}
             Birthday party at [Venue], [Time] onwards.{'\n'}
             All little ones welcome — cake, games &amp; fun!{'\n'}
             Details 👉 [Digital Invite Link]
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Adults casual group post</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             Hey everyone! [Name]&apos;s birthday bash is happening!{'\n'}
             📅 [Date] | 🕖 [Time] | 📍 [Venue]{'\n'}
             Come hungry, come ready to party.{'\n'}
             Full details: [Digital Invite Link]
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Office / friends group</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             Celebrating [Name]&apos;s [Age]th! 🎂{'\n'}
             Join us on [Date] at [Time], [Venue].{'\n'}
             RSVP by [Date] — confirming helps us plan.{'\n'}
             Invite: [Digital Invite Link]
-          </WordingCard>
+          </WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Mixed family group</h3>
-          <WordingCard>
+          <WordingCopyCard ctaHref="/birthday-invitation">
             Pranam 🙏 / Dear All,{'\n'}
             [Name]&apos;s birthday celebration is on [Date] at [Time].{'\n'}
             Venue: [Venue, Address].{'\n'}
             Your blessings and presence are requested.{'\n'}
             View full invite: [Digital Invite Link]
-          </WordingCard>
+          </WordingCopyCard>
+        </div>
+      </section>
+
+      {/* Mid-page CTA 2 */}
+      <section className="px-5 py-2 border-b border-border bg-white">
+        <div className="mx-auto max-w-3xl">
+          <MidPageCTA
+            headline="Those [Digital Invite Link] placeholders? Create yours in 5 minutes."
+            body="Every short message above is designed to pair with a digital invite link. Paste the link and your guests get the venue on a map, a countdown, photos, and an RSVP button — all without installing anything."
+            features={[
+              'One link works on every phone',
+              'Send reminders — same link, no rewriting',
+              'No app needed for guests',
+              'Free to create and share',
+            ]}
+            ctaHref="/birthday-invitation"
+            ctaText="Get Your Birthday Invite Link →"
+          />
         </div>
       </section>
 
@@ -396,9 +426,11 @@ export default function BirthdayInvitationWordingPage() {
         </div>
       </section>
 
+      <StickyCTA href="/birthday-invitation" text="Create Birthday Invite Free →" />
+
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

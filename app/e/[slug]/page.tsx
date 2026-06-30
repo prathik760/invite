@@ -15,6 +15,17 @@ import RoyalDeco from '@/components/templates/RoyalDeco'
 import LuxuryWedding from '@/components/templates/LuxuryWedding'
 import FloatingShareBar from '@/components/ui/FloatingShareBar'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
+import ExpiredInvitation from '@/components/e/ExpiredInvitation'
+
+// Invitation expires 3 days after the event date
+function isExpired(data: Record<string, string>): boolean {
+  if (!data.date) return false
+  const [year, month, day] = data.date.split('-').map(Number)
+  if (!year || !month || !day) return false
+  const eventDate = new Date(year, month - 1, day)
+  const gracePeriodMs = 3 * 24 * 60 * 60 * 1000
+  return Date.now() > eventDate.getTime() + gracePeriodMs
+}
 
 interface PageProps {
   params: { slug: string }
@@ -130,6 +141,11 @@ export default async function EventPage({ params }: PageProps) {
   if (!Component) notFound()
 
   const data = event.data as Record<string, string>
+
+  if (isExpired(data)) {
+    return <ExpiredInvitation templateId={event.templateId} data={data} />
+  }
+
   const shareUrl = `${APP_URL}/e/${event.slug}`
   const names = getEventNames(data)
 

@@ -1,10 +1,14 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import WordingCopyCard from '@/components/wording/WordingCopyCard'
+import MidPageCTA from '@/components/wording/MidPageCTA'
+import StickyCTA from '@/components/wording/StickyCTA'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Griha Pravesh Invitation Wording & Messages | ShareInvite',
+  title: { absolute: 'Griha Pravesh Invitation Wording & Messages | ShareInvite' },
   description:
     '20+ Griha Pravesh invitation messages — formal, WhatsApp-ready, bilingual. Muhurat time, pooja schedule, Google Maps. Copy & share free.',
   alternates: { canonical: `${APP_URL}/griha-pravesh-invitation-wording` },
@@ -56,16 +60,6 @@ const faqSchema = {
   ],
 }
 
-function WordingCard({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl border border-border bg-[#FFFBF5] p-5 my-4 relative">
-      <span className="absolute top-3 right-3 rounded-full bg-[#D9A441]/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#7A5C1E]">
-        Copy
-      </span>
-      <p className="text-sm text-foreground leading-7 pr-16 whitespace-pre-line">{children}</p>
-    </div>
-  )
-}
 
 export default function GrihaPraveshInvitationWordingPage() {
   return (
@@ -75,12 +69,13 @@ export default function GrihaPraveshInvitationWordingPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create?template=griha-pravesh" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
+      <StickyCTA href="/create?template=griha-pravesh" text="Create Free Griha Pravesh Invite →" />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
@@ -114,8 +109,16 @@ export default function GrihaPraveshInvitationWordingPage() {
             Formal invitations work best for printed cards and for sending to elders and extended family. They carry a respectful, warm tone and include all ceremony details.
           </p>
 
+          <MidPageCTA
+            headline="Those [Digital Invite Link] placeholders? Replace them with a real link guests can tap."
+            body="Each message above uses [Digital Invite Link] — a shareable page that already has your muhurat time, Google Maps, and pooja schedule. Create yours free in 5 minutes."
+            features={['Muhurat time clearly highlighted', 'Embedded Google Maps pin', 'Full pooja schedule', 'WhatsApp-ready link']}
+            ctaHref="/create?template=griha-pravesh"
+            ctaText="Create Griha Pravesh Invite Free →"
+          />
+
           <h3 className="font-heading text-base text-ink mb-1">1. Traditional — Vastu Puja, Ganesh Puja, family blessings</h3>
-          <WordingCard>{`With the blessings of our elders and the grace of the Almighty, we joyfully invite you to the Griha Pravesh ceremony of our new home.
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`With the blessings of our elders and the grace of the Almighty, we joyfully invite you to the Griha Pravesh ceremony of our new home.
 
 Vastu Puja & Ganesh Puja: [Muhurat Time]
 Grah Shanti: [Time]
@@ -127,10 +130,10 @@ New Address: [Full Address, City]
 We seek your blessings and heartfelt presence on this auspicious occasion.
 
 — [Host Family Names]
-Contact: [Phone Number]`}</WordingCard>
+Contact: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Apartment / flat move-in (urban setting)</h3>
-          <WordingCard>{`We are delighted to invite you to the Griha Pravesh of our new home.
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`We are delighted to invite you to the Griha Pravesh of our new home.
 
 [Flat/Apartment Name & Number]
 [Society Name, Wing, Floor]
@@ -143,10 +146,10 @@ Parking: [Parking instructions — visitor parking at Gate No. / basement level]
 Entry: [Building entry instructions if applicable]
 
 Please grace us with your blessings on this memorable day.
-— [Father's Name], [Mother's Name] & Family`}</WordingCard>
+— [Father's Name], [Mother's Name] & Family`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. South Indian — Gruhapravesham style</h3>
-          <WordingCard>{`With the blessings of Sri [Family Deity / God] and our elders,
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`With the blessings of Sri [Family Deity / God] and our elders,
 [Father's Name] and [Mother's Name]
 cordially invite you to the
 
@@ -161,10 +164,10 @@ Gruhapravesham Muhurtam — [Time]
 Lunch — [Time] onwards
 
 Your presence and blessings would be the greatest gift.
-RSVP: [Phone Number]`}</WordingCard>
+RSVP: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">4. North Indian — with Laxmi Puja reference</h3>
-          <WordingCard>{`We request the pleasure of your company at the
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`We request the pleasure of your company at the
 Griha Pravesh & Lakshmi Puja
 of our new home.
 
@@ -179,7 +182,7 @@ Lakshmi Puja: [Time]
 Prasad & Lunch: [Time] onwards
 
 Kindly honour us with your presence and blessings.
-Contact: [Phone Number]`}</WordingCard>
+Contact: [Phone Number]`}</WordingCopyCard>
         </div>
       </section>
 
@@ -192,26 +195,26 @@ Contact: [Phone Number]`}</WordingCard>
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">1. Simple casual</h3>
-          <WordingCard>{`We are moving into our new home and would love your blessings!
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`We are moving into our new home and would love your blessings!
 
 Griha Pravesh: [Date] at [Muhurat Time]
 Address: [New Address, City]
 
 Please do join us. Lunch follows the ceremony.
-Details & map: [Digital Invite Link]`}</WordingCard>
+Details & map: [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Muhurat time prominent</h3>
-          <WordingCard>{`Griha Pravesh — [Date]
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`Griha Pravesh — [Date]
 Shubh Muhurat: [Time] SHARP
 
 Please arrive by [15 mins before time] so the puja begins on time.
 Venue: [Address, City]
 Lunch: [Time] onwards
 
-Invite & map 👉 [Digital Invite Link]`}</WordingCard>
+Invite & map 👉 [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. From joint family</h3>
-          <WordingCard>{`With the blessings of [Elder's Name / Dada-Dadi / Nana-Nani],
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`With the blessings of [Elder's Name / Dada-Dadi / Nana-Nani],
 our family is stepping into our new home.
 
 Griha Pravesh: [Date] at [Time]
@@ -220,10 +223,10 @@ New Address: [Address, City]
 [Grandfather's/Head of family's name] & the entire [Family Surname] family
 invite you to join us for this auspicious occasion.
 
-Map & full schedule: [Digital Invite Link]`}</WordingCard>
+Map & full schedule: [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Hindi / English bilingual</h3>
-          <WordingCard>{`नए घर में प्रवेश का मंगल अवसर!
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`नए घर में प्रवेश का मंगल अवसर!
 
 [Family Name] परिवार के नए घर का गृह प्रवेश
 दिनांक: [Date] | मुहूर्त: [Time]
@@ -232,9 +235,22 @@ Map & full schedule: [Digital Invite Link]`}</WordingCard>
 आपके आशीर्वाद और उपस्थिति के बिना यह शुभ कार्य अधूरा है।
 
 Our Griha Pravesh ceremony — do join us!
-Map & details: [Digital Invite Link]`}</WordingCard>
+Map & details: [Digital Invite Link]`}</WordingCopyCard>
         </div>
       </section>
+
+      {/* MidPage CTA 2 */}
+      <div className="px-5">
+        <div className="mx-auto max-w-3xl">
+          <MidPageCTA
+            headline="Stop re-typing the address. Send a link guests can tap for directions."
+            body="The most common complaint after a Griha Pravesh: guests couldn't find the new address. A digital invite with Google Maps pin solves this — no WhatsApp replies asking 'bhai address bhejna'."
+            features={['One tap to Google Maps', 'Parking instructions included', 'RSVP so you know who is coming', 'Send reminder to all with one click']}
+            ctaHref="/create?template=griha-pravesh"
+            ctaText="Create Digital Invite Free →"
+          />
+        </div>
+      </div>
 
       {/* Section 3: What Must Be Included */}
       <section className="px-5 py-16 border-b border-border">
@@ -285,7 +301,7 @@ Map & details: [Digital Invite Link]`}</WordingCard>
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">Griha Pravesh — North &amp; Central India</h3>
-          <WordingCard>{`[Father's Name] & [Mother's Name]
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`[Father's Name] & [Mother's Name]
 request your presence at the
 
 Griha Pravesh
@@ -298,10 +314,10 @@ Ganesh Puja | Grah Shanti | Lakshmi Puja | Lunch
 [Full schedule on digital invite]
 
 Your blessings make our new home complete.
-Contact: [Phone]`}</WordingCard>
+Contact: [Phone]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Gruhapravesham — South India (Tamil / Telugu families)</h3>
-          <WordingCard>{`Sri [Family Deity] Thiruvadigale Saranam
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`Sri [Family Deity] Thiruvadigale Saranam
 
 [Father's Name] & [Mother's Name]
 invite you to the
@@ -317,10 +333,10 @@ Gruhapravesham — [Muhurtam Time]
 Lunch — [Time]
 
 Kindly bless us with your presence.
-RSVP: [Phone]`}</WordingCard>
+RSVP: [Phone]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Ghar Pravesh / Naye Ghar ki Khushi — informal Hindi</h3>
-          <WordingCard>{`🏠 नए घर में आपका स्वागत है!
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`🏠 नए घर में आपका स्वागत है!
 
 हम बड़ी खुशी से आपको अपने नए घर के गृह प्रवेश में आमंत्रित करते हैं।
 
@@ -331,10 +347,10 @@ RSVP: [Phone]`}</WordingCard>
 पूजा, प्रसाद और भोजन — सब कुछ है।
 बस आपके आशीर्वाद चाहिए! 🙏
 
-संपर्क: [Phone Number]`}</WordingCard>
+संपर्क: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Vastu Puja + Housewarming combined</h3>
-          <WordingCard>{`[Family Name] Family
+          <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`[Family Name] Family
 joyfully invites you to the
 
 Vastu Puja & Griha Pravesh Ceremony
@@ -348,7 +364,7 @@ Lunch: [Time] onwards
 Address: [Full Address with Landmark]
 [Google Maps: Digital Invite Link]
 
-Your presence and blessings would make this occasion truly auspicious.`}</WordingCard>
+Your presence and blessings would make this occasion truly auspicious.`}</WordingCopyCard>
         </div>
       </section>
 
@@ -448,7 +464,7 @@ Your presence and blessings would make this occasion truly auspicious.`}</Wordin
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

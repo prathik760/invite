@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CameraIcon, ClockIcon, MapPinIcon, MusicIcon, MessageIcon, ClipboardIcon, ShareIcon, SparklesIcon } from '@/components/ui/Icons'
@@ -5,9 +6,9 @@ import { CameraIcon, ClockIcon, MapPinIcon, MusicIcon, MessageIcon, ClipboardIco
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Free Digital Anniversary Invitation India | ShareInvite',
+  title: { absolute: 'Free Digital Anniversary Invitation India | ShareInvite' },
   description:
-    'Free digital anniversary invitation for India. Silver, golden & milestone anniversary e-invites. WhatsApp-ready with photos & countdown. Ready in 5 minutes.',
+    'Free digital anniversary invitation for India. Silver, golden & milestone e-invites. WhatsApp-ready with photos & countdown. Ready in 5 minutes.',
   keywords: [
     'anniversary invitation',
     'digital anniversary invitation India',
@@ -98,7 +99,7 @@ export default function AnniversaryInvitationPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create?template=anniversary" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -282,7 +283,7 @@ export default function AnniversaryInvitationPage() {
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

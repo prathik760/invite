@@ -1,10 +1,13 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import MidPageCTA from '@/components/wording/MidPageCTA'
+import StickyCTA from '@/components/wording/StickyCTA'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Wedding Invitation Wording & Messages India | ShareInvite',
+  title: { absolute: 'Wedding Invitation Wording & Messages India | ShareInvite' },
   description:
     '30+ ready-to-copy wedding invitation wording samples for Indian families. Formal, casual, WhatsApp, bilingual — copy & share in minutes.',
   keywords: [
@@ -82,7 +85,7 @@ export default function WeddingInvitationWordingPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create?template=elegant-wedding" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
@@ -203,6 +206,24 @@ export default function WeddingInvitationWordingPage() {
         </div>
       </section>
 
+      {/* Mid-page CTA 1 */}
+      <section className="px-5 py-2 border-b border-border bg-white">
+        <div className="mx-auto max-w-3xl">
+          <MidPageCTA
+            headline="Your wedding invitation sets the tone for the big day"
+            body="A plain text message tells guests the date. A digital wedding invite shows them the venue on a map, counts down to the wedding, and lets them RSVP — all from one link shared on WhatsApp."
+            features={[
+              'Live wedding countdown',
+              'Full photo gallery & couple story',
+              'Google Maps tap-to-navigate',
+              'RSVP with guest tracking',
+            ]}
+            ctaHref="/wedding-invitation"
+            ctaText="Create Wedding Invite Free →"
+          />
+        </div>
+      </section>
+
       {/* Section 2: WhatsApp Messages */}
       <section className="px-5 py-16 border-b border-border">
         <div className="mx-auto max-w-4xl">
@@ -278,6 +299,24 @@ export default function WeddingInvitationWordingPage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* Mid-page CTA 2 */}
+      <section className="px-5 py-2 border-b border-border">
+        <div className="mx-auto max-w-3xl">
+          <MidPageCTA
+            headline="One link. Ceremonies, maps, schedule, and RSVP — all in one place."
+            body="Share the same digital invite link across every WhatsApp group. Outstation family sees the hotel address; local guests see the venue map. One update reaches everyone instantly."
+            features={[
+              'Shaadi, mehendi & reception schedule',
+              'Hotel & venue addresses with maps',
+              'Background music & love story',
+              'Free — no credit card needed',
+            ]}
+            ctaHref="/wedding-invitation"
+            ctaText="Get Your Wedding Invite Link →"
+          />
         </div>
       </section>
 
@@ -484,9 +523,11 @@ export default function WeddingInvitationWordingPage() {
         </div>
       </section>
 
+      <StickyCTA href="/wedding-invitation" text="Create Wedding Invite Free →" />
+
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

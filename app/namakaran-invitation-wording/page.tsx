@@ -1,10 +1,14 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import WordingCopyCard from '@/components/wording/WordingCopyCard'
+import MidPageCTA from '@/components/wording/MidPageCTA'
+import StickyCTA from '@/components/wording/StickyCTA'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Namakaran Invitation Messages — Naming Ceremony | ShareInvite',
+  title: { absolute: 'Namakaran Invitation Messages India | ShareInvite' },
   description:
     '20+ Namakaran invitation messages for India — baby boy, baby girl, formal, WhatsApp, bilingual. Naming ceremony & cradle ceremony wording.',
   alternates: { canonical: `${APP_URL}/namakaran-invitation-wording` },
@@ -56,16 +60,6 @@ const faqSchema = {
   ],
 }
 
-function WordingCard({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl border border-border bg-[#FFFBF5] p-5 my-4 relative">
-      <span className="absolute top-3 right-3 rounded-full bg-[#D9A441]/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#7A5C1E]">
-        Copy
-      </span>
-      <p className="text-sm text-foreground leading-7 pr-16 whitespace-pre-line">{children}</p>
-    </div>
-  )
-}
 
 export default function NamakaranInvitationWordingPage() {
   return (
@@ -75,12 +69,13 @@ export default function NamakaranInvitationWordingPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
       </header>
+      <StickyCTA href="/create?template=namakaran" text="Create Free Namakaran Invite →" />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
@@ -115,7 +110,7 @@ export default function NamakaranInvitationWordingPage() {
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">1. Traditional — Sanskrit-influenced formal</h3>
-          <WordingCard>{`With the blessings of our Kula Devata and the grace of our elders,
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`With the blessings of our Kula Devata and the grace of our elders,
 we joyfully invite you to the
 
 Namakaran Sanskar
@@ -129,10 +124,10 @@ Venue: [Venue Name & Address, City]
 Puja: [Time] | Name Announcement: [Time] | Lunch: [Time] onwards
 
 Please bless our little one on this sacred first milestone.
-— [Father's Name] & [Mother's Name]`}</WordingCard>
+— [Father's Name] & [Mother's Name]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Simple WhatsApp message</h3>
-          <WordingCard>{`Our little prince has arrived and it's time to give him his name!
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`Our little prince has arrived and it's time to give him his name!
 
 Baby Boy Naming Ceremony
 Date: [Date] at [Time]
@@ -140,10 +135,10 @@ Venue: [Venue & Address]
 
 [Baby's Name] — officially named on [Date]!
 Do come with your blessings. Lunch follows the ceremony.
-Details: [Digital Invite Link]`}</WordingCard>
+Details: [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. With name reveal element</h3>
-          <WordingCard>{`We are naming our little prince — and we want you there for the moment!
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`We are naming our little prince — and we want you there for the moment!
 
 [Father's Name] & [Mother's Name]
 joyfully invite you to the Namakaran ceremony of
@@ -155,10 +150,10 @@ The name reveal will happen at the ceremony — come be part of it!
 Date: [Date] | Time: [Time]
 Venue: [Address, City]
 
-RSVP: [Phone Number]`}</WordingCard>
+RSVP: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Bilingual Hindi / English</h3>
-          <WordingCard>{`हमारे घर एक नन्हे राजकुमार का आगमन हुआ है!
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`हमारे घर एक नन्हे राजकुमार का आगमन हुआ है!
 
 [Baby's Name] का नामकरण संस्कार
 
@@ -169,10 +164,10 @@ RSVP: [Phone Number]`}</WordingCard>
 आपके आशीर्वाद के बिना यह संस्कार अधूरा है।
 
 Our baby boy's naming ceremony — please join us!
-— [Father's Name] & [Mother's Name]`}</WordingCard>
+— [Father's Name] & [Mother's Name]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">5. South Indian style — Namakarana / Cradle ceremony</h3>
-          <WordingCard>{`With the blessings of Sri [Family Deity],
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`With the blessings of Sri [Family Deity],
 [Father's Name] & [Mother's Name]
 invite you to the
 
@@ -189,7 +184,7 @@ Cradle Ceremony & Name Announcement — [Time]
 Lunch — [Time] onwards
 
 Your presence and blessings are our greatest joy.
-RSVP: [Phone Number]`}</WordingCard>
+RSVP: [Phone Number]`}</WordingCopyCard>
         </div>
       </section>
 
@@ -220,7 +215,7 @@ RSVP: [Phone Number]`}</WordingCard>
           </p>
 
           <h3 className="font-heading text-base text-ink mb-1">1. Formal English</h3>
-          <WordingCard>{`With hearts full of joy and gratitude,
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`With hearts full of joy and gratitude,
 [Father's Name] and [Mother's Name]
 joyfully invite you to celebrate the
 
@@ -236,10 +231,10 @@ Venue: [Venue Name, Address, City]
 Ceremony programme: Puja — [Time] | Name Announcement — [Time] | Lunch — [Time]
 
 Kindly grace us with your blessings and presence.
-RSVP: [Phone Number]`}</WordingCard>
+RSVP: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Modern simple</h3>
-          <WordingCard>{`Our little girl is getting her name, and we want you there!
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`Our little girl is getting her name, and we want you there!
 
 [Baby's Name]'s Naming Ceremony
 Date: [Date] at [Time]
@@ -247,10 +242,10 @@ Venue: [Venue & Address]
 
 Come shower her with your love and blessings.
 Lunch after the ceremony.
-Full invite: [Digital Invite Link]`}</WordingCard>
+Full invite: [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">3. With goddess / blessing reference — South Indian style</h3>
-          <WordingCard>{`With the blessings of Goddess [Lakshmi / Saraswati / Family Deity],
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`With the blessings of Goddess [Lakshmi / Saraswati / Family Deity],
 a little goddess has arrived in our home.
 
 [Father's Name] & [Mother's Name]
@@ -263,16 +258,16 @@ Muhurtam: [Date] at [Time]
 Venue: [Venue, Address, City]
 
 Cradle ceremony, puja, and lunch follow.
-Your blessings are our family's greatest treasure.`}</WordingCard>
+Your blessings are our family's greatest treasure.`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Short WhatsApp group post</h3>
-          <WordingCard>{`[Baby's Name]'s naming ceremony is on [Date]!
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`[Baby's Name]'s naming ceremony is on [Date]!
 Time: [Time] | Venue: [Venue, City]
 All blessings welcome 💛
-Details & map 👉 [Digital Invite Link]`}</WordingCard>
+Details & map 👉 [Digital Invite Link]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">5. Bilingual Hindi / English</h3>
-          <WordingCard>{`हमारी प्यारी बेटी का नामकरण!
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`हमारी प्यारी बेटी का नामकरण!
 
 [Baby's Name] — इस नाम के साथ वो हमारे घर की रोशनी बनेगी।
 
@@ -282,7 +277,7 @@ Details & map 👉 [Digital Invite Link]`}</WordingCard>
 पूजा, नाम घोषणा और भोजन — सभी के लिए स्वागत है।
 
 Our baby girl's naming ceremony — do join us with your blessings!
-— [Father's Name] & [Mother's Name]`}</WordingCard>
+— [Father's Name] & [Mother's Name]`}</WordingCopyCard>
         </div>
       </section>
 
@@ -296,7 +291,7 @@ Our baby girl's naming ceremony — do join us with your blessings!
 
           <h3 className="font-heading text-base text-ink mb-1">Namakaran — North India (day 11 or 12 after birth)</h3>
           <p className="text-sm text-muted leading-7 mb-2">Held 11 or 12 days after birth as per Hindu tradition. Family pandit performs the naming ritual with Sanskrit mantras.</p>
-          <WordingCard>{`[Father's Name] & [Mother's Name]
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`[Father's Name] & [Mother's Name]
 invite you to the Namakaran Sanskar of
 
 Baby [Baby's Name]
@@ -304,11 +299,11 @@ Baby [Baby's Name]
 to be celebrated on [Date] at [Time]
 at [Venue, Address, City]
 
-Puja, prasad, and blessings — your presence completes this sacred ceremony.`}</WordingCard>
+Puja, prasad, and blessings — your presence completes this sacred ceremony.`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Namakarana — South India (Karnataka, Tamil Nadu)</h3>
           <p className="text-sm text-muted leading-7 mb-2">Performed on the 11th or 12th day or a chosen auspicious date. Includes a cradle ceremony and often a homam.</p>
-          <WordingCard>{`[Father's Name] & [Mother's Name]
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`[Father's Name] & [Mother's Name]
 cordially invite you to the
 
 Namakarana
@@ -320,11 +315,11 @@ Muhurtam: [Date] | [Time]
 Venue: [Address, City]
 
 Homam — [Time] | Name Announcement — [Time] | Lunch — [Time]
-RSVP: [Phone Number]`}</WordingCard>
+RSVP: [Phone Number]`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Cradle Ceremony — English term for South Indian tradition</h3>
           <p className="text-sm text-muted leading-7 mb-2">Used by Tamil and Telugu families when writing English invitations. The baby is placed in a decorated cradle and the name is formally announced.</p>
-          <WordingCard>{`[Father's Name] and [Mother's Name]
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`[Father's Name] and [Mother's Name]
 joyfully invite you to the
 
 Cradle Ceremony & Baby Naming
@@ -336,12 +331,12 @@ Date: [Date] at [Time]
 Venue: [Venue, Address, City]
 
 The naming ceremony will be followed by lunch.
-Your blessings are the greatest gift for our child.`}</WordingCard>
+Your blessings are the greatest gift for our child.`}</WordingCopyCard>
 
           <h3 className="font-heading text-base text-ink mb-1 mt-6">Annaprashan combined with naming — Bengali tradition</h3>
           <p className="text-sm text-muted leading-7 mb-2">Bengali families sometimes combine the Namkaran (naming) with Annaprashan (first rice-feeding ceremony) on an auspicious day.</p>
 
-          <WordingCard>{`[Father's Name] & [Mother's Name]
+          <WordingCopyCard ctaHref="/namakaran-invitation">{`[Father's Name] & [Mother's Name]
 invite you to celebrate two milestones in one joyful day:
 
 Namkaran — The Naming Ceremony
@@ -353,9 +348,22 @@ Date: [Date] at [Time]
 Venue: [Venue, Address, City]
 
 Puja — [Time] | Naming — [Time] | Annaprashan — [Time] | Lunch — [Time]
-Please join us for these precious first blessings.`}</WordingCard>
+Please join us for these precious first blessings.`}</WordingCopyCard>
         </div>
       </section>
+
+      {/* MidPage CTA after Regional Traditions */}
+      <div className="px-5">
+        <div className="mx-auto max-w-3xl">
+          <MidPageCTA
+            headline="Those [Digital Invite Link] placeholders? Make them real — with baby photos and a Map pin."
+            body="Every message above has a [Digital Invite Link] slot. That link is a ShareInvite page with your baby's photos, Google Maps, ceremony schedule, and a blessing wall where guests leave wishes. Free to create."
+            features={['Baby photo gallery on the invite', 'Google Maps tap-to-navigate', 'Guest blessing wall', 'WhatsApp-ready link']}
+            ctaHref="/create?template=namakaran"
+            ctaText="Create Namakaran Invite Free →"
+          />
+        </div>
+      </div>
 
       {/* Section 4: What to Include */}
       <section className="px-5 py-16 border-b border-border bg-white">
@@ -543,7 +551,7 @@ Please join us for these precious first blessings.`}</WordingCard>
 
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/" className="flex items-center justify-center gap-2">
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
           <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>

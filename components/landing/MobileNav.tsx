@@ -6,7 +6,7 @@ import Link from 'next/link'
 const NAV_LINKS = [
   { href: '#templates', label: 'Templates' },
   { href: '#features', label: 'Features' },
-  { href: '#pricing', label: 'Pricing' },
+  { href: '/pricing', label: 'Pricing', isLink: true },
   { href: '/blog', label: 'Blog', isLink: true },
   { href: '#custom-template', label: 'Custom', accent: true },
   { href: '/dashboard', label: 'Dashboard', isLink: true },

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -97,11 +98,11 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   const info = CITIES[city]
   if (!info) return {}
 
-  const title = `Digital Wedding Invitation in ${info.display} | Free Online Wedding E-Invite | ShareInvite`
-  const description = `Create a beautiful digital wedding invitation for your ${info.display} wedding in 5 minutes. WhatsApp-ready link, live countdown, Google Maps, gallery & guest wishes. Free to start.`
+  const ogTitle = `Digital Wedding Invitation in ${info.display} | ShareInvite`
+  const description = `Create a digital wedding invitation for your ${info.display} wedding — WhatsApp link with countdown, Google Maps & gallery. Free to start.`
 
   return {
-    title,
+    title: { absolute: ogTitle },
     description,
     keywords: [
       `digital wedding invitation ${info.display}`,
@@ -117,7 +118,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
     ],
     alternates: { canonical: `${APP_URL}/wedding-invitation/${city}` },
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       type: 'website',
       locale: 'en_IN',
@@ -213,7 +214,7 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
           </Link>
           <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
         </div>
@@ -370,7 +371,7 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
       <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
         <Link href="/">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto mx-auto" width="100" height="28" />
+          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto mx-auto" width="100" height="28" />
         </Link>
         <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>
         <div className="mt-4 flex flex-wrap justify-center gap-4">

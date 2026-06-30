@@ -91,6 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ─── Tier 1: Core product pages ───────────────────────────────────────────
     entry('', 1.0, 'weekly'),
     entry('/create', 0.95, 'weekly'),
+    entry('/pricing', 0.90, 'weekly'),
     entry('/templates', 0.90, 'weekly'),
     entry('/blog', 0.85, 'weekly'),
 
