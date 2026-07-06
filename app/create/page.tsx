@@ -194,10 +194,10 @@ export default function CreatePage() {
     try {
       const raw = sessionStorage.getItem(DRAFT_KEY)
       if (!raw) return
-      const draft = JSON.parse(raw) as { templateId: string; data: Record<string, string> }
+      const draft = JSON.parse(raw) as { templateId: string; data: Record<string, string>; step?: number }
       sessionStorage.removeItem(DRAFT_KEY)
       const tpl = TEMPLATES.find(t => t.id === draft.templateId)
-      if (tpl) { setSelectedId(draft.templateId); setData(draft.data); setCurrentStep(2) }
+      if (tpl) { setSelectedId(draft.templateId); setData(draft.data); setCurrentStep(draft.step ?? 2) }
     } catch { }
   }, [session])
 
@@ -252,7 +252,7 @@ export default function CreatePage() {
 
   const handleCreate = () => {
     if (!session) {
-      try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data })) } catch { }
+      try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data, step: currentStep })) } catch { }
       setShowLoginPrompt(true)
       return
     }

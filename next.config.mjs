@@ -19,6 +19,12 @@ const nextConfig = {
         destination: 'https://shareinvite.in/:path*',
         permanent: true,
       },
+      // Namakaran city pages don't exist — redirect to parent so Google stops 404ing them
+      {
+        source: '/namakaran-invitation/:city',
+        destination: '/namakaran-invitation',
+        permanent: true,
+      },
     ]
   },
   async headers() {
