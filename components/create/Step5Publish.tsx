@@ -166,11 +166,25 @@ export default function Step5Publish({
             )}
           </div>
 
-          {/* Upgrade nudge for free users — shown after publishing */}
+          {/* Branding warning for free users — shown before publish */}
           {isFree && (
-            <p className="text-[11px] text-center" style={{ color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(44,32,28,0.4)' }}>
-              Upgrade anytime to add gallery, music &amp; countdown
-            </p>
+            <div
+              className="w-full rounded-xl px-3.5 py-2.5 flex items-start gap-2.5"
+              style={{
+                background: isDark ? 'rgba(217,164,65,0.08)' : 'rgba(217,164,65,0.07)',
+                border: isDark ? '1px solid rgba(217,164,65,0.18)' : '1px solid rgba(217,164,65,0.22)',
+              }}
+            >
+              <span className="text-sm shrink-0 mt-px">👀</span>
+              <div>
+                <p className="text-[11px] font-semibold leading-snug" style={{ color: isDark ? 'rgba(255,255,255,0.70)' : '#3D2D1A' }}>
+                  Guests will see &ldquo;Made with ShareInvite&rdquo;
+                </p>
+                <p className="text-[10px] mt-0.5 leading-snug" style={{ color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(44,32,28,0.5)' }}>
+                  Free plan adds a banner at the top of your invite. Remove it from ₹299.
+                </p>
+              </div>
+            </div>
           )}
 
           {/* Error */}

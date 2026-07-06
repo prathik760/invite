@@ -16,6 +16,7 @@ import LuxuryWedding from '@/components/templates/LuxuryWedding'
 import FloatingShareBar from '@/components/ui/FloatingShareBar'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
 import ExpiredInvitation from '@/components/e/ExpiredInvitation'
+import FreePlanBanner from '@/components/e/FreePlanBanner'
 
 // Invitation expires 3 days after the event date
 function isExpired(data: Record<string, string>): boolean {
@@ -191,6 +192,7 @@ export default async function EventPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {!event.isPaid && <FreePlanBanner />}
       <Component data={data} eventId={event.id} />
       <FloatingShareBar url={shareUrl} names={names} />
     </>

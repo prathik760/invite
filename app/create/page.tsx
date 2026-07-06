@@ -715,7 +715,22 @@ export default function CreatePage() {
 
               <ShareBar url={shareUrl} names={names} />
 
-              <div className="mt-4 space-y-2">
+              {/* Branding notice for free plan — most important conversion moment */}
+              {userPlan === 'free' && (
+                <div className="rounded-xl px-4 py-3 flex items-start gap-3 mb-1"
+                  style={{ background: 'rgba(217,164,65,0.07)', border: '1px solid rgba(217,164,65,0.25)' }}>
+                  <span className="text-base shrink-0 mt-0.5">👀</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-semibold text-foreground">Your guests will see &ldquo;Made with ShareInvite&rdquo;</p>
+                    <p className="text-xs text-muted mt-0.5">Every guest who opens this link sees a ShareInvite banner at the top.</p>
+                    <Link href="/pricing" className="mt-1.5 inline-flex items-center gap-1 text-xs font-bold" style={{ color: '#B87924' }}>
+                      Remove banner — from ₹299 →
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-2 space-y-2">
                 <Link href={`/e/${createdSlug}`}
                   className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold transition-all"
                   style={{ background: 'rgba(217,164,65,0.12)', border: '1px solid rgba(184,121,36,0.28)', color: '#2C201C' }}>

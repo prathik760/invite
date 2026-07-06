@@ -34,9 +34,18 @@ export async function POST(req: NextRequest) {
 
   const sanitizedData = sanitizeData(data as Record<string, unknown>)
 
-  // Attach userId if authenticated
+  // Attach userId if authenticated; check for paid subscription
   const session = await getServerSession(authOptions).catch(() => null)
   const userId = session?.user?.id ?? undefined
+
+  let isPaid = false
+  if (userId) {
+    const sub = await prisma.subscription.findFirst({
+      where: { userId, status: 'active', NOT: { plan: 'free' } },
+      select: { id: true },
+    }).catch(() => null)
+    if (sub) isPaid = true
+  }
 
   try {
     await prisma.template.upsert({
@@ -67,6 +76,7 @@ export async function POST(req: NextRequest) {
         slug,
         templateId,
         data: sanitizedData as object,
+        isPaid,
         ...(userId ? { userId } : {}),
       },
     })
