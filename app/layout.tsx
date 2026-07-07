@@ -1,8 +1,15 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import dynamic from 'next/dynamic'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
+
+// Loaded only after hydration — no SSR, no CWV impact, no hydration mismatch
+const SocialProofNotification = dynamic(
+  () => import('@/components/social-proof/SocialProofNotification'),
+  { ssr: false },
+)
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-5377FL2P'
@@ -157,6 +164,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         <AnimateOnScroll />
         <SessionProvider>{children}</SessionProvider>
+        <SocialProofNotification />
         {GTM_ID && (
           <Script
             id="gtm"

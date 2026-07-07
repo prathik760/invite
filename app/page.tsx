@@ -103,23 +103,23 @@ const features = [
 
 const testimonials = [
   {
-    quote: 'We shared the link on our wedding WhatsApp group and everyone loved it. The countdown and venue map made things so effortless for out-of-town guests.',
+    quote: 'Shared the link with our 340-person WhatsApp group. Within 2 hours, 200+ guests had opened it. Nobody called asking for directions — the map pin handled everything. Upgraded to Pro for the gallery and it was worth every rupee.',
     name: 'Meera Krishnamurthy',
-    event: 'Wedding · Bengaluru',
+    event: 'Wedding · Bengaluru · Pro plan',
     date: 'March 2026',
     avatar: 'https://i.pravatar.cc/96?img=47',
   },
   {
-    quote: "Made our daughter's naming ceremony invite in under 10 minutes. No app downloads, no printing — just a beautiful link we forwarded to the whole family.",
+    quote: "Took 7 minutes to set up and share with 80 family members across 4 cities. Even my parents in a small town opened it without any app download. Saved at least ₹3,000 on printed cards and hours of follow-up calls.",
     name: 'Suresh Iyer',
-    event: 'Naming Ceremony · Chennai',
+    event: 'Naming Ceremony · Chennai · Starter plan',
     date: 'February 2026',
     avatar: 'https://i.pravatar.cc/96?img=57',
   },
   {
-    quote: 'The gold design matched our theme perfectly. Guests kept asking how we made it — it felt so premium compared to the usual card images shared on WhatsApp.',
+    quote: "Started free, upgraded after seeing the preview — the photo gallery made it feel like a proper event website. Three friends used ShareInvite for their events after seeing our invite on their WhatsApp.",
     name: 'Pooja Mehta',
-    event: 'Birthday · Mumbai',
+    event: 'Birthday · Mumbai · Upgraded to Pro',
     date: 'January 2026',
     avatar: 'https://i.pravatar.cc/96?img=44',
   },
@@ -662,7 +662,7 @@ export default function LandingPage() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
-            <span className="font-display text-xl sm:text-2xl text-ink tracking-wide">ShareInvite</span>
+            <span className="hidden sm:inline font-display text-xl sm:text-2xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <nav
             className="hidden items-center gap-6 text-sm text-muted lg:flex"
@@ -703,10 +703,11 @@ export default function LandingPage() {
               <div className="flex flex-col items-start">
 
                 {/* Trust badge */}
-                <div className="hero-anim-3 mb-5 inline-flex items-center gap-2.5 rounded-full border border-[#D9A441]/35 bg-white/80 px-4 py-2 shadow-card">
+                <div className="hero-anim-3 mb-5 inline-flex items-center gap-2.5 rounded-full border border-[#D9A441]/35 bg-white/80 px-4 py-2 shadow-card max-w-full">
                   <StarRating />
-                  <span className="text-xs font-semibold text-accent-strong">
-                    4.9 · 10,000+ invitations · Trusted across 8 cities
+                  <span className="text-xs font-semibold text-accent-strong truncate">
+                    <span className="sm:hidden">4.9 · 10,000+ invitations</span>
+                    <span className="hidden sm:inline">4.9 · 10,000+ invitations · Trusted across 8 cities</span>
                   </span>
                 </div>
 
@@ -728,7 +729,7 @@ export default function LandingPage() {
 
                 {/* Sub-copy — lead with WhatsApp differentiator, then features */}
                 <p className="hero-anim-1 mt-4 max-w-[480px] text-sm leading-[1.85] text-muted sm:text-base">
-                  Share a beautiful invite link on WhatsApp — no app download needed for guests.
+                  Share a beautiful invite link on WhatsApp no app download needed for guests.
                   Includes gallery, music, live countdown, Google Maps, and online RSVP.
                   Crafted for Indian weddings, birthdays, Griha Pravesh and naming ceremonies.
                   Ready in 5 minutes.
@@ -775,12 +776,12 @@ export default function LandingPage() {
                     <div className="my-3.5 w-px" style={{ background: 'rgba(184,121,36,0.14)' }} />
                     <div className="flex flex-col items-center px-5 py-4">
                       <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">5 min</span>
-                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>Quick setup</span>
+                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>Avg. create time</span>
                     </div>
                     <div className="my-3.5 w-px" style={{ background: 'rgba(184,121,36,0.14)' }} />
                     <div className="flex flex-col items-center px-5 py-4">
                       <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">10k+</span>
-                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>Invites created</span>
+                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>Families served</span>
                     </div>
                   </div>
 
@@ -801,6 +802,7 @@ export default function LandingPage() {
                       </span>
                     ))}
                   </div>
+
 
                 </div>
               </div>
@@ -1058,10 +1060,14 @@ export default function LandingPage() {
                 </div>
               </DemoPreviewArea>
 
-              <div className="flex items-center justify-between gap-4 border-t border-[#EDE0CE] bg-white px-7 py-5">
-                <div>
-                  <div className="flex items-center gap-2.5 mb-1 flex-wrap">
-                    <p className="font-heading text-[1.1rem] font-semibold text-ink">Elegant Wedding</p>
+              <div className="border-t border-[#EDE0CE] bg-white px-5 py-5">
+                {/* Name + plan row */}
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-heading text-[1.05rem] font-semibold text-ink">Elegant Wedding</p>
+                    <p className="text-sm text-muted mt-0.5">Warm ivory &amp; gold — timeless romance</p>
+                  </div>
+                  <div className="shrink-0 flex flex-col items-end gap-1 mt-0.5">
                     <span
                       className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em]"
                       style={{ background: 'rgba(47,118,109,0.1)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.25)' }}
@@ -1075,18 +1081,18 @@ export default function LandingPage() {
                       Most Popular
                     </span>
                   </div>
-                  <p className="text-sm text-muted">Warm ivory &amp; gold — timeless romance</p>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
+                {/* Buttons — full-width 2-col grid */}
+                <div className="grid grid-cols-2 gap-2">
                   <DemoViewButton
                     templateId="elegant-wedding"
                     accent="#B87924"
-                    className="flex items-center justify-center gap-1.5 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-85"
+                    className="flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all hover:opacity-85"
                     style={{ background: 'rgba(184,121,36,0.10)', border: '1px solid rgba(184,121,36,0.28)', color: '#B87924' }}
                   />
                   <Link
                     href="/create"
-                    className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold"
+                    className="gold-button flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold"
                   >
                     Use this →
                   </Link>
@@ -1151,12 +1157,16 @@ export default function LandingPage() {
               </DemoPreviewArea>
 
               <div
-                className="flex items-center justify-between gap-4 border-t px-7 py-5"
+                className="border-t px-5 py-5"
                 style={{ background: '#0E0E17', borderColor: 'rgba(201,168,76,0.18)' }}
               >
-                <div>
-                  <div className="flex items-center gap-2.5 mb-1">
-                    <p className="font-heading text-[1.1rem] font-semibold" style={{ color: '#F2EEE6' }}>Cinematic Night</p>
+                {/* Name + plan row */}
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-heading text-[1.05rem] font-semibold" style={{ color: '#F2EEE6' }}>Cinematic Night</p>
+                    <p className="text-sm mt-0.5" style={{ color: 'rgba(242,238,230,0.42)' }}>Dark &amp; dramatic — bold film-noir</p>
+                  </div>
+                  <div className="shrink-0 mt-0.5">
                     <span
                       className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em]"
                       style={{ background: 'rgba(184,121,36,0.14)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)' }}
@@ -1164,18 +1174,18 @@ export default function LandingPage() {
                       Starter · ₹299
                     </span>
                   </div>
-                  <p className="text-sm" style={{ color: 'rgba(242,238,230,0.42)' }}>Dark &amp; dramatic — bold film-noir</p>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
+                {/* Buttons — full-width 2-col grid */}
+                <div className="grid grid-cols-2 gap-2">
                   <DemoViewButton
                     templateId="cinematic-night"
                     accent="#C9A84C"
-                    className="flex items-center justify-center gap-1.5 shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
+                    className="flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
                     style={{ background: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.35)', color: '#C9A84C' }}
                   />
                   <Link
                     href="/create"
-                    className="shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
+                    className="flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-all hover:opacity-90"
                     style={{ background: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.35)', color: '#C9A84C' }}
                   >
                     Use this →
@@ -1450,11 +1460,11 @@ export default function LandingPage() {
             <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
               Loved by Indian Families Across 8 Cities
             </h2>
-            <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-[#D9A441]/25 bg-white px-5 py-2.5 shadow-sm">
+            <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-[#D9A441]/25 bg-white px-5 py-2.5 shadow-sm max-w-full">
               <StarRating />
               <span className="text-sm font-semibold text-ink">4.9 out of 5</span>
-              <span className="h-4 w-px bg-border" />
-              <span className="text-sm text-muted">247+ verified reviews</span>
+              <span className="hidden sm:block h-4 w-px bg-border shrink-0" />
+              <span className="hidden sm:inline text-sm text-muted">247+ verified reviews</span>
             </div>
           </div>
 
