@@ -4,6 +4,16 @@ import { useState } from 'react'
 import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { PLANS } from '@/lib/plans'
+import { TEMPLATES } from '@/modules/templates/data'
+
+// Incremental template names per plan (new ones added at each tier)
+const PLAN_NEW_TEMPLATE_NAMES: Record<string, string[]> = {}
+PLANS.forEach((plan, i) => {
+  const prevIds = i > 0 ? PLANS[i - 1].templateIds : []
+  const newIds = plan.templateIds.filter(id => !prevIds.includes(id))
+  PLAN_NEW_TEMPLATE_NAMES[plan.id] = newIds
+    .map(id => TEMPLATES.find(t => t.id === id)?.name.split('—')[0].trim() ?? id)
+})
 
 function CheckIcon() {
   return (
@@ -162,7 +172,7 @@ export default function PricingSection() {
                   {plan.description}
                 </p>
 
-                <ul className="mt-6 flex-1 space-y-3">
+                <ul className="mt-6 space-y-3">
                   {plan.features.map((item) => (
                     <li key={item} className="flex items-start gap-2.5">
                       <span className={`mt-0.5 ${isFeatured ? 'text-[#D9A441]' : 'text-accent-strong'}`}>
@@ -174,6 +184,30 @@ export default function PricingSection() {
                     </li>
                   ))}
                 </ul>
+
+                {/* Templates included in this tier */}
+                <div className={`mt-5 flex-1 border-t pt-4 ${isFeatured ? 'border-white/10' : 'border-border'}`}>
+                  <p className={`mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] ${isFeatured ? 'text-white/40' : 'text-muted/70'}`}>
+                    {isFree ? 'Template' : 'Templates unlocked'}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {PLAN_NEW_TEMPLATE_NAMES[plan.id]?.map(name => (
+                      <span
+                        key={name}
+                        className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
+                          isFeatured ? 'bg-white/10 text-white/70' : 'bg-[#F5EFE6] text-[#6B5344]'
+                        }`}
+                      >
+                        {name}
+                      </span>
+                    ))}
+                    {!isFree && (
+                      <span className={`text-[11px] ${isFeatured ? 'text-white/30' : 'text-muted/50'}`}>
+                        + all lower plan templates
+                      </span>
+                    )}
+                  </div>
+                </div>
 
                 <button
                   onClick={() => handlePlanCTA(plan.id)}

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import JsonLd from '@/components/seo/JsonLd'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { TEMPLATES } from '@/modules/templates/data'
+import { getRequiredPlan } from '@/lib/plans'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -66,14 +67,34 @@ export default function TemplatesIndexPage() {
       </section>
       <section className="px-5 py-12">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {TEMPLATES.map((template) => (
-            <Link key={template.id} href={`/templates/${templateSeoSlug(template.id)}`} className="rounded-lg border border-border bg-white p-6 shadow-sm hover:shadow-card">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong">{template.category}</p>
-              <h2 className="mt-3 font-heading text-xl text-ink">{template.name}</h2>
-              <p className="mt-3 text-sm leading-7 text-muted">{template.description}</p>
-              <p className="mt-5 text-xs font-semibold text-muted">Create with this template</p>
-            </Link>
-          ))}
+          {TEMPLATES.map((template) => {
+            const plan = getRequiredPlan(template.id)
+            const isFree = plan.price === 0
+            return (
+              <Link key={template.id} href={`/templates/${templateSeoSlug(template.id)}`} className="group rounded-lg border border-border bg-white p-6 shadow-sm hover:shadow-card transition-shadow">
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong">{template.category}</p>
+                  <span
+                    className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold"
+                    style={
+                      isFree
+                        ? { background: 'rgba(47,118,109,0.10)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.20)' }
+                        : plan.id === 'standard'
+                        ? { background: 'rgba(184,121,36,0.10)', color: '#B87924', border: '1px solid rgba(184,121,36,0.22)' }
+                        : plan.id === 'premium'
+                        ? { background: 'rgba(47,118,109,0.08)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.18)' }
+                        : { background: 'rgba(201,168,76,0.12)', color: '#A8823A', border: '1px solid rgba(201,168,76,0.28)' }
+                    }
+                  >
+                    {isFree ? 'Free' : `₹${plan.price}`}
+                  </span>
+                </div>
+                <h2 className="mt-3 font-heading text-xl text-ink">{template.name}</h2>
+                <p className="mt-3 text-sm leading-7 text-muted">{template.description}</p>
+                <p className="mt-5 text-xs font-semibold text-muted group-hover:text-accent-strong transition-colors">Create with this template →</p>
+              </Link>
+            )
+          })}
         </div>
       </section>
       <SiteFooter />
