@@ -4,6 +4,7 @@ import Link from 'next/link'
 import WordingCopyCard from '@/components/wording/WordingCopyCard'
 import MidPageCTA from '@/components/wording/MidPageCTA'
 import StickyCTA from '@/components/wording/StickyCTA'
+import SiteFooter from '@/components/landing/SiteFooter'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -428,20 +429,7 @@ export default function BirthdayInvitationWordingPage() {
 
       <StickyCTA href="/birthday-invitation" text="Create Birthday Invite Free →" />
 
-      <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
-        <Link href="/" className="flex items-center justify-center gap-2">
-          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
-          <span className="font-display text-lg text-ink tracking-wide">ShareInvite</span>
-        </Link>
-        <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>
-        <div className="mt-4 flex flex-wrap justify-center gap-4">
-          <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-          <Link href="/create" className="hover:text-foreground transition-colors">Create</Link>
-          <Link href="/birthday-invitation" className="hover:text-foreground transition-colors">Birthday</Link>
-          <Link href="/wedding-invitation" className="hover:text-foreground transition-colors">Wedding</Link>
-          <Link href="/digital-invitation" className="hover:text-foreground transition-colors">All Events</Link>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   )
 }

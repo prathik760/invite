@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import SiteFooter from '@/components/landing/SiteFooter'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -191,19 +192,7 @@ export default function PressPage() {
         </div>
       </section>
 
-      <footer className="border-t border-border px-5 py-8 text-center text-sm text-muted">
-        <Link href="/" className="flex items-center justify-center gap-2">
-          <Image src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="100" height="28" />
-          <span className="font-display text-lg text-ink">ShareInvite</span>
-        </Link>
-        <p className="mt-2">Free digital invitation website builder for Indian weddings and events.</p>
-        <div className="mt-4 flex flex-wrap justify-center gap-4">
-          <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-          <Link href="/partners" className="hover:text-foreground transition-colors">Partners</Link>
-          <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
-          <Link href="/create" className="hover:text-foreground transition-colors">Create Invite</Link>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   )
 }
