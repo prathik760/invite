@@ -77,10 +77,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   return {
     title: { absolute: ogTitle },
     description,
-    // Noindexed until each city page has substantially unique content (2+ paragraphs,
-    // city-specific traditions, pricing context). Currently only one sentence differs
-    // per city — thin enough to harm site quality signals if indexed.
-    robots: { index: false, follow: true },
+    robots: { index: true, follow: true },
     keywords: [
       `digital birthday invitation ${info.display}`,
       `online birthday invitation ${info.display}`,
@@ -175,6 +172,31 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
         </div>
       </section>
 
+      <section className="bg-white border-b border-border px-5 py-10">
+        <div className="mx-auto max-w-3xl">
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-8">Create your invite in 3 simple steps</p>
+          <div className="grid sm:grid-cols-3 gap-8">
+            {[
+              { n: '1', title: 'Pick a birthday template', desc: 'Choose a design that matches the party mood — festive, elegant, or Bollywood-inspired.' },
+              { n: '2', title: 'Add your party details', desc: 'Enter the name, age, date, venue address, and a personal message. Upload a photo too.' },
+              { n: '3', title: 'Share on WhatsApp', desc: 'Your invite goes live instantly. Copy the link and forward it to all your WhatsApp groups.' },
+            ].map(s => (
+              <div key={s.n} className="flex flex-col items-center text-center">
+                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#D9A441] text-white font-bold text-lg shrink-0">{s.n}</div>
+                <h3 className="font-heading text-base text-ink mb-2">{s.title}</h3>
+                <p className="text-sm text-muted leading-6">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link href="/create" className="gold-button inline-flex rounded-full px-8 py-3 text-sm font-semibold">
+              Create Free Birthday Invite →
+            </Link>
+            <p className="mt-3 text-xs text-muted">No credit card required · Premium plans from ₹299</p>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white border-y border-border px-5 py-12">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="font-display font-normal text-2xl text-ink mb-4 sm:text-3xl">
@@ -236,12 +258,13 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
 
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Create your {info.display} birthday invitation
+          <h2 className="font-display font-normal text-3xl text-ink mb-3">
+            Ready to create your {info.display} birthday invitation?
           </h2>
-          <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes.</p>
+          <p className="text-muted text-sm mb-1">Starts free · Premium plans from ₹299 · No credit card to begin</p>
+          <p className="text-muted text-xs mb-7">Loved by families across India · Invites shared on WhatsApp daily</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create {info.display} Birthday Invite →
+            Create Your Free Birthday Invite →
           </Link>
         </div>
       </section>

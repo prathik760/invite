@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
 import { blogDrafts } from '@/content/blog'
-import { blogArticles } from '@/content/blog-articles'
-import { landingPages } from '@/content/seo-pages'
+import { landingPages, locationPages } from '@/content/seo-pages'
 import { TEMPLATES } from '@/modules/templates/data'
 import { SITE_URL, templateSeoSlug } from '@/lib/seo'
 
@@ -124,8 +123,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Griha Pravesh city pages: 2 full unique paragraphs + traditions per city.
     ...INDEXED_CITIES.map((c) => entry(`/griha-pravesh-invitation/${c}`, 0.70)),
 
-    // Birthday/Engagement city pages are intentionally excluded here.
-    // They are also noindexed at the page level until content is substantially improved.
+    // ─── Tier 4b: Birthday & Engagement city pages ────────────────────────────
+    ...INDEXED_CITIES.map((c) => entry(`/birthday-invitation/${c}`, 0.68)),
+    ...INDEXED_CITIES.map((c) => entry(`/engagement-invitation/${c}`, 0.68)),
+
+    // ─── Tier 4c: Digital-invitations location pages ──────────────────────────
+    ...locationPages.map((page) => entry(`/${page.slug}`, 0.64)),
 
     // ─── Tier 5: Wording guides (high-value informational content) ────────────
     entry('/wedding-invitation-wording', 0.74, 'monthly'),
@@ -138,10 +141,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ─── Tier 6: Individual template pages ────────────────────────────────────
     ...TEMPLATES.map((template) => entry(`/templates/${templateSeoSlug(template.id)}`, 0.65)),
 
-    // ─── Tier 7: Blog posts — only hand-written articles, not auto-generated fallbacks ──
-    ...blogDrafts
-      .filter((post) => post.slug in blogArticles)
-      .map((post) => entry(`/blog/${post.slug}`, 0.65)),
+    // ─── Tier 7: Blog posts ────────────────────────────────────────────────────
+    ...blogDrafts.map((post) => entry(`/blog/${post.slug}`, 0.65)),
 
     // ─── Tier 8: Supporting pages ─────────────────────────────────────────────
     entry('/partners', 0.55),

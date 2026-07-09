@@ -25,9 +25,9 @@ const commonRelated = [
 export const landingPages: SeoPage[] = [
   {
     slug: 'wedding-invitations',
-    title: 'Digital Wedding Invitations India | Online Wedding Card Maker',
+    title: 'Digital Wedding Invitations India | Wedding Card Maker',
     description:
-      'Create premium digital wedding invitations for Indian weddings. Choose templates, add venue, gallery, music, WhatsApp sharing, RSVP tracking, and guest wishes.',
+      'Create premium digital wedding invitations for Indian weddings. Add venue, gallery, music, WhatsApp sharing, RSVP tracking, and guest wishes.',
     h1: 'Digital Wedding Invitations for Indian Weddings',
     primaryKeyword: 'digital wedding invitation',
     occasion: 'wedding',
@@ -59,7 +59,7 @@ export const landingPages: SeoPage[] = [
   },
   {
     slug: 'engagement-invitations',
-    title: 'Engagement Invitation Card Maker | Digital Mangni Invitations',
+    title: 'Engagement Invitation Maker | Digital Mangni Invitations',
     description:
       'Create romantic engagement invitation cards online for ring ceremonies, roka, and mangni events. Share instantly on WhatsApp with RSVP and venue details.',
     h1: 'Engagement Invitation Cards for Ring Ceremonies',
@@ -297,7 +297,7 @@ export const landingPages: SeoPage[] = [
   },
   {
     slug: 'whatsapp-invitation-maker',
-    title: 'WhatsApp Invitation Card Maker | Share Digital Invites Online',
+    title: 'WhatsApp Invitation Card Maker | Share Digital Invites',
     description:
       'Make WhatsApp invitation cards as live web pages for weddings, birthdays, engagements, Griha Pravesh, baby showers, corporate events, and RSVP tracking.',
     h1: 'WhatsApp Invitation Maker for Digital Invitation Cards',
@@ -333,7 +333,7 @@ export const landingPages: SeoPage[] = [
     slug: 'online-rsvp',
     title: 'Online RSVP Platform India | Track Event Responses',
     description:
-      'Use ShareInvite as an online RSVP platform for weddings, birthdays, housewarming, naming ceremonies, and corporate events. Create invites and track responses.',
+      'Use ShareInvite as an online RSVP platform for weddings, birthdays, housewarming & naming ceremonies. Create invites and track responses easily.',
     h1: 'Online RSVP Platform for Indian Events',
     primaryKeyword: 'online RSVP',
     occasion: 'RSVP tracking',
@@ -389,8 +389,8 @@ export const locationPages: LocationPage[] = cities.map((city) => {
   return {
     slug: `digital-invitations-${city}`,
     city: cityName,
-    title: `Digital Invitations in ${cityName} | Wedding & Event Invite Maker`,
-    description: `Create digital invitations in ${cityName} for weddings, engagements, birthdays, Griha Pravesh, baby showers, naming ceremonies, and corporate events. Share on WhatsApp with RSVP tracking.`,
+    title: `Digital Invitations in ${cityName} | Wedding & Event Maker`,
+    description: `Create digital invitations in ${cityName} for weddings, birthdays, Griha Pravesh & engagements. WhatsApp-ready with RSVP tracking. Free to start.`,
     faqs: [
       {
         question: `Can I create a digital wedding invitation in ${cityName}?`,

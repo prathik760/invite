@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import TemplateGallery from '@/components/TemplateGallery'
 
 export const metadata: Metadata = {
-  title: 'Engagement Invitation Templates – Mangni, Roka & Sagai Designs | ShareInvite',
+  title: { absolute: 'Engagement Invitation Templates India | ShareInvite' },
   description:
-    'Browse digital engagement invitation templates for Mangni, Roka, Sagai, Nishchayathartham, and ring ceremonies. Romantic Indian designs to customise and share on WhatsApp.',
+    'Browse engagement invitation templates for Mangni, Roka, Sagai, and ring ceremonies. Romantic Indian designs. Share on WhatsApp in 5 minutes.',
   keywords: [
     'engagement invitation templates India',
     'digital engagement invitation',

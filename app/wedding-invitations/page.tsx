@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import TemplateGallery from '@/components/TemplateGallery'
 
 export const metadata: Metadata = {
-  title: 'Wedding Invitation Templates – Browse All Indian Designs | ShareInvite',
+  title: { absolute: 'Wedding Invitation Templates India | ShareInvite' },
   description:
-    'Browse free digital wedding invitation templates for Indian weddings. Traditional, modern, South Indian, and royal designs. Customise and share on WhatsApp instantly.',
+    'Browse free digital wedding invitation templates for Indian weddings. Traditional, modern, South Indian, and royal designs. Share on WhatsApp instantly.',
   keywords: [
     'wedding invitation templates India',
     'digital wedding invitation templates',

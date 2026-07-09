@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import TemplateGallery from '@/components/TemplateGallery'
 
 export const metadata: Metadata = {
-  title: 'Griha Pravesh Invitation Templates – Housewarming Designs | ShareInvite',
+  title: { absolute: 'Griha Pravesh Invitation Templates India | ShareInvite' },
   description:
-    'Browse free Griha Pravesh and housewarming invitation templates with pooja schedule, venue map, and WhatsApp sharing. Traditional and modern designs. Ready in 5 minutes.',
+    'Browse free Griha Pravesh and housewarming invitation templates with pooja schedule, venue map, and WhatsApp sharing. Traditional and modern designs.',
   keywords: [
     'Griha Pravesh invitation templates',
     'digital housewarming invitation India',

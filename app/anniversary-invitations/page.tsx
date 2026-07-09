@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import TemplateGallery from '@/components/TemplateGallery'
 
 export const metadata: Metadata = {
-  title: 'Anniversary Invitation Templates – Silver, Golden & Milestone Designs | ShareInvite',
+  title: { absolute: 'Anniversary Invitation Templates India | ShareInvite' },
   description:
-    'Browse anniversary invitation templates for silver, golden, and milestone anniversaries. Elegant designs with photo gallery, RSVP, and WhatsApp sharing. Free to start.',
+    'Browse anniversary invitation templates for silver, golden, and milestone anniversaries. Elegant designs with photo gallery, RSVP, and WhatsApp sharing.',
   keywords: [
     'anniversary invitation templates India',
     'digital anniversary invitation',

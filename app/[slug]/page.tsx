@@ -43,13 +43,7 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title,
     description,
-    // Location pages (/digital-invitations-*) are near-identical across cities —
-    // only the city name differs in templated FAQs. Noindex them to prevent
-    // doorway-page signals from harming the site's quality assessment.
-    // The stronger /wedding-invitation/[city] pages cover city-intent properly.
-    robots: locationPage
-      ? { index: false, follow: true }
-      : { index: true, follow: true },
+    robots: { index: true, follow: true },
     keywords: page ? pageKeywords(page) : ['digital invitations', `digital invitations ${locationPage!.city}`, 'online invitation maker', 'whatsapp invitation card'],
     alternates: { canonical: url },
     openGraph: {

@@ -87,8 +87,13 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
   },
   icons: {
-    icon: [{ url: '/logo1.png', type: 'image/png' }],
-    apple: '/logo1.png',
+    icon: [
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/logo1.png', sizes: '1024x1024', type: 'image/png' },
+    ],
+    apple: { url: '/logo1.png', sizes: '1024x1024', type: 'image/png' },
+    shortcut: '/favicon-48.png',
   },
 }
 
@@ -108,7 +113,7 @@ const orgSchema = {
     caption: 'ShareInvite',
   },
   description: 'Digital invitation website builder for Indian weddings, birthdays, and family events.',
-  foundingDate: '2024',
+  foundingDate: '2026',
   areaServed: { '@type': 'Country', name: 'India' },
   contactPoint: {
     '@type': 'ContactPoint',
@@ -139,6 +144,41 @@ const websiteSchema = {
   },
 }
 
+const navSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: [
+    {
+      '@type': 'SiteNavigationElement',
+      position: 1,
+      name: 'Create Invitation',
+      description: 'Create a free digital wedding, birthday, or event invitation in minutes.',
+      url: `${APP_URL}/create`,
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 2,
+      name: 'Invitation Templates',
+      description: 'Browse digital invitation templates for weddings, birthdays, namakaran, griha pravesh and more.',
+      url: `${APP_URL}/templates`,
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 3,
+      name: 'Dashboard',
+      description: 'Manage your digital invitations and track RSVPs.',
+      url: `${APP_URL}/dashboard`,
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 4,
+      name: 'Login',
+      description: 'Log in to your ShareInvite account.',
+      url: `${APP_URL}/login`,
+    },
+  ],
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-IN">
@@ -150,6 +190,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(navSchema) }} />
       </head>
       <body className="bg-background text-foreground font-body antialiased">
         {/* GTM noscript fallback */}

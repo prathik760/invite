@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import TemplateGallery from '@/components/TemplateGallery'
 
 export const metadata: Metadata = {
-  title: 'Birthday Invitation Templates – Free Designs for Every Age | ShareInvite',
+  title: { absolute: 'Birthday Invitation Templates India | ShareInvite' },
   description:
     'Browse free birthday invitation templates for kids, adults, and milestone birthdays. Pick a design and share on WhatsApp in 5 minutes. Online RSVP included.',
   keywords: [

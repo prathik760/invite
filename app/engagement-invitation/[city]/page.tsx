@@ -86,10 +86,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   return {
     title: { absolute: ogTitle },
     description,
-    // Noindexed until each city page has 2+ unique paragraphs of content and
-    // city-specific FAQs. Currently only one paragraph and the ceremony name differ
-    // per city — not enough differentiation to avoid thin/doorway-page classification.
-    robots: { index: false, follow: true },
+    robots: { index: true, follow: true },
     keywords: [
       `digital engagement invitation ${info.display}`,
       `online engagement invitation ${info.display}`,
