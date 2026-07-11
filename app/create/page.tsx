@@ -102,26 +102,25 @@ function UpgradeModal({
             <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold text-ink text-center mb-1">{requiredPlan.name} Template</h2>
-        <p className="text-sm text-muted text-center mb-6">
-          <strong className="text-foreground">{templateName}</strong> is included in the {requiredPlan.name} plan.
+        <h2 className="text-2xl font-bold text-ink text-center mb-1">{templateName}</h2>
+        <p className="text-sm text-muted text-center mb-6 leading-6">
+          Unlock this template with a one-time payment. Includes all premium features.
         </p>
         <div className="rounded-2xl border border-border bg-surface p-4 mb-5">
-          <div className="flex items-baseline justify-between mb-3">
-            <p className="text-lg font-bold text-ink">{requiredPlan.name}</p>
+          <div className="flex items-baseline justify-between mb-4">
+            <p className="text-sm font-medium text-muted">One-time price</p>
             <p className="text-2xl font-bold text-ink">₹{requiredPlan.price.toLocaleString()}</p>
           </div>
-          <p className="text-xs text-muted mb-3">{requiredPlan.description}</p>
-          <ul className="space-y-1.5">
-            {requiredPlan.features.map(f => (
-              <li key={f} className="flex items-start gap-2 text-xs text-muted">
-                <svg className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: '#2F766D' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+          <div className="grid grid-cols-2 gap-y-2 gap-x-3">
+            {['Background music', 'Photo gallery', 'Live countdown', 'Guest wishes', 'Google Maps', 'WhatsApp sharing'].map(f => (
+              <div key={f} className="flex items-center gap-1.5 text-xs text-muted">
+                <svg className="w-3.5 h-3.5 shrink-0" style={{ color: '#2F766D' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                 </svg>
                 {f}
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
         {!isLoggedIn ? (
           <div className="space-y-2">

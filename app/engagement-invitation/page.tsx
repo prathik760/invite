@@ -230,25 +230,22 @@ export default function EngagementInvitationPage() {
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { name: 'Basic', price: '₹0', badge: 'Free', desc: 'Elegant Wedding template, Google Maps, WhatsApp link' },
-              { name: 'Standard', price: '₹499', badge: 'Most popular', desc: '4 templates, background music, event schedule' },
-              { name: 'Premium', price: '₹999', badge: 'Best value', desc: 'Indian Engagement template + 6 more ceremonies' },
-              { name: 'Gold', price: '₹1,499', badge: 'Luxury', desc: 'All 11 templates — KGF Royal Empire + Anniversary' },
+              { price: '₹0', sub: 'Free forever', templates: 'Elegant Wedding' },
+              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran' },
+              { price: '₹599', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh' },
+              { price: '₹999', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
             ].map(p => (
-              <div key={p.name} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <p className="font-heading text-base text-ink">{p.name}</p>
-                  <span className="shrink-0 rounded-full bg-[#D9A441]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-accent-strong">{p.badge}</span>
-                </div>
-                <p className="font-display text-2xl text-ink mb-2">{p.price}</p>
-                <p className="text-xs text-muted leading-5">{p.desc}</p>
+              <div key={p.price} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
+                <p className="font-display text-2xl text-ink">{p.price}</p>
+                <p className="text-[10px] font-medium text-muted mt-0.5 mb-3">{p.sub}</p>
+                <p className="text-xs text-muted leading-5">{p.templates}</p>
               </div>
             ))}
           </div>
-          <p className="mt-6 text-center text-xs text-muted">One-time payment · No subscription · Invitation stays live for 1 year</p>
+          <p className="mt-6 text-center text-xs text-muted">Every template includes the same premium features · One-time payment · No subscription</p>
           <div className="mt-6 text-center">
             <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-              Start Free — Upgrade Anytime →
+              Start Free — Choose Your Template →
             </Link>
           </div>
         </div>

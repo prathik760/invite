@@ -17,15 +17,15 @@ const faqs = [
   },
   {
     question: 'Which plan should I choose?',
-    answer: 'Start free to try the product with the Elegant Wedding template. Choose Standard for a complete invite without watermark. Pick Premium for gallery, music, and countdown. Choose Gold if you want a custom URL, bride & groom portraits, and a full year of hosting.',
+    answer: 'Start free with the Elegant Wedding template. If you love the design, upgrade to any paid template with a one-time payment — ₹299 for Cinematic Night, Janamdin, or Namakaran; ₹599 for Shaadi, Mangni, or Griha Pravesh; ₹999 for Saalgirah, KGF Royal Empire, Royal Deco, or Luxury Wedding.',
   },
   {
     question: 'How much does a digital invitation cost in India?',
-    answer: 'The Elegant Wedding template is completely free — no credit card, no expiry. Premium templates with gallery, music, live countdown, and bride & groom portraits start at ₹499 as a one-time payment. There are no monthly fees or hidden charges.',
+    answer: 'The Elegant Wedding template is completely free — no credit card, no expiry. Paid templates start at ₹299 as a one-time payment. There are no monthly fees or hidden charges.',
   },
   {
     question: 'Can I add bride and groom photos to the invitation?',
-    answer: 'Yes. Gold and Premium plans let you upload a portrait photo for the bride, groom, or both. The photos are displayed in a beautiful circular frame at the top of the invitation template, making it feel personal and warm.',
+    answer: 'Yes. All paid templates let you upload portrait photos for the bride, groom, or both. The photos are displayed in a beautiful frame on the invitation page.',
   },
   {
     question: 'How do I share the invitation with family and friends?',

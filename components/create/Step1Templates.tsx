@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TEMPLATES } from '@/modules/templates/data'
@@ -48,7 +49,7 @@ function PlanBadge({ templateId }: { templateId: string }) {
           : { background: 'rgba(201,168,76,0.14)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)' }
       }
     >
-      {isFree ? 'Free' : `${plan.name} · ₹${plan.price.toLocaleString('en-IN')}`}
+      {isFree ? 'Free' : `₹${plan.price.toLocaleString('en-IN')} one-time`}
     </span>
   )
 }
@@ -202,7 +203,7 @@ function TemplatePreviewModal({
           {!isFree && (
             <p className="text-center text-[11px]"
               style={{ color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(44,32,28,0.42)' }}>
-              {plan.name} plan · One-time ₹{plan.price.toLocaleString('en-IN')} · No subscription
+              One-time ₹{plan.price.toLocaleString('en-IN')} · No subscription
             </p>
           )}
           <button
@@ -300,10 +301,17 @@ export default function Step1Templates({ selectedId, onSelect, onContinue }: Ste
               >
                 {/* Swatch */}
                 <div
-                  className="relative flex items-center justify-center"
-                  style={{ height: '80px', background: v.gradient }}
+                  className="relative overflow-hidden"
+                  style={{ height: '96px' }}
                 >
-                  <div className="text-white/80 scale-110">{v.icon}</div>
+                  <Image
+                    src={v.image}
+                    alt={tpl.name}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
 
                   {/* Preview pill — always visible */}
                   <button
@@ -366,11 +374,8 @@ export default function Step1Templates({ selectedId, onSelect, onContinue }: Ste
               const v = TEMPLATE_VISUALS[selectedId] ?? TEMPLATE_VISUALS['elegant-wedding']
               return tpl ? (
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: v.gradient }}
-                  >
-                    <div className="text-white/85 scale-90">{v.icon}</div>
+                  <div className="w-9 h-9 rounded-xl overflow-hidden shrink-0 border border-border/40">
+                    <Image src={v.image} alt={tpl.name} width={36} height={36} className="w-full h-full object-cover object-top" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-[11px] font-semibold text-ink truncate">

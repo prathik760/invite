@@ -147,7 +147,7 @@ export default function TemplateSeoPage({ params }: Props) {
               <span className="text-sm font-bold text-ink">
                 {plan.price === 0 ? 'Free forever' : `₹${plan.price} one-time`}
               </span>
-              <span className="text-xs text-muted">· {plan.name} plan · No subscription</span>
+              <span className="text-xs text-muted">· One-time payment · No subscription</span>
             </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href={`/create?template=${template.id}`} className="gold-button rounded-full px-9 py-4 text-center text-base font-semibold">Create Invitation</Link>

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -27,7 +28,7 @@ function PlanBadge({ templateId }: { templateId: string }) {
           : { background: 'rgba(201,168,76,0.14)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)' }
       }
     >
-      {isFree ? 'Free' : `${plan.name} · ₹${plan.price.toLocaleString('en-IN')}`}
+      {isFree ? 'Free' : `₹${plan.price.toLocaleString('en-IN')} one-time`}
     </span>
   )
 }
@@ -76,9 +77,8 @@ export default function TemplatePreviewModal({ templateId, open, onClose }: Prop
               }}
             >
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: tv.gradient }}>
-                  <div className="text-white/85 scale-75">{tv.icon}</div>
+                <div className="w-7 h-7 rounded-xl overflow-hidden shrink-0">
+                  <Image src={tv.image} alt={tpl.name} width={28} height={28} className="w-full h-full object-cover object-top" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold truncate"
@@ -177,7 +177,7 @@ export default function TemplatePreviewModal({ templateId, open, onClose }: Prop
               {!isFree && (
                 <p className="text-center text-[11px]"
                   style={{ color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(44,32,28,0.42)' }}>
-                  {plan.name} plan · One-time ₹{plan.price.toLocaleString('en-IN')} · No subscription
+                  One-time ₹{plan.price.toLocaleString('en-IN')} · No subscription
                 </p>
               )}
               <Link
