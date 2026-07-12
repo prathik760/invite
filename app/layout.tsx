@@ -11,6 +11,11 @@ const SocialProofNotification = dynamic(
   { ssr: false },
 )
 
+const WhatsAppButton = dynamic(
+  () => import('@/components/WhatsAppButton'),
+  { ssr: false },
+)
+
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-5377FL2P'
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-5NYQ140ED1'
@@ -206,6 +211,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnimateOnScroll />
         <SessionProvider>{children}</SessionProvider>
         <SocialProofNotification />
+        <WhatsAppButton />
         {GTM_ID && (
           <Script
             id="gtm"
