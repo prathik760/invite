@@ -6,9 +6,9 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Press & Media | ShareInvite — Digital Invitation Platform India',
+  title: { absolute: 'Press & Media | ShareInvite — Digital Invitation Platform' },
   description:
-    'Press resources for ShareInvite — India\'s digital invitation platform. Download logos, read company facts, and contact our media team for interviews and coverage.',
+    'Press kit, logos, and company facts for ShareInvite — India\'s digital invitation platform. Contact our media team for interviews and coverage requests.',
   keywords: [
     'ShareInvite press',
     'ShareInvite media kit',

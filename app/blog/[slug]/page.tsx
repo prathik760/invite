@@ -21,7 +21,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const url = absoluteUrl(`/blog/${post.slug}`)
 
   return {
-    title: `${post.title} | ShareInvite Blog`,
+    title: { absolute: `${post.title} | ShareInvite Blog` },
     description: post.description,
     robots: { index: true, follow: true },
     alternates: { canonical: url },

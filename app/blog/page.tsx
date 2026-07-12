@@ -7,13 +7,13 @@ import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'Wedding Invitation Ideas & Tips | ShareInvite Blog',
+  title: { absolute: 'Indian Invitation Ideas, Tips & Wording | ShareInvite Blog' },
   description:
-    'Read ShareInvite guides for digital wedding invitations, WhatsApp invite ideas, RSVP tracking, birthday invitations, Griha Pravesh invites, baby showers, and Indian event trends.',
+    'Guides on digital invitations for Indian weddings, birthdays, Griha Pravesh, engagements, and family events. Wording samples, WhatsApp tips, and RSVP ideas.',
   alternates: { canonical: absoluteUrl('/blog') },
   openGraph: {
-    title: 'Digital Invitation Blog | ShareInvite',
-    description: 'Practical guides for Indian digital invitations, wedding trends, WhatsApp sharing, and online RSVP.',
+    title: 'Indian Invitation Ideas, Tips & Wording | ShareInvite Blog',
+    description: 'Guides on digital invitations for Indian weddings, birthdays, Griha Pravesh, engagements, and family events.',
     type: 'website',
     siteName: SITE_NAME,
     url: absoluteUrl('/blog'),
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Digital Invitation Blog | ShareInvite',
-    description: 'Guides for digital invitations, WhatsApp cards, and RSVP workflows.',
+    title: 'Indian Invitation Ideas, Tips & Wording | ShareInvite Blog',
+    description: 'Wording samples, WhatsApp tips, and RSVP ideas for Indian events.',
     images: [DEFAULT_OG_IMAGE],
   },
 }

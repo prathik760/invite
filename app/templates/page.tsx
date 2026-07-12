@@ -8,13 +8,13 @@ import { getRequiredPlan } from '@/lib/plans'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'Digital Invitation Templates | Wedding, Birthday & Event Invites',
+  title: { absolute: 'Digital Invitation Templates for Indian Events | ShareInvite' },
   description:
-    'Browse ShareInvite digital invitation templates for weddings, engagements, birthdays, Griha Pravesh, naming ceremonies, anniversaries, and WhatsApp RSVP pages.',
+    '11 WhatsApp-ready digital invitation templates for Indian weddings, birthdays, engagements, Griha Pravesh, naming ceremonies, and anniversaries. Free to start.',
   alternates: { canonical: absoluteUrl('/templates') },
   openGraph: {
-    title: 'Digital Invitation Templates | ShareInvite',
-    description: 'Browse WhatsApp-ready invitation templates for Indian weddings and events.',
+    title: 'Digital Invitation Templates for Indian Events | ShareInvite',
+    description: '11 WhatsApp-ready digital invitation templates for Indian weddings, birthdays, Griha Pravesh, and more.',
     type: 'website',
     siteName: SITE_NAME,
     url: absoluteUrl('/templates'),
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Digital Invitation Templates | ShareInvite',
-    description: 'WhatsApp-ready invitation templates for Indian events.',
+    title: 'Digital Invitation Templates for Indian Events | ShareInvite',
+    description: '11 WhatsApp-ready digital invitation templates for Indian weddings, birthdays, Griha Pravesh, and more.',
     images: [DEFAULT_OG_IMAGE],
   },
 }

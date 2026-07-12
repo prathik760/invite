@@ -79,19 +79,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ?? `${title}${data.venue ? ` at ${data.venue}` : ''}${data.date ? ` on ${data.date}` : ''}. RSVP and view details on ShareInvite.`
   const url = `${APP_URL}/e/${params.slug}`
 
-  // Quality gate: index only events with real engagement.
-  // - isPaid: host invested in the invitation → genuine event.
-  // - approvedWishes ≥ 2: at least two guests were approved → real audience.
-  const approvedWishCount = '_count' in event ? (event as { _count: { wishes: number } })._count.wishes : 0
-  const isPaid = 'isPaid' in event ? (event as { isPaid: boolean }).isPaid : false
-  const shouldIndex = isPaid || approvedWishCount >= 2
-
   return {
     title,
     description,
-    robots: shouldIndex
-      ? { index: true, follow: true }
-      : { index: false, follow: false },
+    robots: { index: false, follow: false },
     alternates: { canonical: url },
     openGraph: {
       title,

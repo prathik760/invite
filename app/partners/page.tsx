@@ -7,9 +7,9 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: 'Partner with ShareInvite | Wedding Planners & Event Professionals India',
+  title: { absolute: 'ShareInvite Partner Programme | Earn 20% Per Referral' },
   description:
-    'Join the ShareInvite partner programme. Refer clients to our digital invitation platform and earn a commission on every paid subscription. Built for Indian wedding planners, photographers, and event managers.',
+    'Earn 20% per referral on ShareInvite — India\'s digital invitation platform. Built for Indian wedding planners, photographers, venue managers, and event professionals.',
   keywords: [
     'ShareInvite partner programme',
     'wedding planner referral programme India',
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/partners` },
   openGraph: {
-    title: 'Partner with ShareInvite | Wedding Professionals India',
-    description: 'Refer clients to ShareInvite and earn on every subscription. Built for Indian wedding planners, photographers, and event managers.',
+    title: 'ShareInvite Partner Programme | Earn 20% Per Referral',
+    description: 'Earn 20% per referral on ShareInvite. Built for Indian wedding planners, photographers, venue managers, and event professionals.',
     type: 'website',
     locale: 'en_IN',
   },

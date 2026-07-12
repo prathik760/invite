@@ -30,7 +30,7 @@ export function generateMetadata({ params }: Props): Metadata {
       : `Create beautiful ${template.name.toLowerCase()} digital invitations and share instantly on WhatsApp with RSVP tracking.`
 
   return {
-    title,
+    title: { absolute: title },
     description,
     keywords: [template.name, `${template.category} invitation template`, 'digital invitation template', 'whatsapp invitation card', 'online RSVP'],
     alternates: { canonical: url },

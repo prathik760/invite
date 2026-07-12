@@ -22,11 +22,12 @@ export function generateMetadata({ params }: Props): Metadata {
   const category = findCategory(params.category)
   if (!category) return {}
   const url = absoluteUrl(`/templates/category/${params.category}`)
-  const title = `${category} Invitation Templates | ShareInvite`
-  const description = `Browse ${category} digital invitation templates for WhatsApp sharing, RSVP workflows, venue details, gallery, and Indian event pages.`
+  const cat = category.charAt(0).toUpperCase() + category.slice(1)
+  const title = `${cat} Invitation Templates | ShareInvite`
+  const description = `Browse ${cat.toLowerCase()} digital invitation templates for Indian events — WhatsApp-ready links, venue details, photo gallery, live countdown, and RSVP guest flow.`
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical: url },
     openGraph: {
