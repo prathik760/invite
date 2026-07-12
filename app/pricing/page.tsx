@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import PricingSection from '@/components/landing/PricingSection'
@@ -409,6 +410,7 @@ export default function PricingPage() {
           </p>
         </div>
       </section>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
     </main>
   )
 }

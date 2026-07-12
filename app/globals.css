@@ -190,12 +190,14 @@ button:focus-visible {
 }
 
 /* Hero entrance animations — run immediately on load, no JS required */
-.hero-anim-0 { animation: luxeFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.hero-anim-1 { animation: luxeFadeUp 0.9s 0.14s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.hero-anim-2 { animation: luxeFadeUp 0.9s 0.26s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.hero-anim-3 { animation: luxeFadeUp 0.9s 0.38s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.hero-anim-4 { animation: luxeScaleIn 1.1s 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.hero-anim-5 { animation: luxeFadeIn  0.8s 0.55s ease both; }
+/* forwards (not both): elements render visible at their natural state during delay,
+   so Chrome can register them as LCP candidates before the animation begins */
+.hero-anim-0 { animation: luxeFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.hero-anim-1 { animation: luxeFadeUp 0.9s 0.14s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.hero-anim-2 { animation: luxeFadeUp 0.9s 0.26s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.hero-anim-3 { animation: luxeFadeUp 0.9s 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.hero-anim-4 { animation: luxeScaleIn 1.1s 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.hero-anim-5 { animation: luxeFadeIn  0.8s 0.55s ease forwards; }
 
 /* Scroll-reveal — hidden until JS adds .is-visible */
 body.js-animate [data-animate] {

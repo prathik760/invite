@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import TemplatePreviewModal from '@/components/create/TemplatePreviewModal'
+import dynamic from 'next/dynamic'
+
+const TemplatePreviewModal = dynamic(() => import('@/components/create/TemplatePreviewModal'), { ssr: false })
 
 // ─── Preview area wrapper ─────────────────────────────────────────────────────
 
