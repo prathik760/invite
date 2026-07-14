@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TEMPLATES } from '@/modules/templates/data'
-import { PLANS, canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
+import { PLANS, getRequiredPlan, type PlanId } from '@/lib/plans'
 import ShareBar from '@/components/ui/ShareBar'
 import { seoEvents, trackEvent } from '@/lib/analytics'
 
@@ -158,7 +158,7 @@ export default function CreatePage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [createdSlug, setCreatedSlug] = useState<string | null>(null)
-  const [userPlan, setUserPlan] = useState<PlanId>('gold')
+  const [userPlan, setUserPlan] = useState<PlanId>('free')
   const [upgradeTarget, setUpgradeTarget] = useState<{ templateId: string; templateName: string } | null>(null)
   const [paying, setPaying] = useState(false)
   const [showLoginPrompt, setShowLoginPrompt] = useState(false)
@@ -255,7 +255,7 @@ export default function CreatePage() {
       setShowLoginPrompt(true)
       return
     }
-    if (!canAccess(selectedId, userPlan)) {
+    if (getRequiredPlan(selectedId).price > 0) {
       setUpgradeTarget({ templateId: selectedId, templateName: selectedTemplate.name })
       return
     }
@@ -295,10 +295,7 @@ export default function CreatePage() {
             })
             const verBody = await verRes.json() as { success?: boolean; error?: string }
             if (verRes.ok && verBody.success) {
-              setUserPlan(planId)
               setUpgradeTarget(null)
-              const tpl = TEMPLATES.find(t => t.id === upgradeTarget?.templateId)
-              if (tpl) { setSelectedId(tpl.id); setData(tpl.config.defaultData) }
               setTimeout(() => doCreate(), 300)
             } else { alert(verBody.error ?? 'Payment verification failed.') }
           } finally { setPaying(false); payRef.current = false }
@@ -715,7 +712,7 @@ export default function CreatePage() {
               <ShareBar url={shareUrl} names={names} />
 
               {/* Branding notice for free plan — most important conversion moment */}
-              {userPlan === 'free' && (
+              {getRequiredPlan(selectedId).price === 0 && (
                 <div className="rounded-xl px-4 py-3 flex items-start gap-3 mb-1"
                   style={{ background: 'rgba(217,164,65,0.07)', border: '1px solid rgba(217,164,65,0.25)' }}>
                   <span className="text-base shrink-0 mt-0.5">👀</span>
