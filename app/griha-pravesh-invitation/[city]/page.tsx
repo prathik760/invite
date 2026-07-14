@@ -4,81 +4,17 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { MapPinIcon, ClipboardIcon, ClockIcon, CameraIcon, MusicIcon, MessageIcon } from '@/components/ui/Icons'
 import SiteFooter from '@/components/landing/SiteFooter'
+import { GRIHA_PRAVESH_CITIES, type CitySlug } from '@/lib/cityContent'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
-const CITIES: Record<string, {
-  display: string
-  state: string
-  localDetail: string
-  localDetail2: string
-  traditions: string[]
-}> = {
-  bengaluru: {
-    display: 'Bengaluru',
-    state: 'Karnataka',
-    localDetail: 'Bengaluru\'s rapid growth means new apartments and homes are launched constantly — Griha Pravesh celebrations are a weekly occurrence in localities like Whitefield, Electronic City, and Sarjapur Road. With guests coming from across the city in peak traffic, a digital invitation with Google Maps is essential.',
-    localDetail2: 'Karnataka families combine Griha Pravesha rituals with Vastu Shanti Puja. The muhurat time, set by the family pandit, is the most important detail guests need. ShareInvite lets you display it prominently with the full pooja schedule — Ganesh Puja, Vastu Shanti, Griha Pravesha, and lunch.',
-    traditions: ['Griha Pravesha', 'Vastu Shanti', 'Satyanarayana Puja', 'Ghar Pravesh'],
-  },
-  mumbai: {
-    display: 'Mumbai',
-    state: 'Maharashtra',
-    localDetail: 'In Mumbai, where apartment buildings have security gates, parking restrictions, and building entry codes, a Griha Pravesh invitation must include more than just the address. ShareInvite lets you add parking instructions, building entry details, and a Google Maps pin for the exact building.',
-    localDetail2: 'Mumbai Griha Pravesh celebrations often include a Satyanarayana Puja combined with the housewarming. Guests from Thane, Navi Mumbai, and Pune need precise timings to plan their travel. A digital invitation makes the muhurat time and schedule visible at all times.',
-    traditions: ['Satyanarayana Puja', 'Vastu Puja', 'Ghar Pravesh', 'Lakshmi Puja'],
-  },
-  delhi: {
-    display: 'Delhi',
-    state: 'Delhi NCR',
-    localDetail: 'Delhi NCR housewarmings often involve guests traveling from Gurgaon, Noida, Faridabad, and Ghaziabad. The traffic during peak hours means guests rely on Google Maps for real-time navigation. A digital Griha Pravesh invitation with a live Maps link removes the "which gate?" and "where to park?" calls on the event day.',
-    localDetail2: 'North Indian Griha Pravesh in Delhi typically involves Ganesh Puja, Ghar Shanti, and a Saptapadi ritual at the threshold. The muhurat is selected carefully by the family pandit — often in the early morning. ShareInvite displays all these timings clearly for guests.',
-    traditions: ['Ghar Pravesh', 'Ganesh Puja', 'Grah Shanti', 'Vastu Puja'],
-  },
-  hyderabad: {
-    display: 'Hyderabad',
-    state: 'Telangana',
-    localDetail: 'Hyderabad\'s real estate boom in Gachibowli, Kondapur, and Miyapur means new home entry ceremonies are frequent. Telugu and Hyderabadi families often celebrate Griha Pravesh with a Satyanarayana Vratam — a ceremony that takes several hours and requires guests to be informed of the full schedule.',
-    localDetail2: 'Gruhapravesham in Telugu tradition involves specific rituals like Vasthu Puja, Vastu Shanti, and the boiling of milk in the new kitchen as the first act inside the home. Each ritual has a timing guests appreciate knowing. A digital invitation that lists the programme helps guests arrive at the right moment.',
-    traditions: ['Gruhapravesham', 'Vasthu Puja', 'Satyanarayana Vratam', 'Vastu Shanti'],
-  },
-  chennai: {
-    display: 'Chennai',
-    state: 'Tamil Nadu',
-    localDetail: 'Chennai Griha Pravesh (Gruhapravesham) is a significant ceremony in Tamil families — the auspicious entry into the new home after Vastu Puja and the boiling of milk. Guests, including relatives from Coimbatore, Madurai, and abroad, need complete details about muhurat timing and the venue.',
-    localDetail2: 'In Tamil tradition, the Gruhapravesham muhurat is often at sunrise — making it an early-morning event that requires guests to arrive before 6 AM or 7 AM. A digital Griha Pravesh invitation shared on WhatsApp, clearly showing the muhurat time, prevents confusion and late arrivals.',
-    traditions: ['Gruhapravesham', 'Vastu Puja', 'Milk Boiling Ritual', 'Lakshmi Puja'],
-  },
-  pune: {
-    display: 'Pune',
-    state: 'Maharashtra',
-    localDetail: 'Pune families moving into new apartments in Kharadi, Baner, Wakad, and Hinjewadi need a digital Griha Pravesh invitation that guests can open on phones while navigating unfamiliar roads. A ShareInvite page with Google Maps, parking details, and the muhurat time makes the event accessible for every guest.',
-    localDetail2: 'Maharashtrian Griha Pravesh includes a Vastu Shanti Puja, Ganesh Pooja, and the traditional Griha Pravesh ritual where the couple enters with a lit lamp. The ceremony schedule, shared on a digital invitation, helps guests from Mumbai and Nashik plan their arrival time.',
-    traditions: ['Vastu Shanti', 'Ganesh Pooja', 'Griha Pravesh', 'Satyanarayana Puja'],
-  },
-  kolkata: {
-    display: 'Kolkata',
-    state: 'West Bengal',
-    localDetail: 'In Kolkata, a new home entry (Griha Pravesh or Nababasa) is celebrated with a Lakshmi Puja and Saraswati Puja. Bengali families mark this with family gatherings and a special meal. ShareInvite helps Kolkata families create a digital invitation with the puja schedule, venue address, and a blessings section for relatives.',
-    localDetail2: 'Bengali Griha Pravesh often coincides with an auspicious tithi from the Hindu calendar. Relatives from Howrah, Salt Lake, and New Town rely on a digital invitation to confirm the muhurat time and venue address. A WhatsApp-ready digital invite removes all day-of confusion.',
-    traditions: ['Lakshmi Puja', 'Saraswati Puja', 'Nababasa', 'Vastu Puja'],
-  },
-  ahmedabad: {
-    display: 'Ahmedabad',
-    state: 'Gujarat',
-    localDetail: 'Gujarati families celebrate Griha Pravesh with a Vastu Shanti Puja and Satyanarayan Katha. Guests from Vadodara, Surat, and Rajkot often attend — making a digital invitation with the exact venue address, muhurat time, and ceremony schedule essential for out-of-city coordination.',
-    localDetail2: 'In Gujarat, the Griha Pravesh muhurat is selected based on astrological guidance — often an early morning or specific afternoon timeslot. ShareInvite displays this prominently in the invitation, ensuring guests from across Gujarat arrive prepared and on time.',
-    traditions: ['Vastu Shanti', 'Satyanarayan Katha', 'Ganesh Puja', 'Lakshmi Puja'],
-  },
-}
-
 export async function generateStaticParams() {
-  return Object.keys(CITIES).map((city) => ({ city }))
+  return Object.keys(GRIHA_PRAVESH_CITIES).map((city) => ({ city }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
   const { city } = await params
-  const info = CITIES[city]
+  const info = GRIHA_PRAVESH_CITIES[city as CitySlug]
   if (!info) return {}
 
   const ogTitle = `Digital Griha Pravesh Invitation in ${info.display} | ShareInvite`
@@ -112,38 +48,17 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 
 export default async function CityGrihaPraveshPage({ params }: { params: Promise<{ city: string }> }) {
   const { city } = await params
-  const info = CITIES[city]
+  const info = GRIHA_PRAVESH_CITIES[city as CitySlug]
   if (!info) notFound()
 
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: `How do I create a Griha Pravesh invitation in ${info.display}?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `Go to shareinvite.in/create, choose a housewarming template, enter the muhurat time, new address, pooja schedule, and a family message. Your digital Griha Pravesh invitation is live with a shareable WhatsApp link in under 5 minutes.`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: `What details should a Griha Pravesh invitation in ${info.display} include?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `A Griha Pravesh invitation in ${info.display} should include: the muhurat time (displayed prominently), the full pooja schedule, the new home address with a Google Maps link, parking and entry instructions for apartment buildings, and a warm family message. ShareInvite lets you include all of these in one WhatsApp-ready link.`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'When should I send a Griha Pravesh invitation?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Send the Griha Pravesh invitation at least 10–14 days before the ceremony so guests can plan around the muhurat time. Share a reminder on WhatsApp 2 days before. If family is travelling from another city, send 3 weeks in advance. With a digital invitation, reminders are as simple as re-forwarding the same link.',
-        },
-      },
-    ],
+    mainEntity: info.faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   }
 
   const localBusinessSchema = {
@@ -195,9 +110,7 @@ export default async function CityGrihaPraveshPage({ params }: { params: Promise
             <span className="gradient-accent italic">in {info.display}</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital Griha Pravesh invitation for your {info.display} housewarming in under 5 minutes.
-            Share a WhatsApp link with the muhurat time, pooja schedule, new address, and a live Google Maps pin.
-            Free to start.
+            {info.localDetail}
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
@@ -223,7 +136,7 @@ export default async function CityGrihaPraveshPage({ params }: { params: Promise
               Ceremonies and rituals we support
             </p>
             <div className="flex flex-wrap justify-center gap-2">
-              {info.traditions.map(t => (
+              {info.traditions.map((t: string) => (
                 <span key={t} className="rounded-full border border-[#D9A441]/30 bg-[#FFF9F2] px-4 py-1.5 text-sm text-accent-strong font-medium">
                   {t}
                 </span>
@@ -298,7 +211,8 @@ export default async function CityGrihaPraveshPage({ params }: { params: Promise
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
             Create your {info.display} Griha Pravesh invitation
           </h2>
-          <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes.</p>
+          <p className="text-muted text-sm mb-1">{info.ctaTagline}</p>
+          <p className="text-muted text-xs mb-7">Free to start · WhatsApp-ready in 5 minutes</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create {info.display} Griha Pravesh Invite →
           </Link>

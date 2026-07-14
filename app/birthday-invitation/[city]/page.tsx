@@ -4,72 +4,17 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { MapPinIcon, ClockIcon, CameraIcon, MusicIcon, ClipboardIcon, MessageIcon } from '@/components/ui/Icons'
 import SiteFooter from '@/components/landing/SiteFooter'
+import { BIRTHDAY_CITIES, type CitySlug } from '@/lib/cityContent'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
-const CITIES: Record<string, {
-  display: string
-  state: string
-  localVenues: string[]
-  localDetail: string
-}> = {
-  bengaluru: {
-    display: 'Bengaluru',
-    state: 'Karnataka',
-    localVenues: ['The Leela Palace', 'ITC Windsor', 'Taj West End', 'Shangri-La Bengaluru', 'Sheraton Grand Bengaluru'],
-    localDetail: 'Bengaluru birthday parties range from rooftop celebrations in Koramangala to grand banquet halls in Indiranagar and private farmhouses on the Mysore Road — a digital invite with Google Maps makes navigation seamless in the city\'s traffic.',
-  },
-  mumbai: {
-    display: 'Mumbai',
-    state: 'Maharashtra',
-    localVenues: ['Taj Lands End', 'The St. Regis Mumbai', 'JW Marriott Juhu', 'Grand Hyatt Mumbai', 'Trident Nariman Point'],
-    localDetail: 'Mumbai birthday celebrations happen across the city — sea-facing venues in Bandra, rooftop parties in Lower Parel, and family gatherings in the suburbs. A WhatsApp-ready invite link works perfectly for Mumbai\'s fast-paced, phone-first lifestyle.',
-  },
-  delhi: {
-    display: 'Delhi',
-    state: 'Delhi NCR',
-    localVenues: ['The Leela Palace New Delhi', 'ITC Maurya', 'Taj Palace', 'The Oberoi New Delhi', 'Hyatt Regency Delhi'],
-    localDetail: 'Delhi birthday parties span farmhouse celebrations in Chattarpur, rooftop venues in CP, and luxury hotel banquets across South Delhi and Gurgaon. A digital invite that works across NCR makes coordination far simpler.',
-  },
-  hyderabad: {
-    display: 'Hyderabad',
-    state: 'Telangana',
-    localVenues: ['Taj Falaknuma Palace', 'ITC Kohenur', 'Park Hyatt Hyderabad', 'The Westin Hyderabad', 'Marriott Hyderabad'],
-    localDetail: 'Hyderabad birthday celebrations reflect the city\'s warmth — from palace venue celebrations in Banjara Hills to family gatherings in Jubilee Hills. A WhatsApp-shared digital invite reaches all guests instantly across the twin cities.',
-  },
-  chennai: {
-    display: 'Chennai',
-    state: 'Tamil Nadu',
-    localVenues: ['ITC Grand Chola', 'Taj Coromandel', 'The Leela Palace Chennai', 'Feathers Hotel', 'Radisson Blu Chennai'],
-    localDetail: 'Chennai birthday parties are warm, family-centred events — from beachside venues in ECR to private halls in Anna Nagar and T Nagar. A digital invite with Google Maps helps guests navigate the city\'s busy neighbourhoods.',
-  },
-  pune: {
-    display: 'Pune',
-    state: 'Maharashtra',
-    localVenues: ['JW Marriott Pune', 'Conrad Pune', 'Hyatt Regency Pune', 'Taj Blue Diamond', 'The Westin Pune'],
-    localDetail: 'Pune birthday celebrations blend the city\'s cosmopolitan energy with Maharashtrian warmth — from terrace parties in Koregaon Park to family celebrations in Kothrud. A digital invite works perfectly for Pune\'s young, WhatsApp-native crowd.',
-  },
-  kolkata: {
-    display: 'Kolkata',
-    state: 'West Bengal',
-    localVenues: ['Taj Bengal', 'ITC Royal Bengal', 'The Oberoi Grand', 'Vedic Village Spa Resort', 'Hyatt Regency Kolkata'],
-    localDetail: 'Kolkata birthday parties carry the city\'s legendary warmth and cultural richness — from heritage venue celebrations in Park Street to family gatherings across the city\'s many cultural neighbourhoods.',
-  },
-  ahmedabad: {
-    display: 'Ahmedabad',
-    state: 'Gujarat',
-    localVenues: ['Hyatt Regency Ahmedabad', 'Crowne Plaza Ahmedabad', 'Vivanta Ahmedabad', 'Fortune Landmark', 'Novotel Ahmedabad'],
-    localDetail: 'Ahmedabad birthday celebrations reflect Gujarati warmth and hospitality — from family gatherings across the city to themed parties in Prahlad Nagar and SG Highway\'s modern venues.',
-  },
-}
-
 export async function generateStaticParams() {
-  return Object.keys(CITIES).map((city) => ({ city }))
+  return Object.keys(BIRTHDAY_CITIES).map((city) => ({ city }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }): Promise<Metadata> {
   const { city } = await params
-  const info = CITIES[city]
+  const info = BIRTHDAY_CITIES[city as CitySlug]
   if (!info) return {}
 
   const ogTitle = `Digital Birthday Invitation in ${info.display} | ShareInvite`
@@ -102,38 +47,17 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 
 export default async function CityBirthdayPage({ params }: { params: Promise<{ city: string }> }) {
   const { city } = await params
-  const info = CITIES[city]
+  const info = BIRTHDAY_CITIES[city as CitySlug]
   if (!info) notFound()
 
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: `How do I create a digital birthday invitation for a ${info.display} party?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `Go to shareinvite.in/create, choose a birthday template, enter the celebrant's name, party date, ${info.display} venue address, and message. Your digital birthday invitation is live with a shareable WhatsApp link in under 5 minutes.`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: `Can I add a ${info.display} venue map to my birthday invitation?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `Yes. ShareInvite lets you add the full venue address with a clickable Google Maps link. Guests get one-tap directions to any venue in ${info.display} directly from the birthday invitation.`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How do I share the birthday invitation with guests in India?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'ShareInvite creates a short link like shareinvite.in/e/your-name that you forward directly on WhatsApp. Guests open it in their phone browser — no app download needed.',
-        },
-      },
-    ],
+    mainEntity: info.faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   }
 
   return (
@@ -162,7 +86,7 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
             <span className="gradient-accent italic">in {info.display}</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital birthday invitation for your {info.display} party in under 5 minutes. Share a WhatsApp link with your venue location, party schedule, photos, and a live countdown. Free to start.
+            {info.heroIntro}
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
@@ -203,11 +127,11 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
           <h2 className="font-display font-normal text-2xl text-ink mb-4 sm:text-3xl">
             Built for {info.display} birthday parties
           </h2>
-          <p className="text-muted text-base leading-8 max-w-2xl mx-auto">{info.localDetail}</p>
+          <p className="text-muted text-base leading-8 max-w-2xl mx-auto">{info.builtForPara}</p>
           <div className="mt-8">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-4">Popular {info.display} venues our customers use</p>
             <div className="flex flex-wrap justify-center gap-3">
-              {info.localVenues.map(venue => (
+              {info.venues.map((venue: string) => (
                 <span key={venue} className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground">
                   {venue}
                 </span>
@@ -257,13 +181,33 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
         </div>
       </section>
 
+      <section className="px-5 py-10 bg-background border-t border-border">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="font-heading text-lg text-ink mb-5 text-center">More invitation guides</h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link href="/birthday-invitation" className="rounded-lg border border-border bg-white px-5 py-2.5 text-sm font-semibold text-ink hover:text-accent-strong transition-colors">
+              Birthday Invitations →
+            </Link>
+            <Link href={`/engagement-invitation/${city}`} className="rounded-lg border border-border bg-white px-5 py-2.5 text-sm font-semibold text-ink hover:text-accent-strong transition-colors">
+              Engagement Invitations in {info.display} →
+            </Link>
+            <Link href={`/wedding-invitation/${city}`} className="rounded-lg border border-border bg-white px-5 py-2.5 text-sm font-semibold text-ink hover:text-accent-strong transition-colors">
+              Wedding Invitations in {info.display} →
+            </Link>
+            <Link href="/templates" className="rounded-lg border border-border bg-white px-5 py-2.5 text-sm font-semibold text-ink hover:text-accent-strong transition-colors">
+              All Templates →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-3">
             Ready to create your {info.display} birthday invitation?
           </h2>
-          <p className="text-muted text-sm mb-1">Starts free · Premium plans from ₹299 · No credit card to begin</p>
-          <p className="text-muted text-xs mb-7">Loved by families across India · Invites shared on WhatsApp daily</p>
+          <p className="text-muted text-sm mb-1">{info.ctaTagline}</p>
+          <p className="text-muted text-xs mb-7">Starts free · Premium plans from ₹299 · No credit card to begin</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Your Free Birthday Invite →
           </Link>
