@@ -87,7 +87,6 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
-  alternates: { canonical: APP_URL },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
   },
@@ -170,16 +169,16 @@ const navSchema = {
     {
       '@type': 'SiteNavigationElement',
       position: 3,
-      name: 'Dashboard',
-      description: 'Manage your digital invitations and track RSVPs.',
-      url: `${APP_URL}/dashboard`,
+      name: 'Pricing',
+      description: 'Simple one-time pricing for digital invitation templates.',
+      url: `${APP_URL}/pricing`,
     },
     {
       '@type': 'SiteNavigationElement',
       position: 4,
-      name: 'Login',
-      description: 'Log in to your ShareInvite account.',
-      url: `${APP_URL}/login`,
+      name: 'Blog',
+      description: 'Guides and ideas for digital invitations for Indian weddings and events.',
+      url: `${APP_URL}/blog`,
     },
   ],
 }

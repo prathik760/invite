@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next'
-import { blogDrafts } from '@/content/blog'
+import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
 import { landingPages, locationPages } from '@/content/seo-pages'
 import { TEMPLATES } from '@/modules/templates/data'
-import { SITE_URL, templateSeoSlug } from '@/lib/seo'
+import { SITE_URL, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
 
 const now = new Date()
 
@@ -32,59 +32,13 @@ const SKIP_LANDING_SLUGS = new Set([
   'naming-ceremony-invitations',
 ])
 
-// Quality-gated user invite pages.
-// Gate matches the page-level robots decision in app/e/[slug]/page.tsx:
-//   index = isPaid OR totalWishCount >= 2
-// Using >= 2 (not just "any approved wish") prevents single test-wish events
-// from leaking through. Fetch 600, post-filter, then cap at 300.
-async function getPublicInviteEntries(): Promise<MetadataRoute.Sitemap> {
-  if (!process.env.DATABASE_URL) return []
-
-  try {
-    const { prisma } = await import('@/lib/db')
-    const events = await prisma.event.findMany({
-      where: {
-        slug: { not: '__custom-requests__' },
-        OR: [
-          { isPaid: true },
-          { wishes: { some: { isApproved: true } } },
-        ],
-      },
-      select: {
-        slug: true,
-        createdAt: true,
-        isPaid: true,
-        _count: { select: { wishes: { where: { isApproved: true } } } },
-      },
-      orderBy: { createdAt: 'desc' },
-      take: 600,
-    })
-
-    return events
-      .filter((event) => {
-        const isPaid = (event as { isPaid: boolean }).isPaid
-        const wishCount = (event as { _count: { wishes: number } })._count.wishes
-        return isPaid || wishCount >= 2
-      })
-      .slice(0, 300)
-      .map((event) => ({
-        url: `${SITE_URL}/e/${event.slug}`,
-        lastModified: event.createdAt,
-        changeFrequency: 'weekly' as const,
-        priority: 0.5,
-      }))
-  } catch {
-    return []
-  }
-}
-
 // Cities with genuinely unique content in their city-specific pages.
 // Wedding and Griha Pravesh pages have 2+ unique paragraphs + local traditions → keep indexed.
 // Birthday and Engagement city pages are thin (1 sentence unique) → excluded from sitemap + noindexed at the page level.
 const INDEXED_CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 'pune', 'kolkata', 'ahmedabad']
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const publicInvites = await getPublicInviteEntries()
+export default function sitemap(): MetadataRoute.Sitemap {
+  const templateCategories = Array.from(new Set(TEMPLATES.map((t) => t.category || 'digital')))
 
   return [
     // ─── Tier 1: Core product pages ───────────────────────────────────────────
@@ -148,9 +102,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry('/partners', 0.55),
     entry('/press', 0.55),
 
-    // ─── Tier 9: Quality-gated user-created invitation pages ──────────────────
-    // Only paid events or events with approved guest wishes are included.
-    // Capped at 300 to preserve crawl budget for higher-value pages.
-    ...publicInvites,
+    // ─── Tier 9: Blog category pages ──────────────────────────────────────────
+    ...blogCategories.map((category) => entry(`/blog/category/${categorySlug(category)}`, 0.60)),
+
+    // ─── Tier 10: Template category pages ─────────────────────────────────────
+    ...templateCategories.map((category) => entry(`/templates/category/${templateCategorySlug(category)}`, 0.60)),
   ]
 }
