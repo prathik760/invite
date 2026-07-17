@@ -15,8 +15,12 @@ export interface Plan {
 
 // Templates assigned to each tier
 const FREE_TEMPLATES = ['elegant-wedding']
-const STANDARD_TEMPLATES = [...FREE_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran',]
-const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh']
+const STANDARD_TEMPLATES = [...FREE_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',]
+const GREETING_TEMPLATES = [
+  'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
+  'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
+]
+const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh', ...GREETING_TEMPLATES]
 const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'royal-deco', 'luxury-wedding']
 
 export const PLANS: Plan[] = [

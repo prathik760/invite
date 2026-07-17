@@ -257,7 +257,7 @@ export default function IndianEngagement({ data, eventId, isPreview = false }: P
           <PortraitRow data={data} dark={true} />
 
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.55, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,9vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(194,24,91,0.25)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(194,24,91,0.25)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {partner1}
           </motion.h1>
 
@@ -267,7 +267,7 @@ export default function IndianEngagement({ data, eventId, isPreview = false }: P
           </motion.p>
 
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 1.0, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,9vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(194,24,91,0.25)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(194,24,91,0.25)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {partner2}
           </motion.h1>
 

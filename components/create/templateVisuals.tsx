@@ -62,9 +62,86 @@ export const TEMPLATE_VISUALS: Record<string, {
     gradient: 'linear-gradient(135deg, #F9F4EA 0%, #C9A44D 60%, #B07878 100%)',
     color: '#C9A44D', rgb: '201,164,77', image: '/11.jpg',
   },
+  'surprise-journey': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M3 8h14v9H3z" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round" /><path d="M2 8h16v3H2zM10 4v13" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round" /><path d="M10 5C10 5 8 2.5 6.5 3.2 5 4 6.5 6 10 5zM10 5c0 0 2-2.5 3.5-1.8C15 4 13.5 6 10 5z" stroke="currentColor" strokeWidth={1.3} strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #B0324B 0%, #8E6BD1 55%, #241028 100%)',
+    color: '#E8B84B', rgb: '232,184,75',
+    image: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-love': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 16C10 16 3 12 3 7.5C3 5.5 4.7 4 6.8 4C8.2 4 9.4 4.8 10 6C10.6 4.8 11.8 4 13.2 4C15.3 4 17 5.5 17 7.5C17 12 10 16 10 16Z" fill="currentColor" opacity="0.85" /></svg>,
+    gradient: 'linear-gradient(135deg, #E4577B 0%, #8E6BD1 100%)',
+    color: '#E4577B', rgb: '228,87,123',
+    image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-valentine': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 16C10 16 3 12 3 7.5C3 5.5 4.7 4 6.8 4C8.2 4 9.4 4.8 10 6C10.6 4.8 11.8 4 13.2 4C15.3 4 17 5.5 17 7.5C17 12 10 16 10 16Z" fill="currentColor" opacity="0.85" /></svg>,
+    gradient: 'linear-gradient(135deg, #E4577B 0%, #B0324B 100%)',
+    color: '#E4577B', rgb: '228,87,123',
+    image: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-anniversary': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 16C10 16 3 12 3 7.5C3 5.5 4.7 4 6.8 4C8.2 4 9.4 4.8 10 6C10.6 4.8 11.8 4 13.2 4C15.3 4 17 5.5 17 7.5C17 12 10 16 10 16Z" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #8B0030 0%, #D9A441 100%)',
+    color: '#D9A441', rgb: '217,164,65',
+    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-propose': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><circle cx="10" cy="11" r="5" stroke="currentColor" strokeWidth={1.5} /><path d="M10 6l-1.6-2.5h3.2L10 6z" fill="currentColor" /></svg>,
+    gradient: 'linear-gradient(135deg, #E4577B 0%, #E8B84B 100%)',
+    color: '#E8B84B', rgb: '232,184,75',
+    image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-promise': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><circle cx="7.5" cy="10" r="3.5" stroke="currentColor" strokeWidth={1.5} /><circle cx="12.5" cy="10" r="3.5" stroke="currentColor" strokeWidth={1.5} /></svg>,
+    gradient: 'linear-gradient(135deg, #2F766D 0%, #8E6BD1 100%)',
+    color: '#7FC9BE', rgb: '127,201,190',
+    image: 'https://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-sorry': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 3c2 2.5 4 4.8 4 7a4 4 0 11-8 0c0-2.2 2-4.5 4-7z" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #7FA8C9 0%, #C9B7D9 100%)',
+    color: '#5E7FA8', rgb: '94,127,168',
+    image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-congratulations': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2v3M10 15v3M2 10h3M15 10h3M4.5 4.5l2 2M13.5 13.5l2 2M15.5 4.5l-2 2M6.5 13.5l-2 2" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #E8B84B 0%, #8E6BD1 100%)',
+    color: '#E8B84B', rgb: '232,184,75',
+    image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-festival': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 3c0 0 3 3.5 3 6.5a3 3 0 01-6 0C7 6.5 10 3 10 3z" fill="currentColor" opacity="0.85" /></svg>,
+    gradient: 'linear-gradient(135deg, #FF8C00 0%, #8E6BD1 100%)',
+    color: '#F2C14E', rgb: '242,193,78',
+    image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-family': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><circle cx="7" cy="7" r="2.2" stroke="currentColor" strokeWidth={1.4} /><circle cx="13" cy="7" r="2.2" stroke="currentColor" strokeWidth={1.4} /><path d="M3.5 16c0-2.2 1.6-3.5 3.5-3.5S10.5 13.8 10.5 16M9.5 16c0-2.2 1.6-3.5 3.5-3.5s3.5 1.3 3.5 3.5" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #E8A44B 0%, #B0324B 100%)',
+    color: '#F2C14E', rgb: '242,193,78',
+    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
+  },
+  'greeting-friendship': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2l1.9 5.2H17l-4.1 3 1.6 5.1L10 12.5 5.5 15.3l1.6-5.1L3 7.2h5.1L10 2z" stroke="currentColor" strokeWidth={1.3} strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #5AB7C9 0%, #E4577B 100%)',
+    color: '#5AB7C9', rgb: '90,183,201',
+    image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80',
+  },
 }
 
 export const DARK_TEMPLATES = new Set([
   'cinematic-night', 'indian-wedding', 'indian-engagement', 'indian-birthday',
   'griha-pravesh', 'namakaran', 'anniversary', 'kgf-wedding', 'royal-deco',
+  'surprise-journey',
+  'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose',
+  'greeting-promise', 'greeting-congratulations', 'greeting-festival', 'greeting-family',
+  'greeting-friendship',
 ])
+
+// The 3D experiences (greeting + interactive journey) are stage-based, full-viewport
+// designs: in a preview they fill the phone shell exactly, so there is nothing to
+// scroll — the "scroll to explore" hint is hidden for them.
+export function is3DTemplate(id: string): boolean {
+  return id === 'surprise-journey' || id.startsWith('greeting-')
+}

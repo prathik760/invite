@@ -20,6 +20,11 @@ interface ScheduleRow { id: string; name: string; time: string }
 
 const WHEN_WHERE_KEYS = new Set(['date', 'time', 'venue', 'venueAddress', 'mapsUrl', 'dressCode', 'theme', 'pooja'])
 const EXTRAS_KEYS = new Set(['message'])
+// Interactive "3D Surprise Journey" fields — routed to the right wizard steps.
+const UNLOCK_KEYS = new Set(['pin', 'pinHint'])
+const JOURNEY_EXTRA_KEYS = new Set(['balloonMessages', 'scratchMessage', 'letterBody', 'signature'])
+// Animated-greeting "reasons / little notes" — revealed one at a time in the card.
+const GREETING_EXTRA_KEYS = new Set(['reasons'])
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -73,21 +78,29 @@ function groupFields(fields: TemplateField[]) {
   let galleryField: TemplateField | null = null
   let musicField: TemplateField | null = null
   const extras: TemplateField[] = []
+  const unlock: TemplateField[] = []
+  const journeyExtras: TemplateField[] = []
+  const greetingExtras: TemplateField[] = []
 
   for (const f of fields) {
     if (f.key === 'schedule') scheduleField = f
     else if (f.key === 'galleryImages') galleryField = f
     else if (f.key === 'musicUrl') musicField = f
+    else if (UNLOCK_KEYS.has(f.key)) unlock.push(f)
+    else if (JOURNEY_EXTRA_KEYS.has(f.key)) journeyExtras.push(f)
+    else if (GREETING_EXTRA_KEYS.has(f.key)) greetingExtras.push(f)
     else if (f.type === 'image') images.push(f)
     else if (WHEN_WHERE_KEYS.has(f.key)) whenWhere.push(f)
     else if (EXTRAS_KEYS.has(f.key)) extras.push(f)
     else people.push(f)
   }
-  return { people, images, whenWhere, scheduleField, galleryField, musicField, extras }
+  return { people, images, whenWhere, scheduleField, galleryField, musicField, extras, unlock, journeyExtras, greetingExtras }
 }
 
 function getPeopleLabel(fields: TemplateField[]): string {
   const keys = fields.map(f => f.key)
+  if (keys.some(k => k === 'headline')) return 'Your Greeting'
+  if (keys.some(k => k === 'recipientName' || k === 'senderName')) return 'Who is it for?'
   if (keys.some(k => k.includes('baby') || k.includes('parent'))) return 'About the Baby'
   if (keys.some(k => k.includes('host'))) return 'The Hosts'
   if (keys.some(k => k.includes('celebrant') || k === 'age' || k === 'theme')) return 'The Celebrant'
@@ -671,6 +684,17 @@ export default function FormEditor({ config, data, onChange, compact = false, se
         </Section>
       )}
 
+      {/* Secret unlock (3D Surprise Journey) */}
+      {show('details') && grouped.unlock.length > 0 && (
+        <Section number={n()} label="The Secret Unlock" hint="They'll enter this PIN to open the surprise. Pick something only they would know.">
+          <div className="space-y-4">
+            {grouped.unlock.map(field => (
+              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
+            ))}
+          </div>
+        </Section>
+      )}
+
       {/* 3. Event Schedule */}
       {show('details') && grouped.scheduleField && (
         <Section number={n()} label="Event Schedule" hint="Build your event timeline — each row is one moment.">
@@ -709,6 +733,33 @@ export default function FormEditor({ config, data, onChange, compact = false, se
           </div>
         </Section>
       ))}
+
+      {/* Reasons / little notes (3D Greeting) */}
+      {show('enrich') && grouped.greetingExtras.map(field => (
+        <Section key={field.key} number={n()} label="Reasons You Love Them" hint="One per line — they'll be revealed one at a time, building to your message.">
+          <div>
+            <textarea
+              value={data[field.key] ?? ''}
+              onChange={e => handleChange(field.key, e.target.value)}
+              placeholder={field.placeholder || 'One reason per line…'}
+              rows={5}
+              className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3.5 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+            />
+            <p className="mt-1.5 text-xs text-muted/60">Each line becomes a reveal card in the greeting.</p>
+          </div>
+        </Section>
+      ))}
+
+      {/* Interactive touches (3D Surprise Journey) */}
+      {show('enrich') && grouped.journeyExtras.length > 0 && (
+        <Section number={n()} label="Personal Touches" hint="Balloon wishes, the scratch-card secret, and your handwritten letter.">
+          <div className="space-y-4">
+            {grouped.journeyExtras.map(field => (
+              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
+            ))}
+          </div>
+        </Section>
+      )}
 
       <div className="pb-6" />
     </div>

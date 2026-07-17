@@ -416,7 +416,7 @@ function InvitationCard({
 
         {/* Bride */}
         <h1 className="font-heading" style={{
-          fontSize: isPreview ? '2.5rem' : 'clamp(2.8rem, 9vw, 4.8rem)',
+          fontSize: isPreview ? '2.5rem' : 'clamp(2.3rem, 8vw, 4.8rem)',
           color: C.ink, lineHeight: 0.93, letterSpacing: '-0.01em',
           textShadow: '0 2px 0 rgba(255,255,255,0.7)',
         }}>
@@ -432,7 +432,7 @@ function InvitationCard({
 
         {/* Groom */}
         <h1 className="font-heading" style={{
-          fontSize: isPreview ? '2.5rem' : 'clamp(2.8rem, 9vw, 4.8rem)',
+          fontSize: isPreview ? '2.5rem' : 'clamp(2.3rem, 8vw, 4.8rem)',
           color: C.ink, lineHeight: 0.93, letterSpacing: '-0.01em',
           textShadow: '0 2px 0 rgba(255,255,255,0.7)',
         }}>

@@ -13,6 +13,8 @@ import Anniversary from '@/components/templates/Anniversary'
 import KGFWedding from '@/components/templates/KGFWedding'
 import RoyalDeco from '@/components/templates/RoyalDeco'
 import LuxuryWedding from '@/components/templates/LuxuryWedding'
+import SurpriseJourney from '@/components/templates/SurpriseJourney'
+import { GREETING_COMPONENTS } from '@/components/templates/greeting/registry'
 import FloatingShareBar from '@/components/ui/FloatingShareBar'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
 import ExpiredInvitation from '@/components/e/ExpiredInvitation'
@@ -35,6 +37,8 @@ interface PageProps {
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
 function getEventTitle(data: Record<string, string>): string {
+  if (data.headline && data.recipientName) return `${data.headline} — for ${data.recipientName}`
+  if (data.recipientName) return `${data.occasion || 'A Surprise'} for ${data.recipientName} 🎁`
   if (data.brideName && data.groomName) return `${data.brideName} & ${data.groomName} — Wedding Invitation`
   if (data.partner1Name && data.partner2Name) return `${data.partner1Name} & ${data.partner2Name} — Engagement Invitation`
   if (data.celebrantName) return `${data.celebrantName}${data.age ? `'s ${data.age}th` : "'s"} Birthday Celebration`
@@ -105,6 +109,7 @@ const TEMPLATE_COMPONENTS: Record<
   string,
   React.ComponentType<{ data: Record<string, string>; eventId?: string; isPreview?: boolean }>
 > = {
+  ...GREETING_COMPONENTS,
   'elegant-wedding': ElegantWedding,
   'cinematic-night': CinematicWedding,
   'indian-wedding': IndianWedding,
@@ -116,6 +121,7 @@ const TEMPLATE_COMPONENTS: Record<
   'kgf-wedding': KGFWedding,
   'royal-deco': RoyalDeco,
   'luxury-wedding': LuxuryWedding,
+  'surprise-journey': SurpriseJourney,
 }
 
 export default async function EventPage({ params }: PageProps) {

@@ -282,7 +282,7 @@ export default function NamingCeremony({ data, eventId, isPreview = false }: Pro
           <PortraitRow data={data} dark={true} />
 
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.65, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.8rem' : 'clamp(2rem,10vw,8rem)', lineHeight: 1.02, color: C.text, textShadow: `0 0 80px ${accentFaint.replace('0.1', '0.35')}`, letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+            className="font-heading" style={{ fontSize: isPreview ? '2.8rem' : 'clamp(2rem,7vw,8rem)', lineHeight: 1.02, color: C.text, textShadow: `0 0 80px ${accentFaint.replace('0.1', '0.35')}`, letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {babyName}
           </motion.h1>
 

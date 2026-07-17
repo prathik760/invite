@@ -294,7 +294,7 @@ export default function IndianBirthday({ data, eventId, isPreview = false }: Pro
           <PortraitRow data={data} dark={true} />
 
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.55, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.4rem' : 'clamp(2rem,9vw,7.5rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 80px rgba(255,140,0,0.22)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+            className="font-heading" style={{ fontSize: isPreview ? '2.4rem' : 'clamp(2rem,7vw,7.5rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 80px rgba(255,140,0,0.22)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {celebrant}
           </motion.h1>
 

@@ -18,7 +18,7 @@ import Step3Details from '@/components/create/Step3Details'
 import Step4Enrich from '@/components/create/Step4Enrich'
 import Step5Publish from '@/components/create/Step5Publish'
 import MobilePreviewStrip from '@/components/create/MobilePreviewStrip'
-import { TEMPLATE_VISUALS, DARK_TEMPLATES } from '@/components/create/templateVisuals'
+import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from '@/components/create/templateVisuals'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -531,18 +531,20 @@ export default function CreatePage() {
                       <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
                         <PreviewPane templateId={selectedId} data={data} />
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none z-10"
-                        style={{ background: isDark ? 'linear-gradient(to top, rgba(6,6,14,0.90), transparent)' : 'linear-gradient(to top, rgba(255,255,255,0.95), transparent)' }}>
-                        <div className="absolute bottom-2.5 left-0 right-0 flex justify-center">
-                          <span className="flex items-center gap-1 text-[8.5px] font-semibold"
-                            style={{ color: isDark ? 'rgba(255,255,255,0.55)' : 'rgba(44,32,28,0.42)' }}>
-                            <svg className="w-3 h-3 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                            </svg>
-                            scroll to explore
-                          </span>
+                      {!is3DTemplate(selectedId) && (
+                        <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none z-10"
+                          style={{ background: isDark ? 'linear-gradient(to top, rgba(6,6,14,0.90), transparent)' : 'linear-gradient(to top, rgba(255,255,255,0.95), transparent)' }}>
+                          <div className="absolute bottom-2.5 left-0 right-0 flex justify-center">
+                            <span className="flex items-center gap-1 text-[8.5px] font-semibold"
+                              style={{ color: isDark ? 'rgba(255,255,255,0.55)' : 'rgba(44,32,28,0.42)' }}>
+                              <svg className="w-3 h-3 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                              </svg>
+                              scroll to explore
+                            </span>
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
 
                     <div className="flex justify-center" style={{ paddingTop: '8px', paddingBottom: '2px' }}>

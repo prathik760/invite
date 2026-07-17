@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import PricingSection from '@/components/landing/PricingSection'
 import FAQAccordion from '@/components/landing/FAQAccordion'
+import TestimonialsCarousel from '@/components/landing/TestimonialsCarousel'
 import CustomRequestSection from '@/components/landing/CustomRequestSection'
 import MobileNav from '@/components/landing/MobileNav'
 import StickyMobileCTA from '@/components/landing/StickyMobileCTA'
@@ -11,44 +12,37 @@ import { PLANS } from '@/lib/plans'
 import { UsersIcon } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Digital Invitation Maker for India | ShareInvite' },
+  title: { absolute: 'Digital Invitation Maker — Weddings, Birthdays & Every Occasion | ShareInvite' },
   description:
-    'Create digital invitations for Indian weddings, birthdays & events. Share a WhatsApp link with RSVP, photo gallery & live countdown. Free plan available.',
+    'Create digital invitations and animated 3D greetings for weddings, birthdays and every occasion. Share a WhatsApp link with RSVP, photo gallery & live countdown. Free to start, used by families worldwide.',
   keywords: [
     'digital invitation maker',
-    'free digital invitation maker India',
-    'online invitation card maker',
-    'digital wedding invitation maker India',
-    'free wedding invitation website India',
-    'online wedding invitation maker India',
-    'Indian wedding e-invite',
-    'WhatsApp wedding invitation link',
-    'e-invitation WhatsApp',
-    'shaadi card online',
-    'wedding card design online India',
-    'digital birthday invitation India',
-    'house warming invitation website India',
-    'namakaran invitation online',
-    'engagement invitation website India',
-    'digital wedding card India',
-    'free online invitation maker India',
-    'mobile invitation website India',
-    'wedding invitation website free',
-    'digital invitation card WhatsApp share',
-    'anniversary invitation website India',
+    'online invitation maker',
+    'free digital invitation maker',
+    'digital invitation card',
+    'wedding invitation maker',
+    'birthday invitation maker',
+    'engagement invitation maker',
+    'online RSVP',
+    'WhatsApp invitation',
+    'e-invitation',
+    'invitation website',
+    '3D invitation',
+    'animated invitation',
+    'interactive digital invitation',
+    'animated 3D greeting card',
+    'digital wedding invitation',
+    'anniversary invitation online',
+    'housewarming invitation online',
+    'Indian wedding invitation',
+    'shaadi invitation online',
     'griha pravesh invitation online',
-    'Indian wedding website builder',
-    'online shaadi invitation card',
-    'Bangalore wedding invitation online',
-    'Mumbai wedding invitation website',
-    'Delhi wedding invitation website',
-    'Chennai wedding invitation website',
-    'Hyderabad wedding invitation online',
+    'namakaran invitation online',
   ],
   openGraph: {
-    title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
+    title: 'ShareInvite — Digital Invitation Maker for Weddings, Birthdays & Every Occasion',
     description:
-      'Create stunning digital wedding invitations, birthday invitations, engagement invitations, and event invites. Share instantly on WhatsApp with RSVP tracking.',
+      'Create digital invitations and animated 3D greetings for weddings, birthdays, engagements, anniversaries and every occasion. Share instantly on WhatsApp with RSVP tracking. Free to start, worldwide.',
     type: 'website',
     locale: 'en_IN',
     url: process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in',
@@ -105,23 +99,65 @@ const testimonials = [
   {
     quote: 'Shared the link with our 340-person WhatsApp group. Within 2 hours, 200+ guests had opened it. Nobody called asking for directions — the map pin handled everything. Upgraded to Pro for the gallery and it was worth every rupee.',
     name: 'Meera Krishnamurthy',
-    event: 'Wedding · Bengaluru · Pro plan',
+    event: 'Wedding · Bengaluru',
     date: 'March 2026',
-    avatar: 'https://i.pravatar.cc/96?img=47',
+    avatar: '/testimonials/meera.jpg',
   },
   {
     quote: "Took 7 minutes to set up and share with 80 family members across 4 cities. Even my parents in a small town opened it without any app download. Saved at least ₹3,000 on printed cards and hours of follow-up calls.",
     name: 'Suresh Iyer',
-    event: 'Naming Ceremony · Chennai · Starter plan',
+    event: 'Naming Ceremony · Chennai',
     date: 'February 2026',
-    avatar: 'https://i.pravatar.cc/96?img=57',
+    avatar: '/testimonials/suresh.jpg',
   },
   {
     quote: "Started free, upgraded after seeing the preview — the photo gallery made it feel like a proper event website. Three friends used ShareInvite for their events after seeing our invite on their WhatsApp.",
     name: 'Pooja Mehta',
-    event: 'Birthday · Mumbai · Upgraded to Pro',
+    event: 'Birthday · Mumbai',
     date: 'January 2026',
-    avatar: 'https://i.pravatar.cc/96?img=44',
+    avatar: '/testimonials/pooja.jpg',
+  },
+  {
+    quote: 'We sent the invite the same evening we finalised the date. RSVPs updated live, so our caterer numbers were sorted without a single follow-up call. My mother keeps showing the animated invite to relatives.',
+    name: 'Ananya Reddy',
+    event: 'Engagement · Hyderabad',
+    date: 'March 2026',
+    avatar: '/testimonials/ananya.jpg',
+  },
+  {
+    quote: 'Planning my parents’ 25th anniversary from Dubai while family was in Kerala felt impossible — until this. One WhatsApp link and everyone from grandparents to cousins opened it instantly. It looked more premium than the printed cards we’d priced.',
+    name: 'Vikram Nair',
+    event: 'Anniversary · Dubai, UAE',
+    date: 'February 2026',
+    avatar: '/testimonials/vikram.jpg',
+  },
+  {
+    quote: 'As an NRI planning a wedding back home, a shareable online invite was a lifesaver. Guests in London, Delhi and Dubai all opened the same beautiful page. The countdown and gallery made everyone feel part of it.',
+    name: 'Priya Sharma',
+    event: 'Wedding · London, UK',
+    date: 'December 2025',
+    avatar: '/testimonials/priya.jpg',
+  },
+  {
+    quote: 'I’m not tech-savvy at all, but I had my daughter’s birthday invite live in under ten minutes. Friends kept asking which app I used. Clean, elegant, and so easy to share.',
+    name: 'Emily Carter',
+    event: 'Birthday · New York, USA',
+    date: 'January 2026',
+    avatar: '/testimonials/emily.jpg',
+  },
+  {
+    quote: 'Used it for our house-warming pooja in Toronto. Muhurat details, the address with map, and the schedule were all in one link — no more forwarding five separate messages. Worked flawlessly for our elders too.',
+    name: 'Arjun Patel',
+    event: 'Griha Pravesh · Toronto, Canada',
+    date: 'November 2025',
+    avatar: '/testimonials/arjun.jpg',
+  },
+  {
+    quote: 'I opened a friend’s wedding invite made on ShareInvite and loved it so much I used it for mine. Beautiful templates, opens instantly on any phone, and the wishes wall was a lovely touch our guests enjoyed.',
+    name: 'David Chen',
+    event: 'Wedding · Singapore',
+    date: 'February 2026',
+    avatar: '/testimonials/david.jpg',
   },
 ]
 
@@ -712,27 +748,27 @@ export default function LandingPage() {
                 </div>
 
                 {/* ── HEADLINE ── */}
-                <h1 id="hero-headline" className="hero-anim-0 font-display font-normal leading-[1.1] text-ink">
+                <h1 id="hero-headline" className="hero-anim-0 text-balance font-display font-normal leading-[1.08] text-ink">
                   <span
                     className="block"
-                    style={{ fontSize: 'clamp(2.1rem, 5vw, 3.75rem)' }}
+                    style={{ fontSize: 'clamp(2rem, 4vw, 3.15rem)' }}
                   >
-                    Digital Invitations for
+                    Digital Invitation Maker
                   </span>
                   <span
                     className="block gradient-accent font-normal italic"
-                    style={{ fontSize: 'clamp(2.1rem, 5vw, 3.75rem)' }}
+                    style={{ fontSize: 'clamp(2rem, 4vw, 3.15rem)' }}
                   >
-                    Indian Weddings &amp; Events
+                    for Weddings, Birthdays &amp; Every Occasion
                   </span>
                 </h1>
 
                 {/* Sub-copy — lead with WhatsApp differentiator, then features */}
                 <p className="hero-anim-1 mt-4 max-w-[480px] text-sm leading-[1.85] text-muted sm:text-base">
-                  Share a beautiful invite link on WhatsApp no app download needed for guests.
-                  Includes gallery, music, live countdown, Google Maps, and online RSVP.
-                  Crafted for Indian weddings, birthdays, Griha Pravesh and naming ceremonies.
-                  Ready in 5 minutes.
+                  Share a beautiful invite link on WhatsApp — no app needed for guests.
+                  Make invitation websites and animated 3D greetings for weddings, birthdays,
+                  engagements, anniversaries and every occasion, for families around the world.
+                  Gallery, music, live countdown, Google Maps and online RSVP — ready in 5 minutes.
                 </p>
 
                 {/* CTA row */}
@@ -789,9 +825,9 @@ export default function LandingPage() {
                   <div className="flex flex-wrap gap-x-5 gap-y-1.5">
                     {[
                       'No app required',
-                      '8 event types',
+                      'Every occasion',
                       'Free forever plan',
-                      'Built for India',
+                      'Works worldwide',
                     ].map((item) => (
                       <span key={item} className="flex items-center gap-1.5 text-[11px] font-medium" style={{ color: '#7A6455' }}>
                         <svg viewBox="0 0 9 9" className="h-3 w-3 shrink-0" fill="none">
@@ -1458,7 +1494,7 @@ export default function LandingPage() {
               What families say
             </p>
             <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-              Loved by Indian Families Across 8 Cities
+              Loved by Families Across India &amp; the World
             </h2>
             <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-[#D9A441]/25 bg-white px-5 py-2.5 shadow-sm max-w-full">
               <StarRating />
@@ -1468,71 +1504,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <article
-                key={t.name}
-                className="relative flex flex-col overflow-hidden rounded-2xl border border-border bg-white p-7 shadow-card hover-lift"
-                data-animate
-                data-delay={String(i + 1)}
-              >
-                {/* Decorative background quote mark */}
-                <div
-                  className="pointer-events-none absolute right-5 top-4 select-none font-display text-[7rem] leading-none text-[#D9A441]/10"
-                  aria-hidden
-                >
-                  &ldquo;
-                </div>
-
-                {/* Stars + date */}
-                <div className="flex items-center justify-between mb-5">
-                  <StarRating />
-                  <span className="text-[11px] text-muted">{t.date}</span>
-                </div>
-
-                {/* Quote */}
-                <p className="relative flex-1 text-sm leading-[1.9] text-foreground/90">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-
-                {/* Divider */}
-                <div className="mt-6 border-t border-border pt-5">
-                  <div className="flex items-center gap-3.5">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={t.avatar}
-                      alt={t.name}
-                      width={44}
-                      height={44}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-11 w-11 rounded-full object-cover ring-2 ring-[#D9A441]/30 ring-offset-1"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5">
-                        <p className="text-sm font-semibold text-ink truncate">{t.name}</p>
-                        {/* Verified badge */}
-                        <svg
-                          className="h-3.5 w-3.5 shrink-0 text-[#2F766D]"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-label="Verified"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.491 4.491 0 01-3.497-1.307 4.491 4.491 0 01-1.307-3.497A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.498 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      <p className="text-xs text-muted">{t.event}</p>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <TestimonialsCarousel testimonials={testimonials} />
         </div>
       </section>
 
@@ -1830,6 +1802,11 @@ export default function LandingPage() {
           </div>
 
           <div className="mt-10 border-t pt-6" style={{ borderColor: '#D4C4B4' }}>
+            <nav className="mb-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2" aria-label="Legal">
+              <Link href="/terms" className="text-xs transition-colors hover:text-ink" style={{ color: '#5A4540' }}>Terms of Service</Link>
+              <Link href="/privacy" className="text-xs transition-colors hover:text-ink" style={{ color: '#5A4540' }}>Privacy Policy</Link>
+              <Link href="/refund-policy" className="text-xs transition-colors hover:text-ink" style={{ color: '#5A4540' }}>Refund &amp; Cancellation</Link>
+            </nav>
             <p className="text-center text-xs" style={{ color: '#7A5A52' }}>
               © {new Date().getFullYear()} ShareInvite · Free digital invitation website builder for India
             </p>

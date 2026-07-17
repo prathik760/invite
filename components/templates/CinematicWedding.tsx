@@ -433,7 +433,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: P
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.45, ease: BEZIER }}
             className="font-heading"
-            style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,9vw,7.5rem)', lineHeight: 1.05, color: C.text, letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}
+            style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7.5rem)', lineHeight: 1.05, color: C.text, letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}
           >
             {brideName}
           </motion.h1>
@@ -454,7 +454,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: P
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 1.0, ease: BEZIER }}
             className="font-heading"
-            style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,9vw,7.5rem)', lineHeight: 1.05, color: C.text, letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}
+            style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7.5rem)', lineHeight: 1.05, color: C.text, letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}
           >
             {groomName}
           </motion.h1>

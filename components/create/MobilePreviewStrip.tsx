@@ -57,6 +57,8 @@ export default function MobilePreviewStrip({ templateId, data, isDark = false }:
           <div
             style={{
               width: '328px',
+              // Definite height so full-height (3D) previews resolve; 248px screen ÷ 0.439 scale.
+              height: '565px',
               transformOrigin: 'top left',
               transform: 'scale(0.4390)',
               pointerEvents: 'none',

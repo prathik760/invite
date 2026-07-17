@@ -102,6 +102,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/partners', 0.55),
     entry('/press', 0.55),
 
+    // ─── Tier 9: Legal / policy pages ─────────────────────────────────────────
+    entry('/terms', 0.40, 'yearly'),
+    entry('/privacy', 0.40, 'yearly'),
+    entry('/refund-policy', 0.40, 'yearly'),
+
     // ─── Tier 9: Blog category pages ──────────────────────────────────────────
     ...blogCategories.map((category) => entry(`/blog/category/${categorySlug(category)}`, 0.60)),
 

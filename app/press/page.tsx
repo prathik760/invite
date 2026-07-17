@@ -74,7 +74,7 @@ export default function PressPage() {
           </p>
           <div className="mt-6">
             <a
-              href="mailto:press@shareinvite.in"
+              href="mailto:shareinvite123@gmail.com"
               className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold"
             >
               Contact Press Team →
@@ -155,7 +155,7 @@ export default function PressPage() {
             </div>
             <div className="rounded-2xl border border-border bg-ink p-8 flex flex-col items-center gap-4 shadow-sm">
               <div className="rounded-xl bg-ink p-4">
-                <Image src="/logo1.png" alt="ShareInvite logo on dark" className="h-12 w-auto brightness-0 invert" />
+                <Image src="/logo1.png" alt="ShareInvite logo on dark" className="h-12 w-auto brightness-0 invert" width={160} height={48} />
               </div>
               <p className="text-sm text-white/60 text-center">Logo on dark background</p>
               <a
@@ -178,13 +178,13 @@ export default function PressPage() {
           </h2>
           <p className="text-muted text-sm mb-7 max-w-md mx-auto">
             For press enquiries, interview requests, data, or brand assets, contact our media team at{' '}
-            <a href="mailto:press@shareinvite.in" className="text-accent-strong hover:underline">
-              press@shareinvite.in
+            <a href="mailto:shareinvite123@gmail.com" className="text-accent-strong hover:underline">
+              shareinvite123@gmail.com
             </a>
             . We typically respond within 24 hours.
           </p>
           <a
-            href="mailto:press@shareinvite.in?subject=Press Enquiry"
+            href="mailto:shareinvite123@gmail.com?subject=Press Enquiry"
             className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold"
           >
             Email Press Team →

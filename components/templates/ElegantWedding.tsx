@@ -399,7 +399,7 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Pro
             initial={{ opacity: 0, y: 32, filter: 'blur(10px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 1, delay: 0.15, ease: BEZIER }}
-            className={`font-heading leading-[0.92] tracking-[-0.01em] ${isPreview ? 'text-[2.75rem]' : 'text-[4.75rem] sm:text-[6.5rem] lg:text-[8rem]'
+            className={`font-heading leading-[0.92] tracking-[-0.01em] ${isPreview ? 'text-[2.75rem]' : 'text-[3rem] sm:text-[6.5rem] lg:text-[8rem]'
               }`}
             style={{
               color: COLORS.ink,
@@ -438,7 +438,7 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Pro
             initial={{ opacity: 0, y: 32, filter: 'blur(10px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ duration: 1, delay: 0.22, ease: BEZIER }}
-            className={`font-heading leading-[0.92] tracking-[-0.01em] ${isPreview ? 'text-[2.75rem]' : 'text-[4.75rem] sm:text-[6.5rem] lg:text-[8rem]'
+            className={`font-heading leading-[0.92] tracking-[-0.01em] ${isPreview ? 'text-[2.75rem]' : 'text-[3rem] sm:text-[6.5rem] lg:text-[8rem]'
               }`}
             style={{
               color: COLORS.ink,

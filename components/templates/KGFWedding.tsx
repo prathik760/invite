@@ -549,7 +549,7 @@ export default function KGFWedding({ data, eventId, isPreview = false }: Props) 
 
   // ── Metallic-shimmer gold for hero names ────────────────────────────────────
   const nameStyle: React.CSSProperties = {
-    fontSize: isPreview ? '2.1rem' : 'clamp(2.6rem, 13vw, 9.5rem)',
+    fontSize: isPreview ? '2.1rem' : 'clamp(2.6rem, 9vw, 9.5rem)',
     lineHeight: 0.96,
     overflowWrap: 'break-word',
     wordBreak: 'break-word',

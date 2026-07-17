@@ -25,6 +25,75 @@ const WEDDING_FIELDS: TemplateConfig['fields'] = [
   { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'With the blessings of our families, we joyfully invite you.' },
 ]
 
+// ─── Animated 3D greeting templates (shared field set, themed per occasion) ──
+const GREETING_FIELDS: TemplateConfig['fields'] = [
+  { key: 'recipientName', label: "Their Name", type: 'text', required: true, placeholder: 'Ananya' },
+  { key: 'senderName', label: 'Your Name', type: 'text', required: true, placeholder: 'Rohan' },
+  { key: 'headline', label: 'Big Headline', type: 'text', required: true, placeholder: 'I Love You' },
+  { key: 'subtitle', label: 'Subtitle (optional)', type: 'text', placeholder: 'today, tomorrow, always' },
+  { key: 'photo', label: 'Cover Photo (optional)', type: 'image', placeholder: '' },
+  { key: 'date', label: 'Special Date (optional)', type: 'date' },
+  { key: 'galleryImages', label: 'Photo Memories (add several)', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+  { key: 'reasons', label: 'Reasons / little notes (one per line)', type: 'textarea', placeholder: "You make me laugh like no one else\nYou never gave up on us\nYou feel like home" },
+  { key: 'message', label: 'Your Message', type: 'textarea', placeholder: 'Write something from the heart…' },
+  { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+]
+
+interface GreetingSeed { key: string; name: string; description: string; headline: string; subtitle: string; message: string; reasons: string; date?: string }
+
+const GREETING_SEEDS: GreetingSeed[] = [
+  { key: 'love', name: 'Love — 3D Journey of Hearts', description: 'A dreamy 3D sky of floating hearts, photo memories and a love confession.',
+    headline: 'I Love You', subtitle: 'today, tomorrow, always', message: 'Every day with you feels like a gift I never knew I was waiting for. Thank you for being my favourite person, my safe place, and my greatest adventure.',
+    reasons: 'The way you laugh at your own jokes\nHow you make ordinary days feel special\nYou always know exactly what to say\nYou believed in me before I did\nYou feel like home' },
+  { key: 'valentine', name: "Valentine's Day — Floating Hearts", description: 'A romantic animated 3D valentine with photo memories and a heartfelt love note.',
+    headline: "Happy Valentine's Day", subtitle: 'Be mine, forever', message: "Of all the hearts in the world, yours is the one I want to hold. Thank you for being my person. Happy Valentine's Day, my love.",
+    reasons: 'Your smile is my favourite view\nYou make me a better person\nEvery day is better with you in it\nI still get butterflies\nYou are my forever valentine' },
+  { key: 'anniversary', name: 'Anniversary — 3D Celebration', description: 'Celebrate your years together with animated hearts, photos and reasons you love them.',
+    headline: 'Happy Anniversary', subtitle: 'to a love that keeps growing', message: 'Another year, another thousand reasons to love you more. Thank you for choosing us, every single day. Here is to forever — then, now, and always.',
+    reasons: 'We turned a house into a home\nYou still make me laugh every day\nWe survived the hard days together\nYou are my best friend\nI would choose you all over again' },
+  { key: 'propose', name: 'Proposal — Will You Marry Me?', description: 'An interactive 3D proposal with rings, photo memories and a "Say Yes" moment.',
+    headline: 'Will You Marry Me?', subtitle: 'I want all my forevers with you', message: 'From the moment I met you, I knew. You are my calm, my chaos, my adventure, my home. I cannot imagine a single tomorrow without you in it. So, my love…',
+    reasons: 'You make me feel truly seen\nEvery day with you is my favourite\nYou are my safe place\nI want to build a life with you\nForever still would not be enough' },
+  { key: 'promise', name: 'Promise — A Vow in 3D', description: 'A serene animated card with photos to make a heartfelt promise.',
+    headline: 'My Promise to You', subtitle: 'sealed with all my heart', message: 'I promise to stand by you, to choose you on the good days and the hard ones, and to keep loving you through it all.',
+    reasons: 'I promise to always listen\nI promise to grow with you\nI promise to be your calm\nI promise to never stop trying\nI promise forever' },
+  { key: 'sorry', name: 'Sorry — Healing Petals', description: 'A gentle, animated apology with soft petals, photos and a heartfelt note.',
+    headline: "I'm Sorry", subtitle: 'you mean everything to me', message: 'I know I hurt you, and I am truly sorry. You matter more to me than being right ever could. I am not perfect, but I am trying — because you are worth it.',
+    reasons: 'I hear you, truly\nYour feelings matter to me\nI never meant to hurt you\nYou deserve so much better\nI will do better, I promise' },
+  { key: 'congratulations', name: 'Congratulations — Confetti Burst', description: 'A celebratory 3D confetti card with photos for wins, promotions and milestones.',
+    headline: 'Congratulations!', subtitle: 'you absolutely earned this', message: 'You worked so hard for this and it shows in every single detail. So proud of you — go celebrate, you deserve every bit of it and so much more!',
+    reasons: 'You never stopped believing\nYou earned every bit of this\nYour hard work paid off\nYou inspire everyone around you\nThe best is yet to come' },
+  { key: 'festival', name: 'Festival Wishes — Glowing Diyas', description: 'Warm animated festival greetings with glowing 3D diyas and photos.',
+    headline: 'Happy Diwali', subtitle: 'may your year glow bright', message: 'Wishing you and your family a festival overflowing with light, laughter, sweets, and endless joy. May this year be your brightest yet.',
+    reasons: 'May your home be full of light\nMay your year be full of joy\nMay every wish come true\nMay laughter fill your days\nWith love, this festive season' },
+  { key: 'family', name: 'Family Wishes — With Love', description: 'A heartfelt animated card with photos for the people who raised you.',
+    headline: 'To My Family', subtitle: 'my forever, my home', message: 'Thank you for the love, the lessons, the sacrifices, and every little moment in between. I am who I am because of you, and I am endlessly grateful.',
+    reasons: 'You taught me everything I know\nYou never stopped believing in me\nHome is wherever you are\nYour love shaped my whole life\nI am so grateful for you' },
+  { key: 'friendship', name: 'Friendship — Starry Cheers', description: 'A playful 3D star-filled card with photos to celebrate your best friends.',
+    headline: 'Happy Friendship Day', subtitle: "here's to us", message: 'Through every high, every low, and every ridiculous inside joke — I am so lucky to call you my best friend. Thank you for being my person.',
+    reasons: 'You always show up for me\nYou know all my secrets\nOur inside jokes are unmatched\nYou make everything more fun\nBest friends, forever' },
+]
+
+const GALLERY_SAMPLE = 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80\nhttps://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=800&q=80\nhttps://images.unsplash.com/photo-1503516459261-40c66117780a?auto=format&fit=crop&w=800&q=80\nhttps://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80'
+
+function buildGreetings(): TemplateData[] {
+  return GREETING_SEEDS.map((s) => ({
+    id: `greeting-${s.key}`,
+    name: s.name,
+    description: s.description,
+    category: 'greeting',
+    config: {
+      fields: GREETING_FIELDS,
+      defaultData: {
+        recipientName: 'Ananya', senderName: 'Rohan',
+        headline: s.headline, subtitle: s.subtitle, message: s.message,
+        reasons: s.reasons, galleryImages: GALLERY_SAMPLE,
+        photo: '', date: s.date ?? '', musicUrl: '',
+      },
+    },
+  }))
+}
+
 export const TEMPLATES: TemplateData[] = [
   {
     id: 'elegant-wedding',
@@ -341,6 +410,47 @@ export const TEMPLATES: TemplateData[] = [
       },
     },
   },
+  {
+    id: 'surprise-journey',
+    name: '3D Surprise Journey',
+    description: 'An interactive 3D gift they unlock — secret PIN, photo memories, balloon pops, a sliding puzzle, a scratch card and a handwritten letter.',
+    category: 'interactive',
+    config: {
+      fields: [
+        // ── The people (Step 2) ──
+        { key: 'recipientName', label: "Their Name", type: 'text', required: true, placeholder: 'Ananya' },
+        { key: 'senderName', label: 'Your Name', type: 'text', required: true, placeholder: 'Rohan' },
+        { key: 'occasion', label: 'Occasion / Greeting', type: 'text', required: true, placeholder: 'Happy Birthday' },
+        { key: 'coverMessage', label: 'Gift Tag Line', type: 'text', placeholder: 'A little something for you…' },
+        // ── The unlock (Step 3) ──
+        { key: 'pin', label: 'Secret PIN (3–6 digits)', type: 'text', required: true, placeholder: '2601' },
+        { key: 'pinHint', label: 'PIN Hint', type: 'text', placeholder: 'The day we first met 💕' },
+        // ── Photos + puzzle share the same gallery (Step 4) ──
+        { key: 'galleryImages', label: 'Photo Memories', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+        // ── Interactive touches (Step 4) ──
+        { key: 'balloonMessages', label: 'Balloon Messages (one per line)', type: 'textarea', placeholder: "You make me smile\nMy favourite person\nHere's to us 🥂" },
+        { key: 'scratchMessage', label: 'Scratch Card Reveal', type: 'textarea', placeholder: 'You + Me = Forever ❤️' },
+        { key: 'letterBody', label: 'Handwritten Letter', type: 'textarea', placeholder: 'Dear Ananya,\n\nFrom the day we met, everything changed…' },
+        { key: 'signature', label: 'Letter Signature', type: 'text', placeholder: 'Forever yours, Rohan' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+      ],
+      defaultData: {
+        recipientName: 'Ananya',
+        senderName: 'Rohan',
+        occasion: 'Happy Birthday',
+        coverMessage: 'A little something I made just for you…',
+        pin: '2601',
+        pinHint: 'The day we first met 💕 (DDMM)',
+        galleryImages: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=80\nhttps://images.unsplash.com/photo-1503516459261-40c66117780a?auto=format&fit=crop&w=900&q=80',
+        balloonMessages: 'You make every day brighter\nMy favourite person in the world\nThank you for being you\nHere\'s to many more 🥂',
+        scratchMessage: 'You + Me = Forever ❤️',
+        letterBody: 'Dear Ananya,\n\nFrom the very first day we met, everything in my world got a little brighter. This tiny gift is just my way of saying what words never quite capture — that I am so grateful for you.\n\nHappy birthday, my love. Here is to us, and to every adventure still waiting.',
+        signature: 'Forever yours, Rohan',
+        musicUrl: '',
+      },
+    },
+  },
+  ...buildGreetings(),
 ]
 
 export function getTemplateData(id: string): TemplateData | undefined {

@@ -311,7 +311,7 @@ export default function Anniversary({ data, eventId, isPreview = false }: Props)
           <PortraitRow data={data} dark={true} />
 
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.75, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(1.9rem,8vw,6.5rem)', lineHeight: 1.08, color: C.text, textShadow: '0 0 70px rgba(139,0,48,0.28)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(1.9rem,6.5vw,6.5rem)', lineHeight: 1.08, color: C.text, textShadow: '0 0 70px rgba(139,0,48,0.28)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {coupleNames}
           </motion.h1>
 

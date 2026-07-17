@@ -112,7 +112,15 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-border pt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+        {/* Legal links — present on every page that uses the site footer */}
+        <div className="mt-12 border-t border-border pt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-start">
+          <Link href="/terms" className="text-xs text-muted transition-colors hover:text-foreground">Terms of Service</Link>
+          <Link href="/privacy" className="text-xs text-muted transition-colors hover:text-foreground">Privacy Policy</Link>
+          <Link href="/refund-policy" className="text-xs text-muted transition-colors hover:text-foreground">Refund &amp; Cancellation</Link>
+          <Link href="/pricing" className="text-xs text-muted transition-colors hover:text-foreground">Pricing</Link>
+        </div>
+
+        <div className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
           <div>
             <p className="text-xs text-muted">
               © {new Date().getFullYear()} ShareInvite. Free digital invitation website builder for Indian weddings and events.
@@ -121,7 +129,7 @@ export default function SiteFooter() {
               Founded by <span className="text-foreground font-medium">Prathik Thelkar</span>
             </p>
           </div>
-          <div className="flex items-center gap-5 text-xs text-muted">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-muted">
             <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
             <Link href="/templates" className="hover:text-foreground transition-colors">Templates</Link>
             <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>

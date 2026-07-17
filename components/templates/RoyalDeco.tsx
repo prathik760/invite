@@ -416,7 +416,7 @@ export default function RoyalDeco({ data, eventId = '__preview__', isPreview = f
 
   // Hero name style — metallic italic shimmer on navy bg
   const nameStyle: React.CSSProperties = {
-    fontSize: isPreview ? '1.95rem' : 'clamp(2.3rem,11vw,8rem)',
+    fontSize: isPreview ? '1.95rem' : 'clamp(2.3rem,8vw,8rem)',
     lineHeight: 0.96, fontStyle: 'italic',
     overflowWrap: 'break-word', wordBreak: 'break-word',
     background: 'linear-gradient(110deg,#6E4A08 0%,#C8902A 16%,#EDCC5C 32%,#E0B43A 44%,#F8E07A 51%,#E0B43A 58%,#EDCC5C 66%,#C8902A 82%,#6E4A08 100%)',

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TEMPLATES } from '@/modules/templates/data'
 import { getRequiredPlan } from '@/lib/plans'
-import { TEMPLATE_VISUALS, DARK_TEMPLATES } from './templateVisuals'
+import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -137,19 +137,21 @@ export default function TemplatePreviewModal({ templateId, open, onClose }: Prop
                       style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
                       <PreviewPane templateId={templateId} data={tpl.config.defaultData} />
                     </div>
-                    {/* Scroll hint */}
-                    <div className="absolute bottom-0 left-0 right-0 h-10 pointer-events-none z-10"
-                      style={{ background: isDark ? 'linear-gradient(to top,rgba(7,7,15,0.88),transparent)' : 'linear-gradient(to top,rgba(255,255,255,0.90),transparent)' }}>
-                      <div className="absolute bottom-2 left-0 right-0 flex justify-center">
-                        <span className="flex items-center gap-1 text-[8px] font-semibold"
-                          style={{ color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(44,32,28,0.35)' }}>
-                          <svg className="w-2.5 h-2.5 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                          </svg>
-                          scroll to explore
-                        </span>
+                    {/* Scroll hint — only for scrollable (2D) templates */}
+                    {!is3DTemplate(templateId) && (
+                      <div className="absolute bottom-0 left-0 right-0 h-10 pointer-events-none z-10"
+                        style={{ background: isDark ? 'linear-gradient(to top,rgba(7,7,15,0.88),transparent)' : 'linear-gradient(to top,rgba(255,255,255,0.90),transparent)' }}>
+                        <div className="absolute bottom-2 left-0 right-0 flex justify-center">
+                          <span className="flex items-center gap-1 text-[8px] font-semibold"
+                            style={{ color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(44,32,28,0.35)' }}>
+                            <svg className="w-2.5 h-2.5 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                            scroll to explore
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                   {/* Home indicator */}
                   <div className="flex justify-center" style={{ paddingTop: '7px', paddingBottom: '2px' }}>

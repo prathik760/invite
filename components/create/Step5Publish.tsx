@@ -5,7 +5,7 @@ import Link from 'next/link'
 import type { Session } from 'next-auth'
 import type { TemplateData } from '@/modules/templates/data'
 import { getRequiredPlan, type PlanId, planLevel } from '@/lib/plans'
-import { TEMPLATE_VISUALS, DARK_TEMPLATES } from './templateVisuals'
+import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -117,18 +117,20 @@ export default function Step5Publish({
                 <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
                   <PreviewPane templateId={selectedTemplate.id} data={data} />
                 </div>
-                {/* Scroll hint */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none z-10"
-                  style={{ background: isDark ? 'linear-gradient(to top, rgba(6,6,14,0.90), transparent)' : 'linear-gradient(to top, rgba(255,255,255,0.92), transparent)' }}
-                >
-                  <div className="absolute bottom-2 left-0 right-0 flex justify-center">
-                    <span className="flex items-center gap-1 text-[8px] font-semibold" style={{ color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(44,32,28,0.38)' }}>
-                      <svg className="w-3 h-3 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-                      scroll to explore
-                    </span>
+                {/* Scroll hint — only for scrollable (2D) templates */}
+                {!is3DTemplate(selectedTemplate.id) && (
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none z-10"
+                    style={{ background: isDark ? 'linear-gradient(to top, rgba(6,6,14,0.90), transparent)' : 'linear-gradient(to top, rgba(255,255,255,0.92), transparent)' }}
+                  >
+                    <div className="absolute bottom-2 left-0 right-0 flex justify-center">
+                      <span className="flex items-center gap-1 text-[8px] font-semibold" style={{ color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(44,32,28,0.38)' }}>
+                        <svg className="w-3 h-3 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                        scroll to explore
+                      </span>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               {/* Home indicator */}

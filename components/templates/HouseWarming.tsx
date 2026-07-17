@@ -254,7 +254,7 @@ export default function HouseWarming({ data, eventId, isPreview = false }: Props
           <PortraitRow data={data} dark={true} />
 
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.55, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2rem' : 'clamp(1.9rem,8vw,6rem)', lineHeight: 1.1, color: C.text, textShadow: '0 0 70px rgba(255,143,0,0.2)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+            className="font-heading" style={{ fontSize: isPreview ? '2rem' : 'clamp(1.9rem,6vw,6rem)', lineHeight: 1.1, color: C.text, textShadow: '0 0 70px rgba(255,143,0,0.2)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
             {hostNames}
           </motion.h1>
 
