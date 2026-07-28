@@ -13,7 +13,7 @@ export const blogCategories = [
 
 export type BlogCategory = (typeof blogCategories)[number]
 
-const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string }> = [
+const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string; metaTitle?: string }> = [
   { title: 'Best Digital Wedding Invitation Templates in India', category: 'Wedding', keyword: 'digital wedding invitation templates India' },
   { title: 'How To Create A WhatsApp Wedding Invitation', category: 'Wedding', keyword: 'WhatsApp wedding invitation' },
   { title: 'Digital Wedding Invitation Vs Printed Cards', category: 'Digital Invitations', keyword: 'digital wedding invitation vs printed cards' },
@@ -23,19 +23,18 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'WhatsApp Invitation Templates For Birthdays', category: 'Birthday', keyword: 'WhatsApp birthday invitation templates' },
   { title: 'How To Make A Digital Griha Pravesh Invitation', category: 'Housewarming', keyword: 'digital Griha Pravesh invitation' },
   { title: 'Baby Shower Invitation Wording Ideas For India', category: 'Baby Shower', keyword: 'baby shower invitation wording India' },
-  { title: 'Naming Ceremony Invitation Message Samples', category: 'Invitation Ideas', keyword: 'naming ceremony invitation message' },
+  { title: 'Naming Ceremony Invitation Message Samples', category: 'Invitation Ideas', keyword: 'naming ceremony invitation message', metaTitle: '50+ Naming Ceremony Invitation Messages for WhatsApp (Copy-Paste)', description: '50+ naming ceremony (Namakaran / Cradle Ceremony) invitation messages for WhatsApp — copy & paste free, for baby boy & girl, in English & Hindi. Ready-to-send samples.' },
   { title: 'Indian Wedding Invitation Wording For WhatsApp', category: 'Wedding', keyword: 'Indian wedding invitation wording WhatsApp' },
   { title: 'Online RSVP Guide For Indian Weddings', category: 'Wedding', keyword: 'online RSVP Indian weddings' },
   { title: 'Best Wedding Website Features For Guests', category: 'Digital Invitations', keyword: 'wedding website features' },
   { title: 'Engagement Invitation Wording For Ring Ceremony', category: 'Engagement', keyword: 'ring ceremony invitation wording' },
-  { title: 'Birthday Invitation Text For WhatsApp Groups', category: 'Birthday', keyword: 'birthday invitation text WhatsApp' },
-  { title: 'Housewarming Invitation Wording For Griha Pravesh', category: 'Housewarming', keyword: 'housewarming invitation wording' },
+  { title: 'Birthday Invitation Text For WhatsApp Groups', category: 'Birthday', keyword: 'birthday invitation text WhatsApp', metaTitle: 'Birthday Invitation Text for WhatsApp Groups — 50+ Samples', description: '50+ birthday invitation text messages for WhatsApp groups — copy & paste free, short and simple samples in English for family and friends groups.' },
   { title: 'Minimal Wedding Invitation Design Ideas', category: 'Wedding Trends', keyword: 'minimal wedding invitation design' },
   { title: 'Royal Wedding Invitation Design Ideas', category: 'Wedding Trends', keyword: 'royal wedding invitation design' },
   { title: 'How To Share Event Invitations On WhatsApp', category: 'Digital Invitations', keyword: 'share event invitations on WhatsApp' },
   { title: 'Why Digital Invitations Are Growing In India', category: 'Digital Invitations', keyword: 'digital invitations India' },
   { title: 'Mehendi And Sangeet Invitation Ideas', category: 'Wedding', keyword: 'Mehendi Sangeet invitation ideas' },
-  { title: 'Roka Ceremony Invitation Ideas And Wording', category: 'Engagement', keyword: 'Roka invitation ideas' },
+  { title: 'Roka Ceremony Invitation Ideas And Wording', category: 'Engagement', keyword: 'Roka invitation ideas', metaTitle: '40+ Roka Ceremony Invitation Messages & Wording for WhatsApp', description: '40+ Roka ceremony invitation messages, wording and ideas for WhatsApp — copy & paste free, in English & Hindi. Ready-to-send samples for a modern Roka invite.' },
   { title: 'First Birthday Invitation Ideas For Indian Families', category: 'Birthday', keyword: 'first birthday invitation ideas India' },
   { title: '60th Birthday Invitation Ideas For Parents', category: 'Birthday', keyword: '60th birthday invitation ideas' },
   { title: 'Silver Anniversary Invitation Ideas', category: 'Invitation Ideas', keyword: 'silver anniversary invitation ideas' },
@@ -71,6 +70,85 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     date: '2026-02-14',
     description: 'A real story about a college friend\'s surprise engagement — and how a digital WhatsApp invitation on ShareInvite impressed the entire friend group and both families at a fraction of what anyone expected to pay.',
   },
+
+  // ─── 3D & animated greeting templates ──────────────────────────────────────
+  {
+    title: '3D Surprise Journey: The Interactive Digital Gift You Send Online',
+    category: 'Digital Invitations',
+    keyword: '3d digital invitation gift online',
+    date: '2026-07-01',
+    description: 'Send a 3D digital gift they actually unlock — a secret PIN, photo memories, balloon pops, a scratch card and a handwritten letter. The ShareInvite 3D Surprise Journey turns a birthday or anniversary wish into an interactive experience they open on any phone, no app needed.',
+  },
+  {
+    title: '3D Love Card Online — Send a Romantic Animated Card in Minutes',
+    category: 'Invitation Ideas',
+    keyword: 'love card online',
+    date: '2026-07-03',
+    description: 'Create a 3D animated love card online and share it on WhatsApp in minutes. Floating hearts, your photos, little reasons you love them and a heartfelt message — a romantic digital card that feels far more personal than a text.',
+  },
+  {
+    title: 'Valentines Day Card Online — Send a 3D Animated Valentine on WhatsApp',
+    category: 'Invitation Ideas',
+    keyword: 'valentines day card online',
+    date: '2026-07-05',
+    description: 'Make a Valentine\'s Day card online in minutes and send a 3D animated valentine on WhatsApp — floating hearts, your photos and a love note. The most romantic (and easiest) way to say I love you this Valentine\'s Day, no app required.',
+  },
+  {
+    title: 'Anniversary Card Online — Create a 3D Animated Anniversary Card',
+    category: 'Invitation Ideas',
+    keyword: 'anniversary card online',
+    date: '2026-07-07',
+    description: 'Create an anniversary card online with a 3D animated design, your photos, a countdown of years together and a personal message. A beautiful marriage-anniversary wish for your wife, husband or parents you can share on WhatsApp in minutes.',
+  },
+  {
+    title: 'Digital Proposal Card — A 3D Will You Marry Me Card That Says Yes',
+    category: 'Invitation Ideas',
+    keyword: 'digital proposal card',
+    date: '2026-07-09',
+    description: 'Plan the perfect proposal with a 3D digital proposal card — an interactive "Will You Marry Me?" moment with rings, your photo memories and a Say Yes button. A unique online proposal idea you can create and share in minutes.',
+  },
+  {
+    title: 'Promise Day Card Online — Send a Heartfelt 3D Promise',
+    category: 'Invitation Ideas',
+    keyword: 'promise day card online',
+    date: '2026-07-11',
+    description: 'Send a Promise Day card online with a serene 3D animated design, your photos and the promises you want to make. A heartfelt Valentine-week greeting you can personalise and share on WhatsApp in minutes.',
+  },
+  {
+    title: 'Sorry Card Online — Say Sorry With a Heartfelt Animated Card',
+    category: 'Invitation Ideas',
+    keyword: 'sorry card online',
+    date: '2026-07-13',
+    description: 'Say sorry the right way with a gentle 3D animated apology card — soft petals, your photos and a sincere message. A thoughtful way to apologise to someone you love and share it privately on WhatsApp.',
+  },
+  {
+    title: 'Congratulations Card Online — Send an Animated Congrats Card',
+    category: 'Invitation Ideas',
+    keyword: 'congratulations card online',
+    date: '2026-07-15',
+    description: 'Send a congratulations card online with a celebratory 3D confetti animation, photos and a personal message. Perfect for a new job, promotion, exam success, new baby or any big win — create and share it on WhatsApp in minutes.',
+  },
+  {
+    title: 'Festival Wishes Card Online — Diwali and Festival Greetings',
+    category: 'Invitation Ideas',
+    keyword: 'festival wishes card online',
+    date: '2026-07-16',
+    description: 'Send animated festival wishes online — glowing 3D diyas for Diwali and warm greetings for every festival. Add your photos and a personal message, then share your digital festival greeting card with family and friends on WhatsApp.',
+  },
+  {
+    title: 'Family Wishes Card Online — A Heartfelt Digital Card for Family',
+    category: 'Invitation Ideas',
+    keyword: 'family wishes card online',
+    date: '2026-07-17',
+    description: 'Create a heartfelt digital card for your family — a 3D animated design with photo memories and a message for your parents, siblings or the people who raised you. A meaningful way to say thank you and I love you, sharable on WhatsApp.',
+  },
+  {
+    title: 'Friendship Day Card Online — Send a 3D Card to Your Best Friends',
+    category: 'Invitation Ideas',
+    keyword: 'friendship day card online',
+    date: '2026-07-18',
+    description: 'Send a Friendship Day card online with a playful 3D star-filled animation, your favourite photos together and an inside-joke message. The perfect Happy Friendship Day greeting for your best friends — create and share on WhatsApp in minutes.',
+  },
 ]
 
 export type BlogDraft = {
@@ -81,6 +159,7 @@ export type BlogDraft = {
   description: string
   date: string
   status: 'draft'
+  metaTitle?: string
 }
 
 function buildDescription(title: string, keyword: string, category: BlogCategory): string {
@@ -114,6 +193,7 @@ export const blogDrafts: BlogDraft[] = draftTitles.map((item, index) => ({
   description: item.description ?? buildDescription(item.title, item.keyword, item.category),
   date: item.date ?? `2026-05-${String((index % 28) + 1).padStart(2, '0')}`,
   status: 'draft',
+  metaTitle: item.metaTitle,
 }))
 
 export function categorySlug(category: BlogCategory | string) {

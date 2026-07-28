@@ -12,9 +12,9 @@ import { PLANS } from '@/lib/plans'
 import { UsersIcon } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Digital Invitation Maker — Weddings, Birthdays & Every Occasion | ShareInvite' },
+  title: { absolute: 'Digital Invitation Maker for Weddings & Events | ShareInvite' },
   description:
-    'Create digital invitations and animated 3D greetings for weddings, birthdays and every occasion. Share a WhatsApp link with RSVP, photo gallery & live countdown. Free to start, used by families worldwide.',
+    'Create digital invitations & animated 3D greetings for weddings, birthdays & every occasion. Share a WhatsApp link with RSVP & live countdown — free to start.',
   keywords: [
     'digital invitation maker',
     'online invitation maker',
@@ -765,10 +765,9 @@ export default function LandingPage() {
 
                 {/* Sub-copy — lead with WhatsApp differentiator, then features */}
                 <p className="hero-anim-1 mt-4 max-w-[480px] text-sm leading-[1.85] text-muted sm:text-base">
-                  Share a beautiful invite link on WhatsApp — no app needed for guests.
-                  Make invitation websites and animated 3D greetings for weddings, birthdays,
-                  engagements, anniversaries and every occasion, for families around the world.
-                  Gallery, music, live countdown, Google Maps and online RSVP — ready in 5 minutes.
+                  Create digital invitations and animated 3D greetings for weddings, birthdays
+                  and every occasion — shared on WhatsApp, no app needed for guests.
+                  Gallery, music, live countdown, maps and RSVP, ready in 5 minutes.
                 </p>
 
                 {/* CTA row */}
@@ -1606,7 +1605,7 @@ export default function LandingPage() {
               FAQ
             </p>
             <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-              Digital Invitation — Frequently Asked Questions
+              Digital Invitation Frequently Asked Questions
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-muted">
               Everything you need to know about creating your first digital invitation.
@@ -1620,9 +1619,9 @@ export default function LandingPage() {
       <section className="px-5 py-20 sm:py-28" style={{ background: '#FCF7F1' }}>
         <div className="mx-auto max-w-5xl">
           <div className="mb-12 text-center" data-animate>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">Trusted by Indian families</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">Trusted worldwide</p>
             <h2 className="mt-3 font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl">
-              Trusted by 10,000+ Indian Families
+              Trusted by 10,000+ Families Worldwide
             </h2>
           </div>
 
@@ -1713,6 +1712,41 @@ export default function LandingPage() {
       </section>
 
       <StickyMobileCTA />
+
+      {/* ─── SEO CONTENT (crawlable copy + internal links) ─── */}
+      <section className="border-t border-border bg-white px-5 py-14" aria-label="About ShareInvite digital invitation maker">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="font-display text-2xl text-ink sm:text-3xl">The digital invitation maker for every celebration</h2>
+          <div className="mt-5 space-y-4 text-sm leading-7 text-muted">
+            <p>
+              <strong className="text-foreground">ShareInvite</strong> is a free online invitation maker for creating beautiful
+              digital invitations and animated 3D greeting cards in minutes — no design skills and no app needed for your guests.
+              Choose a template, add your names, date, venue and photos, and share a single link on WhatsApp that opens instantly
+              in any phone browser. Every invitation includes a photo gallery, background music, a live countdown, Google Maps
+              directions, online RSVP and a guest wishes wall.
+            </p>
+            <p>
+              Make a <Link href="/wedding-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital wedding invitation</Link>,
+              a <Link href="/birthday-invitation" className="text-accent-strong underline-offset-2 hover:underline">birthday invitation</Link>,
+              an <Link href="/engagement-invitation" className="text-accent-strong underline-offset-2 hover:underline">engagement invite</Link>,
+              a <Link href="/griha-pravesh-invitation" className="text-accent-strong underline-offset-2 hover:underline">griha pravesh invitation</Link>, or a
+              <Link href="/namakaran-invitation" className="text-accent-strong underline-offset-2 hover:underline"> namakaran invitation</Link> —
+              for families in India and around the world. Prefer something more personal? Send an interactive
+              {' '}<Link href="/blog/3d-surprise-journey-the-interactive-digital-gift-you-send-online" className="text-accent-strong underline-offset-2 hover:underline">3D Surprise Journey</Link>,
+              a <Link href="/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp" className="text-accent-strong underline-offset-2 hover:underline">Valentine&apos;s Day card</Link>,
+              an <Link href="/blog/anniversary-card-online-create-a-3d-animated-anniversary-card" className="text-accent-strong underline-offset-2 hover:underline">anniversary card</Link>, or a
+              {' '}<Link href="/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes" className="text-accent-strong underline-offset-2 hover:underline">3D proposal card</Link> —
+              animated greetings you personalise and share in minutes.
+            </p>
+            <p>
+              Start free with no credit card required. See all designs on the
+              {' '}<Link href="/templates" className="text-accent-strong underline-offset-2 hover:underline">templates page</Link>,
+              compare plans on <Link href="/pricing" className="text-accent-strong underline-offset-2 hover:underline">pricing</Link>,
+              or read guides on the <Link href="/blog" className="text-accent-strong underline-offset-2 hover:underline">ShareInvite blog</Link>.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* ─── FOOTER ─── */}
       <footer className="border-t border-border bg-[#EFE5D8] px-5 py-14 pb-28 sm:pb-14">

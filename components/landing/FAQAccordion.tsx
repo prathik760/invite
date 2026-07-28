@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     question: 'Which plan should I choose?',
-    answer: 'Start free with the Elegant Wedding template. If you love the design, upgrade to any paid template with a one-time payment — ₹299 for Cinematic Night, Janamdin, or Namakaran; ₹599 for Shaadi, Mangni, or Griha Pravesh; ₹999 for Saalgirah, KGF Royal Empire, Royal Deco, or Luxury Wedding.',
+    answer: 'Start free with the Elegant Wedding template. If you love the design, upgrade to any paid template with a one-time payment — ₹299 for Cinematic Night, Janamdin, Namakaran, or the interactive 3D Surprise Journey; ₹599 for Shaadi, Mangni, Griha Pravesh, or the animated 3D Greeting Cards; ₹999 for Saalgirah, KGF Royal Empire, Royal Deco, or Luxury Wedding.',
   },
   {
     question: 'How much does a digital invitation cost in India?',

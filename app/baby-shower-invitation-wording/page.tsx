@@ -9,13 +9,13 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Baby Shower & Godh Bharai Invitation Wording | ShareInvite' },
+  title: { absolute: '25+ Baby Shower & Godh Bharai Messages for WhatsApp (Free)' },
   description:
-    '20+ baby shower invitation messages for India — Godh Bharai, Seemantham, modern baby shower. WhatsApp-ready wording. Free digital invite.',
+    '25+ baby shower & Godh Bharai invitation messages for WhatsApp — copy & paste free. Seemantham, Valaikappu & modern samples, plus quotes and captions in English & Hindi.',
   alternates: { canonical: `${APP_URL}/baby-shower-invitation-wording` },
   openGraph: {
-    title: 'Baby Shower & Godh Bharai Invitation Wording India | ShareInvite',
-    description: '20+ baby shower invitation messages — Godh Bharai, Seemantham, modern. WhatsApp-ready. Copy & share free.',
+    title: '25+ Baby Shower & Godh Bharai Messages for WhatsApp (Free)',
+    description: 'Copy & paste baby shower & Godh Bharai invitation messages for WhatsApp — Seemantham, Valaikappu & modern samples, plus quotes and captions. Free.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Baby Shower Godh Bharai Invitation Wording India' }],
@@ -84,14 +84,14 @@ export default function BabyShowerInvitationWordingPage() {
         <div className="relative mx-auto max-w-4xl">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            20+ messages · Godh Bharai, Seemantham &amp; modern · Copy & share free
+            25+ messages · Godh Bharai, Seemantham &amp; modern · Copy &amp; share free
           </div>
           <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
             Baby Shower Invitation Wording —<br />
             <span className="gradient-accent italic">Godh Bharai &amp; Seemantham Messages</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            20+ ready-to-copy baby shower invitation messages for India — Godh Bharai, Seemantham, and modern baby shower variants. WhatsApp-ready.
+            25+ ready-to-copy baby shower invitation messages for India — Godh Bharai, Seemantham, Valaikappu and modern baby shower variants, plus quotes and captions. WhatsApp-ready.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
@@ -392,6 +392,48 @@ Gifts optional — your presence is the present!`}</WordingCopyCard>
                 <p className="text-sm text-muted leading-7">{item.body}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quotes, Lines & Captions */}
+      <section className="px-5 py-16 border-b border-border">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Baby Shower Quotes, Lines &amp; Captions</h2>
+          <p className="text-sm text-muted leading-7 mb-8">
+            Short one-liners to open your invitation, use as a WhatsApp caption, or pair with your digital invite link.
+          </p>
+          <div className="rounded-2xl border border-border bg-white p-6 sm:p-8 shadow-sm space-y-7">
+            <div>
+              <h3 className="font-heading text-base text-ink mb-3">Baby shower quotes &amp; lines</h3>
+              <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
+                <li>&ldquo;A little one is on the way — come shower us with love!&rdquo;</li>
+                <li>&ldquo;Blessings, not gifts — your presence is the present.&rdquo;</li>
+                <li>Join us to bless the mom-to-be on [Date]! 🤰</li>
+                <li>A tiny miracle is coming — celebrate with us! [Date]</li>
+                <li>Godh Bharai blessings for [Name] — do join us. 🙏</li>
+                <li>Come shower [Name] with love before baby arrives!</li>
+                <li>Little feet are on the way — bless them with us. 👣</li>
+                <li>Sweet blessings for a sweet beginning — [Date] · [Venue].</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-heading text-base text-ink mb-3">WhatsApp &amp; Instagram captions</h3>
+              <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
+                <li>Baby loading… 🤰 Join the shower on [Date]!</li>
+                <li>Oh baby! 🎀 Come celebrate the mom-to-be. [Date]</li>
+                <li>Twinkle twinkle little star — a baby&apos;s on the way! ⭐</li>
+                <li>Showering blessings on [Name] 💛 You&apos;re invited!</li>
+                <li>From bump to baby — bless the journey! [Date]</li>
+                <li>Little one, big love — join our Godh Bharai! 🙏</li>
+                <li>Details 👉 [Digital Invite Link] · see you there!</li>
+              </ul>
+            </div>
+            <p className="text-xs text-muted leading-6 pt-1">
+              Tip: open with any line, then paste your{' '}
+              <Link href="/create" className="text-accent-strong underline-offset-2 hover:underline">digital baby shower invite link</Link>{' '}
+              below it — guests get the venue map, schedule and RSVP in one tap.
+            </p>
           </div>
         </div>
       </section>

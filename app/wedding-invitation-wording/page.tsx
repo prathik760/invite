@@ -8,9 +8,9 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Wedding Invitation Wording & Messages India | ShareInvite' },
+  title: { absolute: '30+ Wedding Invitation Messages for WhatsApp | Copy-Paste' },
   description:
-    '30+ ready-to-copy wedding invitation wording samples for Indian families. Formal, casual, WhatsApp, bilingual — copy & share in minutes.',
+    '30+ wedding invitation messages & wording for WhatsApp — copy & paste free. Formal, casual, traditional and bilingual samples, plus quotes & lines in English & Hindi.',
   keywords: [
     'wedding invitation wording',
     'wedding invitation message',
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/wedding-invitation-wording` },
   openGraph: {
-    title: 'Wedding Invitation Wording & Messages India | ShareInvite',
-    description: '30+ ready-to-copy wedding invitation wording samples for Indian families. Formal, casual, WhatsApp, bilingual — copy & share in minutes.',
+    title: '30+ Wedding Invitation Messages for WhatsApp (Copy & Paste)',
+    description: 'Copy & paste wedding invitation messages & wording for WhatsApp — formal, casual, traditional and bilingual samples, plus quotes & lines. Free.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Wedding Invitation Wording India' }],
@@ -470,6 +470,61 @@ export default function WeddingInvitationWordingPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quotes, Lines & Captions */}
+      <section className="px-5 py-16 border-b border-border bg-white">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Wedding Invitation Quotes, Lines &amp; Captions</h2>
+          <p className="text-sm text-muted leading-7 mb-8">
+            Short one-liners to open your wedding invitation, use as a WhatsApp caption, or pair with your digital invite link.
+          </p>
+          <div className="rounded-2xl border border-border bg-background p-6 sm:p-8 shadow-sm space-y-7">
+            <div>
+              <h3 className="font-heading text-base text-ink mb-3">Wedding invitation quotes</h3>
+              <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
+                <li>&ldquo;Two souls, one journey — begins with your blessings.&rdquo;</li>
+                <li>&ldquo;Come witness the start of our happily ever after.&rdquo;</li>
+                <li>&ldquo;A love written in the stars, celebrated with you.&rdquo;</li>
+                <li>&ldquo;Together forever, and it starts with you by our side.&rdquo;</li>
+                <li>&ldquo;With our families&apos; blessings, we begin as one.&rdquo;</li>
+                <li>&ldquo;Every love story is beautiful; ours begins on [Date].&rdquo;</li>
+                <li>&ldquo;Join us where forever begins.&rdquo;</li>
+                <li>&ldquo;Two hearts becoming one — please share the moment.&rdquo;</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-heading text-base text-ink mb-3">Short invitation lines</h3>
+              <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
+                <li>[Name] &amp; [Name] are getting married — join us on [Date]! 💍</li>
+                <li>You&apos;re invited to our wedding — [Date] at [Venue].</li>
+                <li>Save the date: our wedding, [Date] · [City].</li>
+                <li>With joy, we invite you to bless our union. [Date]</li>
+                <li>Come celebrate love, laughter and forever with us!</li>
+                <li>Our big day needs your blessings — [Date] · [Venue].</li>
+                <li>Two families unite — please join the celebration!</li>
+                <li>The wedding of [Name] &amp; [Name] awaits your presence.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-heading text-base text-ink mb-3">WhatsApp &amp; Instagram captions</h3>
+              <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
+                <li>Forever starts on [Date] 💍 You&apos;re invited!</li>
+                <li>She said yes, now the wedding&apos;s a date! 💛 [Date]</li>
+                <li>#Shaadi loading… join us [Date] at [Venue]! 🎉</li>
+                <li>From two hearts to one home — come celebrate! 🏡</li>
+                <li>Wedding bells are ringing 🔔 Details 👉 [Invite Link]</li>
+                <li>Our forever begins — save the date! ✨ [Date]</li>
+                <li>Tying the knot &amp; can&apos;t wait to see you there! 💍</li>
+              </ul>
+            </div>
+            <p className="text-xs text-muted leading-6 pt-1">
+              Tip: open with any line, then paste your{' '}
+              <Link href="/wedding-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital wedding invite link</Link>{' '}
+              below it — guests get the venue map, countdown, schedule and RSVP in one tap.
+            </p>
           </div>
         </div>
       </section>

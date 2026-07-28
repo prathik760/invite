@@ -9,13 +9,13 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Namakaran Invitation Messages India | ShareInvite' },
+  title: { absolute: '20+ Namakaran Invitation Messages for WhatsApp (Boy & Girl)' },
   description:
-    '20+ Namakaran invitation messages for India — baby boy, baby girl, formal, WhatsApp, bilingual. Naming ceremony & cradle ceremony wording.',
+    '20+ Namakaran (naming ceremony) invitation messages for WhatsApp — copy & paste free. Baby boy & baby girl, formal and bilingual samples in English & Hindi.',
   alternates: { canonical: `${APP_URL}/namakaran-invitation-wording` },
   openGraph: {
-    title: 'Namakaran Invitation Messages — Naming Ceremony | ShareInvite',
-    description: '20+ Namakaran invitation messages — baby boy, baby girl, formal, WhatsApp, bilingual. Copy & share free.',
+    title: '20+ Namakaran Invitation Messages for WhatsApp (Boy & Girl)',
+    description: 'Copy & paste Namakaran naming-ceremony invitation messages for WhatsApp — baby boy & girl, formal and bilingual samples. Free.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Namakaran Invitation Wording India' }],
@@ -496,6 +496,33 @@ Please join us for these precious first blessings.`}</WordingCopyCard>
               Create Your Namakaran Invitation Free →
             </Link>
             <p className="mt-3 text-xs text-muted">No credit card required · WhatsApp-ready link in minutes</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Quotes, Lines & Captions */}
+      <section className="px-5 py-16 border-b border-border">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Namakaran Quotes, Lines &amp; Captions</h2>
+          <p className="text-sm text-muted leading-7 mb-8">
+            Short one-liners to open your naming-ceremony invitation, use as a WhatsApp caption, or pair with your digital invite link.
+          </p>
+          <div className="rounded-2xl border border-border bg-white p-6 sm:p-8 shadow-sm">
+            <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
+              <li>&ldquo;A new name, a new blessing — join our little one&apos;s Namakaran.&rdquo;</li>
+              <li>Our bundle of joy has a name — come bless [Baby&apos;s Name]! 👶</li>
+              <li>Join us for the naming ceremony of our little one on [Date]. 🙏</li>
+              <li>With God&apos;s grace, we name our baby — be part of the joy!</li>
+              <li>Blessings requested for [Baby&apos;s Name]&apos;s Namakaran. [Date]</li>
+              <li>A little miracle, a beautiful name — celebrate with us!</li>
+              <li>Cradle ceremony &amp; naming — your blessings await. 🍼</li>
+              <li>Naming ceremony on [Date] · [Venue] — do grace the occasion.</li>
+            </ul>
+            <p className="text-xs text-muted leading-6 pt-4">
+              Tip: open with any line, then paste your{' '}
+              <Link href="/namakaran-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital Namakaran invite link</Link>{' '}
+              below it — guests get the venue map, schedule and RSVP in one tap.
+            </p>
           </div>
         </div>
       </section>

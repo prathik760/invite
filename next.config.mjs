@@ -25,6 +25,13 @@ const nextConfig = {
         destination: '/namakaran-invitation',
         permanent: true,
       },
+      // Consolidate the housewarming-wording blog into the authoritative wording page
+      // (same search intent — avoids keyword cannibalisation, passes link equity).
+      {
+        source: '/blog/housewarming-invitation-wording-for-griha-pravesh',
+        destination: '/griha-pravesh-invitation-wording',
+        permanent: true,
+      },
     ]
   },
   async headers() {

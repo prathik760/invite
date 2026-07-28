@@ -1,40 +1,56 @@
 export const NAMES = [
-  'Rahul', 'Priya', 'Ananya', 'Arjun', 'Sneha',
-  'Karthik', 'Meera', 'Aarav', 'Riya', 'Neha',
-  'Ishita', 'Rohan', 'Nikhil', 'Pooja', 'Akash',
-  'Aditi', 'Varun', 'Divya', 'Sanjana', 'Abhishek',
+  // Global mix — ShareInvite is used by families and couples worldwide
+  'Emma', 'Liam', 'Sofia', 'Noah', 'Mia',
+  'Aarav', 'Priya', 'Rohan', 'Ananya', 'Ishita',
+  'Wei', 'Aisha', 'Diego', 'Yuki', 'Omar',
+  'Chloe', 'Mateo', 'Hana', 'Zara', 'Lucas',
+  'Fatima', 'Ethan', 'Ava', 'Arjun',
 ] as const
 
 export const CITIES = [
-  'Bengaluru', 'Mumbai', 'Delhi', 'Hyderabad', 'Chennai',
-  'Pune', 'Mysuru', 'Ahmedabad', 'Surat', 'Jaipur',
-  'Lucknow', 'Indore', 'Nagpur', 'Kochi', 'Coimbatore',
-  'Noida', 'Gurugram', 'Visakhapatnam', 'Mangalore', 'Hubballi',
+  // Worldwide reach
+  'London', 'New York', 'Dubai', 'Singapore', 'Toronto',
+  'Sydney', 'San Francisco', 'Dublin', 'Melbourne', 'Auckland',
+  'Doha', 'Kuala Lumpur', 'Chicago', 'Vancouver', 'Abu Dhabi',
+  'Manchester', 'Hong Kong', 'Amsterdam',
+  'Mumbai', 'Bengaluru', 'Delhi', 'Hyderabad', 'Dallas', 'Riyadh',
 ] as const
 
 export const INVITATION_TYPES = [
+  // Classic invitations
   'Wedding Invitation',
   'Birthday Invitation',
+  'Engagement Invitation',
+  'Anniversary Invitation',
   'Baby Shower Invitation',
   'Naming Ceremony Invitation',
   'Housewarming Invitation',
   'Reception Invitation',
-  'Engagement Invitation',
-  'Anniversary Invitation',
-  'Half Saree Ceremony',
-  'Thread Ceremony',
+  // New 3D & animated greeting templates
+  '3D Surprise Gift',
+  '3D Love Card',
+  "Valentine's Day Card",
+  'Anniversary Card',
+  'Proposal Card',
+  'Promise Day Card',
+  'Congratulations Card',
+  'Festival Greeting Card',
+  'Family Wishes Card',
+  'Friendship Day Card',
 ] as const
 
 // Each template receives (name, city, invitationType) — unused params prefixed with _
+// Wording works for both invitations and greeting cards ("created" / "sent" / "designing").
 export const MESSAGE_TEMPLATES: Array<(n: string, c: string, t: string) => string> = [
   (n, c, t) => `${n} from ${c} just created a ${t}.`,
   (n, c, t) => `${n} from ${c} started designing a ${t}.`,
   (n, c, t) => `${n} from ${c} published a ${t}.`,
-  (n, c, t) => `${n} from ${c} created a ${t}.`,
+  (n, c, t) => `${n} from ${c} just sent a ${t}.`,
+  (n, c, t) => `${n} in ${c} shared a ${t} on WhatsApp.`,
   (n, c)    => `${n} from ${c} joined ShareInvite.`,
   (n, c)    => `${n} from ${c} is now using ShareInvite.`,
-  (_n, c, t) => `Someone from ${c} started designing a ${t}.`,
-  (_n, c, t) => `A family from ${c} designed a ${t}.`,
+  (_n, c, t) => `Someone in ${c} started designing a ${t}.`,
+  (_n, c, t) => `A ${t} was just created in ${c}.`,
 ]
 
 export const TIMES = [

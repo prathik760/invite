@@ -1501,4 +1501,597 @@ The families who feel most at peace with their invitation spending, in my experi
       { label: 'Indian wedding invitation wording', href: '/blog/indian-wedding-invitation-wording-for-whatsapp' },
     ],
   },
+
+  '3d-surprise-journey-the-interactive-digital-gift-you-send-online': {
+    intro: `A birthday text gets read in two seconds and forgotten in five. A 3D digital gift gets talked about for weeks. The ShareInvite 3D Surprise Journey is a new kind of online gift — an interactive experience your person actually *unlocks* on their phone. They enter a secret PIN, pop balloons hiding little messages, slide a photo puzzle of your memories, scratch a hidden reveal, and finish on a handwritten letter from you. No app to download, no printing, no shipping — just a link you share on WhatsApp that opens instantly in any browser. If you have been searching for a unique digital gift online, a surprise gift for a long-distance partner, or a birthday gift idea that isn't another gift card, this is the most personal thing you can send in five minutes.`,
+    sections: [
+      {
+        heading: 'What is the 3D Surprise Journey — and why it beats an ordinary e-card',
+        body: `The 3D Surprise Journey is an animated, interactive digital gift built with real WebGL 3D — not a static image or a slideshow. When your recipient opens the link, a wrapped 3D gift box floats on their screen. To open it, they type a secret PIN you set (with a hint only they would understand, like the day you first met). From there they move through a sequence of playful "stages" you personalise: a photo-memories carousel, balloons they pop to reveal your messages, a sliding puzzle made from one of your photos, a scratch card hiding a surprise line, and finally a typewriter-style handwritten letter signed by you.
+
+Unlike an ordinary e-card, the Surprise Journey is *earned* — the small moment of unlocking it creates anticipation, and every stage is a tiny hit of delight. That emotional pacing is why people screen-record it and re-share it. It works for a birthday surprise, an anniversary, a long-distance "thinking of you", a proposal warm-up, or just because. And because it's a link, distance doesn't matter — someone across the world opens it the same second you send it.`,
+      },
+      {
+        heading: 'How to create your 3D digital gift in 5 minutes',
+        body: `Creating a Surprise Journey on ShareInvite takes about five minutes and no design skill. Here is the flow: (1) Pick the 3D Surprise Journey template and enter the occasion and their name. (2) Set the secret PIN and a hint — a shared inside date works best. (3) Upload your photo memories; the same gallery powers both the photo carousel and the sliding puzzle. (4) Write your balloon messages (one short line per balloon), your scratch-card reveal, and your handwritten letter. (5) Preview it live, then publish to get a shareable link.
+
+Every field is optional beyond the basics, so you can make it as short or as elaborate as you like. Once published you get a clean link — paste it into WhatsApp, iMessage, Instagram DM or email. You can edit the details later, and the same link keeps working, so there is no pressure to get every word perfect before you send it.`,
+      },
+      {
+        heading: 'Best occasions for an interactive digital gift',
+        body: `The Surprise Journey suits any moment that deserves more than a text. **Birthdays** are the most popular use — set the PIN to their birth date and fill the balloons with reasons you are glad they were born. **Anniversaries** work beautifully with a photo puzzle of your first trip together. **Long-distance relationships** are the sweet spot: it collapses the distance into a shared, real-time experience. It is also a wonderful **proposal build-up**, a **"congratulations" surprise** for a new job or graduation, a **get-well** pick-me-up, or a **festival** or **new year** surprise for someone far away. Because you control every message, the same template becomes a completely different gift each time — romantic, funny, nostalgic, or celebratory.`,
+      },
+      {
+        heading: 'Personalisation ideas that make it unforgettable',
+        body: `The magic is in the details. For the **PIN hint**, use something only the two of you would know — "the number of our first house" or "the date under the mango tree". For **balloon messages**, keep each to a short punchy line: an inside joke, a memory, a compliment they never expect. For the **photo puzzle**, choose a slightly blurry or funny candid — it makes the reveal more fun than a posed shot. For the **scratch card**, hide the biggest line: "You + Me = Forever", a trip you have secretly booked, or the actual question if you are proposing. For the **handwritten letter**, write the way you actually talk, not the way greeting cards talk — that honesty is what makes people cry (the good kind). Background music ties it all together; add a song that means something to both of you.`,
+      },
+      {
+        heading: 'Opens on any phone — no app, no download, no printing',
+        body: `One reason digital gifts fail is friction: apps to install, accounts to create, files that will not open. The Surprise Journey removes all of it. Your recipient taps the link and it opens instantly in their phone's browser — Android or iPhone, old device or new. There is nothing to download, no sign-up, and the 3D runs smoothly because it is optimised for mobile. That also makes it perfect for **older relatives** who struggle with apps: if they can open a WhatsApp link, they can open your gift. And because there is no printing or courier, there is zero wait and zero shipping cost — you can create it at 11pm and have it delighting someone on the other side of the country by 11:01.`,
+      },
+      {
+        heading: 'How much does it cost — and is it worth it?',
+        body: `The 3D Surprise Journey is available on an affordable one-time plan — far less than a bouquet, a printed gift, or a delivery that arrives a day late. There are no subscriptions and no per-message charges: you pay once and your link stays live so your person can revisit the gift whenever they want to feel that moment again. Compared to a generic gift card, the value is not the price — it is that no one else could have sent it. It is your PIN, your photos, your words. That is what people remember. When you are ready, choose the plan that fits, personalise your journey, and send something they will actually screenshot.`,
+      },
+      {
+        heading: 'Why ShareInvite for your 3D digital gift',
+        body: `ShareInvite is built for exactly this: beautiful, interactive digital experiences that are effortless to create and instant to share. The Surprise Journey combines real 3D animation, thoughtful interaction design, and a five-minute builder so anyone can make something that looks like it took a designer a week. It is mobile-first, WhatsApp-native, and works worldwide. If you want a gift that feels personal, modern and a little bit magical — without the cost or wait of anything physical — this is the easiest way to do it.`,
+      },
+    ],
+    checklist: [
+      'Set a secret PIN and a hint only your recipient would understand.',
+      'Upload 4+ photo memories — they power both the carousel and the sliding puzzle.',
+      'Keep each balloon message to one short, punchy line.',
+      'Hide your biggest surprise line on the scratch card.',
+      'Write the handwritten letter the way you actually talk.',
+      'Add a background song that means something to both of you.',
+      'Preview on your own phone, then share the link on WhatsApp.',
+    ],
+    faq: [
+      { q: 'What is a 3D Surprise Journey digital gift?', a: 'It is an interactive online gift you send as a link. The recipient unlocks a 3D gift box with a secret PIN, then moves through personalised stages — photo memories, balloon messages, a sliding photo puzzle, a scratch-card reveal and a handwritten letter. It opens in any phone browser with no app download, making it a unique digital gift for birthdays, anniversaries and long-distance relationships.' },
+      { q: 'Do they need to download an app to open it?', a: 'No. The Surprise Journey opens instantly in any mobile or desktop browser on both Android and iPhone. You share a link on WhatsApp, Instagram, iMessage or email, and your recipient just taps it. There is no app, no sign-up and no download — which also makes it easy for older relatives to open.' },
+      { q: 'How long does it take to create one?', a: 'About five minutes. You pick the template, set the PIN and hint, upload a few photos, write your balloon messages, scratch-card reveal and letter, preview it live, and publish to get your shareable link. You can edit the details afterwards and the same link keeps working.' },
+      { q: 'What occasions is it good for?', a: 'Birthdays, anniversaries, proposals, long-distance "thinking of you" moments, congratulations for a new job or graduation, festivals and new year surprises. Because you write every message yourself, the same template can be romantic, funny or celebratory depending on the moment.' },
+      { q: 'Can I send it to someone in another country?', a: 'Yes. It is just a link, so distance is irrelevant — someone abroad opens it the same moment you send it, in their own browser, at no extra cost. This is one of the most popular uses for long-distance couples and families living apart.' },
+      { q: 'How much does the 3D Surprise Journey cost?', a: 'It is available on an affordable one-time plan with no subscription and no recurring charges — you pay once and the link stays live so your recipient can revisit it anytime. Check the pricing page for the current plan and start creating your surprise.' },
+    ],
+    links: [
+      { label: 'Create your 3D Surprise Journey', href: '/create?template=surprise-journey' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Browse all templates', href: '/templates' },
+      { label: 'Send a 3D love card', href: '/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes' },
+    ],
+  },
+
+  'valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp': {
+    intro: `Every February the same thing happens: the shops sell out of the good cards, the delivery slots fill up, and half of us end up sending a plain "Happy Valentine's Day ❤️" text at 9pm. There is a better way. A Valentine's Day card online — specifically a 3D animated valentine you build in minutes and send on WhatsApp — is more romantic than a shop card, more personal than a text, and it arrives the instant you hit send. With ShareInvite you add your own photos, the little reasons you love them, and a heartfelt message, wrapped in a dreamy animation of floating hearts. Whether it is for your girlfriend, boyfriend, wife, husband, or the person you are working up the courage to tell, this is the easiest way to make Valentine's Day feel special.`,
+    sections: [
+      {
+        heading: 'Why send a Valentine\'s Day card online instead of a paper card',
+        body: `A paper card is lovely for about thirty seconds. A digital valentine keeps giving: it animates, it plays your song, it holds your photos, and your person can reopen it any time they want to smile. Practically, an online Valentine's card also solves the February problems — nothing to buy in advance, nothing to post, and no risk of it arriving late. It is ideal for **long-distance couples**, for anyone who thought of the perfect words at the last minute, and for people who would rather spend on an experience than a piece of printed card. Most importantly, it is unmistakably *from you*: your photos, your reasons, your handwriting-style message. That personalisation is what turns "nice card" into "I saved this".`,
+      },
+      {
+        heading: 'How to make a 3D animated Valentine in 5 minutes',
+        body: `Here is how to create your Valentine's Day card on ShareInvite: (1) Choose the Valentine's Day (Floating Hearts) template. (2) Enter their name and yours. (3) Add a big headline — "Happy Valentine's Day", "Be Mine", or something only they would get. (4) Upload a few photos of the two of you for the memories section. (5) List the little reasons you love them, one per line. (6) Write your main message from the heart, and optionally add a background song. (7) Preview it live and publish to get your link.
+
+That link is all you need. Paste it into WhatsApp and it opens instantly for them — no app, no sign-up. You can schedule the moment by simply sending at midnight, or wait for the morning. Everything is editable afterwards, so you can start now and refine the words later.`,
+      },
+      {
+        heading: 'Valentine\'s message ideas for her and for him',
+        body: `Stuck on words? Keep them specific — specific beats poetic every time. **For her:** "You make ordinary Tuesdays feel like something. Happy Valentine's Day to the person I choose, every single day." Or: "Three years in and I still get nervous-excited when your name lights up my phone." **For him:** "You are my calm and my favourite chaos. Thank you for being mine." Or: "Of all my decisions, choosing you is the one I'm proudest of." **For a new relationship or a crush:** keep it light and honest — "I've been trying to find a smooth way to say this, so I made you a card instead. Happy Valentine's Day." The "reasons I love you" lines work best as small, true observations: the way they laugh at their own jokes, how they always text when they get home safe, the fact that they remember the little things.`,
+      },
+      {
+        heading: 'Perfect for long-distance relationships',
+        body: `If your Valentine is in another city or country, a digital valentine is not a compromise — it is genuinely better. You cannot hand them flowers, but you can send a card that plays your song, scrolls through your photos together, and delivers your message the exact second it turns midnight where they are. There is no shipping, no customs, no delay. Many long-distance couples open it together on a video call — one taps the link, the other watches their face. That shared moment, live across the distance, is something a posted card can never do. Add photos from the last time you were together and a countdown to the next time you will be, and you have turned a hard day apart into a small celebration.`,
+      },
+      {
+        heading: 'Make it unmistakably yours',
+        body: `The templates are beautiful on their own, but the details make it *yours*. Use a photo the two of you took, not a stock image. Pick a song from a specific memory — the one from the road trip, the first dance, the café you always go to. In the reasons section, avoid generic lines like "you're perfect" and use true ones like "you always give me the window seat". For the headline, an inside joke will land harder than "Happy Valentine's Day" ever could. These small, honest touches are what make your person screenshot the card and keep it — and they cost nothing but a minute of thought.`,
+      },
+      {
+        heading: 'How much does a digital Valentine\'s card cost?',
+        body: `A ShareInvite Valentine's card is available on an affordable one-time plan — typically less than a single shop-bought card and a fraction of a flower delivery, with no subscription. You pay once, and the link stays live so your partner can revisit the card whenever they want. Compared to a bouquet that wilts in a week, a digital valentine that keeps your photos, your song and your words is remarkable value. When you are ready, pick your plan, personalise your card, and send the most romantic message in their inbox this February.`,
+      },
+    ],
+    checklist: [
+      'Choose the Valentine\'s Day floating-hearts template.',
+      'Use a real photo of the two of you, not a stock image.',
+      'Write 4–5 specific "reasons I love you" lines, one per line.',
+      'Pick a background song tied to a shared memory.',
+      'Make the headline an inside joke if you can.',
+      'Preview on your phone before sending.',
+      'Send the WhatsApp link at midnight or first thing in the morning.',
+    ],
+    faq: [
+      { q: 'How do I make a Valentine\'s Day card online for free to start?', a: 'On ShareInvite you choose the Valentine\'s Day template, add your photos, your reasons and a message, and preview the whole animated card live before you pay anything. You only pay a small one-time fee to publish and share your link — there is no subscription. The whole process takes about five minutes and needs no design skill.' },
+      { q: 'Can I send the Valentine card on WhatsApp?', a: 'Yes — that is the main way people share it. When you publish, you get a link that you paste into WhatsApp (or Instagram, iMessage or email). It opens instantly in your partner\'s phone browser with the animation, photos and music, with no app to download on either side.' },
+      { q: 'Is a digital valentine good for a long-distance relationship?', a: 'It is ideal. The card arrives the moment you send it, plays your song and shows your photos together, and many couples open it on a video call so they can watch each other\'s reaction. There is no shipping delay, no customs and no extra cost to send it to another country.' },
+      { q: 'What should I write in a Valentine\'s card?', a: 'Be specific rather than poetic. Mention true, small things — the way they laugh, a shared memory, a habit you love. For the reasons section use short honest lines; for the main message write the way you actually talk. Specific and honest always beats generic romantic phrasing.' },
+      { q: 'Can I add our photos and a song?', a: 'Yes. You can upload several photos for the memories section and add a background music URL so your song plays while the card animates. Using a real photo of the two of you and a song from a shared memory is what makes the card feel personal.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no recurring charges — usually less than a shop card plus flowers. Your link stays live afterwards so your partner can reopen the card any time. See the pricing page for the current plan.' },
+    ],
+    links: [
+      { label: 'Create your Valentine\'s Day card', href: '/create?template=greeting-valentine' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Send a 3D love card', href: '/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes' },
+      { label: 'Digital proposal card', href: '/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes' },
+    ],
+  },
+
+  'anniversary-card-online-create-a-3d-animated-anniversary-card': {
+    intro: `An anniversary is a story — so a plain "Happy Anniversary" text never quite does it justice. An anniversary card online, animated in 3D and filled with your own photos, tells the story the way it deserves to be told. With ShareInvite you can create a marriage-anniversary card for your wife or husband, a card celebrating your parents' anniversary, or a wedding-anniversary greeting for friends, in about five minutes. It counts the years you have shared, scrolls through your favourite memories, plays your song, and ends on a message from the heart — then you send it as a link on WhatsApp. Whether it is your first anniversary or your parents' 25th, this is the most personal anniversary wish you can send without leaving the house.`,
+    sections: [
+      {
+        heading: 'Why a digital anniversary card is more meaningful',
+        body: `Anniversaries are about accumulated time — the trips, the ordinary evenings, the hard patches you made it through. A digital anniversary card can actually *show* that, which a paper card cannot. It animates, it holds a gallery of your years together, it plays a song that means something, and it displays a count of the years (or days) you have shared. For couples, that is a mini highlight-reel of your relationship. For a card to your parents, it is a way to honour a marriage the whole family can watch and re-share. And practically: it is instant, needs no posting, and can be opened together on a video call if you are apart. The result feels less like a card and more like a small tribute.`,
+      },
+      {
+        heading: 'How to create your anniversary card in 5 minutes',
+        body: `On ShareInvite: (1) Choose the Anniversary (3D Celebration) template. (2) Enter the names — your partner's and yours, or your parents' names if the card is for them. (3) Add the headline "Happy Anniversary" and a subtitle like "to a love that keeps growing". (4) Upload photos from across your years together for the memories section. (5) List the reasons or milestones — "we turned a house into a home", "we still laugh at the same jokes". (6) Write your main message and add your song. (7) Preview live and publish for a shareable link. The years-together count and date badge update automatically from the date you set, so it always reads correctly. Everything is editable later, and the link stays the same.`,
+      },
+      {
+        heading: 'Anniversary message ideas for wife, husband and parents',
+        body: `**For your wife:** "Every year with you is my new favourite year. Thank you for building this life with me. Happy anniversary, my love." **For your husband:** "You are still the best decision I ever made. Here's to us — then, now, and always." **For a first anniversary:** "One year down, a whole lifetime to go. I'd choose this — and you — all over again." **For a milestone (25th/50th):** "Twenty-five years of love, patience and laughter. You've shown us all what forever looks like." **For your parents:** "Watching the two of you is how we learned what love actually means. Happy anniversary, Mumma and Papa — we're so grateful." The best anniversary messages name something specific you have been through together; specificity is what makes the reader's eyes well up.`,
+      },
+      {
+        heading: 'Ideas for milestone anniversaries',
+        body: `Milestone anniversaries deserve a little extra. For a **first anniversary**, build the gallery around your wedding and your first year of "firsts". For a **silver (25th)** or **golden (50th)** anniversary — often a card from children to parents — gather photos from across the decades, from old wedding pictures to recent family gatherings, and let the animation carry the sweep of time. Add the reasons as a list of milestones the family remembers. Because the card is a link, siblings and relatives across cities and countries can all open the same tribute, and you can even collect a few lines from each of them to include in the message. It becomes a shared family gift rather than a single card.`,
+      },
+      {
+        heading: 'Open it together, even from far away',
+        body: `If you and your partner are apart on your anniversary — travel, work, distance — the digital card shines. Send the link and open it together on a video call, or let them discover it in the morning with your song already playing. For a card to parents who live in another city, the whole family can open it at the same time and call to celebrate. There is no posting, no delay, and no chance of it arriving on the wrong day. The card lands exactly when you want it to, anywhere in the world, and stays saved for whenever they want to feel that moment again.`,
+      },
+      {
+        heading: 'How much does an anniversary card online cost?',
+        body: `A ShareInvite anniversary card is an affordable one-time payment — no subscription, no recurring fees — and your link stays live afterwards so it becomes a keepsake, not a card that gets recycled next week. For the price of a modest gift you get an animated, photo-filled tribute that your partner or parents can revisit for years. When you are ready, choose your plan, add your photos and your years together, and send an anniversary wish that actually captures the story.`,
+      },
+    ],
+    checklist: [
+      'Choose the Anniversary 3D template and set the correct anniversary date.',
+      'Gather photos from across your years together, not just recent ones.',
+      'Write reasons/milestones as short, specific lines.',
+      'Name something you have been through together in the main message.',
+      'Add a song tied to the relationship — a first dance or road-trip track.',
+      'For parents\' anniversaries, collect a line from each family member.',
+      'Preview on your phone, then share the link on WhatsApp.',
+    ],
+    faq: [
+      { q: 'How do I make an anniversary card online?', a: 'Choose the Anniversary template on ShareInvite, enter the names and anniversary date, upload photos from your years together, list a few milestones, and write a personal message. Preview the animated card live, then publish to get a link you can share on WhatsApp. It takes about five minutes and needs no design skill.' },
+      { q: 'Can I make a marriage anniversary card for my wife or husband?', a: 'Yes. The template is designed for exactly that — it shows a count of your years together, a gallery of your photos, your song and your message. Just enter your names, set the wedding date, and personalise the reasons and message for your wife or husband.' },
+      { q: 'Can children make an anniversary card for their parents?', a: 'Absolutely, and it is one of the most popular uses. Gather photos from across your parents\' marriage, list family milestones, and optionally include a line from each sibling. Because it is a link, relatives in different cities can all open the same tribute together.' },
+      { q: 'Does it show the number of years together?', a: 'Yes. When you set the anniversary date, the card automatically displays the years (or days) you have shared and a date badge, so it always reads correctly without you having to update anything manually.' },
+      { q: 'Can we open it together if we are in different cities?', a: 'Yes. Since the card is a shareable link, you can send it and open it together on a video call, or let your partner find it in the morning with your song playing. There is no shipping delay and it works anywhere in the world.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no subscription, and the link stays live afterwards so the card becomes a lasting keepsake. See the pricing page for the current plan and start creating.' },
+    ],
+    links: [
+      { label: 'Create your anniversary card', href: '/create?template=greeting-anniversary' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Send a 3D love card', href: '/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+
+  'digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes': {
+    intro: `You only propose once (hopefully), so the way you ask should feel like *you*. A digital proposal card is a modern, unforgettable way to pop the question — an interactive 3D "Will You Marry Me?" experience with rings, your photo memories, and a moment where they tap "Yes" and the screen erupts in celebration. With ShareInvite you can build this online proposal in minutes and reveal it however you like: on a phone you hand them at dinner, on a big screen at home, or as a link if you are apart. It is a unique proposal idea for long-distance couples, a beautiful lead-in to an in-person ring moment, or the main event itself. Here is how to plan a proposal they will never stop talking about.`,
+    sections: [
+      {
+        heading: 'What is a digital proposal card?',
+        body: `A digital proposal card is an interactive online experience that asks the big question. On ShareInvite, the Proposal template opens with a dreamy 3D scene — rings and floating hearts — and walks through your story: a gallery of your photo memories, the reasons you want forever with them, and a final screen with the question and a "Say Yes" button they actually tap. When they say yes, the card celebrates with animation. It is not a replacement for meaning what you say — it is a way to *stage* it beautifully, with your own words and pictures, in a format that feels personal and modern rather than clichéd. And because it is digital, you can reveal it in person or across any distance.`,
+      },
+      {
+        heading: 'How to create your proposal card in minutes',
+        body: `Here is the flow on ShareInvite: (1) Choose the Proposal ("Will You Marry Me?") template. (2) Enter their name and yours. (3) Write the headline — "Will You Marry Me?" — and a subtitle like "I want all my forevers with you". (4) Upload your most meaningful photos together. (5) List the reasons — the honest, specific ones. (6) Write the message that leads into the question. (7) Add your song. (8) Preview it live and publish to get your private link. Set it up quietly in advance, test it on your own phone, and decide how you will reveal it. Everything is editable, so you can perfect the words in the days before without changing the link.`,
+      },
+      {
+        heading: 'Creative ways to reveal your proposal',
+        body: `The card is the moment — how you reveal it is the staging. **In person:** hand them your phone with the card open, or cast it to a TV at home after dinner. **A treasure-hunt finish:** end a day of little clues with the link as the final "clue". **Long-distance:** send the link during a video call and watch their face as they move through it — many couples do a "real" ring moment later when they reunite. **A private setting:** because the link is unlisted, you control exactly who sees it and when. Whatever you choose, cue your song first, make sure the phone is charged, and give them space to actually read the letter before the question appears.`,
+      },
+      {
+        heading: 'What to write in a proposal message',
+        body: `This is the most important text you will ever write, so make it true rather than grand. Tell the story of *why*: the moment you knew, the ordinary day that felt like more, the future you keep picturing. Avoid movie-script lines; use your real voice. Something like: "From the first time you fell asleep on my shoulder on that bus, I knew I never wanted to sit next to anyone else. You are my calm, my adventure, my home. I want every ordinary Tuesday and every big adventure with you. So —" and let the question land on the next screen. In the reasons section, list small specific things you love. Specific, honest words are what make people cry and say yes.`,
+      },
+      {
+        heading: 'Perfect for long-distance and surprise proposals',
+        body: `Not everyone can be in the same room to propose, and a digital proposal card makes distance no obstacle. Send the link during a call and experience the moment together in real time. For couples who will reunite soon, the card can be the "official ask" that holds them over until the in-person ring moment. It is also ideal for a **surprise element** — you can set everything up without them knowing, and because it is an unlisted link, there is no risk of the surprise leaking. Add a countdown to the day you will next be together, and the proposal doubles as a promise of what is coming.`,
+      },
+      {
+        heading: 'How much does a digital proposal card cost?',
+        body: `Given it is the question of a lifetime, a ShareInvite proposal card is remarkably affordable — a small one-time payment, no subscription, and the link stays live so it becomes a keepsake of the moment you asked. Compared to the cost of everything else that goes into a proposal, this is the part that carries your actual words and story, and it costs less than dinner for two. When you are ready, pick your plan, build your proposal privately, and get ready to hear yes.`,
+      },
+    ],
+    checklist: [
+      'Set up the proposal card privately and well in advance.',
+      'Use your most meaningful photos, in rough chronological order.',
+      'Write the message in your real voice — true beats grand.',
+      'Cue your song before you reveal it.',
+      'Test the whole flow on your own phone first.',
+      'Decide your reveal: in person, on a TV, or on a video call.',
+      'Make sure the phone is charged and the link is saved for the moment.',
+    ],
+    faq: [
+      { q: 'What is a digital proposal card?', a: 'It is an interactive online "Will You Marry Me?" experience you create and reveal on a phone or screen. On ShareInvite it features a 3D scene with rings, a gallery of your photos, the reasons you love them, and a final screen with the question and a "Say Yes" button they tap. You can reveal it in person or send it as a private link across any distance.' },
+      { q: 'How do I make a Will You Marry Me card online?', a: 'Choose the Proposal template on ShareInvite, add their name, your photos, the reasons you love them and a heartfelt message leading into the question, then add your song and publish to get a private link. It takes only a few minutes, and you can perfect the wording in the days before your reveal.' },
+      { q: 'Can I use it for a long-distance proposal?', a: 'Yes — it is one of the best uses. Send the link during a video call and go through the moment together in real time. Many couples use it as the official ask and do an in-person ring moment when they reunite. Add a countdown to your next meeting to make it even more special.' },
+      { q: 'Is the proposal card private?', a: 'Your proposal link is unlisted, so only the people you share it with can see it. That lets you set everything up in advance without spoiling the surprise, and control exactly when and how your partner discovers it.' },
+      { q: 'What should I write in a proposal message?', a: 'Tell the true story of why you want forever with them — the moment you knew, the future you picture — in your real voice rather than movie-script lines. List small, specific reasons you love them. Honest and specific wording is what makes the moment land and the answer yes.' },
+      { q: 'How much does it cost?', a: 'It is a small one-time payment with no subscription, and the link stays live afterwards as a keepsake of the moment. See the pricing page for the current plan and create your proposal privately when you are ready.' },
+    ],
+    links: [
+      { label: 'Create your proposal card', href: '/create?template=greeting-propose' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Send a 3D love card', href: '/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes' },
+      { label: 'Anniversary card online', href: '/blog/anniversary-card-online-create-a-3d-animated-anniversary-card' },
+    ],
+  },
+
+  '3d-love-card-online-send-a-romantic-animated-card-in-minutes': {
+    intro: `Some feelings deserve more than a text bubble. A 3D love card online lets you say "I love you" in a way they can see, hear and keep — a dreamy animation of floating hearts, your own photos scrolling past, the little reasons you love them, and a message written in your voice. With ShareInvite you can create a romantic digital card in minutes and send it on WhatsApp, whether it is a random-Tuesday reminder, a make-their-day surprise, or a just-because note for a long-distance partner. No card shop, no printing, no waiting — just the most personal love card in their inbox, opened with a single tap on any phone.`,
+    sections: [
+      {
+        heading: 'Why a 3D love card beats a text or a store-bought card',
+        body: `A "love you ❤️" text disappears up the chat in minutes. A shop card says whatever the shop decided to print. A 3D love card is different on both counts: it is unmistakably yours, and it lasts. It animates with floating hearts, plays a song that means something to the two of you, holds a gallery of your photos, and lists the specific reasons you love them. Because it is a link, it opens instantly on any phone with no app, and your partner can reopen it whenever they need a lift. It is the difference between "I typed three words" and "you made this for me" — and that difference is exactly what makes someone save a card instead of scrolling past it.`,
+      },
+      {
+        heading: 'How to make a romantic digital love card in minutes',
+        body: `On ShareInvite: (1) Choose the Love (3D Journey of Hearts) template. (2) Enter their name and yours. (3) Add a headline — "I Love You", or something only the two of you would understand. (4) Upload a few favourite photos together for the memories section. (5) List your reasons, one short line each. (6) Write your message from the heart and add your song. (7) Preview it live and publish to get a shareable link. Paste the link into WhatsApp and it opens instantly for them. Everything stays editable afterwards, and the link never changes — so you can start now and fine-tune the words later, no pressure to be perfect on the first try.`,
+      },
+      {
+        heading: 'Sweet "reasons I love you" ideas that actually land',
+        body: `The reasons section is where a good love card becomes a great one — but only if the reasons are *specific*. Skip "you're perfect" and "you're my everything"; they read as filler. Use small, true observations instead: "you always steal my hoodies and I secretly love it", "you text me when you reach home safe", "you remember the tiny things I mention once", "you laugh at your own jokes before the punchline", "you make even a boring day feel like something". Five honest, specific lines will move your partner far more than a paragraph of grand declarations. The rule of thumb: if the line could be copy-pasted to anyone, cut it; if only *they* would recognise it, keep it.`,
+      },
+      {
+        heading: 'Perfect for long-distance love',
+        body: `When you cannot be in the same room, a 3D love card closes the gap. It arrives the instant you send it — no shipping, no delay, no matter which city or country they are in. Many couples open it together on a video call so they can watch each other's reaction, or send it as a surprise to be discovered in the morning with the song already playing. Build the gallery from the last time you were together, add a countdown to the next time you will meet, and the card becomes both a love note and a promise. For long-distance relationships, this is one of the simplest ways to make an ordinary day feel like you are right there.`,
+      },
+      {
+        heading: 'Occasions for a love card (it is not just Valentine\'s)',
+        body: `A love card works for far more than February 14th. Send one on a **monthly anniversary**, on the day you first met, or after a long week just to say "I'm proud of us". Use it to say **good luck** before their big interview, **well done** after it, or **I'm thinking of you** when they are travelling. It is a lovely **birthday** add-on, a sweet **"we made it through a hard week"** note, or a spontaneous **no reason at all** surprise — which is often the one that means the most. Because you write every word, the same template becomes a fresh card every time, matched to whatever your person needs to hear that day.`,
+      },
+      {
+        heading: 'How much does a digital love card cost?',
+        body: `A ShareInvite love card is an affordable one-time payment — no subscription, no per-message fees — and the link stays live afterwards so your partner can revisit it any time. For less than the cost of a bunch of flowers that wilt in a week, you get an animated, photo-filled, song-playing card that keeps your words safe forever. When you are ready, choose your plan, add your photos and your reasons, and send the most personal "I love you" they will get all year.`,
+      },
+    ],
+    checklist: [
+      'Choose the Love 3D hearts template.',
+      'Use real photos of the two of you, not stock images.',
+      'Write 4–5 specific "reasons I love you" lines.',
+      'Add a song tied to a shared memory.',
+      'Make the headline an inside joke if you can.',
+      'Preview on your phone before sending.',
+      'Share the link on WhatsApp — send it at a moment they won\'t expect.',
+    ],
+    faq: [
+      { q: 'How do I make a love card online?', a: 'Choose the Love template on ShareInvite, add their name, upload a few photos together, list the specific reasons you love them, write a heartfelt message and add your song. Preview the animated card live, then publish to get a link you can share on WhatsApp. It takes about five minutes and needs no design skill.' },
+      { q: 'Can I send the love card on WhatsApp?', a: 'Yes. When you publish, you get a link to paste into WhatsApp, Instagram, iMessage or email. It opens instantly in your partner\'s phone browser with the animation, photos and music — no app to download on either side.' },
+      { q: 'Is it good for a long-distance relationship?', a: 'It is ideal. The card arrives the moment you send it, plays your song and shows your photos, and many couples open it together on a video call. There is no shipping delay and no extra cost to send it to another city or country.' },
+      { q: 'What should I write in a love card?', a: 'Be specific rather than grand. List small true things — a habit you love, a shared memory, the way they make ordinary days better. Specific, honest lines that only your partner would recognise land far harder than generic romantic phrases.' },
+      { q: 'Can I add photos and music?', a: 'Yes. You can upload several photos for the memories section and add a background song so it plays while the card animates. Using real photos and a meaningful song is what makes the card feel personal.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no recurring charges, and the link stays live afterwards so your partner can reopen the card any time. See the pricing page for the current plan.' },
+    ],
+    links: [
+      { label: 'Create your love card', href: '/create?template=greeting-love' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Valentine\'s Day card online', href: '/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp' },
+      { label: 'Digital proposal card', href: '/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes' },
+    ],
+  },
+
+  'promise-day-card-online-send-a-heartfelt-3d-promise': {
+    intro: `Promise Day, celebrated during Valentine's week, is about the quiet part of love — not grand gestures, but the commitments you actually keep. A Promise Day card online is the perfect way to say those things: a serene 3D animated card with your photos and the promises you want to make, sent as a link on WhatsApp in minutes. With ShareInvite you can create a heartfelt Promise Day greeting for your partner, list the promises that matter, add your song, and send it instantly — no app, no printing. Whether you are near or far this Valentine's week, here is how to make a promise they can keep and revisit.`,
+    sections: [
+      {
+        heading: 'What is Promise Day and why send a card?',
+        body: `Promise Day falls on 11th February, part of the run-up to Valentine's Day. Where other days in the week are about flowers, chocolates and hugs, Promise Day is about words that last — the vows and commitments that hold a relationship together. A digital Promise Day card suits the occasion perfectly because it can hold those promises in writing, wrapped in a calm, romantic animation your partner can return to whenever they need reassurance. It is more meaningful than a forwarded "Happy Promise Day" message, and unlike a physical card, it keeps your promises saved and playable — a small anchor you both can come back to through the year.`,
+      },
+      {
+        heading: 'How to create your Promise Day card in minutes',
+        body: `On ShareInvite: (1) Choose the Promise (A Vow in 3D) template. (2) Enter their name and yours. (3) Set the headline — "My Promise to You" — and a subtitle like "sealed with all my heart". (4) Upload a few of your favourite photos together. (5) List your promises, one per line. (6) Write your main message and add a gentle background song. (7) Preview live and publish for a shareable link. Paste it into WhatsApp and it opens instantly on their phone. As with every ShareInvite card, everything stays editable and the link never changes, so you can refine your promises before or after you send.`,
+      },
+      {
+        heading: 'Meaningful promises to write (that you can actually keep)',
+        body: `The best promises are small and real, not sweeping and impossible. Instead of "I'll give you the world", try promises you can genuinely honour: "I promise to always hear you out before I react", "I promise to keep choosing you on the hard days, not just the easy ones", "I promise to grow with you instead of apart", "I promise to be your calm when everything else is loud", "I promise to keep trying, even when I get it wrong". Grounded promises like these carry more weight because your partner knows you mean them. Aim for four or five; a short list of real promises beats a long list of romantic-sounding ones.`,
+      },
+      {
+        heading: 'Promise Day ideas for long-distance couples',
+        body: `Promise Day can be hard when you are apart — but it is also when commitments matter most. A digital Promise Day card lets you send those commitments across any distance the instant you write them. Open it together on a video call and read the promises aloud, or send it as a surprise to be found in the morning. Build the gallery from your favourite moments together and add a countdown to the day you will next be in the same place — turning your promises into something with a date attached. For long-distance couples, a card full of kept-able promises can be more reassuring than any gift.`,
+      },
+      {
+        heading: 'Make it part of your Valentine\'s week',
+        body: `Promise Day works beautifully as one note in a larger Valentine's-week sequence. You might send a Rose Day message, a Propose Day moment, a Promise Day card, and then a full Valentine's Day card on the 14th — each building on the last. ShareInvite makes this easy because every card is the same quick, five-minute flow with a different focus. Keeping a consistent look and a shared song across the week makes the whole run feel intentional and romantic, and gives your partner a little something to look forward to each day rather than one big gesture that is over in a moment.`,
+      },
+      {
+        heading: 'How much does a Promise Day card cost?',
+        body: `A ShareInvite Promise Day card is an affordable one-time payment with no subscription, and the link stays live so your promises remain saved and revisitable through the year. For the price of a small gift you get an animated, photo-filled card that carries the commitments your relationship is built on. When you are ready, choose your plan, write the promises you truly intend to keep, and send a Promise Day card that means something.`,
+      },
+    ],
+    checklist: [
+      'Choose the Promise 3D template.',
+      'Write 4–5 promises you can genuinely keep, one per line.',
+      'Keep each promise small, specific and real.',
+      'Add photos from meaningful moments together.',
+      'Choose a calm, gentle background song.',
+      'Preview on your phone before sending.',
+      'Send on 11th February, or read it together on a call.',
+    ],
+    faq: [
+      { q: 'When is Promise Day and what do you send?', a: 'Promise Day is on 11th February, during Valentine\'s week. It is about the commitments you make to each other, so a Promise Day card typically lists the promises you want to keep, wrapped in a heartfelt message. A digital Promise Day card on ShareInvite lets you write those promises, add photos and a song, and share them on WhatsApp in minutes.' },
+      { q: 'How do I make a Promise Day card online?', a: 'Choose the Promise template on ShareInvite, add your partner\'s name, upload a few photos, list your promises one per line, write a message and add a gentle song. Preview the animated card, then publish to get a WhatsApp-ready link. It takes about five minutes.' },
+      { q: 'What promises should I write?', a: 'Choose small, real promises you can actually keep — like listening before reacting, choosing them on hard days, and growing together — rather than sweeping impossible ones. Four or five grounded promises carry more weight because your partner knows you mean them.' },
+      { q: 'Can I send it to a long-distance partner?', a: 'Yes. The card is a link that opens instantly anywhere, so you can send your promises across any distance. Open it together on a video call to read them aloud, or send it as a morning surprise. Add a countdown to your next meeting to make it extra special.' },
+      { q: 'Can I send a series of cards through Valentine\'s week?', a: 'Yes. Many people send a sequence — Rose Day, Propose Day, Promise Day and Valentine\'s Day — each a quick five-minute card on ShareInvite. Keeping a consistent look and a shared song across the week makes the whole run feel intentional and romantic.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no subscription, and the link stays live afterwards so your promises remain saved. See the pricing page for the current plan and start creating.' },
+    ],
+    links: [
+      { label: 'Create your Promise Day card', href: '/create?template=greeting-promise' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Valentine\'s Day card online', href: '/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp' },
+      { label: 'Send a 3D love card', href: '/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes' },
+    ],
+  },
+
+  'sorry-card-online-say-sorry-with-a-heartfelt-animated-card': {
+    intro: `Saying sorry is hard, and a rushed "sry" text often makes it worse. A sorry card online gives your apology the space and sincerity it needs — a gentle 3D animated card with soft petals, your photos together, and a message that actually acknowledges what happened. With ShareInvite you can create a heartfelt apology card in minutes and send it privately on WhatsApp, whether you are saying sorry to a partner, a friend, or a family member. It will not fix everything on its own — nothing does — but a thoughtful, personal card shows you took the time to mean it. Here is how to apologise in a way that lands.`,
+    sections: [
+      {
+        heading: 'Why a heartfelt sorry card works better than a text',
+        body: `A one-line "sorry" text can read as dismissive, especially over something that mattered. A sorry card slows the moment down and signals effort — you sat with it, you chose words, you made something. The ShareInvite apology card uses a calm, gentle animation (soft petals rather than loud celebration) that matches the tone of an apology, and it gives you room to say the three things a real apology needs: what you did, that you understand why it hurt, and what you will do differently. It is private — a link only they see — so it never feels performative. Used sincerely, it is a way to open the door to a conversation, not to skip one.`,
+      },
+      {
+        heading: 'How to create a sorry card online in minutes',
+        body: `On ShareInvite: (1) Choose the Sorry (Healing Petals) template — it uses a soft, light theme suited to an apology. (2) Enter their name and yours. (3) Set a gentle headline — "I'm Sorry" — and a subtitle like "you mean everything to me". (4) Add a photo or two of a good moment between you. (5) In the message, write your sincere apology. (6) Optionally add a soft background song. (7) Preview live and publish for a private link you can send on WhatsApp. Everything is editable, so take your time getting the words right — a sorry card is one where the wording matters more than anything.`,
+      },
+      {
+        heading: 'How to word a sincere apology',
+        body: `A real apology has three parts and avoids one trap. **Name what you did:** "I snapped at you last night and shut down the conversation." **Acknowledge the impact:** "I know it made you feel unheard, and that's the opposite of what you deserve." **Say what changes:** "I'm going to slow down and actually listen instead of getting defensive." The trap to avoid is the fake apology — "I'm sorry you felt that way" shifts blame onto them and undoes everything. Do not over-explain or list your own grievances in the same card; keep the focus on your part. End with warmth, not a demand: "I love you and I'm working on this," rather than "so can we move on?"`,
+      },
+      {
+        heading: 'Saying sorry to a partner, a friend, or family',
+        body: `The template flexes to whoever you owe the apology. **For a partner:** lead with the relationship — "you're my person and I hurt you, and that's not okay with me." **For a friend:** honesty and no ego — "I let you down and I've been sitting with it. Our friendship matters more than being right." **For a parent or sibling:** respect and specificity — "I spoke to you in a way I shouldn't have. I'm sorry, and I mean it." In each case, keep the message focused on your actions and their feelings, not on defending yourself. A sincere, specific apology in a calm card can reopen a conversation that a defensive text would have shut down further.`,
+      },
+      {
+        heading: 'When a card helps — and when to talk in person',
+        body: `A sorry card is a bridge, not a substitute for a real conversation — and knowing the difference matters. It works well when you need to break the ice after a fight, when emotions are too high for a good live conversation right now, or when distance means you cannot be there in person. It is not the right tool for something serious that truly needs a face-to-face talk; in that case, use the card to ask for that conversation gently rather than to avoid it. Send it privately, give them room to respond in their own time, and do not follow it with pressure. The goal is to lower the temperature and show sincerity — the healing happens in the talk that follows.`,
+      },
+      {
+        heading: 'How much does a sorry card online cost?',
+        body: `A ShareInvite sorry card is an affordable one-time payment with no subscription, and the link stays private and live for as long as you need it. It costs little, but the effort it signals is what counts. When you are ready, choose your plan, write the apology you mean, and send something that shows you cared enough to do more than type one word.`,
+      },
+    ],
+    checklist: [
+      'Choose the Sorry (soft petals) template for a gentle tone.',
+      'Name specifically what you did — don\'t be vague.',
+      'Acknowledge how it made them feel.',
+      'Say clearly what you\'ll do differently.',
+      'Avoid "sorry you felt that way" — it shifts blame.',
+      'Keep the focus on your part, not your grievances.',
+      'Send it privately and give them space to respond.',
+    ],
+    faq: [
+      { q: 'How do I say sorry with a card online?', a: 'Choose the Sorry template on ShareInvite, add the person\'s name, a photo of a good moment between you, and a sincere message that names what you did, acknowledges the hurt, and says what will change. Preview it, then publish to get a private link you can send on WhatsApp. It takes only a few minutes.' },
+      { q: 'What should I write in an apology card?', a: 'Use three parts: name what you did, acknowledge how it made them feel, and say what you\'ll do differently. Avoid "I\'m sorry you felt that way", which shifts blame. Keep the focus on your actions rather than defending yourself, and end with warmth instead of a demand to move on.' },
+      { q: 'Can I send a sorry card to a friend or family member, not just a partner?', a: 'Yes. The template works for anyone you owe an apology — a partner, a close friend, a parent or a sibling. Adjust the tone and message to the relationship, keeping it sincere and specific in every case.' },
+      { q: 'Is the sorry card private?', a: 'Yes. You share it as a link, so only the person you send it to sees it. That keeps the apology personal and never performative.' },
+      { q: 'Should I send a card or apologise in person?', a: 'A card is great for breaking the ice, when emotions are too high for a good live talk, or when you are apart. For something serious, use the card to gently ask for a face-to-face conversation rather than to avoid one. The card lowers the temperature; the real healing happens in the talk that follows.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no subscription, and the link stays live and private for as long as you need. See the pricing page for the current plan.' },
+    ],
+    links: [
+      { label: 'Create your sorry card', href: '/create?template=greeting-sorry' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Send a 3D love card', href: '/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes' },
+      { label: 'Family wishes card online', href: '/blog/family-wishes-card-online-a-heartfelt-digital-card-for-family' },
+    ],
+  },
+
+  'congratulations-card-online-send-an-animated-congrats-card': {
+    intro: `Big wins deserve a moment, not just a thumbs-up react. A congratulations card online turns "congrats 🎉" into something they will actually remember — a celebratory 3D confetti animation, your photos, and a personal message, sent on WhatsApp in minutes. With ShareInvite you can create a congrats card for a new job, a promotion, exam results, a graduation, a new baby, a new home, or any milestone worth celebrating. It is quick to make, free to start, opens on any phone with no app, and feels far more thoughtful than a group-chat emoji. Here is how to send congratulations that match the size of the achievement.`,
+    sections: [
+      {
+        heading: 'Why send a congratulations card online',
+        body: `When someone lands a job, passes an exam, or hits a milestone, the moment is huge for them — and a two-word text does not quite honour it. A digital congratulations card does: it bursts into confetti, shows photos, plays a celebratory song, and carries a message that says you actually noticed how hard they worked. It stands out in a busy WhatsApp group where everyone else sent the same emoji, and because it is a link, the person can keep it and revisit the moment. Whether the win is professional or personal, a congrats card is a small, genuine way to make someone feel truly seen on their big day.`,
+      },
+      {
+        heading: 'How to create a congrats card in minutes',
+        body: `On ShareInvite: (1) Choose the Congratulations (Confetti Burst) template. (2) Enter their name and yours. (3) Set the headline — "Congratulations!" — and a subtitle that names the win, like "you absolutely earned this". (4) Upload a photo or two (of them, or of you both celebrating). (5) List the reasons they deserve it. (6) Write a personal message and add an upbeat song. (7) Preview live and publish for a WhatsApp-ready link. The whole thing takes about five minutes and needs no design skill, so you can send it the moment you hear the good news — timing that makes the congratulations feel even warmer.`,
+      },
+      {
+        heading: 'Congratulations message ideas for every win',
+        body: `Match the message to the milestone. **New job / promotion:** "You worked for this quietly for years — so glad the world finally caught up. Congratulations!" **Exam results / graduation:** "All those late nights just turned into a very good day. So proud of you." **New baby:** "Welcome to the most wonderful, exhausting, joyful chapter. Congratulations to the three of you!" **New home:** "From all the searching to the keys in your hand — congratulations on your new home." **Business / startup win:** "You bet on yourself and it paid off. Here's to the next chapter." In every case, name the specific effort behind the win — "all those late nights", "years of quiet work" — because acknowledging the *how* means more than praising the result.`,
+      },
+      {
+        heading: 'Great for teams, offices and group celebrations',
+        body: `A congratulations card is not just for one-to-one moments — it is perfect for teams and offices too. When a colleague gets promoted, a teammate lands a client, or someone retires, a single shared card feels far more considered than a flurry of separate messages. Because it is a link, you can collect a line from each team member into the message and send one card from the whole group. It works across offices and time zones, opens on any device, and gives remote teams a way to celebrate together even when they cannot be in the same room. One thoughtful card from the team lands better than twenty identical emojis.`,
+      },
+      {
+        heading: 'Make the celebration personal',
+        body: `The details are what turn a generic congrats into a memorable one. Use a real photo — of them at the desk, in the graduation gown, or of the two of you together. Pick a song with celebratory energy. In the reasons section, be specific about *why* they earned it: "you never stopped even when it got hard", "you helped everyone else while carrying your own load". A personal message that references the journey — not just the outcome — tells the person you were paying attention the whole time. That is the difference between a card they close and a card they screenshot.`,
+      },
+      {
+        heading: 'How much does a congratulations card cost?',
+        body: `A ShareInvite congratulations card is an affordable one-time payment with no subscription, and the link stays live so the recipient can revisit their big-day card whenever they like. For less than the cost of a small gift, you get an animated, photo-filled celebration that stands out from every plain-text message. When you are ready, choose your plan, personalise the card, and send congratulations worthy of the achievement.`,
+      },
+    ],
+    checklist: [
+      'Choose the Congratulations confetti template.',
+      'Name the specific win in the subtitle.',
+      'Use a real photo of the person or the celebration.',
+      'Acknowledge the effort behind the win, not just the result.',
+      'Add an upbeat, celebratory song.',
+      'For teams, collect one line from each person into the message.',
+      'Send it the moment you hear the news.',
+    ],
+    faq: [
+      { q: 'How do I make a congratulations card online?', a: 'Choose the Congratulations template on ShareInvite, add the person\'s name, upload a photo, list why they earned it, and write a personal message. Preview the confetti animation live, then publish to get a link you can share on WhatsApp. It takes about five minutes and needs no design skill.' },
+      { q: 'What occasions is a congrats card good for?', a: 'A new job or promotion, exam results, graduation, a new baby, a new home, a business win, retirement — any milestone worth celebrating. Because you write the message yourself, the same template fits professional and personal wins alike.' },
+      { q: 'Can we send one congratulations card from a whole team?', a: 'Yes, and it is a popular use. Collect a line from each team member into the message and send a single shared card. It works across offices and time zones and opens on any device, so remote teams can celebrate together with one thoughtful card instead of many separate emojis.' },
+      { q: 'What should I write in a congratulations message?', a: 'Name the specific effort behind the win — the late nights, the years of quiet work — rather than just praising the result. Acknowledging the journey tells the person you were paying attention, which means far more than a generic "well done".' },
+      { q: 'Does it open without an app?', a: 'Yes. You share a link that opens instantly in any phone or desktop browser, with the confetti animation, photos and music — no app to download for you or the recipient.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no subscription, and the link stays live afterwards so the recipient can revisit it. See the pricing page for the current plan.' },
+    ],
+    links: [
+      { label: 'Create your congratulations card', href: '/create?template=greeting-congratulations' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Friendship Day card online', href: '/blog/friendship-day-card-online-send-a-3d-card-to-your-best-friends' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+
+  'festival-wishes-card-online-diwali-and-festival-greetings': {
+    intro: `Every festival the family WhatsApp groups fill up with the same forwarded "Happy Diwali" images everyone has seen for years. Stand out this year with a festival wishes card online — an animated 3D greeting with glowing diyas, your own photos, and a warm personal message that actually feels like it came from you. With ShareInvite you can create digital festival greetings for Diwali, New Year, and every celebration in minutes, then share them on WhatsApp with family and friends anywhere in the world. No more recycled forwards — here is how to send festival wishes people are genuinely happy to receive.`,
+    sections: [
+      {
+        heading: 'Why send an animated festival card instead of a forward',
+        body: `The problem with forwarded festival images is that everyone can tell they are forwards — the same graphics circulate for years and get skimmed past instantly. A personalised festival card is the opposite: glowing 3D diyas, your family photo, and a message written for the people you are sending it to. It signals that you actually thought of them, which is the whole point of festival wishes. It is also a lovely way to reach relatives abroad who cannot be home for the festival — the card carries the warmth of the celebration across any distance, opens on any phone, and can be revisited through the festive season rather than lost in a busy group chat.`,
+      },
+      {
+        heading: 'How to create your festival greeting in minutes',
+        body: `On ShareInvite: (1) Choose the Festival Wishes (Glowing Diyas) template. (2) Enter the recipient's name (or your family name for a group send) and yours. (3) Set the headline for the festival — "Happy Diwali", "Happy New Year", or the festival you are celebrating. (4) Add a subtitle like "may your year glow bright". (5) Upload a family photo or two. (6) Write your wishes and add a festive song. (7) Preview live and publish for a shareable link. Send it to individuals or paste it into your family and friends groups on WhatsApp — it opens instantly for everyone, on any device, with no app to download.`,
+      },
+      {
+        heading: 'Festivals and occasions it is perfect for',
+        body: `The warm, glowing-diya aesthetic suits India's festival calendar and beyond: **Diwali** (the classic fit — festival of lights), **New Year**, **Raksha Bandhan**, **Bhai Dooj**, **Navratri** and **Durga Puja**, **Pongal** and **Makar Sankranti**, **Ganesh Chaturthi**, **Eid**, **Christmas**, and regional new years like **Ugadi**, **Gudi Padwa** and **Baisakhi**. Because you set the headline and message yourself, one template covers your whole year of celebrations — just change the words for each occasion. It is equally at home for a corporate festival greeting to clients and staff or a heartfelt personal one to family, so you can keep one beautiful format across every festival you send.`,
+      },
+      {
+        heading: 'Festival wishes and message ideas',
+        body: `Warm and specific beats generic every time. **Diwali:** "Wishing you a Diwali full of light, laughter, sweets and zero calorie guilt. May this year be your brightest yet." **New Year:** "Here's to a year of good health, big wins and small joys. Happy New Year from our family to yours." **For relatives abroad:** "Missing you at the table this year — but sending all the light and love of the festival across the miles." **Corporate:** "Thank you for a wonderful year of working together. Wishing you and your family a joyful and prosperous festive season." Adding one specific line — a shared memory, a wish for something you know they are hoping for — instantly lifts a festival message above the standard forward.`,
+      },
+      {
+        heading: 'Reach the whole family, near and far',
+        body: `Festivals are about togetherness, and a digital festival card makes that possible even when the family is scattered across cities and countries. One link reaches everyone at once — grandparents down the road and cousins across the ocean — and opens the same way on every phone, including the older relatives who struggle with apps (if they can open a WhatsApp link, they can open your card). You can personalise a card per branch of the family, or send one warm family-name greeting to the whole group. Either way, it beats a forwarded image, and it gives everyone a little piece of the celebration to keep.`,
+      },
+      {
+        heading: 'How much does a festival card cost?',
+        body: `A ShareInvite festival card is an affordable one-time payment with no subscription, and the link stays live through the festive season and beyond. For less than the cost of a box of sweets, you get an animated, personalised greeting that you can send to your whole family and friends list — far more memorable than another forwarded image. When you are ready, choose your plan, add your family photo and your wishes, and light up someone's festival this year.`,
+      },
+    ],
+    checklist: [
+      'Choose the Festival Wishes glowing-diyas template.',
+      'Set the headline to the specific festival you\'re celebrating.',
+      'Add a family photo for a personal touch.',
+      'Write one specific line beyond the generic wish.',
+      'Add a festive background song.',
+      'Preview on your phone before sending.',
+      'Share the link to individuals or your family WhatsApp groups.',
+    ],
+    faq: [
+      { q: 'How do I make a Diwali or festival card online?', a: 'Choose the Festival Wishes template on ShareInvite, set the headline to your festival (like "Happy Diwali"), add a family photo, write your wishes and add a festive song. Preview the glowing-diya animation, then publish to get a link you can share on WhatsApp with family and friends. It takes about five minutes.' },
+      { q: 'Which festivals can I use it for?', a: 'Diwali, New Year, Raksha Bandhan, Bhai Dooj, Navratri, Durga Puja, Pongal, Makar Sankranti, Ganesh Chaturthi, Eid, Christmas and regional new years like Ugadi, Gudi Padwa and Baisakhi. Because you set the headline and message yourself, one template covers your whole year of celebrations.' },
+      { q: 'Can I send it to my family WhatsApp group?', a: 'Yes. When you publish you get a link you can paste into any WhatsApp chat or group. It opens instantly on every phone with no app download — perfect for reaching the whole family at once, including relatives abroad and older family members.' },
+      { q: 'Is it better than a forwarded festival image?', a: 'Much better. Forwarded images are obviously generic and get skimmed past. A personalised card with your family photo, the specific festival and a warm message shows you actually thought of the person — which is the whole point of sending festival wishes.' },
+      { q: 'Can I use it for corporate or client festival greetings?', a: 'Yes. The warm, elegant design works well for business greetings to clients and staff. Just adjust the message to a professional tone and send one polished festival card instead of a mass forward.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no subscription, and the link stays live through the festive season. See the pricing page for the current plan and start creating.' },
+    ],
+    links: [
+      { label: 'Create your festival wishes card', href: '/create?template=greeting-festival' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Family wishes card online', href: '/blog/family-wishes-card-online-a-heartfelt-digital-card-for-family' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+
+  'family-wishes-card-online-a-heartfelt-digital-card-for-family': {
+    intro: `We say "I love you" to partners and friends easily enough, but the people who raised us — parents, grandparents, siblings — often hear it least. A family wishes card online is a way to change that: a warm 3D animated card with photo memories and a heartfelt message for the family who shaped you, sent on WhatsApp in minutes. With ShareInvite you can create a digital card for your parents, a thank-you to Mum and Dad, a card for a grandparent's birthday, or a message to the whole family, and share it instantly with everyone, wherever they are. Here is how to say the things we usually leave unsaid.`,
+    sections: [
+      {
+        heading: 'Why send a family wishes card',
+        body: `Family is the relationship we most take for granted — the love is assumed, so it often goes unspoken. A family wishes card creates the occasion to actually say it: thank you for the sacrifices, the lessons, the ordinary everyday care. Because it holds photos and a message wrapped in a warm animation, it becomes a small keepsake your parents or grandparents can revisit, not a message lost in a chat. It is perfect for the moments that deserve more than a call — a parent's birthday, an anniversary, Mother's or Father's Day, or simply a "I don't say this enough" note. For older family members especially, a heartfelt card they can reopen means a great deal.`,
+      },
+      {
+        heading: 'How to create a card for your family in minutes',
+        body: `On ShareInvite: (1) Choose the Family Wishes (With Love) template. (2) Enter who it is for — "Mum & Dad", a grandparent's name, or your family name — and your name. (3) Set a headline like "To My Family" and a subtitle such as "my forever, my home". (4) Upload photo memories from across the years. (5) List the reasons or thank-yous, one per line. (6) Write your message from the heart and add a warm song. (7) Preview live and publish for a shareable link. Send it to one person or to the whole family group on WhatsApp — it opens instantly on every phone, so even the least tech-savvy relative can see it with one tap.`,
+      },
+      {
+        heading: 'What to write for parents, grandparents and siblings',
+        body: `Specific memories move people far more than general praise. **For parents:** "Thank you for every early morning, every sacrifice you never mentioned, and for believing in me before I believed in myself. I'm who I am because of you." **For grandparents:** "Your stories, your hands in the kitchen, your endless patience — you are the warmth this whole family is built on." **For a sibling:** "You've been my first friend, my worst rival and my safest place — sometimes all in one day. Love you always." Reference actual things — a dish they make, a lesson they taught, a moment they showed up for you. Naming the specific is what turns a nice card into one that makes them tear up.`,
+      },
+      {
+        heading: 'Perfect for families living apart',
+        body: `Families are increasingly spread across cities and countries, and a digital family card closes that gap. One link reaches parents back home, siblings in other cities, and cousins abroad, all at once — and everyone opens the same warm message on their own phone. For festivals, birthdays or anniversaries when you cannot travel home, it is a way to be present anyway. You can gather a line from each family member into a single message so the card comes from everyone, or send individual cards to different relatives. Either way, it carries family warmth across any distance, instantly and at no extra cost.`,
+      },
+      {
+        heading: 'Occasions for a family card',
+        body: `A family wishes card fits far more than one date on the calendar. Send it for **Mother's Day** and **Father's Day**, a **parent's or grandparent's birthday**, a **wedding anniversary** for your parents, or a festival when the family is apart. It is also lovely with no occasion at all — a spontaneous "thank you for everything" that, precisely because it is unexpected, often means the most. Use it to welcome a new member into the family, to mark a milestone like a retirement, or to comfort a relative going through a hard time. Because you write every word, the card becomes whatever your family needs it to be that day.`,
+      },
+      {
+        heading: 'How much does a family wishes card cost?',
+        body: `A ShareInvite family card is an affordable one-time payment with no subscription, and the link stays live so it becomes a keepsake your family can return to. It costs very little, but the words inside — the thank-yous we usually leave unsaid — are priceless to the people who receive them. When you are ready, choose your plan, gather your photos, and finally say the things your family deserves to hear.`,
+      },
+    ],
+    checklist: [
+      'Choose the Family Wishes template.',
+      'Gather photo memories from across the years.',
+      'Write specific thank-yous, not general praise.',
+      'Reference real moments — a dish, a lesson, a time they showed up.',
+      'Add a warm, gentle background song.',
+      'For a group card, collect a line from each family member.',
+      'Share the link with the whole family on WhatsApp.',
+    ],
+    faq: [
+      { q: 'How do I make a card for my parents or family online?', a: 'Choose the Family Wishes template on ShareInvite, enter who it is for, upload photo memories, list your thank-yous and write a heartfelt message. Preview the animated card, then publish to get a link you can share on WhatsApp with the whole family. It takes about five minutes and needs no design skill.' },
+      { q: 'What should I write in a card for my family?', a: 'Use specific memories rather than general praise — a dish a grandparent makes, a sacrifice a parent made, a moment a sibling showed up for you. Naming the specific is what makes a family card genuinely moving, far more than lines like "you\'re the best".' },
+      { q: 'Can everyone in the family sign one card?', a: 'Yes. You can gather a line from each family member into a single message so the card comes from everyone, then share one link. It is ideal for a milestone like a parent\'s anniversary or a grandparent\'s birthday.' },
+      { q: 'Is it good for families living in different countries?', a: 'Very. One link reaches relatives anywhere in the world, and everyone opens the same warm message on their own phone. It is a way to be present for birthdays, festivals and anniversaries even when you cannot travel home.' },
+      { q: 'Will older relatives be able to open it?', a: 'Yes. It opens with a single tap in any phone browser with no app to download or account to create — so if a relative can open a WhatsApp link, they can open your card.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no subscription, and the link stays live afterwards as a keepsake. See the pricing page for the current plan.' },
+    ],
+    links: [
+      { label: 'Create your family wishes card', href: '/create?template=greeting-family' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Festival wishes card online', href: '/blog/festival-wishes-card-online-diwali-and-festival-greetings' },
+      { label: 'Anniversary card online', href: '/blog/anniversary-card-online-create-a-3d-animated-anniversary-card' },
+    ],
+  },
+
+  'friendship-day-card-online-send-a-3d-card-to-your-best-friends': {
+    intro: `Best friends are the family we choose — so they deserve better than a copy-pasted "Happy Friendship Day" forward. A Friendship Day card online lets you send something that actually captures your bond: a playful 3D star-filled animation, your favourite photos together, and an inside-joke message only your crew would get. With ShareInvite you can create a Friendship Day greeting in minutes and share it on WhatsApp with your best friends, your college group, or your childhood gang, wherever life has scattered them. No app, no printing — just the most personal Happy Friendship Day message in the group chat. Here is how to do it.`,
+    sections: [
+      {
+        heading: 'Why send a Friendship Day card online',
+        body: `Friendship Day (the first Sunday of August in India) is the one day built for celebrating your closest friends — and a personal card beats a forwarded image every time. The forwards are generic and everyone knows it; a card with your actual photos, your inside jokes, and a message written for *this* friendship stands out and gets saved. It is especially meaningful for friends you no longer see often — the school gang, the college roommates, the friends who moved cities or countries. A quick digital card is a way to say "distance hasn't changed us" and to make someone smile in the middle of an ordinary day.`,
+      },
+      {
+        heading: 'How to create a Friendship Day card in minutes',
+        body: `On ShareInvite: (1) Choose the Friendship (Starry Cheers) template. (2) Enter your friend's name (or your group's name) and yours. (3) Set a headline — "Happy Friendship Day" — and a subtitle like "here's to us". (4) Upload your favourite photos together — the sillier the better. (5) List the reasons they are a great friend, one line each. (6) Write your message, inside jokes very much encouraged, and add your anthem. (7) Preview live and publish for a link. Send it to one friend or drop it in the group chat on WhatsApp — it opens instantly for everyone, on any phone, with the animation, photos and music.`,
+      },
+      {
+        heading: 'Friendship message ideas and inside-joke energy',
+        body: `Friendship cards are the one place where "serious and heartfelt" and "absolutely unhinged" both work — so lean into your group's actual vibe. **Heartfelt:** "Through every high, every low and every terrible decision we made together — I'm so lucky you're my person. Happy Friendship Day." **Funny:** "Happy Friendship Day to the only people who've seen me at my worst and stuck around anyway. Legally, you can't leave now." **For a distant friend:** "Different cities, same nonsense. Miss you — Happy Friendship Day." The reasons section is perfect for callbacks: "you always answer at 2am", "you've never once judged my playlists", "you remember every embarrassing thing I've ever done and use it responsibly". Inside jokes are the whole point — the more specific to your friendship, the better it lands.`,
+      },
+      {
+        heading: 'Perfect for the group chat and scattered squads',
+        body: `Friendships rarely stay in one place — people move for work, study and life — and a digital card is how you keep celebrating anyway. Drop one link into the group chat and the whole squad opens it at once, wherever they are in the world. You can make one card for the entire group with photos from your best trips together, or send individual cards to each friend. Because it opens on any phone with no app, even the friend who never updates anything can see it. For reunions that keep getting postponed, a Friendship Day card is a small way to close the distance until the next time you are all in the same room.`,
+      },
+      {
+        heading: 'Not just for Friendship Day',
+        body: `The template is great year-round, not only in August. Send one when a friend **moves away** or **moves back**, on a **friendversary** (the day you became friends), to say **thank you** after they showed up for you, or for a **birthday** with a best-friend twist. It is a fun way to mark a **reunion**, to cheer up a friend having a rough week, or to celebrate a milestone in their life. Because you write every word and pick every photo, the same starry template becomes a birthday card, a thank-you, or a "just because I appreciate you" note — whatever your friendship needs that day.`,
+      },
+      {
+        heading: 'How much does a Friendship Day card cost?',
+        body: `A ShareInvite Friendship Day card is an affordable one-time payment with no subscription, and the link stays live so your friends can revisit it (and screenshot the embarrassing photos). It costs less than a round of coffees, and it is a lot more memorable than the fifteenth forwarded friendship image in the group. When you are ready, choose your plan, gather your best photos and worst inside jokes, and send your crew something worth saving.`,
+      },
+    ],
+    checklist: [
+      'Choose the Friendship starry template.',
+      'Use your funniest, most real photos together.',
+      'Write reasons as callbacks to inside jokes.',
+      'Match the tone to your group — heartfelt, unhinged, or both.',
+      'Add your friendship anthem as the song.',
+      'Preview on your phone before sending.',
+      'Drop the link in the group chat on WhatsApp.',
+    ],
+    faq: [
+      { q: 'How do I make a Friendship Day card online?', a: 'Choose the Friendship template on ShareInvite, add your friend\'s or group\'s name, upload your favourite photos together, list the reasons they are a great friend, and write a message full of inside jokes. Preview the starry animation, then publish to get a link you can share on WhatsApp. It takes about five minutes.' },
+      { q: 'When is Friendship Day?', a: 'In India, Friendship Day is celebrated on the first Sunday of August. A digital card is the perfect way to mark it — especially for friends you no longer see often — and the template works year-round for friendversaries, birthdays and reunions too.' },
+      { q: 'Can I send one card to my whole friend group?', a: 'Yes. Make a single card with photos from your best moments together and drop the link into the group chat — everyone opens it at once, wherever they are. You can also send individual cards to each friend if you prefer.' },
+      { q: 'What should I write in a Friendship Day message?', a: 'Match your group\'s real vibe — heartfelt, hilarious, or both — and lean into inside jokes. The reasons section works best as callbacks only your friends would get: "you always answer at 2am", "you remember every embarrassing thing and use it responsibly". Specific-to-your-friendship always lands better than generic lines.' },
+      { q: 'Does it work for friends living abroad?', a: 'Yes. It is a link that opens instantly on any phone anywhere in the world, so scattered squads can all open the same card at once. It is a great way to celebrate friendships that have spread across cities and countries.' },
+      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no subscription, and the link stays live afterwards so your friends can revisit it. See the pricing page for the current plan.' },
+    ],
+    links: [
+      { label: 'Create your Friendship Day card', href: '/create?template=greeting-friendship' },
+      { label: 'See pricing', href: '/pricing' },
+      { label: 'Congratulations card online', href: '/blog/congratulations-card-online-send-an-animated-congrats-card' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
 }

@@ -8,6 +8,7 @@ import SiteFooter from '@/components/landing/SiteFooter'
 import { blogDrafts, categorySlug, findBlogPost, type BlogCategory } from '@/content/blog'
 import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
 import { blogArticles } from '@/content/blog-articles'
+import { DemoViewButton } from '@/components/landing/DemoTrigger'
 
 type Props = { params: { slug: string } }
 
@@ -21,7 +22,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const url = absoluteUrl(`/blog/${post.slug}`)
 
   return {
-    title: { absolute: `${post.title} | ShareInvite Blog` },
+    title: { absolute: post.metaTitle ?? `${post.title} | ShareInvite Blog` },
     description: post.description,
     robots: { index: true, follow: true },
     alternates: { canonical: url },
@@ -475,11 +476,27 @@ const CATEGORY_TEMPLATE: Record<string, string> = {
   'Anniversary': 'anniversary',
 }
 
+// Blog posts that showcase a specific template → enables the "View Live Demo" popup
+const BLOG_TEMPLATE: Record<string, string> = {
+  '3d-surprise-journey-the-interactive-digital-gift-you-send-online': 'surprise-journey',
+  '3d-love-card-online-send-a-romantic-animated-card-in-minutes': 'greeting-love',
+  'valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp': 'greeting-valentine',
+  'anniversary-card-online-create-a-3d-animated-anniversary-card': 'greeting-anniversary',
+  'digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes': 'greeting-propose',
+  'promise-day-card-online-send-a-heartfelt-3d-promise': 'greeting-promise',
+  'sorry-card-online-say-sorry-with-a-heartfelt-animated-card': 'greeting-sorry',
+  'congratulations-card-online-send-an-animated-congrats-card': 'greeting-congratulations',
+  'festival-wishes-card-online-diwali-and-festival-greetings': 'greeting-festival',
+  'family-wishes-card-online-a-heartfelt-digital-card-for-family': 'greeting-family',
+  'friendship-day-card-online-send-a-3d-card-to-your-best-friends': 'greeting-friendship',
+}
+
 export default function BlogPostPage({ params }: Props) {
   const post = findBlogPost(params.slug)
   if (!post) notFound()
 
-  const createHref = `/create?template=${CATEGORY_TEMPLATE[post.category] ?? 'elegant-wedding'}`
+  const demoTemplateId = BLOG_TEMPLATE[post.slug]
+  const createHref = `/create?template=${demoTemplateId ?? CATEGORY_TEMPLATE[post.category] ?? 'elegant-wedding'}`
   const content = blogArticles[post.slug] ?? buildPostContent(post.keyword, post.category)
 
   const faqJsonLd = {
@@ -510,7 +527,18 @@ export default function BlogPostPage({ params }: Props) {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href={createHref} className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
+          <div className="flex items-center gap-2.5">
+            {demoTemplateId && (
+              <DemoViewButton
+                templateId={demoTemplateId}
+                accent="#7A3E4A"
+                label="View Live Demo"
+                className="hidden items-center justify-center gap-1.5 rounded-xl border px-5 py-2.5 text-sm font-semibold transition-all hover:-translate-y-0.5 sm:flex"
+                style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: 'rgba(122,62,74,0.05)' }}
+              />
+            )}
+            <Link href={createHref} className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
+          </div>
         </div>
       </header>
       <article className="mx-auto max-w-3xl px-5 py-14">
@@ -524,6 +552,28 @@ export default function BlogPostPage({ params }: Props) {
           <span>·</span>
           <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
         </div>
+
+        {/* Live demo showcase — see the actual template before reading */}
+        {demoTemplateId && (
+          <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-[#D9A441]/35 bg-[#FFFBF5] p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
+              <p className="font-heading text-lg text-ink">See this template live</p>
+              <p className="mt-1 text-sm text-muted">Tap to open the real, interactive demo — exactly what your recipient sees.</p>
+            </div>
+            <div className="flex shrink-0 items-center gap-2.5">
+              <DemoViewButton
+                templateId={demoTemplateId}
+                accent="#7A3E4A"
+                label="View Live Demo"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full border px-6 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5"
+                style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: '#fff' }}
+              />
+              <Link href={createHref} className="gold-button inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold">
+                Use this template →
+              </Link>
+            </div>
+          </div>
+        )}
 
         {/* Intro paragraph */}
         <p className="mt-10 text-base leading-8 text-muted">{content.intro}</p>
@@ -667,9 +717,20 @@ export default function BlogPostPage({ params }: Props) {
         <div className="mt-10 rounded-2xl border border-[#E8DCCD] bg-[#FFF9F2] p-7 text-center">
           <p className="font-heading text-lg text-ink">Ready to create your invitation?</p>
           <p className="mt-2 text-sm text-muted">Choose a template, fill in your details, and share on WhatsApp in under 5 minutes.</p>
-          <Link href={createHref} className="gold-button mt-5 inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-            Create Free Invitation →
-          </Link>
+          <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link href={createHref} className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
+              Create Free Invitation →
+            </Link>
+            {demoTemplateId && (
+              <DemoViewButton
+                templateId={demoTemplateId}
+                accent="#7A3E4A"
+                label="View Live Demo"
+                className="inline-flex items-center justify-center gap-1.5 rounded-full border px-8 py-3.5 text-sm font-semibold transition-all hover:-translate-y-0.5"
+                style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: '#fff' }}
+              />
+            )}
+          </div>
         </div>
       </article>
       <SiteFooter />
