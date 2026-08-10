@@ -489,6 +489,7 @@ const BLOG_TEMPLATE: Record<string, string> = {
   'festival-wishes-card-online-diwali-and-festival-greetings': 'greeting-festival',
   'family-wishes-card-online-a-heartfelt-digital-card-for-family': 'greeting-family',
   'friendship-day-card-online-send-a-3d-card-to-your-best-friends': 'greeting-friendship',
+  'raksha-bandhan-invitation-card-online-free-digital-rakhi-template': 'rakshabandhan',
 }
 
 export default function BlogPostPage({ params }: Props) {

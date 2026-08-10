@@ -14,6 +14,7 @@ import KGFWedding from '@/components/templates/KGFWedding'
 import RoyalDeco from '@/components/templates/RoyalDeco'
 import LuxuryWedding from '@/components/templates/LuxuryWedding'
 import SurpriseJourney from '@/components/templates/SurpriseJourney'
+import RakshaBandhanPremium from '@/components/templates/RakshaBandhanPremium'
 import { GREETING_COMPONENTS } from '@/components/templates/greeting/registry'
 import FloatingShareBar from '@/components/ui/FloatingShareBar'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
@@ -45,6 +46,7 @@ function getEventTitle(data: Record<string, string>): string {
   if (data.hostNames) return `${data.hostNames} — Griha Pravesh`
   if (data.babyName) return `Namakaran of ${data.babyName}`
   if (data.coupleNames) return `${data.coupleNames}${data.years ? ` — ${data.years} Years` : ''} Anniversary`
+  if (data.sisterName && data.brotherName) return `${data.sisterName} & ${data.brotherName} — Raksha Bandhan`
   return 'You are Invited'
 }
 
@@ -122,6 +124,7 @@ const TEMPLATE_COMPONENTS: Record<
   'royal-deco': RoyalDeco,
   'luxury-wedding': LuxuryWedding,
   'surprise-journey': SurpriseJourney,
+  'rakshabandhan': RakshaBandhanPremium,
 }
 
 export default async function EventPage({ params }: PageProps) {

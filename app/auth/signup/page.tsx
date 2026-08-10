@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { motion } from 'framer-motion'
+import GoogleButton from '@/components/auth/GoogleButton'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -172,6 +173,14 @@ export default function SignupPage() {
                 <p className="text-sm" style={{ color: '#B96B70' }}>{error}</p>
               </motion.div>
             )}
+
+            <GoogleButton callbackUrl="/dashboard" label="Sign up with Google" />
+
+            <div className="my-5 flex items-center gap-3">
+              <span className="h-px flex-1" style={{ background: '#E8DCCD' }} />
+              <span className="text-[11px] uppercase tracking-[0.18em] text-muted">or</span>
+              <span className="h-px flex-1" style={{ background: '#E8DCCD' }} />
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

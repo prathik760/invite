@@ -23,6 +23,7 @@ const CATEGORY_TAB_MAP: Record<string, string> = {
   anniversary: 'anniversary',
   interactive: 'interactive',
   greeting: 'greeting',
+  rakshabandhan: 'rakshabandhan',
 }
 
 const TABS = [
@@ -35,6 +36,7 @@ const TABS = [
   { value: 'housewarming', label: 'Griha Pravesh' },
   { value: 'naming', label: 'Namakaran' },
   { value: 'anniversary', label: 'Anniversary' },
+  { value: 'rakshabandhan', label: 'Rakhi' },
 ]
 
 function PlanBadge({ templateId }: { templateId: string }) {

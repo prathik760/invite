@@ -14,7 +14,7 @@ export interface Plan {
 }
 
 // Templates assigned to each tier
-const FREE_TEMPLATES = ['elegant-wedding']
+const FREE_TEMPLATES = ['elegant-wedding', 'rakshabandhan']
 const STANDARD_TEMPLATES = [...FREE_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',]
 const GREETING_TEMPLATES = [
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
@@ -31,7 +31,7 @@ export const PLANS: Plan[] = [
     badge: 'Free forever',
     description: 'Create a beautiful invitation in minutes — no payment needed.',
     templateIds: FREE_TEMPLATES,
-    features: ['1 template (Elegant Wedding)', 'Date, venue & Google Maps', 'Guest wishes collection', 'WhatsApp share link'],
+    features: ['2 templates (Elegant Wedding + Raksha Bandhan)', 'Date, venue & Google Maps', 'Guest wishes collection', 'WhatsApp share link'],
   },
   {
     id: 'standard',

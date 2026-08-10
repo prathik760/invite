@@ -647,9 +647,9 @@ export default function FormEditor({ config, data, onChange, compact = false, se
               ))}
             </div>
           )}
-          <div className={grouped.people.length >= 2 ? 'grid grid-cols-2 gap-4' : 'space-y-4'}>
+          <div className={grouped.people.length >= 2 ? 'grid grid-cols-1 gap-4 sm:grid-cols-2' : 'space-y-4'}>
             {grouped.people.map(field => (
-              <div key={field.key} className={grouped.people.length >= 2 && field.type === 'textarea' ? 'col-span-2' : ''}>
+              <div key={field.key} className={grouped.people.length >= 2 && field.type === 'textarea' ? 'sm:col-span-2' : ''}>
                 <FieldInput field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
               </div>
             ))}

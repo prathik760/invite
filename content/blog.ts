@@ -149,6 +149,16 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     date: '2026-07-18',
     description: 'Send a Friendship Day card online with a playful 3D star-filled animation, your favourite photos together and an inside-joke message. The perfect Happy Friendship Day greeting for your best friends — create and share on WhatsApp in minutes.',
   },
+
+  // ─── Raksha Bandhan (free template) ─────────────────────────────────────────
+  {
+    title: 'Raksha Bandhan Invitation Card Online — Free Digital Rakhi Template',
+    category: 'Digital Invitations',
+    keyword: 'raksha bandhan invitation card online',
+    date: '2026-08-08',
+    metaTitle: 'Raksha Bandhan Invitation Card Online — Free Digital Rakhi Invite (2026)',
+    description: 'Create a free Raksha Bandhan invitation card online in minutes — a beautiful digital Rakhi invite and greeting with photos, a live countdown, event timeline, guest wishes, RSVP and one-tap WhatsApp sharing. Perfect for brothers and sisters, including NRIs celebrating from abroad.',
+  },
 ]
 
 export type BlogDraft = {

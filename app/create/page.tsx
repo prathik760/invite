@@ -152,6 +152,7 @@ function UpgradeModal({
 export default function CreatePage() {
   const { data: session } = useSession()
   const [currentStep, setCurrentStep] = useState(1)
+  const [previewOpen, setPreviewOpen] = useState(false)  // mobile full-screen live preview
   const [selectedId, setSelectedId] = useState(TEMPLATES[0].id)
   const selectedTemplate = TEMPLATES.find(t => t.id === selectedId) ?? TEMPLATES[0]
   const [data, setData] = useState<Record<string, string>>(selectedTemplate.config.defaultData)
@@ -341,6 +342,7 @@ export default function CreatePage() {
           <Link href="/" className="flex items-center gap-2 hover:opacity-75 transition-opacity shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
+            <span className="font-display text-lg sm:text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           {!createdSlug && (
             <div className="hidden sm:block">
@@ -377,9 +379,10 @@ export default function CreatePage() {
       {isSplitStep && (
         <div className="flex-1 flex flex-col md:flex-row min-h-0">
 
-          {/* LEFT: Form panel */}
+          {/* LEFT: Form panel — extra bottom padding on mobile so its last content
+              (the "See the full design" button) clears the fixed bottom nav bar. */}
           <aside
-            className="w-full md:w-[360px] lg:w-[420px] xl:w-[460px] shrink-0 md:border-r border-border overflow-y-auto scrollbar-hide"
+            className="w-full md:w-[360px] lg:w-[420px] xl:w-[460px] shrink-0 md:border-r border-border overflow-y-auto scrollbar-hide pb-28 md:pb-0"
             style={{ background: '#FDFBF8', maxHeight: 'calc(100vh - 67px)' }}
           >
             {/* "Now editing" accent strip — desktop only */}
@@ -455,14 +458,33 @@ export default function CreatePage() {
               />
             )}
 
-            {/* Mobile: inline mini-preview */}
-            <div className="md:hidden">
+            {/* Mobile: inline mini-preview — tap to open the full live preview.
+                (role="button", not <button>, because the mini-preview contains its
+                own buttons — nested <button> is invalid HTML.) */}
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => setPreviewOpen(true)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPreviewOpen(true) } }}
+              className="block w-full cursor-pointer md:hidden"
+              aria-label="Open full-screen preview of your invitation"
+            >
               <MobilePreviewStrip
                 templateId={selectedId}
                 data={data}
                 isDark={isDark}
                 color={tv.color}
               />
+              <span
+                className="mx-4 mb-6 flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white"
+                style={{ background: 'linear-gradient(135deg,#B87924,#D9A441)', boxShadow: '0 8px 22px rgba(184,121,36,0.32)' }}
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                See the full design
+              </span>
             </div>
           </aside>
 
@@ -560,6 +582,57 @@ export default function CreatePage() {
               </div>
             </div>
           </section>
+        </div>
+      )}
+
+      {/* ─── Mobile: full-screen live preview overlay ──────────────────── */}
+      {isSplitStep && previewOpen && (
+        <div className="fixed inset-0 z-[70] flex flex-col md:hidden">
+          {/* Top bar */}
+          <div className="flex items-center justify-between gap-3 px-4 py-3 shrink-0"
+            style={{ background: 'rgba(253,251,248,0.98)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(44,32,28,0.09)' }}>
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="h-2 w-2 shrink-0 rounded-full animate-pulse" style={{ background: '#2F766D' }} />
+              <p className="truncate text-sm font-semibold text-ink">
+                Preview · {selectedTemplate.name.split('—')[0].trim()}
+              </p>
+            </div>
+            <button
+              onClick={() => setPreviewOpen(false)}
+              className="gold-button flex shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+              Keep editing
+            </button>
+          </div>
+          {/* Scrollable phone preview */}
+          <div
+            className="scrollbar-hide flex flex-1 justify-center overflow-y-auto px-4 pb-8 pt-6"
+            style={{
+              background: isDark
+                ? `radial-gradient(ellipse 90% 55% at 50% 0%, rgba(${tv.rgb},0.38), transparent 60%), #06060E`
+                : `radial-gradient(ellipse 90% 55% at 50% 0%, rgba(${tv.rgb},0.20), transparent 60%), linear-gradient(175deg,#FFF9F2,#F5EDE2)`,
+            }}
+          >
+            <div className="relative h-fit" style={{ width: 'min(320px, calc(100vw - 2rem))' }}>
+              <div style={{ borderRadius: 'clamp(28px, 11%, 40px)', background: '#1C1C1E', padding: '9px', boxShadow: '0 30px 70px rgba(0,0,0,0.3)' }}>
+                <div className="flex justify-center" style={{ height: '24px', marginBottom: '-24px', position: 'relative', zIndex: 10 }}>
+                  <div style={{ marginTop: '7px', width: '82px', height: '20px', background: '#1C1C1E', borderRadius: '10px' }} />
+                </div>
+                <div className="overflow-hidden bg-white" style={{ borderRadius: 'clamp(20px, 9%, 32px)', height: 'calc(100dvh - 210px)' }}>
+                  <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
+                    <PreviewPane templateId={selectedId} data={data} />
+                  </div>
+                </div>
+                <div className="flex justify-center" style={{ paddingTop: '7px', paddingBottom: '2px' }}>
+                  <div style={{ width: '74px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.22)' }} />
+                </div>
+              </div>
+              <p className="mt-4 text-center text-xs text-muted">This is exactly what your guests will see. Scroll to explore.</p>
+            </div>
+          </div>
         </div>
       )}
 

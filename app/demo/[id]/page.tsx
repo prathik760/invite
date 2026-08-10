@@ -17,6 +17,7 @@ import KGFWedding from '@/components/templates/KGFWedding'
 import RoyalDeco from '@/components/templates/RoyalDeco'
 import LuxuryWedding from '@/components/templates/LuxuryWedding'
 import SurpriseJourney from '@/components/templates/SurpriseJourney'
+import RakshaBandhanPremium from '@/components/templates/RakshaBandhanPremium'
 import { GREETING_COMPONENTS } from '@/components/templates/greeting/registry'
 import { TEMPLATES } from '@/modules/templates/data'
 
@@ -26,6 +27,7 @@ const TEMPLATE_COMPONENTS: Record<
 > = {
   ...GREETING_COMPONENTS,
   'surprise-journey': SurpriseJourney,
+  'rakshabandhan': RakshaBandhanPremium,
   'elegant-wedding': ElegantWedding,
   'cinematic-night': CinematicWedding,
   'indian-wedding': IndianWedding,

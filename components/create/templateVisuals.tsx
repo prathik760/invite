@@ -128,6 +128,12 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#5AB7C9', rgb: '90,183,201',
     image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80',
   },
+  'rakshabandhan': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth={1.4} /><path d="M10 2v3M10 15v3M2 10h3M15 10h3M4.3 4.3l2.1 2.1M13.6 13.6l2.1 2.1M15.7 4.3l-2.1 2.1M6.4 13.6l-2.1 2.1" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #E0B65A 0%, #C24E68 100%)',
+    color: '#C24E68', rgb: '194,78,104',
+    image: 'https://images.unsplash.com/photo-1533903345306-15d1c30952de?auto=format&fit=crop&w=600&q=80',
+  },
 }
 
 export const DARK_TEMPLATES = new Set([

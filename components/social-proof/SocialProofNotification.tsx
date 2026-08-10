@@ -17,6 +17,7 @@ const EXCLUDED_PREFIXES = [
   '/admin',
   '/checkout',
   '/auth',
+  '/e/',      // published invitation pages — keep the guest's view clean
 ]
 
 const SHOW_DURATION   = 5500   // ms the toast stays visible

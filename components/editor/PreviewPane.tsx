@@ -12,6 +12,7 @@ import KGFWedding from '@/components/templates/KGFWedding'
 import RoyalDeco from '@/components/templates/RoyalDeco'
 import LuxuryWedding from '@/components/templates/LuxuryWedding'
 import SurpriseJourney from '@/components/templates/SurpriseJourney'
+import RakshaBandhanPremium from '@/components/templates/RakshaBandhanPremium'
 import { GREETING_COMPONENTS } from '@/components/templates/greeting/registry'
 
 const COMPONENTS: Record<string, React.ComponentType<{ data: Record<string, string>; isPreview?: boolean; eventId?: string }>> = {
@@ -28,6 +29,7 @@ const COMPONENTS: Record<string, React.ComponentType<{ data: Record<string, stri
   'royal-deco': RoyalDeco,
   'luxury-wedding': LuxuryWedding,
   'surprise-journey': SurpriseJourney,
+  'rakshabandhan': RakshaBandhanPremium,
 }
 
 

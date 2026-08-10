@@ -10,6 +10,112 @@ type ContentBlock = {
 }
 
 export const blogArticles: Record<string, ContentBlock> = {
+  'raksha-bandhan-invitation-card-online-free-digital-rakhi-template': {
+    intro: `Raksha Bandhan is a day about one of the oldest, warmest bonds there is — the promise between a brother and a sister. But families today are spread across cities and countries, and the rakhi thread often travels further than the siblings can. A digital Raksha Bandhan invitation card fixes that beautifully: whether you are inviting family home for the celebration or sending a heartfelt Rakhi greeting to a sibling who lives far away, you can create a stunning, personal card online in minutes, add your own photos and message, and share it on WhatsApp with one link. On ShareInvite, the Raksha Bandhan template is completely free — so there is nothing to lose and a whole celebration to gain.`,
+    sections: [
+      {
+        heading: 'Why send a Raksha Bandhan invitation online this year',
+        body: `Printed Rakhi cards look lovely for a moment and then sit in a drawer. The place your family actually gathers is WhatsApp — the family group, the cousins' chat, the message thread with a sibling abroad. A digital Raksha Bandhan invitation meets everyone exactly where they already are.
+
+The advantages are simple and real. It is **instant** — no printing, no courier, no waiting. It is **free** on ShareInvite, so cost is never a reason to skip it. It works perfectly for **NRI families** — a sister in Delhi can send her brother in Toronto a card that opens instantly on his phone at the right local time. And it is **interactive** in a way paper never can be: a live countdown to Raksha Bandhan, a gallery of childhood photos, a wishes wall your whole family can write on, and even a way to send shagun or a gift online. It is not just an invitation — it is a small, shareable celebration of the bond itself.`,
+      },
+      {
+        heading: 'What to include in a Raksha Bandhan invitation card',
+        body: `A great Rakhi invitation is personal first and practical second. Include:
+
+**The two names** — the brother and sister (or all the siblings) at the heart of the day. This is what makes the card feel like yours and not a template.
+
+**The date and rakhi muhurat** — Raksha Bandhan is tied to the Shravana Purnima, and many families tie the rakhi at a specific auspicious time. Add the date and the muhurat so no one misses the moment.
+
+**An event timeline** — if you are hosting, a simple schedule helps: rakhi ceremony, sweets and treats, lunch with family, gift exchange, and family photos. It sets expectations and builds excitement.
+
+**Photos that mean something** — a few childhood pictures, an old festival photo, a recent one together. On the ShareInvite template these sit in a scrapbook-style "Our Bond" section and a photo gallery, and they do more emotional work than any amount of text.
+
+**A personal message** — a line or two from the heart. A promise, a thank-you, an inside joke. This is the part your sibling will screenshot.
+
+**Optional: a gift / shagun option and RSVP** — if relatives want to send blessings or shagun, you can add UPI or bank details (only if you choose to — it stays private otherwise), and collect RSVPs so you know who is coming.`,
+      },
+      {
+        heading: 'Raksha Bandhan wishes and messages you can copy-paste',
+        body: `Not sure what to write? Use these as-is or personalise them.
+
+**From a sister to her brother:**
+"To the one who fought with me and for me — happy Raksha Bandhan, bhai. This thread is small, but everything it stands for is not. Thank you for always being my safe place. ❤️"
+
+**From a brother to his sister:**
+"Happy Raksha Bandhan to my first best friend. Distance can't touch this bond. I'm always just one call away — today and every day. 🎀"
+
+**For a sibling living far away (NRI):**
+"The rakhi may reach you a little late this year, but my love is right on time. Wherever you are in the world, you're always home to me. Happy Raksha Bandhan! 🌏"
+
+**Short and sweet for a WhatsApp group:**
+"Happy Raksha Bandhan to all the brothers and sisters in this family! May the bond only grow stronger. 🙏"
+
+On the digital card, this message appears in a beautiful "Our Bond" section — so it lands with far more warmth than a plain forwarded text.`,
+      },
+      {
+        heading: 'How to create your free Raksha Bandhan invitation in 5 minutes',
+        body: `You do not need any design skill. Here is the whole process:
+
+**1. Open the Raksha Bandhan template.** Start from the live demo below or head to the create page — the Raksha Bandhan Premium template is free.
+
+**2. Add the names and your photos.** Enter the brother's and sister's names and upload a few favourite pictures for the scrapbook and gallery.
+
+**3. Set the date and rakhi muhurat.** The live countdown and event timeline fill in automatically.
+
+**4. Write your message and (optionally) add gift or RSVP details.** Keep the gift section off if you'd rather — it only appears if you add payment details.
+
+**5. Preview on your own phone, then share the link on WhatsApp.** That's it — your family opens it instantly, no app needed.
+
+The whole thing takes about five minutes, and because you can preview the exact card before sending, there are no surprises.`,
+      },
+      {
+        heading: 'Inside the ShareInvite Raksha Bandhan template',
+        body: `The Raksha Bandhan Premium template is built to feel premium and festive without being fussy. It opens with a warm, cream-and-gold hero and a marble-stage illustration, then flows through the parts of the day:
+
+- **"Our Bond"** — a scrapbook of your photos with your personal message.
+- **A live countdown** — "Celebration starts in…" building anticipation.
+- **An event timeline** — rakhi ceremony, sweets, lunch, gifts, photos, each with its own icon.
+- **A photo gallery** — "Moments to Cherish" your family can tap through.
+- **A wishes wall** — relatives leave blessings that appear on the card.
+- **An optional gift section** — UPI / QR / bank details, shown only if you choose to add them.
+
+It is fully responsive, so it looks just as good on your grandmother's phone as on a laptop, and it needs no app — it opens in any browser from a single WhatsApp link.`,
+      },
+      {
+        heading: 'Sharing your Rakhi invite on WhatsApp',
+        body: `When your card is ready, you get one clean link. Forward it to the family group, send it to each sibling, or post it in the cousins' chat. WhatsApp shows a preview card — a title and image — so it looks like a real invitation the moment it lands, not just a bare link. Because it opens in the phone's browser instantly, even relatives who aren't tech-savvy can view it with a single tap. No PDF to download, no app to install, no pinch-to-zoom on a blurry image of a paper card.`,
+      },
+      {
+        heading: 'It is free — so there is nothing to lose',
+        body: `The Raksha Bandhan template on ShareInvite is free to create and share. You can preview the finished card on your own phone before you send it, so you know exactly what your family will see. There is no printing cost, no courier, and no paper wasted — just a warm, personal, interactive Rakhi card that reaches every sibling and relative in seconds. This Raksha Bandhan, spend the money on sweets and gifts, not on cards. Create your free Rakhi invitation and send the bond, not just a message.`,
+      },
+    ],
+    checklist: [
+      'The brother and sister names (or all the siblings)',
+      'A few favourite photos — childhood and recent',
+      'The date and rakhi muhurat (tying time)',
+      'A short, heartfelt personal message',
+      'Optional: UPI / bank details for shagun, and RSVP',
+      'Preview the card on your own phone first',
+      'Share the single link on WhatsApp — family group and each sibling',
+    ],
+    faq: [
+      { q: 'Is the Raksha Bandhan invitation card really free?', a: 'Yes. The Raksha Bandhan Premium template on ShareInvite is free to create and share — no payment needed, and no ShareInvite watermark on the essentials. You can preview the finished card on your own phone before you send it.' },
+      { q: 'Can I send the Rakhi card to my brother or sister living abroad (NRI)?', a: 'Absolutely — that is one of the best uses. The card is a web link that opens instantly on any phone or laptop, anywhere in the world, in the browser. Your sibling in the US, UK, Dubai, Canada, Australia or Singapore can open it with one tap, no app and no download.' },
+      { q: 'Do my family need to install an app to open it?', a: 'No. The invitation opens directly in any web browser from the WhatsApp link. There is nothing to download or install — ideal for elders and less tech-savvy relatives.' },
+      { q: 'Can I add my own photos and a personal message?', a: 'Yes. You can upload several photos for the scrapbook "Our Bond" section and the "Moments to Cherish" gallery, and write your own heartfelt message that appears beautifully on the card.' },
+      { q: 'Can relatives send shagun or a gift, and can I collect RSVPs?', a: 'Yes — optionally. You can add a gift section with your UPI ID, a payment QR or bank details, and it only appears if you choose to add them (otherwise it stays private). Guests can also leave RSVPs and wishes that show up on the card.' },
+      { q: 'When should I send my Raksha Bandhan invitation?', a: 'Send it about one to two weeks before Raksha Bandhan so family can plan travel and the countdown builds excitement. Because it is digital, you can also update details after sending — everyone always sees the latest version at the same link.' },
+    ],
+    links: [
+      { label: 'Raksha Bandhan template — see the live demo', href: '/demo/rakshabandhan' },
+      { label: 'Create your free Rakhi invitation', href: '/create?template=rakshabandhan' },
+      { label: 'Browse all invitation templates', href: '/templates' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+      { label: 'All digital invitations', href: '/digital-invitation' },
+    ],
+  },
   'indian-wedding-invitation-wording-for-whatsapp': {
     intro: `The WhatsApp message you send with a wedding invitation matters as much as the invitation itself. Most guests read the forwarding message before they click the link — and for distant relatives or older family members, the message may be all they read carefully. Getting the wording right means fewer follow-up calls, fewer confused aunties asking about the venue, and a first impression that feels as warm as the event itself.`,
     sections: [
