@@ -18,6 +18,15 @@ const WhatsAppButton = dynamic(
   { ssr: false },
 )
 
+// Seasonal promotion, shown once the visitor scrolls past PROMO.triggerAtScroll
+// or reaches the footer. ssr:false keeps it out of the
+// initial payload and off the LCP path — it is a post-engagement prompt, so it
+// must cost nothing until the visitor has actually engaged.
+const ScrollPromo = dynamic(
+  () => import('@/components/marketing/ScrollPromoMount'),
+  { ssr: false },
+)
+
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-5377FL2P'
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-5NYQ140ED1'
@@ -212,6 +221,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnimateOnScroll />
         <SessionProvider>{children}</SessionProvider>
         <WhatsAppButton />
+        <ScrollPromo />
         {GTM_ID && (
           <Script
             id="gtm"

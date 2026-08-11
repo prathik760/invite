@@ -45,6 +45,13 @@ export const seoEvents = {
   checkoutStart: 'checkout_start',
   purchase: 'purchase',
 
+  // ─── Promotions ──────────────────────────────────────────────────────────
+  // promoView fires when the popup is actually shown, not when it mounts, so
+  // the click-through rate below is a real rate rather than a mount count.
+  promoView: 'promo_view',
+  promoClick: 'promo_click',
+  promoDismiss: 'promo_dismiss',
+
   // ─── Sharing ─────────────────────────────────────────────────────────────
   whatsappShare: 'whatsapp_share',
   linkCopy: 'link_copy',
