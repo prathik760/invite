@@ -4,10 +4,13 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import StickyCTA from '@/components/seo/StickyCTA'
+import TrackedLink from '@/components/ui/TrackedLink'
+import { templatePrice } from '@/lib/plans'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { blogDrafts, categorySlug, findBlogPost, type BlogCategory } from '@/content/blog'
-import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
-import { blogArticles } from '@/content/blog-articles'
+import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, templateSeoSlug } from '@/lib/seo'
+import { TEMPLATES } from '@/modules/templates/data'
+import { blogArticles, hasFullArticle } from '@/content/blog-articles'
 import { DemoViewButton } from '@/components/landing/DemoTrigger'
 
 type Props = { params: { slug: string } }
@@ -24,7 +27,12 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title: { absolute: post.metaTitle ?? `${post.title} | ShareInvite Blog` },
     description: post.description,
-    robots: { index: true, follow: true },
+    // Posts still running on generated filler are kept out of the index until
+    // real copy exists. `follow` is retained so they keep passing equity to the
+    // template and landing pages they link to.
+    robots: hasFullArticle(post.slug)
+      ? { index: true, follow: true }
+      : { index: false, follow: true },
     alternates: { canonical: url },
     openGraph: {
       title: post.title,
@@ -497,7 +505,19 @@ export default function BlogPostPage({ params }: Props) {
   if (!post) notFound()
 
   const demoTemplateId = BLOG_TEMPLATE[post.slug]
-  const createHref = `/create?template=${demoTemplateId ?? CATEGORY_TEMPLATE[post.category] ?? 'elegant-wedding'}`
+  const ctaTemplateId = demoTemplateId ?? CATEGORY_TEMPLATE[post.category] ?? 'elegant-wedding'
+  const createHref = `/create?template=${ctaTemplateId}&src=blog`
+  const ctaPrice = templatePrice(ctaTemplateId)
+  const ctaTemplate = TEMPLATES.find((t) => t.id === ctaTemplateId)
+  const ctaTemplateHref = `/templates/${templateSeoSlug(ctaTemplateId)}`
+  // "Free to start" was shown on articles whose CTA points at a ₹299–₹999
+  // template. State the real one-time price instead — a reader who learns the
+  // price here and still clicks is a far better lead than one who discovers it
+  // at step 5 of the builder.
+  const ctaPriceLine =
+    ctaPrice === 0
+      ? 'Free to publish · WhatsApp-ready link · No app for guests'
+      : `Build & preview free · ₹${ctaPrice} one-time to publish · No app for guests`
   const content = blogArticles[post.slug] ?? buildPostContent(post.keyword, post.category)
 
   const faqJsonLd = {
@@ -589,15 +609,40 @@ export default function BlogPostPage({ params }: Props) {
           ))}
         </div>
 
-        {/* Inline CTA — mid-article conversion nudge */}
-        <div className="mt-10 flex items-center justify-between gap-4 rounded-2xl border border-[#D9A441]/35 bg-[#FFFBF5] px-6 py-5">
-          <div className="min-w-0">
-            <p className="font-heading text-base text-ink">Create your invitation in 5 minutes</p>
-            <p className="mt-1 text-xs text-muted">Free to start · WhatsApp-ready link · No app for guests</p>
+        {/* Inline CTA — the bridge from "I found my wording" to "I have an
+            invitation". Names what the reader gets and what it costs, so the
+            click is informed rather than a surprise later in the funnel. */}
+        <div className="mt-10 rounded-2xl border border-[#D9A441]/35 bg-[#FFFBF5] px-6 py-6">
+          <p className="font-heading text-base text-ink">Found the wording you want?</p>
+          <p className="mt-1.5 text-sm leading-6 text-muted">
+            Turn it into a live invitation page{ctaTemplate ? ` with the ${ctaTemplate.name.split('—')[0].trim()} template` : ''} — your message, photos and event details on one link you send to a WhatsApp group.
+          </p>
+          <ul className="mt-4 grid gap-x-5 gap-y-1.5 text-sm text-muted sm:grid-cols-2">
+            {['Photo gallery', 'Live countdown', 'Google Maps directions', 'Background music', 'Guest wishes & RSVP', 'One WhatsApp link'].map((f) => (
+              <li key={f} className="flex items-center gap-2">
+                <span className="text-[#2F766D]">✓</span>{f}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:items-center">
+            <TrackedLink
+              href={createHref}
+              location="blog_inline_cta"
+              meta={{ template_id: ctaTemplateId, price: ctaPrice, page_type: 'blog_post', blog_slug: post.slug }}
+              className="gold-button inline-flex shrink-0 justify-center rounded-full px-6 py-3 text-sm font-semibold"
+            >
+              Create my invitation →
+            </TrackedLink>
+            <TrackedLink
+              href={ctaTemplateHref}
+              location="blog_inline_template_link"
+              meta={{ template_id: ctaTemplateId, price: ctaPrice, page_type: 'blog_post', blog_slug: post.slug }}
+              className="inline-flex shrink-0 justify-center rounded-full border border-border bg-white px-6 py-3 text-sm font-semibold text-ink"
+            >
+              See the template first
+            </TrackedLink>
           </div>
-          <Link href={createHref} className="gold-button shrink-0 rounded-full px-5 py-2.5 text-xs font-semibold">
-            Start Free →
-          </Link>
+          <p className="mt-3 text-xs text-muted">{ctaPriceLine}</p>
         </div>
 
         {/* Quick checklist */}
@@ -719,9 +764,14 @@ export default function BlogPostPage({ params }: Props) {
           <p className="font-heading text-lg text-ink">Ready to create your invitation?</p>
           <p className="mt-2 text-sm text-muted">Choose a template, fill in your details, and share on WhatsApp in under 5 minutes.</p>
           <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href={createHref} className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-              Create Free Invitation →
-            </Link>
+            <TrackedLink
+              href={createHref}
+              location="blog_footer_cta"
+              meta={{ template_id: ctaTemplateId, price: ctaPrice, page_type: 'blog_post', blog_slug: post.slug }}
+              className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold"
+            >
+              Create my invitation →
+            </TrackedLink>
             {demoTemplateId && (
               <DemoViewButton
                 templateId={demoTemplateId}
@@ -732,10 +782,11 @@ export default function BlogPostPage({ params }: Props) {
               />
             )}
           </div>
+          <p className="mt-4 text-xs text-muted">{ctaPriceLine}</p>
         </div>
       </article>
       <SiteFooter />
-      <StickyCTA />
+      <StickyCTA pageType="blog_post" />
     </main>
   )
 }

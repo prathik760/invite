@@ -25,6 +25,16 @@ const nextConfig = {
         destination: '/namakaran-invitation',
         permanent: true,
       },
+      // /naming-ceremony-invitations duplicates /namakaran-invitation: same
+      // query intent, same templates, generic body copy. app/sitemap.ts already
+      // excluded it on the assumption this redirect existed — it did not, so the
+      // page stayed live and indexable and competed with the page we want to
+      // rank. Single hop, straight to the final canonical URL.
+      {
+        source: '/naming-ceremony-invitations',
+        destination: '/namakaran-invitation',
+        permanent: true,
+      },
       // Consolidate the housewarming-wording blog into the authoritative wording page
       // (same search intent — avoids keyword cannibalisation, passes link equity).
       {

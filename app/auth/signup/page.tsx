@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
+import { seoEvents, trackEvent } from '@/lib/analytics'
 import { motion } from 'framer-motion'
 import GoogleButton from '@/components/auth/GoogleButton'
 
@@ -83,8 +84,15 @@ function AuthBrandPanel() {
   )
 }
 
-export default function SignupPage() {
+function SignupForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  // Sign-up ignored callbackUrl and always landed on /dashboard. A user who hit
+  // "Create free account" from step 5 of the builder lost their place and had
+  // to navigate back to /create for the saved draft to be restored.
+  const rawCallback = searchParams.get('callbackUrl') || '/dashboard'
+  const callbackUrl =
+    rawCallback.startsWith('/') && !rawCallback.startsWith('//') ? rawCallback : '/dashboard'
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -119,14 +127,15 @@ export default function SignupPage() {
     if (result?.error) {
       setError('Account created but sign-in failed. Please sign in manually.')
     } else {
-      router.push('/dashboard')
+      // Fires only after the account exists and sign-in succeeded.
+      trackEvent(seoEvents.signupComplete, { method: 'credentials', destination: callbackUrl })
+      router.push(callbackUrl)
       router.refresh()
     }
   }
 
   return (
-    <div className="flex min-h-screen">
-      <AuthBrandPanel />
+    <>
 
       <div
         className="flex min-h-screen lg:min-h-0 flex-1 flex-col items-center justify-center px-5 py-12"
@@ -174,7 +183,7 @@ export default function SignupPage() {
               </motion.div>
             )}
 
-            <GoogleButton callbackUrl="/dashboard" label="Sign up with Google" />
+            <GoogleButton callbackUrl={callbackUrl} label="Sign up with Google" />
 
             <div className="my-5 flex items-center gap-3">
               <span className="h-px flex-1" style={{ background: '#E8DCCD' }} />
@@ -287,6 +296,17 @@ export default function SignupPage() {
           </p>
         </motion.div>
       </div>
+    </>
+  )
+}
+
+export default function SignupPage() {
+  return (
+    <div className="flex min-h-screen">
+      <AuthBrandPanel />
+      <Suspense fallback={null}>
+        <SignupForm />
+      </Suspense>
     </div>
   )
 }

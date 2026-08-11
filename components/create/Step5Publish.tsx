@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import type { Session } from 'next-auth'
 import type { TemplateData } from '@/modules/templates/data'
-import { getRequiredPlan, type PlanId, planLevel } from '@/lib/plans'
+import { canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
@@ -36,7 +36,8 @@ export default function Step5Publish({
   const tv = TEMPLATE_VISUALS[selectedTemplate.id] ?? TEMPLATE_VISUALS['elegant-wedding']
   const requiredPlan = getRequiredPlan(selectedTemplate.id)
   const isFree = requiredPlan.price === 0
-  const userHasAccess = planLevel(userPlan) >= planLevel(requiredPlan.id as PlanId)
+  const userHasAccess = canAccess(selectedTemplate.id, userPlan)
+  const mustPay = !isFree && !userHasAccess
 
   return (
     <div
@@ -154,10 +155,14 @@ export default function Step5Publish({
                 Your plan
               </p>
               <p className="text-sm font-semibold" style={{ color: isDark ? '#fff' : '#221B17' }}>
-                {isFree ? 'Free — no payment needed' : `${requiredPlan.name} · ₹${requiredPlan.price.toLocaleString('en-IN')}`}
+                {isFree
+                  ? 'Free — no payment needed'
+                  : userHasAccess
+                    ? `${requiredPlan.name} · unlocked`
+                    : `₹${requiredPlan.price.toLocaleString('en-IN')} one-time · ${requiredPlan.name}`}
               </p>
             </div>
-            {!isFree && !userHasAccess && (
+            {mustPay && (
               <Link
                 href="/pricing"
                 className="shrink-0 text-[11px] font-bold px-3 py-1.5 rounded-xl"
@@ -168,8 +173,10 @@ export default function Step5Publish({
             )}
           </div>
 
-          {/* Branding warning for free users — shown before publish */}
-          {isFree && (
+          {/* Branding warning — only when the invitation will actually carry
+              the banner. Keyed on the user's plan too, so a paying customer
+              using the free design is not warned about branding they removed. */}
+          {isFree && userPlan === 'free' && (
             <div
               className="w-full rounded-xl px-3.5 py-2.5 flex items-start gap-2.5"
               style={{
@@ -207,7 +214,7 @@ export default function Step5Publish({
               <><Spinner />Creating your invitation…</>
             ) : (
               <>
-                Get my invitation link
+                {mustPay ? `Continue to payment — ₹${requiredPlan.price.toLocaleString('en-IN')}` : 'Get my invitation link'}
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
@@ -215,11 +222,16 @@ export default function Step5Publish({
             )}
           </button>
 
-          {!session && (
-            <p className="text-[11px]" style={{ color: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(44,32,28,0.35)' }}>
-              No account needed · Share on WhatsApp instantly
-            </p>
-          )}
+          {/* Tell the user exactly what the next tap does. The old copy said
+              "No account needed" while the button in fact opened a sign-in
+              modal — the single most common reason to abandon at step 5. */}
+          <p className="text-center text-[11px] leading-4" style={{ color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(44,32,28,0.42)' }}>
+            {mustPay
+              ? 'Secure one-time payment via Razorpay · Your invitation publishes right after'
+              : !session
+                ? 'You’ll sign in next so your invitation is saved to your dashboard'
+                : 'Publishes instantly · Share the link on WhatsApp'}
+          </p>
         </div>
       </div>
     </div>

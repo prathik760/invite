@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/digital-invitation` },
   openGraph: {
     title: 'Free Digital Invitation Website Maker India | ShareInvite',
-    description: 'Create digital invitation websites for any Indian event. WhatsApp-ready. 10 templates. Free to start.',
+    description: 'Create digital invitation websites for any Indian event. WhatsApp-ready. Build and preview free — paid templates from ₹199 one-time.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Invitation Website India' }],
@@ -92,7 +92,7 @@ export default function DigitalInvitationPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -101,7 +101,7 @@ export default function DigitalInvitationPage() {
         <div className="relative mx-auto max-w-4xl">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            10 templates · Free to start · WhatsApp ready
+            Free to build &amp; preview · WhatsApp ready · No app needed
           </div>
           <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
             Digital Invitation Website<br />
@@ -112,7 +112,7 @@ export default function DigitalInvitationPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Free Digital Invite →
+              Start My Digital Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · No app download</span>
           </div>
@@ -156,7 +156,7 @@ export default function DigitalInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Free Digital Invitation Today</h2>
-          <p className="text-muted text-sm mb-7">Free to start · WhatsApp-ready · No credit card needed</p>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · Paid templates from ₹199 one-time · WhatsApp-ready</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Digital Invitation →
           </Link>

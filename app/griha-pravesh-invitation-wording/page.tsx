@@ -73,10 +73,10 @@ export default function GrihaPraveshInvitationWordingPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create?template=griha-pravesh" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=griha-pravesh" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
-      <StickyCTA href="/create?template=griha-pravesh" text="Create Free Griha Pravesh Invite →" />
+      <StickyCTA href="/create?template=griha-pravesh" text="Start My Griha Pravesh Invite →" />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
@@ -96,7 +96,7 @@ export default function GrihaPraveshInvitationWordingPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=griha-pravesh" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Griha Pravesh Invite Free →
+              Start My Griha Pravesh Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · WhatsApp-ready link</span>
           </div>
@@ -116,7 +116,7 @@ export default function GrihaPraveshInvitationWordingPage() {
             body="Each message above uses [Digital Invite Link] — a shareable page that already has your muhurat time, Google Maps, and pooja schedule. Create yours free in 5 minutes."
             features={['Muhurat time clearly highlighted', 'Embedded Google Maps pin', 'Full pooja schedule', 'WhatsApp-ready link']}
             ctaHref="/create?template=griha-pravesh"
-            ctaText="Create Griha Pravesh Invite Free →"
+            ctaText="Start My Griha Pravesh Invite →"
           />
 
           <h3 className="font-heading text-base text-ink mb-1">1. Traditional — Vastu Puja, Ganesh Puja, family blessings</h3>
@@ -517,7 +517,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             body="The most common complaint after a Griha Pravesh: guests couldn't find the new address. A digital invite with Google Maps pin solves this — no WhatsApp replies asking 'bhai address bhejna'."
             features={['One tap to Google Maps', 'Parking instructions included', 'RSVP so you know who is coming', 'Send reminder to all with one click']}
             ctaHref="/create?template=griha-pravesh"
-            ctaText="Create Digital Invite Free →"
+            ctaText="Start My Digital Invite →"
           />
         </div>
       </div>
@@ -727,7 +727,7 @@ Your presence and blessings would make this occasion truly auspicious.`}</Wordin
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Griha Pravesh Invitation</h2>
           <p className="text-muted text-sm mb-7">Free to create · Muhurat time, map &amp; pooja schedule · WhatsApp-ready in 5 minutes</p>
           <Link href="/create?template=griha-pravesh" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Griha Pravesh Invite Free →
+            Start My Griha Pravesh Invite →
           </Link>
         </div>
       </section>

@@ -89,7 +89,7 @@ export default function WeddingInvitationWordingPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create?template=elegant-wedding" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=elegant-wedding" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -220,7 +220,7 @@ export default function WeddingInvitationWordingPage() {
               'RSVP with guest tracking',
             ]}
             ctaHref="/wedding-invitation"
-            ctaText="Create Wedding Invite Free →"
+            ctaText="Start My Wedding Invite →"
           />
         </div>
       </section>
@@ -574,12 +574,12 @@ export default function WeddingInvitationWordingPage() {
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Ready to Create Your Digital Wedding Invitation?</h2>
           <p className="text-muted text-sm mb-7">Use any wording sample above. Add your details, photos, and music — and share in 5 minutes.</p>
           <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Wedding Invite Free →
+            Start My Wedding Invite →
           </Link>
         </div>
       </section>
 
-      <StickyCTA href="/wedding-invitation" text="Create Wedding Invite Free →" />
+      <StickyCTA href="/wedding-invitation" text="Start My Wedding Invite →" />
 
       <SiteFooter />
     </main>

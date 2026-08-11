@@ -3,6 +3,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import PricingSection from '@/components/landing/PricingSection'
 import FAQAccordion from '@/components/landing/FAQAccordion'
+import { TEMPLATES } from '@/modules/templates/data'
+import { templatePrice } from '@/lib/plans'
+import { digitalOffer, templateSeoSlug } from '@/lib/seo'
+import { templateImageUrl } from '@/lib/templateMedia'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -43,30 +47,16 @@ export const metadata: Metadata = {
 
 // ─── Structured Data ──────────────────────────────────────────────────────────
 
-const TEMPLATE_PRICES = [
-  { id: 'elegant-wedding', name: 'Elegant Wedding', price: 0 },
-  { id: 'cinematic-night', name: 'Cinematic Night', price: 299 },
-  { id: 'indian-birthday', name: 'Janamdin', price: 299 },
-  { id: 'namakaran', name: 'Namakaran', price: 299 },
-  { id: 'surprise-journey', name: '3D Surprise Journey', price: 299 },
-  { id: 'indian-wedding', name: 'Shaadi', price: 599 },
-  { id: 'indian-engagement', name: 'Mangni', price: 599 },
-  { id: 'griha-pravesh', name: 'Griha Pravesh', price: 599 },
-  { id: 'greeting-love', name: '3D Love Greeting', price: 599 },
-  { id: 'greeting-valentine', name: "3D Valentine's Greeting", price: 599 },
-  { id: 'greeting-anniversary', name: '3D Anniversary Greeting', price: 599 },
-  { id: 'greeting-propose', name: '3D Proposal Greeting', price: 599 },
-  { id: 'greeting-promise', name: '3D Promise Greeting', price: 599 },
-  { id: 'greeting-sorry', name: '3D Sorry Greeting', price: 599 },
-  { id: 'greeting-congratulations', name: '3D Congratulations Greeting', price: 599 },
-  { id: 'greeting-festival', name: '3D Festival Greeting', price: 599 },
-  { id: 'greeting-family', name: '3D Family Greeting', price: 599 },
-  { id: 'greeting-friendship', name: '3D Friendship Greeting', price: 599 },
-  { id: 'anniversary', name: 'Saalgirah', price: 999 },
-  { id: 'kgf-wedding', name: 'KGF Royal Empire', price: 999 },
-  { id: 'royal-deco', name: 'Royal Deco', price: 999 },
-  { id: 'luxury-wedding', name: 'Luxury Wedding', price: 999 },
-]
+// Derived from lib/plans.ts rather than hand-maintained. The previous
+// hard-coded list had already drifted: it omitted the ₹199 Raksha Bandhan
+// template entirely, so the pricing page and the checkout disagreed.
+const TEMPLATE_PRICES = TEMPLATES.map((tpl) => ({
+  id: tpl.id,
+  name: tpl.name,
+  description: tpl.description,
+  price: templatePrice(tpl.id),
+  slug: templateSeoSlug(tpl.id),
+}))
 
 const pricingSchema = {
   '@context': 'https://schema.org',
@@ -83,64 +73,58 @@ const pricingSchema = {
       item: {
         '@type': 'Product',
         name: `${tpl.name} Digital Invitation Template`,
-        offers: {
-          '@type': 'Offer',
-          price: String(tpl.price),
-          priceCurrency: 'INR',
-          availability: 'https://schema.org/InStock',
-          url: `${APP_URL}/create?template=${tpl.id}`,
-          priceValidUntil: '2027-12-31',
-        },
+        description: tpl.description,
+        sku: tpl.id,
+        // Was missing entirely — the cause of all 22 "Missing field image"
+        // Merchant Listing warnings. These are the real preview images the
+        // site renders for each template, not the ShareInvite logo.
+        image: [templateImageUrl(tpl.id)],
+        brand: { '@type': 'Brand', name: 'ShareInvite' },
+        // Point at the template's own page, which is the canonical, indexable
+        // URL for this product. /create?template= is a query-parameter view of
+        // the builder and should not be advertised as the product URL.
+        url: `${APP_URL}/templates/${tpl.slug}`,
+        offers: digitalOffer(tpl.price, `${APP_URL}/templates/${tpl.slug}`),
       },
     })),
   },
 }
 
+const PRICING_FAQS = [
+  {
+    question: 'How much does a digital wedding invitation cost in India?',
+    answer: 'ShareInvite offers one completely free template — Elegant Wedding — which you can publish and share on WhatsApp without paying. Every other design is a one-time payment: ₹199 for Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin (birthday), Namakaran, and the interactive 3D Surprise Journey; ₹599 for Shaadi, Mangni (engagement), Griha Pravesh, and the animated 3D Greeting Cards; ₹999 for Saalgirah, KGF Royal Empire, Royal Deco, and Luxury Wedding. There are no monthly fees, and you can build and preview any template in full before deciding to pay.',
+  },
+  {
+    question: 'Is it a one-time payment or a monthly subscription?',
+    answer: 'All paid templates are a one-time payment. You pay once for your template — there are no monthly subscriptions, no recurring charges, and no hidden fees.',
+  },
+  {
+    question: 'Which templates are free, and what do I pay for?',
+    answer: 'The Elegant Wedding template is free to create, publish and share — guests see a small "Made with ShareInvite" banner at the top. Every other template is a one-time purchase, which also removes that banner. You can fill in all your details and preview any template completely before paying; payment is only required at the final publish step.',
+  },
+  {
+    question: 'Can I upgrade my template after paying?',
+    answer: 'Yes. You can start free and upgrade to any paid template anytime from your dashboard by paying the one-time price for that template. Buying a higher tier never removes access to templates you already own.',
+  },
+  {
+    question: 'Can I get a refund?',
+    answer: 'Yes, in genuine cases. Refund requests can be raised within 7 days of the transaction at no cost to you — for example if you were charged twice or the template did not work as described. Approved refunds are returned to your original payment method via Razorpay. Full details are on our Refund & Cancellation Policy page.',
+  },
+  {
+    question: 'Is the payment secure?',
+    answer: 'Yes. All payments are processed through Razorpay — India\'s most trusted payment gateway. ShareInvite never stores your card details. You can pay via UPI, credit card, debit card, or net banking.',
+  },
+]
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'How much does a digital wedding invitation cost in India?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'ShareInvite offers a completely free Elegant Wedding template — no credit card needed. Paid templates are a one-time payment: ₹299 for Cinematic Night, Janamdin, Namakaran, and the interactive 3D Surprise Journey; ₹599 for Shaadi, Mangni, Griha Pravesh, and the animated 3D Greeting Cards (Love, Valentine, Anniversary, Proposal and more); ₹999 for Saalgirah, KGF Royal Empire, Royal Deco, and Luxury Wedding. There are no monthly fees.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Is it a one-time payment or a monthly subscription?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'All paid templates are a one-time payment. You pay once for your template — there are no monthly subscriptions, no recurring charges, and no hidden fees.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Why do different templates have different prices?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'The price reflects the uniqueness, craftsmanship, animations, and visual design of each template. Every template includes the same premium features — music, gallery, countdown, maps, RSVP. You simply choose the design that best matches your celebration.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Can I upgrade my template after paying?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Yes. You can start free and upgrade to any paid template anytime from your dashboard by paying the one-time price for that template.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Is the payment secure?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Yes. All payments are processed through Razorpay — India\'s most trusted payment gateway. ShareInvite never stores your card details. You can pay via UPI, credit card, debit card, or net banking.',
-      },
-    },
-  ],
+  mainEntity: PRICING_FAQS.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
 }
 
 // ─── Everything Included features ────────────────────────────────────────────
@@ -381,7 +365,7 @@ export default function PricingPage() {
               Everything you need to know about templates, pricing, and payment.
             </p>
           </div>
-          <FAQAccordion />
+          <FAQAccordion faqs={PRICING_FAQS} />
         </div>
       </section>
 

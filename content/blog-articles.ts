@@ -11,13 +11,13 @@ type ContentBlock = {
 
 export const blogArticles: Record<string, ContentBlock> = {
   'raksha-bandhan-invitation-card-online-free-digital-rakhi-template': {
-    intro: `Raksha Bandhan is a day about one of the oldest, warmest bonds there is — the promise between a brother and a sister. But families today are spread across cities and countries, and the rakhi thread often travels further than the siblings can. A digital Raksha Bandhan invitation card fixes that beautifully: whether you are inviting family home for the celebration or sending a heartfelt Rakhi greeting to a sibling who lives far away, you can create a stunning, personal card online in minutes, add your own photos and message, and share it on WhatsApp with one link. On ShareInvite, the Raksha Bandhan template is completely free — so there is nothing to lose and a whole celebration to gain.`,
+    intro: `Raksha Bandhan is a day about one of the oldest, warmest bonds there is — the promise between a brother and a sister. But families today are spread across cities and countries, and the rakhi thread often travels further than the siblings can. A digital Raksha Bandhan invitation card fixes that beautifully: whether you are inviting family home for the celebration or sending a heartfelt Rakhi greeting to a sibling who lives far away, you can create a stunning, personal card online in minutes, add your own photos and message, and share it on WhatsApp with one link. On ShareInvite, the premium Raksha Bandhan template is just ₹199 — less than the cost of a single printed card set, for something your whole family can open, keep and cherish.`,
     sections: [
       {
         heading: 'Why send a Raksha Bandhan invitation online this year',
         body: `Printed Rakhi cards look lovely for a moment and then sit in a drawer. The place your family actually gathers is WhatsApp — the family group, the cousins' chat, the message thread with a sibling abroad. A digital Raksha Bandhan invitation meets everyone exactly where they already are.
 
-The advantages are simple and real. It is **instant** — no printing, no courier, no waiting. It is **free** on ShareInvite, so cost is never a reason to skip it. It works perfectly for **NRI families** — a sister in Delhi can send her brother in Toronto a card that opens instantly on his phone at the right local time. And it is **interactive** in a way paper never can be: a live countdown to Raksha Bandhan, a gallery of childhood photos, a wishes wall your whole family can write on, and even a way to send shagun or a gift online. It is not just an invitation — it is a small, shareable celebration of the bond itself.`,
+The advantages are simple and real. It is **instant** — no printing, no courier, no waiting. It is **affordable** — the whole premium template is just ₹199, far less than printing and couriering paper cards. It works perfectly for **NRI families** — a sister in Delhi can send her brother in Toronto a card that opens instantly on his phone at the right local time. And it is **interactive** in a way paper never can be: a live countdown to Raksha Bandhan, a gallery of childhood photos, a wishes wall your whole family can write on, and even a way to send shagun or a gift online. It is not just an invitation — it is a small, shareable celebration of the bond itself.`,
       },
       {
         heading: 'What to include in a Raksha Bandhan invitation card',
@@ -54,10 +54,10 @@ The advantages are simple and real. It is **instant** — no printing, no courie
 On the digital card, this message appears in a beautiful "Our Bond" section — so it lands with far more warmth than a plain forwarded text.`,
       },
       {
-        heading: 'How to create your free Raksha Bandhan invitation in 5 minutes',
+        heading: 'How to create your Raksha Bandhan invitation in 5 minutes',
         body: `You do not need any design skill. Here is the whole process:
 
-**1. Open the Raksha Bandhan template.** Start from the live demo below or head to the create page — the Raksha Bandhan Premium template is free.
+**1. Open the Raksha Bandhan template.** Start from the live demo below or head to the create page — the Raksha Bandhan Premium template unlocks for just ₹199.
 
 **2. Add the names and your photos.** Enter the brother's and sister's names and upload a few favourite pictures for the scrapbook and gallery.
 
@@ -87,8 +87,8 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
         body: `When your card is ready, you get one clean link. Forward it to the family group, send it to each sibling, or post it in the cousins' chat. WhatsApp shows a preview card — a title and image — so it looks like a real invitation the moment it lands, not just a bare link. Because it opens in the phone's browser instantly, even relatives who aren't tech-savvy can view it with a single tap. No PDF to download, no app to install, no pinch-to-zoom on a blurry image of a paper card.`,
       },
       {
-        heading: 'It is free — so there is nothing to lose',
-        body: `The Raksha Bandhan template on ShareInvite is free to create and share. You can preview the finished card on your own phone before you send it, so you know exactly what your family will see. There is no printing cost, no courier, and no paper wasted — just a warm, personal, interactive Rakhi card that reaches every sibling and relative in seconds. This Raksha Bandhan, spend the money on sweets and gifts, not on cards. Create your free Rakhi invitation and send the bond, not just a message.`,
+        heading: 'Just ₹199 — a whole celebration for the price of a card',
+        body: `The Raksha Bandhan Premium template on ShareInvite is just ₹199 — a one-time price for a card your whole family can open, keep and revisit. You can preview the finished card on your own phone before you pay or share, so you know exactly what your family will see. There is no printing cost, no courier, and no paper wasted — just a warm, personal, interactive Rakhi card that reaches every sibling and relative in seconds. For less than the cost of a single boxed card set, you send the bond itself, not just a message.`,
       },
     ],
     checklist: [
@@ -101,7 +101,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       'Share the single link on WhatsApp — family group and each sibling',
     ],
     faq: [
-      { q: 'Is the Raksha Bandhan invitation card really free?', a: 'Yes. The Raksha Bandhan Premium template on ShareInvite is free to create and share — no payment needed, and no ShareInvite watermark on the essentials. You can preview the finished card on your own phone before you send it.' },
+      { q: 'How much does the Raksha Bandhan invitation card cost?', a: 'The Raksha Bandhan Premium template on ShareInvite is just ₹199 — a one-time price with no subscription. You can design and preview the finished card on your own phone before you pay, so you know exactly what your family will see, and there is no ShareInvite watermark on the essentials.' },
       { q: 'Can I send the Rakhi card to my brother or sister living abroad (NRI)?', a: 'Absolutely — that is one of the best uses. The card is a web link that opens instantly on any phone or laptop, anywhere in the world, in the browser. Your sibling in the US, UK, Dubai, Canada, Australia or Singapore can open it with one tap, no app and no download.' },
       { q: 'Do my family need to install an app to open it?', a: 'No. The invitation opens directly in any web browser from the WhatsApp link. There is nothing to download or install — ideal for elders and less tech-savvy relatives.' },
       { q: 'Can I add my own photos and a personal message?', a: 'Yes. You can upload several photos for the scrapbook "Our Bond" section and the "Moments to Cherish" gallery, and write your own heartfelt message that appears beautifully on the card.' },
@@ -110,7 +110,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
     ],
     links: [
       { label: 'Raksha Bandhan template — see the live demo', href: '/demo/rakshabandhan' },
-      { label: 'Create your free Rakhi invitation', href: '/create?template=rakshabandhan' },
+      { label: 'Create your Rakhi invitation — just ₹199', href: '/create?template=rakshabandhan' },
       { label: 'Browse all invitation templates', href: '/templates' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
       { label: 'All digital invitations', href: '/digital-invitation' },
@@ -2200,4 +2200,23 @@ That link is all you need. Paste it into WhatsApp and it opens instantly for the
       { label: 'Browse all templates', href: '/templates' },
     ],
   },
+}
+
+/**
+ * Whether a post has a hand-written article rather than generated filler.
+ *
+ * Posts listed in `blogDrafts` but absent from `blogArticles` fall back to
+ * `buildPostContent()` in app/blog/[slug]/page.tsx, which produces the same
+ * prose for every post with only the keyword swapped. 30 of the 62 posts in the
+ * sitemap were in that state, which is why Search Console reports
+ * /blog/best-wedding-website-features-for-guests as "Duplicate without
+ * user-selected canonical" — Google sees ~30 pages saying the same thing and
+ * declines to pick one.
+ *
+ * These posts stay reachable and keep passing link equity (noindex, follow);
+ * they are simply no longer submitted for indexing until real copy is written
+ * for them. Adding a `blogArticles` entry re-qualifies a post automatically.
+ */
+export function hasFullArticle(slug: string): boolean {
+  return Object.prototype.hasOwnProperty.call(blogArticles, slug)
 }

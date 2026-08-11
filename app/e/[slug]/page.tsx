@@ -2,20 +2,8 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { prisma } from '@/lib/db'
-import ElegantWedding from '@/components/templates/ElegantWedding'
-import CinematicWedding from '@/components/templates/CinematicWedding'
-import IndianWedding from '@/components/templates/IndianWedding'
-import IndianEngagement from '@/components/templates/IndianEngagement'
-import IndianBirthday from '@/components/templates/IndianBirthday'
-import HouseWarming from '@/components/templates/HouseWarming'
-import NamingCeremony from '@/components/templates/NamingCeremony'
-import Anniversary from '@/components/templates/Anniversary'
-import KGFWedding from '@/components/templates/KGFWedding'
-import RoyalDeco from '@/components/templates/RoyalDeco'
-import LuxuryWedding from '@/components/templates/LuxuryWedding'
-import SurpriseJourney from '@/components/templates/SurpriseJourney'
-import RakshaBandhanPremium from '@/components/templates/RakshaBandhanPremium'
-import { GREETING_COMPONENTS } from '@/components/templates/greeting/registry'
+import TemplateRenderer from '@/components/templates/TemplateRenderer'
+import { getTemplateData } from '@/modules/templates/data'
 import FloatingShareBar from '@/components/ui/FloatingShareBar'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
 import ExpiredInvitation from '@/components/e/ExpiredInvitation'
@@ -107,25 +95,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-const TEMPLATE_COMPONENTS: Record<
-  string,
-  React.ComponentType<{ data: Record<string, string>; eventId?: string; isPreview?: boolean }>
-> = {
-  ...GREETING_COMPONENTS,
-  'elegant-wedding': ElegantWedding,
-  'cinematic-night': CinematicWedding,
-  'indian-wedding': IndianWedding,
-  'indian-engagement': IndianEngagement,
-  'indian-birthday': IndianBirthday,
-  'griha-pravesh': HouseWarming,
-  'namakaran': NamingCeremony,
-  'anniversary': Anniversary,
-  'kgf-wedding': KGFWedding,
-  'royal-deco': RoyalDeco,
-  'luxury-wedding': LuxuryWedding,
-  'surprise-journey': SurpriseJourney,
-  'rakshabandhan': RakshaBandhanPremium,
-}
 
 export default async function EventPage({ params }: PageProps) {
   // Block the internal sentinel slug used for custom template requests
@@ -138,8 +107,9 @@ export default async function EventPage({ params }: PageProps) {
 
   if (!event) notFound()
 
-  const Component = TEMPLATE_COMPONENTS[event.templateId]
-  if (!Component) notFound()
+  // Validated against the plain template data, not the renderer: the renderer
+  // is a client module, so its exports cannot be called during server render.
+  if (!getTemplateData(event.templateId)) notFound()
 
   const data = event.data as Record<string, string>
 
@@ -193,8 +163,8 @@ export default async function EventPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {!event.isPaid && <FreePlanBanner />}
-      <Component data={data} eventId={event.id} />
-      <FloatingShareBar url={shareUrl} names={names} />
+      <TemplateRenderer templateId={event.templateId} data={data} eventId={event.id} />
+      <FloatingShareBar url={shareUrl} names={names} templateId={event.templateId} />
     </>
   )
 }

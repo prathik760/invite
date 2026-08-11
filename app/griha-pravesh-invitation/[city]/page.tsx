@@ -93,7 +93,7 @@ export default async function CityGrihaPraveshPage({ params }: { params: Promise
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 

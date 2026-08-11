@@ -7,9 +7,9 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Digital Anniversary Invitation India | ShareInvite' },
+  title: { absolute: 'Digital Anniversary Invitation India — Build Free, Publish ₹999 | ShareInvite' },
   description:
-    'Free digital anniversary invitation for India. Silver, golden & milestone e-invites. WhatsApp-ready with photos & countdown. Ready in 5 minutes.',
+    'Digital anniversary invitation for India. Silver, golden & milestone e-invites. WhatsApp-ready with photos & countdown. Build and preview free; publish for ₹999 one-time. Ready in 5 minutes.',
   keywords: [
     'anniversary invitation',
     'digital anniversary invitation India',
@@ -19,12 +19,11 @@ export const metadata: Metadata = {
     'golden anniversary invitation',
     'anniversary e-invite India',
     'anniversary invitation WhatsApp',
-    'free anniversary invitation online India',
   ],
   alternates: { canonical: `${APP_URL}/anniversary-invitation` },
   openGraph: {
-    title: 'Free Digital Anniversary Invitation India | ShareInvite',
-    description: 'Free digital anniversary invitation for India. Silver, golden & milestone anniversary e-invites. WhatsApp-ready with photos & countdown.',
+    title: 'Digital Anniversary Invitation India — Build Free, Publish ₹999 | ShareInvite',
+    description: 'Digital anniversary invitation for India. Silver, golden & milestone anniversary e-invites. WhatsApp-ready with photos & countdown.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Anniversary Invitation India' }],
@@ -37,7 +36,7 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'How do I create a digital anniversary invitation for free?',
+      name: 'How do I create a digital anniversary invitation in India?',
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Go to shareinvite.in/create, choose an anniversary template, enter the couple\'s names, anniversary year, celebration date, venue, and a personal message. Upload milestone photos from across the years, and your invitation is live in under 5 minutes — with a WhatsApp-shareable link for all family groups.',
@@ -65,6 +64,14 @@ const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: "Yes. ShareInvite's anniversary invitation includes a photo gallery section where you can upload the couple's photos from across the years — wedding photos, family milestones, travel memories, and recent pictures. Guests can swipe through the gallery while viewing the invitation, which makes the digital invite feel like a celebration in itself.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does a digital anniversary invitation cost?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The Anniversary template is ₹999 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you would like to try the product first.',
       },
     },
   ],
@@ -103,7 +110,7 @@ export default function AnniversaryInvitationPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create?template=anniversary" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=anniversary" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -113,7 +120,7 @@ export default function AnniversaryInvitationPage() {
         <div className="relative mx-auto max-w-4xl">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Free · WhatsApp ready · No app download
+            Build free · WhatsApp ready · No app download
           </div>
           <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
             Digital Anniversary Invitation<br />
@@ -124,9 +131,9 @@ export default function AnniversaryInvitationPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=anniversary" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Anniversary Invite Free →
+              Start My Anniversary Invite →
             </Link>
-            <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
+            <span className="text-sm text-muted">Free to build &amp; preview · ₹999 one-time to publish</span>
           </div>
         </div>
       </section>
@@ -182,7 +189,7 @@ export default function AnniversaryInvitationPage() {
       <section className="bg-white border-b border-border px-5 py-14">
         <div className="mx-auto max-w-5xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            How to Create a Free Digital Anniversary Invitation
+            How to Create a Digital Anniversary Invitation
           </h2>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
@@ -257,7 +264,7 @@ export default function AnniversaryInvitationPage() {
               { href: '/engagement-invitation', label: 'Digital Engagement Invitation' },
               { href: '/digital-invitation', label: 'All Digital Invitations' },
               { href: '/templates', label: 'Browse All Templates' },
-              { href: '/create', label: 'Create Your Anniversary Invitation Free' },
+              { href: '/create', label: 'Create Your Anniversary Invitation' },
             ].map(l => (
               <Link
                 key={l.href}
@@ -274,10 +281,10 @@ export default function AnniversaryInvitationPage() {
       {/* CTA */}
       <section className="px-5 py-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Free Anniversary Invitation Today</h2>
-          <p className="text-muted text-sm mb-7">Free to create · No credit card · WhatsApp-ready in 5 minutes</p>
+          <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Anniversary Invitation Today</h2>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹999 one-time to publish · WhatsApp-ready in 5 minutes</p>
           <Link href="/create?template=anniversary" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Anniversary Invite Free →
+            Start My Anniversary Invite →
           </Link>
         </div>
       </section>

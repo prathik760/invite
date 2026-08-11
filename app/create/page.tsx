@@ -7,9 +7,9 @@ import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TEMPLATES } from '@/modules/templates/data'
-import { PLANS, getRequiredPlan, type PlanId } from '@/lib/plans'
+import { PLANS, canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
 import ShareBar from '@/components/ui/ShareBar'
-import { seoEvents, trackEvent } from '@/lib/analytics'
+import { CREATE_STEPS, seoEvents, trackEvent } from '@/lib/analytics'
 
 import StepProgress from '@/components/create/StepProgress'
 import Step1Templates from '@/components/create/Step1Templates'
@@ -169,14 +169,24 @@ export default function CreatePage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const tplParam = params.get('template')
-    if (tplParam) {
-      const tpl = TEMPLATES.find(t => t.id === tplParam)
-      if (tpl) {
-        setSelectedId(tpl.id)
-        setData(tpl.config.defaultData)
-        setCurrentStep(2)
-      }
+    const tpl = tplParam ? TEMPLATES.find(t => t.id === tplParam) : undefined
+    if (tpl) {
+      setSelectedId(tpl.id)
+      setData(tpl.config.defaultData)
+      setCurrentStep(2)
     }
+    // Fires once per arrival at the builder. Previously nothing was recorded
+    // until the user *changed* template, so every visitor who landed on /create
+    // with a pre-selected template was invisible in the funnel.
+    const entry = tpl ?? TEMPLATES[0]
+    trackEvent(seoEvents.createStart, {
+      template_id: entry.id,
+      template_name: entry.name,
+      template_category: entry.category,
+      price: getRequiredPlan(entry.id).price,
+      entry_point: tpl ? 'deep_link' : 'gallery',
+      source: params.get('src') ?? undefined,
+    })
   }, [])
 
   // Fetch real user plan once signed in
@@ -214,6 +224,17 @@ export default function CreatePage() {
   }, [])
 
   const goToStep = (step: number) => {
+    // Only a forward move completes the step you were on. Going Back must not
+    // record a completion, or the funnel inflates every time someone edits.
+    if (step > currentStep) {
+      trackEvent(seoEvents.createStepComplete, {
+        step: currentStep,
+        step_name: CREATE_STEPS[currentStep],
+        template_id: selectedId,
+        template_name: selectedTemplate.name,
+        price: getRequiredPlan(selectedId).price,
+      })
+    }
     setCurrentStep(step)
     window.scrollTo({ top: 0, behavior: 'instant' })
     if (step > 1) {
@@ -234,8 +255,15 @@ export default function CreatePage() {
         body: JSON.stringify({ templateId: selectedTemplate.id, data }),
       })
       if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        throw new Error((body as { error?: string }).error || 'Failed to create invitation')
+        const body = await res.json().catch(() => ({})) as { error?: string; code?: string }
+        // Server-side entitlement check rejected this — open the paywall rather
+        // than showing a dead-end error message.
+        if (res.status === 402 || body.code === 'PAYMENT_REQUIRED') {
+          setLoading(false)
+          openPaywall()
+          return
+        }
+        throw new Error(body.error || 'Failed to create invitation')
       }
       const { slug } = await res.json() as { slug: string }
       setCreatedSlug(slug)
@@ -243,6 +271,8 @@ export default function CreatePage() {
         template_id: selectedTemplate.id,
         template_name: selectedTemplate.name,
         template_category: selectedTemplate.category,
+        price: getRequiredPlan(selectedTemplate.id).price,
+        signed_in: !!session,
         invite_slug: slug,
       })
     } catch (e) {
@@ -250,14 +280,49 @@ export default function CreatePage() {
     } finally { setLoading(false) }
   }
 
+  const openMobilePreview = () => {
+    trackEvent(seoEvents.previewOpen, {
+      template_id: selectedId,
+      template_name: selectedTemplate.name,
+      step: currentStep,
+      step_name: CREATE_STEPS[currentStep],
+    })
+    setPreviewOpen(true)
+  }
+
+  const requiredPlanForSelected = getRequiredPlan(selectedId)
+  const needsPayment = !canAccess(selectedId, userPlan)
+
+  const openPaywall = () => {
+    trackEvent(seoEvents.paywallView, {
+      template_id: selectedId,
+      template_name: selectedTemplate.name,
+      plan: requiredPlanForSelected.id,
+      price: requiredPlanForSelected.price,
+    })
+    setUpgradeTarget({ templateId: selectedId, templateName: selectedTemplate.name })
+  }
+
   const handleCreate = () => {
+    trackEvent(seoEvents.publishClick, {
+      template_id: selectedId,
+      template_name: selectedTemplate.name,
+      price: requiredPlanForSelected.price,
+      requires_payment: needsPayment,
+      signed_in: !!session,
+    })
+
     if (!session) {
       try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data, step: currentStep })) } catch { }
+      trackEvent(seoEvents.signupStart, { trigger: 'publish', template_id: selectedId })
       setShowLoginPrompt(true)
       return
     }
-    if (getRequiredPlan(selectedId).price > 0) {
-      setUpgradeTarget({ templateId: selectedId, templateName: selectedTemplate.name })
+    // Was `getRequiredPlan(selectedId).price > 0`, which ignored what the user
+    // had already bought — a paying customer was shown the upgrade modal again
+    // on every publish and could never use the template they owned.
+    if (needsPayment) {
+      openPaywall()
       return
     }
     doCreate()
@@ -265,6 +330,13 @@ export default function CreatePage() {
 
   const handleContinueAsGuest = () => {
     setShowLoginPrompt(false)
+    // Guests may publish free templates only. Paid templates need an account to
+    // attach the purchase to; the API rejects the request either way, so send
+    // them to the paywall rather than into a failed create.
+    if (getRequiredPlan(selectedId).price > 0) {
+      openPaywall()
+      return
+    }
     doCreate()
   }
 
@@ -272,6 +344,15 @@ export default function CreatePage() {
   const handleUpgradePayment = useCallback(async (planId: PlanId) => {
     if (payRef.current) return
     payRef.current = true; setPaying(true)
+    const plan = PLANS.find(p => p.id === planId)
+    trackEvent(seoEvents.checkoutStart, {
+      plan: planId,
+      plan_name: plan?.name,
+      price: plan?.price,
+      currency: 'INR',
+      template_id: upgradeTarget?.templateId,
+      template_name: upgradeTarget?.templateName,
+    })
     try {
       const orderRes = await fetch('/api/payments/create-order', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -294,8 +375,23 @@ export default function CreatePage() {
               method: 'POST', headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ ...response, plan: planId }),
             })
-            const verBody = await verRes.json() as { success?: boolean; error?: string }
+            const verBody = await verRes.json() as { success?: boolean; error?: string; plan?: PlanId }
             if (verRes.ok && verBody.success) {
+              // Fires only after the server verified the Razorpay signature and
+              // amount — never on opening or dismissing the checkout sheet.
+              trackEvent(seoEvents.purchase, {
+                transaction_id: response.razorpay_payment_id,
+                plan: planId,
+                plan_name: plan?.name,
+                value: plan?.price,
+                price: plan?.price,
+                currency: 'INR',
+                template_id: upgradeTarget?.templateId,
+                template_name: upgradeTarget?.templateName,
+              })
+              // Reflect the new entitlement immediately so the publish path does
+              // not bounce the user back to the paywall they just paid at.
+              setUserPlan(verBody.plan ?? planId)
               setUpgradeTarget(null)
               setTimeout(() => doCreate(), 300)
             } else { alert(verBody.error ?? 'Payment verification failed.') }
@@ -464,8 +560,8 @@ export default function CreatePage() {
             <div
               role="button"
               tabIndex={0}
-              onClick={() => setPreviewOpen(true)}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPreviewOpen(true) } }}
+              onClick={() => openMobilePreview()}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMobilePreview() } }}
               className="block w-full cursor-pointer md:hidden"
               aria-label="Open full-screen preview of your invitation"
             >
@@ -784,10 +880,11 @@ export default function CreatePage() {
                 </button>
               </div>
 
-              <ShareBar url={shareUrl} names={names} />
+              <ShareBar url={shareUrl} names={names} templateId={selectedId} source="create_success" />
 
-              {/* Branding notice for free plan — most important conversion moment */}
-              {getRequiredPlan(selectedId).price === 0 && (
+              {/* Branding notice — shown only when the published invite really
+                  carries the banner (free template AND free plan). */}
+              {getRequiredPlan(selectedId).price === 0 && userPlan === 'free' && (
                 <div className="rounded-xl px-4 py-3 flex items-start gap-3 mb-1"
                   style={{ background: 'rgba(217,164,65,0.07)', border: '1px solid rgba(217,164,65,0.25)' }}>
                   <span className="text-base shrink-0 mt-0.5">👀</span>

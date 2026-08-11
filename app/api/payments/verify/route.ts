@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { getRazorpayClient, verifyPaymentSignature, getPlanPrice } from '@/lib/razorpay'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
-import { PLAN_MAP } from '@/lib/plans'
+import { PLAN_MAP, planLevel } from '@/lib/plans'
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -52,24 +52,36 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, plan: existing.plan })
     }
 
+    // Never downgrade on a later, cheaper purchase. A customer on All Access
+    // who then buys the standalone Raksha Bandhan plan must keep All Access —
+    // a plain upsert would overwrite it and revoke templates they paid for.
+    const current = await prisma.subscription.findUnique({
+      where: { userId: session.user.id },
+      select: { plan: true, status: true },
+    })
+    const keepExisting =
+      current?.status === 'active' &&
+      planLevel(current.plan as PlanId) > planLevel(plan as PlanId)
+    const effectivePlan = (keepExisting ? current!.plan : plan) as PlanId
+
     await prisma.subscription.upsert({
       where: { userId: session.user.id },
       update: {
-        plan: plan as PlanId,
+        plan: effectivePlan,
         status: 'active',
         razorpayPaymentId: razorpay_payment_id,
         razorpayOrderId: razorpay_order_id,
       },
       create: {
         userId: session.user.id,
-        plan: plan as PlanId,
+        plan: effectivePlan,
         status: 'active',
         razorpayPaymentId: razorpay_payment_id,
         razorpayOrderId: razorpay_order_id,
       },
     })
 
-    return NextResponse.json({ success: true, plan })
+    return NextResponse.json({ success: true, plan: effectivePlan })
   } catch (err) {
     console.error('[POST /api/payments/verify]', err)
     return NextResponse.json({ error: 'Could not activate subscription. Contact support with payment ID.' }, { status: 500 })

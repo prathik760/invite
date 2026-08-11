@@ -103,7 +103,7 @@ export default function WeddingInvitationPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create?template=elegant-wedding" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=elegant-wedding" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -126,7 +126,7 @@ export default function WeddingInvitationPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=elegant-wedding" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Free Wedding Invite →
+              Start My Wedding Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
           </div>
@@ -225,7 +225,7 @@ export default function WeddingInvitationPage() {
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { price: '₹0', sub: 'Free forever', templates: 'Elegant Wedding' },
+              { price: '₹0', sub: 'Free to publish', templates: 'Elegant Wedding' },
               { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran' },
               { price: '₹599', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh' },
               { price: '₹999', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
@@ -290,7 +290,7 @@ export default function WeddingInvitationPage() {
           </h2>
           <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes.</p>
           <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Wedding Invite Free →
+            Start My Wedding Invite →
           </Link>
         </div>
       </section>

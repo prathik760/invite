@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { templateImage } from '@/lib/templateMedia'
+import { formatTemplatePrice, templatePrice } from '@/lib/plans'
+import { trackCta } from '@/lib/analytics'
 
 interface TemplateItem {
   name: string
@@ -9,7 +12,9 @@ interface TemplateItem {
   templateId: string
   theme: string
   category: string
-  previewImage: string
+  /** Unused. Kept optional so existing page data still type-checks; the real
+   *  preview is resolved from templateId. */
+  previewImage?: string
 }
 
 interface FaqItem {
@@ -87,12 +92,24 @@ export default function TemplateGallery({
               key={template.slug}
               className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm"
             >
+              {/* Resolved from templateId. Every page in this gallery pointed at
+                  /templates/*-preview.jpg, a directory that does not exist in
+                  /public — so all six wedding cards, and every card on the
+                  birthday, engagement, anniversary and griha pravesh galleries,
+                  rendered as a broken image. */}
               <div className="aspect-[3/4] bg-[#FCF7F1] relative">
                 <img
-                  src={template.previewImage}
+                  src={templateImage(template.templateId)}
                   alt={`${template.name} digital invitation template`}
+                  loading="lazy"
                   className="h-full w-full object-cover"
                 />
+                <span
+                  className="absolute right-3 top-3 rounded-full px-2.5 py-1 text-xs font-bold shadow-sm"
+                  style={{ background: 'rgba(255,255,255,0.94)', color: '#B87924' }}
+                >
+                  {formatTemplatePrice(template.templateId)}
+                </span>
               </div>
               <div className="p-5">
                 <span className="rounded-full border border-[#D9A441]/30 bg-[#FFFBF5] px-2.5 py-1 text-xs font-semibold text-accent-strong">
@@ -107,7 +124,15 @@ export default function TemplateGallery({
                     Preview
                   </Link>
                   <Link
-                    href={`/create?template=${template.templateId}`}
+                    href={`/create?template=${template.templateId}&src=gallery`}
+                    onClick={() =>
+                      trackCta('Use This', 'template_gallery_card', {
+                        template_id: template.templateId,
+                        template_name: template.name,
+                        price: templatePrice(template.templateId),
+                        page_type: 'template_gallery',
+                      })
+                    }
                     className="gold-button flex-1 rounded-lg py-2 text-center text-sm font-semibold"
                   >
                     Use This

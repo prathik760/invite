@@ -82,7 +82,7 @@ export default function EngagementInvitationWordingPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create?template=indian-engagement" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=indian-engagement" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -104,7 +104,7 @@ export default function EngagementInvitationWordingPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=indian-engagement" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Engagement Invite Free →
+              Start My Engagement Invite →
             </Link>
             <span className="text-sm text-muted">Free to start · No credit card</span>
           </div>
@@ -210,7 +210,7 @@ export default function EngagementInvitationWordingPage() {
               'RSVP — track who confirmed',
             ]}
             ctaHref="/engagement-invitation"
-            ctaText="Create Engagement Invite Free →"
+            ctaText="Start My Engagement Invite →"
           />
         </div>
       </section>
@@ -830,12 +830,12 @@ export default function EngagementInvitationWordingPage() {
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Ready to Create Your Digital Engagement Invitation?</h2>
           <p className="text-muted text-sm mb-7">Use any wording sample above. Add photos, venue map, and schedule — share in 5 minutes.</p>
           <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Engagement Invite Free →
+            Start My Engagement Invite →
           </Link>
         </div>
       </section>
 
-      <StickyCTA href="/engagement-invitation" text="Create Engagement Invite Free →" />
+      <StickyCTA href="/engagement-invitation" text="Start My Engagement Invite →" />
 
       <SiteFooter />
     </main>

@@ -2,7 +2,12 @@
 
 import { useState } from 'react'
 
-const faqs = [
+export interface Faq {
+  question: string
+  answer: string
+}
+
+const defaultFaqs: Faq[] = [
   {
     question: 'What is a digital invitation website?',
     answer: 'A digital invitation website is a mobile-friendly event page guests open from a link. It includes event details, photos, countdown, music, map directions, and guest wishes — all in one beautifully designed page they can save and revisit.',
@@ -13,7 +18,7 @@ const faqs = [
   },
   {
     question: 'Is this designed for Indian weddings and family events?',
-    answer: 'Yes. The product is built for Indian event workflows where families share invites on WhatsApp and guests need quick access to date, time, venue, maps, and ceremony details. All 10 templates are designed for Indian celebrations — weddings, engagements, birthdays, Griha Pravesh, Namakaran, and anniversaries.',
+    answer: 'Yes. The product is built for Indian event workflows where families share invites on WhatsApp and guests need quick access to date, time, venue, maps, and ceremony details. Every template is designed for Indian celebrations — weddings, engagements, birthdays, Griha Pravesh, Namakaran, and anniversaries.',
   },
   {
     question: 'Which plan should I choose?',
@@ -33,11 +38,17 @@ const faqs = [
   },
   {
     question: 'Can I use this for events other than weddings?',
-    answer: 'Absolutely. ShareInvite has 10 templates covering weddings, engagements (Mangni), birthdays (Janamdin), house warmings (Griha Pravesh), naming ceremonies (Namakaran), and anniversaries. If you need a custom design for a different event, use the "Request Custom Template" section to describe your requirements.',
+    answer: 'Absolutely. ShareInvite has templates covering weddings, engagements (Mangni), birthdays (Janamdin), house warmings (Griha Pravesh), naming ceremonies (Namakaran), and anniversaries. If you need a custom design for a different event, use the "Request Custom Template" section to describe your requirements.',
   },
 ]
 
-export default function FAQAccordion() {
+/**
+ * `faqs` is a prop so a page can render exactly the questions it also emits as
+ * FAQPage JSON-LD. Google requires FAQ structured data to match content that is
+ * visible on the page — /pricing previously shipped five pricing questions in
+ * its schema while rendering these eight generic ones.
+ */
+export default function FAQAccordion({ faqs = defaultFaqs }: { faqs?: Faq[] }) {
   const [open, setOpen] = useState<number | null>(0)
 
   return (

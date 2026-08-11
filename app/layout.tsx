@@ -5,11 +5,13 @@ import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
 
-// Loaded only after hydration — no SSR, no CWV impact, no hydration mismatch
-const SocialProofNotification = dynamic(
-  () => import('@/components/social-proof/SocialProofNotification'),
-  { ssr: false },
-)
+// The SocialProofNotification widget was removed here. It synthesised
+// "<Name> from <City> just created a <type> invitation" toasts by picking at
+// random from a static list in data/socialProof.ts — none of it reflected real
+// activity. Fabricated social proof is a consumer-protection problem and, on a
+// site whose measured activity is ~1 invitation created per 28 days, an easy
+// one to disprove. Reinstate only when backed by real published-invite data
+// (a lightweight endpoint over the Event table would do it).
 
 const WhatsAppButton = dynamic(
   () => import('@/components/WhatsAppButton'),
@@ -209,7 +211,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         <AnimateOnScroll />
         <SessionProvider>{children}</SessionProvider>
-        <SocialProofNotification />
         <WhatsAppButton />
         {GTM_ID && (
           <Script

@@ -7,16 +7,14 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Digital Griha Pravesh Invitation India | ShareInvite' },
+  title: { absolute: 'Digital Griha Pravesh Invitation India — Build Free, Publish ₹599 | ShareInvite' },
   description:
-    'Free digital Griha Pravesh invitation for India. Share muhurat time, pooja schedule & Google Maps on WhatsApp. No app needed. Ready in 5 minutes.',
+    'Digital Griha Pravesh invitation for India. Share muhurat time, pooja schedule & Google Maps on WhatsApp. No app needed. Build and preview free; publish for ₹599 one-time. Ready in 5 minutes.',
   keywords: [
     'digital Griha Pravesh invitation',
-    'online housewarming invitation India free',
     'Griha Pravesh invitation WhatsApp',
     'housewarming ceremony invitation digital',
     'Griha Pravesh e-invite India',
-    'griha pravesh card online free',
     'housewarming invitation website India',
     'digital house warming invitation',
     'ghar pravesh invitation online',
@@ -26,8 +24,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/griha-pravesh-invitation` },
   openGraph: {
-    title: 'Free Digital Griha Pravesh Invitation | Housewarming E-Invite India | ShareInvite',
-    description: 'Create a stunning digital Griha Pravesh invitation with muhurat time, pooja schedule, and Google Maps. WhatsApp-ready. Free to start.',
+    title: 'Digital Griha Pravesh Invitation | Housewarming E-Invite India | ShareInvite',
+    description: 'Create a stunning digital Griha Pravesh invitation with muhurat time, pooja schedule, and Google Maps. WhatsApp-ready. Build and preview free — publish for ₹599 one-time.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Griha Pravesh Invitation India' }],
@@ -40,7 +38,7 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'How do I create a digital Griha Pravesh invitation for free?',
+      name: 'How do I create a digital Griha Pravesh invitation in India?',
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Go to shareinvite.in/create, choose a template, enter the muhurat time, new address, pooja schedule, and a family blessing message. Your Griha Pravesh invitation is live in under 5 minutes — share the link directly on WhatsApp with all family groups.',
@@ -68,6 +66,14 @@ const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Send the Griha Pravesh invitation at least 10–14 days before the ceremony. Share a reminder on WhatsApp 2 days before. With a digital invitation, reminders are as simple as re-forwarding the same link — no new design or printing needed.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does a digital Griha Pravesh invitation cost?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The Griha Pravesh template is ₹599 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you would like to try the product first.',
       },
     },
   ],
@@ -104,7 +110,7 @@ export default function GrihaPraveshInvitationPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create?template=griha-pravesh" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=griha-pravesh" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -114,20 +120,20 @@ export default function GrihaPraveshInvitationPage() {
         <div className="relative mx-auto max-w-4xl">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Free · WhatsApp ready · No app download
+            Build free · WhatsApp ready · No app download
           </div>
           <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
             Digital Griha Pravesh Invitation<br />
             <span className="gradient-accent italic">Housewarming · Ghar Pravesh</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital Griha Pravesh invitation in minutes. Share the muhurat time, full pooja schedule, new address with Google Maps, and family blessings — all from one WhatsApp link. Free to start.
+            Create a beautiful digital Griha Pravesh invitation in minutes. Share the muhurat time, full pooja schedule, new address with Google Maps, and family blessings — all from one WhatsApp link. Build and preview free — publish for ₹599 one-time.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=griha-pravesh" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Free Griha Pravesh Invite →
+              Start My Griha Pravesh Invite →
             </Link>
-            <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
+            <span className="text-sm text-muted">Free to build &amp; preview · ₹599 one-time to publish</span>
           </div>
         </div>
       </section>
@@ -139,7 +145,7 @@ export default function GrihaPraveshInvitationPage() {
             Griha Pravesh Invitations for Every Regional Housewarming Tradition
           </h2>
           <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Griha Pravesh, Ghar Pravesh, Gruhapravesham, Vastu Puja — one free digital invitation works for all regional traditions
+            Griha Pravesh, Ghar Pravesh, Gruhapravesham, Vastu Puja — one digital invitation works for all regional traditions
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CEREMONY_NAMES.map(c => (
@@ -179,7 +185,7 @@ export default function GrihaPraveshInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-5xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            How to Create a Free Griha Pravesh Digital Invitation
+            How to Create a Griha Pravesh Digital Invitation
           </h2>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
@@ -218,11 +224,11 @@ export default function GrihaPraveshInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Create Your Free Griha Pravesh Invitation
+            Create Your Griha Pravesh Invitation
           </h2>
-          <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes. Loved by Indian families.</p>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹599 one-time to publish · WhatsApp-ready in 5 minutes</p>
           <Link href="/create?template=griha-pravesh" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Griha Pravesh Invite Free →
+            Start My Griha Pravesh Invite →
           </Link>
         </div>
       </section>

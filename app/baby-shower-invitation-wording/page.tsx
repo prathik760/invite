@@ -73,10 +73,10 @@ export default function BabyShowerInvitationWordingPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
-      <StickyCTA href="/create" text="Create Free Baby Shower Invite →" />
+      <StickyCTA href="/create" text="Start My Baby Shower Invite →" />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
@@ -95,7 +95,7 @@ export default function BabyShowerInvitationWordingPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Baby Shower Invite Free →
+              Start My Baby Shower Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · WhatsApp-ready link</span>
           </div>
@@ -192,7 +192,7 @@ Invite & map: [Digital Invite Link]`}</WordingCopyCard>
             body="Each message above has a [Digital Invite Link] slot. That's a real page on ShareInvite — with venue address, Google Maps, and RSVP built in. Create yours free."
             features={['Venue address + Google Maps pin', 'RSVP so you know headcount', 'Ceremony schedule included', 'WhatsApp-ready in 5 minutes']}
             ctaHref="/create"
-            ctaText="Create Baby Shower Invite Free →"
+            ctaText="Start My Baby Shower Invite →"
           />
         </div>
       </div>
@@ -318,7 +318,7 @@ Gifts optional — your presence is the present!`}</WordingCopyCard>
             body="Know exactly how many people are coming before the event. No more vague confirmations with 3 yes replies and 7 no-shows. A digital invite with RSVP tracks it all."
             features={['Real RSVP with name and count', 'Automated reminder 1 day before', 'WhatsApp share in one tap', 'Free plan — no credit card']}
             ctaHref="/create"
-            ctaText="Create Free Baby Shower Invite →"
+            ctaText="Start My Baby Shower Invite →"
           />
         </div>
       </div>
@@ -483,7 +483,7 @@ Gifts optional — your presence is the present!`}</WordingCopyCard>
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Baby Shower Invitation</h2>
           <p className="text-muted text-sm mb-7">Free to create · Godh Bharai, Seemantham &amp; modern baby shower · WhatsApp-ready</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Baby Shower Invite Free →
+            Start My Baby Shower Invite →
           </Link>
         </div>
       </section>

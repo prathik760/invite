@@ -7,6 +7,46 @@ import { seoEvents, trackEvent } from '@/lib/analytics'
 interface ShareBarProps {
   url: string
   names?: string
+  /** Template the invitation was built from — decides the share wording. */
+  templateId?: string
+  /** Where the share happened, so GA4 can separate host shares from guest shares. */
+  source?: string
+}
+
+/**
+ * WhatsApp share copy per occasion.
+ *
+ * This used to be a single hard-coded wedding string, so a birthday, griha
+ * pravesh or Raksha Bandhan invite was forwarded as "*X & Y Wedding
+ * Invitation* 💍". Guests receiving obviously wrong wording is a direct hit on
+ * the forward rate, which is the product's main growth loop.
+ */
+function shareMessage(templateId: string | undefined, names: string | undefined, url: string) {
+  const who = names ? `*${names}*\n\n` : ''
+  const line = (emoji: string, label: string) =>
+    `You're invited! ${emoji}\n\n${who}${label}\n\nView the invitation and leave your wishes:\n${url}`
+
+  switch (templateId) {
+    case 'indian-birthday':
+      return line('🎉', 'Birthday celebration invitation')
+    case 'griha-pravesh':
+      return line('🏡', 'Griha Pravesh invitation')
+    case 'namakaran':
+      return line('👶', 'Namakaran ceremony invitation')
+    case 'indian-engagement':
+      return line('💍', 'Engagement invitation')
+    case 'anniversary':
+      return line('❤️', 'Anniversary celebration invitation')
+    case 'rakshabandhan':
+      return line('🎀', 'Raksha Bandhan celebration')
+    case 'surprise-journey':
+      return `I made something for you 🎁\n\nOpen your surprise:\n${url}`
+    default:
+      if (templateId?.startsWith('greeting-')) {
+        return `I made something for you 💛\n\nOpen it here:\n${url}`
+      }
+      return line('💍', 'Wedding invitation')
+  }
 }
 
 function WhatsAppIcon() {
@@ -25,16 +65,15 @@ function LinkIcon() {
   )
 }
 
-export default function ShareBar({ url, names }: ShareBarProps) {
+export default function ShareBar({ url, names, templateId, source = 'unknown' }: ShareBarProps) {
   const [copied, setCopied] = useState(false)
 
-  const waText = names
-    ? `You're invited! 💍\n\n*${names} Wedding Invitation*\n\nView the invitation and leave your wishes:\n${url}`
-    : `You're invited! 💍\n\nView the wedding invitation:\n${url}`
+  const waText = shareMessage(templateId, names, url)
 
   const waHref = `https://wa.me/?text=${encodeURIComponent(waText)}`
 
   const handleCopy = async () => {
+    trackEvent(seoEvents.linkCopy, { share_url: url, template_id: templateId, source })
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
@@ -55,6 +94,8 @@ export default function ShareBar({ url, names }: ShareBarProps) {
     trackEvent(seoEvents.whatsappShare, {
       share_url: url,
       invite_names: names,
+      template_id: templateId,
+      source,
     })
   }
 

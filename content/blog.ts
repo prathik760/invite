@@ -13,7 +13,7 @@ export const blogCategories = [
 
 export type BlogCategory = (typeof blogCategories)[number]
 
-const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string; metaTitle?: string }> = [
+const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string; metaTitle?: string; slug?: string }> = [
   { title: 'Best Digital Wedding Invitation Templates in India', category: 'Wedding', keyword: 'digital wedding invitation templates India' },
   { title: 'How To Create A WhatsApp Wedding Invitation', category: 'Wedding', keyword: 'WhatsApp wedding invitation' },
   { title: 'Digital Wedding Invitation Vs Printed Cards', category: 'Digital Invitations', keyword: 'digital wedding invitation vs printed cards' },
@@ -150,14 +150,16 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     description: 'Send a Friendship Day card online with a playful 3D star-filled animation, your favourite photos together and an inside-joke message. The perfect Happy Friendship Day greeting for your best friends — create and share on WhatsApp in minutes.',
   },
 
-  // ─── Raksha Bandhan (free template) ─────────────────────────────────────────
+  // ─── Raksha Bandhan (premium template) ──────────────────────────────────────
   {
-    title: 'Raksha Bandhan Invitation Card Online — Free Digital Rakhi Template',
+    title: 'Raksha Bandhan Invitation Card Online — Premium Digital Rakhi Template',
     category: 'Digital Invitations',
     keyword: 'raksha bandhan invitation card online',
     date: '2026-08-08',
-    metaTitle: 'Raksha Bandhan Invitation Card Online — Free Digital Rakhi Invite (2026)',
-    description: 'Create a free Raksha Bandhan invitation card online in minutes — a beautiful digital Rakhi invite and greeting with photos, a live countdown, event timeline, guest wishes, RSVP and one-tap WhatsApp sharing. Perfect for brothers and sisters, including NRIs celebrating from abroad.',
+    // Slug pinned to the originally-indexed URL so existing links keep working.
+    slug: 'raksha-bandhan-invitation-card-online-free-digital-rakhi-template',
+    metaTitle: 'Raksha Bandhan Invitation Card Online — Premium Digital Rakhi Invite (2026)',
+    description: 'Create a stunning Raksha Bandhan invitation card online in minutes — a premium digital Rakhi invite and greeting with photos, a live countdown, event timeline, guest wishes, RSVP and one-tap WhatsApp sharing. Just ₹199 for the whole celebration. Perfect for brothers and sisters, including NRIs celebrating from abroad.',
   },
 ]
 
@@ -196,7 +198,7 @@ function buildDescription(title: string, keyword: string, category: BlogCategory
 }
 
 export const blogDrafts: BlogDraft[] = draftTitles.map((item, index) => ({
-  slug: slugify(item.title),
+  slug: item.slug ?? slugify(item.title),
   title: item.title,
   category: item.category,
   keyword: item.keyword,

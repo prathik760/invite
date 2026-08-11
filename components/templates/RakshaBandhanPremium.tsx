@@ -201,6 +201,7 @@ const IconDiya = (p: IconProps) => (
 const IconHeart = (p: IconProps) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M12 21s-7-4.35-9.5-8.5C.6 9.3 2.2 5.6 5.6 5.6c2 0 3.2 1.2 4.4 2.8 1.2-1.6 2.4-2.8 4.4-2.8 3.4 0 5 3.7 3.1 6.9C19 16.65 12 21 12 21Z" /></svg>
 )
+/* Used only by the currently-disabled RSVP + gift section (see below):
 const IconCoin = (p: IconProps) => (
   <svg {...svgBase} {...p}><circle cx="12" cy="12" r="8" /><path d="M9.5 8h5M9.5 10.4h5M13.2 8c1.4 0 1.4 2.4 0 2.4h-2l3.3 3.6" /></svg>
 )
@@ -213,18 +214,23 @@ const IconCheck = (p: IconProps) => (
 const IconSend = (p: IconProps) => (
   <svg {...svgBase} {...p}><path d="M21.5 2.5 10.8 13.2M21.5 2.5 14.7 21.5l-3.9-8.3-8.3-3.9z" /></svg>
 )
+*/
 
 const TIMELINE_ICONS = [IconRakhi, IconSweet, IconMeal, IconGiftBox, IconCamera]
 
-const SOCIAL_ICONS: { label: string; path: React.ReactNode }[] = [
-  { label: 'Facebook', path: <path d="M13.5 9H16l.5-3h-3V4.2c0-.8.3-1.4 1.5-1.4H16.7V.1C16.3.05 15.3 0 14.2 0 11.9 0 10.3 1.4 10.3 4v2H7.6v3h2.7v8h3.2V9z" /> },
-  { label: 'Instagram', path: <path d="M12 2.2c3.2 0 3.6 0 4.9.07 3.25.15 4.77 1.69 4.92 4.92.06 1.28.07 1.66.07 4.86s-.01 3.58-.07 4.86c-.15 3.23-1.66 4.77-4.92 4.92-1.3.06-1.68.07-4.9.07s-3.6-.01-4.9-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.12 15.6 2.11 15.2 2.11 12s.01-3.58.07-4.86C2.33 3.9 3.84 2.36 7.1 2.21 8.4 2.15 8.8 2.14 12 2.14zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.3.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 114-4 4 4 0 01-4 4zm6.4-11.85a1.44 1.44 0 101.44 1.44 1.44 1.44 0 00-1.44-1.44z" /> },
-  { label: 'YouTube', path: <path d="M23.5 6.5a3 3 0 00-2.1-2.1C19.5 3.9 12 3.9 12 3.9s-7.5 0-9.4.5A3 3 0 00.5 6.5C0 8.4 0 12 0 12s0 3.6.5 5.5a3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1C24 15.6 24 12 24 12s0-3.6-.5-5.5zM9.6 15.6V8.4l6.2 3.6z" /> },
-  { label: 'Pinterest', path: <path d="M12 0A12 12 0 007.4 23c-.1-.9-.2-2.4 0-3.4l1.4-6s-.4-.7-.4-1.8c0-1.7 1-3 2.2-3 1 0 1.5.8 1.5 1.7 0 1-.7 2.6-1 4-.3 1.2.6 2.1 1.7 2.1 2 0 3.5-2.2 3.5-5.3 0-2.8-2-4.7-4.8-4.7-3.3 0-5.2 2.4-5.2 4.9 0 1 .3 2 .8 2.6.1.1.1.2.1.3l-.3 1.3c0 .2-.2.3-.4.2-1.4-.7-2.2-2.8-2.2-4.5 0-3.6 2.6-7 7.5-7 4 0 7.1 2.8 7.1 6.6 0 4-2.5 7.1-6 7.1-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.3 1-1 2.3-1.4 3A12 12 0 1012 0z" /> },
+const SHAREINVITE_URL = 'https://shareinvite.in'
+const SHAREINVITE_LINKEDIN = 'https://www.linkedin.com/company/share-invite'
+const SHAREINVITE_INSTAGRAM = 'https://www.instagram.com/shareinvite.in'
+
+const SOCIAL_ICONS: { label: string; href: string; path: React.ReactNode }[] = [
+  { label: 'Instagram', href: SHAREINVITE_INSTAGRAM, path: <path d="M12 2.2c3.2 0 3.6 0 4.9.07 3.25.15 4.77 1.69 4.92 4.92.06 1.28.07 1.66.07 4.86s-.01 3.58-.07 4.86c-.15 3.23-1.66 4.77-4.92 4.92-1.3.06-1.68.07-4.9.07s-3.6-.01-4.9-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.12 15.6 2.11 15.2 2.11 12s.01-3.58.07-4.86C2.33 3.9 3.84 2.36 7.1 2.21 8.4 2.15 8.8 2.14 12 2.14zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.3.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 114-4 4 4 0 01-4 4zm6.4-11.85a1.44 1.44 0 101.44 1.44 1.44 1.44 0 00-1.44-1.44z" /> },
+  { label: 'LinkedIn', href: SHAREINVITE_LINKEDIN, path: <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z" /> },
 ]
 
+/* Placeholder QR — used only by the currently-disabled gift section (see below):
 const TINY_QR =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' fill='%23fff'/%3E%3Cg fill='%23161616'%3E%3Crect x='8' y='8' width='34' height='34'/%3E%3Crect x='16' y='16' width='18' height='18' fill='%23fff'/%3E%3Crect x='21' y='21' width='8' height='8' fill='%23161616'/%3E%3Crect x='78' y='8' width='34' height='34'/%3E%3Crect x='86' y='16' width='18' height='18' fill='%23fff'/%3E%3Crect x='91' y='21' width='8' height='8' fill='%23161616'/%3E%3Crect x='8' y='78' width='34' height='34'/%3E%3Crect x='16' y='86' width='18' height='18' fill='%23fff'/%3E%3Crect x='21' y='91' width='8' height='8' fill='%23161616'/%3E%3Crect x='52' y='10' width='8' height='8'/%3E%3Crect x='52' y='26' width='8' height='8'/%3E%3Crect x='52' y='42' width='8' height='8'/%3E%3Crect x='68' y='52' width='8' height='8'/%3E%3Crect x='52' y='60' width='8' height='8'/%3E%3Crect x='84' y='52' width='8' height='8'/%3E%3Crect x='100' y='60' width='8' height='8'/%3E%3Crect x='60' y='78' width='8' height='8'/%3E%3Crect x='76' y='84' width='8' height='8'/%3E%3Crect x='92' y='78' width='8' height='8'/%3E%3Crect x='100' y='92' width='8' height='8'/%3E%3Crect x='60' y='100' width='8' height='8'/%3E%3Crect x='84' y='100' width='8' height='8'/%3E%3C/g%3E%3C/svg%3E"
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' fill='%23fff'/%3E%3Cg fill='%23161616'%3E%3Crect x='8' y='8' width='34' height='34'/%3E%3Crect x='16' y='16' width='18' height='18' fill='%23fff'/%3E%3Crect x='21' y='21' width='8' height='8' fill='%23161616'/%3E%3Crect x='78' y='8' width='34' height='34'/%3E%3Crect x='86' y='16' width='18' height='18' fill='%23fff'/%3E%3Crect x='91' y='21' width='8' height='8' fill='%23161616'/%3E%3Crect x='8' y='78' width='34' height='34'/%3E%3Crect x='16' y='86' width='18' height='18' fill='%23fff'/%3E%3Crect x='21' y='91' width='8' height='8' fill='%23161616'/%3E%3Crect x='52' y='10' width='8' height='8'/%3E%3Crect x='52' y='26' width='8' height='8'/%3E%3Crect x='52' y='42' width='8' height='8'/%3E%3Crect x='68' y='52' width='8' height='8'/%3E%3Crect x='52' y='60' width='8' height='8'/%3E%3Crect x='84' y='52' width='8' height='8'/%3E%3Crect x='100' y='60' width='8' height='8'/%3E%3Crect x='60' y='78' width='8' height='8'/%3E%3Crect x='76' y='84' width='8' height='8'/%3E%3Crect x='92' y='78' width='8' height='8'/%3E%3Crect x='60' y='100' width='8' height='8'/%3E%3Crect x='84' y='100' width='8' height='8'/%3E%3C/g%3E%3C/svg%3E"
+*/
 
 // ── Music button (floating) ──────────────────────────────────────────────────
 const MusicButton = memo(function MusicButton({ src }: { src: string }) {
@@ -240,7 +246,7 @@ const MusicButton = memo(function MusicButton({ src }: { src: string }) {
     const a = audioRef.current
     if (!a) return
     if (playing) { a.pause(); setPlaying(false) }
-    else a.play().then(() => setPlaying(true)).catch(() => {})
+    else a.play().then(() => setPlaying(true)).catch(() => { })
   }, [playing])
   return (
     <button
@@ -514,18 +520,18 @@ export default function RakshaBandhanPremium({ data, eventId, isPreview = false 
                 {timeline.map((t, i) => {
                   const TlIcon = TIMELINE_ICONS[i % TIMELINE_ICONS.length]
                   return (
-                  <motion.div key={i} {...fadeUp(i * 0.08)} className="flex h-full flex-col items-center text-center">
-                    <div className="relative z-[2] mb-4 flex h-14 w-14 shrink-0 items-center justify-center rounded-full"
-                      style={{ background: C.white, border: `2px solid ${C.goldBorder}`, boxShadow: '0 6px 16px rgba(194,150,46,0.2)', color: C.rose }}>
-                      <TlIcon className="h-6 w-6" />
-                    </div>
-                    <div className="flex w-full flex-1 flex-col rounded-2xl px-4 py-4 transition-transform hover:-translate-y-1"
-                      style={{ background: C.paper, border: `1px solid ${C.roseBorder}`, boxShadow: '0 10px 28px rgba(158,43,78,0.07)' }}>
-                      <p className="font-heading text-[15px]" style={{ color: C.roseDeep }}>{t.title}</p>
-                      {t.time && <p className="mt-1 text-xs font-semibold" style={{ color: C.gold }}>{t.time}</p>}
-                      {t.desc && <p className="mt-2 text-[12.5px] leading-relaxed" style={{ color: C.inkSoft }}>{t.desc}</p>}
-                    </div>
-                  </motion.div>
+                    <motion.div key={i} {...fadeUp(i * 0.08)} className="flex h-full flex-col items-center text-center">
+                      <div className="relative z-[2] mb-4 flex h-14 w-14 shrink-0 items-center justify-center rounded-full"
+                        style={{ background: C.white, border: `2px solid ${C.goldBorder}`, boxShadow: '0 6px 16px rgba(194,150,46,0.2)', color: C.rose }}>
+                        <TlIcon className="h-6 w-6" />
+                      </div>
+                      <div className="flex w-full flex-1 flex-col rounded-2xl px-4 py-4 transition-transform hover:-translate-y-1"
+                        style={{ background: C.paper, border: `1px solid ${C.roseBorder}`, boxShadow: '0 10px 28px rgba(158,43,78,0.07)' }}>
+                        <p className="font-heading text-[15px]" style={{ color: C.roseDeep }}>{t.title}</p>
+                        {t.time && <p className="mt-1 text-xs font-semibold" style={{ color: C.gold }}>{t.time}</p>}
+                        {t.desc && <p className="mt-2 text-[12.5px] leading-relaxed" style={{ color: C.inkSoft }}>{t.desc}</p>}
+                      </div>
+                    </motion.div>
                   )
                 })}
               </div>
@@ -570,18 +576,21 @@ export default function RakshaBandhanPremium({ data, eventId, isPreview = false 
       <WishesSection eventId={eventId} sampleWishes={sampleWishes} isPreview={isPreview} />
 
       {/* ══════════════════════ RSVP + GIFT ══════════════════════ */}
-      <section className={isPreview ? 'px-3 py-8' : 'px-4 py-14 sm:px-8 sm:py-20'}>
+      {/* <section className={isPreview ? 'px-3 py-8' : 'px-4 py-14 sm:px-8 sm:py-20'}>
         <div className={`mx-auto grid gap-6 ${hasGift ? 'max-w-5xl' : 'max-w-xl'} ${isPreview || !hasGift ? '' : 'md:grid-cols-2'}`}>
           <RsvpForm eventId={eventId} isPreview={isPreview} />
           {hasGift && <GiftSection data={data} isPreview={isPreview} />}
         </div>
-      </section>
+      </section> */}
 
       {/* ══════════════════════ FOOTER ══════════════════════ */}
       <footer className={isPreview ? 'px-4 py-8' : 'px-4 py-12 sm:px-8'} style={{ background: C.creamDeep, borderTop: `1px solid ${C.goldBorder}` }}>
         <div className={`mx-auto grid max-w-5xl gap-8 ${isPreview ? 'grid-cols-1' : 'sm:grid-cols-2 lg:grid-cols-4'}`}>
           <div>
-            <p className="font-heading text-xl italic" style={{ color: C.rose }}>ShareInvite</p>
+            <a href={SHAREINVITE_URL} target="_blank" rel="noopener noreferrer"
+              className="font-heading text-xl italic transition-opacity hover:opacity-80" style={{ color: C.rose }}>
+              ShareInvite
+            </a>
             <p className="mt-2 text-sm leading-relaxed" style={{ color: C.inkSoft }}>Creating beautiful memories for your special moments.</p>
           </div>
           <FooterCol title="Quick Links" links={[['Home', '#home'], ['Our Story', '#story'], ['Gallery', '#gallery']]} />
@@ -590,11 +599,11 @@ export default function RakshaBandhanPremium({ data, eventId, isPreview = false 
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: C.gold }}>Follow Us</p>
             <div className="flex gap-2.5">
               {SOCIAL_ICONS.map((s) => (
-                <span key={s.label} aria-label={s.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full"
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full transition-opacity hover:opacity-80"
                   style={{ background: C.rose, color: C.white }}>
                   <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">{s.path}</svg>
-                </span>
+                </a>
               ))}
             </div>
           </div>
@@ -652,7 +661,7 @@ function WishesSection({ eventId, sampleWishes, isPreview }: { eventId?: string;
     fetch(`/api/wishes?eventId=${eventId}`)
       .then((r) => r.json())
       .then((d) => Array.isArray(d) ? setWishes(d.map((w: { name: string; message: string }) => ({ name: w.name, message: w.message }))) : undefined)
-      .catch(() => {})
+      .catch(() => { })
   }, [eventId])
 
   const list = wishes.length ? wishes : sampleWishes
@@ -694,6 +703,8 @@ function WishesSection({ eventId, sampleWishes, isPreview }: { eventId?: string;
 }
 
 // ── RSVP form (submits through the existing /api/wishes endpoint) ─────────────
+// Currently disabled along with the RSVP + Gift section above. Re-enable both together.
+/*
 function RsvpForm({ eventId, isPreview }: { eventId?: string; isPreview?: boolean }) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -754,72 +765,73 @@ function RsvpForm({ eventId, isPreview }: { eventId?: string; isPreview?: boolea
     </motion.div>
   )
 }
+*/
 
 // ── GIFT section (UPI / payment apps / QR / bank details) ─────────────────────
-function GiftSection({ data, isPreview }: { data: Record<string, string>; isPreview?: boolean }) {
-  const [copied, setCopied] = useState<string | null>(null)
-  const upi = data.upiId
-  const copy = (label: string, value: string) => {
-    navigator.clipboard?.writeText(value).then(() => { setCopied(label); setTimeout(() => setCopied(null), 1500) }).catch(() => {})
-  }
-  const bank = [
-    ['Name', data.bankAccountName],
-    ['A/C No', data.bankAccountNumber],
-    ['IFSC', data.bankIfsc],
-    ['Bank', data.bankName],
-  ].filter(([, v]) => v) as [string, string][]
+// function GiftSection({ data, isPreview }: { data: Record<string, string>; isPreview?: boolean }) {
+//   const [copied, setCopied] = useState<string | null>(null)
+//   const upi = data.upiId
+//   const copy = (label: string, value: string) => {
+//     navigator.clipboard?.writeText(value).then(() => { setCopied(label); setTimeout(() => setCopied(null), 1500) }).catch(() => {})
+//   }
+//   const bank = [
+//     ['Name', data.bankAccountName],
+//     ['A/C No', data.bankAccountNumber],
+//     ['IFSC', data.bankIfsc],
+//     ['Bank', data.bankName],
+//   ].filter(([, v]) => v) as [string, string][]
 
-  return (
-    <motion.div id="gift" {...fadeUp(0.1)} className={`relative overflow-hidden rounded-3xl ${isPreview ? 'p-5' : 'p-7 sm:p-9'}`} style={{ background: `linear-gradient(160deg, ${C.pinkBgSoft}, ${C.pinkBg})`, border: `1px solid ${C.roseBorder}`, boxShadow: '0 16px 44px rgba(158,43,78,0.08)' }}>
-      {/* animated coins */}
-      <motion.span className="absolute right-6 top-4" aria-hidden style={{ color: C.gold }} animate={{ y: [0, -6, 0], rotate: [0, 12, 0] }} transition={{ duration: 2.4, repeat: Infinity }}><IconCoin className="h-5 w-5" /></motion.span>
-      <motion.span className="absolute right-16 top-10" aria-hidden style={{ color: C.goldSoft }} animate={{ y: [0, -5, 0] }} transition={{ duration: 2, repeat: Infinity, delay: 0.4 }}><IconCoin className="h-4 w-4" /></motion.span>
+//   return (
+//     <motion.div id="gift" {...fadeUp(0.1)} className={`relative overflow-hidden rounded-3xl ${isPreview ? 'p-5' : 'p-7 sm:p-9'}`} style={{ background: `linear-gradient(160deg, ${C.pinkBgSoft}, ${C.pinkBg})`, border: `1px solid ${C.roseBorder}`, boxShadow: '0 16px 44px rgba(158,43,78,0.08)' }}>
+//       {/* animated coins */}
+//       <motion.span className="absolute right-6 top-4" aria-hidden style={{ color: C.gold }} animate={{ y: [0, -6, 0], rotate: [0, 12, 0] }} transition={{ duration: 2.4, repeat: Infinity }}><IconCoin className="h-5 w-5" /></motion.span>
+//       <motion.span className="absolute right-16 top-10" aria-hidden style={{ color: C.goldSoft }} animate={{ y: [0, -5, 0] }} transition={{ duration: 2, repeat: Infinity, delay: 0.4 }}><IconCoin className="h-4 w-4" /></motion.span>
 
-      <h2 className="flex items-center justify-center gap-2 text-center font-heading text-2xl sm:text-3xl" style={{ color: C.roseDeep }}>Send a Gift <IconGiftBox className="h-6 w-6" style={{ color: C.rose }} /></h2>
-      <p className="mx-auto mt-2 max-w-xs text-center text-sm" style={{ color: C.inkSoft }}>Bless your loved ones with your warm wishes and support.</p>
+//       <h2 className="flex items-center justify-center gap-2 text-center font-heading text-2xl sm:text-3xl" style={{ color: C.roseDeep }}>Send a Gift <IconGiftBox className="h-6 w-6" style={{ color: C.rose }} /></h2>
+//       <p className="mx-auto mt-2 max-w-xs text-center text-sm" style={{ color: C.inkSoft }}>Bless your loved ones with your warm wishes and support.</p>
 
-      {/* payment app pills */}
-      <div className="mt-5 flex flex-wrap justify-center gap-2">
-        {['UPI', 'GPay', 'PhonePe', 'Paytm'].map((p) => (
-          <a
-            key={p}
-            href={upi ? `upi://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(data.bankAccountName || 'ShareInvite')}&cu=INR` : undefined}
-            className="rounded-xl bg-white px-3.5 py-2 text-xs font-bold shadow-sm transition-transform hover:scale-105"
-            style={{ color: C.roseDeep, border: `1px solid ${C.roseBorder}` }}
-          >
-            {p}
-          </a>
-        ))}
-      </div>
+//       {/* payment app pills */}
+//       <div className="mt-5 flex flex-wrap justify-center gap-2">
+//         {['UPI', 'GPay', 'PhonePe', 'Paytm'].map((p) => (
+//           <a
+//             key={p}
+//             href={upi ? `upi://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(data.bankAccountName || 'ShareInvite')}&cu=INR` : undefined}
+//             className="rounded-xl bg-white px-3.5 py-2 text-xs font-bold shadow-sm transition-transform hover:scale-105"
+//             style={{ color: C.roseDeep, border: `1px solid ${C.roseBorder}` }}
+//           >
+//             {p}
+//           </a>
+//         ))}
+//       </div>
 
-      <div className={`mt-5 flex flex-col items-center gap-4 ${isPreview ? '' : 'sm:flex-row sm:items-start sm:justify-center'}`}>
-        {/* QR */}
-        <div className="flex flex-col items-center">
-          <div className="rounded-2xl bg-white p-3 shadow-md">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={data.qrImage || TINY_QR} alt="Scan to pay" className="h-28 w-28" />
-          </div>
-          <p className="mt-2 text-[11px] font-semibold uppercase tracking-wide" style={{ color: C.inkSoft }}>Scan to Pay</p>
-          {upi && (
-            <button onClick={() => copy('UPI', upi)} className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold" style={{ color: C.rose }}>
-              <IconCopy className="h-3.5 w-3.5" />
-              {copied === 'UPI' ? 'Copied' : 'Copy UPI ID'}
-            </button>
-          )}
-        </div>
+//       <div className={`mt-5 flex flex-col items-center gap-4 ${isPreview ? '' : 'sm:flex-row sm:items-start sm:justify-center'}`}>
+//         {/* QR */}
+//         <div className="flex flex-col items-center">
+//           <div className="rounded-2xl bg-white p-3 shadow-md">
+//             {/* eslint-disable-next-line @next/next/no-img-element */}
+//             <img src={data.qrImage || TINY_QR} alt="Scan to pay" className="h-28 w-28" />
+//           </div>
+//           <p className="mt-2 text-[11px] font-semibold uppercase tracking-wide" style={{ color: C.inkSoft }}>Scan to Pay</p>
+//           {upi && (
+//             <button onClick={() => copy('UPI', upi)} className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold" style={{ color: C.rose }}>
+//               <IconCopy className="h-3.5 w-3.5" />
+//               {copied === 'UPI' ? 'Copied' : 'Copy UPI ID'}
+//             </button>
+//           )}
+//         </div>
 
-        {/* bank details */}
-        {bank.length > 0 && (
-          <div className="w-full max-w-[240px] rounded-2xl bg-white p-4 shadow-sm" style={{ border: `1px solid ${C.roseBorder}` }}>
-            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: C.gold }}>Bank Details</p>
-            {bank.map(([k, v]) => (
-              <p key={k} className="text-[12.5px]" style={{ color: C.inkSoft }}>
-                <span className="font-semibold" style={{ color: C.ink }}>{k}:</span> {v}
-              </p>
-            ))}
-          </div>
-        )}
-      </div>
-    </motion.div>
-  )
-}
+//         {/* bank details */}
+//         {bank.length > 0 && (
+//           <div className="w-full max-w-[240px] rounded-2xl bg-white p-4 shadow-sm" style={{ border: `1px solid ${C.roseBorder}` }}>
+//             <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: C.gold }}>Bank Details</p>
+//             {bank.map(([k, v]) => (
+//               <p key={k} className="text-[12.5px]" style={{ color: C.inkSoft }}>
+//                 <span className="font-semibold" style={{ color: C.ink }}>{k}:</span> {v}
+//               </p>
+//             ))}
+//           </div>
+//         )}
+//       </div>
+//     </motion.div>
+//   )
+// }

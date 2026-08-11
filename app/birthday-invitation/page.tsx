@@ -3,28 +3,33 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CakeIcon, ClockIcon, MapPinIcon, CameraIcon, MusicIcon, SparklesIcon } from '@/components/ui/Icons'
 import SiteFooter from '@/components/landing/SiteFooter'
+import TrackedLink from '@/components/ui/TrackedLink'
+import { templatePrice } from '@/lib/plans'
+
+const BIRTHDAY_TEMPLATE = 'indian-birthday'
+const BIRTHDAY_PRICE = templatePrice(BIRTHDAY_TEMPLATE)
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Digital Birthday Invitation India | ShareInvite' },
+  title: { absolute: 'Digital Birthday Invitation India — Build Free, Publish ₹299 | ShareInvite' },
   description:
-    'Free digital birthday invitation for India — festive templates with countdown, WhatsApp link & photo gallery. No app needed. Ready in 5 minutes.',
+    'Create a digital birthday invitation for India in 5 minutes — live countdown, photo gallery, Google Maps and a one-tap WhatsApp link. Build and preview free; publish for ₹299 one-time. No app needed for guests.',
   keywords: [
-    'digital birthday invitation India free',
+    'digital birthday invitation India',
     'online birthday invitation India',
     'birthday e-invite India',
     'WhatsApp birthday invitation link',
     'digital birthday card India',
-    'birthday invitation website free',
+    'birthday invitation website India price',
     'Bollywood birthday invitation',
     'birthday invitation online maker',
     'birthday invitation website India',
   ],
   alternates: { canonical: `${APP_URL}/birthday-invitation` },
   openGraph: {
-    title: 'Free Digital Birthday Invitation Website India | ShareInvite',
-    description: 'Create a beautiful digital birthday invitation in 5 minutes. WhatsApp-ready. Free to start.',
+    title: 'Digital Birthday Invitation Website India | ShareInvite',
+    description: 'Create a beautiful digital birthday invitation in 5 minutes. WhatsApp-ready. Build and preview free — publish for ₹299 one-time.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Birthday Invitation India' }],
@@ -37,10 +42,10 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'How do I create a digital birthday invitation for free in India?',
+      name: 'How much does a digital birthday invitation cost in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Visit shareinvite.in/create, pick the Janamdin Birthday template, enter the celebrant\'s name, age, date, venue and message, then click Create. Your birthday invitation is live with a WhatsApp-shareable link in under 5 minutes.',
+        text: 'The Janamdin birthday template is ₹299 as a one-time payment — there is no subscription and no per-guest charge. You can build the entire invitation and preview exactly how it will look before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you want to try the product first.',
       },
     },
     {
@@ -56,7 +61,15 @@ const faqSchema = {
       name: 'What makes ShareInvite birthday invitations different from WhatsApp image invites?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Unlike a static image, ShareInvite creates a live website with a countdown timer, Google Maps directions, photo gallery, background music, and a guest wishes section — all accessible from a single WhatsApp link. It\'s a premium experience at zero cost.',
+        text: 'Unlike a static image, ShareInvite creates a live invitation page with a countdown timer, Google Maps directions, photo gallery, background music, and a guest wishes section — all from a single WhatsApp link. Details can be corrected after sharing without resending a new card, and guests never need to install an app.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I create a digital birthday invitation in India?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Go to shareinvite.in/create, pick the Janamdin Birthday template, enter the celebrant\'s name, age, date, venue and message, then preview and publish. Your birthday invitation is live with a WhatsApp-shareable link in under 5 minutes.',
       },
     },
   ],
@@ -73,7 +86,7 @@ export default function BirthdayInvitationPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create?template=indian-birthday" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=indian-birthday" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -82,20 +95,25 @@ export default function BirthdayInvitationPage() {
         <div className="relative mx-auto max-w-4xl">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Free · WhatsApp ready · No app required
+            Build free · WhatsApp ready · No app required
           </div>
           <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
             Digital Birthday Invitation<br />
             <span className="gradient-accent italic">Website for India</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a festive digital birthday invitation in 5 minutes. Indian birthday templates with live countdown, photo gallery, favourite song &amp; one-tap WhatsApp sharing. Free to start.
+            Create a festive digital birthday invitation in 5 minutes. Indian birthday templates with live countdown, photo gallery, favourite song &amp; one-tap WhatsApp sharing. Add your details and preview the whole invitation free — publish it for ₹{BIRTHDAY_PRICE} one-time.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create?template=indian-birthday" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Birthday Invite Free →
-            </Link>
-            <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
+            <TrackedLink
+              href="/create?template=indian-birthday&src=birthday_landing"
+              location="birthday_landing_hero"
+              meta={{ template_id: BIRTHDAY_TEMPLATE, price: BIRTHDAY_PRICE, event_type: 'birthday', page_type: 'event_landing' }}
+              className="gold-button rounded-full px-10 py-4 text-base font-semibold"
+            >
+              Start My Birthday Invite →
+            </TrackedLink>
+            <span className="text-sm text-muted">Free to build &amp; preview · ₹{BIRTHDAY_PRICE} one-time to publish</span>
           </div>
         </div>
       </section>
@@ -157,7 +175,7 @@ export default function BirthdayInvitationPage() {
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { price: '₹0', sub: 'Free forever', templates: 'Elegant Wedding' },
+              { price: '₹0', sub: 'Free to publish', templates: 'Elegant Wedding' },
               { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran' },
               { price: '₹599', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh' },
               { price: '₹999', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
@@ -213,10 +231,15 @@ export default function BirthdayInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create a Memorable Digital Birthday Invitation</h2>
-          <p className="text-muted text-sm mb-7">Free to create · No credit card · WhatsApp-ready in 5 minutes</p>
-          <Link href="/create?template=indian-birthday" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Birthday Invite Free →
-          </Link>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹{BIRTHDAY_PRICE} one-time to publish · WhatsApp-ready in 5 minutes</p>
+          <TrackedLink
+            href="/create?template=indian-birthday&src=birthday_landing_footer"
+            location="birthday_landing_footer"
+            meta={{ template_id: BIRTHDAY_TEMPLATE, price: BIRTHDAY_PRICE, event_type: 'birthday', page_type: 'event_landing' }}
+            className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold"
+          >
+            Start My Birthday Invite →
+          </TrackedLink>
         </div>
       </section>
 

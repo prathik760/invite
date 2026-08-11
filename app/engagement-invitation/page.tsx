@@ -7,12 +7,11 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Digital Engagement Invitation India | ShareInvite' },
+  title: { absolute: 'Digital Engagement Invitation India — Build Free, Publish ₹599 | ShareInvite' },
   description:
-    'Free digital engagement invitation for Mangni, Roka & Sagai in India. WhatsApp link with countdown, Google Maps & photo gallery. Ready in 5 minutes.',
+    'Digital engagement invitation for Mangni, Roka & Sagai in India. WhatsApp link with countdown, Google Maps & photo gallery. Build and preview free; publish for ₹599 one-time. Ready in 5 minutes.',
   keywords: [
     'digital engagement invitation India',
-    'online engagement invitation free',
     'mangni invitation digital',
     'roka ceremony invitation online',
     'engagement e-invite India',
@@ -26,8 +25,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/engagement-invitation` },
   openGraph: {
-    title: 'Free Digital Engagement Invitation | Mangni & Roka E-Invite India | ShareInvite',
-    description: 'Create a stunning digital engagement invitation for your Mangni or Roka ceremony. WhatsApp-ready. Free to start.',
+    title: 'Digital Engagement Invitation | Mangni & Roka E-Invite India | ShareInvite',
+    description: 'Create a stunning digital engagement invitation for your Mangni or Roka ceremony. WhatsApp-ready. Build and preview free — publish for ₹599 one-time.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Engagement Invitation India' }],
@@ -40,7 +39,7 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'How do I create a digital engagement invitation for free in India?',
+      name: 'How do I create a digital engagement invitation in India?',
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Go to shareinvite.in/create, choose a template, enter the couple\'s names, engagement date, venue, and a personal message, then click Create. Your engagement invitation website is live in under 5 minutes — share the link directly on WhatsApp.',
@@ -68,6 +67,14 @@ const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'A digital engagement invitation is faster, cheaper, and more interactive. Guests get live countdown, one-tap Google Maps, a photo gallery, and a wishes section — all from one link shared on WhatsApp. No printing costs, no delays, and guests can share it instantly with their own contacts.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does a digital engagement invitation cost?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The Engagement template is ₹599 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you would like to try the product first.',
       },
     },
   ],
@@ -102,7 +109,7 @@ export default function EngagementInvitationPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
           <Link href="/"><Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /></Link>
-          <Link href="/create?template=indian-engagement" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=indian-engagement" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -112,7 +119,7 @@ export default function EngagementInvitationPage() {
         <div className="relative mx-auto max-w-4xl">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Free · WhatsApp ready · No app download
+            Build free · WhatsApp ready · No app download
           </div>
           <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
             Digital Engagement Invitation<br />
@@ -121,11 +128,11 @@ export default function EngagementInvitationPage() {
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
             Create a beautiful digital engagement invitation website for your Mangni, Roka, or Sagai ceremony.
             Share a WhatsApp link with the full schedule, Google Maps, photos, and a guest wishes section.
-            Ready in 5 minutes. Free to start.
+            Ready in 5 minutes. Build and preview free — publish for ₹599 one-time.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=indian-engagement" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Free Engagement Invite →
+              Start My Engagement Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · Live in 5 minutes</span>
           </div>
@@ -139,7 +146,7 @@ export default function EngagementInvitationPage() {
             Digital Invitations for Mangni, Roka &amp; Sagai Ceremonies
           </h2>
           <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Mangni, Roka, Sagai, Nishchayathartham — one free digital engagement invitation works for every Indian tradition
+            Mangni, Roka, Sagai, Nishchayathartham — one digital engagement invitation works for every Indian tradition
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CEREMONIES.map(c => (
@@ -179,7 +186,7 @@ export default function EngagementInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-5xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            How to Create a Free Digital Engagement Invitation
+            How to Create a Digital Engagement Invitation
           </h2>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
@@ -230,9 +237,10 @@ export default function EngagementInvitationPage() {
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { price: '₹0', sub: 'Free forever', templates: 'Elegant Wedding' },
-              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran' },
-              { price: '₹599', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh' },
+              { price: '₹0', sub: 'Free to publish', templates: 'Elegant Wedding' },
+              { price: '₹199', sub: 'One-time', templates: 'Raksha Bandhan Premium' },
+              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran, 3D Surprise Journey' },
+              { price: '₹599', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },
               { price: '₹999', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
             ].map(p => (
               <div key={p.price} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
@@ -244,8 +252,8 @@ export default function EngagementInvitationPage() {
           </div>
           <p className="mt-6 text-center text-xs text-muted">Every template includes the same premium features · One-time payment · No subscription</p>
           <div className="mt-6 text-center">
-            <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-              Start Free — Choose Your Template →
+            <Link href="/templates" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
+              Browse All Templates →
             </Link>
           </div>
         </div>
@@ -272,13 +280,13 @@ export default function EngagementInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Create Your Free Digital Engagement Invitation
+            Create Your Digital Engagement Invitation
           </h2>
           <p className="text-muted text-sm mb-7">
-            Free to start. WhatsApp-ready in 5 minutes. Loved by Indian families.
+            Free to build &amp; preview · ₹599 one-time to publish · WhatsApp-ready in 5 minutes
           </p>
           <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Engagement Invite Free →
+            Start My Engagement Invite →
           </Link>
         </div>
       </section>

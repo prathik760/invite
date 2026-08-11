@@ -7,11 +7,12 @@ import ShareBar from './ShareBar'
 interface FloatingShareBarProps {
   url: string
   names?: string
+  templateId?: string
 }
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
-export default function FloatingShareBar({ url, names }: FloatingShareBarProps) {
+export default function FloatingShareBar({ url, names, templateId }: FloatingShareBarProps) {
   const [visible, setVisible] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -116,7 +117,7 @@ export default function FloatingShareBar({ url, names }: FloatingShareBarProps) 
                       </span>
                     </div>
 
-                    <ShareBar url={url} names={names} />
+                    <ShareBar url={url} names={names} templateId={templateId} source="published_invite" />
                   </div>
                 </motion.div>
               )}

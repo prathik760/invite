@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import StickyCTA from '@/components/seo/StickyCTA'
+import TrackedLink from '@/components/ui/TrackedLink'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { TEMPLATES } from '@/modules/templates/data'
 import {
@@ -144,12 +145,22 @@ function LandingPage({ page }: { page: SeoPage }) {
             {page.description} Built for WhatsApp sharing, RSVP tracking, Indian event details, fast mobile loading, and beautiful invitation templates that are ready to publish in minutes.
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/create" className="gold-button rounded-full px-9 py-4 text-base font-semibold">
+            <TrackedLink
+              href="/create?src=seo_landing"
+              location="seo_landing_hero"
+              meta={{ page_type: 'seo_landing', landing_slug: page.slug, event_type: page.occasion }}
+              className="gold-button rounded-full px-9 py-4 text-base font-semibold"
+            >
               Create Invitation
-            </Link>
-            <Link href="/templates" className="rounded-full border border-border bg-white px-9 py-4 text-base font-semibold text-ink">
+            </TrackedLink>
+            <TrackedLink
+              href="/templates"
+              location="seo_landing_hero_secondary"
+              meta={{ page_type: 'seo_landing', landing_slug: page.slug }}
+              className="rounded-full border border-border bg-white px-9 py-4 text-base font-semibold text-ink"
+            >
               View Templates
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </section>
@@ -246,7 +257,7 @@ function LandingPage({ page }: { page: SeoPage }) {
         </div>
       </section>
       <SiteFooter />
-      <StickyCTA />
+      <StickyCTA pageType="seo_landing" />
     </main>
   )
 }
@@ -351,7 +362,7 @@ function LocationLandingPage({ page }: { page: LocationPage }) {
         </div>
       </section>
       <SiteFooter />
-      <StickyCTA />
+      <StickyCTA pageType="city_landing" />
     </main>
   )
 }

@@ -9,6 +9,7 @@ import MobileNav from '@/components/landing/MobileNav'
 import StickyMobileCTA from '@/components/landing/StickyMobileCTA'
 import { DemoPreviewArea, DemoViewButton } from '@/components/landing/DemoTrigger'
 import { PLANS } from '@/lib/plans'
+import { TEMPLATES } from '@/modules/templates/data'
 import { UsersIcon } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ShareInvite — Digital Invitation Maker for Weddings, Birthdays & Every Occasion',
     description:
-      'Create digital invitations and animated 3D greetings for weddings, birthdays, engagements, anniversaries and every occasion. Share instantly on WhatsApp with RSVP tracking. Free to start, worldwide.',
+      'Create digital invitations and animated 3D greetings for weddings, birthdays, engagements, anniversaries and every occasion. Share instantly on WhatsApp with RSVP tracking. Free template available; paid designs from ₹199 one-time.',
     type: 'website',
     locale: 'en_IN',
     url: process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in',
@@ -573,12 +574,11 @@ export default function LandingPage() {
     url: APP_URL,
     description:
       'Create a beautiful digital invitation website for Indian weddings, birthdays, house warming ceremonies, naming ceremonies, engagements, and anniversaries. Features gallery, music, live countdown, Google Maps, WhatsApp sharing, and guest wishes.',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '247',
-      bestRating: '5',
-    },
+    // aggregateRating and review were removed here. The 4.9/247 rating and the
+    // three Review objects were not backed by any review data in this codebase,
+    // and Google's policy disallows self-serving reviews on your own
+    // Organization/Product markup — they earn no rich result and risk a manual
+    // action. Re-add once reviews are genuinely collected and stored.
     offers: PLANS.map((plan) => ({
       '@type': 'Offer',
       name: `${plan.name} Digital Invitation Plan`,
@@ -595,32 +595,10 @@ export default function LandingPage() {
       'Google Maps integration',
       'WhatsApp sharing link',
       'Guest wishes collection',
-      '10 beautiful Indian event templates',
+      `${TEMPLATES.length} Indian event & greeting templates`,
       'Custom URL support',
     ],
-    review: [
-      {
-        '@type': 'Review',
-        author: { '@type': 'Person', name: 'Meera Krishnamurthy' },
-        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-        reviewBody: 'We shared the link on our wedding WhatsApp group and everyone loved it. The countdown and venue map made things so effortless for out-of-town guests.',
-        datePublished: '2025-03-01',
-      },
-      {
-        '@type': 'Review',
-        author: { '@type': 'Person', name: 'Suresh Iyer' },
-        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-        reviewBody: 'Made our daughter\'s naming ceremony invite in under 10 minutes. No app downloads, no printing — just a beautiful link we forwarded to the whole family.',
-        datePublished: '2025-02-01',
-      },
-      {
-        '@type': 'Review',
-        author: { '@type': 'Person', name: 'Pooja Mehta' },
-        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-        reviewBody: 'The gold design matched our theme perfectly. Guests kept asking how we made it — it felt so premium compared to the usual card images shared on WhatsApp.',
-        datePublished: '2025-01-01',
-      },
-    ],
+
   }
 
   const faqSchema = {

@@ -5,44 +5,12 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
-import ElegantWedding from '@/components/templates/ElegantWedding'
-import CinematicWedding from '@/components/templates/CinematicWedding'
-import IndianWedding from '@/components/templates/IndianWedding'
-import IndianEngagement from '@/components/templates/IndianEngagement'
-import IndianBirthday from '@/components/templates/IndianBirthday'
-import HouseWarming from '@/components/templates/HouseWarming'
-import NamingCeremony from '@/components/templates/NamingCeremony'
-import Anniversary from '@/components/templates/Anniversary'
-import KGFWedding from '@/components/templates/KGFWedding'
-import RoyalDeco from '@/components/templates/RoyalDeco'
-import LuxuryWedding from '@/components/templates/LuxuryWedding'
-import SurpriseJourney from '@/components/templates/SurpriseJourney'
-import RakshaBandhanPremium from '@/components/templates/RakshaBandhanPremium'
-import { GREETING_COMPONENTS } from '@/components/templates/greeting/registry'
+import TemplateRenderer from '@/components/templates/TemplateRenderer'
 import { TEMPLATES } from '@/modules/templates/data'
 
-const TEMPLATE_COMPONENTS: Record<
-  string,
-  React.ComponentType<{ data: Record<string, string>; isPreview?: boolean }>
-> = {
-  ...GREETING_COMPONENTS,
-  'surprise-journey': SurpriseJourney,
-  'rakshabandhan': RakshaBandhanPremium,
-  'elegant-wedding': ElegantWedding,
-  'cinematic-night': CinematicWedding,
-  'indian-wedding': IndianWedding,
-  'indian-engagement': IndianEngagement,
-  'indian-birthday': IndianBirthday,
-  'griha-pravesh': HouseWarming,
-  'namakaran': NamingCeremony,
-  'anniversary': Anniversary,
-  'kgf-wedding': KGFWedding,
-  'royal-deco': RoyalDeco,
-  'luxury-wedding': LuxuryWedding,
-}
 
 export function generateStaticParams() {
-  return Object.keys(TEMPLATE_COMPONENTS).map(id => ({ id }))
+  return TEMPLATES.map((t) => ({ id: t.id }))
 }
 
 // WebGL experiences (greeting + interactive journey) are mobile-first, full-viewport
@@ -54,8 +22,7 @@ const PREVIEW_CATEGORIES = new Set(['greeting', 'interactive'])
 
 export default function DemoPage({ params }: { params: { id: string } }) {
   const template = TEMPLATES.find(t => t.id === params.id)
-  const Component = TEMPLATE_COMPONENTS[params.id]
-  if (!template || !Component) notFound()
+  if (!template) notFound()
 
   const usePreview = PREVIEW_CATEGORIES.has(template.category ?? '')
 
@@ -94,7 +61,7 @@ export default function DemoPage({ params }: { params: { id: string } }) {
       {/* Invitation rendered with sample data — the real, full experience (2D
           templates) or the auto-opened WebGL experience (greeting / journey). */}
       <div className={usePreview ? 'relative min-h-0 flex-1 overflow-hidden' : 'overflow-x-hidden'}>
-        <Component data={template.config.defaultData} isPreview={usePreview} />
+        <TemplateRenderer templateId={params.id} data={template.config.defaultData} isPreview={usePreview} />
       </div>
     </div>
   )

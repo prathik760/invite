@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
+import { hasFullArticle } from '@/content/blog-articles'
 import { landingPages, locationPages } from '@/content/seo-pages'
 import { TEMPLATES } from '@/modules/templates/data'
 import { SITE_URL, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
@@ -22,7 +23,9 @@ function entry(
 // Slugs to exclude from the landingPages spread:
 // - gallery pages are already listed explicitly in Tier 2b with correct priorities
 // - naming-ceremony-invitations 301-redirects to /namakaran-invitation; a sitemap
-//   must never list a URL that redirects (GSC flags it as "Page with redirect")
+//   must never list a URL that redirects (GSC flags it as "Page with redirect").
+//   That redirect is defined in next.config.mjs — it was missing until now, so
+//   the page was live, indexable and cannibalising /namakaran-invitation.
 const SKIP_LANDING_SLUGS = new Set([
   'wedding-invitations',
   'engagement-invitations',
@@ -33,8 +36,16 @@ const SKIP_LANDING_SLUGS = new Set([
 ])
 
 // Cities with genuinely unique content in their city-specific pages.
-// Wedding and Griha Pravesh pages have 2+ unique paragraphs + local traditions → keep indexed.
-// Birthday and Engagement city pages are thin (1 sentence unique) → excluded from sitemap + noindexed at the page level.
+// All four occasion families (wedding, griha pravesh, birthday, engagement)
+// carry per-city hero copy, a "built for" paragraph, a real venue list and
+// city-specific FAQs in lib/cityContent.ts — so all four are indexable and all
+// four are listed below.
+//
+// The previous comment here claimed birthday and engagement city pages were
+// "thin (1 sentence unique) → excluded from sitemap + noindexed". That was
+// false on both counts: Tier 4b lists them, and both routes set
+// robots: { index: true }. Left uncorrected it would have prompted someone to
+// noindex 16 pages that do carry unique content.
 const INDEXED_CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 'pune', 'kolkata', 'ahmedabad']
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -96,7 +107,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TEMPLATES.map((template) => entry(`/templates/${templateSeoSlug(template.id)}`, 0.65)),
 
     // ─── Tier 7: Blog posts ────────────────────────────────────────────────────
-    ...blogDrafts.map((post) => entry(`/blog/${post.slug}`, 0.65)),
+    // Only posts with a hand-written article. The other 30 drafts render
+    // templated filler that differs by keyword alone; submitting them was
+    // asking Google to index 30 near-identical pages, and it declined
+    // ("Duplicate without user-selected canonical"). They are noindex,follow
+    // at the page level and re-enter this list as soon as real copy is added.
+    ...blogDrafts
+      .filter((post) => hasFullArticle(post.slug))
+      .map((post) => entry(`/blog/${post.slug}`, 0.65)),
 
     // ─── Tier 8: Supporting pages ─────────────────────────────────────────────
     entry('/partners', 0.55),

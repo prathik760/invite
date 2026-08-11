@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { MapPinIcon, ClipboardIcon, ClockIcon, CameraIcon, MusicIcon, MessageIcon } from '@/components/ui/Icons'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { WEDDING_CITIES, type CitySlug } from '@/lib/cityContent'
+import { PLANS } from '@/lib/plans'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -73,20 +74,20 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
       name: info.display,
     },
     serviceType: 'Digital Wedding Invitation',
-    priceRange: '₹0 – ₹1499',
+    // Derived from lib/plans.ts so it can never drift from what is charged.
+    // Was "₹0 – ₹1499" — a price point that does not exist on the site.
+    priceRange: `₹0 – ₹${Math.max(...PLANS.map((p) => p.price)).toLocaleString('en-IN')}`,
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'IN',
       addressRegion: info.state,
       addressLocality: info.display,
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '247',
-      bestRating: '5',
-      worstRating: '1',
-    },
+    // No aggregateRating here. The previous 4.9/247 figure was not backed by a
+    // review system in this codebase, and self-serving ratings on your own
+    // business/product markup are against Google's structured-data policy —
+    // they are ignored at best and are a manual-action risk at worst.
+    // Re-add only when real, collected reviews exist to compute it from.
     sameAs: [`${APP_URL}`],
     potentialAction: {
       '@type': 'OrderAction',
@@ -106,7 +107,7 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 

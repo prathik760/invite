@@ -73,10 +73,10 @@ export default function NamakaranInvitationWordingPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
-      <StickyCTA href="/create?template=namakaran" text="Create Free Namakaran Invite →" />
+      <StickyCTA href="/create?template=namakaran" text="Start My Namakaran Invite →" />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
@@ -95,7 +95,7 @@ export default function NamakaranInvitationWordingPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Namakaran Invite Free →
+              Start My Namakaran Invite →
             </Link>
             <span className="text-sm text-muted">No credit card · WhatsApp-ready link</span>
           </div>
@@ -202,7 +202,7 @@ RSVP: [Phone Number]`}</WordingCopyCard>
             href="/create?template=namakaran"
             className="gold-button shrink-0 rounded-xl px-7 py-3.5 text-sm font-semibold whitespace-nowrap"
           >
-            Create Namakaran Invite Free →
+            Start My Namakaran Invite →
           </Link>
         </div>
       </section>
@@ -361,7 +361,7 @@ Please join us for these precious first blessings.`}</WordingCopyCard>
             body="Every message above has a [Digital Invite Link] slot. That link is a ShareInvite page with your baby's photos, Google Maps, ceremony schedule, and a blessing wall where guests leave wishes. Free to create."
             features={['Baby photo gallery on the invite', 'Google Maps tap-to-navigate', 'Guest blessing wall', 'WhatsApp-ready link']}
             ctaHref="/create?template=namakaran"
-            ctaText="Create Namakaran Invite Free →"
+            ctaText="Start My Namakaran Invite →"
           />
         </div>
       </div>
@@ -572,7 +572,7 @@ Please join us for these precious first blessings.`}</WordingCopyCard>
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Namakaran Invitation</h2>
           <p className="text-muted text-sm mb-7">Free to create · Baby photos, ceremony schedule &amp; map · WhatsApp-ready</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Namakaran Invite Free →
+            Start My Namakaran Invite →
           </Link>
         </div>
       </section>

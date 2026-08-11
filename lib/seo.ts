@@ -43,6 +43,52 @@ export function templateCategorySlug(category?: string) {
   return slugify(category || 'digital-invitations')
 }
 
+/**
+ * Return policy, modelled from the actual published policy at /refund-policy:
+ * refund requests are accepted within 7 days of the transaction, at no cost to
+ * the customer, for customers in India.
+ *
+ * Nothing here is invented to satisfy a Search Console warning — every value
+ * maps to a sentence in the live policy page.
+ */
+export const MERCHANT_RETURN_POLICY = {
+  '@type': 'MerchantReturnPolicy',
+  applicableCountry: 'IN',
+  returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+  merchantReturnDays: 7,
+  returnMethod: 'https://schema.org/ReturnByMail',
+  returnFees: 'https://schema.org/FreeReturn',
+  merchantReturnLink: `${SITE_URL}/refund-policy`,
+} as const
+
+/**
+ * Offer for a digital product.
+ *
+ * Deliberately has NO `shippingDetails`: ShareInvite sells a hosted invitation
+ * page delivered instantly over the web. There is no parcel, no destination and
+ * no delivery window, so inventing an OfferShippingDetails block purely to
+ * clear the Merchant Listing warning would be a false statement about the
+ * business. Digital delivery is declared explicitly instead, via the
+ * GoodRelations DirectDownload delivery mode that schema.org defines for this.
+ *
+ * Also deliberately has NO `validFrom` / `priceValidUntil`: these prices are
+ * standing prices, not a promotion with a start and end date. Adding invented
+ * dates would tell Google the price expires when it does not.
+ */
+export function digitalOffer(price: number, url: string) {
+  return {
+    '@type': 'Offer',
+    price: String(price),
+    priceCurrency: 'INR',
+    availability: 'https://schema.org/InStock',
+    itemCondition: 'https://schema.org/NewCondition',
+    url,
+    availableDeliveryMethod: 'http://purl.org/goodrelations/v1#DeliveryModeDirectDownload',
+    hasMerchantReturnPolicy: MERCHANT_RETURN_POLICY,
+    seller: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+  }
+}
+
 export function faqJsonLd(faqs: Array<{ question: string; answer: string }>) {
   return {
     '@context': 'https://schema.org',

@@ -7,27 +7,24 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Digital Namakaran Invitation India | ShareInvite' },
+  title: { absolute: 'Digital Namakaran Invitation India — Build Free, Publish ₹299 | ShareInvite' },
   description:
-    'Free Namakaran invitation for India — WhatsApp link with ceremony schedule, Google Maps & blessings section. Share baby photos. Ready in 5 minutes.',
+    'Namakaran invitation for India — WhatsApp link with ceremony schedule, Google Maps & blessings section. Share baby photos. Build and preview free; publish for ₹299 one-time. Ready in 5 minutes.',
   keywords: [
     'digital namakaran invitation',
-    'naming ceremony invitation online free',
     'namakaran e-invite India',
     'baby naming ceremony invitation digital',
     'naamkaran invitation WhatsApp',
     'cradle ceremony invitation online',
     'annaprashan invitation digital',
     'naming ceremony card online India',
-    'namkaran invitation website free',
     'baby shower naming invitation',
     'rice ceremony invitation digital India',
-    'namakarana invitation free',
   ],
   alternates: { canonical: `${APP_URL}/namakaran-invitation` },
   openGraph: {
-    title: 'Free Digital Namakaran Invitation | Naming Ceremony E-Invite India | ShareInvite',
-    description: 'Create a beautiful digital Namakaran invitation for your baby\'s naming ceremony. WhatsApp-ready. Free to start.',
+    title: 'Digital Namakaran Invitation | Naming Ceremony E-Invite India | ShareInvite',
+    description: 'Create a beautiful digital Namakaran invitation for your baby\'s naming ceremony. WhatsApp-ready. Build and preview free — publish for ₹299 one-time.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Namakaran Invitation India' }],
@@ -40,7 +37,7 @@ const faqSchema = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'How do I create a digital Namakaran invitation for free?',
+      name: 'How do I create a digital Namakaran invitation in India?',
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Go to shareinvite.in/create, choose a template, enter the baby\'s name, parents\' names, ceremony date, venue, and a personal message. Your Namakaran invitation is live in under 5 minutes — share the link directly on WhatsApp with all family groups.',
@@ -68,6 +65,14 @@ const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'The Namakaran ceremony is traditionally held on the 11th or 12th day after birth, or on an auspicious muhurat chosen by the family. Some families hold it on the 28th day. The exact timing varies by region and community. Send digital invitations at least 7–10 days before the ceremony date.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How much does a digital Namakaran invitation cost?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The Namakaran template is ₹299 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you would like to try the product first.',
       },
     },
   ],
@@ -104,7 +109,7 @@ export default function NamakaranInvitationPage() {
             <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
             <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
           </Link>
-          <Link href="/create?template=namakaran" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
+          <Link href="/create?template=namakaran" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
         </div>
       </header>
 
@@ -114,20 +119,20 @@ export default function NamakaranInvitationPage() {
         <div className="relative mx-auto max-w-4xl">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Free · WhatsApp ready · No app download
+            Build free · WhatsApp ready · No app download
           </div>
           <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
             Digital Namakaran Invitation<br />
             <span className="gradient-accent italic">Naming Ceremony · Cradle Ceremony</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital Namakaran invitation for your baby&apos;s naming ceremony in minutes. Share the muhurat time, ceremony schedule, venue map, and the baby&apos;s first photos — all from one WhatsApp link. Free to start.
+            Create a beautiful digital Namakaran invitation for your baby&apos;s naming ceremony in minutes. Share the muhurat time, ceremony schedule, venue map, and the baby&apos;s first photos — all from one WhatsApp link. Build and preview free — publish for ₹299 one-time.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=namakaran" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Free Namakaran Invite →
+              Start My Namakaran Invite →
             </Link>
-            <span className="text-sm text-muted">No credit card · Ready in 5 minutes</span>
+            <span className="text-sm text-muted">Free to build &amp; preview · ₹299 one-time to publish</span>
           </div>
         </div>
       </section>
@@ -139,7 +144,7 @@ export default function NamakaranInvitationPage() {
             Namakaran Invitations for Every Indian Baby Naming Tradition
           </h2>
           <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Namakaran, Naamkaran, Cradle Ceremony, Namakarana — one free digital invitation works for every regional baby naming tradition
+            Namakaran, Naamkaran, Cradle Ceremony, Namakarana — one digital invitation works for every regional baby naming tradition
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {CEREMONY_NAMES.map(c => (
@@ -179,7 +184,7 @@ export default function NamakaranInvitationPage() {
       <section className="bg-white border-y border-border px-5 py-14">
         <div className="mx-auto max-w-5xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            How to Create a Free Digital Namakaran Invitation
+            How to Create a Digital Namakaran Invitation
           </h2>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
@@ -218,11 +223,11 @@ export default function NamakaranInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Create Your Free Digital Namakaran Invitation
+            Create Your Digital Namakaran Invitation
           </h2>
-          <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes.</p>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹299 one-time to publish · WhatsApp-ready in 5 minutes</p>
           <Link href="/create?template=namakaran" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Namakaran Invite Free →
+            Start My Namakaran Invite →
           </Link>
         </div>
       </section>
