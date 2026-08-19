@@ -189,10 +189,11 @@ export default function CustomRequestSection() {
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-muted">
+                  <label htmlFor="custom-request-event-type" className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-muted">
                     Event Type <span style={{ color: '#B87924' }}>*</span>
                   </label>
                   <select
+                    id="custom-request-event-type"
                     required
                     value={form.eventType}
                     onChange={set('eventType')}

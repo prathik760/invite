@@ -675,7 +675,7 @@ export default function LandingPage() {
             aria-label="ShareInvite home"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <Image priority src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
+            <Image priority src="/logo1.png" alt="" aria-hidden className="h-9 w-auto" width="140" height="36" />
             <span className="font-display text-base sm:text-2xl text-ink tracking-wide">ShareInvite</span>
           </Link>
           <nav
@@ -1734,7 +1734,7 @@ export default function LandingPage() {
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-2.5 mb-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <Image src="/logo1.png" alt="ShareInvite" className="h-9 w-auto" width="140" height="36" />
+                <Image src="/logo1.png" alt="" aria-hidden className="h-9 w-auto" width="140" height="36" />
                 <p className="font-display text-2xl text-ink tracking-wide">ShareInvite</p>
               </div>
               <p className="text-sm leading-6" style={{ color: '#4A3B35' }}>

@@ -12,7 +12,7 @@ export interface Testimonial {
 
 function Stars() {
   return (
-    <div className="flex gap-0.5" aria-label="5 out of 5 stars">
+    <div className="flex gap-0.5" role="img" aria-label="Rated 5 out of 5">
       {[...Array(5)].map((_, i) => (
         <svg key={i} className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="#B87924" aria-hidden>
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
@@ -162,6 +162,8 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
       <div className="mt-8 flex items-center justify-center gap-4">
         <ArrowButton dir="left" onClick={prev} />
         <div className="flex items-center gap-2">
+          {/* Visible pill stays 8px; the button is 24px tall with padding so the
+              tap target meets the minimum size guideline. */}
           {testimonials.map((t, i) => (
             <button
               key={t.name}
@@ -169,12 +171,16 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
               onClick={() => scrollToIndex(i)}
               aria-label={`Go to testimonial ${i + 1}`}
               aria-current={i === active}
-              className="h-2 rounded-full transition-all"
-              style={{
-                width: i === active ? 22 : 8,
-                background: i === active ? '#B87924' : 'rgba(184,121,36,0.28)',
-              }}
-            />
+              className="flex h-6 items-center justify-center px-1"
+            >
+              <span
+                className="block h-2 rounded-full transition-all"
+                style={{
+                  width: i === active ? 22 : 8,
+                  background: i === active ? '#B87924' : 'rgba(184,121,36,0.28)',
+                }}
+              />
+            </button>
           ))}
         </div>
         <ArrowButton dir="right" onClick={next} />
