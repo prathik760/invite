@@ -13,12 +13,19 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.shareinvite.in' }],
-        destination: 'https://shareinvite.in/:path*',
-        permanent: true,
-      },
+      // The www -> apex redirect that used to live here has been removed.
+      //
+      // www.shareinvite.in is now a domain managed by Vercel, and Vercel applies
+      // its own domain-level redirect at the edge before the app ever runs.
+      // Keeping a second, app-level rule made the two halves of a redirect loop
+      // the moment the Vercel side was pointed apex -> www: the edge sent
+      // shareinvite.in to www (307), this rule sent it straight back (308), and
+      // the site became unreachable.
+      //
+      // Domain canonicalisation now has exactly one owner: Vercel. Set the apex
+      // as the primary domain there and have www redirect to it — that is the
+      // direction every canonical tag, the sitemap and NEXT_PUBLIC_APP_URL
+      // already assume.
       // Namakaran city pages don't exist — redirect to parent so Google stops 404ing them
       {
         source: '/namakaran-invitation/:city',
