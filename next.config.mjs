@@ -47,6 +47,22 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // Published invitations are private to the host and their guests, and
+        // must never appear in search. The pages already send
+        // `robots: noindex, nofollow` in their metadata, but /e/:slug/
+        // opengraph-image returns an image/png and therefore cannot carry a
+        // meta tag at all — an HTTP header is the only way to exclude it.
+        // Search Console had it under "Crawled - currently not indexed".
+        //
+        // This also backstops the HTML pages: a header cannot be lost the way a
+        // metadata export can if that code is refactored.
+        //
+        // Safe for link previews — WhatsApp, Facebook and Twitter scrapers
+        // ignore X-Robots-Tag, so OG images still render in shared chats.
+        source: '/e/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
         source: '/(.*)',
         headers: [
           { key: 'X-Frame-Options', value: 'DENY' },

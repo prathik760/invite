@@ -2,12 +2,21 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { blogCategories, blogDrafts, categorySlug, findBlogCategory } from '@/content/blog'
+import { blogCategories, blogDrafts, categorySlug, findBlogCategory, indexablePostCount, MIN_INDEXABLE_POSTS } from '@/content/blog'
+import { hasFullArticle } from '@/content/blog-articles'
+import { BLOG_CATEGORY_INTRO } from '@/content/category-intros'
 import JsonLd from '@/components/seo/JsonLd'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
 
 type Props = { params: { category: string } }
+
+// A category page is only worth indexing if it lists at least
+// MIN_INDEXABLE_POSTS posts Google is allowed to index. "Wedding Trends" has
+// seven posts and zero real articles — all generated filler, now noindexed —
+// so its category page is an empty shell pointing at pages Google will not
+// index. The rule lives in content/blog.ts so the sitemap shares it exactly.
+const indexable = (category: string) => indexablePostCount(category, hasFullArticle)
 
 export function generateStaticParams() {
   return blogCategories.map((category) => ({ category: categorySlug(category) }))
@@ -18,11 +27,17 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!category) return {}
   const url = absoluteUrl(`/blog/category/${params.category}`)
   const title = `${category} Invitation Ideas | ShareInvite Blog`
-  const description = `Tips, ideas, and guides for ${category.toLowerCase()} invitations — WhatsApp sharing, wording samples, RSVP, and digital invitation inspiration for Indian families.`
+  const description =
+    BLOG_CATEGORY_INTRO[category]?.slice(0, 155) ??
+    `Tips, ideas, and guides for ${category.toLowerCase()} invitations — WhatsApp sharing, wording samples, RSVP, and digital invitation inspiration for Indian families.`
 
   return {
     title,
     description,
+    robots:
+      indexable(category) >= MIN_INDEXABLE_POSTS
+        ? { index: true, follow: true }
+        : { index: false, follow: true },
     alternates: { canonical: url },
     openGraph: {
       title,
@@ -61,8 +76,9 @@ export default function BlogCategoryPage({ params }: Props) {
       <section className="px-5 py-14">
         <div className="mx-auto max-w-7xl">
           <h1 className="font-display text-4xl font-normal text-ink sm:text-5xl">{category} Invitation Ideas</h1>
-          <p className="mt-4 max-w-2xl text-base leading-8 text-muted">
-            Ideas, wording samples, and practical guides for {category.toLowerCase()} invitations — from what to write to how to share on WhatsApp.
+          <p className="mt-4 max-w-3xl text-base leading-8 text-muted">
+            {BLOG_CATEGORY_INTRO[category] ??
+              `Ideas, wording samples, and practical guides for ${category.toLowerCase()} invitations — from what to write to how to share on WhatsApp.`}
           </p>
           <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (

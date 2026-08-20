@@ -131,3 +131,17 @@ export function collectionPageJsonLd(name: string, description: string, url: str
     },
   }
 }
+
+/**
+ * A template category listing exactly one design says nothing the template's
+ * own page does not. Eight of the eleven categories are in that position, which
+ * is why /templates/category/engagement and /templates/category/rakshabandhan
+ * were discovered by Google and never crawled. Below this threshold the
+ * category page is noindex,follow — reachable, still passing equity, but not
+ * competing with the template page it duplicates.
+ */
+export const MIN_TEMPLATES_TO_INDEX = 2
+
+export function templateCountFor(category: string): number {
+  return TEMPLATES.filter((t) => (t.category || 'digital') === category).length
+}

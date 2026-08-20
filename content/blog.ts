@@ -219,3 +219,19 @@ export function findBlogPost(slug: string) {
 export function findBlogCategory(slug: string) {
   return blogCategories.find((category) => categorySlug(category) === slug)
 }
+
+/**
+ * How many posts in a category Google is actually allowed to index.
+ *
+ * Used by both the category route and the sitemap so the noindex decision and
+ * the sitemap listing can never disagree.
+ */
+export function indexablePostCount(
+  category: string,
+  hasFullArticle: (slug: string) => boolean,
+): number {
+  return blogDrafts.filter((p) => p.category === category && hasFullArticle(p.slug)).length
+}
+
+/** Minimum indexable posts for a category page to be worth indexing itself. */
+export const MIN_INDEXABLE_POSTS = 2

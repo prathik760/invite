@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import { TEMPLATES } from '@/modules/templates/data'
-import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
+import { DEFAULT_OG_IMAGE, MIN_TEMPLATES_TO_INDEX, SITE_NAME, absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, templateCategorySlug, templateCountFor, templateSeoSlug } from '@/lib/seo'
+import { TEMPLATE_CATEGORY_INTRO } from '@/content/category-intros'
 
 type Props = { params: { category: string } }
 
@@ -29,6 +30,10 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title: { absolute: title },
     description,
+    robots:
+      templateCountFor(category) >= MIN_TEMPLATES_TO_INDEX
+        ? { index: true, follow: true }
+        : { index: false, follow: true },
     alternates: { canonical: url },
     openGraph: {
       title,
@@ -67,8 +72,9 @@ export default function TemplateCategoryPage({ params }: Props) {
       <section className="px-5 py-14">
         <div className="mx-auto max-w-7xl">
           <h1 className="font-display text-4xl font-normal text-ink sm:text-5xl">{category} Invitation Templates</h1>
-          <p className="mt-4 max-w-2xl text-base leading-8 text-muted">
-            Browse {category} invitation templates and return to ShareInvite home within one click. Each template links to the creation flow and relevant category pages.
+          <p className="mt-4 max-w-3xl text-base leading-8 text-muted">
+            {TEMPLATE_CATEGORY_INTRO[category] ??
+              `Browse every ${category} invitation template on ShareInvite. Each design publishes to one shareable link with venue details, a photo gallery and WhatsApp sharing built in.`}
           </p>
           <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {templates.map((template) => (

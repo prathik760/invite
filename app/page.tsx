@@ -1714,7 +1714,8 @@ export default function LandingPage() {
               a <Link href="/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp" className="text-accent-strong underline-offset-2 hover:underline">Valentine&apos;s Day card</Link>,
               an <Link href="/blog/anniversary-card-online-create-a-3d-animated-anniversary-card" className="text-accent-strong underline-offset-2 hover:underline">anniversary card</Link>, or a
               {' '}<Link href="/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes" className="text-accent-strong underline-offset-2 hover:underline">3D proposal card</Link> —
-              animated greetings you personalise and share in minutes.
+              animated greetings you personalise and share in minutes. Celebrating Rakhi apart from your sibling? Send a
+              {' '}<Link href="/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template" className="text-accent-strong underline-offset-2 hover:underline">Raksha Bandhan invitation card online</Link>.
             </p>
             <p>
               Start free with no credit card required. See all designs on the

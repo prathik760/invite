@@ -1,9 +1,9 @@
 import { MetadataRoute } from 'next'
-import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
+import { blogCategories, blogDrafts, categorySlug, indexablePostCount, MIN_INDEXABLE_POSTS } from '@/content/blog'
 import { hasFullArticle } from '@/content/blog-articles'
 import { landingPages, locationPages } from '@/content/seo-pages'
 import { TEMPLATES } from '@/modules/templates/data'
-import { SITE_URL, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
+import { MIN_TEMPLATES_TO_INDEX, SITE_URL, templateCategorySlug, templateCountFor, templateSeoSlug } from '@/lib/seo'
 
 const now = new Date()
 
@@ -126,9 +126,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/refund-policy', 0.40, 'yearly'),
 
     // ─── Tier 9: Blog category pages ──────────────────────────────────────────
-    ...blogCategories.map((category) => entry(`/blog/category/${categorySlug(category)}`, 0.60)),
+    // Only categories with enough indexable posts behind them. "Wedding Trends"
+    // has seven posts and zero real articles, so its page lists nothing Google
+    // will index — it is noindexed at the route and omitted here to match.
+    ...blogCategories
+      .filter((category) => indexablePostCount(category, hasFullArticle) >= MIN_INDEXABLE_POSTS)
+      .map((category) => entry(`/blog/category/${categorySlug(category)}`, 0.60)),
 
     // ─── Tier 10: Template category pages ─────────────────────────────────────
-    ...templateCategories.map((category) => entry(`/templates/category/${templateCategorySlug(category)}`, 0.60)),
+    // Single-template categories duplicate the template's own page, so they are
+    // noindexed at the route and left out here.
+    ...templateCategories
+      .filter((category) => templateCountFor(category) >= MIN_TEMPLATES_TO_INDEX)
+      .map((category) => entry(`/templates/category/${templateCategorySlug(category)}`, 0.60)),
   ]
 }
