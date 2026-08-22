@@ -21,7 +21,7 @@ const defaultFaqs: Faq[] = [
     answer: 'Yes. The product is built for Indian event workflows where families share invites on WhatsApp and guests need quick access to date, time, venue, maps, and ceremony details. Every template is designed for Indian celebrations — weddings, engagements, birthdays, Griha Pravesh, Namakaran, and anniversaries.',
   },
   {
-    question: 'Which plan should I choose?',
+    question: 'Which template should I choose, and what does it cost?',
     answer: 'Build and preview any template for free, then pay once for the one you publish — ₹199 for Elegant Wedding or Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin, Namakaran, or the interactive 3D Surprise Journey; ₹399 for Shaadi, Mangni, Griha Pravesh, or the animated 3D Greeting Cards; ₹499 for Saalgirah, KGF Royal Empire, Royal Deco, or Luxury Wedding.',
   },
   {

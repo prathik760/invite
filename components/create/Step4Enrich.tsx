@@ -1,26 +1,19 @@
 'use client'
 
-import Link from 'next/link'
 import FormEditor from '@/components/editor/FormEditor'
 import type { TemplateData } from '@/modules/templates/data'
-import { PLAN_MAP, type PlanId, planLevel } from '@/lib/plans'
 
 interface Step4EnrichProps {
   selectedTemplate: TemplateData
   data: Record<string, string>
   onChange: (data: Record<string, string>) => void
-  userPlan: PlanId
   onBack: () => void
   onContinue: () => void
 }
 
 export default function Step4Enrich({
-  selectedTemplate, data, onChange, userPlan, onBack, onContinue,
+  selectedTemplate, data, onChange, onBack, onContinue,
 }: Step4EnrichProps) {
-  const level = planLevel(userPlan)
-  const needsMusicUpgrade = level < 1
-  const needsGalleryUpgrade = level < 2
-
   return (
     <div>
       {/* Step header */}
@@ -40,38 +33,9 @@ export default function Step4Enrich({
         </span>
       </div>
 
-      {/* Upgrade nudge for entry-tier users */}
-      {(needsGalleryUpgrade || needsMusicUpgrade) && userPlan !== 'gold' && (
-        <div
-          className="mx-4 mt-4 rounded-2xl overflow-hidden"
-          style={{ border: '1px solid rgba(184,138,68,0.2)', background: 'rgba(184,138,68,0.04)' }}
-        >
-          <div className="px-4 py-3.5 flex items-start gap-3">
-            <svg className="w-4 h-4 shrink-0 mt-0.5" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-            </svg>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-ink">
-                {needsGalleryUpgrade && needsMusicUpgrade
-                  ? 'Gallery and music require an upgrade'
-                  : 'Photo gallery requires an upgrade'}
-              </p>
-              <p className="text-xs text-muted mt-0.5 leading-relaxed">
-                {needsGalleryUpgrade && needsMusicUpgrade
-                  ? 'Fill in the fields below — your invite publishes now and unlocks when you upgrade.'
-                  : `Music is included in your plan. Gallery unlocks from ${PLAN_MAP.premium!.name} (₹${PLAN_MAP.premium!.price}).`}
-              </p>
-              <Link
-                href="/pricing"
-                className="mt-1.5 inline-flex items-center gap-1 text-xs font-bold"
-                style={{ color: '#B87924' }}
-              >
-                See all plans →
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* No upgrade nudge here. Every template is bought on its own, so there
+          is no tier to climb — telling someone mid-form that a field they are
+          filling in is locked only makes them doubt the purchase. */}
 
       {/* Form — gallery, music, personal note */}
       <FormEditor

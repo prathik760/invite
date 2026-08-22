@@ -1,3 +1,4 @@
+import { SoftwareAppSchema } from '@/components/StructuredData'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -676,6 +677,7 @@ export default function LandingPage() {
       className="min-h-screen overflow-x-hidden bg-background text-foreground"
       style={{ WebkitOverflowScrolling: 'touch' }}
     >
+      <SoftwareAppSchema />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
@@ -695,7 +697,7 @@ export default function LandingPage() {
             className="hidden items-center gap-6 text-sm text-muted lg:flex"
             aria-label="Main navigation"
           >
-            <a href="#templates" className="transition-colors hover:text-foreground">Templates</a>
+            <a href="/templates" className="transition-colors hover:text-foreground">Templates</a>
             <a href="#features" className="transition-colors hover:text-foreground">Features</a>
             <Link href="/pricing" className="transition-colors hover:text-foreground">Pricing</Link>
             <Link href="/blog" className="transition-colors hover:text-foreground">Blog</Link>

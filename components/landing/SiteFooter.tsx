@@ -39,7 +39,9 @@ const blogLinks = [
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-border bg-white">
+    // Pages that end in this footer often dock a CTA bar to the bottom of the
+    // viewport; without this the last rows sit underneath it and are unreadable.
+    <footer className="border-t border-border bg-white" style={{ paddingBottom: 'var(--bottom-dock-h, 0px)' }}>
       <div className="mx-auto max-w-7xl px-5 py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}

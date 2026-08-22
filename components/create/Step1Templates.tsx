@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TEMPLATES } from '@/modules/templates/data'
 import { getRequiredPlan } from '@/lib/plans'
+import BottomDock from '@/components/ui/BottomDock'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
@@ -367,8 +368,8 @@ export default function Step1Templates({ selectedId, onSelect, onContinue }: Ste
         </div>
 
         {/* Selected template summary + CTA */}
-        <div
-          className="fixed bottom-0 inset-x-0 z-30 px-4 py-4"
+        <BottomDock
+          className="px-4 pt-4"
           style={{
             background: 'rgba(248,245,240,0.97)',
             backdropFilter: 'blur(20px)',
@@ -404,7 +405,7 @@ export default function Step1Templates({ selectedId, onSelect, onContinue }: Ste
               </svg>
             </button>
           </div>
-        </div>
+        </BottomDock>
       </div>
 
       {/* Preview modal */}

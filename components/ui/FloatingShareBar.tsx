@@ -29,7 +29,8 @@ export default function FloatingShareBar({ url, names, templateId }: FloatingSha
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.55, ease: BEZIER }}
-          className="fixed bottom-0 inset-x-0 z-50 px-4 pb-5 sm:px-6 pointer-events-none"
+          className="pointer-events-none fixed inset-x-0 bottom-0 px-4 pb-5 sm:px-6"
+          style={{ zIndex: 'var(--z-dock)' as unknown as number }}
         >
           <div
             className="max-w-lg mx-auto rounded-2xl overflow-hidden pointer-events-auto"

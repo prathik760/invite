@@ -1,3 +1,4 @@
+import BottomDock from '@/components/ui/BottomDock'
 import TrackedLink from '@/components/ui/TrackedLink'
 
 /**
@@ -9,8 +10,13 @@ import TrackedLink from '@/components/ui/TrackedLink'
  */
 export default function StickyCTA({ pageType = 'seo_page' }: { pageType?: string }) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-white/95 px-4 py-3 shadow-[0_-10px_30px_rgba(34,27,23,0.10)] backdrop-blur-xl">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3">
+    <BottomDock
+      className="border-t border-border bg-white/95 px-4 pt-3 shadow-[0_-10px_30px_rgba(34,27,23,0.10)] backdrop-blur-xl"
+      style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}
+    >
+      {/* pr-20 on desktop keeps the primary button clear of the floating
+          support bubble, which sits in the same bottom-right corner. */}
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 sm:pr-20">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold text-ink">Create a WhatsApp-ready invitation</p>
           <p className="text-xs text-muted">Free to build &amp; preview · Paid templates from ₹199 one-time.</p>
@@ -36,6 +42,6 @@ export default function StickyCTA({ pageType = 'seo_page' }: { pageType?: string
           </TrackedLink>
         </div>
       </div>
-    </div>
+    </BottomDock>
   )
 }

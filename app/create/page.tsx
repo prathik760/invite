@@ -10,6 +10,9 @@ import { TEMPLATES } from '@/modules/templates/data'
 import { PLANS, canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
 import ShareBar from '@/components/ui/ShareBar'
 import { CREATE_STEPS, seoEvents, trackEvent } from '@/lib/analytics'
+import BottomDock from '@/components/ui/BottomDock'
+import PaymentProblem, { type PayError } from '@/components/create/PaymentProblem'
+import { supportWhatsAppUrl } from '@/lib/support'
 
 import StepProgress from '@/components/create/StepProgress'
 import Step1Templates from '@/components/create/Step1Templates'
@@ -38,13 +41,20 @@ function Spinner() {
 function LoginPromptModal({ onClose, onContinueAsGuest }: { onClose: () => void; onContinueAsGuest: () => void }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center px-4"
-      style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)' }}
+      className="fixed inset-0 flex items-center justify-center px-4"
+      style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)', zIndex: 'var(--z-overlay)' as unknown as number }}
       onClick={e => { if (e.target === e.currentTarget) onClose() }}>
       <motion.div initial={{ scale: 0.96, y: 16, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.96, y: 16, opacity: 0 }} transition={{ duration: 0.3, ease: BEZIER }}
-        className="w-full max-w-sm rounded-3xl p-7"
-        style={{ background: '#FFF', border: '1px solid #E8DCCD', boxShadow: '0 32px 80px rgba(34,27,23,0.28)' }}>
+        className="w-full max-w-sm overflow-y-auto rounded-3xl p-6 sm:p-7"
+        style={{
+          background: '#FFF',
+          border: '1px solid #E8DCCD',
+          boxShadow: '0 32px 80px rgba(34,27,23,0.28)',
+          // Without a cap the card overflows the viewport on short screens
+          // (landscape phones, small laptops) and the pay button is unreachable.
+          maxHeight: 'calc(100dvh - 2rem)',
+        }}>
         <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5"
           style={{ background: 'linear-gradient(135deg, rgba(217,164,65,0.15), rgba(184,121,36,0.10))' }}>
           <svg className="w-7 h-7" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -78,7 +88,7 @@ function LoginPromptModal({ onClose, onContinueAsGuest }: { onClose: () => void;
 
 // ─── Upgrade modal ─────────────────────────────────────────────────────────────
 function UpgradeModal({
-  templateName, requiredPlan, isLoggedIn, onClose, onPay, paying,
+  templateName, requiredPlan, isLoggedIn, onClose, onPay, paying, payError,
 }: {
   templateName: string
   requiredPlan: typeof PLANS[number]
@@ -86,16 +96,24 @@ function UpgradeModal({
   onClose: () => void
   onPay: (planId: PlanId) => void
   paying: boolean
+  payError: PayError | null
 }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center px-4"
-      style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)' }}
+      className="fixed inset-0 flex items-center justify-center px-4"
+      style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)', zIndex: 'var(--z-overlay)' as unknown as number }}
       onClick={e => { if (e.target === e.currentTarget) onClose() }}>
       <motion.div initial={{ scale: 0.96, y: 16, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.96, y: 16, opacity: 0 }} transition={{ duration: 0.3, ease: BEZIER }}
-        className="w-full max-w-sm rounded-3xl p-7"
-        style={{ background: '#FFF', border: '1px solid #E8DCCD', boxShadow: '0 32px 80px rgba(34,27,23,0.28)' }}>
+        className="w-full max-w-sm overflow-y-auto rounded-3xl p-6 sm:p-7"
+        style={{
+          background: '#FFF',
+          border: '1px solid #E8DCCD',
+          boxShadow: '0 32px 80px rgba(34,27,23,0.28)',
+          // Without a cap the card overflows the viewport on short screens
+          // (landscape phones, small laptops) and the pay button is unreachable.
+          maxHeight: 'calc(100dvh - 2rem)',
+        }}>
         <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-5"
           style={{ background: 'rgba(217,164,65,0.12)' }}>
           <svg className="w-6 h-6" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -104,11 +122,12 @@ function UpgradeModal({
         </div>
         <h2 className="text-2xl font-bold text-ink text-center mb-1">{templateName}</h2>
         <p className="text-sm text-muted text-center mb-6 leading-6">
-          Unlock this template with a one-time payment. Includes all premium features.
+          A one-time payment for this design. No plan, no subscription — you buy the
+          template you want and every feature is included.
         </p>
         <div className="rounded-2xl border border-border bg-surface p-4 mb-5">
           <div className="flex items-baseline justify-between mb-4">
-            <p className="text-sm font-medium text-muted">One-time price</p>
+            <p className="text-sm font-medium text-muted">This template</p>
             <p className="text-2xl font-bold text-ink">₹{requiredPlan.price.toLocaleString()}</p>
           </div>
           <div className="grid grid-cols-2 gap-y-2 gap-x-3">
@@ -122,6 +141,16 @@ function UpgradeModal({
             ))}
           </div>
         </div>
+        {payError && (
+          <PaymentProblem
+            error={payError}
+            price={requiredPlan.price}
+            templateName={templateName}
+            onRetry={() => onPay(requiredPlan.id)}
+            retrying={paying}
+          />
+        )}
+
         {!isLoggedIn ? (
           <div className="space-y-2">
             <Link href="/auth/login?callbackUrl=/create"
@@ -140,7 +169,40 @@ function UpgradeModal({
             {paying ? 'Opening payment…' : `Pay ₹${requiredPlan.price.toLocaleString()} — One Time`}
           </button>
         )}
-        <button onClick={onClose} className="mt-3 w-full py-2.5 text-sm text-muted hover:text-foreground transition-colors">
+        {/* Trust row. This modal is the moment of decision and until now it
+            offered no refund policy, no support route and no payment marks —
+            all of which exist elsewhere on the site but not where they count. */}
+        <div className="mt-4 border-t border-border/50 pt-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10px] text-muted">
+            <span className="inline-flex items-center gap-1">
+              <svg className="h-3 w-3" style={{ color: '#2F766D' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+              Secured by Razorpay
+            </span>
+            <span aria-hidden>·</span>
+            <span>UPI · Card · Net banking</span>
+            <span aria-hidden>·</span>
+            <span>One-time — no subscription</span>
+          </div>
+          <div className="mt-2.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px]">
+            <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline" style={{ color: '#B87924' }}>
+              7-day refund policy
+            </Link>
+            <span className="text-muted" aria-hidden>·</span>
+            <a
+              href={supportWhatsAppUrl(`Hi, I have a question about the ${templateName} template (₹${requiredPlan.price}) before I pay.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold underline-offset-2 hover:underline"
+              style={{ color: 'rgb(22,163,74)' }}
+            >
+              Question? Chat with us
+            </a>
+          </div>
+        </div>
+
+        <button onClick={onClose} className="mt-2 w-full py-2.5 text-sm text-muted hover:text-foreground transition-colors">
           Maybe later
         </button>
       </motion.div>
@@ -162,8 +224,16 @@ export default function CreatePage() {
   const [userPlan, setUserPlan] = useState<PlanId>('free')
   const [upgradeTarget, setUpgradeTarget] = useState<{ templateId: string; templateName: string } | null>(null)
   const [paying, setPaying] = useState(false)
+  // Payment problems used to surface as browser alert() dialogs — including
+  // after the customer's money had already left their account. This holds a
+  // structured error so the UI can show the payment reference, a retry and a
+  // route to a human instead.
+  const [payError, setPayError] = useState<PayError | null>(null)
   const [showLoginPrompt, setShowLoginPrompt] = useState(false)
   const [savedToast, setSavedToast] = useState(false)
+  // Blocks the autosave effect until the stored draft has been read back, so
+  // the default form values cannot clobber it on first paint.
+  const [draftLoaded, setDraftLoaded] = useState(false)
 
   // Pre-select template from URL param, skip straight to Step 2
   useEffect(() => {
@@ -198,18 +268,44 @@ export default function CreatePage() {
       .catch(() => { })
   }, [session])
 
-  // Restore draft after sign-in
+  /**
+   * Restore a draft on arrival — from any earlier visit, not just a sign-in.
+   *
+   * The builder used to write the draft in exactly one place (the publish click
+   * of a signed-out user) into sessionStorage, which dies with the tab. So the
+   * "Sign in to save your progress" prompt at step 2 lost everything the moment
+   * it was obeyed, and the "Progress saved automatically" toast on every step
+   * was simply false. Both now describe what actually happens.
+   */
   useEffect(() => {
-    if (!session) return
+    // A ?template= deep link is an explicit request for that design, so it wins
+    // over whatever was left in storage.
+    if (new URLSearchParams(window.location.search).get('template')) { setDraftLoaded(true); return }
     try {
-      const raw = sessionStorage.getItem(DRAFT_KEY)
-      if (!raw) return
-      const draft = JSON.parse(raw) as { templateId: string; data: Record<string, string>; step?: number }
-      sessionStorage.removeItem(DRAFT_KEY)
-      const tpl = TEMPLATES.find(t => t.id === draft.templateId)
-      if (tpl) { setSelectedId(draft.templateId); setData(draft.data); setCurrentStep(draft.step ?? 2) }
-    } catch { }
-  }, [session])
+      const raw = localStorage.getItem(DRAFT_KEY)
+      if (raw) {
+        const draft = JSON.parse(raw) as { templateId: string; data: Record<string, string>; step?: number }
+        const tpl = TEMPLATES.find(t => t.id === draft.templateId)
+        if (tpl && draft.data) {
+          setSelectedId(draft.templateId)
+          setData(draft.data)
+          setCurrentStep(Math.min(Math.max(draft.step ?? 2, 1), 4))
+        }
+      }
+    } catch { /* private mode or corrupt payload — start clean */ }
+    setDraftLoaded(true)
+  }, [])
+
+  /**
+   * Persist on every edit. Guarded by `draftLoaded` so the initial render's
+   * default data cannot overwrite a stored draft before it has been read back.
+   */
+  useEffect(() => {
+    if (!draftLoaded || createdSlug) return
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data, step: currentStep }))
+    } catch { /* quota or private mode — autosave is best-effort */ }
+  }, [draftLoaded, selectedId, data, currentStep, createdSlug])
 
   const handleTemplateChange = useCallback((id: string) => {
     const tpl = TEMPLATES.find(t => t.id === id) ?? TEMPLATES[0]
@@ -222,6 +318,21 @@ export default function CreatePage() {
       template_category: tpl.category,
     })
   }, [])
+
+  /**
+   * Put the user at the top of the step they just moved to.
+   *
+   * Both surfaces have to be reset: the window (steps 1 and 5 scroll the page)
+   * and the form panel (steps 2-4 scroll inside an aside). Deferred to the next
+   * frame so the incoming step has rendered before we scroll it — resetting the
+   * old step's scroll position is what made this look like it did nothing.
+   */
+  const scrollToStepTop = () => {
+    requestAnimationFrame(() => {
+      formPanelRef.current?.scrollTo({ top: 0, behavior: 'auto' })
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    })
+  }
 
   const goToStep = (step: number) => {
     // Only a forward move completes the step you were on. Going Back must not
@@ -236,7 +347,7 @@ export default function CreatePage() {
       })
     }
     setCurrentStep(step)
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    scrollToStepTop()
     if (step > 1) {
       setSavedToast(true)
       setTimeout(() => setSavedToast(false), 2200)
@@ -266,6 +377,9 @@ export default function CreatePage() {
         throw new Error(body.error || 'Failed to create invitation')
       }
       const { slug } = await res.json() as { slug: string }
+      // Published — drop the draft so the next visit starts clean instead of
+      // reopening an invitation that already exists.
+      try { localStorage.removeItem(DRAFT_KEY) } catch { }
       setCreatedSlug(slug)
       trackEvent(seoEvents.inviteCreation, {
         template_id: selectedTemplate.id,
@@ -300,6 +414,7 @@ export default function CreatePage() {
       plan: requiredPlanForSelected.id,
       price: requiredPlanForSelected.price,
     })
+    setPayError(null)
     setUpgradeTarget({ templateId: selectedId, templateName: selectedTemplate.name })
   }
 
@@ -313,7 +428,8 @@ export default function CreatePage() {
     })
 
     if (!session) {
-      try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data, step: currentStep })) } catch { }
+      // No explicit save needed — the autosave effect above has already stored
+      // this draft, and it survives the round trip through sign-in.
       trackEvent(seoEvents.signupStart, { trigger: 'publish', template_id: selectedId })
       setShowLoginPrompt(true)
       return
@@ -336,32 +452,42 @@ export default function CreatePage() {
     openPaywall()
   }
 
+  // The steps 2-4 form lives in its own `overflow-y-auto` panel, so
+  // `window.scrollTo` never moved it: pressing Continue after scrolling down
+  // swapped the fields but left the panel where it was, dropping the user into
+  // the middle of the next step with no idea which step they were on.
+  const formPanelRef = useRef<HTMLElement>(null)
+
   const payRef = useRef<boolean>(false)
   const handleUpgradePayment = useCallback(async (planId: PlanId) => {
     if (payRef.current) return
-    payRef.current = true; setPaying(true)
+    payRef.current = true; setPaying(true); setPayError(null)
     const plan = PLANS.find(p => p.id === planId)
-    trackEvent(seoEvents.checkoutStart, {
+    const ctx = {
       plan: planId,
       plan_name: plan?.name,
       price: plan?.price,
       currency: 'INR',
       template_id: upgradeTarget?.templateId,
       template_name: upgradeTarget?.templateName,
-    })
+    }
+    trackEvent(seoEvents.checkoutStart, ctx)
     try {
       const orderRes = await fetch('/api/payments/create-order', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan: planId }),
       })
       const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; keyId?: string; error?: string }
-      if (!orderRes.ok || !order.orderId) throw new Error(order.error ?? 'Could not create order')
+      if (!orderRes.ok || !order.orderId) throw new Error(order.error ?? 'Could not start the payment. Please try again.')
       const options: RazorpayOptions = {
         key: (order.keyId ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) as string,
         amount: order.amount as number,
         currency: order.currency ?? 'INR',
         name: 'ShareInvite',
-        description: `${PLANS.find(p => p.id === planId)?.name} Plan — One Time`,
+        // Shown inside the Razorpay sheet. Naming the template the customer
+        // actually chose beats a tier name they never asked for and would not
+        // recognise on their bank statement.
+        description: `${upgradeTarget?.templateName ?? 'Invitation template'} — one-time`,
         order_id: order.orderId as string,
         prefill: { email: session?.user?.email ?? undefined, name: session?.user?.name ?? undefined },
         theme: { color: '#B87924' },
@@ -375,34 +501,52 @@ export default function CreatePage() {
             if (verRes.ok && verBody.success) {
               // Fires only after the server verified the Razorpay signature and
               // amount — never on opening or dismissing the checkout sheet.
-              trackEvent(seoEvents.purchase, {
-                transaction_id: response.razorpay_payment_id,
-                plan: planId,
-                plan_name: plan?.name,
-                value: plan?.price,
-                price: plan?.price,
-                currency: 'INR',
-                template_id: upgradeTarget?.templateId,
-                template_name: upgradeTarget?.templateName,
-              })
+              trackEvent(seoEvents.purchase, { ...ctx, transaction_id: response.razorpay_payment_id, value: plan?.price })
               // Reflect the new entitlement immediately so the publish path does
               // not bounce the user back to the paywall they just paid at.
               setUserPlan(verBody.plan ?? planId)
               setUpgradeTarget(null)
               setTimeout(() => doCreate(), 300)
-            } else { alert(verBody.error ?? 'Payment verification failed.') }
+            } else {
+              // The worst case in the whole flow: Razorpay may have taken the
+              // money but we could not confirm it. Never a bare alert here —
+              // the customer needs the payment reference and a way to reach us.
+              trackEvent(seoEvents.paymentFailed, { ...ctx, transaction_id: response.razorpay_payment_id })
+              setPayError({
+                kind: 'verification',
+                message: verBody.error ?? 'We could not confirm your payment with our server.',
+                paymentId: response.razorpay_payment_id,
+              })
+            }
+          } catch {
+            trackEvent(seoEvents.paymentFailed, { ...ctx, transaction_id: response.razorpay_payment_id })
+            setPayError({
+              kind: 'verification',
+              message: 'We could not reach our server to confirm your payment.',
+              paymentId: response.razorpay_payment_id,
+            })
           } finally { setPaying(false); payRef.current = false }
         },
-        modal: { ondismiss: () => { setPaying(false); payRef.current = false } },
+        modal: {
+          ondismiss: () => {
+            // Closing the sheet is not an error — no scary message, just an
+            // honest note that nothing was charged, plus a way back in.
+            trackEvent(seoEvents.checkoutAbandon, ctx)
+            setPayError({ kind: 'cancelled', message: 'Payment was cancelled — you have not been charged.' })
+            setPaying(false); payRef.current = false
+          },
+        },
       }
       if (typeof window !== 'undefined' && window.Razorpay) {
         new window.Razorpay(options).open()
       } else {
-        alert('Payment system is loading. Please try again.')
+        trackEvent(seoEvents.checkoutError, { ...ctx, reason: 'script_not_loaded' })
+        setPayError({ kind: 'setup', message: 'The secure payment window is still loading. Please try again in a moment.' })
         setPaying(false); payRef.current = false
       }
     } catch (e) {
-      alert(e instanceof Error ? e.message : 'Payment failed. Please try again.')
+      trackEvent(seoEvents.checkoutError, { ...ctx, reason: 'order_failed' })
+      setPayError({ kind: 'setup', message: e instanceof Error ? e.message : 'We could not start the payment. Please try again.' })
       setPaying(false); payRef.current = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -426,7 +570,10 @@ export default function CreatePage() {
     <div className="min-h-screen bg-background flex flex-col text-foreground">
 
       {/* Gold accent bar */}
-      <div className="sticky top-0 z-50 h-[3px] shrink-0 bg-gradient-to-r from-[#B87924] via-[#D9A441] to-[#B96B70]" />
+      <div
+        className="sticky top-0 h-[3px] shrink-0 bg-gradient-to-r from-[#B87924] via-[#D9A441] to-[#B96B70]"
+        style={{ zIndex: 'var(--z-sticky-header)' as unknown as number }}
+      />
 
       {/* ─── Header ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-[3px] z-40 h-14 sm:h-16 border-b border-border bg-background/95 backdrop-blur-xl flex items-center justify-between px-4 sm:px-6 shrink-0 gap-3">
@@ -474,8 +621,17 @@ export default function CreatePage() {
           {/* LEFT: Form panel — extra bottom padding on mobile so its last content
               (the "See the full design" button) clears the fixed bottom nav bar. */}
           <aside
-            className="w-full md:w-[360px] lg:w-[420px] xl:w-[460px] shrink-0 md:border-r border-border overflow-y-auto scrollbar-hide pb-28 md:pb-0"
-            style={{ background: '#FDFBF8', maxHeight: 'calc(100vh - 67px)' }}
+            ref={formPanelRef}
+            className="w-full md:w-[360px] lg:w-[420px] xl:w-[460px] shrink-0 md:border-r border-border overflow-y-auto scrollbar-hide md:pb-0"
+            style={{
+              background: '#FDFBF8',
+              // dvh, not vh: on mobile Safari `100vh` is the *expanded* viewport,
+              // so the panel ran taller than the visible area and its last field
+              // sat under the browser chrome.
+              maxHeight: 'calc(100dvh - 67px)',
+              // Clears the docked nav bar, whose real height is published by it.
+              paddingBottom: 'calc(var(--bottom-dock-h, 0px) + 1.5rem)',
+            }}
           >
             {/* "Now editing" accent strip — desktop only */}
             <div className="hidden md:flex items-center gap-3 px-5 py-3 shrink-0"
@@ -544,7 +700,6 @@ export default function CreatePage() {
                 selectedTemplate={selectedTemplate}
                 data={data}
                 onChange={setData}
-                userPlan={userPlan}
                 onBack={() => goToStep(3)}
                 onContinue={() => goToStep(5)}
               />
@@ -584,7 +739,7 @@ export default function CreatePage() {
           <section
             className="hidden md:flex md:flex-col flex-1 overflow-y-auto scrollbar-hide"
             style={{
-              maxHeight: 'calc(100vh - 67px)',
+              maxHeight: 'calc(100dvh - 67px)',
               background: isDark
                 ? `radial-gradient(ellipse 90% 65% at 50% -5%, rgba(${tv.rgb},0.40) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 85% 90%, rgba(${tv.rgb},0.14) 0%, transparent 55%), #06060E`
                 : `radial-gradient(ellipse 90% 60% at 50% -5%, rgba(${tv.rgb},0.22) 0%, transparent 60%), radial-gradient(ellipse 55% 45% at 88% 85%, rgba(217,164,65,0.13) 0%, transparent 55%), linear-gradient(175deg,#FFF9F2 0%,#F5EDE2 100%)`,
@@ -679,7 +834,7 @@ export default function CreatePage() {
 
       {/* ─── Mobile: full-screen live preview overlay ──────────────────── */}
       {isSplitStep && previewOpen && (
-        <div className="fixed inset-0 z-[70] flex flex-col md:hidden">
+        <div className="fixed inset-0 flex flex-col md:hidden" style={{ zIndex: 'var(--z-overlay)' as unknown as number }}>
           {/* Top bar */}
           <div className="flex items-center justify-between gap-3 px-4 py-3 shrink-0"
             style={{ background: 'rgba(253,251,248,0.98)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(44,32,28,0.09)' }}>
@@ -744,8 +899,8 @@ export default function CreatePage() {
 
       {/* ─── Mobile sticky navigation (steps 2–4) ──────────────────────── */}
       {!createdSlug && isSplitStep && (
-        <div
-          className="md:hidden fixed bottom-0 inset-x-0 z-30"
+        <BottomDock
+          className="md:hidden"
           style={{
             background: 'rgba(253,251,248,0.98)',
             backdropFilter: 'blur(20px)',
@@ -770,13 +925,18 @@ export default function CreatePage() {
               {currentStep === 4 ? 'Preview & Publish →' : 'Continue →'}
             </button>
           </div>
-        </div>
+        </BottomDock>
       )}
 
       {/* ─── Mobile sticky CTA (step 5) ─────────────────────────────────── */}
+      {/* On a phone the phone-mockup preview fills the viewport, so the pay
+          button inside Step5Publish sits well below the fold — customers had to
+          scroll to find out how to pay. This docks it. It previously always read
+          "Get my invitation link" even when ₹399 was due, so the one button
+          people could actually see never mentioned payment at all. */}
       {!createdSlug && currentStep === 5 && (
-        <div
-          className="md:hidden fixed bottom-0 inset-x-0 z-30"
+        <BottomDock
+          className="md:hidden"
           style={{
             background: 'rgba(253,251,248,0.98)',
             backdropFilter: 'blur(20px)',
@@ -797,29 +957,48 @@ export default function CreatePage() {
             {loading && <Spinner />}
             {loading ? 'Creating your invitation…' : (
               <>
-                Get my invitation link
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                {needsPayment
+                  ? `Continue to payment — ₹${requiredPlanForSelected.price.toLocaleString('en-IN')}`
+                  : 'Get my invitation link'}
+                <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
               </>
             )}
           </button>
-        </div>
+          {needsPayment && (
+            <p className="mt-1.5 text-center text-[10px] leading-4 text-muted">
+              {!session ? 'Sign in first · ' : ''}Razorpay secured · UPI, card &amp; net banking ·{' '}
+              <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline" style={{ color: '#B87924' }}>
+                7-day refunds
+              </Link>
+            </p>
+          )}
+        </BottomDock>
       )}
 
       {/* ─── "Progress saved" toast ─────────────────────────────────────── */}
       <AnimatePresence>
         {savedToast && (
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 16 }}
+            // x is animated rather than applied via `-translate-x-1/2`: Framer
+            // writes the whole `transform` property, so a Tailwind translate
+            // class on the same element is silently overwritten by the y
+            // animation — which is why the toast sat half its width off-centre.
+            initial={{ opacity: 0, y: 16, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 16, x: '-50%' }}
             transition={{ duration: 0.25, ease: BEZIER }}
-            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 px-4 py-2.5 rounded-full shadow-lg"
-            style={{ background: '#221B17', color: '#fff' }}
+            className="fixed left-1/2 flex max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full px-4 py-2.5 shadow-lg"
+            style={{
+              background: '#221B17',
+              color: '#fff',
+              zIndex: 'var(--z-toast)' as unknown as number,
+              bottom: 'calc(var(--bottom-dock-h, 0px) + 1.25rem)',
+            }}
           >
             <span className="text-[10px]" style={{ color: '#2F766D' }}>✓</span>
-            <span className="text-xs font-semibold whitespace-nowrap">Progress saved automatically</span>
+            <span className="text-xs font-semibold whitespace-nowrap">Progress saved</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -840,9 +1019,10 @@ export default function CreatePage() {
             templateName={upgradeTarget.templateName}
             requiredPlan={upgradeRequiredPlan}
             isLoggedIn={!!session}
-            onClose={() => setUpgradeTarget(null)}
+            onClose={() => { setUpgradeTarget(null); setPayError(null) }}
             onPay={handleUpgradePayment}
             paying={paying}
+            payError={payError}
           />
         )}
       </AnimatePresence>
@@ -851,8 +1031,8 @@ export default function CreatePage() {
       <AnimatePresence>
         {createdSlug && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center px-4"
-            style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)' }}>
+            className="fixed inset-0 flex items-end sm:items-center justify-center px-4"
+            style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)', zIndex: 'var(--z-overlay)' as unknown as number }}>
             <motion.div initial={{ y: 40, opacity: 0, scale: 0.97 }} animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 40, opacity: 0 }} transition={{ duration: 0.45, ease: BEZIER }}
               className="w-full max-w-md rounded-t-3xl p-7 pb-10 sm:rounded-3xl sm:p-8"

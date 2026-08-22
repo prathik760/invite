@@ -1,22 +1,47 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import { seoEvents, trackEvent } from '@/lib/analytics'
+import { SUPPORT_WHATSAPP_URL } from '@/lib/support'
 
-const WA_HREF =
-  'https://wa.me/916361770366?text=Hi%2C%20I%20want%20to%20enquire%20about%20ShareInvite'
-
+/**
+ * Floating support button.
+ *
+ * Two things it must never do, both of which it used to:
+ *
+ *  1. Sit on top of a modal. It was `z-50`, the same as every overlay, and is
+ *     rendered after {children} in the root layout — so it won on DOM order and
+ *     painted over the payment modal and the publish success screen. On the
+ *     success screen that put a green WhatsApp circle right next to the green
+ *     "Share on WhatsApp" button: two identical-looking buttons doing entirely
+ *     different things. It now sits at --z-float, below --z-overlay.
+ *
+ *  2. Overlap a docked bottom bar. It cleared one with a hard-coded 88px, which
+ *     was wrong for every bar of a different height. It now offsets by the live
+ *     --bottom-dock-h published by <BottomDock>.
+ */
 export default function WhatsAppButton() {
   const pathname = usePathname()
 
-  if (pathname?.startsWith('/e/')) return null
+  // Hidden on published invitations (the guest's view, never the host's) and in
+  // the builder, where the checkout already offers a contextual support link
+  // and a second floating button only competes with the pay button.
+  if (pathname?.startsWith('/e/') || pathname?.startsWith('/create')) return null
 
   return (
     <a
-      href={WA_HREF}
+      href={SUPPORT_WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed bottom-[88px] right-4 z-50 sm:bottom-6 sm:right-5 group"
+      // Untracked until now, so the number of enquiries this button generates —
+      // the top of the entire WhatsApp sales motion — was unmeasurable.
+      onClick={() => trackEvent(seoEvents.supportContact, { channel: 'whatsapp', source: 'floating_button', path: pathname ?? '' })}
+      className="group fixed right-4 sm:right-5"
+      style={{
+        zIndex: 'var(--z-float)' as unknown as number,
+        bottom: 'calc(var(--bottom-dock-h, 0px) + 1rem + env(safe-area-inset-bottom, 0px))',
+      }}
     >
       {/* Slow pulse ring */}
       <span

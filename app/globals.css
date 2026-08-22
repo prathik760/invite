@@ -27,6 +27,28 @@
     "Kohinoor Devanagari", "Noto Sans Devanagari",
     sans-serif;
   --font-script: "Snell Roundhand", "Apple Chancery", "Brush Script MT", cursive;
+
+  /* ─── Stacking order ──────────────────────────────────────────────────────
+     One scale for every element that leaves the document flow. Before this,
+     the floating WhatsApp button, the sticky bottom bars and every modal were
+     all `z-50`, and the button — rendered after {children} in the layout — won
+     on DOM order. It painted on top of the payment modal and of the publish
+     success screen, which is why a second WhatsApp button appeared next to the
+     "Share on WhatsApp" button there.
+
+     Never hand-write a z-index above 20. Use these. */
+  --z-sticky-header: 30;   /* in-page sticky headers, step progress bars       */
+  --z-dock: 40;            /* fixed bottom bars (CTA docks, mobile nav)        */
+  --z-float: 45;           /* floating action button — above docks, below UI   */
+  --z-toast: 55;           /* transient toasts                                 */
+  --z-overlay: 60;         /* modals, paywalls, full-screen overlays           */
+  --z-promo: 61;           /* promo popup, deliberately above ordinary modals  */
+
+  /* Height of whatever fixed bar is docked to the bottom of the viewport, in
+     px. Published by <BottomDock> and read by the floating button and by page
+     padding, so nothing has to hard-code "88px" and guess again when the bar's
+     content changes. Defaults to 0 when no dock is mounted. */
+  --bottom-dock-h: 0px;
 }
 
 * {

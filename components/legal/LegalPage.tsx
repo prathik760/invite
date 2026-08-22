@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import SiteHeader from '@/components/layout/SiteHeader'
 import Link from 'next/link'
 import SiteFooter from '@/components/landing/SiteFooter'
 
@@ -50,15 +50,7 @@ export default function LegalPage({ eyebrow, title, subtitle, lastUpdated, intro
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
-          <Link href="/" className="flex items-center gap-2.5">
-            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width={120} height={32} />
-            <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
-          </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Free Invite</Link>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-14 pb-12 sm:pt-20 sm:pb-16">

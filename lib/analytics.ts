@@ -44,6 +44,15 @@ export const seoEvents = {
   paywallView: 'paywall_view',
   checkoutStart: 'checkout_start',
   purchase: 'purchase',
+  // Without these three, `checkout_start` minus `purchase` is a single opaque
+  // bucket: a dismissed sheet, a declined card and a failed verification all
+  // look identical, so the largest drop in the funnel cannot be diagnosed.
+  /** Razorpay sheet closed without paying. */
+  checkoutAbandon: 'checkout_abandon',
+  /** Could not reach checkout at all (order creation / script load failed). */
+  checkoutError: 'checkout_error',
+  /** Money may have left the account but the server could not confirm it. */
+  paymentFailed: 'payment_failed',
 
   // ─── Promotions ──────────────────────────────────────────────────────────
   // promoView fires when the popup is actually shown, not when it mounts, so
@@ -51,6 +60,12 @@ export const seoEvents = {
   promoView: 'promo_view',
   promoClick: 'promo_click',
   promoDismiss: 'promo_dismiss',
+
+  // ─── Support / enquiry ───────────────────────────────────────────────────
+  /** Any tap that opens a route to a human (WhatsApp button, checkout help). */
+  supportContact: 'support_contact',
+  /** Custom-template enquiry form submitted successfully. */
+  enquirySubmit: 'enquiry_submit',
 
   // ─── Sharing ─────────────────────────────────────────────────────────────
   whatsappShare: 'whatsapp_share',

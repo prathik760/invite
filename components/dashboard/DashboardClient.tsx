@@ -1,5 +1,6 @@
 'use client'
 
+import { PLAN_MAP, type PlanId } from '@/lib/plans'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
@@ -92,11 +93,17 @@ interface Props {
   user: { name: string | null; email: string | null; plan?: string }
 }
 
-const PLAN_LABELS: Record<string, { label: string; color: string; bg: string; border: string }> = {
-  free:     { label: 'Free',     color: '#7E716B', bg: 'rgba(126,113,107,0.1)',  border: '1px solid rgba(126,113,107,0.2)' },
-  standard: { label: 'Standard', color: '#B87924', bg: 'rgba(184,121,36,0.12)', border: '1px solid rgba(184,121,36,0.25)' },
-  premium:  { label: 'Premium',  color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.25)' },
-  gold:     { label: 'Gold',     color: '#C9A84C', bg: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.3)'  },
+// Templates are bought individually, so there is no tier name to display. The
+// badge reports how many designs the account has unlocked instead — the thing a
+// customer can actually act on.
+const BADGE_STYLE = {
+  bg: 'rgba(184,121,36,0.12)',
+  color: '#B87924',
+  border: '1px solid rgba(184,121,36,0.25)',
+}
+
+function unlockedCount(plan: string): number {
+  return PLAN_MAP[plan as PlanId]?.templateIds.length ?? 0
 }
 
 export default function DashboardClient({ user }: Props) {
@@ -220,10 +227,10 @@ export default function DashboardClient({ user }: Props) {
               <div className="px-4 py-3 border-b border-border/60">
                 <p className="text-xs font-semibold text-ink truncate">{user.name || 'Welcome back'}</p>
                 <p className="text-xs text-muted truncate">{user.email}</p>
-                {PLAN_LABELS[userPlan] && (
+                {unlockedCount(userPlan) > 0 && (
                   <span className="mt-1.5 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
-                    style={{ background: PLAN_LABELS[userPlan].bg, color: PLAN_LABELS[userPlan].color, border: PLAN_LABELS[userPlan].border }}>
-                    {PLAN_LABELS[userPlan].label} plan
+                    style={{ background: BADGE_STYLE.bg, color: BADGE_STYLE.color, border: BADGE_STYLE.border }}>
+                    {unlockedCount(userPlan)} template{unlockedCount(userPlan) !== 1 ? 's' : ''} unlocked
                   </span>
                 )}
               </div>
@@ -292,10 +299,10 @@ export default function DashboardClient({ user }: Props) {
                 <p className="text-xs text-muted">invitation{events.length !== 1 ? 's' : ''}</p>
               </div>
             )}
-            {PLAN_LABELS[userPlan] && (
+            {unlockedCount(userPlan) > 0 && (
               <span className="rounded-xl px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide"
-                style={{ background: PLAN_LABELS[userPlan].bg, color: PLAN_LABELS[userPlan].color, border: PLAN_LABELS[userPlan].border }}>
-                {PLAN_LABELS[userPlan].label}
+                style={{ background: BADGE_STYLE.bg, color: BADGE_STYLE.color, border: BADGE_STYLE.border }}>
+                {unlockedCount(userPlan)} unlocked
               </span>
             )}
           </div>

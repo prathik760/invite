@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import BottomDock from '@/components/ui/BottomDock'
 
 interface StickyCTAProps {
   href: string
@@ -18,10 +19,11 @@ export default function StickyCTA({ href, text }: StickyCTAProps) {
   }, [])
 
   return (
-    <div
-      className={`fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pt-2 bg-background/95 backdrop-blur-md border-t border-border sm:hidden transition-transform duration-300 ${
+    <BottomDock
+      className={`px-4 pt-2 bg-background/95 backdrop-blur-md border-t border-border sm:hidden transition-transform duration-300 ${
         visible ? 'translate-y-0' : 'translate-y-full'
       }`}
+      style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}
     >
       <Link
         href={href}
@@ -30,8 +32,8 @@ export default function StickyCTA({ href, text }: StickyCTAProps) {
         {text}
       </Link>
       <p className="mt-1 text-center text-[10px] text-muted">
-        Free · No credit card · WhatsApp-ready in 5 min
+        Free to build · No credit card · WhatsApp-ready in 5 min
       </p>
-    </div>
+    </BottomDock>
   )
 }

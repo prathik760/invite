@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { Session } from 'next-auth'
 import type { TemplateData } from '@/modules/templates/data'
 import { canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
+import { supportWhatsAppUrl } from '@/lib/support'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
@@ -141,34 +142,16 @@ export default function Step5Publish({
           </div>
         </div>
 
-        {/* Plan badge + CTA */}
-        <div className="w-full max-w-xs mt-8 flex flex-col items-center gap-3">
+        {/* Plan badge + CTA. The bottom padding on mobile clears the docked
+            CTA bar, whose real height is published as --bottom-dock-h. */}
+        <div
+          className="w-full max-w-xs mt-8 flex flex-col items-center gap-3"
+          style={{ paddingBottom: 'calc(var(--bottom-dock-h, 0px) + 1rem)' }}
+        >
 
-          {/* Current plan badge */}
-          <div
-            className="w-full rounded-2xl px-4 py-3.5 flex items-center justify-between gap-3"
-            style={{ background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(44,32,28,0.04)', border: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(44,32,28,0.1)' }}
-          >
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[.2em] mb-0.5" style={{ color: isDark ? 'rgba(255,255,255,0.4)' : 'rgba(44,32,28,0.38)' }}>
-                Your plan
-              </p>
-              <p className="text-sm font-semibold" style={{ color: isDark ? '#fff' : '#221B17' }}>
-                {userHasAccess
-                  ? `${requiredPlan.name} · unlocked`
-                  : `₹${requiredPlan.price.toLocaleString('en-IN')} one-time · ${requiredPlan.name}`}
-              </p>
-            </div>
-            {mustPay && (
-              <Link
-                href="/pricing"
-                className="shrink-0 text-[11px] font-bold px-3 py-1.5 rounded-xl"
-                style={{ background: 'rgba(184,138,68,0.15)', color: '#B87924', border: '1px solid rgba(184,138,68,0.3)' }}
-              >
-                Upgrade
-              </Link>
-            )}
-          </div>
+          {/* No plan badge. Pricing is per template, not per tier, so there is
+              no "plan" to report and nothing to upgrade to — the price of the
+              design they picked is already on the button. */}
 
           {/* No branding warning: every template is a paid publish, so no new
               invitation carries the "Made with ShareInvite" banner. */}
@@ -180,11 +163,14 @@ export default function Step5Publish({
             </div>
           )}
 
-          {/* Primary CTA */}
+          {/* Primary CTA — desktop only. On mobile the identical action is
+              docked to the bottom of the viewport by the create page, and
+              rendering both produced two buttons for one action with the
+              off-screen one carrying the price. */}
           <button
             onClick={onPublish}
             disabled={loading}
-            className="gold-button w-full flex items-center justify-center gap-2.5 rounded-2xl py-4 font-bold disabled:opacity-50"
+            className="gold-button hidden w-full md:flex items-center justify-center gap-2.5 rounded-2xl py-4 font-bold disabled:opacity-50"
             style={{ fontSize: '15px', letterSpacing: '0.01em' }}
           >
             {loading ? (
@@ -201,14 +187,53 @@ export default function Step5Publish({
 
           {/* Tell the user exactly what the next tap does. The old copy said
               "No account needed" while the button in fact opened a sign-in
-              modal — the single most common reason to abandon at step 5. */}
-          <p className="text-center text-[11px] leading-4" style={{ color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(44,32,28,0.42)' }}>
-            {mustPay
-              ? 'Secure one-time payment via Razorpay · Your invitation publishes right after'
-              : !session
-                ? 'You’ll sign in next so your invitation is saved to your dashboard'
+              modal — the single most common reason to abandon at step 5.
+              A logged-out user on a paid template meets the sign-in step first,
+              so say so rather than promising the payment sheet. */}
+          <p className="hidden md:block text-center text-[11px] leading-4" style={{ color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(44,32,28,0.42)' }}>
+            {!session
+              ? 'You’ll sign in first, so your invitation and payment stay linked to your account'
+              : mustPay
+                ? 'Secure one-time payment via Razorpay · Your invitation publishes right after'
                 : 'Publishes instantly · Share the link on WhatsApp'}
           </p>
+
+          {/* Reassurance at the point of payment. All of this existed on the
+              marketing pages and none of it was reachable from the one screen
+              where the customer actually parts with money — /create does not
+              even render the site footer. */}
+          {mustPay && (
+            <div className="hidden md:block w-full pt-1">
+              <div
+                className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px]"
+                style={{ color: isDark ? 'rgba(255,255,255,0.42)' : 'rgba(44,32,28,0.48)' }}
+              >
+                <span className="inline-flex items-center gap-1">
+                  <svg className="h-3 w-3" style={{ color: '#2F766D' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  </svg>
+                  UPI · Card · Net banking
+                </span>
+                <span aria-hidden>·</span>
+                <span>No subscription</span>
+              </div>
+              <div className="mt-1.5 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px]">
+                <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline" style={{ color: '#B87924' }}>
+                  7-day refund policy
+                </Link>
+                <span aria-hidden style={{ color: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(44,32,28,0.3)' }}>·</span>
+                <a
+                  href={supportWhatsAppUrl(`Hi, I have a question about the ${selectedTemplate.name} template (₹${requiredPlan.price}) before I pay.`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline-offset-2 hover:underline"
+                  style={{ color: 'rgb(22,163,74)' }}
+                >
+                  Talk to a human first
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,26 +1,9 @@
 import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE, PLANS } from '@/lib/plans'
 
-export function WebsiteSchema() {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: 'ShareInvite',
-          url: 'https://shareinvite.in',
-          description: 'Create and share digital invitations for Indian weddings, birthdays and celebrations.',
-          potentialAction: {
-            '@type': 'SearchAction',
-            target: { '@type': 'EntryPoint', urlTemplate: 'https://shareinvite.in/templates?q={search_term_string}' },
-            'query-input': 'required name=search_term_string',
-          },
-        }),
-      }}
-    />
-  )
-}
+// WebsiteSchema used to live here as a second, conflicting WebSite entity — the
+// root layout already emits one with a proper @id and publisher link. It was
+// imported by nothing, and carried the SearchAction that Google retired in
+// November 2024, so it has been removed rather than reconciled.
 
 export function SoftwareAppSchema() {
   return (

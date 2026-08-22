@@ -1,3 +1,4 @@
+import { NAV } from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
@@ -149,48 +150,34 @@ const websiteSchema = {
   url: APP_URL,
   description: 'Digital invitation website builder for Indian weddings and events.',
   publisher: { '@id': `${APP_URL}/#organization` },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${APP_URL}/templates?q={search_term_string}`,
-    },
-    'query-input': 'required name=search_term_string',
-  },
+  // No `potentialAction: SearchAction` here. It only ever powered the sitelinks
+  // search box, which Google retired globally on 21 November 2024 — the markup
+  // now renders nothing. `name` is what still matters: it is the source of the
+  // site name shown above the result.
 }
 
 const navSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
+  // Derived from the same NAV array the header renders, plus the create route.
+  // The hand-written version listed /templates as a nav item while the header
+  // linked to an on-page #templates anchor — the markup described navigation
+  // the site did not have.
   itemListElement: [
     {
       '@type': 'SiteNavigationElement',
       position: 1,
       name: 'Create Invitation',
-      description: 'Create a free digital wedding, birthday, or event invitation in minutes.',
+      description: 'Build a digital wedding, birthday, or event invitation in minutes.',
       url: `${APP_URL}/create`,
     },
-    {
+    ...NAV.map((item, i) => ({
       '@type': 'SiteNavigationElement',
-      position: 2,
-      name: 'Invitation Templates',
-      description: 'Browse digital invitation templates for weddings, birthdays, namakaran, griha pravesh and more.',
-      url: `${APP_URL}/templates`,
-    },
-    {
-      '@type': 'SiteNavigationElement',
-      position: 3,
-      name: 'Pricing',
-      description: 'Simple one-time pricing for digital invitation templates.',
-      url: `${APP_URL}/pricing`,
-    },
-    {
-      '@type': 'SiteNavigationElement',
-      position: 4,
-      name: 'Blog',
-      description: 'Guides and ideas for digital invitations for Indian weddings and events.',
-      url: `${APP_URL}/blog`,
-    },
+      position: i + 2,
+      name: item.label,
+      description: item.description,
+      url: `${APP_URL}${item.href}`,
+    })),
   ],
 }
 

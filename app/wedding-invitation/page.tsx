@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { RingIcon, CalendarIcon, ClockIcon, MusicIcon, CameraIcon, MessageIcon, ClipboardIcon, ShirtIcon, ShareIcon } from '@/components/ui/Icons'
@@ -97,15 +97,7 @@ export default function WeddingInvitationPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(weddingFaqSchema) }} />
 
       {/* Nav */}
-      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
-          <Link href="/" className="flex items-center gap-2.5">
-            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
-            <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
-          </Link>
-          <Link href="/create?template=elegant-wedding" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
-        </div>
-      </header>
+      <SiteHeader createHref="/create?template=elegant-wedding" />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
