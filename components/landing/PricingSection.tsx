@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PLAN_MAP } from '@/lib/plans'
 
 function CheckIcon() {
   return (
@@ -8,25 +9,29 @@ function CheckIcon() {
   )
 }
 
+// Prices come from lib/plans.ts, never from a second hand-kept list — a
+// duplicated ladder here is exactly how the cards and the checkout drifted
+// apart before. Only the display names of the templates each tier *adds* are
+// local, since the tier lists are cumulative and would otherwise repeat.
 const PRICE_GROUPS = [
   {
-    id: 'free',
-    price: '₹0',
-    priceSub: 'Free forever',
-    highlighted: false,
-    badge: null as string | null,
+    id: 'basic' as const,
     templates: [
       { id: 'elegant-wedding', name: 'Elegant Wedding' },
     ],
-    cta: 'Start Free',
+    cta: 'Start for ₹199 →',
     ctaHref: '/create?template=elegant-wedding',
   },
   {
-    id: 'standard',
-    price: '₹299',
-    priceSub: 'One-time payment',
-    highlighted: true,
-    badge: 'Most popular',
+    id: 'rakhi' as const,
+    templates: [
+      { id: 'rakshabandhan', name: 'Raksha Bandhan Premium' },
+    ],
+    cta: 'Choose a Template →',
+    ctaHref: '/create?template=rakshabandhan',
+  },
+  {
+    id: 'standard' as const,
     templates: [
       { id: 'cinematic-night', name: 'Cinematic Night' },
       { id: 'indian-birthday', name: 'Janamdin' },
@@ -37,11 +42,7 @@ const PRICE_GROUPS = [
     ctaHref: '/create',
   },
   {
-    id: 'premium',
-    price: '₹599',
-    priceSub: 'One-time payment',
-    highlighted: false,
-    badge: null as string | null,
+    id: 'premium' as const,
     templates: [
       { id: 'indian-wedding', name: 'Shaadi' },
       { id: 'indian-engagement', name: 'Mangni' },
@@ -52,11 +53,7 @@ const PRICE_GROUPS = [
     ctaHref: '/create',
   },
   {
-    id: 'gold',
-    price: '₹999',
-    priceSub: 'One-time payment',
-    highlighted: false,
-    badge: null as string | null,
+    id: 'gold' as const,
     templates: [
       { id: 'anniversary', name: 'Saalgirah' },
       { id: 'kgf-wedding', name: 'KGF Royal Empire' },
@@ -66,7 +63,16 @@ const PRICE_GROUPS = [
     cta: 'Choose a Template →',
     ctaHref: '/create',
   },
-]
+].map((group) => {
+  const plan = PLAN_MAP[group.id]!
+  return {
+    ...group,
+    price: `₹${plan.price.toLocaleString('en-IN')}`,
+    priceSub: 'One-time payment',
+    highlighted: !!plan.highlighted,
+    badge: plan.highlighted ? plan.badge : null,
+  }
+})
 
 const TRUST_BADGES = [
   {
@@ -99,7 +105,7 @@ const TRUST_BADGES = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
-    text: 'Free plan always available',
+    text: 'Free to build & preview',
   },
 ]
 
@@ -120,10 +126,9 @@ export default function PricingSection() {
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {PRICE_GROUPS.map((group) => {
             const isFeatured = group.highlighted
-            const isFree = group.id === 'free'
 
             return (
               <article
@@ -168,11 +173,7 @@ export default function PricingSection() {
                 <Link
                   href={group.ctaHref}
                   className={`mt-8 flex items-center justify-center rounded-xl py-3.5 text-sm font-semibold transition-all ${
-                    isFeatured
-                      ? 'bg-white text-ink hover:bg-white/90'
-                      : isFree
-                      ? 'gold-button'
-                      : 'gold-button'
+                    isFeatured ? 'bg-white text-ink hover:bg-white/90' : 'gold-button'
                   }`}
                 >
                   {group.cta}

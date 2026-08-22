@@ -103,7 +103,7 @@ export default function DashboardClient({ user }: Props) {
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
   const [fetchError, setFetchError] = useState('')
-  const [approvingId, setApprovingId] = useState<string | null>(null)
+  const [removingId, setRemovingId] = useState<string | null>(null)
   const [expandedWishes, setExpandedWishes] = useState<Set<string>>(new Set())
   const [newWishIds, setNewWishIds] = useState<Set<string>>(new Set())
   const [lastChecked, setLastChecked] = useState<Date>(new Date())
@@ -120,13 +120,13 @@ export default function DashboardClient({ user }: Props) {
       .then((data: unknown) => {
         const evs = Array.isArray(data) ? (data as Event[]) : []
 
-        // Detect new wishes since last check
+        // Detect wishes that arrived since the last poll. They are already live
+        // on the invitation — this only flags them as unread for the host.
         const incoming = new Set<string>()
         for (const ev of evs) {
           const prev = prevWishCountRef.current[ev.id] ?? ev.wishes.length
-          const newWishes = ev.wishes.filter(w => !w.isApproved).slice(prev)
-          newWishes.forEach(w => incoming.add(w.id))
-          prevWishCountRef.current[ev.id] = ev.wishes.filter(w => !w.isApproved).length
+          ev.wishes.slice(prev).forEach(w => incoming.add(w.id))
+          prevWishCountRef.current[ev.id] = ev.wishes.length
         }
         setNewWishIds(prev => {
           const next = new Set(prev)
@@ -148,43 +148,33 @@ export default function DashboardClient({ user }: Props) {
     return () => clearInterval(id)
   }, [fetchEvents])
 
-  const approveWish = async (wishId: string) => {
-    setApprovingId(wishId)
-    try {
-      const res = await fetch(`/api/wishes/${wishId}/approve`, { method: 'PATCH' })
-      if (!res.ok) throw new Error(`Server error ${res.status}`)
-      setEvents(prev => prev.map(ev => ({ ...ev, wishes: ev.wishes.map(w => w.id === wishId ? { ...w, isApproved: true } : w) })))
-      setNewWishIds(prev => { const n = new Set(prev); n.delete(wishId); return n })
-    } catch {
-      // Server rejected — leave state unchanged
-    } finally { setApprovingId(null) }
-  }
-
+  // Removal is the only moderation action — wishes are live from the moment a
+  // guest sends them, so there is nothing to approve.
   const deleteWish = async (wishId: string) => {
-    setApprovingId(wishId)
+    setRemovingId(wishId)
     try {
-      const res = await fetch(`/api/wishes/${wishId}/approve`, { method: 'DELETE' })
+      const res = await fetch(`/api/wishes/${wishId}`, { method: 'DELETE' })
       if (!res.ok) throw new Error(`Server error ${res.status}`)
       setEvents(prev => prev.map(ev => ({ ...ev, wishes: ev.wishes.filter(w => w.id !== wishId) })))
       setNewWishIds(prev => { const n = new Set(prev); n.delete(wishId); return n })
     } catch {
       // Server rejected — leave state unchanged
-    } finally { setApprovingId(null) }
+    } finally { setRemovingId(null) }
   }
 
   const toggleWishes = (id: string) => {
     setExpandedWishes(prev => { const n = new Set(prev); if (n.has(id)) { n.delete(id) } else { n.add(id) }; return n })
   }
 
-  const totalPending = events.reduce((s, ev) => s + ev.wishes.filter(w => !w.isApproved).length, 0)
+  const totalNew = events.reduce((s, ev) => s + ev.wishes.filter(w => newWishIds.has(w.id)).length, 0)
   const initials = (user.name || user.email || 'U').slice(0, 2).toUpperCase()
 
-  const scrollToPendingWishes = () => {
-    const firstEventWithPending = events.find(ev => ev.wishes.some(w => !w.isApproved))
-    if (!firstEventWithPending) return
-    setExpandedWishes(prev => { const n = new Set(prev); n.add(firstEventWithPending.id); return n })
+  const scrollToNewWishes = () => {
+    const firstEventWithNew = events.find(ev => ev.wishes.some(w => newWishIds.has(w.id)))
+    if (!firstEventWithNew) return
+    setExpandedWishes(prev => { const n = new Set(prev); n.add(firstEventWithNew.id); return n })
     setTimeout(() => {
-      document.getElementById(`event-${firstEventWithPending.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      document.getElementById(`event-${firstEventWithNew.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }, 100)
   }
 
@@ -254,7 +244,7 @@ export default function DashboardClient({ user }: Props) {
 
       {/* ─── Wish notification banner ─── */}
       <AnimatePresence>
-        {totalPending > 0 && (
+        {totalNew > 0 && (
           <motion.div ref={wishBannerRef}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -269,16 +259,16 @@ export default function DashboardClient({ user }: Props) {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ background: '#B87924' }} />
                 </span>
                 <p className="text-sm font-semibold text-ink">
-                  {totalPending} pending wish{totalPending !== 1 ? 'es' : ''} waiting for your approval
+                  {totalNew} new wish{totalNew !== 1 ? 'es' : ''} — already live on your invitation
                 </p>
                 <span className="hidden sm:block text-xs text-muted">· Last checked {formatRelativeDate(lastChecked.toISOString())}</span>
               </div>
               <button
-                onClick={scrollToPendingWishes}
+                onClick={scrollToNewWishes}
                 className="shrink-0 text-xs font-semibold px-3 py-1.5 rounded-xl transition-all"
                 style={{ background: 'rgba(184,121,36,0.12)', color: '#B87924', border: '1px solid rgba(184,121,36,0.22)' }}
               >
-                Review now →
+                See them →
               </button>
             </div>
           </motion.div>
@@ -293,7 +283,7 @@ export default function DashboardClient({ user }: Props) {
             <h1 className="font-heading text-3xl text-ink mb-1">
               {user.name ? `Welcome, ${user.name.split(' ')[0]}` : 'My Invitations'}
             </h1>
-            <p className="text-muted text-sm">Manage your invitations and approve guest wishes.</p>
+            <p className="text-muted text-sm">Manage your invitations and read guest wishes as they arrive.</p>
           </div>
           <div className="shrink-0 text-right hidden sm:flex items-center gap-3">
             {!loading && events.length > 0 && (
@@ -356,8 +346,9 @@ export default function DashboardClient({ user }: Props) {
               const title = getEventTitle(d)
               const eventUrl = `${baseUrl}/e/${event.slug}`
               const waUrl = `https://wa.me/?text=${encodeURIComponent(`You're invited ❤️\n\n${title}\n\n${eventUrl}`)}`
-              const pending = event.wishes.filter(w => !w.isApproved)
-              const approved = event.wishes.filter(w => w.isApproved)
+              // No pending/approved split any more — every wish is live. The
+              // only distinction the host cares about is which ones are unread.
+              const unreadWishes = event.wishes.filter(w => newWishIds.has(w.id))
               const wishesExpanded = expandedWishes.has(event.id)
               const meta = TEMPLATE_META[event.templateId]
               const hasNewWishes = event.wishes.some(w => newWishIds.has(w.id))
@@ -386,11 +377,11 @@ export default function DashboardClient({ user }: Props) {
                               {meta.label}
                             </span>
                           )}
-                          {pending.length > 0 && (
+                          {unreadWishes.length > 0 && (
                             <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold"
                               style={{ background: 'rgba(217,164,65,0.12)', color: '#B87924', border: '1px solid rgba(184,121,36,0.2)' }}>
                               {hasNewWishes && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />}
-                              {pending.length} pending
+                              {unreadWishes.length} new
                             </span>
                           )}
                         </div>
@@ -423,7 +414,7 @@ export default function DashboardClient({ user }: Props) {
                         {event.wishes.length > 0 && (
                           <button onClick={() => toggleWishes(event.id)}
                             className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-xl border border-border transition-colors hover:border-accent/40"
-                            style={{ color: pending.length > 0 ? '#B87924' : '#7E716B' }}>
+                            style={{ color: unreadWishes.length > 0 ? '#B87924' : '#7E716B' }}>
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
                             </svg>
@@ -448,75 +439,39 @@ export default function DashboardClient({ user }: Props) {
                         transition={{ duration: 0.3, ease: BEZIER }}
                         className="overflow-hidden"
                       >
-                        <div className="divide-y divide-border">
-                          {pending.length > 0 && (
-                            <div className="px-5 sm:px-6 py-5">
-                              <div className="flex items-center justify-between mb-3">
-                                <p className="text-[10px] text-muted uppercase tracking-[0.22em]">
-                                  Pending Approval ({pending.length})
-                                </p>
-                                <p className="text-[10px] text-muted/60">Approve to make visible on the invite</p>
+                        <div className="px-5 sm:px-6 py-5">
+                          <div className="flex items-center justify-between mb-3">
+                            <p className="text-[10px] text-muted uppercase tracking-[0.22em]">
+                              Live on your invitation ({event.wishes.length})
+                            </p>
+                            <p className="text-[10px] text-muted/60">Every guest can see these · Remove any you don&apos;t want</p>
+                          </div>
+                          <div className="space-y-3">
+                            {event.wishes.map(wish => (
+                              <div key={wish.id}
+                                className="group flex items-start gap-3 rounded-xl p-4 border transition-all"
+                                style={{
+                                  background: newWishIds.has(wish.id) ? 'rgba(217,164,65,0.04)' : 'rgba(255,255,255,0.7)',
+                                  borderColor: newWishIds.has(wish.id) ? 'rgba(217,164,65,0.25)' : '#E8DCCD',
+                                }}
+                              >
+                                {newWishIds.has(wish.id) && (
+                                  <span className="shrink-0 mt-1.5 text-[10px] font-bold uppercase tracking-[0.18em] px-1.5 py-0.5 rounded-md"
+                                    style={{ background: 'rgba(217,164,65,0.14)', color: '#B87924' }}>New</span>
+                                )}
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-semibold text-foreground mb-0.5">{wish.name}</p>
+                                  <p className="text-sm text-muted leading-relaxed">{wish.message}</p>
+                                  <p className="text-xs text-muted/50 mt-1">{formatRelativeDate(wish.createdAt)}</p>
+                                </div>
+                                <button onClick={() => deleteWish(wish.id)} disabled={removingId === wish.id}
+                                  className="shrink-0 px-3 py-1.5 text-xs rounded-lg border transition-all disabled:opacity-50 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
+                                  style={{ background: 'rgba(185,107,112,0.08)', color: '#B96B70', borderColor: 'rgba(185,107,112,0.22)' }}>
+                                  Remove
+                                </button>
                               </div>
-                              <div className="space-y-3">
-                                {pending.map(wish => (
-                                  <div key={wish.id}
-                                    className="flex items-start gap-3 rounded-xl p-4 border transition-all"
-                                    style={{
-                                      background: newWishIds.has(wish.id) ? 'rgba(217,164,65,0.04)' : 'rgba(255,255,255,0.7)',
-                                      borderColor: newWishIds.has(wish.id) ? 'rgba(217,164,65,0.25)' : '#E8DCCD',
-                                    }}
-                                  >
-                                    {newWishIds.has(wish.id) && (
-                                      <span className="shrink-0 mt-1.5 text-[10px] font-bold uppercase tracking-[0.18em] px-1.5 py-0.5 rounded-md"
-                                        style={{ background: 'rgba(217,164,65,0.14)', color: '#B87924' }}>New</span>
-                                    )}
-                                    <div className="flex-1 min-w-0">
-                                      <p className="text-sm font-semibold text-foreground mb-0.5">{wish.name}</p>
-                                      <p className="text-sm text-muted leading-relaxed line-clamp-2">{wish.message}</p>
-                                      <p className="text-xs text-muted/50 mt-1">{formatRelativeDate(wish.createdAt)}</p>
-                                    </div>
-                                    <div className="flex items-center gap-2 shrink-0">
-                                      <button onClick={() => approveWish(wish.id)} disabled={approvingId === wish.id}
-                                        className="px-3 py-1.5 text-xs rounded-lg border transition-colors disabled:opacity-50"
-                                        style={{ background: 'rgba(22,163,74,0.08)', color: 'rgb(22,163,74)', borderColor: 'rgba(22,163,74,0.22)' }}>
-                                        Approve
-                                      </button>
-                                      <button onClick={() => deleteWish(wish.id)} disabled={approvingId === wish.id}
-                                        className="px-3 py-1.5 text-xs rounded-lg border transition-colors disabled:opacity-50"
-                                        style={{ background: 'rgba(185,107,112,0.08)', color: '#B96B70', borderColor: 'rgba(185,107,112,0.22)' }}>
-                                        Delete
-                                      </button>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {approved.length > 0 && (
-                            <div className="px-5 sm:px-6 py-5">
-                              <p className="text-[10px] text-muted uppercase tracking-[0.22em] mb-3">
-                                Approved &amp; Visible ({approved.length})
-                              </p>
-                              <div className="space-y-2">
-                                {approved.map(wish => (
-                                  <div key={wish.id} className="flex items-start gap-3 py-2.5 rounded-xl px-3 hover:bg-background/60 transition-colors group">
-                                    <div className="flex-1 min-w-0">
-                                      <span className="text-sm font-semibold text-foreground mr-2">{wish.name}</span>
-                                      <span className="text-sm text-muted">— {wish.message}</span>
-                                    </div>
-                                    <button onClick={() => deleteWish(wish.id)} disabled={approvingId === wish.id}
-                                      className="opacity-0 group-hover:opacity-100 text-muted hover:text-rose transition-all shrink-0 p-1 rounded-lg hover:bg-rose/8"
-                                      title="Delete">
-                                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                      </svg>
-                                    </button>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
+                            ))}
+                          </div>
                         </div>
                       </motion.div>
                     )}

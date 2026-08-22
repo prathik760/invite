@@ -14,7 +14,7 @@ const BRAND_FEATURES = [
   'Mobile-first invitation websites — built for India',
   'Real-time preview as you fill the form',
   'WhatsApp sharing, gallery, music & countdown',
-  'Collect and approve guest wishes from your dashboard',
+  'See guest wishes land on your invite in real time',
 ]
 
 function AuthBrandPanel() {

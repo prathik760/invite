@@ -42,7 +42,7 @@ const weddingFaqSchema = {
       name: 'How do I create a free digital wedding invitation website in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Go to shareinvite.in/create, choose a wedding template (Elegant Wedding is free), enter names, date, venue, and personal message, then click Create. You get a unique URL instantly — share it on WhatsApp in under 5 minutes.',
+        text: 'Go to shareinvite.in/create, choose a wedding template, enter names, date, venue, and personal message, then click Create. Building and previewing is free; publishing is a one-time payment from ₹199. You get a unique URL immediately after — share it on WhatsApp in under 5 minutes.',
       },
     },
     {
@@ -73,7 +73,7 @@ const weddingFaqSchema = {
 }
 
 const TEMPLATES = [
-  { name: 'Elegant Wedding', desc: 'Warm ivory & gold — timeless romance', badge: 'Free', badgeColor: '#2F766D' },
+  { name: 'Elegant Wedding', desc: 'Warm ivory & gold — timeless romance', badge: '₹199', badgeColor: '#2F766D' },
   { name: 'Cinematic Night', desc: 'Dark & dramatic — bold film-noir style', badge: 'Standard', badgeColor: '#B87924' },
   { name: 'Shaadi — Indian Wedding', desc: 'Vibrant crimson & gold — grand Indian ceremony', badge: 'Premium', badgeColor: '#B87924' },
   { name: 'KGF — Royal Empire', desc: 'Dark gold cinematic luxury — KGF inspired', badge: 'Gold', badgeColor: '#C9A84C' },
@@ -165,10 +165,10 @@ export default function WeddingInvitationPage() {
       <section className="px-5 py-16">
         <div className="mx-auto max-w-7xl">
           <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            5 Free Digital Wedding Invitation Templates
+            5 Digital Wedding Invitation Templates
           </h2>
           <p className="text-center text-muted text-sm mb-10 max-w-xl mx-auto">
-            From timeless ivory weddings to grand Indian ceremonies — every digital wedding invitation template is mobile-first, WhatsApp-ready, and free to start.
+            From timeless ivory weddings to grand Indian ceremonies — every digital wedding invitation template is mobile-first, WhatsApp-ready, and free to build and preview.
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TEMPLATES.map(t => (
@@ -225,10 +225,10 @@ export default function WeddingInvitationPage() {
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { price: '₹0', sub: 'Free to publish', templates: 'Elegant Wedding' },
-              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran' },
-              { price: '₹599', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh' },
-              { price: '₹999', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
+              { price: '₹199', sub: 'One-time', templates: 'Elegant Wedding, Raksha Bandhan Premium' },
+              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran, 3D Surprise Journey' },
+              { price: '₹399', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },
+              { price: '₹499', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
             ].map(p => (
               <div key={p.price} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
                 <p className="font-display text-2xl text-ink">{p.price}</p>
@@ -240,7 +240,7 @@ export default function WeddingInvitationPage() {
           <p className="mt-6 text-center text-xs text-muted">Every template includes the same premium features · One-time payment · No subscription</p>
           <div className="mt-6 text-center">
             <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-              Start Free — Choose Your Template →
+              Start Building — Choose Your Template →
             </Link>
           </div>
         </div>
@@ -288,7 +288,7 @@ export default function WeddingInvitationPage() {
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
             Create Your Free Digital Wedding Invitation
           </h2>
-          <p className="text-muted text-sm mb-7">Free to start. WhatsApp-ready in 5 minutes.</p>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · Publish from ₹199 · WhatsApp-ready in 5 minutes.</p>
           <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Start My Wedding Invite →
           </Link>

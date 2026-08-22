@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { formatTemplatePrice, templatePrice } from '@/lib/plans'
 
 // ─── Template recommendation data ────────────────────────────────────────────
 // Pick 3 recs per original category: same-category first, then cross-sell
@@ -17,25 +18,23 @@ interface TemplateCard {
   id: string
   name: string
   tagline: string
-  planLabel: string
-  price: string
   gradient: string
   accent: string
   rgb: string
 }
 
 const TEMPLATE_CARDS: Record<string, TemplateCard> = {
-  'elegant-wedding':  { id: 'elegant-wedding',  name: 'Elegant Wedding',          tagline: 'Timeless ivory & gold',        planLabel: 'Free',    price: '₹0',   gradient: 'linear-gradient(135deg,#2C1810,#5C3420)', accent: '#D9A441', rgb: '217,164,65' },
-  'cinematic-night':  { id: 'cinematic-night',  name: 'Cinematic Night',           tagline: 'Dark luxury wedding',          planLabel: '₹299',    price: '₹299', gradient: 'linear-gradient(135deg,#0A0A1A,#1A1A3A)', accent: '#818CF8', rgb: '129,140,248' },
-  'indian-wedding':   { id: 'indian-wedding',   name: 'Shaadi',                    tagline: 'Rich Indian ceremony',         planLabel: '₹599',    price: '₹599', gradient: 'linear-gradient(135deg,#1A0000,#3A0808)', accent: '#E2A735', rgb: '226,167,53' },
-  'indian-engagement':{ id: 'indian-engagement',name: 'Mangni',                    tagline: 'Romantic engagement',          planLabel: '₹599',    price: '₹599', gradient: 'linear-gradient(135deg,#1A0010,#3A0025)', accent: '#F48FB1', rgb: '244,143,177' },
-  'indian-birthday':  { id: 'indian-birthday',  name: 'Janamdin',                  tagline: 'Festive birthday',             planLabel: '₹299',    price: '₹299', gradient: 'linear-gradient(135deg,#1A0500,#3A1000)', accent: '#FF8C00', rgb: '255,140,0' },
-  'griha-pravesh':    { id: 'griha-pravesh',     name: 'Griha Pravesh',             tagline: 'Auspicious housewarming',      planLabel: '₹599',    price: '₹599', gradient: 'linear-gradient(135deg,#0F0500,#2A1000)', accent: '#FFB300', rgb: '255,179,0' },
-  'namakaran':        { id: 'namakaran',         name: 'Namakaran',                 tagline: 'Celestial naming ceremony',    planLabel: '₹299',    price: '₹299', gradient: 'linear-gradient(135deg,#040F22,#0A1E44)', accent: '#4FC3F7', rgb: '79,195,247' },
-  'kgf-wedding':      { id: 'kgf-wedding',       name: 'KGF Royal Empire',          tagline: 'Cinematic blockbuster style',  planLabel: '₹999',   price: '₹999', gradient: 'linear-gradient(135deg,#0A0500,#1A0A00)', accent: '#D4A017', rgb: '212,160,23' },
-  'royal-deco':       { id: 'royal-deco',        name: 'Royal Deco',                tagline: 'Art Deco palace edition',      planLabel: '₹999',   price: '₹999', gradient: 'linear-gradient(135deg,#03060F,#060B1E)', accent: '#BFA060', rgb: '191,160,96' },
-  'anniversary':      { id: 'anniversary',       name: 'Saalgirah',                 tagline: 'Cinematic anniversary',        planLabel: '₹999',   price: '₹999', gradient: 'linear-gradient(135deg,#0A0008,#180012)', accent: '#CE93D8', rgb: '206,147,216' },
-  'luxury-wedding':   { id: 'luxury-wedding',    name: 'Luxury Wedding',            tagline: 'Premium multi-function',       planLabel: '₹999',   price: '₹999', gradient: 'linear-gradient(135deg,#1C1008,#2E1A0A)', accent: '#C9A84C', rgb: '201,168,76' },
+  'elegant-wedding':  { id: 'elegant-wedding',  name: 'Elegant Wedding',          tagline: 'Timeless ivory & gold',        gradient: 'linear-gradient(135deg,#2C1810,#5C3420)', accent: '#D9A441', rgb: '217,164,65' },
+  'cinematic-night':  { id: 'cinematic-night',  name: 'Cinematic Night',           tagline: 'Dark luxury wedding',          gradient: 'linear-gradient(135deg,#0A0A1A,#1A1A3A)', accent: '#818CF8', rgb: '129,140,248' },
+  'indian-wedding':   { id: 'indian-wedding',   name: 'Shaadi',                    tagline: 'Rich Indian ceremony',         gradient: 'linear-gradient(135deg,#1A0000,#3A0808)', accent: '#E2A735', rgb: '226,167,53' },
+  'indian-engagement':{ id: 'indian-engagement',name: 'Mangni',                    tagline: 'Romantic engagement',          gradient: 'linear-gradient(135deg,#1A0010,#3A0025)', accent: '#F48FB1', rgb: '244,143,177' },
+  'indian-birthday':  { id: 'indian-birthday',  name: 'Janamdin',                  tagline: 'Festive birthday',             gradient: 'linear-gradient(135deg,#1A0500,#3A1000)', accent: '#FF8C00', rgb: '255,140,0' },
+  'griha-pravesh':    { id: 'griha-pravesh',     name: 'Griha Pravesh',             tagline: 'Auspicious housewarming',      gradient: 'linear-gradient(135deg,#0F0500,#2A1000)', accent: '#FFB300', rgb: '255,179,0' },
+  'namakaran':        { id: 'namakaran',         name: 'Namakaran',                 tagline: 'Celestial naming ceremony',    gradient: 'linear-gradient(135deg,#040F22,#0A1E44)', accent: '#4FC3F7', rgb: '79,195,247' },
+  'kgf-wedding':      { id: 'kgf-wedding',       name: 'KGF Royal Empire',          tagline: 'Cinematic blockbuster style',  gradient: 'linear-gradient(135deg,#0A0500,#1A0A00)', accent: '#D4A017', rgb: '212,160,23' },
+  'royal-deco':       { id: 'royal-deco',        name: 'Royal Deco',                tagline: 'Art Deco palace edition',      gradient: 'linear-gradient(135deg,#03060F,#060B1E)', accent: '#BFA060', rgb: '191,160,96' },
+  'anniversary':      { id: 'anniversary',       name: 'Saalgirah',                 tagline: 'Cinematic anniversary',        gradient: 'linear-gradient(135deg,#0A0008,#180012)', accent: '#CE93D8', rgb: '206,147,216' },
+  'luxury-wedding':   { id: 'luxury-wedding',    name: 'Luxury Wedding',            tagline: 'Premium multi-function',       gradient: 'linear-gradient(135deg,#1C1008,#2E1A0A)', accent: '#C9A84C', rgb: '201,168,76' },
 }
 
 // ─── Category lookup ──────────────────────────────────────────────────────────
@@ -150,7 +149,7 @@ export default function ExpiredInvitation({ templateId, data }: ExpiredInvitatio
       <section className="px-5 pb-16">
         <div className="max-w-2xl mx-auto">
           <p className="text-center text-sm text-[#706861] mb-6">
-            Create a beautiful digital invitation for your next {categoryLabel} — free in 5 minutes.
+            Create a beautiful digital invitation for your next {categoryLabel} — build it free in 5 minutes.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -193,16 +192,16 @@ export default function ExpiredInvitation({ templateId, data }: ExpiredInvitatio
                   <span
                     className="shrink-0 text-[9px] font-bold uppercase tracking-[0.08em] px-2 py-0.5 rounded-full"
                     style={
-                      tpl.planLabel === 'Free'
+                      templatePrice(tpl.id) <= 199
                         ? { background: 'rgba(47,118,109,0.12)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.22)' }
-                        : tpl.planLabel === '₹299'
+                        : templatePrice(tpl.id) <= 299
                         ? { background: 'rgba(184,138,68,0.12)', color: '#B87924', border: '1px solid rgba(184,138,68,0.25)' }
-                        : tpl.planLabel === '₹599'
+                        : templatePrice(tpl.id) <= 399
                         ? { background: 'rgba(47,118,109,0.10)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.20)' }
                         : { background: 'rgba(201,168,76,0.14)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.30)' }
                     }
                   >
-                    {tpl.price}
+                    {formatTemplatePrice(tpl.id)}
                   </span>
                 </div>
               </Link>
@@ -220,7 +219,7 @@ export default function ExpiredInvitation({ templateId, data }: ExpiredInvitatio
                 boxShadow: '0 4px 14px rgba(184,121,36,0.35)',
               }}
             >
-              Create your own invitation — free
+              Start building — free
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
@@ -236,7 +235,7 @@ export default function ExpiredInvitation({ templateId, data }: ExpiredInvitatio
 
           {/* Trust line */}
           <p className="mt-5 text-center text-[11px] text-[#B0A090]">
-            Free plan available · No credit card needed · Share via WhatsApp
+            Free to build &amp; preview · Publish from ₹199 · Share via WhatsApp
           </p>
         </div>
       </section>

@@ -8,7 +8,7 @@ import SiteFooter from '@/components/landing/SiteFooter'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { TEMPLATES } from '@/modules/templates/data'
 import { absoluteUrl, breadcrumbJsonLd, digitalOffer, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
-import { getRequiredPlan } from '@/lib/plans'
+import { getRequiredPlan, HIGHEST_PAID_PRICE } from '@/lib/plans'
 import { templateImage, templateImageUrl } from '@/lib/templateMedia'
 
 type Props = { params: { slug: string } }
@@ -204,9 +204,7 @@ export default function TemplateSeoPage({ params }: Props) {
         name: `How much does the ${template.name} template cost?`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: plan.price === 0
-            ? `The ${template.name} template is completely free. Create your invitation and share it on WhatsApp at no cost.`
-            : `The ${template.name} template is included in the ${plan.name} plan at ₹${plan.price}. This is a one-time payment — no subscription. The free Elegant Wedding template is available at ₹0 if you'd like to try first.`,
+          text: `The ${template.name} template is included in the ${plan.name} plan at ₹${plan.price}. This is a one-time payment — no subscription, and no template costs more than ₹${HIGHEST_PAID_PRICE}. You can build and preview the whole invitation for free before you pay.`,
         },
       },
       {

@@ -651,7 +651,7 @@ function FooterCol({ title, links }: { title: string; links: [string, string][] 
   )
 }
 
-// ── WISHES carousel (displays approved wishes / sample wishes) ────────────────
+// ── WISHES carousel (displays live wishes / sample wishes) ────────────────────
 function WishesSection({ eventId, sampleWishes, isPreview }: { eventId?: string; sampleWishes: SampleWish[]; isPreview?: boolean }) {
   const [wishes, setWishes] = useState<SampleWish[]>([])
   const trackRef = useRef<HTMLDivElement>(null)

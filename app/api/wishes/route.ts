@@ -59,12 +59,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Event not found' }, { status: 404 })
     }
 
+    // Published immediately — a guest's wish appears on the invitation as soon
+    // as they send it. The host can still take one down from the dashboard.
     const wish = await prisma.wish.create({
       data: {
         eventId,
         name: name.trim(),
         message: message.trim(),
-        isApproved: false,
+        isApproved: true,
       },
     })
 

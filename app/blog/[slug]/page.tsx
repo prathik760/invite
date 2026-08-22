@@ -318,7 +318,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'Collecting family blessings through the invitation',
-            body: `A digital baby shower invitation can serve as a blessings page too. Family members who cannot attend can leave messages and wishes on the invitation page — hosts can approve and display them. For a ${keyword} shared across a large joint family, this feature creates a beautiful record the mother can revisit long after the ceremony.`,
+            body: `A digital baby shower invitation can serve as a blessings page too. Family members who cannot attend can leave messages and wishes on the invitation page, and they appear there straight away for everyone else to read. For a ${keyword} shared across a large joint family, this feature creates a beautiful record the mother can revisit long after the ceremony.`,
           },
           {
             heading: 'Including guests from other cities',
@@ -463,7 +463,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a template for your event type, fill in the names, date, venue, and schedule. Your invitation is live with a WhatsApp-ready link in under 5 minutes. Guests open it in their phone browser — no app download needed.' },
-          { q: 'Are digital invitations free in India?', a: 'ShareInvite is free to start. You can create a digital invitation, add all details, and share the link on WhatsApp at no cost. Premium features like custom short URLs, priority support, and advanced customisation are available on paid plans.' },
+          { q: 'Are digital invitations free in India?', a: 'ShareInvite is free to build with. You can choose a template, add all your details, and preview the finished invitation at no cost. Publishing the link is a one-time payment starting at ₹199, with no template costing more than ₹499 — there is no subscription.' },
           { q: 'Can I update a digital invitation after sending it?', a: 'Yes — this is one of the biggest advantages over printed cards. You can update venue details, change a timing, correct a spelling, or add new information at any time. The same link continues to work for all guests who already received it, showing the updated information automatically.' },
         ],
         links: links['Digital Invitations'],
@@ -510,7 +510,7 @@ export default function BlogPostPage({ params }: Props) {
   const ctaPrice = templatePrice(ctaTemplateId)
   const ctaTemplate = TEMPLATES.find((t) => t.id === ctaTemplateId)
   const ctaTemplateHref = `/templates/${templateSeoSlug(ctaTemplateId)}`
-  // "Free to start" was shown on articles whose CTA points at a ₹299–₹999
+  // "Free to start" was shown on articles whose CTA points at a ₹199–₹499
   // template. State the real one-time price instead — a reader who learns the
   // price here and still clicks is a far better lead than one who discovers it
   // at step 5 of the builder.

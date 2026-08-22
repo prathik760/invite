@@ -75,7 +75,7 @@ const faqSchema = {
       name: 'How much does a digital invitation cost in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Elegant Wedding template is completely free forever. Premium templates with gallery, music, and countdown start at ₹499 as a one-time payment — no monthly fees, no hidden charges.',
+        text: 'Building and previewing any template is completely free. Publishing is a one-time payment starting at ₹199 for Elegant Wedding, with gallery, music, and countdown templates from ₹299 — and no template costs more than ₹499. No monthly fees, no hidden charges.',
       },
     },
   ],
@@ -108,7 +108,7 @@ export default function DigitalInvitationPage() {
             <span className="gradient-accent italic">for Every Indian Occasion</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a free digital invitation for any Indian occasion — wedding, birthday, Griha Pravesh, Namakaran, engagement, or anniversary. WhatsApp-ready in 5 minutes.
+            Build a free digital invitation preview for any Indian occasion — wedding, birthday, Griha Pravesh, Namakaran, engagement, or anniversary. WhatsApp-ready in 5 minutes.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">

@@ -429,6 +429,9 @@ function KGFWishes({ eventId }: { eventId: string }) {
         body: JSON.stringify({ eventId, name: name.trim(), message: msg.trim() })
       })
       if (!res.ok) throw new Error()
+      // Blessings publish on arrival — add it to the wall immediately.
+      const created = await res.json()
+      setWishes(prev => [created, ...prev.filter(w => w.id !== created.id)])
       setSent(true); setName(''); setMsg('')
     } catch { setErr('Could not send. Please try again.') }
     finally { setBusy(false) }
@@ -449,7 +452,7 @@ function KGFWishes({ eventId }: { eventId: string }) {
                       className="text-4xl select-none mb-5" style={{ color: C.ember, animationName: 'kgf-flicker', animationDuration: '2s', animationIterationCount: 'infinite' } as React.CSSProperties} aria-hidden>⚡</motion.div>
                     <p className="font-heading text-xl sm:text-2xl mb-3" style={{ color: C.text }}>Blessing Received</p>
                     <p className="text-sm mb-6 leading-relaxed" style={{ color: C.textMuted }}>
-                      Your blessing has been received with honour.<br />It shall appear once approved.
+                      Your blessing is now inscribed on this invitation.<br />Every guest who opens the link shall see it.
                     </p>
                     <button onClick={() => setSent(false)} className="text-xs tracking-[0.14em] hover:opacity-100 transition-opacity" style={{ color: C.goldMuted }}>
                       Send another blessing →

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import FormEditor from '@/components/editor/FormEditor'
 import type { TemplateData } from '@/modules/templates/data'
-import { type PlanId, planLevel } from '@/lib/plans'
+import { PLAN_MAP, type PlanId, planLevel } from '@/lib/plans'
 
 interface Step4EnrichProps {
   selectedTemplate: TemplateData
@@ -40,7 +40,7 @@ export default function Step4Enrich({
         </span>
       </div>
 
-      {/* Upgrade nudge for free plan users */}
+      {/* Upgrade nudge for entry-tier users */}
       {(needsGalleryUpgrade || needsMusicUpgrade) && userPlan !== 'gold' && (
         <div
           className="mx-4 mt-4 rounded-2xl overflow-hidden"
@@ -59,7 +59,7 @@ export default function Step4Enrich({
               <p className="text-xs text-muted mt-0.5 leading-relaxed">
                 {needsGalleryUpgrade && needsMusicUpgrade
                   ? 'Fill in the fields below — your invite publishes now and unlocks when you upgrade.'
-                  : 'Music is included in your plan. Gallery unlocks from Premium (₹999).'}
+                  : `Music is included in your plan. Gallery unlocks from ${PLAN_MAP.premium!.name} (₹${PLAN_MAP.premium!.price}).`}
               </p>
               <Link
                 href="/pricing"

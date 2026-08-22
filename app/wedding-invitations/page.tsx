@@ -86,7 +86,7 @@ const faq = [
   {
     question: 'Are the wedding invitation templates free?',
     answer:
-      'The Elegant Wedding template is free. Premium templates — including Cinematic Night, KGF Royal Empire, and Royal Deco — are available as one-time purchases starting at ₹499. All templates include maps, gallery, music, RSVP, and WhatsApp sharing.',
+      'The Elegant Wedding template is ₹199. Every other design — including Cinematic Night, KGF Royal Empire, and Royal Deco — is a one-time purchase between ₹299 and ₹499. All templates include maps, gallery, music, RSVP, and WhatsApp sharing, and you can build and preview any of them for free.',
   },
   {
     question: 'How long does it take to create a digital wedding invitation?',

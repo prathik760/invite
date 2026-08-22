@@ -51,11 +51,12 @@ const sections: LegalSection[] = [
   },
   {
     id: 'free-plan',
-    title: 'Free Plan',
+    title: 'Building & Previewing Is Free',
     body: (
       <Para>
-        Our free plan carries no charge, so there is nothing to pay, cancel, or refund. You can create and share a free
-        invitation without entering any payment details.
+        Building and previewing an invitation carries no charge, so there is nothing to pay, cancel, or refund at that
+        stage. You can choose a template, fill in every detail, and preview the finished invitation without entering any
+        payment details. Payment is only requested at the final publish step.
       </Para>
     ),
   },

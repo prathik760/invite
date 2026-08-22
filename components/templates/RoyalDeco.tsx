@@ -299,6 +299,9 @@ function RoyalWishes({ eventId }: { eventId:string }) {
       const res = await fetch('/api/wishes',{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({eventId,name:name.trim(),message:msg.trim()})})
       if (!res.ok) throw new Error()
+      // Blessings publish on arrival — add it to the wall immediately.
+      const created = await res.json()
+      setWishes(prev => [created, ...prev.filter(w => w.id !== created.id)])
       setSent(true); setName(''); setMsg('')
     } catch { setErr('Could not send. Please try again.') } finally { setBusy(false) }
   }
@@ -315,7 +318,7 @@ function RoyalWishes({ eventId }: { eventId:string }) {
                   <motion.div key="ty" initial={{opacity:0,scale:.95}} animate={{opacity:1,scale:1}} exit={{opacity:0}} className="text-center py-8 sm:py-12">
                     <div className="text-3xl select-none mb-5" style={{color:R.goldL}} aria-hidden>⚜</div>
                     <p className="font-heading text-xl sm:text-2xl mb-3" style={{color:R.ink}}>Blessing Received</p>
-                    <p className="text-sm leading-relaxed mb-6" style={{color:R.inkM}}>Your blessing has been received with honour.<br/>It shall appear once approved.</p>
+                    <p className="text-sm leading-relaxed mb-6" style={{color:R.inkM}}>Your blessing is now inscribed on this invitation.<br/>Every guest who opens the link shall see it.</p>
                     <button onClick={()=>setSent(false)} className="text-[10px] uppercase tracking-[0.18em] transition-opacity hover:opacity-70" style={{color:R.goldLm}}>
                       Send another blessing →
                     </button>

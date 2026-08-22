@@ -15,7 +15,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 export const metadata: Metadata = {
   title: { absolute: 'Pricing — Digital Invitation Templates | ShareInvite' },
   description:
-    'Simple one-time pricing for digital invitation templates. Free Elegant Wedding template. Paid templates from ₹299 — no subscription, no hidden charges. Built for Indian weddings, birthdays, and family events.',
+    'Simple one-time pricing for digital invitation templates. Build and preview any design free — publish from ₹199, and never more than ₹499. No subscription, no hidden charges. Built for Indian weddings, birthdays, and family events.',
   keywords: [
     'digital invitation price india',
     'wedding invitation cost online india',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ShareInvite Pricing — One-Time Payment for Digital Invitations',
     description:
-      'Create beautiful digital invitations for Indian weddings, birthdays, and family events. Free template available. Paid templates from ₹299 one-time — no subscription.',
+      'Create beautiful digital invitations for Indian weddings, birthdays, and family events. Free to build and preview. Publish from ₹199 one-time — every template under ₹500, no subscription.',
     type: 'website',
     locale: 'en_IN',
     url: `${APP_URL}/pricing`,
@@ -93,19 +93,19 @@ const pricingSchema = {
 const PRICING_FAQS = [
   {
     question: 'How much does a digital wedding invitation cost in India?',
-    answer: 'ShareInvite offers one completely free template — Elegant Wedding — which you can publish and share on WhatsApp without paying. Every other design is a one-time payment: ₹199 for Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin (birthday), Namakaran, and the interactive 3D Surprise Journey; ₹599 for Shaadi, Mangni (engagement), Griha Pravesh, and the animated 3D Greeting Cards; ₹999 for Saalgirah, KGF Royal Empire, Royal Deco, and Luxury Wedding. There are no monthly fees, and you can build and preview any template in full before deciding to pay.',
+    answer: 'Every ShareInvite template is a one-time payment, and no template costs more than ₹499: ₹199 for Elegant Wedding and Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin (birthday), Namakaran, and the interactive 3D Surprise Journey; ₹399 for Shaadi, Mangni (engagement), Griha Pravesh, and the animated 3D Greeting Cards; ₹499 for Saalgirah, KGF Royal Empire, Royal Deco, and Luxury Wedding. There are no monthly fees, and you can build and preview any template in full before deciding to pay.',
   },
   {
     question: 'Is it a one-time payment or a monthly subscription?',
-    answer: 'All paid templates are a one-time payment. You pay once for your template — there are no monthly subscriptions, no recurring charges, and no hidden fees.',
+    answer: 'All templates are a one-time payment. You pay once for your template — there are no monthly subscriptions, no recurring charges, and no hidden fees.',
   },
   {
-    question: 'Which templates are free, and what do I pay for?',
-    answer: 'The Elegant Wedding template is free to create, publish and share — guests see a small "Made with ShareInvite" banner at the top. Every other template is a one-time purchase, which also removes that banner. You can fill in all your details and preview any template completely before paying; payment is only required at the final publish step.',
+    question: 'Is anything free, and what exactly do I pay for?',
+    answer: 'Building and previewing is completely free: you can pick any template, fill in every detail, add photos, and see the finished invitation on your own phone without paying or entering card details. Payment is only requested at the final publish step, when you get your shareable link. Prices start at ₹199 and go no higher than ₹499, and no ShareInvite branding appears on any paid invitation.',
   },
   {
     question: 'Can I upgrade my template after paying?',
-    answer: 'Yes. You can start free and upgrade to any paid template anytime from your dashboard by paying the one-time price for that template. Buying a higher tier never removes access to templates you already own.',
+    answer: 'Yes. You can upgrade to any other template anytime from your dashboard by paying the one-time price for that template. Buying a higher tier never removes access to templates you already own.',
   },
   {
     question: 'Can I get a refund?',
@@ -220,7 +220,7 @@ export default function PricingPage() {
               Everything Included With Every Template
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-muted">
-              Whether you choose the free template or a paid one, you get the same premium features. The price reflects the design, not the features.
+              Whichever template you choose, you get the same premium features. The price reflects the design, not the features.
             </p>
           </div>
 
@@ -329,14 +329,14 @@ export default function PricingPage() {
             Not sure which template to pick?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-muted">
-            Start free with the Elegant Wedding template — no credit card needed. See the full invitation experience before choosing a paid design.
+            Build and preview any template free — no credit card needed. See the full invitation experience before you decide which design to publish.
           </p>
           <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Link
               href="/create"
               className="gold-button inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold"
             >
-              Create your invitation — free
+              Start building — free
             </Link>
             <Link
               href="/demo/elegant-wedding"
@@ -386,12 +386,12 @@ export default function PricingPage() {
             Your invitation is 5 minutes away.
           </h2>
           <p className="relative mx-auto mt-5 max-w-md text-sm leading-7 text-white/60">
-            Free to create. One-time payment to unlock premium templates.
+            Free to build and preview. One-time payment from ₹199 to publish.
             No monthly fees. No hidden charges.
           </p>
           <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/create" className="gold-button w-full rounded-xl px-8 py-4 text-sm font-semibold sm:w-auto">
-              Create Free Invitation
+              Build Your Invitation Free
             </Link>
             <Link
               href="/templates"
@@ -401,7 +401,7 @@ export default function PricingPage() {
             </Link>
           </div>
           <p className="relative mt-4 text-xs text-white/40">
-            Start free — no credit card required
+            Build and preview free — no credit card required
           </p>
         </div>
       </section>

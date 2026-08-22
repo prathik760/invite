@@ -1,6 +1,14 @@
 // ─── Plan definitions ────────────────────────────────────────────────────────
 
-export type PlanId = 'free' | 'rakhi' | 'standard' | 'premium' | 'gold'
+/**
+ * `'free'` is NOT a purchasable tier — it is the sentinel for "no active
+ * purchase" (logged-out visitors, and the `plan` column's DB default). It
+ * deliberately owns no templates, so every template now requires a purchase.
+ *
+ * The entry tier is `'basic'` (₹199). Pricing the sentinel itself would have
+ * granted every anonymous visitor the entry template for nothing.
+ */
+export type PlanId = 'free' | 'basic' | 'rakhi' | 'standard' | 'premium' | 'gold'
 
 export interface Plan {
   id: PlanId
@@ -14,9 +22,9 @@ export interface Plan {
 }
 
 // Templates assigned to each tier
-const FREE_TEMPLATES = ['elegant-wedding']
+const BASIC_TEMPLATES = ['elegant-wedding']
 const RAKHI_TEMPLATES = ['rakshabandhan']
-const STANDARD_TEMPLATES = [...FREE_TEMPLATES, ...RAKHI_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',]
+const STANDARD_TEMPLATES = [...BASIC_TEMPLATES, ...RAKHI_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',]
 const GREETING_TEMPLATES = [
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
@@ -26,13 +34,13 @@ const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'roy
 
 export const PLANS: Plan[] = [
   {
-    id: 'free',
-    name: 'Free',
-    price: 0,
-    badge: 'Free forever',
-    description: 'Create a beautiful invitation in minutes — no payment needed.',
-    templateIds: FREE_TEMPLATES,
-    features: ['Elegant Wedding template', 'Date, venue & Google Maps', 'Guest wishes collection', 'WhatsApp share link'],
+    id: 'basic',
+    name: 'Basic',
+    price: 199,
+    badge: 'Lowest price',
+    description: 'Build and preview free — publish the Elegant Wedding invitation for a one-time ₹199.',
+    templateIds: BASIC_TEMPLATES,
+    features: ['Elegant Wedding template', 'Date, venue & Google Maps', 'Guest wishes collection', 'WhatsApp share link', 'No ShareInvite branding'],
   },
   {
     id: 'rakhi',
@@ -48,7 +56,7 @@ export const PLANS: Plan[] = [
     name: 'Starter',
     price: 299,
     badge: 'Most popular',
-    description: 'Unlock 4 designs for weddings, birthdays, naming ceremonies and more.',
+    description: `Unlock ${STANDARD_TEMPLATES.length} designs for weddings, birthdays, naming ceremonies and more.`,
     templateIds: STANDARD_TEMPLATES,
     features: [`${STANDARD_TEMPLATES.length} templates`, 'Background music player', 'Event schedule timeline', 'No ShareInvite branding'],
     highlighted: true,
@@ -56,7 +64,7 @@ export const PLANS: Plan[] = [
   {
     id: 'premium',
     name: 'Pro',
-    price: 599,
+    price: 399,
     badge: 'Best value',
     description: 'Cover every Indian ceremony — weddings, engagements, griha pravesh and more.',
     templateIds: PREMIUM_TEMPLATES,
@@ -65,7 +73,7 @@ export const PLANS: Plan[] = [
   {
     id: 'gold',
     name: 'All Access',
-    price: 999,
+    price: 499,
     badge: 'Complete collection',
     description: 'Every template unlocked — including KGF Royal Empire, Anniversary and more.',
     templateIds: GOLD_TEMPLATES,
@@ -73,8 +81,10 @@ export const PLANS: Plan[] = [
   },
 ]
 
-// Lookup helpers
-export const PLAN_MAP = Object.fromEntries(PLANS.map(p => [p.id, p])) as Record<PlanId, Plan>
+// Lookup helpers.
+// `'free'` has no entry here on purpose — it is the no-purchase sentinel, so
+// every lookup for it must miss and every entitlement check must fail.
+export const PLAN_MAP = Object.fromEntries(PLANS.map(p => [p.id, p])) as Record<PlanId, Plan | undefined>
 
 export function getPlanForTemplate(templateId: string): Plan {
   return PLANS.find(p => p.templateIds.includes(templateId) &&
@@ -88,10 +98,10 @@ export function getRequiredPlan(templateId: string): Plan {
 }
 
 export function canAccess(templateId: string, userPlan: PlanId): boolean {
-  // Free templates are available on every plan. Without this, buying the
-  // standalone Raksha Bandhan plan would *remove* access to the free template,
-  // because that plan's templateIds list only contains its own design.
-  if (FREE_TEMPLATES.includes(templateId)) return true
+  // No blanket exemption any more: with no free tier, access is granted only by
+  // the plan the user actually bought. Basic and Raksha Bandhan are parallel
+  // single-template tiers — buying one does not grant the other. Standard and
+  // above include both, so an upgrade never takes a template away.
   const plan = PLAN_MAP[userPlan]
   return plan?.templateIds.includes(templateId) ?? false
 }
@@ -107,11 +117,16 @@ export function templatePrice(templateId: string): number {
   return getRequiredPlan(templateId).price
 }
 
+/**
+ * No template publishes for free any more — every design is a one-time
+ * purchase. Kept so callers that gate on it keep compiling and correctly
+ * take the paid path.
+ */
 export function isFreeTemplate(templateId: string): boolean {
   return templatePrice(templateId) === 0
 }
 
-/** Formatted for display, e.g. "Free" / "₹299". */
+/** Formatted for display, e.g. "₹199". */
 export function formatTemplatePrice(templateId: string): string {
   const price = templatePrice(templateId)
   return price === 0 ? 'Free' : `₹${price.toLocaleString('en-IN')}`
@@ -122,6 +137,38 @@ export const LOWEST_PAID_PRICE = Math.min(
   ...PLANS.filter((p) => p.price > 0).map((p) => p.price),
 )
 
+/** Dearest template price — used in "₹X – ₹Y" range copy and JSON-LD. */
+export const HIGHEST_PAID_PRICE = Math.max(...PLANS.map((p) => p.price))
+
+/**
+ * Resolve which single plan a user should hold after buying `purchased` while
+ * already on `current`.
+ *
+ * The subscription table stores one plan per user, so a plain overwrite can
+ * revoke templates that were already paid for. Basic and Raksha Bandhan make
+ * this concrete: they cost the same and sit at the same level, but neither
+ * contains the other, so buying the second would drop the first.
+ *
+ * Returns whichever plan already covers everything the user owns, and when
+ * neither does, promotes them to the cheapest plan that covers both. PLANS is
+ * ordered by ascending price, so `find` yields the cheapest such plan.
+ */
+export function mergePlans(current: PlanId, purchased: PlanId): PlanId {
+  const owned = [
+    ...(PLAN_MAP[current]?.templateIds ?? []),
+    ...(PLAN_MAP[purchased]?.templateIds ?? []),
+  ]
+  const covers = (p: Plan) => owned.every(t => p.templateIds.includes(t))
+
+  const purchasedPlan = PLAN_MAP[purchased]
+  if (purchasedPlan && covers(purchasedPlan)) return purchased
+
+  const currentPlan = PLAN_MAP[current]
+  if (currentPlan && covers(currentPlan)) return current
+
+  return PLANS.find(covers)?.id ?? purchased
+}
+
 export function planLevel(plan: PlanId): number {
-  return { free: 0, rakhi: 0.5, standard: 1, premium: 2, gold: 3 }[plan] ?? 0
+  return { free: 0, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3 }[plan] ?? 0
 }

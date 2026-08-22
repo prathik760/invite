@@ -1063,11 +1063,11 @@ For anyone planning an engagement in India right now, whether it is a ring cerem
       },
       {
         q: 'How much does a digital engagement invitation cost in India?',
-        a: 'On ShareInvite, premium engagement templates start at ₹499 — which includes all features: music, photo gallery, Google Maps, guest wishes, and a shareable WhatsApp link. For context, printed engagement card sets for a guest list of 200 typically cost several times this, without any of the interactive features or the ability to update details after sending.',
+        a: 'On ShareInvite, the Mangni engagement template is ₹399 as a one-time payment — which includes all features: music, photo gallery, Google Maps, guest wishes, and a shareable WhatsApp link. For context, printed engagement card sets for a guest list of 200 typically cost several times this, without any of the interactive features or the ability to update details after sending.',
       },
       {
         q: 'Can guests leave wishes or respond through a digital engagement invitation?',
-        a: 'Yes. ShareInvite includes a guest wishes section on every invitation page. Guests open the link, read the invitation, and can leave a message or blessings directly on the page. The host approves and displays these. It turns the invitation into a keepsake — a digital record of everyone\'s wishes from before the ceremony, which couples often revisit long after the event.',
+        a: 'Yes. ShareInvite includes a guest wishes section on every invitation page. Guests open the link, read the invitation, and can leave a message or blessings directly on the page, which appears there immediately for everyone else to read. The host can remove any wish they would rather not show. It turns the invitation into a keepsake — a digital record of everyone\'s wishes from before the ceremony, which couples often revisit long after the event.',
       },
       {
         q: 'Is a digital invitation appropriate for a formal Indian engagement ceremony?',
@@ -1141,7 +1141,7 @@ When you enable the wishes section on an engagement invitation, something shifts
 
 The wish section also does something unexpected for the guests who do attend. Seeing that forty people have already left wishes before they arrive makes the event feel significant in a way that a headcount cannot. It is social proof of a different kind — not numbers, but names and faces and specific messages. "Your grandmother wrote something in Tamil, the whole family cried" is a real account from a ShareInvite engagement. The grandmother was in Coimbatore. She had never typed a wish on a digital platform before. The couple still have the message.
 
-One practical point: approve wishes before they appear publicly on the page. The approval step takes thirty seconds, and it means the visible wish section stays warm and genuine rather than accidentally including a family dispute disguised as a blessing. Enable the section, but stay involved with it.`,
+One practical point: wishes appear on the page the moment a guest sends them, so keep half an eye on the section as the invitation circulates. Any wish can be removed from your dashboard in a couple of taps, which is occasionally worth doing if a family dispute arrives disguised as a blessing. Enable the section, but stay involved with it.`,
       },
     ],
     checklist: [
@@ -1315,7 +1315,7 @@ The third thing is the guest wishes section. A printed card generates no respons
 
 But there is a hidden cost that rarely gets calculated: the time and coordination involved in printing, distributing, and tracking down who has and has not received a card. In joint households where the responsibility is split between family members, this coordination is real labour. The cousin who is supposed to deliver forty cards to relatives in another neighbourhood. The aunt who was going to bring cards to her colony but forgot. The ten cards that need to be posted to out-of-city family, requiring someone to go to the post office. This time has a cost even if it is not a line item.
 
-A digital invitation on ShareInvite starts free. Premium templates — the ones that look genuinely good — start at ₹499. At that price point, the comparison to printed cards is not competitive; it is absurd. The premium invitation costs less than the printing cost for ten printed cards, can be shared with any number of guests, and updates automatically if anything changes.
+A digital invitation on ShareInvite starts at ₹199, and no template costs more than ₹499 — you can build and preview any of them for free before paying. At that price point, the comparison to printed cards is not competitive; it is absurd. The premium invitation costs less than the printing cost for ten printed cards, can be shared with any number of guests, and updates automatically if anything changes.
 
 What most families end up doing is a hybrid: twenty-five to thirty printed cards for the inner circle, costing ₹2,000 to ₹5,000 with quality printing, and a ShareInvite link for everyone else. This combination costs a fraction of a full printed run and does the communication job better for ninety percent of the guest list.`,
       },
@@ -1347,7 +1347,7 @@ The families who are still printing five hundred cards and also sending a WhatsA
       },
       {
         q: 'What does a digital wedding invitation actually cost in India?',
-        a: 'On ShareInvite, a digital wedding invitation starts free. Premium templates — the ones that look genuinely good on WhatsApp — start at ₹499 as a one-time cost. This covers unlimited guest access, all features (Maps, music, gallery, wishes, RSVP), and the ability to update the invitation if details change. Compare this to printed cards: a mid-range print run of three hundred cards typically costs ₹15,000 to ₹40,000 with design and delivery.',
+        a: 'On ShareInvite, a digital wedding invitation starts at ₹199 as a one-time cost, and the most elaborate templates are ₹499 — you can build and preview any of them for free before paying. This covers unlimited guest access, all features (Maps, music, gallery, wishes, RSVP), and the ability to update the invitation if details change. Compare this to printed cards: a mid-range print run of three hundred cards typically costs ₹15,000 to ₹40,000 with design and delivery.',
       },
       {
         q: 'Can I do both — send printed cards and a digital invitation?',

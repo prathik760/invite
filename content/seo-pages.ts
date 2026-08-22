@@ -213,7 +213,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Can guests send blessings on the invite?',
         answer:
-          'Yes. Guest wishes can be submitted on the invitation page and approved by the host.',
+          'Yes. Guest wishes are submitted on the invitation page and appear there instantly; the host can remove any of them.',
       },
       {
         question: 'Can I add baby shower theme details?',

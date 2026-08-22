@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ShareInvite — Digital Invitation Maker for Weddings, Birthdays & Every Occasion',
     description:
-      'Create digital invitations and animated 3D greetings for weddings, birthdays, engagements, anniversaries and every occasion. Share instantly on WhatsApp with RSVP tracking. Free template available; paid designs from ₹199 one-time.',
+      'Create digital invitations and animated 3D greetings for weddings, birthdays, engagements, anniversaries and every occasion. Share instantly on WhatsApp with RSVP tracking. Free to build and preview; publish from ₹199 one-time, never more than ₹499.',
     type: 'website',
     locale: 'en_IN',
     url: process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in',
@@ -92,69 +92,82 @@ const features = [
       </svg>
     ),
     title: 'Guest Wishes & Blessing Wall',
-    description: 'Guests leave a blessing directly on the invite. You approve it in your dashboard — and it appears live on the invitation for every other guest to see.',
+    description: 'Guests leave a blessing directly on the invite and it appears live on the invitation straight away, for every other guest to see. No approval step, nothing to wait for.',
   },
 ]
 
+// Reviews are shown in the language each family actually speaks — Kannada,
+// Tamil, Hindi, Malayalam, Russian and English. `lang` carries the BCP-47 tag
+// through to the markup for screen readers and search engines; nothing about
+// the language is displayed on the card.
 const testimonials = [
   {
-    quote: 'Shared the link with our 340-person WhatsApp group. Within 2 hours, 200+ guests had opened it. Nobody called asking for directions — the map pin handled everything. Upgraded to Pro for the gallery and it was worth every rupee.',
+    quote: 'ನಮ್ಮ 340 ಜನರ ವಾಟ್ಸಾಪ್ ಗುಂಪಿಗೆ ಲಿಂಕ್ ಕಳುಹಿಸಿದೆವು. ಎರಡು ಗಂಟೆಯೊಳಗೆ 200ಕ್ಕೂ ಹೆಚ್ಚು ಅತಿಥಿಗಳು ಅದನ್ನು ತೆರೆದಿದ್ದರು. ದಾರಿ ಕೇಳಲು ಯಾರೂ ಫೋನ್ ಮಾಡಲಿಲ್ಲ — ನಕ್ಷೆಯ ಲಿಂಕ್ ಎಲ್ಲವನ್ನೂ ನೋಡಿಕೊಂಡಿತು. ಫೋಟೋ ಗ್ಯಾಲರಿಗಾಗಿ ಪ್ರೊ ಪ್ಲಾನ್‌ಗೆ ಬದಲಾಯಿಸಿದೆವು — ಪ್ರತಿ ರೂಪಾಯಿಗೂ ಬೆಲೆ ಇತ್ತು.',
+    lang: 'kn',
     name: 'Meera Krishnamurthy',
     event: 'Wedding · Bengaluru',
     date: 'March 2026',
     avatar: '/testimonials/meera.jpg',
   },
   {
-    quote: "Took 7 minutes to set up and share with 80 family members across 4 cities. Even my parents in a small town opened it without any app download. Saved at least ₹3,000 on printed cards and hours of follow-up calls.",
+    quote: 'ஏழு நிமிடங்களில் அமைத்து, நான்கு நகரங்களில் இருந்த 80 உறவினர்களுக்கு அனுப்பிவிட்டேன். சிறு ஊரில் இருக்கும் என் பெற்றோர் கூட எந்த ஆப்பையும் பதிவிறக்காமல் திறந்து பார்த்தார்கள். அச்சிடப்பட்ட அழைப்பிதழ்களுக்கான ₹3,000-ஐயும், பல மணி நேரத் தொலைபேசி அழைப்புகளையும் மிச்சப்படுத்தியது.',
+    lang: 'ta',
     name: 'Suresh Iyer',
     event: 'Naming Ceremony · Chennai',
     date: 'February 2026',
     avatar: '/testimonials/suresh.jpg',
   },
   {
-    quote: "Started free, upgraded after seeing the preview — the photo gallery made it feel like a proper event website. Three friends used ShareInvite for their events after seeing our invite on their WhatsApp.",
+    quote: 'पूरा निमंत्रण बनाकर मुफ़्त में देख लिया, फिर पसंद आने पर ही पैसे दिए। फ़ोटो गैलरी ने इसे किसी असली इवेंट वेबसाइट जैसा बना दिया। हमारा निमंत्रण व्हाट्सएप पर देखकर तीन दोस्तों ने भी अपने कार्यक्रमों के लिए ShareInvite इस्तेमाल किया।',
+    lang: 'hi',
     name: 'Pooja Mehta',
     event: 'Birthday · Mumbai',
     date: 'January 2026',
     avatar: '/testimonials/pooja.jpg',
   },
   {
-    quote: 'We sent the invite the same evening we finalised the date. RSVPs updated live, so our caterer numbers were sorted without a single follow-up call. My mother keeps showing the animated invite to relatives.',
-    name: 'Ananya Reddy',
-    event: 'Engagement · Hyderabad',
-    date: 'March 2026',
-    avatar: '/testimonials/ananya.jpg',
-  },
-  {
-    quote: 'Planning my parents’ 25th anniversary from Dubai while family was in Kerala felt impossible — until this. One WhatsApp link and everyone from grandparents to cousins opened it instantly. It looked more premium than the printed cards we’d priced.',
+    quote: 'അച്ഛനമ്മമാരുടെ ഇരുപത്തഞ്ചാം വിവാഹവാർഷികം ദുബായിൽ നിന്ന് ഒരുക്കുന്നത് അസാധ്യമായി തോന്നി — കുടുംബം മുഴുവൻ കേരളത്തിലായിരുന്നു. ഒരൊറ്റ വാട്ട്‌സ്ആപ്പ് ലിങ്ക് മതിയായിരുന്നു; മുത്തശ്ശി മുതൽ കസിൻസ് വരെ എല്ലാവരും അത് ഉടനെ തുറന്നു. ഞങ്ങൾ വില ചോദിച്ച അച്ചടിച്ച കാർഡുകളേക്കാൾ മനോഹരമായിരുന്നു ഇത്.',
+    lang: 'ml',
     name: 'Vikram Nair',
     event: 'Anniversary · Dubai, UAE',
     date: 'February 2026',
     avatar: '/testimonials/vikram.jpg',
   },
   {
+    quote: 'Я совсем не разбираюсь в технике, но приглашение на день рождения дочери было готово меньше чем за десять минут. Подруги всё спрашивали, каким приложением я пользовалась. Красиво, аккуратно и очень просто отправить.',
+    lang: 'ru',
+    name: 'Anastasia Volkova',
+    event: 'Birthday · Moscow, Russia',
+    date: 'January 2026',
+    avatar: '/testimonials/emily.jpg',
+  },
+  {
+    quote: 'We sent the invite the same evening we finalised the date. RSVPs updated live, so our caterer numbers were sorted without a single follow-up call. My mother keeps showing the animated invite to relatives.',
+    lang: 'en',
+    name: 'Ananya Reddy',
+    event: 'Engagement · Hyderabad',
+    date: 'March 2026',
+    avatar: '/testimonials/ananya.jpg',
+  },
+  {
     quote: 'As an NRI planning a wedding back home, a shareable online invite was a lifesaver. Guests in London, Delhi and Dubai all opened the same beautiful page. The countdown and gallery made everyone feel part of it.',
+    lang: 'en',
     name: 'Priya Sharma',
     event: 'Wedding · London, UK',
     date: 'December 2025',
     avatar: '/testimonials/priya.jpg',
   },
   {
-    quote: 'I’m not tech-savvy at all, but I had my daughter’s birthday invite live in under ten minutes. Friends kept asking which app I used. Clean, elegant, and so easy to share.',
-    name: 'Emily Carter',
-    event: 'Birthday · New York, USA',
-    date: 'January 2026',
-    avatar: '/testimonials/emily.jpg',
-  },
-  {
     quote: 'Used it for our house-warming pooja in Toronto. Muhurat details, the address with map, and the schedule were all in one link — no more forwarding five separate messages. Worked flawlessly for our elders too.',
+    lang: 'en',
     name: 'Arjun Patel',
     event: 'Griha Pravesh · Toronto, Canada',
     date: 'November 2025',
     avatar: '/testimonials/arjun.jpg',
   },
   {
-    quote: 'I opened a friend’s wedding invite made on ShareInvite and loved it so much I used it for mine. Beautiful templates, opens instantly on any phone, and the wishes wall was a lovely touch our guests enjoyed.',
+    quote: 'I opened a friend\u2019s wedding invite made on ShareInvite and loved it so much I used it for mine. Beautiful templates, opens instantly on any phone, and the wishes wall was a lovely touch our guests enjoyed.',
+    lang: 'en',
     name: 'David Chen',
     event: 'Wedding · Singapore',
     date: 'February 2026',
@@ -218,7 +231,7 @@ const COMPACT_TEMPLATES = [
     demoHref: '/demo/indian-wedding',
     name: 'Shaadi — Indian Wedding',
     tagline: 'Rich traditional ceremony',
-    plan: { label: 'Pro', price: '₹599', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
+    plan: { label: 'Pro', price: '₹399', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
     eventType: 'Indian Wedding',
     sampleName: 'Priya & Rahul',
     sampleSub: 'Sacred Union',
@@ -238,7 +251,7 @@ const COMPACT_TEMPLATES = [
     demoHref: '/demo/indian-engagement',
     name: 'Mangni — Engagement',
     tagline: 'Romantic rose ceremony',
-    plan: { label: 'Pro', price: '₹599', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
+    plan: { label: 'Pro', price: '₹399', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
     eventType: 'Engagement Ceremony',
     sampleName: 'Isha & Dev',
     sampleSub: 'The Beginning',
@@ -258,7 +271,7 @@ const COMPACT_TEMPLATES = [
     demoHref: '/demo/griha-pravesh',
     name: 'Griha Pravesh',
     tagline: 'Auspicious housewarming',
-    plan: { label: 'Pro', price: '₹599', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
+    plan: { label: 'Pro', price: '₹399', color: '#2F766D', bg: 'rgba(47,118,109,0.12)', border: '1px solid rgba(47,118,109,0.3)' },
     eventType: 'House Warming',
     sampleName: 'The Mehta Family',
     sampleSub: 'New Beginnings',
@@ -278,7 +291,7 @@ const COMPACT_TEMPLATES = [
     demoHref: '/demo/anniversary',
     name: 'Saalgirah — Anniversary',
     tagline: 'Cinematic love story',
-    plan: { label: 'All Access', price: '₹999', color: '#C9A84C', bg: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.3)' },
+    plan: { label: 'All Access', price: '₹499', color: '#C9A84C', bg: 'rgba(201,168,76,0.14)', border: '1px solid rgba(201,168,76,0.3)' },
     eventType: 'Anniversary',
     sampleName: 'Meera & Vivek',
     sampleSub: '25 Years Together',
@@ -634,7 +647,7 @@ export default function LandingPage() {
         name: 'Is it free to create a digital wedding invitation?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes — creating and sharing the Elegant Wedding template is completely free forever. No credit card required. Premium templates with gallery, music, countdown, and more start at ₹499 as a one-time payment.',
+          text: 'Building and previewing is completely free — pick a template, add every detail, and see the finished invitation on your phone without a credit card. Publishing is a one-time payment starting at ₹199 for Elegant Wedding, and no template costs more than ₹499. There are no monthly fees.',
         },
       },
       {
@@ -768,7 +781,7 @@ export default function LandingPage() {
                     </svg>
                   </Link>
                 </div>
-                <p className="mt-2 text-[11px] text-muted">No credit card required · Free forever plan available</p>
+                <p className="mt-2 text-[11px] text-muted">No credit card to build · Publish from ₹199 one-time</p>
 
                 {/* ── Stats + proof ── */}
                 <div className="mt-8 flex flex-col gap-4">
@@ -783,8 +796,8 @@ export default function LandingPage() {
                     }}
                   >
                     <div className="flex flex-col items-center px-5 py-4">
-                      <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">₹0</span>
-                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>Free to start</span>
+                      <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">₹199</span>
+                      <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>One-time, from</span>
                     </div>
                     <div className="my-3.5 w-px" style={{ background: 'rgba(184,121,36,0.14)' }} />
                     <div className="flex flex-col items-center px-5 py-4">
@@ -803,7 +816,7 @@ export default function LandingPage() {
                     {[
                       'No app required',
                       'Every occasion',
-                      'Free forever plan',
+                      'Free to build & preview',
                       'Works worldwide',
                     ].map((item) => (
                       <span key={item} className="flex items-center gap-1.5 text-[11px] font-medium" style={{ color: '#7A6455' }}>
@@ -943,7 +956,7 @@ export default function LandingPage() {
                       {/* Footer badges */}
                       <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
                         <span className="rounded-full px-2.5 py-0.5 text-[8px] font-semibold" style={{ background: 'rgba(201,153,60,0.12)', color: '#C9993C', border: '1px solid rgba(201,153,60,0.25)' }}>Elegant Wedding</span>
-                        <span className="rounded-full px-2.5 py-0.5 text-[8px] font-semibold" style={{ background: 'rgba(46,111,100,0.15)', color: '#4fa898', border: '1px solid rgba(46,111,100,0.3)' }}>Free</span>
+                        <span className="rounded-full px-2.5 py-0.5 text-[8px] font-semibold" style={{ background: 'rgba(46,111,100,0.15)', color: '#4fa898', border: '1px solid rgba(46,111,100,0.3)' }}>₹199</span>
                         <span className="rounded-full px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.08em]" style={{ background: 'rgba(122,62,74,0.15)', color: '#C9993C', border: '1px solid rgba(122,62,74,0.28)' }}>Most Popular</span>
                       </div>
                     </div>
@@ -1085,7 +1098,7 @@ export default function LandingPage() {
                       className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em]"
                       style={{ background: 'rgba(47,118,109,0.1)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.25)' }}
                     >
-                      Free · ₹0
+                      From ₹199
                     </span>
                     <span
                       className="rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em]"
@@ -1325,7 +1338,7 @@ export default function LandingPage() {
               href="/create"
               className="gold-button inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold"
             >
-              Start with any template — free
+              Build with any template — free
               <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
@@ -1408,17 +1421,10 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="flex gap-5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-heading text-sm font-bold text-white" style={{ background: '#7A3E4A' }}>3</div>
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-heading text-sm font-bold text-white" style={{ background: '#D9A441' }}>3</div>
                   <div>
-                    <p className="font-heading text-base text-ink">You approve it in your dashboard</p>
-                    <p className="mt-1 text-sm leading-7 text-muted">Every wish lands in your host dashboard. You review them — approve the ones you want displayed. Anything irrelevant stays hidden.</p>
-                  </div>
-                </div>
-                <div className="flex gap-5">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-heading text-sm font-bold text-white" style={{ background: '#D9A441' }}>4</div>
-                  <div>
-                    <p className="font-heading text-base text-ink">Approved wishes appear live on the invitation</p>
-                    <p className="mt-1 text-sm leading-7 text-muted">Once approved, every other guest who opens the invite sees the blessing — like a public wall of love growing in real time as more family and friends wish.</p>
+                    <p className="font-heading text-base text-ink">It appears instantly — for everyone</p>
+                    <p className="mt-1 text-sm leading-7 text-muted">No approval queue, no waiting. The wish goes straight onto the invitation, and every other guest who opens the link sees it — a wall of love growing in real time as more family and friends write. It also lands in your host dashboard, where you can remove anything you would rather not show.</p>
                   </div>
                 </div>
               </div>
@@ -1442,8 +1448,8 @@ export default function LandingPage() {
                         </div>
                         <span className="text-xs font-semibold text-ink">{w.name}</span>
                         <span className="ml-auto flex items-center gap-1 rounded-full bg-[#2F766D]/10 px-2 py-0.5 text-[9px] font-semibold text-[#2F766D]">
-                          <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                          Approved
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
+                          Live
                         </span>
                       </div>
                       <p className="text-xs leading-6 text-muted">{w.msg}</p>
@@ -1670,7 +1676,7 @@ export default function LandingPage() {
             Build your first premium invitation website in minutes.
           </h2>
           <p className="relative mx-auto mt-5 max-w-lg text-sm leading-7 text-white/60">
-            Free to create. Beautiful to share. Loved by guests.
+            Free to build. Beautiful to share. Loved by guests.
           </p>
           <div className="relative mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
@@ -1697,7 +1703,7 @@ export default function LandingPage() {
           <h2 className="font-display text-2xl text-ink sm:text-3xl">The digital invitation maker for every celebration</h2>
           <div className="mt-5 space-y-4 text-sm leading-7 text-muted">
             <p>
-              <strong className="text-foreground">ShareInvite</strong> is a free online invitation maker for creating beautiful
+              <strong className="text-foreground">ShareInvite</strong> is a free-to-build online invitation maker for creating beautiful
               digital invitations and animated 3D greeting cards in minutes — no design skills and no app needed for your guests.
               Choose a template, add your names, date, venue and photos, and share a single link on WhatsApp that opens instantly
               in any phone browser. Every invitation includes a photo gallery, background music, a live countdown, Google Maps
@@ -1718,7 +1724,7 @@ export default function LandingPage() {
               {' '}<Link href="/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template" className="text-accent-strong underline-offset-2 hover:underline">Raksha Bandhan invitation card online</Link>.
             </p>
             <p>
-              Start free with no credit card required. See all designs on the
+              Start building free — no credit card required. See all designs on the
               {' '}<Link href="/templates" className="text-accent-strong underline-offset-2 hover:underline">templates page</Link>,
               compare plans on <Link href="/pricing" className="text-accent-strong underline-offset-2 hover:underline">pricing</Link>,
               or read guides on the <Link href="/blog" className="text-accent-strong underline-offset-2 hover:underline">ShareInvite blog</Link>.

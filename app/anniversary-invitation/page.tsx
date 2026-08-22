@@ -7,9 +7,9 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Digital Anniversary Invitation India — Build Free, Publish ₹999 | ShareInvite' },
+  title: { absolute: 'Digital Anniversary Invitation India — Build Free, Publish ₹499 | ShareInvite' },
   description:
-    'Digital anniversary invitation for India. Silver, golden & milestone e-invites. WhatsApp-ready with photos & countdown. Build and preview free; publish for ₹999 one-time. Ready in 5 minutes.',
+    'Digital anniversary invitation for India. Silver, golden & milestone e-invites. WhatsApp-ready with photos & countdown. Build and preview free; publish for ₹499 one-time. Ready in 5 minutes.',
   keywords: [
     'anniversary invitation',
     'digital anniversary invitation India',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/anniversary-invitation` },
   openGraph: {
-    title: 'Digital Anniversary Invitation India — Build Free, Publish ₹999 | ShareInvite',
+    title: 'Digital Anniversary Invitation India — Build Free, Publish ₹499 | ShareInvite',
     description: 'Digital anniversary invitation for India. Silver, golden & milestone anniversary e-invites. WhatsApp-ready with photos & countdown.',
     type: 'website',
     locale: 'en_IN',
@@ -71,7 +71,7 @@ const faqSchema = {
       name: 'How much does a digital anniversary invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Anniversary template is ₹999 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you would like to try the product first.',
+        text: 'The Anniversary template is ₹499 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
       },
     },
   ],
@@ -133,7 +133,7 @@ export default function AnniversaryInvitationPage() {
             <Link href="/create?template=anniversary" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
               Start My Anniversary Invite →
             </Link>
-            <span className="text-sm text-muted">Free to build &amp; preview · ₹999 one-time to publish</span>
+            <span className="text-sm text-muted">Free to build &amp; preview · ₹499 one-time to publish</span>
           </div>
         </div>
       </section>
@@ -282,7 +282,7 @@ export default function AnniversaryInvitationPage() {
       <section className="px-5 py-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Anniversary Invitation Today</h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹999 one-time to publish · WhatsApp-ready in 5 minutes</p>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹499 one-time to publish · WhatsApp-ready in 5 minutes</p>
           <Link href="/create?template=anniversary" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Start My Anniversary Invite →
           </Link>

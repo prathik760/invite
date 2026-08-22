@@ -35,7 +35,7 @@ export default function MidPageCTA({ headline, body, features, ctaHref, ctaText 
         {ctaText}
       </Link>
       <p className="mt-2.5 text-[11px] text-muted">
-        Free plan · Ready in 5 min · No credit card needed
+        Free to build · Ready in 5 min · No credit card needed
       </p>
     </div>
   )

@@ -5,7 +5,7 @@ import { prisma } from '@/lib/db'
 import { generateSlug } from '@/lib/utils'
 import { getTemplateData } from '@/modules/templates/data'
 import { createLocalEvent, shouldUseLocalStore } from '@/lib/local-store'
-import { canAccess, isFreeTemplate, templatePrice, type PlanId } from '@/lib/plans'
+import { canAccess, templatePrice, type PlanId } from '@/lib/plans'
 
 // Strip HTML tags from a string value to prevent stored XSS.
 // Safe for all text fields — URLs (mapsUrl, musicUrl) are left intact since they pass URL validation.
@@ -66,11 +66,12 @@ export async function POST(req: NextRequest) {
   }
 
   // `isPaid` drives the "Made with ShareInvite" banner on the published page.
-  // True when the invitation is on a paid template OR the author holds a paid
-  // plan. Keying it on the template alone would have re-introduced the banner
-  // for a paying customer who chose the free Elegant Wedding design — they
-  // have paid to remove that branding, so they must not see it come back.
-  const isPaid = !isFreeTemplate(templateId) || userPlan !== 'free'
+  // Every template is now a purchase, so reaching this line already means the
+  // author holds a plan covering it — the check is kept explicit rather than
+  // hard-coded to `true` so the banner logic stays honest if a free tier ever
+  // returns. Legacy events published under the old free tier keep isPaid=false
+  // and continue to show the banner.
+  const isPaid = userPlan !== 'free'
 
   try {
     await prisma.template.upsert({

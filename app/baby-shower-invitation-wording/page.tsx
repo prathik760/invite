@@ -316,7 +316,7 @@ Gifts optional — your presence is the present!`}</WordingCopyCard>
           <MidPageCTA
             headline="Stop typing the address twice. Send a link — guests RSVP, you get the headcount."
             body="Know exactly how many people are coming before the event. No more vague confirmations with 3 yes replies and 7 no-shows. A digital invite with RSVP tracks it all."
-            features={['Real RSVP with name and count', 'Automated reminder 1 day before', 'WhatsApp share in one tap', 'Free plan — no credit card']}
+            features={['Real RSVP with name and count', 'Automated reminder 1 day before', 'WhatsApp share in one tap', 'Free to build — no credit card']}
             ctaHref="/create"
             ctaText="Start My Baby Shower Invite →"
           />

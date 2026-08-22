@@ -51,7 +51,7 @@ const faq = [
   {
     question: 'Is the Griha Pravesh invitation template free?',
     answer:
-      'The Griha Pravesh template is available starting at ₹499 — a one-time cost covering all features including muhurat time display, pooja schedule, Google Maps, photo gallery, background music, guest wishes, and the WhatsApp-shareable link. The free plan is also available with the Elegant Wedding template.',
+      'The Griha Pravesh template is ₹399 — a one-time cost covering all features including muhurat time display, pooja schedule, Google Maps, photo gallery, background music, guest wishes, and the WhatsApp-shareable link. Building and previewing is free, and ShareInvite templates start at ₹199.',
   },
 ]
 

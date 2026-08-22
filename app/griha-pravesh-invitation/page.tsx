@@ -7,9 +7,9 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Digital Griha Pravesh Invitation India — Build Free, Publish ₹599 | ShareInvite' },
+  title: { absolute: 'Digital Griha Pravesh Invitation India — Build Free, Publish ₹399 | ShareInvite' },
   description:
-    'Digital Griha Pravesh invitation for India. Share muhurat time, pooja schedule & Google Maps on WhatsApp. No app needed. Build and preview free; publish for ₹599 one-time. Ready in 5 minutes.',
+    'Digital Griha Pravesh invitation for India. Share muhurat time, pooja schedule & Google Maps on WhatsApp. No app needed. Build and preview free; publish for ₹399 one-time. Ready in 5 minutes.',
   keywords: [
     'digital Griha Pravesh invitation',
     'Griha Pravesh invitation WhatsApp',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/griha-pravesh-invitation` },
   openGraph: {
     title: 'Digital Griha Pravesh Invitation | Housewarming E-Invite India | ShareInvite',
-    description: 'Create a stunning digital Griha Pravesh invitation with muhurat time, pooja schedule, and Google Maps. WhatsApp-ready. Build and preview free — publish for ₹599 one-time.',
+    description: 'Create a stunning digital Griha Pravesh invitation with muhurat time, pooja schedule, and Google Maps. WhatsApp-ready. Build and preview free — publish for ₹399 one-time.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Griha Pravesh Invitation India' }],
@@ -73,7 +73,7 @@ const faqSchema = {
       name: 'How much does a digital Griha Pravesh invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Griha Pravesh template is ₹599 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you would like to try the product first.',
+        text: 'The Griha Pravesh template is ₹399 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
       },
     },
   ],
@@ -127,13 +127,13 @@ export default function GrihaPraveshInvitationPage() {
             <span className="gradient-accent italic">Housewarming · Ghar Pravesh</span>
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital Griha Pravesh invitation in minutes. Share the muhurat time, full pooja schedule, new address with Google Maps, and family blessings — all from one WhatsApp link. Build and preview free — publish for ₹599 one-time.
+            Create a beautiful digital Griha Pravesh invitation in minutes. Share the muhurat time, full pooja schedule, new address with Google Maps, and family blessings — all from one WhatsApp link. Build and preview free — publish for ₹399 one-time.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=griha-pravesh" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
               Start My Griha Pravesh Invite →
             </Link>
-            <span className="text-sm text-muted">Free to build &amp; preview · ₹599 one-time to publish</span>
+            <span className="text-sm text-muted">Free to build &amp; preview · ₹399 one-time to publish</span>
           </div>
         </div>
       </section>
@@ -226,7 +226,7 @@ export default function GrihaPraveshInvitationPage() {
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
             Create Your Griha Pravesh Invitation
           </h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹599 one-time to publish · WhatsApp-ready in 5 minutes</p>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹399 one-time to publish · WhatsApp-ready in 5 minutes</p>
           <Link href="/create?template=griha-pravesh" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Start My Griha Pravesh Invite →
           </Link>

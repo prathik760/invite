@@ -8,6 +8,8 @@ export interface Testimonial {
   event: string
   date: string
   avatar: string
+  /** BCP-47 tag for the quote, e.g. 'kn', 'ta'. Defaults to English. */
+  lang?: string
 }
 
 function Stars() {
@@ -129,7 +131,11 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
               <span className="text-[11px] text-muted">{t.date}</span>
             </div>
 
-            <p className="relative flex-1 text-sm leading-[1.9] text-foreground/90">
+            {/* `lang` is set so screen readers switch pronunciation and search
+                engines index the script correctly — without it an Indic or
+                Cyrillic quote is read out as if it were English. It renders
+                nothing visible. */}
+            <p lang={t.lang ?? 'en'} className="relative flex-1 text-sm leading-[1.9] text-foreground/90">
               &ldquo;{t.quote}&rdquo;
             </p>
 

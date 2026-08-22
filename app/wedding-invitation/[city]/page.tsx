@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { MapPinIcon, ClipboardIcon, ClockIcon, CameraIcon, MusicIcon, MessageIcon } from '@/components/ui/Icons'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { WEDDING_CITIES, type CitySlug } from '@/lib/cityContent'
-import { PLANS } from '@/lib/plans'
+import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE, PLANS } from '@/lib/plans'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -75,8 +75,8 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
     },
     serviceType: 'Digital Wedding Invitation',
     // Derived from lib/plans.ts so it can never drift from what is charged.
-    // Was "₹0 – ₹1499" — a price point that does not exist on the site.
-    priceRange: `₹0 – ₹${Math.max(...PLANS.map((p) => p.price)).toLocaleString('en-IN')}`,
+    // Was "₹0 – ₹1499" — neither of those price points exists on the site.
+    priceRange: `₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} – ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')}`,
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'IN',
@@ -200,13 +200,15 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
       <section className="border-t border-border bg-[#FFFBF5] px-5 py-12">
         <div className="mx-auto max-w-4xl">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { name: 'Basic', price: '₹0', badge: 'Free', desc: 'Elegant Wedding template, Google Maps, WhatsApp link' },
-              { name: 'Standard', price: '₹499', badge: 'Most popular', desc: '4 templates, background music, event schedule' },
-              { name: 'Premium', price: '₹999', badge: 'Best value', desc: '7 templates — Indian Wedding, Engagement & more' },
-              { name: 'Gold', price: '₹1,499', badge: 'Luxury', desc: 'All 11 templates, KGF Royal Empire + Anniversary' },
-            ].map(p => (
+          {/* Straight from lib/plans.ts — this list used to be hand-kept and had
+              drifted to a "Gold ₹1,499" tier that never existed. */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {PLANS.map(plan => ({
+              name: plan.name,
+              price: `₹${plan.price.toLocaleString('en-IN')}`,
+              badge: plan.badge,
+              desc: plan.description,
+            })).map(p => (
               <div key={p.name} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <p className="font-heading text-base text-ink">{p.name}</p>
@@ -220,7 +222,7 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
           <p className="mt-6 text-center text-xs text-muted">One-time payment · No subscription · Invitation stays live for 1 year</p>
           <div className="mt-6 text-center">
             <Link href="/create" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-              Start Free — No Credit Card →
+              Start Building — No Credit Card →
             </Link>
           </div>
         </div>

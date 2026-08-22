@@ -72,7 +72,7 @@ const faqSchema = {
       name: 'How much does a digital Namakaran invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Namakaran template is ₹299 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you would like to try the product first.',
+        text: 'The Namakaran template is ₹299 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
       },
     },
   ],

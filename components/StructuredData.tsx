@@ -1,3 +1,5 @@
+import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE, PLANS } from '@/lib/plans'
+
 export function WebsiteSchema() {
   return (
     <script
@@ -31,9 +33,19 @@ export function SoftwareAppSchema() {
           name: 'ShareInvite',
           applicationCategory: 'UtilitiesApplication',
           operatingSystem: 'Web',
-          description: 'Free digital invitation maker for Indian weddings, birthdays, engagements and all celebrations.',
+          description: 'Digital invitation maker for Indian weddings, birthdays, engagements and all celebrations. Free to build and preview; one-time payment to publish.',
           url: 'https://shareinvite.in',
-          offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR', description: 'Free plan available' },
+          // Advertised as a real price range, not ₹0 — Google treats an Offer
+          // price of 0 as "this product is free", which is no longer true and
+          // would be flagged as a price mismatch against the template pages.
+          offers: {
+            '@type': 'AggregateOffer',
+            priceCurrency: 'INR',
+            lowPrice: String(LOWEST_PAID_PRICE),
+            highPrice: String(HIGHEST_PAID_PRICE),
+            offerCount: PLANS.length,
+            description: 'One-time payment per template. Free to build and preview.',
+          },
           author: {
             '@type': 'Person',
             name: 'Prathik Thelkar',

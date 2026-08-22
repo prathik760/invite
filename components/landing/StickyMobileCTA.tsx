@@ -26,7 +26,7 @@ export default function StickyMobileCTA() {
         >
           Create Free Invitation →
         </Link>
-        <p className="mt-1.5 text-center text-[10px] text-muted">Free forever · No credit card needed</p>
+        <p className="mt-1.5 text-center text-[10px] text-muted">Free to build &amp; preview · No credit card needed</p>
       </div>
     </div>
   )

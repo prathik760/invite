@@ -45,7 +45,7 @@ const faqSchema = {
       name: 'How much does a digital birthday invitation cost in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Janamdin birthday template is ₹299 as a one-time payment — there is no subscription and no per-guest charge. You can build the entire invitation and preview exactly how it will look before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you want to try the product first.',
+        text: 'The Janamdin birthday template is ₹299 as a one-time payment — there is no subscription and no per-guest charge. You can build the entire invitation and preview exactly how it will look before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
       },
     },
     {
@@ -175,10 +175,10 @@ export default function BirthdayInvitationPage() {
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { price: '₹0', sub: 'Free to publish', templates: 'Elegant Wedding' },
-              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran' },
-              { price: '₹599', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh' },
-              { price: '₹999', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
+              { price: '₹199', sub: 'One-time', templates: 'Elegant Wedding, Raksha Bandhan Premium' },
+              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran, 3D Surprise Journey' },
+              { price: '₹399', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },
+              { price: '₹499', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
             ].map(p => (
               <div key={p.price} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
                 <p className="font-display text-2xl text-ink">{p.price}</p>
@@ -190,7 +190,7 @@ export default function BirthdayInvitationPage() {
           <p className="mt-6 text-center text-xs text-muted">Every template includes the same premium features · One-time payment · No subscription</p>
           <div className="mt-6 text-center">
             <Link href="/create?template=indian-birthday" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-              Start Free — Choose Your Template →
+              Start Building — Choose Your Template →
             </Link>
           </div>
         </div>

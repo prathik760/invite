@@ -110,26 +110,14 @@ export async function createLocalWish(eventId: string, name: string, message: st
     eventId,
     name,
     message,
-    isApproved: false,
+    // Matches the database default — wishes are visible the moment they land.
+    isApproved: true,
     createdAt: new Date().toISOString(),
   }
 
   event.wishes.unshift(wish)
   await writeStore(store)
   return wish
-}
-
-export async function approveLocalWish(id: string) {
-  const store = await readStore()
-  for (const event of store.events) {
-    const wish = event.wishes.find((item) => item.id === id)
-    if (wish) {
-      wish.isApproved = true
-      await writeStore(store)
-      return wish
-    }
-  }
-  return null
 }
 
 export async function deleteLocalWish(id: string) {

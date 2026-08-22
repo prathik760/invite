@@ -152,6 +152,9 @@ function NamingWishes({ eventId, gender }: { eventId: string; gender?: string })
     try {
       const res = await fetch('/api/wishes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ eventId, name: name.trim(), message: message.trim() }) })
       if (!res.ok) throw new Error()
+      // Wishes publish on arrival — add it to the wall immediately.
+      const created = await res.json()
+      setWishes(prev => [created, ...prev.filter(w => w.id !== created.id)])
       setSubmitted(true); setName(''); setMessage('')
     } catch { setError('Could not send your blessing. Please try again.') } finally { setLoading(false) }
   }

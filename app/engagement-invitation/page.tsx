@@ -7,9 +7,9 @@ import SiteFooter from '@/components/landing/SiteFooter'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Digital Engagement Invitation India — Build Free, Publish ₹599 | ShareInvite' },
+  title: { absolute: 'Digital Engagement Invitation India — Build Free, Publish ₹399 | ShareInvite' },
   description:
-    'Digital engagement invitation for Mangni, Roka & Sagai in India. WhatsApp link with countdown, Google Maps & photo gallery. Build and preview free; publish for ₹599 one-time. Ready in 5 minutes.',
+    'Digital engagement invitation for Mangni, Roka & Sagai in India. WhatsApp link with countdown, Google Maps & photo gallery. Build and preview free; publish for ₹399 one-time. Ready in 5 minutes.',
   keywords: [
     'digital engagement invitation India',
     'mangni invitation digital',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/engagement-invitation` },
   openGraph: {
     title: 'Digital Engagement Invitation | Mangni & Roka E-Invite India | ShareInvite',
-    description: 'Create a stunning digital engagement invitation for your Mangni or Roka ceremony. WhatsApp-ready. Build and preview free — publish for ₹599 one-time.',
+    description: 'Create a stunning digital engagement invitation for your Mangni or Roka ceremony. WhatsApp-ready. Build and preview free — publish for ₹399 one-time.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Engagement Invitation India' }],
@@ -74,7 +74,7 @@ const faqSchema = {
       name: 'How much does a digital engagement invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Engagement template is ₹599 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. ShareInvite also has a free Elegant Wedding template if you would like to try the product first.',
+        text: 'The Engagement template is ₹399 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
       },
     },
   ],
@@ -128,7 +128,7 @@ export default function EngagementInvitationPage() {
           <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
             Create a beautiful digital engagement invitation website for your Mangni, Roka, or Sagai ceremony.
             Share a WhatsApp link with the full schedule, Google Maps, photos, and a guest wishes section.
-            Ready in 5 minutes. Build and preview free — publish for ₹599 one-time.
+            Ready in 5 minutes. Build and preview free — publish for ₹399 one-time.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/create?template=indian-engagement" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
@@ -237,11 +237,10 @@ export default function EngagementInvitationPage() {
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { price: '₹0', sub: 'Free to publish', templates: 'Elegant Wedding' },
-              { price: '₹199', sub: 'One-time', templates: 'Raksha Bandhan Premium' },
+              { price: '₹199', sub: 'One-time', templates: 'Elegant Wedding, Raksha Bandhan Premium' },
               { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran, 3D Surprise Journey' },
-              { price: '₹599', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },
-              { price: '₹999', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
+              { price: '₹399', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },
+              { price: '₹499', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
             ].map(p => (
               <div key={p.price} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
                 <p className="font-display text-2xl text-ink">{p.price}</p>
@@ -283,7 +282,7 @@ export default function EngagementInvitationPage() {
             Create Your Digital Engagement Invitation
           </h2>
           <p className="text-muted text-sm mb-7">
-            Free to build &amp; preview · ₹599 one-time to publish · WhatsApp-ready in 5 minutes
+            Free to build &amp; preview · ₹399 one-time to publish · WhatsApp-ready in 5 minutes
           </p>
           <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Start My Engagement Invite →

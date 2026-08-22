@@ -206,6 +206,9 @@ function CinematicWishes({ eventId }: { eventId: string }) {
         body: JSON.stringify({ eventId, name: name.trim(), message: message.trim() }),
       })
       if (!res.ok) throw new Error()
+      // Wishes publish on arrival — add it to the wall immediately.
+      const created = await res.json()
+      setWishes(prev => [created, ...prev.filter(w => w.id !== created.id)])
       setSubmitted(true)
       setName('')
       setMessage('')
@@ -255,8 +258,8 @@ function CinematicWishes({ eventId }: { eventId: string }) {
                 </motion.div>
                 <p className="font-heading text-2xl mb-3" style={{ color: C.text }}>Thank You</p>
                 <p className="text-sm mb-7" style={{ color: C.textMuted, lineHeight: 1.8 }}>
-                  Your wish has been received with love.<br />
-                  It will appear here once approved.
+                  Your wish is now live on this invitation.<br />
+                  Every guest who opens the link will see it.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}

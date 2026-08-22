@@ -43,7 +43,10 @@ model Wish {
   event      Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   name       String
   message    String
-  isApproved Boolean  @default(false)
+  // Guest wishes publish straight to the invitation — no host approval step.
+  // The column is kept so a host can still take a wish down (see DELETE
+  // /api/wishes/[id]); it is no longer a gate on first appearance.
+  isApproved Boolean  @default(true)
   createdAt  DateTime @default(now())
 }
 

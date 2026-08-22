@@ -330,14 +330,10 @@ export default function CreatePage() {
 
   const handleContinueAsGuest = () => {
     setShowLoginPrompt(false)
-    // Guests may publish free templates only. Paid templates need an account to
-    // attach the purchase to; the API rejects the request either way, so send
-    // them to the paywall rather than into a failed create.
-    if (getRequiredPlan(selectedId).price > 0) {
-      openPaywall()
-      return
-    }
-    doCreate()
+    // Every template is a purchase now, so a guest can never publish: the
+    // account is what the purchase attaches to, and the API rejects the request
+    // regardless. Send them to the paywall rather than into a failed create.
+    openPaywall()
   }
 
   const payRef = useRef<boolean>(false)
@@ -882,21 +878,9 @@ export default function CreatePage() {
 
               <ShareBar url={shareUrl} names={names} templateId={selectedId} source="create_success" />
 
-              {/* Branding notice — shown only when the published invite really
-                  carries the banner (free template AND free plan). */}
-              {getRequiredPlan(selectedId).price === 0 && userPlan === 'free' && (
-                <div className="rounded-xl px-4 py-3 flex items-start gap-3 mb-1"
-                  style={{ background: 'rgba(217,164,65,0.07)', border: '1px solid rgba(217,164,65,0.25)' }}>
-                  <span className="text-base shrink-0 mt-0.5">👀</span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-foreground">Your guests will see &ldquo;Made with ShareInvite&rdquo;</p>
-                    <p className="text-xs text-muted mt-0.5">Every guest who opens this link sees a ShareInvite banner at the top.</p>
-                    <Link href="/pricing" className="mt-1.5 inline-flex items-center gap-1 text-xs font-bold" style={{ color: '#B87924' }}>
-                      Remove banner — from ₹299 →
-                    </Link>
-                  </div>
-                </div>
-              )}
+              {/* No branding notice: every template is a paid publish, so no
+                  newly created invitation carries the "Made with ShareInvite"
+                  banner. */}
 
               <div className="mt-2 space-y-2">
                 <Link href={`/e/${createdSlug}`}

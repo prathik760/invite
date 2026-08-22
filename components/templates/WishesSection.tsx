@@ -83,6 +83,11 @@ export default function WishesSection({ eventId }: WishesSectionProps) {
         body: JSON.stringify({ eventId, name: name.trim(), message: message.trim() }),
       })
       if (!res.ok) throw new Error()
+      // Show it straight away. Wishes are published on arrival, so the guest
+      // who just wrote one must see it in the list rather than being told to
+      // wait for someone to approve it.
+      const created: WishRecord = await res.json()
+      setWishes((prev) => [created, ...prev.filter((w) => w.id !== created.id)])
       setSubmitted(true)
       trackEvent(seoEvents.rsvpSubmission, {
         event_id: eventId,
@@ -172,8 +177,8 @@ export default function WishesSection({ eventId }: WishesSectionProps) {
                   className="font-body mb-7"
                   style={{ color: 'rgba(44,32,28,0.52)', fontSize: '13.5px', lineHeight: '1.85' }}
                 >
-                  Your wish has been received with love.<br />
-                  It will appear here once approved.
+                  Your wish is now live on this invitation.<br />
+                  Every guest who opens the link will see it.
                 </motion.p>
                 <motion.button
                   initial={{ opacity: 0 }}
@@ -313,7 +318,7 @@ export default function WishesSection({ eventId }: WishesSectionProps) {
           </AnimatePresence>
         </motion.div>
 
-        {/* ── Approved wishes ── */}
+        {/* ── Live wishes ── */}
         {wishes.length > 0 && (
           <div className="space-y-4">
             {wishes.map((wish, i) => (

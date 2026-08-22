@@ -1,5 +1,10 @@
 import Link from 'next/link'
 
+/**
+ * Shown only on invitations published without a purchase — legacy events from
+ * the old free tier, and custom requests. No newly published invitation carries
+ * it, since every template is now a paid publish.
+ */
 export default function FreePlanBanner() {
   return (
     <div
@@ -12,7 +17,6 @@ export default function FreePlanBanner() {
       <p className="text-xs leading-snug" style={{ color: 'rgba(255,255,255,0.50)' }}>
         Made with{' '}
         <span className="font-semibold" style={{ color: '#D9A441' }}>ShareInvite</span>
-        {' '}— Free plan
       </p>
       <Link
         href="/pricing"

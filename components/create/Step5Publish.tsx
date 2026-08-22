@@ -35,9 +35,8 @@ export default function Step5Publish({
   const isDark = DARK_TEMPLATES.has(selectedTemplate.id)
   const tv = TEMPLATE_VISUALS[selectedTemplate.id] ?? TEMPLATE_VISUALS['elegant-wedding']
   const requiredPlan = getRequiredPlan(selectedTemplate.id)
-  const isFree = requiredPlan.price === 0
   const userHasAccess = canAccess(selectedTemplate.id, userPlan)
-  const mustPay = !isFree && !userHasAccess
+  const mustPay = !userHasAccess
 
   return (
     <div
@@ -155,11 +154,9 @@ export default function Step5Publish({
                 Your plan
               </p>
               <p className="text-sm font-semibold" style={{ color: isDark ? '#fff' : '#221B17' }}>
-                {isFree
-                  ? 'Free — no payment needed'
-                  : userHasAccess
-                    ? `${requiredPlan.name} · unlocked`
-                    : `₹${requiredPlan.price.toLocaleString('en-IN')} one-time · ${requiredPlan.name}`}
+                {userHasAccess
+                  ? `${requiredPlan.name} · unlocked`
+                  : `₹${requiredPlan.price.toLocaleString('en-IN')} one-time · ${requiredPlan.name}`}
               </p>
             </div>
             {mustPay && (
@@ -173,28 +170,8 @@ export default function Step5Publish({
             )}
           </div>
 
-          {/* Branding warning — only when the invitation will actually carry
-              the banner. Keyed on the user's plan too, so a paying customer
-              using the free design is not warned about branding they removed. */}
-          {isFree && userPlan === 'free' && (
-            <div
-              className="w-full rounded-xl px-3.5 py-2.5 flex items-start gap-2.5"
-              style={{
-                background: isDark ? 'rgba(217,164,65,0.08)' : 'rgba(217,164,65,0.07)',
-                border: isDark ? '1px solid rgba(217,164,65,0.18)' : '1px solid rgba(217,164,65,0.22)',
-              }}
-            >
-              <span className="text-sm shrink-0 mt-px">👀</span>
-              <div>
-                <p className="text-[11px] font-semibold leading-snug" style={{ color: isDark ? 'rgba(255,255,255,0.70)' : '#3D2D1A' }}>
-                  Guests will see &ldquo;Made with ShareInvite&rdquo;
-                </p>
-                <p className="text-[10px] mt-0.5 leading-snug" style={{ color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(44,32,28,0.5)' }}>
-                  Free plan adds a banner at the top of your invite. Remove it from ₹299.
-                </p>
-              </div>
-            </div>
-          )}
+          {/* No branding warning: every template is a paid publish, so no new
+              invitation carries the "Made with ShareInvite" banner. */}
 
           {/* Error */}
           {error && (

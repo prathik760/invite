@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { getRazorpayClient, verifyPaymentSignature, getPlanPrice } from '@/lib/razorpay'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
-import { PLAN_MAP, planLevel } from '@/lib/plans'
+import { mergePlans, PLAN_MAP } from '@/lib/plans'
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -52,17 +52,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, plan: existing.plan })
     }
 
-    // Never downgrade on a later, cheaper purchase. A customer on All Access
-    // who then buys the standalone Raksha Bandhan plan must keep All Access —
-    // a plain upsert would overwrite it and revoke templates they paid for.
+    // Never revoke templates on a later purchase. A customer on All Access who
+    // then buys the standalone Raksha Bandhan plan must keep All Access — a
+    // plain upsert would overwrite it and take away templates they paid for.
+    // mergePlans also covers the same-price case (Basic and Raksha Bandhan are
+    // both ₹199 and neither contains the other), where a level comparison alone
+    // would drop whichever was bought first.
     const current = await prisma.subscription.findUnique({
       where: { userId: session.user.id },
       select: { plan: true, status: true },
     })
-    const keepExisting =
-      current?.status === 'active' &&
-      planLevel(current.plan as PlanId) > planLevel(plan as PlanId)
-    const effectivePlan = (keepExisting ? current!.plan : plan) as PlanId
+    const effectivePlan =
+      current?.status === 'active'
+        ? mergePlans(current.plan as PlanId, plan as PlanId)
+        : (plan as PlanId)
 
     await prisma.subscription.upsert({
       where: { userId: session.user.id },

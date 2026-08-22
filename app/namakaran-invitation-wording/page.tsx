@@ -483,7 +483,7 @@ Please join us for these precious first blessings.`}</WordingCopyCard>
               </div>
               <h3 className="font-heading text-base text-ink mb-2">Guest Wishes — The Blessing Wall</h3>
               <p className="text-sm text-muted leading-6">
-                This is what makes ShareInvite different. When a guest opens the invitation, they can leave a blessing for the baby directly on the page. You see all wishes in your dashboard. Approve the ones you love, and they appear on the invitation for every other guest to see — &ldquo;Sharma Family: Wishing Baby Aryan a blessed and joyful life.&rdquo;
+                This is what makes ShareInvite different. When a guest opens the invitation, they can leave a blessing for the baby directly on the page — and it appears there straight away for every other guest to see, with no approval step. Every wish also lands in your dashboard, where you can remove anything you would rather not show. &ldquo;Sharma Family: Wishing Baby Aryan a blessed and joyful life.&rdquo;
               </p>
               <p className="text-xs text-muted mt-2">Family members who can&apos;t attend can still be part of the celebration with a blessing that stays on the invite permanently.</p>
             </div>

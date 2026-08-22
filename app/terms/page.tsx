@@ -97,9 +97,10 @@ const sections: LegalSection[] = [
     body: (
       <>
         <Para>
-          ShareInvite offers a free plan and one-time paid plans that unlock additional templates and features. Paid plans
-          are a <strong className="text-foreground">one-time purchase</strong> — they are not a subscription and do not
-          renew automatically, so you will not be charged on a recurring basis.
+          Building and previewing an invitation on ShareInvite is free. Publishing requires a one-time paid plan, which
+          unlocks the template you choose. Paid plans are a <strong className="text-foreground">one-time purchase</strong>
+          {' '}— they are not a subscription and do not renew automatically, so you will not be charged on a recurring
+          basis.
         </Para>
         <Bullets
           items={[
