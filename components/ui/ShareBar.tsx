@@ -39,6 +39,8 @@ function shareMessage(templateId: string | undefined, names: string | undefined,
       return line('❤️', 'Anniversary celebration invitation')
     case 'rakshabandhan':
       return line('🎀', 'Raksha Bandhan celebration')
+    case 'ganesh-chaturthi':
+      return line('🪔', 'Ganesh Chaturthi darshan & aarti')
     case 'surprise-journey':
       return `I made something for you 🎁\n\nOpen your surprise:\n${url}`
     default:

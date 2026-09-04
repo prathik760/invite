@@ -70,6 +70,15 @@ const nextConfig = {
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
       {
+        // The site-wide OG card. Same reasoning as /e/:slug/opengraph-image
+        // above — it returns image/png, so it cannot carry a meta tag, and
+        // Google had crawled /opengraph-image?<hash> as a page of its own
+        // ("Crawled - currently not indexed"). It is an asset for link
+        // previews, never a search result.
+        source: '/opengraph-image',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
+      },
+      {
         source: '/(.*)',
         headers: [
           { key: 'X-Frame-Options', value: 'DENY' },

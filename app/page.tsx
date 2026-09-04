@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ShareInvite — Digital Invitation Maker for Weddings, Birthdays & Every Occasion',
     description:
-      'Create digital invitations and animated 3D greetings for weddings, birthdays, engagements, anniversaries and every occasion. Share instantly on WhatsApp with RSVP tracking. Free to build and preview; publish from ₹199 one-time, never more than ₹499.',
+      'Create digital invitations and animated 3D greetings for weddings, birthdays, engagements, anniversaries and every occasion. Share instantly on WhatsApp with RSVP tracking. Free to build and preview; publish from ₹99 one-time, never more than ₹499.',
     type: 'website',
     locale: 'en_IN',
     url: process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in',
@@ -648,7 +648,7 @@ export default function LandingPage() {
         name: 'Is it free to create a digital wedding invitation?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Building and previewing is completely free — pick a template, add every detail, and see the finished invitation on your phone without a credit card. Publishing is a one-time payment starting at ₹199 for Elegant Wedding, and no template costs more than ₹499. There are no monthly fees.',
+          text: 'Building and previewing is completely free — pick a template, add every detail, and see the finished invitation on your phone without a credit card. Publishing is a one-time payment starting at ₹99 for the Ganesh Chaturthi template (₹199 for Elegant Wedding), and no template costs more than ₹499. There are no monthly fees.',
         },
       },
       {
@@ -783,7 +783,7 @@ export default function LandingPage() {
                     </svg>
                   </Link>
                 </div>
-                <p className="mt-2 text-[11px] text-muted">No credit card to build · Publish from ₹199 one-time</p>
+                <p className="mt-2 text-[11px] text-muted">No credit card to build · Publish from ₹99 one-time</p>
 
                 {/* ── Stats + proof ── */}
                 <div className="mt-8 flex flex-col gap-4">
@@ -798,7 +798,7 @@ export default function LandingPage() {
                     }}
                   >
                     <div className="flex flex-col items-center px-5 py-4">
-                      <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">₹199</span>
+                      <span className="font-display text-[1.6rem] font-light leading-none text-ink sm:text-[1.8rem]">₹99</span>
                       <span className="mt-2 text-[8.5px] font-bold uppercase tracking-[0.22em]" style={{ color: '#A07850' }}>One-time, from</span>
                     </div>
                     <div className="my-3.5 w-px" style={{ background: 'rgba(184,121,36,0.14)' }} />
@@ -1724,6 +1724,9 @@ export default function LandingPage() {
               {' '}<Link href="/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes" className="text-accent-strong underline-offset-2 hover:underline">3D proposal card</Link> —
               animated greetings you personalise and share in minutes. Celebrating Rakhi apart from your sibling? Send a
               {' '}<Link href="/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template" className="text-accent-strong underline-offset-2 hover:underline">Raksha Bandhan invitation card online</Link>.
+              Welcoming Bappa home this Ganeshotsav? Make a
+              {' '}<Link href="/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template" className="text-accent-strong underline-offset-2 hover:underline">Ganesh Chaturthi invitation card online</Link>
+              {' '}for just ₹99 — sthapana muhurat, daily aarti timings, the visarjan day and a map to your mandap on one WhatsApp link.
             </p>
             <p>
               Start building free — no credit card required. See all designs on the

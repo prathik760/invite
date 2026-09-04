@@ -18,7 +18,7 @@ interface ScheduleRow { id: string; name: string; time: string }
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const WHEN_WHERE_KEYS = new Set(['date', 'time', 'venue', 'venueAddress', 'mapsUrl', 'dressCode', 'theme', 'pooja'])
+const WHEN_WHERE_KEYS = new Set(['date', 'time', 'venue', 'venueAddress', 'mapsUrl', 'dressCode', 'theme', 'pooja', 'visarjanDate', 'visarjanTime'])
 const EXTRAS_KEYS = new Set(['message'])
 // Interactive "3D Surprise Journey" fields — routed to the right wizard steps.
 const UNLOCK_KEYS = new Set(['pin', 'pinHint'])

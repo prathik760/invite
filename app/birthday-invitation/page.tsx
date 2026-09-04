@@ -165,8 +165,9 @@ export default function BirthdayInvitationPage() {
       <section className="border-t border-border bg-[#FFFBF5] px-5 py-12">
         <div className="mx-auto max-w-4xl">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
+              { price: '₹99', sub: 'One-time', templates: 'Ganesh Chaturthi Premium' },
               { price: '₹199', sub: 'One-time', templates: 'Elegant Wedding, Raksha Bandhan Premium' },
               { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran, 3D Surprise Journey' },
               { price: '₹399', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },

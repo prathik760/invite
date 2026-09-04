@@ -19,7 +19,7 @@ export default function StickyCTA({ pageType = 'seo_page' }: { pageType?: string
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 sm:pr-20">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold text-ink">Create a WhatsApp-ready invitation</p>
-          <p className="text-xs text-muted">Free to build &amp; preview · Paid templates from ₹199 one-time.</p>
+          <p className="text-xs text-muted">Free to build &amp; preview · Paid templates from ₹99 one-time.</p>
         </div>
         <div className="flex shrink-0 gap-2">
           {/* Relabelled: this links to the product overview page, not a live

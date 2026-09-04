@@ -25,6 +25,7 @@ const CATEGORY_TAB_MAP: Record<string, string> = {
   interactive: 'interactive',
   greeting: 'greeting',
   rakshabandhan: 'rakshabandhan',
+  ganeshchaturthi: 'ganeshchaturthi',
 }
 
 const TABS = [
@@ -38,6 +39,7 @@ const TABS = [
   { value: 'naming', label: 'Namakaran' },
   { value: 'anniversary', label: 'Anniversary' },
   { value: 'rakshabandhan', label: 'Rakhi' },
+  { value: 'ganeshchaturthi', label: 'Ganesh Chaturthi' },
 ]
 
 function PlanBadge({ templateId }: { templateId: string }) {

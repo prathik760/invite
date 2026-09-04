@@ -1,0 +1,86 @@
+ShareInvite — URLs to submit in Search Console (URL Inspection > Request Indexing)
+Generated 2026-09-04. Every URL below was verified: HTTP 200, "index, follow", and present in sitemap.xml.
+
+IMPORTANT: Google limits Request Indexing to roughly 10-12 URLs per property per day.
+Submit in the batches below, one batch per day, in this order. Do NOT submit the
+noindex blog posts or the 404 /e/ pages from your coverage report — those are
+intentional and will just burn the quota.
+
+Before batch 1: deploy the code, then go to Sitemaps and resubmit
+https://shareinvite.in/sitemap.xml
+
+
+=== BATCH 1 — DAY 1 (do these first; the festival is time-critical) ===
+https://shareinvite.in/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template
+https://shareinvite.in/templates/ganesh-chaturthi-premium-invitation-template
+https://shareinvite.in/
+https://shareinvite.in/pricing
+https://shareinvite.in/templates
+https://shareinvite.in/blog
+https://shareinvite.in/digital-invitation
+https://shareinvite.in/wedding-invitation
+https://shareinvite.in/birthday-invitation
+https://shareinvite.in/engagement-invitation
+
+Why: the two Ganesh pages are new and need discovery now. The rest are the pages
+that link to them (homepage, /blog, /templates and the footer-bearing landing
+pages) plus every page whose price copy changed to Rs 99 — re-crawling the
+linking pages is how Google finds the new URLs fastest.
+
+
+=== BATCH 2 — DAY 2 (city pages Google still has cached as noindex) ===
+https://shareinvite.in/digital-invitations-bangalore
+https://shareinvite.in/digital-invitations-hyderabad
+https://shareinvite.in/digital-invitations-mumbai
+https://shareinvite.in/digital-invitations-delhi
+https://shareinvite.in/digital-invitations-chennai
+https://shareinvite.in/digital-invitations-pune
+https://shareinvite.in/digital-invitations-kolkata
+https://shareinvite.in/wedding-invitations
+https://shareinvite.in/engagement-invitation/bengaluru
+https://shareinvite.in/engagement-invitation/mumbai
+
+Why: all 7 digital-invitations-* pages were last crawled in June/July while they
+were still noindex. They now serve "index, follow". Google has not re-crawled
+them since, so they sit in "Excluded by noindex" on stale data.
+
+
+=== BATCH 3 — DAY 3 (remaining engagement + birthday city pages) ===
+https://shareinvite.in/engagement-invitation/hyderabad
+https://shareinvite.in/engagement-invitation/pune
+https://shareinvite.in/engagement-invitation/delhi
+https://shareinvite.in/engagement-invitation/chennai
+https://shareinvite.in/engagement-invitation/ahmedabad
+https://shareinvite.in/birthday-invitation/bengaluru
+https://shareinvite.in/birthday-invitation/mumbai
+https://shareinvite.in/birthday-invitation/hyderabad
+https://shareinvite.in/birthday-invitation/pune
+https://shareinvite.in/birthday-invitation/ahmedabad
+
+
+=== BATCH 4 — DAY 4 (last of the city set) ===
+https://shareinvite.in/birthday-invitation/kolkata
+https://shareinvite.in/engagement-invitation/kolkata
+https://shareinvite.in/birthday-invitation/delhi
+https://shareinvite.in/birthday-invitation/chennai
+
+These four were not in your coverage export's noindex list, so they may already
+be indexed. Check each with URL Inspection first and only request indexing if it
+reports "URL is not on Google".
+
+
+=== DO NOT SUBMIT ===
+- Any /blog/... post from the "Excluded by noindex" list (mehendi-and-sangeet,
+  minimal-wedding-invitation-design, office-party-invitation-templates,
+  60th-birthday-invitation-ideas, music-ideas-for-wedding-invitation-websites,
+  and ~16 more). These are noindex BY DESIGN until real copy is written for them.
+- /auth/login — noindex by design.
+- Any /e/<slug> URL from the 404 list. Those invitations were deleted; 404 is the
+  correct answer and Google drops them on its own.
+- /opengraph-image — now correctly noindex.
+- /create?template=... — canonicalises to /create. That is healthy, not an error.
+
+=== ALSO: stop re-running these validations in Search Console ===
+"Excluded by noindex" and "Not found (404)" will fail forever, because the pages
+in them are meant to be noindexed or are genuinely gone. Both have already
+failed once. Leave them alone.

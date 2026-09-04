@@ -128,6 +128,12 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#5AB7C9', rgb: '90,183,201',
     image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80',
   },
+  'ganesh-chaturthi': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 3.2c2.2 2.7 4.6 6.2 4.6 8.6 0 2.5-2.1 4.4-4.6 4.4s-4.6-1.9-4.6-4.4c0-2.4 2.4-5.9 4.6-8.6z" stroke="currentColor" strokeWidth={1.4} strokeLinejoin="round" /><path d="M6.2 13.4h7.6" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #F0A32A 0%, #E4761B 48%, #B4232A 100%)',
+    color: '#E4761B', rgb: '228,118,27',
+    image: 'https://images.unsplash.com/photo-1563777389189-5e3564e5961c?auto=format&fit=crop&w=600&q=80',
+  },
   'rakshabandhan': {
     icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth={1.4} /><path d="M10 2v3M10 15v3M2 10h3M15 10h3M4.3 4.3l2.1 2.1M13.6 13.6l2.1 2.1M15.7 4.3l-2.1 2.1M6.4 13.6l-2.1 2.1" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" /></svg>,
     gradient: 'linear-gradient(135deg, #E0B65A 0%, #C24E68 100%)',

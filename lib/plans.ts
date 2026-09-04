@@ -5,10 +5,14 @@
  * purchase" (logged-out visitors, and the `plan` column's DB default). It
  * deliberately owns no templates, so every template now requires a purchase.
  *
- * The entry tier is `'basic'` (₹199). Pricing the sentinel itself would have
- * granted every anonymous visitor the entry template for nothing.
+ * The cheapest tier is `'ganesh'` (₹99); `'basic'` (₹199) is the entry price
+ * for a wedding design. Pricing the sentinel itself would have granted every
+ * anonymous visitor a template for nothing.
+ *
+ * PLANS is ordered by ascending price and must stay that way — `getRequiredPlan`
+ * and `mergePlans` both take the first match as the cheapest one.
  */
-export type PlanId = 'free' | 'basic' | 'rakhi' | 'standard' | 'premium' | 'gold'
+export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'standard' | 'premium' | 'gold'
 
 export interface Plan {
   id: PlanId
@@ -24,7 +28,8 @@ export interface Plan {
 // Templates assigned to each tier
 const BASIC_TEMPLATES = ['elegant-wedding']
 const RAKHI_TEMPLATES = ['rakshabandhan']
-const STANDARD_TEMPLATES = [...BASIC_TEMPLATES, ...RAKHI_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',]
+const GANESH_TEMPLATES = ['ganesh-chaturthi']
+const STANDARD_TEMPLATES = [...BASIC_TEMPLATES, ...RAKHI_TEMPLATES, ...GANESH_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',]
 const GREETING_TEMPLATES = [
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
@@ -34,10 +39,19 @@ const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'roy
 
 export const PLANS: Plan[] = [
   {
+    id: 'ganesh',
+    name: 'Ganesh Chaturthi',
+    price: 99,
+    badge: 'Lowest price',
+    description: 'Unlock the premium Ganesh Chaturthi invitation for ₹99 — invite family home for darshan, aarti and prasad.',
+    templateIds: GANESH_TEMPLATES,
+    features: ['Ganesh Chaturthi Premium template', 'Sthapana countdown & utsav schedule', 'Visarjan day & Google Maps', 'Guest wishes & blessings wall'],
+  },
+  {
     id: 'basic',
     name: 'Basic',
     price: 199,
-    badge: 'Lowest price',
+    badge: 'Entry wedding price',
     description: 'Build and preview free — publish the Elegant Wedding invitation for a one-time ₹199.',
     templateIds: BASIC_TEMPLATES,
     features: ['Elegant Wedding template', 'Date, venue & Google Maps', 'Guest wishes collection', 'WhatsApp share link', 'No ShareInvite branding'],
@@ -99,9 +113,10 @@ export function getRequiredPlan(templateId: string): Plan {
 
 export function canAccess(templateId: string, userPlan: PlanId): boolean {
   // No blanket exemption any more: with no free tier, access is granted only by
-  // the plan the user actually bought. Basic and Raksha Bandhan are parallel
-  // single-template tiers — buying one does not grant the other. Standard and
-  // above include both, so an upgrade never takes a template away.
+  // the plan the user actually bought. Basic, Raksha Bandhan and Ganesh
+  // Chaturthi are parallel single-template tiers — buying one does not grant
+  // the others. Standard and above include all of them, so an upgrade never
+  // takes a template away.
   const plan = PLAN_MAP[userPlan]
   return plan?.templateIds.includes(templateId) ?? false
 }
@@ -170,5 +185,5 @@ export function mergePlans(current: PlanId, purchased: PlanId): PlanId {
 }
 
 export function planLevel(plan: PlanId): number {
-  return { free: 0, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3 }[plan] ?? 0
+  return { free: 0, ganesh: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3 }[plan] ?? 0
 }

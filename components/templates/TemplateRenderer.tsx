@@ -50,6 +50,7 @@ const TEMPLATE_COMPONENTS: Record<string, TemplateComponent> = {
   'luxury-wedding': dynamic(() => import('./LuxuryWedding')),
   'surprise-journey': dynamic(() => import('./SurpriseJourney')),
   'rakshabandhan': dynamic(() => import('./RakshaBandhanPremium')),
+  'ganesh-chaturthi': dynamic(() => import('./GaneshChaturthi')),
   'greeting-love': greeting('GreetingLove'),
   'greeting-valentine': greeting('GreetingValentine'),
   'greeting-anniversary': greeting('GreetingAnniversary'),

@@ -15,6 +15,14 @@ function CheckIcon() {
 // local, since the tier lists are cumulative and would otherwise repeat.
 const PRICE_GROUPS = [
   {
+    id: 'ganesh' as const,
+    templates: [
+      { id: 'ganesh-chaturthi', name: 'Ganesh Chaturthi Premium' },
+    ],
+    cta: 'Start for ₹99 →',
+    ctaHref: '/create?template=ganesh-chaturthi',
+  },
+  {
     id: 'basic' as const,
     templates: [
       { id: 'elegant-wedding', name: 'Elegant Wedding' },
@@ -126,7 +134,7 @@ export default function PricingSection() {
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {PRICE_GROUPS.map((group) => {
             const isFeatured = group.highlighted
 

@@ -13,7 +13,7 @@ export const blogCategories = [
 
 export type BlogCategory = (typeof blogCategories)[number]
 
-const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string; metaTitle?: string; slug?: string }> = [
+const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string; metaTitle?: string; slug?: string; image?: string }> = [
   { title: 'Best Digital Wedding Invitation Templates in India', category: 'Wedding', keyword: 'digital wedding invitation templates India' },
   { title: 'How To Create A WhatsApp Wedding Invitation', category: 'Wedding', keyword: 'WhatsApp wedding invitation' },
   { title: 'Digital Wedding Invitation Vs Printed Cards', category: 'Digital Invitations', keyword: 'digital wedding invitation vs printed cards' },
@@ -150,6 +150,20 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     description: 'Send a Friendship Day card online with a playful 3D star-filled animation, your favourite photos together and an inside-joke message. The perfect Happy Friendship Day greeting for your best friends — create and share on WhatsApp in minutes.',
   },
 
+  // ─── Ganesh Chaturthi (premium template) ────────────────────────────────────
+  {
+    title: 'Ganesh Chaturthi Invitation Card Online — Make a Digital Ganpati Invite in 5 Minutes',
+    category: 'Digital Invitations',
+    keyword: 'ganesh chaturthi invitation card online',
+    date: '2026-09-04',
+    // Slug pinned rather than generated: the generated one would carry the
+    // whole H1, and this is the phrasing the head term is actually searched in.
+    slug: 'ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template',
+    metaTitle: 'Ganesh Chaturthi Invitation Card Online — Ganpati Invite ₹99',
+    image: 'https://images.unsplash.com/photo-1563777389189-5e3564e5961c?auto=format&fit=crop&w=1200&q=80',
+    description: 'Create a Ganesh Chaturthi invitation card online in minutes — a premium digital Ganpati invite with the Vakratunda shloka, sthapana countdown, daily aarti timings, visarjan day, Google Maps and a wishes wall. Just ₹99 one-time, shared on WhatsApp. Includes copy-paste Ganesh Chaturthi invitation messages in English, Hindi and Marathi.',
+  },
+
   // ─── Raksha Bandhan (premium template) ──────────────────────────────────────
   {
     title: 'Raksha Bandhan Invitation Card Online — Premium Digital Rakhi Template',
@@ -172,6 +186,15 @@ export type BlogDraft = {
   date: string
   status: 'draft'
   metaTitle?: string
+  /**
+   * Share image for this specific post, absolute or site-root-relative.
+   *
+   * Every post previously shared the one generic brand OG card, so a post
+   * about a specific template showed nothing of that template when it was
+   * forwarded on WhatsApp or posted to a group — which is most of the traffic
+   * a festival post gets. Falls back to the brand card when unset.
+   */
+  image?: string
 }
 
 function buildDescription(title: string, keyword: string, category: BlogCategory): string {
@@ -206,6 +229,7 @@ export const blogDrafts: BlogDraft[] = draftTitles.map((item, index) => ({
   date: item.date ?? `2026-05-${String((index % 28) + 1).padStart(2, '0')}`,
   status: 'draft',
   metaTitle: item.metaTitle,
+  image: item.image,
 }))
 
 export function categorySlug(category: BlogCategory | string) {

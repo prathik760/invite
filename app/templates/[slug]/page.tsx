@@ -134,6 +134,10 @@ const CATEGORY_CONTEXT: Record<string, { intro: string; guests: string }> = {
     intro: 'Rakhi is one of the hardest days to be in a different city from your sibling, and families are increasingly spread across the country and abroad.',
     guests: 'Whether you are inviting family home or sending the wish itself, it lands as one link that opens instantly on any phone.',
   },
+  ganeshchaturthi: {
+    intro: 'Ganeshotsav runs for several days rather than one, and the invitation has to hold a sthapana muhurat, daily aarti timings and a visarjan day that is often confirmed late.',
+    guests: 'Relatives, neighbours and mandal members come for darshan across different days, so they reopen the same link to check that evening\u2019s aarti time and find the mandap on a map.',
+  },
   greeting: {
     intro: 'This is an animated greeting for one person rather than an event invitation \u2014 there is no venue, no guest list and no RSVP.',
     guests: 'It is built to be opened once, properly, on a phone: your photos, your words, and an animation that plays as they scroll.',
@@ -187,6 +191,10 @@ export default function TemplateSeoPage({ params }: Props) {
     housewarming: { href: '/griha-pravesh-invitation', label: 'Griha Pravesh invitations' },
     naming: { href: '/namakaran-invitation', label: 'Namakaran invitations' },
     anniversary: { href: '/anniversary-invitation', label: 'Anniversary invitations' },
+    ganeshchaturthi: {
+      href: '/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template',
+      label: 'Ganesh Chaturthi invitation guide',
+    },
   }
   const occasion = OCCASION_LINK[template.category ?? ''] ?? {
     href: '/whatsapp-invitation-maker',

@@ -17,6 +17,8 @@ export const PRIMARY_KEYWORDS = [
   'baby shower invitation',
   'naming ceremony invitation',
   'indian wedding invitation',
+  'ganesh chaturthi invitation card',
+  'ganpati invitation card online',
 ]
 
 export function absoluteUrl(path = '/') {

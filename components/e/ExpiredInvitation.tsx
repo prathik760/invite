@@ -12,6 +12,7 @@ const RECS_BY_CATEGORY: Record<string, string[]> = {
   anniversary:  ['anniversary', 'cinematic-night', 'elegant-wedding'],
   movie:        ['kgf-wedding', 'cinematic-night', 'indian-wedding'],
   retro:        ['royal-deco', 'kgf-wedding', 'cinematic-night'],
+  ganeshchaturthi: ['ganesh-chaturthi', 'rakshabandhan', 'elegant-wedding'],
 }
 
 interface TemplateCard {
@@ -35,6 +36,8 @@ const TEMPLATE_CARDS: Record<string, TemplateCard> = {
   'royal-deco':       { id: 'royal-deco',        name: 'Royal Deco',                tagline: 'Art Deco palace edition',      gradient: 'linear-gradient(135deg,#03060F,#060B1E)', accent: '#BFA060', rgb: '191,160,96' },
   'anniversary':      { id: 'anniversary',       name: 'Saalgirah',                 tagline: 'Cinematic anniversary',        gradient: 'linear-gradient(135deg,#0A0008,#180012)', accent: '#CE93D8', rgb: '206,147,216' },
   'luxury-wedding':   { id: 'luxury-wedding',    name: 'Luxury Wedding',            tagline: 'Premium multi-function',       gradient: 'linear-gradient(135deg,#1C1008,#2E1A0A)', accent: '#C9A84C', rgb: '201,168,76' },
+  'ganesh-chaturthi': { id: 'ganesh-chaturthi',  name: 'Ganesh Chaturthi Premium',  tagline: 'Saffron & gold Ganeshotsav',   gradient: 'linear-gradient(135deg,#3A1206,#6E2A08)', accent: '#E4761B', rgb: '228,118,27' },
+  'rakshabandhan':    { id: 'rakshabandhan',     name: 'Raksha Bandhan Premium',    tagline: 'Cream & gold festive',         gradient: 'linear-gradient(135deg,#2E1218,#4E1A28)', accent: '#C24E68', rgb: '194,78,104' },
 }
 
 // ─── Category lookup ──────────────────────────────────────────────────────────
@@ -45,12 +48,14 @@ const TEMPLATE_CATEGORY: Record<string, string> = {
   'indian-engagement': 'engagement', 'indian-birthday': 'birthday',
   'griha-pravesh': 'housewarming',   'namakaran': 'naming',
   'anniversary': 'anniversary',
+  'ganesh-chaturthi': 'ganeshchaturthi',
 }
 
 const CATEGORY_LABEL: Record<string, string> = {
   wedding: 'weddings', engagement: 'engagements', birthday: 'birthdays',
   housewarming: 'housewarming ceremonies', naming: 'naming ceremonies',
   anniversary: 'anniversaries', movie: 'cinematic weddings', retro: 'royal weddings',
+  ganeshchaturthi: 'Ganesh Chaturthi celebrations',
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -67,6 +72,9 @@ function getEventLabel(data: Record<string, string>, templateId: string): string
   if (data.partner1Name && data.partner2Name) return `${data.partner1Name} & ${data.partner2Name}`
   if (data.celebrantName) return `${data.celebrantName}'s Birthday`
   if (data.coupleNames) return `${data.coupleNames}'s Anniversary`
+  // hostNames is shared with Griha Pravesh, so the occasion has to come from
+  // the template rather than the field alone.
+  if (templateId === 'ganesh-chaturthi') return data.hostNames ? `${data.hostNames}'s Ganesh Utsav` : 'This Ganesh Utsav'
   if (data.hostNames) return `${data.hostNames}'s Griha Pravesh`
   if (data.babyName) return `Namakaran of ${data.babyName}`
   const category = TEMPLATE_CATEGORY[templateId] ?? 'celebration'
@@ -235,7 +243,7 @@ export default function ExpiredInvitation({ templateId, data }: ExpiredInvitatio
 
           {/* Trust line */}
           <p className="mt-5 text-center text-[11px] text-[#B0A090]">
-            Free to build &amp; preview · Publish from ₹199 · Share via WhatsApp
+            Free to build &amp; preview · Publish from ₹99 · Share via WhatsApp
           </p>
         </div>
       </section>

@@ -23,6 +23,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const post = findBlogPost(params.slug)
   if (!post) return {}
   const url = absoluteUrl(`/blog/${post.slug}`)
+  const shareImage = post.image ? absoluteUrl(post.image) : DEFAULT_OG_IMAGE
 
   return {
     title: { absolute: post.metaTitle ?? `${post.title} | ShareInvite Blog` },
@@ -40,14 +41,14 @@ export function generateMetadata({ params }: Props): Metadata {
       type: 'article',
       siteName: SITE_NAME,
       url,
-      images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: post.title }],
+      images: [{ url: shareImage, width: 1200, height: 630, alt: post.title }],
       publishedTime: post.date,
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: [DEFAULT_OG_IMAGE],
+      images: [shareImage],
     },
   }
 }
@@ -70,7 +71,7 @@ function articleJsonLd(post: NonNullable<ReturnType<typeof findBlogPost>>) {
       name: 'ShareInvite',
       logo: { '@type': 'ImageObject', url: absoluteUrl('/logo1.png') },
     },
-    image: DEFAULT_OG_IMAGE,
+    image: post.image ? absoluteUrl(post.image) : DEFAULT_OG_IMAGE,
     mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
   }
 }
@@ -463,7 +464,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a template for your event type, fill in the names, date, venue, and schedule. Your invitation is live with a WhatsApp-ready link in under 5 minutes. Guests open it in their phone browser — no app download needed.' },
-          { q: 'Are digital invitations free in India?', a: 'ShareInvite is free to build with. You can choose a template, add all your details, and preview the finished invitation at no cost. Publishing the link is a one-time payment starting at ₹199, with no template costing more than ₹499 — there is no subscription.' },
+          { q: 'Are digital invitations free in India?', a: 'ShareInvite is free to build with. You can choose a template, add all your details, and preview the finished invitation at no cost. Publishing the link is a one-time payment starting at ₹99, with no template costing more than ₹499 — there is no subscription.' },
           { q: 'Can I update a digital invitation after sending it?', a: 'Yes — this is one of the biggest advantages over printed cards. You can update venue details, change a timing, correct a spelling, or add new information at any time. The same link continues to work for all guests who already received it, showing the updated information automatically.' },
         ],
         links: links['Digital Invitations'],
@@ -484,6 +485,63 @@ const CATEGORY_TEMPLATE: Record<string, string> = {
   'Anniversary': 'anniversary',
 }
 
+/**
+ * Bold spans inside an article line.
+ *
+ * Bodies in content/blog-articles.ts are written in a light markdown. Plain
+ * string segments are returned as-is — React only needs keys on elements.
+ */
+function renderInline(text: string) {
+  return text
+    .split(/\*\*(.+?)\*\*/g)
+    .map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-semibold text-ink">{part}</strong> : part))
+}
+
+/**
+ * Render one article section body.
+ *
+ * Every body was previously dropped into a single <p> as raw text. Blank lines
+ * collapsed to spaces and the markdown was printed literally, so all 33
+ * hand-written articles rendered as one run-on paragraph containing visible
+ * asterisks — and Google saw no paragraph or list structure to read at all.
+ *
+ * Blank lines separate blocks, a block of "- " lines becomes a real <ul>, and
+ * single newlines inside a block stay as line breaks (the copy-paste message
+ * samples rely on a bold label sitting directly above its quote).
+ */
+function ArticleBody({ body }: { body: string }) {
+  const blocks = body.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean)
+
+  return (
+    <div className="mt-3 space-y-4">
+      {blocks.map((block, i) => {
+        const lines = block.split('\n').map((l) => l.trim()).filter(Boolean)
+
+        if (lines.every((l) => l.startsWith('- '))) {
+          return (
+            <ul key={i} className="ml-5 list-disc space-y-2 text-base leading-8 text-muted">
+              {lines.map((line, j) => (
+                <li key={j}>{renderInline(line.slice(2))}</li>
+              ))}
+            </ul>
+          )
+        }
+
+        return (
+          <p key={i} className="text-base leading-8 text-muted">
+            {lines.map((line, j) => (
+              <span key={j}>
+                {j > 0 && <br />}
+                {renderInline(line)}
+              </span>
+            ))}
+          </p>
+        )
+      })}
+    </div>
+  )
+}
+
 // Blog posts that showcase a specific template → enables the "View Live Demo" popup
 const BLOG_TEMPLATE: Record<string, string> = {
   '3d-surprise-journey-the-interactive-digital-gift-you-send-online': 'surprise-journey',
@@ -498,6 +556,7 @@ const BLOG_TEMPLATE: Record<string, string> = {
   'family-wishes-card-online-a-heartfelt-digital-card-for-family': 'greeting-family',
   'friendship-day-card-online-send-a-3d-card-to-your-best-friends': 'greeting-friendship',
   'raksha-bandhan-invitation-card-online-free-digital-rakhi-template': 'rakshabandhan',
+  'ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template': 'ganesh-chaturthi',
 }
 
 export default function BlogPostPage({ params }: Props) {
@@ -510,7 +569,7 @@ export default function BlogPostPage({ params }: Props) {
   const ctaPrice = templatePrice(ctaTemplateId)
   const ctaTemplate = TEMPLATES.find((t) => t.id === ctaTemplateId)
   const ctaTemplateHref = `/templates/${templateSeoSlug(ctaTemplateId)}`
-  // "Free to start" was shown on articles whose CTA points at a ₹199–₹499
+  // "Free to start" was shown on articles whose CTA points at a ₹99–₹499
   // template. State the real one-time price instead — a reader who learns the
   // price here and still clicks is a far better lead than one who discovers it
   // at step 5 of the builder.
@@ -604,7 +663,7 @@ export default function BlogPostPage({ params }: Props) {
           {content.sections.map((section, i) => (
             <div key={i}>
               <h2 className="font-heading text-xl text-ink">{section.heading}</h2>
-              <p className="mt-3 text-base leading-8 text-muted">{section.body}</p>
+              <ArticleBody body={section.body} />
             </div>
           ))}
         </div>

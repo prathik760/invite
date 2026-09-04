@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/digital-invitation` },
   openGraph: {
     title: 'Free Digital Invitation Website Maker India | ShareInvite',
-    description: 'Create digital invitation websites for any Indian event. WhatsApp-ready. Build and preview free — paid templates from ₹199 one-time.',
+    description: 'Create digital invitation websites for any Indian event. WhatsApp-ready. Build and preview free — paid templates from ₹99 one-time.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Invitation Website India' }],
@@ -75,7 +75,7 @@ const faqSchema = {
       name: 'How much does a digital invitation cost in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Building and previewing any template is completely free. Publishing is a one-time payment starting at ₹199 for Elegant Wedding, with gallery, music, and countdown templates from ₹299 — and no template costs more than ₹499. No monthly fees, no hidden charges.',
+        text: 'Building and previewing any template is completely free. Publishing is a one-time payment starting at ₹99 for the Ganesh Chaturthi template and ₹199 for Elegant Wedding, with gallery, music, and countdown templates from ₹299 — and no template costs more than ₹499. No monthly fees, no hidden charges.',
       },
     },
   ],
@@ -148,7 +148,7 @@ export default function DigitalInvitationPage() {
       <section className="px-5 pb-16 text-center">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
           <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Free Digital Invitation Today</h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · Paid templates from ₹199 one-time · WhatsApp-ready</p>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · Paid templates from ₹99 one-time · WhatsApp-ready</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Digital Invitation →
           </Link>

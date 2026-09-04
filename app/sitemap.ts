@@ -48,6 +48,24 @@ const SKIP_LANDING_SLUGS = new Set([
 // noindex 16 pages that do carry unique content.
 const INDEXED_CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 'pune', 'kolkata', 'ahmedabad']
 
+/**
+ * The live seasonal campaign — currently Ganesh Chaturthi.
+ *
+ * Tiers 6 and 7 give every template page and every blog post the same
+ * 0.65/monthly, which is right for a stable catalogue and wrong for a page that
+ * has to be found before a festival passes: a new URL arrives with no history,
+ * ranked equal-last among 25 templates and 34 posts. These two are listed
+ * separately at a much higher priority and a weekly change frequency, and
+ * filtered out of the generic spreads below so no URL appears twice.
+ *
+ * Priority and changeFrequency are hints, not instructions — the real work is
+ * done by the internal links from the homepage and the template page. Point
+ * these at the next festival when the campaign moves on, or set them to null.
+ */
+const SEASONAL_TEMPLATE_ID: string | null = 'ganesh-chaturthi'
+const SEASONAL_BLOG_SLUG: string | null =
+  'ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template'
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const templateCategories = Array.from(new Set(TEMPLATES.map((t) => t.category || 'digital')))
 
@@ -103,8 +121,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/namakaran-invitation-wording', 0.70, 'monthly'),
     entry('/baby-shower-invitation-wording', 0.68, 'monthly'),
 
+    // ─── Tier 5b: Live seasonal campaign ──────────────────────────────────────
+    ...(SEASONAL_TEMPLATE_ID
+      ? [entry(`/templates/${templateSeoSlug(SEASONAL_TEMPLATE_ID)}`, 0.92, 'weekly')]
+      : []),
+    ...(SEASONAL_BLOG_SLUG ? [entry(`/blog/${SEASONAL_BLOG_SLUG}`, 0.90, 'weekly')] : []),
+
     // ─── Tier 6: Individual template pages ────────────────────────────────────
-    ...TEMPLATES.map((template) => entry(`/templates/${templateSeoSlug(template.id)}`, 0.65)),
+    ...TEMPLATES
+      .filter((template) => template.id !== SEASONAL_TEMPLATE_ID)
+      .map((template) => entry(`/templates/${templateSeoSlug(template.id)}`, 0.65)),
 
     // ─── Tier 7: Blog posts ────────────────────────────────────────────────────
     // Only posts with a hand-written article. The other 30 drafts render
@@ -113,7 +139,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ("Duplicate without user-selected canonical"). They are noindex,follow
     // at the page level and re-enter this list as soon as real copy is added.
     ...blogDrafts
-      .filter((post) => hasFullArticle(post.slug))
+      .filter((post) => hasFullArticle(post.slug) && post.slug !== SEASONAL_BLOG_SLUG)
       .map((post) => entry(`/blog/${post.slug}`, 0.65)),
 
     // ─── Tier 8: Supporting pages ─────────────────────────────────────────────

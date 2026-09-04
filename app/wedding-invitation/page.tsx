@@ -42,7 +42,7 @@ const weddingFaqSchema = {
       name: 'How do I create a free digital wedding invitation website in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Go to shareinvite.in/create, choose a wedding template, enter names, date, venue, and personal message, then click Create. Building and previewing is free; publishing is a one-time payment from ₹199. You get a unique URL immediately after — share it on WhatsApp in under 5 minutes.',
+        text: 'Go to shareinvite.in/create, choose a wedding template, enter names, date, venue, and personal message, then click Create. Building and previewing is free; publishing a wedding template is a one-time payment from ₹199 (templates for other occasions start at ₹99). You get a unique URL immediately after — share it on WhatsApp in under 5 minutes.',
       },
     },
     {
@@ -215,8 +215,9 @@ export default function WeddingInvitationPage() {
       <section className="border-t border-border bg-[#FFFBF5] px-5 py-12">
         <div className="mx-auto max-w-4xl">
           <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
+              { price: '₹99', sub: 'One-time', templates: 'Ganesh Chaturthi Premium' },
               { price: '₹199', sub: 'One-time', templates: 'Elegant Wedding, Raksha Bandhan Premium' },
               { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran, 3D Surprise Journey' },
               { price: '₹399', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },
@@ -280,7 +281,7 @@ export default function WeddingInvitationPage() {
           <h2 className="font-display font-normal text-3xl text-ink mb-4">
             Create Your Free Digital Wedding Invitation
           </h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · Publish from ₹199 · WhatsApp-ready in 5 minutes.</p>
+          <p className="text-muted text-sm mb-7">Free to build &amp; preview · Publish from ₹99 · WhatsApp-ready in 5 minutes.</p>
           <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Start My Wedding Invite →
           </Link>

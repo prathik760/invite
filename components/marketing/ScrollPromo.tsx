@@ -65,6 +65,7 @@ export default function ScrollPromo() {
   const price = promoPrice()
   const countdown = useCountdown(PROMO.endsAt)
   const percent = discountPercent()
+  const copy = PROMO.copy
 
   useEffect(() => {
     setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -138,12 +139,12 @@ export default function ScrollPromo() {
         >
           {/* Banner: the template's own colours, so the popup looks like the
               product rather than a generic interstitial. */}
-          <div className="relative" style={{ background: 'linear-gradient(135deg,#E0B65A 0%,#C24E68 100%)' }}>
+          <div className="relative" style={{ background: `linear-gradient(135deg,${copy.accentSoft} 0%,${copy.accent} 100%)` }}>
             <div className="flex items-center gap-3 px-5 pb-4 pt-5 sm:px-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={templateImage(PROMO.templateId)}
-                alt="Raksha Bandhan Premium invitation template"
+                alt={copy.imageAlt}
                 width={64}
                 height={64}
                 loading="lazy"
@@ -152,10 +153,10 @@ export default function ScrollPromo() {
               />
               <div className="min-w-0 text-white">
                 <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/80">
-                  Raksha Bandhan
+                  {copy.eyebrow}
                 </p>
                 <p id="si-promo-title" className="mt-0.5 font-display text-xl leading-tight">
-                  Rakhi is about the distance
+                  {copy.headline}
                 </p>
               </div>
             </div>
@@ -175,9 +176,7 @@ export default function ScrollPromo() {
 
           <div className="px-5 pb-6 pt-5 sm:px-6">
             <p id="si-promo-desc" className="text-sm leading-6 text-muted">
-              Your brother or sister is probably in another city this year. Send them a
-              Raksha Bandhan page they actually open — your photos together, your message,
-              a countdown to the day, and a wishes wall the whole family can sign.
+              {copy.body}
             </p>
 
             {/* Price. Strike-through appears only when a real prior price is
@@ -189,7 +188,7 @@ export default function ScrollPromo() {
                   <span className="text-base text-muted line-through">₹{PROMO.originalPrice}</span>
                   <span
                     className="rounded-full px-2 py-0.5 text-[11px] font-bold text-white"
-                    style={{ background: '#C24E68' }}
+                    style={{ background: copy.accent }}
                   >
                     {percent}% off
                   </span>
@@ -199,18 +198,18 @@ export default function ScrollPromo() {
             </div>
 
             {isLowestPricedPaid() && (
-              <p className="mt-1.5 text-xs font-medium" style={{ color: '#C24E68' }}>
+              <p className="mt-1.5 text-xs font-medium" style={{ color: copy.accent }}>
                 Our lowest-priced premium template
               </p>
             )}
             {countdown && (
-              <p className="mt-1.5 text-xs font-semibold" style={{ color: '#C24E68' }}>
+              <p className="mt-1.5 text-xs font-semibold" style={{ color: copy.accent }}>
                 {countdown}
               </p>
             )}
 
             <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-muted">
-              {['Photo memories', 'Event timeline', 'Wishes & RSVP', 'Optional shagun link'].map((f) => (
+              {copy.features.map((f) => (
                 <li key={f} className="flex items-center gap-1.5">
                   <span style={{ color: '#2F766D' }}>✓</span>{f}
                 </li>
@@ -230,9 +229,9 @@ export default function ScrollPromo() {
                 snoozePromo()
               }}
               className="mt-5 flex w-full items-center justify-center rounded-2xl px-6 py-3.5 text-sm font-bold text-white"
-              style={{ background: 'linear-gradient(135deg,#C24E68,#E0B65A)' }}
+              style={{ background: `linear-gradient(135deg,${copy.accent},${copy.accentSoft})` }}
             >
-              Make our Rakhi page →
+              {copy.cta}
             </Link>
 
             <p className="mt-2.5 text-center text-[11px] text-muted">

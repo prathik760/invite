@@ -15,7 +15,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 export const metadata: Metadata = {
   title: { absolute: 'Pricing — Digital Invitation Templates | ShareInvite' },
   description:
-    'Simple one-time pricing for digital invitation templates. Build and preview any design free — publish from ₹199, and never more than ₹499. No subscription, no hidden charges. Built for Indian weddings, birthdays, and family events.',
+    'Simple one-time pricing for digital invitation templates. Build and preview any design free — publish from ₹99, and never more than ₹499. No subscription, no hidden charges. Built for Indian weddings, birthdays, and family events.',
   keywords: [
     'digital invitation price india',
     'wedding invitation cost online india',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ShareInvite Pricing — One-Time Payment for Digital Invitations',
     description:
-      'Create beautiful digital invitations for Indian weddings, birthdays, and family events. Free to build and preview. Publish from ₹199 one-time — every template under ₹500, no subscription.',
+      'Create beautiful digital invitations for Indian weddings, birthdays, and family events. Free to build and preview. Publish from ₹99 one-time — every template under ₹500, no subscription.',
     type: 'website',
     locale: 'en_IN',
     url: `${APP_URL}/pricing`,
@@ -93,7 +93,7 @@ const pricingSchema = {
 const PRICING_FAQS = [
   {
     question: 'How much does a digital wedding invitation cost in India?',
-    answer: 'Every ShareInvite template is a one-time payment, and no template costs more than ₹499: ₹199 for Elegant Wedding and Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin (birthday), Namakaran, and the interactive 3D Surprise Journey; ₹399 for Shaadi, Mangni (engagement), Griha Pravesh, and the animated 3D Greeting Cards; ₹499 for Saalgirah, KGF Royal Empire, Royal Deco, and Luxury Wedding. There are no monthly fees, and you can build and preview any template in full before deciding to pay.',
+    answer: 'Every ShareInvite template is a one-time payment, and no template costs more than ₹499: ₹99 for Ganesh Chaturthi Premium; ₹199 for Elegant Wedding and Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin (birthday), Namakaran, and the interactive 3D Surprise Journey; ₹399 for Shaadi, Mangni (engagement), Griha Pravesh, and the animated 3D Greeting Cards; ₹499 for Saalgirah, KGF Royal Empire, Royal Deco, and Luxury Wedding. There are no monthly fees, and you can build and preview any template in full before deciding to pay.',
   },
   {
     question: 'Is it a one-time payment or a monthly subscription?',
@@ -101,7 +101,7 @@ const PRICING_FAQS = [
   },
   {
     question: 'Is anything free, and what exactly do I pay for?',
-    answer: 'Building and previewing is completely free: you can pick any template, fill in every detail, add photos, and see the finished invitation on your own phone without paying or entering card details. Payment is only requested at the final publish step, when you get your shareable link. Prices start at ₹199 and go no higher than ₹499, and no ShareInvite branding appears on any paid invitation.',
+    answer: 'Building and previewing is completely free: you can pick any template, fill in every detail, add photos, and see the finished invitation on your own phone without paying or entering card details. Payment is only requested at the final publish step, when you get your shareable link. Prices start at ₹99 and go no higher than ₹499, and no ShareInvite branding appears on any paid invitation.',
   },
   {
     question: 'Can I upgrade my template after paying?',
@@ -386,7 +386,7 @@ export default function PricingPage() {
             Your invitation is 5 minutes away.
           </h2>
           <p className="relative mx-auto mt-5 max-w-md text-sm leading-7 text-white/60">
-            Free to build and preview. One-time payment from ₹199 to publish.
+            Free to build and preview. One-time payment from ₹99 to publish.
             No monthly fees. No hidden charges.
           </p>
           <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

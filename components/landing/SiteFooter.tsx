@@ -34,6 +34,7 @@ const blogLinks = [
   { label: 'Birthday Invitation Blog', href: '/blog/category/birthday' },
   { label: 'Housewarming Invitation Ideas', href: '/blog/category/housewarming' },
   { label: 'Digital Invitation Trends', href: '/blog/category/digital-invitations' },
+  { label: 'Ganesh Chaturthi Invitation Card', href: '/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template' },
   { label: 'All Blog Posts', href: '/blog' },
 ]
 

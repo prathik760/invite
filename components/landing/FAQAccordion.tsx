@@ -22,11 +22,11 @@ const defaultFaqs: Faq[] = [
   },
   {
     question: 'Which template should I choose, and what does it cost?',
-    answer: 'Build and preview any template for free, then pay once for the one you publish — ₹199 for Elegant Wedding or Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin, Namakaran, or the interactive 3D Surprise Journey; ₹399 for Shaadi, Mangni, Griha Pravesh, or the animated 3D Greeting Cards; ₹499 for Saalgirah, KGF Royal Empire, Royal Deco, or Luxury Wedding.',
+    answer: 'Build and preview any template for free, then pay once for the one you publish — ₹99 for Ganesh Chaturthi Premium; ₹199 for Elegant Wedding or Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin, Namakaran, or the interactive 3D Surprise Journey; ₹399 for Shaadi, Mangni, Griha Pravesh, or the animated 3D Greeting Cards; ₹499 for Saalgirah, KGF Royal Empire, Royal Deco, or Luxury Wedding.',
   },
   {
     question: 'How much does a digital invitation cost in India?',
-    answer: 'Building and previewing is completely free — no credit card, no expiry. Publishing is a one-time payment starting at ₹199, and no template costs more than ₹499. There are no monthly fees or hidden charges.',
+    answer: 'Building and previewing is completely free — no credit card, no expiry. Publishing is a one-time payment starting at ₹99, and no template costs more than ₹499. There are no monthly fees or hidden charges.',
   },
   {
     question: 'Can I add bride and groom photos to the invitation?',

@@ -51,7 +51,7 @@ export default function InvitationNotFound() {
             Create an invitation →
           </Link>
           <p className="mt-3 text-xs text-muted">
-            Free to build &amp; preview · Paid templates from ₹199 one-time
+            Free to build &amp; preview · Paid templates from ₹99 one-time
           </p>
         </div>
 

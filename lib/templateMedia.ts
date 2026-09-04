@@ -31,6 +31,7 @@ const TEMPLATE_IMAGES: Record<string, string> = {
   'luxury-wedding': '/11.jpg',
   'surprise-journey': 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=80',
   'rakshabandhan': 'https://images.unsplash.com/photo-1533903345306-15d1c30952de?auto=format&fit=crop&w=1200&q=80',
+  'ganesh-chaturthi': 'https://images.unsplash.com/photo-1563777389189-5e3564e5961c?auto=format&fit=crop&w=1200&q=80',
   'greeting-love': 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=80',
   'greeting-valentine': 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1200&q=80',
   'greeting-anniversary': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',

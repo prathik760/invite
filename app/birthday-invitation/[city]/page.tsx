@@ -109,7 +109,7 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
             <Link href="/create" className="gold-button inline-flex rounded-full px-8 py-3 text-sm font-semibold">
               Start My Birthday Invite →
             </Link>
-            <p className="mt-3 text-xs text-muted">No credit card to build · Publish from ₹199 one-time</p>
+            <p className="mt-3 text-xs text-muted">No credit card to build · Publish from ₹99 one-time</p>
           </div>
         </div>
       </section>
@@ -199,7 +199,7 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
             Ready to create your {info.display} birthday invitation?
           </h2>
           <p className="text-muted text-sm mb-1">{info.ctaTagline}</p>
-          <p className="text-muted text-xs mb-7">Free to build &amp; preview · Publish from ₹199 · No credit card to begin</p>
+          <p className="text-muted text-xs mb-7">Free to build &amp; preview · Publish from ₹99 · No credit card to begin</p>
           <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
             Create Your Free Birthday Invite →
           </Link>

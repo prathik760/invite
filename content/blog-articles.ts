@@ -10,6 +10,171 @@ type ContentBlock = {
 }
 
 export const blogArticles: Record<string, ContentBlock> = {
+  'ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template': {
+    intro: `Ganesh Chaturthi is the one festival where the invitation has to work harder than the card, because Ganeshotsav is never a single evening. Bappa arrives, stays for a day or five or ten, and every one of those evenings has an aarti that someone in your family, your building or your mandal will want to attend. A forwarded image cannot carry any of that. A Ganesh Chaturthi invitation card online can: one link that holds the sthapana muhurat, the daily aarti timings, the visarjan day, a map to your mandap, and a wall where relatives leave their blessings. On ShareInvite the Ganesh Chaturthi Premium template is just ₹99 — the lowest-priced premium template on the site, and less than a plate of modaks — and you can build the whole thing, preview it on your own phone, and only pay when you are ready to share. Here is how to make one in five minutes, plus copy-paste Ganpati invitation messages in English, Hindi and Marathi.`,
+    sections: [
+      {
+        heading: 'Why send a Ganesh Chaturthi invitation online this year',
+        body: `Every year the same thing happens. You send a pretty Ganpati image to the family group, and then you spend the next week answering the same four questions on WhatsApp: what time is the sthapana, which day is the aarti you want us at, what is the exact address, and when is the visarjan. The image could not answer any of them, so you did.
+
+A digital invitation answers them once, for everyone, and keeps answering them. It is **instant** — no printing, no courier, no trip to the press. It is **editable** — if the visarjan shifts by a day or the evening aarti moves to 8pm, you change it on the page and the same link updates for every single person you already sent it to. Nobody gets a correction message. It is **built for WhatsApp**, which is where your family group, your building group and your cousins abroad already live. And it works beautifully for **NRI relatives** — a link opens instantly in Dubai, London, New Jersey or Melbourne, so family who cannot fly down for Ganeshotsav can still see the mandap, read the aarti timings and leave a blessing on the page.
+
+At ₹99 one-time it also costs less than almost anything else you will buy for the festival — which is the honest reason most people switch.`,
+      },
+      {
+        heading: 'Eight ready-to-use Ganesh Chaturthi invitation messages for WhatsApp',
+        body: `Copy any of these, swap the bracketed bits, and paste your invitation link on the line below it.
+
+**Sample 1 — Family sthapana at home (English):**
+"Ganpati Bappa Morya! 🙏 We are welcoming Bappa home this Ganesh Chaturthi. Sthapana on [Date] at [Time], with aarti every evening at [Time] at [Address]. Do come for darshan and prasad — and bring the children. — [Family Name] family"
+
+**Sample 2 — Hindi:**
+"गणेश चतुर्थी की हार्दिक शुभकामनाएँ! 🙏 [Date] को हमारे घर पर श्री गणेश जी की स्थापना है। [Time] बजे आरती और प्रसाद के लिए आप सपरिवार आमंत्रित हैं। पता: [Address] — [Family Name] परिवार"
+
+**Sample 3 — Marathi:**
+"गणपती बाप्पा मोरया! 🙏 [Date] रोजी आमच्या घरी श्री गणेशाची प्रतिष्ठापना आहे. रोज संध्याकाळी [Time] वाजता आरती व प्रसादासाठी आपण सहकुटुंब यावे. पत्ता: [Address] — [Family Name] परिवार"
+
+**Sample 4 — Inviting someone for one specific aarti:**
+"Bappa is home! 🪔 We would love to have you with us for the [Day] evening aarti at [Time] on [Date] at [Address]. Modaks are non-negotiable. Tap the link for the full schedule and directions."
+
+**Sample 5 — Housing society or Ganesh mandal:**
+"[Society/Mandal Name] Ganeshotsav [Year] 🙏 Sthapana on [Date] at [Time]. Daily aarti at [Time] and [Time], cultural programme on [Date], mahaprasad on [Date], and visarjan on [Date] at [Time]. All residents and families are warmly invited. Full schedule and venue map in the link."
+
+**Sample 6 — Short version for a busy group:**
+"Ganpati Bappa Morya! 🙏 Sthapana [Date], [Time] | Aarti daily [Time] | [Address]. Tap for the full schedule, map and visarjan timing."
+
+**Sample 7 — For relatives who live far away or abroad:**
+"Bappa is home with us this year, and we wish you were too. 🙏 The whole schedule, photos of the mandap and the aarti timings are on this link — open it whenever it is morning where you are, and leave your blessing on the page. We will read it out at the aarti."
+
+**Sample 8 — Visarjan invitation:**
+"गणपती बाप्पा मोरया, पुढच्या वर्षी लवकर या! 🙏 Join us for the visarjan procession on [Date], starting from [Address] at [Time]. Dhol, colour and one last aarti before we send Bappa off. Do come."
+
+A note on the visarjan message: send it as its own message two days before, not buried in the original invite. It is the part people most often miss, and it is the part they most regret missing.`,
+      },
+      {
+        heading: 'What to include in a Ganpati invitation card',
+        body: `A good Ganeshotsav invitation is devotional first and logistical second — but it has to be both, because guests are coming to a specific address at a specific time on one of several days.
+
+**The host name** — your family name, or your society or mandal name. This is what tells a relative whose Bappa they are being invited to.
+
+**The sthapana date and muhurat** — Ganesh Chaturthi falls on the Chaturthi of Bhadrapada Shukla Paksha, and most families install Bappa at a specific muhurat their priest or panchang gives them. Put the exact time on the card, because guests plan their day around it.
+
+**The daily aarti timing** — the single most-asked question of the whole festival. If your evening aarti is at 7:30pm every day, say so once on the page and you will never be asked again.
+
+**The full address and a map link** — mandaps are often in new buildings, inner lanes or society compounds that older directions do not cover. A one-tap Google Maps link removes every "which gate?" call.
+
+**The visarjan day and time** — it is a separate event, often confirmed later than everything else, and it deserves its own line rather than a footnote.
+
+**A shloka or invocation** — the Vakratunda Mahakaya shloka, or Shri Ganeshaya Namah, sets the tone before a single detail is read.
+
+**Photos** — last year's mandap, the decoration, the family at the aarti. This is what makes relatives forward it to their own children.
+
+**A personal message** — two lines in your own words about why you would like them there. This is the part people screenshot.`,
+      },
+      {
+        heading: 'What makes this Ganpati invite different from a forwarded image',
+        body: `Most Ganesh Chaturthi invitations online are a picture. You download a template, type your names into it in an app, export a JPEG and forward it. It looks fine for three seconds and then it is a dead image in a chat — unsearchable, uneditable, unreadable without pinch-zooming, and silent on every practical question.
+
+This template is a live page instead, and that difference shows up in five specific ways:
+
+- **It is multi-day, not single-day.** Ganeshotsav runs for one and a half, five, seven or ten days. The utsav schedule holds every one of them — sthapana, mahaaarti, modak prasad, bhajan sandhya, visarjan — each with its own time and icon. An image can show one date.
+- **Visarjan gets its own card.** No other invitation template on ShareInvite has this, because no other occasion needs it. It sits in the darshan section with its own date and time, and it says "date to be announced" until you fill it in — which is exactly how most families actually plan.
+- **You can change it after you send it.** The muhurat moves, the aarti shifts, the visarjan gets pushed a day. You edit the page and the same WhatsApp link shows the new version to everyone who already has it.
+- **Guests can write back.** The wishes wall collects blessings from relatives who cannot attend, and they appear on the page for everyone else to read. An image cannot do that.
+- **It opens for everyone.** No app, no PDF, no download. Your grandmother taps the link and it opens in her browser; so does a cousin on a five-year-old Android in another country.
+
+The design is not a generic festival theme either. It is saffron, vermilion and gold on warm cream, with a temple-arch mandap frame for your Bappa photo, a marigold-and-mango-leaf toran strung across the top, floating marigold petals and two diyas glowing at the foot of the mandap. It reads as Ganeshotsav specifically, not as a recoloured wedding card.`,
+      },
+      {
+        heading: 'Inside the ShareInvite Ganesh Chaturthi Premium template',
+        body: `The page flows the way the festival does, from arrival to farewell:
+
+- **The mandap hero** — your Bappa or mandap photo inside a temple arch, under a marigold toran, with your family name and the sthapana date and time.
+- **The invocation** — the Vakratunda Mahakaya shloka and Shri Ganeshaya Namah, with your personal message beneath it.
+- **A live countdown** — "Bappa Arrives In", counting down to your sthapana muhurat.
+- **The utsav schedule** — every day of your Ganeshotsav as its own card with its own time and icon.
+- **Darshan details** — the mandap address, the pooja and muhurat details, the visarjan day, and what to wear, each in its own panel with a one-tap Maps link.
+- **Moments of Devotion** — a photo gallery your family can tap through, with a full-screen lightbox.
+- **Wishes and Blessings** — live blessings from guests, plus a form for anyone to add one.
+- **Background aarti** — add an aarti or bhajan track that plays when a guest taps the music button.
+
+It is mobile-first and fully responsive, so it looks right on a phone in a crowded mandap and on a laptop, and it needs no app at all.`,
+      },
+      {
+        heading: 'Perfect for housing societies and Ganesh mandals',
+        body: `Public Ganeshotsav is where this template earns its keep. A society or mandal invitation has to reach hundreds of families across several WhatsApp groups, carry a ten-day programme, and stay correct while the programme keeps changing right through the festival.
+
+Put the mandal name as the host, list every day of the programme in the schedule, and share one link into every building group. When the cultural night gets moved or a guest artist is confirmed, you edit the page once — you do not send a second corrected message to eleven groups. Residents can leave blessings on the wishes wall, which quietly becomes a record of the year's utsav, and the visarjan card gives the procession the prominence it usually loses at the bottom of a printed notice.
+
+For a mandal that would otherwise print and paste notices in every lobby, ₹99 for a link that every resident can reopen all festival is not really a comparison.`,
+      },
+      {
+        heading: 'How to create your Ganesh Chaturthi invitation in 5 minutes',
+        body: `You need no design skill and no account to start.
+
+**1. Open the Ganesh Chaturthi template.** Start from the live demo below, or go straight to the create page.
+
+**2. Add your family, society or mandal name.** Upload a photo of your Bappa or last year's mandap for the temple-arch hero — or leave it and the arch shows a decorative Om instead.
+
+**3. Set the sthapana date and muhurat time.** The countdown and the schedule build themselves from this.
+
+**4. Fill in the utsav schedule.** Add a row per day or per event — sthapana, mahaaarti, modak prasad, bhajan sandhya, visarjan — with the time for each.
+
+**5. Add the mandap address, a Google Maps link, and the visarjan date.** Leave the visarjan date blank if it is not confirmed; the card will say so and you can fill it in later.
+
+**6. Write your message and paste your photos.** Then add an aarti track if you want one playing.
+
+**7. Preview it on your own phone, then publish for ₹99 and share the link.**
+
+Because you can preview the finished page before paying anything, there are no surprises — you see exactly what your family will see.`,
+      },
+      {
+        heading: 'How to send the Ganpati invite link on WhatsApp',
+        body: `Create the invitation first, get the link, then compose your message around it. Paste the link on its own line at the end rather than in the middle of a sentence — WhatsApp builds a preview card from it, and a link buried mid-paragraph breaks the message awkwardly. The preview shows the template image and title, so it lands looking like an invitation rather than a bare URL.
+
+For large family groups, send the group message first and then message the people who matter most individually — grandparents, your parents' siblings, relatives travelling in. The group message handles logistics; the individual message handles relationships, and older relatives in particular notice the difference between being included in a group and being invited.
+
+Then send exactly two follow-ups: one the evening before your sthapana with just the time and the link, and one two days before the visarjan. Those two messages are the ones that actually fill your mandap.`,
+      },
+      {
+        heading: 'Just ₹99 — the lowest-priced premium template on ShareInvite',
+        body: `The Ganesh Chaturthi Premium template is ₹99, one-time. No subscription, no per-guest charge, no renewal — you pay once and the link stays live through the whole festival and afterwards.
+
+That makes it the cheapest premium template on ShareInvite, and it is deliberate: Ganeshotsav is a festival where families are already spending on the murti, the decoration, the prasad and the mandap, and the invitation should not be another real cost. ₹99 is less than couriering a handful of printed cards, less than a plate of modaks, and less than the auto fare to the printer.
+
+You can build the entire page, fill in every detail, upload your photos and preview it on your own phone before paying a rupee. Payment is only asked for at the final publish step, when you get your shareable link.`,
+      },
+    ],
+    checklist: [
+      'Your family, society or mandal name as the host',
+      'The sthapana date and the exact muhurat time',
+      'The daily aarti timing — the most-asked question of the festival',
+      'Full mandap address plus a one-tap Google Maps link',
+      'The visarjan date and time, on its own line',
+      'A shloka or invocation, and two lines in your own words',
+      'Photos of your Bappa or last year’s mandap',
+      'Preview on your own phone, then share one link on WhatsApp',
+    ],
+    faq: [
+      { q: 'How much does the Ganesh Chaturthi invitation card cost?', a: 'The Ganesh Chaturthi Premium template on ShareInvite is ₹99 — a one-time payment with no subscription and no per-guest charge. It is the lowest-priced premium template on the site. You can build the whole invitation, add your photos and preview it on your own phone before you pay, and payment is only requested at the final publish step.' },
+      { q: 'How do I make a Ganesh Chaturthi invitation card online?', a: 'Open the Ganesh Chaturthi template on ShareInvite, add your family or mandal name, upload a photo of your Bappa, set the sthapana date and muhurat, fill in the utsav schedule day by day, add the mandap address with a Google Maps link and the visarjan date, then write your message. Preview it and publish for ₹99 to get a WhatsApp-ready link. It takes about five minutes.' },
+      { q: 'Can I use it for a housing society or Ganesh mandal invitation?', a: 'Yes — it is one of the best uses. Put the society or mandal name as the host, list your full multi-day programme in the utsav schedule, and share one link into every building group. When the programme changes mid-festival you edit the page once instead of sending corrected notices to every group.' },
+      { q: 'Can I add the visarjan date separately?', a: 'Yes. Visarjan has its own card in the darshan section with its own date and time, because it is a separate event that is often confirmed later. If you leave it blank the card reads "date to be announced", and you can fill it in later — the same link updates for everyone who already has it.' },
+      { q: 'What if the muhurat or aarti timing changes after I have shared it?', a: 'You edit the page and the same link shows the new version to everyone. Nobody needs a corrected message, and nobody is left reading an out-of-date time in a WhatsApp thread. This is the main practical advantage over a forwarded image or a printed card.' },
+      { q: 'Can I send it to relatives living abroad?', a: 'Yes. It is a web link that opens instantly in any browser anywhere in the world, with no app and no download. NRI family in the US, UK, Dubai, Canada, Australia or Singapore can open it with one tap, see the mandap photos and aarti timings, and leave a blessing on the wishes wall that everyone at home can read.' },
+      { q: 'Do my guests need to install an app to open it?', a: 'No. The invitation opens directly in any phone or laptop browser from the WhatsApp link. There is nothing to download or install, which matters most for elders and less tech-savvy relatives.' },
+      { q: 'Can I write the invitation in Hindi or Marathi?', a: 'Yes. Every text field on the template is yours to fill, so you can write the title, message, schedule and invocation in Marathi, Hindi, English or a mix. There are copy-paste Ganesh Chaturthi invitation messages in all three languages earlier in this article.' },
+      { q: 'When should I send my Ganesh Chaturthi invitation?', a: 'Send it about a week to ten days before Ganesh Chaturthi so family can plan travel and the countdown builds anticipation. Then send two short follow-ups: one the evening before your sthapana, and one two days before the visarjan.' },
+    ],
+    links: [
+      { label: 'Ganesh Chaturthi template — see the live demo', href: '/demo/ganesh-chaturthi' },
+      { label: 'Create your Ganpati invitation — just ₹99', href: '/create?template=ganesh-chaturthi' },
+      { label: 'Ganesh Chaturthi Premium template details', href: '/templates/ganesh-chaturthi-premium-invitation-template' },
+      { label: 'Festival wishes card online — Diwali and festival greetings', href: '/blog/festival-wishes-card-online-diwali-and-festival-greetings' },
+      { label: 'Browse all invitation templates', href: '/templates' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
   'raksha-bandhan-invitation-card-online-free-digital-rakhi-template': {
     intro: `Raksha Bandhan is a day about one of the oldest, warmest bonds there is — the promise between a brother and a sister. But families today are spread across cities and countries, and the rakhi thread often travels further than the siblings can. A digital Raksha Bandhan invitation card fixes that beautifully: whether you are inviting family home for the celebration or sending a heartfelt Rakhi greeting to a sibling who lives far away, you can create a stunning, personal card online in minutes, add your own photos and message, and share it on WhatsApp with one link. On ShareInvite, the premium Raksha Bandhan template is just ₹199 — less than the cost of a single printed card set, for something your whole family can open, keep and cherish.`,
     sections: [
@@ -2089,6 +2254,7 @@ That link is all you need. Paste it into WhatsApp and it opens instantly for the
     ],
     links: [
       { label: 'Create your festival wishes card', href: '/create?template=greeting-festival' },
+      { label: 'Ganesh Chaturthi invitation card online — ₹99', href: '/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template' },
       { label: 'See pricing', href: '/pricing' },
       { label: 'Family wishes card online', href: '/blog/family-wishes-card-online-a-heartfelt-digital-card-for-family' },
       { label: 'Browse all templates', href: '/templates' },
