@@ -11,6 +11,7 @@ import StickyMobileCTA from '@/components/landing/StickyMobileCTA'
 import { DemoPreviewArea, DemoViewButton } from '@/components/landing/DemoTrigger'
 import { PLANS } from '@/lib/plans'
 import { TEMPLATES } from '@/modules/templates/data'
+import { hreflangAlternates } from '@/lib/i18n'
 import { UsersIcon } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
@@ -52,6 +53,15 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, ''),
+    // Declared here as well as in the root layout: a page-level `alternates`
+    // replaces the layout's rather than merging with it, so without this the
+    // English homepage advertised no translations while every locale pointed
+    // back to it. Google discards one-directional hreflang, which would have
+    // silently disabled the whole set.
+    languages: hreflangAlternates(
+      '/',
+      (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, ''),
+    ),
   },
 }
 

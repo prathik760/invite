@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
+import { hreflangAlternates } from '@/lib/i18n'
 
 // The SocialProofNotification widget was removed here. It synthesised
 // "<Name> from <City> just created a <type> invitation" toasts by picking at
@@ -25,6 +26,14 @@ const WhatsAppButton = dynamic(
 // must cost nothing until the visitor has actually engaged.
 const ScrollPromo = dynamic(
   () => import('@/components/marketing/ScrollPromoMount'),
+  { ssr: false },
+)
+
+// Offers another language based on the browser's declared preference. ssr:false
+// because it depends on navigator.language, and it must never redirect — see
+// lib/i18n.ts for why a geo-redirect would stop the other locales being indexed.
+const LocaleSuggestion = dynamic(
+  () => import('@/components/i18n/LocaleSuggestion'),
   { ssr: false },
 )
 
@@ -93,6 +102,13 @@ export const metadata: Metadata = {
     description:
       'Create stunning digital wedding invitations and share instantly on WhatsApp with RSVP tracking. Free to start.',
     images: [OG_IMAGE],
+  },
+  alternates: {
+    canonical: APP_URL,
+    // Reciprocal hreflang. Google discards one-directional annotations, so the
+    // English root must point at every locale exactly as each locale points
+    // back here. Root is also x-default: where an unmatched visitor belongs.
+    languages: hreflangAlternates('/', APP_URL),
   },
   robots: {
     index: true,
@@ -205,6 +221,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             />
           </noscript>
         )}
+        <LocaleSuggestion />
         <AnimateOnScroll />
         <SessionProvider>{children}</SessionProvider>
         <WhatsAppButton />

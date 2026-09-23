@@ -4,6 +4,7 @@ import { hasFullArticle } from '@/content/blog-articles'
 import { landingPages, locationPages } from '@/content/seo-pages'
 import { TEMPLATES } from '@/modules/templates/data'
 import { MIN_TEMPLATES_TO_INDEX, SITE_URL, templateCategorySlug, templateCountFor, templateSeoSlug } from '@/lib/seo'
+import { PREFIXED_LOCALES } from '@/lib/i18n'
 
 const now = new Date()
 
@@ -158,6 +159,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogCategories
       .filter((category) => indexablePostCount(category, hasFullArticle) >= MIN_INDEXABLE_POSTS)
       .map((category) => entry(`/blog/category/${categorySlug(category)}`, 0.60)),
+
+    // ─── Tier 0b: Localised home pages ────────────────────────────────────────
+    // One entry per non-English locale. Listing them is what makes them
+    // discoverable: there is deliberately no geo-redirect, so Googlebot only
+    // reaches these through the sitemap, the switcher links and hreflang.
+    ...PREFIXED_LOCALES.map((l) => entry(`/${l.code}`, 0.80, 'weekly')),
 
     // ─── Tier 10: Template category pages ─────────────────────────────────────
     // Single-template categories duplicate the template's own page, so they are
