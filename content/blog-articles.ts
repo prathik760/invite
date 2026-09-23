@@ -2366,6 +2366,2791 @@ That link is all you need. Paste it into WhatsApp and it opens instantly for the
       { label: 'Browse all templates', href: '/templates' },
     ],
   },
+  'whatsapp-invitation-templates-for-birthdays': {
+    intro: `Almost every birthday invitation in India now travels through WhatsApp. Not email, not a printed card handed over in person — a message in a family group or a forward to twenty friends at once. That single fact should change how you write the invitation, and most people never adjust for it.
+
+A WhatsApp birthday invitation has to survive three things: being read on a small screen in a crowded group chat, being forwarded by someone who is not you, and being scrolled past by someone who will look for it again two days later. Templates that ignore those constraints produce invitations that get lost — the classic case being a beautiful square image where the venue address is set in small text that compresses into illegibility the moment WhatsApp re-encodes it.
+
+Below are templates you can copy directly, organised by the situation you are actually in, plus the structural rules that make a WhatsApp birthday invitation work.`,
+    sections: [
+      {
+        heading: 'Short templates for a WhatsApp group',
+        body: `Group messages get skimmed, not read. The first line has to carry the occasion and the name, because that is often all anyone sees before deciding whether to keep reading.
+
+- 🎉 *Aarav turns 7!* Join us for cake, games and chaos on Saturday 12 Oct, 5 PM at Play Arena, Koramangala. Details and directions: [link]
+- It's *Meera's 30th* and we want you there. Sunday 3 Nov, 7 PM onwards, The Terrace, Bandra. Everything you need is here: [link]
+- *Birthday lunch for Papa* 🎂 Sunday 17 Nov, 1 PM, home. Come hungry. Address and map: [link]
+
+Notice what these have in common. The name and the occasion sit in the first six words. The date, time and venue follow in one line rather than on four separate lines, because four short lines look like a wall of text on a phone. And the link carries everything else.
+
+The single most common mistake is front-loading sentiment — "It gives us immense joy to invite you…" — before the reader knows whose birthday it is. In a group chat that sentence is invisible. Lead with the fact, let the warmth follow.`,
+      },
+      {
+        heading: 'Templates for a child’s birthday party',
+        body: `A children's party invitation is really addressed to a parent, and parents need a different set of facts: whether they are expected to stay, whether siblings can come, what time it ends, and whether food is being served.
+
+- Hi! 🎈 *Aarav is turning 7* and would love Ishaan to come. Saturday 12 Oct, 5–8 PM at Play Arena, Koramangala. Dinner will be served. Parents are welcome to stay — there's seating and chai. RSVP here: [link]
+- *Kiara's 4th birthday* 🌈 Sunday 20 Oct, 4–6 PM, our place in Powai. It's a small one — around ten kids. Siblings absolutely welcome. Snacks and cake sorted. Details: [link]
+
+The "parents welcome to stay" line matters more than people expect. For a party of four-year-olds, most parents will stay regardless; saying so explicitly tells them there will be somewhere to sit and something to drink. For eight-year-olds, spelling out drop-off and pick-up times prevents a stream of individual messages asking exactly that.
+
+End time is not optional. A birthday invitation without one generates more follow-up questions than any other missing detail.`,
+      },
+      {
+        heading: 'Templates for milestone birthdays',
+        body: `Milestone birthdays — 1st, 18th, 50th, 60th — carry more formality and often a larger, more mixed guest list. The tone shifts, but the structure should not.
+
+- With love and gratitude, we invite you to celebrate *Papa's 60th birthday*. Sunday 17 Nov, 7 PM, Hotel Sea Princess, Juhu. Dinner and a short programme. Your blessings mean everything: [link]
+- *Ananya turns 18* 🥂 and we would love you with us. Saturday 5 Oct, 8 PM, The Glasshouse, Gurgaon. Dress code: smart casual. RSVP: [link]
+- Our little *Vihaan completes one year* 🎂 Join us for his first birthday — Sunday 10 Nov, 11 AM, Sunshine Banquet, Thane. Lunch will be served: [link]
+
+For a 60th or a 25th anniversary-style milestone where elders are involved, "your blessings" or "your presence" does real work — it signals the event's register to guests who will dress and behave accordingly. For an 18th, the dress code line prevents half the guest list arriving in jeans and the other half in cocktail wear.
+
+A first birthday invitation should always state that a meal is being served and roughly when, because guests are travelling with an infant's schedule in mind.`,
+      },
+      {
+        heading: 'Why a link beats an image for WhatsApp',
+        body: `The default instinct is to design a square image and forward it. It works, until it does not.
+
+WhatsApp compresses images aggressively. Text that looked crisp in the design tool turns soft on a mid-range Android screen, and a venue address in ten-point type becomes genuinely unreadable. An image also cannot be corrected: when the venue changes — and at Indian family events it changes often — you send a second image, and half your guests keep referring to the first one. There is no way to know which version any given guest is looking at.
+
+A link behaves differently. It opens a page with legible text at any screen size, a tappable Google Maps button instead of an address that has to be copied by hand, and a schedule that can be read at a glance. Change the venue and every guest who opens the link sees the new one, including guests who opened it last week. The same URL keeps working no matter how many times it is forwarded.
+
+The practical compromise most families land on: a short message with a link as the primary invitation, and an image only if you specifically want something visual to sit in the chat. The details live at the link.`,
+      },
+      {
+        heading: 'The structure that works, in order',
+        body: `Whatever wording you choose, keep the order of information consistent. Guests scan for these in sequence, and they give up quickly if the sequence is jumbled.
+
+- **Who and what** — the name and the occasion, in the first line
+- **When** — day, date and start time, with an end time for children's parties
+- **Where** — venue name and locality, not the full postal address
+- **What to expect** — dinner, cake cutting, games, a programme
+- **Anything required of the guest** — dress code, RSVP, gifts or no gifts
+- **The link** — carrying the map, full address, schedule and photos
+
+Two things belong on the page rather than in the message. The full postal address is one: it takes three lines in a chat and nobody types it into Maps anyway. Any mention of gifts is the other — "no gifts please" reads warmer on an invitation page than as a line in a group message, where it can sound like an instruction.
+
+Send it between ten days and two weeks ahead for a weekend party, and send a short reminder two days before. Not a week before, when nobody is thinking about the weekend yet, and not the night before, when people have already made plans.`,
+      },
+    ],
+    checklist: [
+      'Name and occasion in the first six words, before any sentiment',
+      'Day, date and start time on one line — plus an end time for children’s parties',
+      'Venue name and locality in the message; full address on the invitation page',
+      'State clearly whether a meal is being served',
+      'For kids’ parties, say whether parents should stay or drop off',
+      'Use a link rather than an image so details stay legible and correctable',
+      'Send 10–14 days ahead, with a reminder two days before',
+    ],
+    faq: [
+      {
+        q: 'What should I write in a birthday invitation message for WhatsApp?',
+        a: 'Lead with the name and the occasion, then the date, time and venue on a single line, then a link carrying the map and full details. For example: "🎉 *Aarav turns 7!* Join us for cake and games on Saturday 12 Oct, 5 PM at Play Arena, Koramangala. Details and directions: [link]". Keep sentiment for after the facts — in a group chat, an opening line of warm phrasing is usually scrolled past before anyone learns whose birthday it is.',
+      },
+      {
+        q: 'Is it better to send a birthday invitation as an image or a link?',
+        a: 'A link, in almost every case. WhatsApp compresses images, so small text such as the venue address often becomes unreadable on a mid-range phone. An image also cannot be updated — if the venue changes you have to send a second one, and some guests will keep referring to the first. A link opens a page with legible text, a tappable Maps button and a schedule, and edits appear for everyone instantly, including guests who opened it days earlier.',
+      },
+      {
+        q: 'How far in advance should a birthday invitation be sent?',
+        a: 'Ten days to two weeks for a weekend party, with a short reminder two days before. Earlier than two weeks and guests do not yet have that weekend in view; a reminder a week ahead is too early for the same reason, and the night before is too late for anyone who needs to arrange travel or childcare. For a milestone birthday where guests are travelling from other cities, send three to four weeks ahead.',
+      },
+      {
+        q: 'What details do parents need in a children’s party invitation?',
+        a: 'Start and end time, whether a meal is being served, whether parents are expected to stay or drop off, and whether siblings are welcome. Those four answers account for nearly every follow-up message a host receives. An end time is the most commonly forgotten and the most frequently asked about.',
+      },
+    ],
+    links: [
+      { label: 'Digital birthday invitations', href: '/birthday-invitation' },
+      { label: 'Birthday invitation wording and messages', href: '/birthday-invitation-wording' },
+      { label: 'Birthday invitation templates', href: '/birthday-invitations' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'how-to-share-event-invitations-on-whatsapp': {
+    intro: `WhatsApp is where Indian event invitations actually live. Not email, which older relatives will not open, and not a printed card, which reaches perhaps a tenth of the guest list. If an invitation does not work on WhatsApp, it does not work.
+
+But "sharing on WhatsApp" is not one action. Sending to a family group, forwarding to an individual, posting to a Status, and sending to a group you are not a member of are four different things with different etiquette and different failure modes. Most of the frustration hosts report — guests missing details, the same question asked fifteen times, an outdated venue circulating a week after it changed — comes from treating them as the same.
+
+Here is how each one works, what breaks, and the sequence that produces the fewest follow-up messages.`,
+    sections: [
+      {
+        heading: 'Send to family groups first, individuals second',
+        body: `The order matters more than people expect. Sending to the extended family group before you have told close family individually reads as careless — an aunt learning about her nephew's wedding from a group broadcast is a real source of friction in Indian families.
+
+The sequence that works: immediate family individually or by phone, then close relatives individually, then the family groups, then friends and colleagues. This takes an extra evening and prevents a category of hurt feelings that is genuinely difficult to repair afterwards.
+
+Within groups, one message is enough. Hosts often send the invitation, then a follow-up with the venue, then another with the schedule, then a correction. Each one pushes the previous up and out of view. Send one message carrying a link, and edit the page when something changes rather than sending a fresh message.`,
+      },
+      {
+        heading: 'What a forwardable invitation needs',
+        body: `Assume every invitation you send will be forwarded by someone who is not you, to someone you did not choose, without any of your context. That assumption should shape what you send.
+
+A forwarded image loses everything around it. If the message said "7 PM at the Juhu venue" and the image only says "Reception", the person who receives the forward has half an invitation. A link does not have this problem — everything travels with it, because everything is on the page.
+
+Forwardability also means the invitation should be self-explanatory about who is hosting. "Sharma family" or "Priya and Arjun" should appear on the page itself, not only in the message. A guest three forwards removed should be able to tell whose event this is without asking.
+
+One practical consequence: avoid putting anything in the invitation you would not want widely circulated. Home addresses for small gatherings, personal phone numbers, and anything about gifts are better handled in direct messages than on a page that will be forwarded freely.`,
+      },
+      {
+        heading: 'Groups you are not a member of',
+        body: `A common situation: you want the invitation to reach your cousin's in-laws, or a colleague's team, but you are not in those groups. You send it to one person and ask them to forward it.
+
+This works, but only if the message is written to be forwarded as-is. A message that begins "Hi Rahul, could you share this with everyone?" gets forwarded with that line still attached, which is confusing for the recipients. Send two messages: one asking Rahul to forward, and a second containing the clean invitation he can pass on. Say explicitly which one to forward.
+
+The same applies to Status. An invitation posted to WhatsApp Status reaches everyone in your contacts, including people you may not intend to invite. For a small gathering this creates awkwardness. Status works well for a large wedding where a broad announcement is welcome, and badly for a fifteen-person birthday dinner.`,
+      },
+      {
+        heading: 'Why the preview matters',
+        body: `When you paste a link into WhatsApp, it fetches the page and shows a preview card — a title, a line of description, and an image. This card is the first impression, and for many guests it is the only thing they look at before deciding whether to tap.
+
+A generic preview — a bare domain name and no image — reads as spam, particularly in a family group where forwarded links are treated with suspicion. A preview showing the couple's names, the date and an image of the actual invitation reads as an invitation, and gets opened.
+
+This is worth checking before you send. Paste the link into a chat with yourself and look at what appears. If the preview is wrong or missing, the page is missing its Open Graph tags, and you will get noticeably fewer opens. On ShareInvite the preview is generated per invitation, so it shows the names and event rather than a site-wide card.
+
+One caveat: WhatsApp caches previews. If you edit the invitation title and resend the same link, the old preview may persist for a while. Get the preview right before the first send.`,
+      },
+      {
+        heading: 'Reminders without nagging',
+        body: `Two reminders is the right number for most events: one when the invitation goes out, one two to three days before.
+
+The two-to-three-day reminder is the one that changes attendance. A week ahead is too early — guests have not begun planning the weekend. The night before is too late for anyone arranging travel, childcare or leave. Two to three days out is when people are actively organising the week ahead.
+
+Keep the reminder short and re-send the link rather than restating the details: "Looking forward to seeing everyone on Saturday! Details and directions here: [link]". Restating the details invites contradictions between the message and the page.
+
+For out-of-city guests, replace the general reminder with a direct message asking whether they need help with travel or accommodation. That is a different conversation, and it belongs in a one-to-one chat rather than a group.`,
+      },
+    ],
+    checklist: [
+      'Tell immediate and close family individually before posting to groups',
+      'Send one message with a link rather than several messages with details',
+      'Check the link preview in a chat with yourself before the first send',
+      'Write forwardable messages — assume they travel without your context',
+      'Put the host names on the page, not only in the message',
+      'Keep home addresses and gift notes out of widely forwarded invitations',
+      'Reminder two to three days before, not a week and not the night before',
+    ],
+    faq: [
+      {
+        q: 'What is the best way to share an event invitation on WhatsApp?',
+        a: 'Send one message containing a short line of context and a link, rather than several messages carrying separate details. Tell immediate and close family individually first, then post to family groups, then friends and colleagues. A link keeps every detail together when the invitation is forwarded, and lets you correct a venue or timing without sending a second message that competes with the first.',
+      },
+      {
+        q: 'Should I send an invitation image or a link on WhatsApp?',
+        a: 'A link. WhatsApp compresses images, so addresses and timings in small text often become unreadable, and an image cannot be corrected once it has been forwarded. A link opens a page with legible text, a tappable Maps button, and details that update for every guest at once — including those who opened it days earlier.',
+      },
+      {
+        q: 'How do I share an invitation with a WhatsApp group I am not in?',
+        a: 'Send two separate messages to someone who is in the group: one asking them to forward, and one containing the clean invitation. If you combine them, your request to forward travels with the invitation and confuses the recipients. Say clearly which message to pass on.',
+      },
+      {
+        q: 'How many reminders should I send before the event?',
+        a: 'Two. One when the invitation first goes out, and one two to three days before the event. A reminder a week ahead lands before guests are thinking about that weekend, and the night before is too late for anyone who needs to arrange travel or childcare. Keep the second one short and re-send the link rather than restating details.',
+      },
+    ],
+    links: [
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Browse invitation templates', href: '/templates' },
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+    ],
+  },
+  'how-to-write-a-personal-wedding-invite-message': {
+    intro: `Most wedding invitation wording is inherited. You look at what a cousin sent last year, swap the names and dates, and send it. It is safe, it is fast, and it sounds like nobody in particular wrote it.
+
+A personal message is different, and it does not mean abandoning formality. Indian wedding invitations carry real obligations — both families named, elders acknowledged, the ceremony properly described. Personal means adding one or two lines that only you could have written, inside that structure, rather than replacing it.
+
+This guide covers what to keep from the traditional form, where a personal line actually belongs, and wording you can adapt for the people you are writing to.`,
+    sections: [
+      {
+        heading: 'What the traditional structure is doing',
+        body: `Before changing anything, it helps to know what each part of the conventional wording is for.
+
+The invocation — a line to Ganesha, a Bismillah, a reference to God's grace — sets the register and signals that this is a sacred occasion rather than a party. The parents' names establish that two families are joining, not just two individuals; in many communities the invitation is formally issued by the parents, not the couple. The ceremony names and timings carry practical information that guests genuinely need. The request for blessings closes the circle by stating what is being asked of the guest.
+
+None of this is decoration. Removing the parents' names to make an invitation feel modern is the most common mistake, and in many families it causes real offence — it reads as excluding the people hosting the wedding. Keep the structure. Personalise inside it.`,
+      },
+      {
+        heading: 'Where a personal line belongs',
+        body: `There are two natural places: just before the request for blessings, and in the message you send alongside the invitation.
+
+On the invitation itself, one or two sentences after the ceremony details works well. Something specific rather than general: how you met, how long it took, something true about the two of you. "Seven years after a chance meeting in a Pune bookshop, we are finally doing this" tells a guest something. "We are excited to begin our journey together" does not.
+
+The accompanying WhatsApp message carries the rest. This is where you can write differently to different people — a line to a school friend that would be out of place on a formal card, or a note to an uncle acknowledging he has been asking about this for three years. The invitation stays consistent for everyone; the covering message changes.
+
+A useful test: if the sentence could appear on any wedding invitation in India with only the names changed, it is not personal. Cut it or replace it with something only true of you.`,
+      },
+      {
+        heading: 'Wording you can adapt',
+        body: `For a formal invitation with a personal closing:
+
+- Together with our families, we invite you to celebrate our wedding on Sunday 14 December at The Leela Palace, Bengaluru. We met in a crowded Metro carriage in 2019 and have been arguing about the right way to make chai ever since. We would love you there for the day it becomes official.
+
+For a covering message to close friends:
+
+- We are getting married! 14 December, Bengaluru. You have heard about this person for six years, so it is about time you met them properly. Full details and directions here: [link]
+
+For a message to elders and relatives:
+
+- Respected Uncle and Aunty, with the blessings of our families, Priya and Arjun are to be married on 14 December at The Leela Palace, Bengaluru. We would be honoured by your presence and your blessings. All ceremony details are here: [link]
+
+For a wedding where the couple are hosting themselves:
+
+- After eleven years, two cities and one very long wait for approvals, we are getting married. Join us on 14 December at The Leela Palace, Bengaluru. Details and schedule: [link]
+
+Adapt the specifics. The pattern to keep is: the obligation first, the personal line second, the link last.`,
+      },
+      {
+        heading: 'What to avoid',
+        body: `Three things consistently make personal wedding messages worse.
+
+Over-explaining the relationship. A paragraph about your journey belongs on the invitation page or in a speech, not in the message. One sentence is personal; five is a monologue, and guests still have to find the venue.
+
+Inside jokes on the formal invitation. Anything that requires context excludes the majority of the guest list, including the elders whose blessings the invitation is asking for. Save these for individual messages.
+
+Apologising for the format. "Sorry for the digital invite, we could not print cards for everyone" undercuts the invitation. A digital invitation is not a lesser version of a printed one; most Indian families now send both, printed cards to close family and elders and a link to everyone else. State it as a choice, not a compromise.`,
+      },
+    ],
+    checklist: [
+      'Keep the invocation, both families’ names and the ceremony details',
+      'Add one or two sentences that only you could have written',
+      'Cut any line that would work on any other wedding invitation',
+      'Vary the covering message by recipient; keep the invitation consistent',
+      'Keep inside jokes out of the formal invitation',
+      'Do not apologise for sending a digital invitation',
+      'End with the link carrying schedule, venue and directions',
+    ],
+    faq: [
+      {
+        q: 'How do I make a wedding invitation message personal without losing formality?',
+        a: 'Keep the traditional structure — the invocation, both families’ names, the ceremony details and the request for blessings — and add one or two specific sentences just before the closing. Specific means something only true of you: how you met, how long it took, a detail about the two of you. General warmth such as "excited to begin our journey" reads as filler because it could appear on any invitation.',
+      },
+      {
+        q: 'Should the parents’ names be on a modern wedding invitation?',
+        a: 'In almost every Indian context, yes. In many communities the invitation is formally issued by the parents rather than the couple, and removing their names reads as excluding the people hosting the wedding. It is the most common mistake made in the name of modernising an invitation. Keep the names and personalise elsewhere.',
+      },
+      {
+        q: 'Can I send different invitation messages to different guests?',
+        a: 'Yes, and it works well. Keep the invitation itself identical for everyone, and vary the covering WhatsApp message — warmer and more informal to close friends, more formal to elders and relatives. The invitation carries the obligation and the facts; the covering message carries the relationship.',
+      },
+      {
+        q: 'Should I apologise for sending a digital wedding invitation?',
+        a: 'No. Most Indian families now send both — a printed card to close family and elders, and a digital link to the wider guest list. Apologising frames the digital invitation as a lesser version of a card, which it is not: it carries the map, the full schedule and updates that reach every guest when details change.',
+      },
+    ],
+    links: [
+      { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'mehendi-and-sangeet-invitation-ideas': {
+    intro: `Mehendi and Sangeet are the two functions guests look forward to most and the two most often handled badly on the invitation. They sit before the wedding day, they usually have a different guest list, and they carry expectations about clothing, timing and participation that the main wedding invitation does not cover.
+
+The recurring problem is treating them as line items on the wedding schedule. A guest reading "Mehendi — 4 PM, Saturday" has no idea whether to arrive in heavy clothes or light ones, whether food is being served, whether they are expected to perform something at the Sangeet, or whether the invitation extends to their spouse.
+
+Here is what each function actually needs on the invitation, with wording you can adapt.`,
+    sections: [
+      {
+        heading: 'What a Mehendi invitation needs',
+        body: `Mehendi is usually daytime, usually at home or a smaller venue, and usually a smaller and more female-weighted guest list than the wedding. It also runs long — a bridal mehendi can take four to six hours, and guests getting their own henna applied will be there a while.
+
+The details guests actually need: the start time and a realistic sense of how long to stay, whether henna artists will be available for guests, whether a meal is being served or only snacks, and the dress code. Yellow, green and orange are conventional; saying so prevents a guest arriving in red and feeling out of place.
+
+One detail that is almost always omitted and almost always asked: whether children are included. Mehendi is often the most child-friendly function of the wedding, and saying so explicitly saves a round of messages.
+
+Sample wording:
+
+- **Mehendi** — Friday 12 December, 11 AM onwards, at the Sharma residence, Indiranagar. Henna artists will be available for all guests, so come early if you would like yours done. Lunch will be served. Colours: yellow, green and orange. Children very welcome.`,
+      },
+      {
+        heading: 'What a Sangeet invitation needs',
+        body: `Sangeet has a participation question that no other function has: is the guest expected to perform? For many families the answer is yes for immediate family and cousins and no for everyone else, but guests cannot guess which category they are in.
+
+If there are performances, say so, and say who is performing. Guests who are expected to rehearse need weeks of notice, not a mention on the invitation. Guests who are not performing need to know they can simply attend.
+
+Sangeet is also the function where the dress code shifts most — it is typically the dressiest evening before the wedding itself, and "Indian festive" or "cocktail" tells guests something useful. Timing matters too: Sangeet starts late and runs later, and guests bringing elderly relatives or small children will want to know roughly when dinner is served.
+
+Sample wording:
+
+- **Sangeet** — Saturday 13 December, 7 PM onwards, Grand Ballroom, The Leela Palace. An evening of music, dancing and family performances. Dinner from 9 PM. Dress code: Indian festive. If you would like to perform, please let Rohan know by 30 November.`,
+      },
+      {
+        heading: 'Handling different guest lists without awkwardness',
+        body: `Mehendi and Sangeet frequently have a narrower guest list than the wedding, and this is where digital invitations are genuinely easier than printed ones. A printed card listing all functions goes to everyone, including guests invited only to the reception, which either over-invites or requires two print runs.
+
+With a link, you can publish the full schedule and be explicit about which functions are open: "Mehendi and Sangeet are family and close friends; the wedding and reception are for all our guests." Stating it plainly is better than leaving guests to work it out, which produces the exact awkwardness you were trying to avoid.
+
+The alternative approach — two separate invitation links, one with the full schedule and one with only the wedding and reception — works for larger weddings where the difference in guest lists is substantial. Neither is wrong; what matters is that no guest is left guessing whether they were meant to be at something.`,
+      },
+      {
+        heading: 'Practical details hosts forget',
+        body: `A few recurring omissions, each of which generates messages.
+
+Parking and access. Mehendi is often at a residence, which means street parking and a gate that may be hard to find. A Maps pin solves this; a written address usually does not.
+
+Seating. Mehendi guests sit on the floor in many homes. Elderly guests will want to know whether chairs are available, and will usually not ask.
+
+Timing honesty. If the invitation says 11 AM and the henna artists arrive at noon, guests who came on time spend an hour waiting. Say "11 AM onwards, henna from 12" if that is the reality.
+
+Photography. Increasingly, hosts ask guests not to post photographs before the wedding day. If that matters to you, it belongs on the invitation, phrased warmly — "we would love you to hold off posting until after the wedding" — rather than as a rule announced at the venue.`,
+      },
+    ],
+    checklist: [
+      'State the dress code and colours for each function separately',
+      'Say whether henna artists are available for guests at the Mehendi',
+      'Make clear whether Sangeet performances are expected, and from whom',
+      'State whether a meal is served and roughly when',
+      'Be explicit about which functions each guest is invited to',
+      'Include a Maps pin, especially for functions at a residence',
+      'Mention seating and access for elderly guests',
+    ],
+    faq: [
+      {
+        q: 'What should a Mehendi invitation include?',
+        a: 'Start time and a realistic sense of duration, whether henna artists are available for guests, whether a meal or only snacks are being served, the colour or dress code, and whether children are included. A Maps pin matters more than usual because Mehendi is often held at a residence, where the address alone is rarely enough to find the gate.',
+      },
+      {
+        q: 'How do I tell guests whether they need to perform at the Sangeet?',
+        a: 'State it on the invitation and give a deadline: "An evening of music, dancing and family performances. If you would like to perform, please let Rohan know by 30 November." Guests who are expected to rehearse need weeks of notice, and guests who are not performing need to know they can simply attend. Leaving it unsaid produces a round of individual messages asking exactly this.',
+      },
+      {
+        q: 'How do I invite some guests to Mehendi and Sangeet but not all?',
+        a: 'Say it plainly on the invitation — "Mehendi and Sangeet are for family and close friends; the wedding and reception are for all our guests." Stating it is less awkward than leaving guests to work it out. For larger weddings, publishing two links, one with the full schedule and one with only the wedding and reception, keeps the distinction cleanly.',
+      },
+      {
+        q: 'What dress code should I mention for Mehendi and Sangeet?',
+        a: 'For Mehendi, yellow, green and orange are conventional and worth naming so nobody arrives in red. Sangeet is usually the dressiest evening before the wedding, so "Indian festive" or "cocktail" is the useful phrasing. Naming them separately matters, because guests otherwise assume one code covers all pre-wedding functions.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  '60th-birthday-invitation-ideas-for-parents': {
+    intro: `A sixtieth birthday in an Indian family is rarely just a birthday. In many South Indian families it is Shashtiabdapoorthi, a ceremony with its own rituals and religious significance. Elsewhere it is a milestone the children organise, often as a surprise, often with a guest list spanning four decades of the parent's life.
+
+That mix — ritual, surprise, and a guest list that includes both colleagues from 1990 and grandchildren under ten — makes the invitation harder than it looks. The tone has to work for a temple priest and a WhatsApp group of cousins. The logistics have to work for guests in their eighties.
+
+Here is how to handle it, with wording for the common variations.`,
+    sections: [
+      {
+        heading: 'Decide what kind of event it is first',
+        body: `Three formats dominate, and the invitation differs substantially between them.
+
+A ceremonial Shashtiabdapoorthi or Ugra Ratha Shanti involves a homam, a priest, a muhurat time, and a specific sequence that guests are expected to attend from the start. The invitation needs the muhurat, a clear start time, and usually a note that guests should arrive before it.
+
+A celebratory dinner or lunch is simpler — a venue, a time, a meal — and the invitation reads much like any milestone birthday.
+
+A combined event, ceremony in the morning and celebration in the evening, is the most common and the one most often communicated badly. Guests need to know whether they are invited to both or one, and the two have different dress codes and different timings.
+
+Decide which of the three you are hosting before writing anything, because the wording follows from it.`,
+      },
+      {
+        heading: 'Wording for a ceremonial sixtieth',
+        body: `Traditional register, parents named respectfully, blessings requested:
+
+- With the blessings of the Almighty, we invite you to the *Shashtiabdapoorthi* of our beloved father, **Sri Ramesh Iyer**, on Sunday 17 November. Homam begins at 7:30 AM at Sri Venkateswara Temple, Malleswaram, followed by lunch. Your presence and blessings would mean everything to our family.
+
+- On the occasion of our parents **Sri Ramesh and Smt Lakshmi Iyer** completing sixty years, we invite you to join us for the *Ugra Ratha Shanti* ceremony on Sunday 17 November, 7:30 AM onwards, at our residence in Jayanagar. Lunch will follow the ceremony.
+
+Two details matter here. The muhurat start time should be stated exactly, with a note that guests should arrive beforehand — ceremonies begin at the appointed time regardless of who has arrived. And where both parents are being honoured, name both; a Shashtiabdapoorthi is frequently celebrated for the couple.`,
+      },
+      {
+        heading: 'Wording for a celebration or surprise',
+        body: `Warmer, less formal, and — for a surprise — with the secrecy stated clearly enough that nobody ruins it.
+
+- **Papa turns 60!** 🎂 Join us for dinner on Saturday 16 November, 7:30 PM, Hotel Sea Princess, Juhu. Sixty years, four grandchildren and an unbroken record of terrible jokes. Details: [link]
+
+- We are celebrating **Amma's 60th** and it is a *surprise* — please do not mention it to her. Sunday 17 November, 12:30 PM, at our home in Adyar. Please arrive by 12:15. Lunch will be served: [link]
+
+For a surprise, put the request for secrecy in the first two lines, not at the end. Guests skim, and an instruction at the bottom of a message gets missed by exactly the person who will then call to wish her.
+
+Also give a "please arrive by" time that is fifteen to twenty minutes before the moment of surprise. Indian guests arriving at the stated time will arrive at the stated time, which for a surprise is too late.`,
+      },
+      {
+        heading: 'Logistics for an older guest list',
+        body: `A sixtieth birthday guest list skews older than a wedding's, and a handful of details make a disproportionate difference.
+
+Parking and drop-off. Say where cars can be left and whether there is a drop-off point near the entrance. Guests in their seventies and eighties will not walk from distant parking.
+
+Seating and stairs. If the venue involves stairs or floor seating, say so. Guests will arrange accordingly or ask for help, but only if they know in advance.
+
+Timing. Ceremonies that start at 7:30 AM mean elderly guests are travelling before dawn. Where possible, say whether transport is being arranged.
+
+Gifts. Many sixtieth celebrations explicitly ask for none. "Your blessings are the only gift we need" is the conventional phrasing and reads warmly on an invitation page — better there than as a line in a group message, where it can sound like an instruction.`,
+      },
+    ],
+    checklist: [
+      'Decide whether the event is ceremonial, celebratory, or both',
+      'State the muhurat exactly, with a note to arrive before it',
+      'Name both parents if the ceremony honours the couple',
+      'For a surprise, put the secrecy request in the first two lines',
+      'Give an arrival time earlier than the moment of surprise',
+      'Cover parking, drop-off, stairs and seating for elderly guests',
+      'Handle the gifts question on the invitation page, warmly',
+    ],
+    faq: [
+      {
+        q: 'What is Shashtiabdapoorthi and how should the invitation read?',
+        a: 'Shashtiabdapoorthi marks the completion of sixty years and is celebrated in many South Indian families with a homam and associated rituals, often for the couple rather than one parent. The invitation should use a traditional register, name the parents respectfully, state the muhurat time exactly, and ask for the guest’s blessings. Add a note that guests should arrive before the muhurat, since the ceremony begins at the appointed time regardless of who has arrived.',
+      },
+      {
+        q: 'How do I word a surprise 60th birthday invitation?',
+        a: 'Put the request for secrecy in the first two lines, not at the end — guests skim, and an instruction at the bottom is missed by exactly the person who then calls to wish them. Give an arrival time fifteen to twenty minutes before the moment of surprise, because guests arriving at the stated time will arrive at the stated time.',
+      },
+      {
+        q: 'Should a 60th birthday invitation mention gifts?',
+        a: 'Many families explicitly ask for none, and "your blessings are the only gift we need" is the conventional phrasing. It reads better on the invitation page than as a line in a WhatsApp group, where it can come across as an instruction rather than a sentiment.',
+      },
+      {
+        q: 'What logistics matter most for a 60th birthday guest list?',
+        a: 'Parking and drop-off, stairs and seating, and honest timings. The guest list skews older than a wedding’s, so guests need to know whether there is a drop-off near the entrance, whether the venue involves stairs or floor seating, and — for an early-morning ceremony — whether transport is being arranged.',
+      },
+    ],
+    links: [
+      { label: 'Digital birthday invitations', href: '/birthday-invitation' },
+      { label: 'Birthday invitation wording and messages', href: '/birthday-invitation-wording' },
+      { label: 'Birthday invitation templates', href: '/birthday-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+  'housewarming-pooja-schedule-invitation-guide': {
+    intro: `A Griha Pravesh invitation lives or dies on two things: the muhurat time and the address. Get either wrong and guests either miss the ceremony or spend twenty minutes circling a new development looking for a gate.
+
+This is the one invitation where timing is not flexible. A wedding reception that starts half an hour late is normal. A Griha Pravesh homam begins at the muhurat, and guests arriving afterwards have missed the part they came for. The invitation has to communicate that without sounding officious.
+
+Here is how to structure the schedule, what the address needs to include, and wording you can adapt.`,
+    sections: [
+      {
+        heading: 'Publishing the pooja schedule',
+        body: `Most Griha Pravesh ceremonies follow a recognisable sequence, and listing it with times tells guests when to arrive and how long to stay.
+
+A typical morning:
+
+- **Ganesh Pooja** — 9:00 AM
+- **Vastu Shanti Homam** — 9:45 AM
+- **Griha Pravesh muhurat** — 10:30 AM
+- **Kalash sthapana and milk boiling** — 10:45 AM
+- **Prasad and lunch** — 12:30 PM onwards
+
+Two of these matter most to guests. The muhurat, because it is the moment of entering the house and the one nobody wants to miss. And lunch, because guests travelling an hour each way want to know whether they are staying for a meal.
+
+State the muhurat explicitly and separately, not buried in a list. "Griha Pravesh muhurat at 10:30 AM — please arrive by 10:15" does more work than any other line on the invitation.`,
+      },
+      {
+        heading: 'The address problem',
+        body: `New homes are the hardest addresses in India to find. The building may not be on Maps yet, the locality may have three roads with similar names, and the gate may be on a different road from the postal address.
+
+A written address is not sufficient. What guests need:
+
+- A Google Maps pin, tappable from the invitation
+- The building or apartment name, and the flat number
+- A landmark that exists — a temple, a school, a main road junction
+- Which gate to use, if the complex has more than one
+- Where to park, and whether visitor parking requires a pass
+
+The parking detail is the most commonly omitted and the most commonly asked about. Gated complexes often require visitors to be registered at the gate; if that applies, say so, and say what guests should tell security.
+
+If the building is genuinely not on Maps, drop a pin at the location and share that pin rather than an address search result. A pin at the actual gate is worth more than a correct postal address.`,
+      },
+      {
+        heading: 'Wording you can adapt',
+        body: `Traditional, with the ceremony named:
+
+- With the blessings of the Almighty, we invite you to the **Griha Pravesh** of our new home on Sunday 17 November. Ganesh Pooja from 9:00 AM, Griha Pravesh muhurat at 10:30 AM, lunch from 12:30 PM. Flat 4B, Lotus Residency, Sector 62, Noida. Please arrive by 10:15 for the muhurat. Directions: [link]
+
+Simpler and warmer:
+
+- We have moved! 🏡 Join us for our **house warming** on Sunday 17 November. Pooja at 10:30 AM, lunch to follow. Flat 4B, Lotus Residency, Sector 62, Noida. Would love to have you bless the new place: [link]
+
+For a regional variant, use the name your family uses — Gruhapravesham, Ghar Pravesh, Vastu Puja. Guests recognise the term and it signals the register of the event.
+
+Keep "please arrive by" in the invitation itself rather than adding it later in a group message. It is the instruction most likely to be missed if it arrives separately.`,
+      },
+      {
+        heading: 'Details hosts forget',
+        body: `Footwear. Many families ask guests to remove shoes at the door, and for a ceremony with fifty guests that means a pile at the entrance. Saying "shoes off at the door" in advance is not rude; it lets guests choose footwear accordingly.
+
+Whether to bring anything. Guests will ask. Decide in advance whether you want gifts, and say so. "Your presence and blessings are all we need" is conventional and reads well. If you would welcome something specific — plants are traditional for a new home — say that instead.
+
+Duration. A guest who thinks they are attending a one-hour pooja and finds themselves at a four-hour event with lunch will have planned badly. Publishing the full schedule with an end time solves this.
+
+Children and elders. Say whether there is seating, since many Griha Pravesh ceremonies are conducted with guests seated on the floor. Elderly relatives will want to know whether chairs are available.`,
+      },
+    ],
+    checklist: [
+      'State the muhurat time separately and add a "please arrive by" time',
+      'Publish the full pooja sequence with timings',
+      'Include a Google Maps pin at the actual gate, not just an address',
+      'Name a real landmark, the gate to use, and where to park',
+      'Say whether visitors must register at the security gate',
+      'State whether lunch or prasad is being served, and when',
+      'Mention floor seating and shoe removal in advance',
+    ],
+    faq: [
+      {
+        q: 'What should a Griha Pravesh invitation include?',
+        a: 'The muhurat time stated separately with a "please arrive by" time, the full pooja sequence with timings, whether lunch is served, and an address that guests can actually use — a Maps pin at the gate, the flat number, a real landmark, which gate to use, and where to park. New homes are the hardest addresses in India to find, and a written address alone is rarely enough.',
+      },
+      {
+        q: 'How early should guests arrive for a house warming pooja?',
+        a: 'Fifteen minutes before the muhurat. Unlike a reception, a Griha Pravesh homam begins at the appointed time regardless of who has arrived, so guests who arrive at the stated muhurat have already missed the entry. Put "please arrive by 10:15 for the 10:30 muhurat" on the invitation itself rather than in a follow-up message.',
+      },
+      {
+        q: 'What is the usual order of a Griha Pravesh ceremony?',
+        a: 'Commonly Ganesh Pooja first, then the Vastu Shanti homam, then the Griha Pravesh muhurat when the family enters the house, then kalash sthapana and the boiling of milk, then prasad and lunch. Timings vary by family and priest, so publish the sequence your priest has given rather than a generic one.',
+      },
+      {
+        q: 'Should a housewarming invitation mention gifts?',
+        a: 'Decide and state it, because guests will otherwise ask individually. "Your presence and blessings are all we need" is the conventional phrasing. If you would welcome something specific — plants are traditional for a new home — saying so is more helpful than leaving it open.',
+      },
+    ],
+    links: [
+      { label: 'Griha Pravesh invitations', href: '/griha-pravesh-invitation' },
+      { label: 'Griha Pravesh invitation wording', href: '/griha-pravesh-invitation-wording' },
+      { label: 'Housewarming invitation templates', href: '/griha-pravesh-invitations' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'engagement-invitation-checklist-for-families': {
+    intro: `An engagement invitation is usually the first thing two families send out together, and it is often written in a hurry — the date gets fixed, the venue is booked, and the invitation goes out in a week.
+
+That compressed timeline is where mistakes happen. One family's surname is spelled wrong. The invitation names only the couple, and an uncle notices. The venue has two banquet halls and the invitation does not say which. None of these are catastrophic, but they are the kind of thing an Indian family remembers.
+
+This is a checklist built around the things that actually go wrong, in the order you should settle them.`,
+    sections: [
+      {
+        heading: 'Settle the names before anything else',
+        body: `Agree, in writing, between both families: the exact spelling of every name that will appear, which parents are named, and in what order.
+
+Spelling is not trivial. Families spell the same surname differently — Iyer and Iyar, Chowdhury and Choudhury — and using the wrong one on a formal invitation is noticed. Ask each family to send their names exactly as they want them printed, and use that text verbatim rather than retyping it.
+
+Order matters in many communities. Traditionally the bride's family is named first on an engagement invitation, but this varies, and the safest route is to ask rather than assume. Where one parent is deceased, agree how they are referenced — "the late Sri Ramesh Iyer" is common, and whether to include it at all is the family's decision, not the designer's.
+
+Get this confirmed by both families before any design work starts. Changing names after an invitation has circulated is far worse than a short delay.`,
+      },
+      {
+        heading: 'The details guests need',
+        body: `Beyond names, an engagement invitation carries a compact set of facts.
+
+- The ceremony name your family uses — Roka, Mangni, Sagai, Nishchayathartham
+- Date and the exact start time, plus the muhurat if there is one
+- Venue name, the specific hall if the venue has several, and a Maps pin
+- Whether a meal is served, and roughly when
+- Dress code, if there is one
+- Whether the ring exchange has a set time guests should be present for
+
+The hall number is the most common omission at hotel venues. "The Leela Palace" is not an address when the hotel is running three events that evening; guests will wander.
+
+The ring exchange timing is the second. If it happens at 6:30 and dinner is at 8, guests who arrive at 7:30 have missed the point of the evening. Say so.`,
+      },
+      {
+        heading: 'Agreeing the guest list and who invites whom',
+        body: `Two families inviting from one invitation creates a coordination problem that is worth solving explicitly.
+
+Decide who sends to whom. Usually each family invites its own guests using the same invitation, which means both families need the link or the card at the same time. A staggered send — one family invites a week before the other — produces awkward conversations between guests who know each other.
+
+Decide the tone of the covering message separately. The bride's family may write to their relatives differently from how the groom's family writes to theirs, and that is fine. The invitation stays identical; the accompanying message varies.
+
+Agree what happens with plus-ones and children. If the venue has a hard capacity, say so early. "We would love to have you both" invites a couple; silence invites a family.`,
+      },
+      {
+        heading: 'Before you send',
+        body: `A short pre-send check catches most of what goes wrong.
+
+Read every name aloud against the text each family sent. Check the date against a calendar — the day of the week is wrong on invitations more often than the date itself. Open the Maps link and confirm it lands at the venue entrance rather than a nearby road.
+
+Send the invitation to one person in each family first and ask them to check it before it goes wider. This is the single most effective step, and it takes an hour.
+
+Check the link preview by pasting it into a chat with yourself. An invitation whose preview shows a bare domain gets fewer opens than one showing the couple's names and date.
+
+Finally, confirm both families are sending on the same day, and agree a reminder two to three days before the ceremony.`,
+      },
+    ],
+    checklist: [
+      'Get exact name spellings in writing from both families',
+      'Agree whose parents are named, and in what order',
+      'Name the specific hall, not just the hotel',
+      'State the ring exchange time, not only the start time',
+      'Include a Maps pin that lands at the venue entrance',
+      'Decide plus-ones and children explicitly',
+      'Have one person in each family proof it before sending wider',
+      'Both families send on the same day',
+    ],
+    faq: [
+      {
+        q: 'Whose name comes first on an engagement invitation?',
+        a: 'In many communities the bride’s family is named first, but this varies by region and family, so ask rather than assume. Get both families to send their names exactly as they want them to appear and use that text verbatim — surnames are spelled differently between families, and an error on a formal invitation is noticed.',
+      },
+      {
+        q: 'What details are most often missing from engagement invitations?',
+        a: 'The specific hall at a multi-hall venue, and the time of the ring exchange. "The Leela Palace" is not enough when the hotel is running three events that evening. And if the ring exchange is at 6:30 with dinner at 8, guests arriving at 7:30 have missed the ceremony — state both times.',
+      },
+      {
+        q: 'Should both families send the engagement invitation at the same time?',
+        a: 'Yes. Each family usually invites its own guests using the same invitation, and a staggered send produces awkward conversations between guests who know each other. Agree a single send date, and let each family write its own covering message while the invitation itself stays identical.',
+      },
+      {
+        q: 'How do I handle plus-ones and children on an engagement invitation?',
+        a: 'State it explicitly. "We would love to have you both" invites a couple; saying nothing invites a family. If the venue has a hard capacity, raise it early with both families rather than after the guest list has been circulated.',
+      },
+    ],
+    links: [
+      { label: 'Digital engagement invitations', href: '/engagement-invitation' },
+      { label: 'Engagement invitation wording', href: '/engagement-invitation-wording' },
+      { label: 'Engagement invitation templates', href: '/engagement-invitations' },
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+    ],
+  },
+  'birthday-party-schedule-ideas-for-invitations': {
+    intro: `Most birthday invitations give a start time and nothing else. For an adult dinner that is fine. For a children's party, a milestone celebration, or anything running more than two hours, it produces a predictable set of messages: when is the cake, do we need to be there at the start, what time does it end.
+
+A published schedule answers all of them at once. It also does something less obvious — it tells guests which part of the event matters, so the people who can only come for an hour know which hour to choose.
+
+Here are schedules that work for the common formats, and how much detail to put on the invitation.`,
+    sections: [
+      {
+        heading: 'A children’s party schedule',
+        body: `Children's parties run on a tighter clock than adult events, because the children have a limited attention span and the parents have a pick-up time in mind.
+
+A two-and-a-half hour format that works:
+
+- **4:00 PM** — Arrival, free play
+- **4:30 PM** — Games and activities
+- **5:15 PM** — Food for the children
+- **5:45 PM** — Cake cutting
+- **6:15 PM** — Return gifts and goodbyes
+
+Cake cutting is the anchor. Parents planning around it will ask if you do not publish it, and late-arriving guests routinely miss it. Putting it on the invitation means a parent arriving at 5:30 knows they are in time.
+
+Keep arrival to a thirty-minute window at the start. "4:00 PM onwards" with no structure means children arrive across ninety minutes and the games never start properly.`,
+      },
+      {
+        heading: 'An adult birthday dinner',
+        body: `Adult events need less structure, but two times still matter: when to arrive and when the moment happens.
+
+- **7:30 PM** — Drinks and snacks
+- **8:30 PM** — Dinner served
+- **9:30 PM** — Cake and toast
+- **10:00 PM** onwards — Music
+
+The value here is that a guest who cannot come until nine knows they will make the cake, and a guest who has to leave at nine knows they will not. Without that, both guess.
+
+For a surprise, the schedule serves a different purpose — it establishes the arrival deadline. Put "please arrive by 7:15" prominently, above the schedule, and make clear the surprise happens at a fixed moment.`,
+      },
+      {
+        heading: 'Milestone celebrations with a programme',
+        body: `First birthdays, sixtieth birthdays and similar milestones often include a ceremony or a programme, and these need the most detail because guests are travelling and elders are involved.
+
+- **11:00 AM** — Guests arrive
+- **11:30 AM** — Pooja / ceremony
+- **12:15 PM** — Speeches and family programme
+- **1:00 PM** — Lunch
+- **2:30 PM** — Cake cutting and photographs
+
+Where there is a muhurat or a ceremony with a fixed start, treat it the way a Griha Pravesh invitation treats the muhurat: state it separately and add an arrival time before it.
+
+If there are speeches or performances, saying so lets the people involved prepare and lets everyone else know the event has a seated portion. Guests who expect a standing reception and find a ninety-minute programme will have made the wrong childcare arrangements.`,
+      },
+      {
+        heading: 'How much to put on the invitation',
+        body: `There is a balance. A five-line schedule is useful; a fifteen-line one reads like a conference agenda and nobody finishes it.
+
+Put on the invitation: arrival, the anchor moment (cake, ceremony, speeches), when food is served, and the end time. That is four lines and it answers almost every question.
+
+Leave off: setup details, vendor timings, and anything that might change. A schedule that shifts after the invitation has gone out is worse than no schedule, because guests plan around it.
+
+End time is the single most valuable line and the most commonly omitted. For children's parties it is essential — parents are arranging pick-up. For adult events it signals the register of the evening: a party ending at 11 PM is a different event from one with no stated end.
+
+If the schedule is genuinely uncertain, publish it on the invitation page rather than in the message, so you can adjust it without resending anything.`,
+      },
+    ],
+    checklist: [
+      'Publish the cake cutting time — it is the most asked-about detail',
+      'Give a thirty-minute arrival window rather than an open start',
+      'State when food is served, and what kind',
+      'Always include an end time, especially for children’s parties',
+      'For a surprise, put the arrival deadline above the schedule',
+      'Flag any seated programme or speeches in advance',
+      'Keep the schedule to four or five lines on the invitation',
+    ],
+    faq: [
+      {
+        q: 'Should I put a schedule on a birthday invitation?',
+        a: 'For anything longer than two hours, yes. Four lines is usually enough: arrival, the anchor moment such as cake cutting or a ceremony, when food is served, and the end time. It answers most of the questions guests would otherwise send individually, and it tells guests who can only attend part of the event which part to choose.',
+      },
+      {
+        q: 'What time should cake cutting be on a children’s party schedule?',
+        a: 'Roughly forty-five minutes before the end — after food and before return gifts. In a 4:00 to 6:15 party, around 5:45 works. Publishing the time matters more than the exact slot: parents plan around it, and late-arriving guests otherwise miss it.',
+      },
+      {
+        q: 'How long should a children’s birthday party be?',
+        a: 'Two to two and a half hours is the common format, with a thirty-minute arrival window at the start. Longer than that and younger children tire; an open-ended start means guests arrive across ninety minutes and the games never begin properly.',
+      },
+      {
+        q: 'What is the most commonly forgotten detail on a birthday invitation?',
+        a: 'The end time. Parents arranging pick-up need it, and for adult events it signals the register of the evening. It is the detail hosts most often omit and guests most often ask about.',
+      },
+    ],
+    links: [
+      { label: 'Digital birthday invitations', href: '/birthday-invitation' },
+      { label: 'Birthday invitation wording and messages', href: '/birthday-invitation-wording' },
+      { label: 'Birthday invitation templates', href: '/birthday-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+  'how-to-add-google-maps-to-wedding-invitations': {
+    intro: `The most useful thing on an Indian wedding invitation is not the design. It is a button that opens Google Maps at the right gate.
+
+Wedding venues are hard to find. Banquet halls share names across cities, farmhouses sit on unnamed roads, and hotel complexes have entrances on different streets from their postal addresses. Every guest who cannot find the venue calls someone in the family, usually during the ceremony.
+
+A written address does not solve this, because nobody types an address into Maps while driving. A tappable link does. Here is how to get the link right, and what to do when the venue is not properly on Maps.`,
+    sections: [
+      {
+        heading: 'Getting a link that actually works',
+        body: `Open Google Maps, search for the venue, and check what comes up. If the listing is correct and the pin is at the entrance, use the Share option and copy the link. That is the simple case.
+
+Two things to verify before you trust it. First, that the pin is at the entrance guests will use, not the centre of a large property. For a hotel with a banquet entrance separate from the main lobby, this matters. Second, that the listing is the right branch — searching a chain hotel name frequently returns a different city.
+
+Use the share link rather than copying the URL from the browser address bar. Address-bar URLs are long, contain your session coordinates, and sometimes open a search result rather than the pin.
+
+Test the final link on a phone that is not yours, ideally on Android and iOS, before it goes out.`,
+      },
+      {
+        heading: 'When the venue is not on Maps',
+        body: `New farmhouses, community halls and residences frequently have no listing, or a listing whose pin is in the wrong place.
+
+The fix is to drop your own pin. Open Maps, long-press at the exact spot where guests should arrive, and share the resulting location. This produces a coordinate link that opens exactly where you placed it, regardless of whether the venue has a listing.
+
+Do this standing at the gate, on the day you visit the venue. A pin dropped from a satellite view at home is usually twenty to fifty metres off, which is enough to send guests to the wrong side of a compound wall.
+
+For rural venues, add a written line alongside the pin describing the final approach: "turn left at the Hanuman temple, the gate is 200 m on the right". Mobile data is unreliable outside cities, and a guest whose Maps stops loading needs something to fall back on.`,
+      },
+      {
+        heading: 'Where the link belongs on the invitation',
+        body: `Put it as a button, not as a URL in a paragraph. A raw Maps URL in body text is long, ugly, and easy to mis-tap on a phone.
+
+The convention that works: venue name in bold, the address in smaller text beneath it, then a clearly labelled button — "Open in Google Maps" or "Get directions". Guests scanning the invitation for directions look for a button.
+
+Place it near the venue details rather than at the bottom of the page. A guest already in the car is scrolling to find it fast.
+
+If there are multiple venues across functions — Mehendi at home, wedding at a hall, reception elsewhere — each needs its own pin next to its own function. A single Maps link on a multi-venue invitation sends guests to the wrong place.`,
+      },
+      {
+        heading: 'Details that prevent phone calls',
+        body: `The Maps pin solves navigation. These solve the rest.
+
+Which gate. Large venues have several, and only one will be open for your event. Name it.
+
+Parking. Say where it is and whether it is attended. For city hotels, say whether valet is available. Guests circling for parking arrive late and irritated.
+
+Security registration. Gated communities and some hotels require visitors to be listed. If guests need to give a name at the gate, tell them whose name.
+
+A phone number. One family member's number, clearly labelled as the contact for directions on the day. Not the couple's — they will be occupied. This single line prevents the calls that would otherwise reach the bride.`,
+      },
+    ],
+    checklist: [
+      'Use the Maps Share link, not the browser address bar URL',
+      'Verify the pin sits at the entrance guests will use',
+      'Check the listing is the right branch, not another city',
+      'Drop your own pin at the gate if the venue is not listed',
+      'Add written final-approach directions for rural venues',
+      'Present it as a labelled button, not a raw URL',
+      'Give each function its own pin on multi-venue weddings',
+      'Name the gate, the parking and a contact number for the day',
+    ],
+    faq: [
+      {
+        q: 'How do I add a Google Maps link to a wedding invitation?',
+        a: 'Search the venue in Google Maps, confirm the pin sits at the entrance guests will use and that the listing is the correct branch, then use Share and copy that link. Use the share link rather than the browser address bar URL, which is long and sometimes opens a search result instead of the pin. Present it on the invitation as a labelled button near the venue details.',
+      },
+      {
+        q: 'What if the wedding venue is not listed on Google Maps?',
+        a: 'Drop your own pin. Long-press at the exact spot where guests should arrive and share that location — it produces a coordinate link that opens precisely there. Do it standing at the gate rather than from a satellite view at home, which is usually twenty to fifty metres off, enough to send guests to the wrong side of a compound wall.',
+      },
+      {
+        q: 'Should each wedding function have its own map link?',
+        a: 'Yes, whenever the functions are at different venues. Mehendi at home, the wedding at a hall and the reception elsewhere each need their own pin beside their own function. A single Maps link on a multi-venue invitation reliably sends some guests to the wrong place.',
+      },
+      {
+        q: 'What else should go with the map link?',
+        a: 'Which gate to use, where to park and whether it is attended, whether guests must register at security, and a phone number for someone other than the couple who can answer directions questions on the day. The pin solves navigation; these four solve everything else that generates calls.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+    ],
+  },
+  'digital-invitation-checklist-before-sharing': {
+    intro: `The moment you send an invitation to a family WhatsApp group, it stops being yours. It gets forwarded, screenshotted, and referred back to for weeks. Mistakes that would take a second to fix beforehand become messages you have to send to three hundred people.
+
+Most of what goes wrong is not design. It is a wrong day of the week, a Maps pin at the wrong gate, a name spelled the way one side of the family does not spell it, or a link preview that looks like spam.
+
+This is the check to run before you send, in the order that catches the most.`,
+    sections: [
+      {
+        heading: 'Check the facts first',
+        body: `Names, dates, times, venue. In that order, and against a source rather than from memory.
+
+Names: check every name against the text the family sent you, character by character. Do not retype names — copy them. Surnames are spelled differently between families, and a formal invitation with the wrong spelling is noticed and remembered.
+
+Date: check the day of the week against a calendar. "Saturday 14 December" where the 14th is a Sunday is the single most common error on invitations, and it is the one that causes guests to arrive on the wrong day.
+
+Time: confirm the start time, and separately the time of the moment that matters — the muhurat, the ring exchange, the cake cutting. Guests plan around the second one.
+
+Venue: the specific hall, not just the hotel. Venues run several events an evening.`,
+      },
+      {
+        heading: 'Check it on a phone',
+        body: `Almost every guest will open the invitation on a phone, usually mid-range Android, often on mobile data. Reviewing it on a desktop tells you very little.
+
+Open it on a phone and check that the names are legible without zooming, the date and venue can be read at a glance, the Maps button is large enough to tap accurately, and the page loads in a few seconds on mobile data rather than wifi.
+
+Scroll the whole page. Text that sits over a background image frequently becomes unreadable at phone width even when it looks fine on a laptop.
+
+If you have an older relative, send it to them and ask what the date is. If they cannot answer in five seconds, the hierarchy is wrong.`,
+      },
+      {
+        heading: 'Check the link preview',
+        body: `When the link is pasted into WhatsApp, it produces a preview card — title, description, image. This is the first thing guests see, and for many it decides whether they tap.
+
+Paste the link into a chat with yourself and look at it. A preview showing the names, the date and an image reads as an invitation. A bare domain with no image reads as a forwarded spam link, especially in a family group, and gets fewer opens.
+
+Get this right before the first send. WhatsApp caches previews, so correcting the title afterwards and resending the same link often shows the old card for some time.`,
+      },
+      {
+        heading: 'Check what happens after you send',
+        body: `Two things are worth confirming while you still have time to change them.
+
+That you can edit it. The main advantage of a digital invitation is that a venue change does not require a second message. Confirm you know how to edit, and that edits appear for guests who already opened the link.
+
+That it will still be there. Check how long the invitation stays live — through the event and ideally for some weeks after, since guests revisit it for photographs and details.
+
+Finally, decide what is not going on it. Home addresses for small gatherings, personal phone numbers, and anything about gifts travel further than you intend once an invitation is forwarded. Those belong in direct messages.`,
+      },
+    ],
+    checklist: [
+      'Copy names from what each family sent — never retype them',
+      'Check the day of the week against a calendar',
+      'State both the start time and the time of the key moment',
+      'Name the specific hall, not just the venue',
+      'Open the invitation on a mid-range phone on mobile data',
+      'Confirm the Maps pin lands at the entrance guests will use',
+      'Check the WhatsApp link preview before the first send',
+      'Keep home addresses and gift notes off a forwardable page',
+    ],
+    faq: [
+      {
+        q: 'What should I check before sending a digital invitation?',
+        a: 'Names against the text each family sent, the day of the week against a calendar, the start time and the time of the key moment separately, and the specific hall rather than just the venue. Then open it on a mid-range phone over mobile data, confirm the Maps pin lands at the right entrance, and check the WhatsApp link preview by pasting it into a chat with yourself.',
+      },
+      {
+        q: 'Why does the WhatsApp link preview matter?',
+        a: 'It is the first thing guests see and often decides whether they tap. A preview showing the names, date and an image reads as an invitation; a bare domain with no image reads as a forwarded spam link, particularly in a family group. Get it right before the first send, because WhatsApp caches previews and the old card can persist after you correct it.',
+      },
+      {
+        q: 'What is the most common mistake on invitations?',
+        a: 'The day of the week not matching the date — "Saturday 14 December" where the 14th is a Sunday. It is easy to miss on proofreading and it is the error most likely to make guests arrive on the wrong day. Check the date against an actual calendar rather than from memory.',
+      },
+      {
+        q: 'What should not go on a digital invitation?',
+        a: 'Home addresses for small private gatherings, personal phone numbers, and anything about gifts. An invitation is forwarded well beyond the people you sent it to, so anything you would not want widely circulated belongs in a direct message rather than on the page.',
+      },
+    ],
+    links: [
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+      { label: 'Browse invitation templates', href: '/templates' },
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+    ],
+  },
+  'whatsapp-invitation-etiquette-for-indian-families': {
+    intro: `WhatsApp has replaced the printed card as the primary way Indian families invite people, and the etiquette has not fully caught up. The rules for a printed invitation were settled over generations. The rules for a forwarded link are still being worked out, family by family, usually after someone has been offended.
+
+Most of the friction is not about the invitation itself. It is about order, tone, and who hears first — the same things that governed card distribution, applied to a medium where everything is instant and nothing is private.
+
+Here is what causes offence, and what the settled conventions now look like.`,
+    sections: [
+      {
+        heading: 'Order of telling matters more than anything',
+        body: `The most common cause of hurt feelings is not a badly worded invitation. It is an aunt learning about a wedding from a group broadcast at the same moment as a distant colleague.
+
+The convention that works: immediate family by phone call, close relatives individually, then family groups, then friends and colleagues, then the wider circle. Elders in particular should be told by voice, not by message. A phone call to an uncle before the invitation circulates costs five minutes and is remembered.
+
+This applies even when the invitation is ready and you are impatient to send it. Sending to two hundred people an hour earlier gains nothing; telling an elder after the group did causes a conversation you will be having for years.
+
+For a wedding, many families still hand-deliver a printed card to the closest relatives and elders, with the digital link going to everyone else. The card is not doing informational work — it is a mark of respect. The two coexist comfortably.`,
+      },
+      {
+        heading: 'Tone by recipient',
+        body: `One invitation, many covering messages. The invitation itself stays identical; what you write above it changes with the relationship.
+
+To elders: respectful address, the families named, blessings requested. "Respected Uncle and Aunty, with the blessings of our families…" is not old-fashioned, it is expected.
+
+To relatives of your generation: warmer, still complete. They will forward it onwards, so it should read well without you.
+
+To friends: informal, short, and often funnier. This is the message that can carry personality.
+
+To colleagues: neutral and brief, with the venue and date clear. Avoid family-specific religious framing unless you know it lands well.
+
+The mistake is using one message for all four. A message that works for a school friend reads as careless to an elder; a formal message to a close friend reads as distant.`,
+      },
+      {
+        heading: 'What not to do in groups',
+        body: `A few things reliably irritate people.
+
+Repeated sends. Posting the invitation to the same group four times "so nobody misses it" pushes other conversations out and reads as shouting. Once, then one reminder.
+
+Tagging everyone. Using @ to tag every member of a large group generates a notification for each person and is widely disliked.
+
+Asking for RSVPs in the group. Guests then reply in the group, producing fifty messages everyone has to read. Ask for responses in direct messages or through the invitation page.
+
+Correcting details by new message. Each correction competes with the original, and some guests will keep referring to the first version. Edit the invitation page instead, so the same link always shows the current details.
+
+Posting to Status for a small event. Status reaches every contact, including people who are not invited, which creates an awkwardness that is difficult to undo.`,
+      },
+      {
+        heading: 'Gifts, money and the things nobody says out loud',
+        body: `Gift preferences are the hardest thing to get right in a message, because anything stated directly can read as an instruction.
+
+The convention: put it on the invitation page, not in the WhatsApp message. "Your presence and blessings are the only gift we need" reads warmly on a page and slightly bossily in a chat.
+
+If you are collecting money — for a honeymoon fund, or shagun — be careful. Many families find a payment link in an invitation uncomfortable. Where it is accepted, it is usually because the family made it clearly optional and placed it discreetly rather than prominently.
+
+Never send an invitation and a payment request in the same message. Whatever the intent, it reads as a bill.
+
+For a house warming or a milestone birthday where guests will ask what to bring, answering the question on the page saves everyone the individual exchange.`,
+      },
+    ],
+    checklist: [
+      'Tell immediate family and elders by phone before any group send',
+      'Hand a printed card to closest relatives where that is the family custom',
+      'Vary the covering message by relationship; keep the invitation identical',
+      'Send once to each group, plus one reminder two to three days before',
+      'Do not tag every member of a large group',
+      'Take RSVPs in direct messages, not in the group',
+      'Correct details by editing the page, not by sending a new message',
+      'Keep gift and payment notes off the message and on the page',
+    ],
+    faq: [
+      {
+        q: 'Who should be told about a wedding before the invitation goes to groups?',
+        a: 'Immediate family by phone, then close relatives individually, then the family groups. Elders in particular should hear by voice rather than from a broadcast. An aunt learning of a wedding from a group message at the same time as a distant colleague is the most common cause of hurt feelings, and a five-minute call prevents it.',
+      },
+      {
+        q: 'Is it rude to send a wedding invitation only on WhatsApp?',
+        a: 'Not any more, for the wider guest list. Most Indian families now hand-deliver a printed card to the closest relatives and elders — as a mark of respect rather than for the information — and send the digital link to everyone else. The two coexist comfortably, and apologising for the digital version is unnecessary.',
+      },
+      {
+        q: 'How many times should I send an invitation to a WhatsApp group?',
+        a: 'Once, plus a single reminder two to three days before the event. Repeated sends push other conversations out of view and read as shouting. If details change, edit the invitation page rather than posting a correction, so the same link always shows current information.',
+      },
+      {
+        q: 'Where should gift preferences be mentioned?',
+        a: 'On the invitation page, not in the WhatsApp message. "Your presence and blessings are the only gift we need" reads warmly on a page and slightly bossily in a chat. And never combine an invitation and a payment request in one message — whatever the intent, it reads as a bill.',
+      },
+    ],
+    links: [
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+      { label: 'Browse invitation templates', href: '/templates' },
+    ],
+  },
+  'how-rsvp-tracking-reduces-event-follow-up': {
+    intro: `The real cost of a missing RSVP system is not an inaccurate headcount. It is the two weeks before the event when the host answers the same four questions in individual chats, fifty times over, while also trying to manage caterers, family and travel.
+
+Indian event RSVP does not work like the Western model of a card returned with a checkbox. Attendance is decided at family level, changes late, and gets communicated through intermediaries. No form will change that. What a good system does is reduce the volume of messages the host has to personally field.
+
+Here is where the follow-up actually comes from, and what reduces it.`,
+    sections: [
+      {
+        heading: 'Where the messages actually come from',
+        body: `Host follow-up is rarely about attendance. Sorting real messages from a large Indian wedding, the pattern is consistent.
+
+The biggest category is logistics — where exactly is the venue, which gate, where do we park, what time does the ceremony start. All of these are answerable by the invitation, and they get asked anyway when the invitation is an image with small text or an address that has to be copied by hand.
+
+The second category is scheduling — which functions am I invited to, when is the cake, do I need to be there for the muhurat. Answerable by publishing a schedule.
+
+The third is genuine attendance, and it is the smallest. Ironically it is the one most RSVP tools are built for.
+
+The implication is that reducing follow-up is mostly a content problem, not a tracking problem. An invitation that answers the logistics questions properly removes most of the volume before any RSVP mechanism is involved.`,
+      },
+      {
+        heading: 'Soft RSVP works better than forms',
+        body: `Most Indian guests will not fill in an RSVP form. They will reply in the chat where they received the invitation, because that is where the conversation already is.
+
+What works better is a response mechanism that fits how guests already behave — a wishes or blessings section on the invitation page. Leaving a blessing is culturally natural in a way that submitting a form is not, and a guest who writes "we will definitely be there" has told you two things: they have seen the invitation, and they intend to come.
+
+This gives the host something more practically useful than a headcount: a list of who has engaged and who has not. Follow-up can then be targeted at the families you have not heard from rather than broadcast to everyone.
+
+It is directional rather than exact, and that is the right level of precision for an Indian event, where the final number is an estimate regardless.`,
+      },
+      {
+        heading: 'Ask families, not individuals',
+        body: `When you do need numbers, ask the decision-maker for each family unit rather than sending a general request.
+
+"Sharma Uncle, will you all be coming for the reception? How many should we count from your side?" produces an answer. A broadcast RSVP request to three hundred individuals produces a handful of replies and a lot of silence.
+
+The answers will be approximate — "maybe five or six of us" — and that is usable. Add ten to fifteen percent to the confirmed total for catering. Experienced Indian caterers build the same buffer in, and a host who gives a genuinely firm number will run short.
+
+Do this for the families who matter most to the count — those travelling, those staying with you, those bringing large groups. For the rest, the soft signal from the invitation page is enough.`,
+      },
+      {
+        heading: 'What to publish to cut the volume',
+        body: `Concretely, the things that most reduce follow-up messages.
+
+A tappable Maps pin at the correct gate, rather than a written address. This alone removes the largest single category of questions.
+
+A schedule with the anchor moments — muhurat, ring exchange, cake, dinner — so guests can plan arrival.
+
+An explicit statement of which functions each guest is invited to, where guest lists differ between functions.
+
+Parking, gate and security-registration details, which guests will otherwise ask on the day, by phone, while you are occupied.
+
+One named contact who is not the host. A family member's number on the invitation, labelled as the person to call for directions, diverts the day-of calls away from the couple or the parents.
+
+None of this is RSVP tracking in the technical sense. All of it reduces follow-up far more than a response form does.`,
+      },
+    ],
+    checklist: [
+      'Answer logistics on the invitation — it is the biggest source of messages',
+      'Publish a schedule with the anchor moments',
+      'Use a wishes section as a soft RSVP rather than a form',
+      'Ask family units for counts, not individuals',
+      'Add 10–15% to confirmed numbers for catering',
+      'State clearly which functions each guest is invited to',
+      'Name a contact other than the host for day-of questions',
+    ],
+    faq: [
+      {
+        q: 'Why do RSVP forms not work well for Indian weddings?',
+        a: 'They assume guests decide individually, know their answer, and will complete a form. Indian event attendance is usually a family-level decision, changes late, and gets communicated in the chat where the invitation arrived. Most guests skip the form and reply in WhatsApp, which leaves the host managing two systems instead of one.',
+      },
+      {
+        q: 'What actually reduces follow-up messages before an event?',
+        a: 'Answering logistics on the invitation itself. The largest category of host messages is not attendance but where the venue is, which gate, where to park and when the ceremony starts. A tappable Maps pin, a published schedule and parking details remove most of that volume before any RSVP mechanism is involved.',
+      },
+      {
+        q: 'How does a guest wishes section work as an RSVP?',
+        a: 'Leaving a blessing is culturally natural in a way that filling a form is not, so guests who ignore an RSVP request will often leave a message. A guest who writes "we will definitely be there" has confirmed both that they saw the invitation and that they intend to come. It gives the host a list of who has engaged, so follow-up can be targeted rather than broadcast.',
+      },
+      {
+        q: 'How accurate should my headcount be for catering?',
+        a: 'Treat it as an estimate with a range and add ten to fifteen percent to your confirmed figure. Experienced Indian caterers build the same buffer in, so a host who supplies a genuinely firm number tends to run short.',
+      },
+    ],
+    links: [
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Browse invitation templates', href: '/templates' },
+    ],
+  },
+  'best-photo-gallery-ideas-for-digital-invitations': {
+    intro: `A photo gallery is the part of a digital invitation guests actually spend time on. The venue and timings get scanned in fifteen seconds; the photographs get scrolled, zoomed and shown to someone else in the room.
+
+That makes the gallery worth more thought than it usually gets. The default approach — upload thirty favourite pictures — produces a slow page that guests abandon halfway. A well-chosen gallery of eight tells a story and gets shared.
+
+Here is how to choose, order and size them.`,
+    sections: [
+      {
+        heading: 'How many, and why fewer is better',
+        body: `Six to ten photographs is the range that works. Beyond about a dozen, two things go wrong.
+
+The page gets slow. Photographs are by far the heaviest thing on an invitation, and guests on mobile data in smaller towns will abandon a page that takes more than a few seconds. A gallery of thirty full-resolution images can be twenty times the weight of the rest of the page combined.
+
+And attention drops. Guests scroll a short gallery to the end and feel they have seen it. A long one gets abandoned in the middle, which means your best photograph — usually near the end — is never seen.
+
+If you have thirty photographs you love, the invitation is not the place. Choose eight for the invitation and share the rest afterwards.`,
+      },
+      {
+        heading: 'What to choose',
+        body: `A gallery works best when the images do different jobs rather than repeating one.
+
+For a wedding: one clear portrait of the couple, two or three from the engagement or pre-wedding shoot, one candid with family, one of the venue if it is striking, and one older photograph — the couple years earlier, or the families together. The older one is consistently the image guests comment on.
+
+For a birthday: a strong recent portrait, two or three across different ages, one with the people the party is for, and one that is funny. Milestone birthdays especially benefit from a progression across years.
+
+For a Griha Pravesh: the exterior, one or two interiors, and the family at the door. Guests genuinely want to see the house.
+
+Avoid near-duplicates from the same shoot. Five photographs from one session in the same outfits read as one photograph.`,
+      },
+      {
+        heading: 'Order and orientation',
+        body: `Lead with the strongest image, because it is often the one used for the WhatsApp link preview and the only one some guests see.
+
+After that, chronology works better than any other ordering for milestone events — oldest to newest tells a story without needing captions.
+
+Orientation matters more than people expect. Invitations are viewed on phones in portrait, so portrait and square images fill the screen while landscape images appear small with space either side. A gallery that is mostly landscape looks weaker on a phone than the same photographs on a laptop. Where you have a choice, favour portrait and square.
+
+Check how a group of images reads together. Mixed orientations in a grid can look untidy; consistent orientation looks deliberate.`,
+      },
+      {
+        heading: 'Getting the files right',
+        body: `Resize before uploading. A photograph straight from a phone camera is often four to eight megabytes; on an invitation it needs to be a few hundred kilobytes. Resizing to around 1600 pixels on the long edge is more than enough for a phone screen and cuts the weight dramatically.
+
+Watch faces at the edges. Galleries crop to fit, and a face at the very edge of a frame can be cut. Choose images with a little space around the subject.
+
+Be careful with screenshots and forwarded images. A photograph that has been through WhatsApp several times is already compressed, and it will look noticeably soft next to originals. Use the original file where you have it.
+
+Finally, consider who is in them. An invitation is forwarded widely, so photographs of children and of family who may not expect to appear deserve a moment's thought before they go on a public page.`,
+      },
+    ],
+    checklist: [
+      'Keep the gallery to six to ten photographs',
+      'Lead with the strongest image — it often becomes the link preview',
+      'Give each photograph a different job; avoid near-duplicates',
+      'Include one older photograph for milestone events',
+      'Favour portrait and square over landscape for phone screens',
+      'Resize to about 1600px on the long edge before uploading',
+      'Use originals rather than images already compressed by WhatsApp',
+      'Think about who appears, since invitations are forwarded widely',
+    ],
+    faq: [
+      {
+        q: 'How many photos should a digital invitation have?',
+        a: 'Six to ten. Beyond a dozen the page gets noticeably slower on mobile data, and guests abandon long galleries partway — which usually means the best photograph, often placed near the end, is never seen. If you have thirty you love, choose eight for the invitation and share the rest after the event.',
+      },
+      {
+        q: 'What size should photos be for a digital invitation?',
+        a: 'Around 1600 pixels on the long edge, which is ample for a phone screen. Photographs straight from a phone camera are often four to eight megabytes each; resized they are a few hundred kilobytes. Since images are by far the heaviest part of an invitation, this is the single biggest factor in how fast the page loads.',
+      },
+      {
+        q: 'Should invitation photos be portrait or landscape?',
+        a: 'Portrait or square. Invitations are viewed on phones held upright, so portrait images fill the screen while landscape ones appear small with empty space either side. A gallery that looks good on a laptop can look weak on the device almost every guest will actually use.',
+      },
+      {
+        q: 'Which photo should come first in the gallery?',
+        a: 'The strongest one. It is frequently used for the WhatsApp link preview, which is the first and sometimes only image a guest sees before deciding whether to open the invitation.',
+      },
+    ],
+    links: [
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Browse invitation templates', href: '/templates' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'wedding-invitation-timeline-for-indian-families': {
+    intro: `"When should we send the invitation?" has a different answer for an Indian wedding than for almost any other event, because there is no single moment of inviting. There is a save-the-date, a phone call to elders, a printed card hand-delivered to close family, a digital link to everyone else, and separate communications for each function.
+
+Getting the sequence wrong is the most common source of family friction around a wedding. Not a badly designed card — an uncle who found out from a group.
+
+Here is a working timeline, counted backwards from the wedding date, with what happens at each point and who it goes to.`,
+    sections: [
+      {
+        heading: 'Three to six months before',
+        body: `This is the save-the-date window, and it matters most for guests who will travel.
+
+As soon as the date is fixed, tell immediate family by phone. Not message — phone. This includes grandparents, the parents' siblings, and anyone who would reasonably expect to hear directly.
+
+For out-of-city and overseas guests, a save-the-date at this stage is genuinely useful. They are booking leave and flights, and Indian wedding season means fares rise sharply as the date approaches. A save-the-date does not need a venue or a schedule; the date and city are enough.
+
+If the wedding falls in peak season — November to February, or around major muhurat dates — push this earlier. Guests attending three weddings that month will commit to whichever they heard about first.
+
+This is also when the printed card, if you are having one, needs to be commissioned. Printers book out during season.`,
+      },
+      {
+        heading: 'Four to six weeks before',
+        body: `This is the main invitation window, and the order within it matters.
+
+Close family and elders first, by hand where possible. In many families the printed card is delivered in person to a defined circle — grandparents, parents' siblings, close family friends — and this is treated as a mark of respect rather than a delivery method. Plan the visits; they take a weekend.
+
+Then relatives individually, by message with the digital link. Then the family WhatsApp groups. Then friends and colleagues.
+
+Both families should send on the same day. A staggered send produces awkward conversations between guests who know each other across both sides.
+
+Four to six weeks gives local guests enough notice to keep the date and out-of-city guests a second prompt to finalise travel. Earlier than six weeks for local guests and the invitation is forgotten by the time it matters.`,
+      },
+      {
+        heading: 'Two to three weeks before',
+        body: `This is when function-specific communication goes out, if your functions have different guest lists.
+
+Mehendi and Sangeet invitations often go to a narrower circle than the wedding. If you are handling this with a single invitation, state clearly which functions each guest is invited to. If with separate links, send them now.
+
+This is also the window for accommodation and travel coordination with out-of-city guests — who is staying where, whether transport is being arranged, whether anyone needs help. These are individual conversations, not group messages.
+
+If anything has changed since the invitation went out — a venue, a timing, an added function — update the invitation page now rather than sending a correction message. Guests who open the link get the current version, including those who opened it three weeks ago.`,
+      },
+      {
+        heading: 'The final week',
+        body: `Two to three days before the first function, send a short reminder with the link. Not a week before, when guests are not yet thinking about the weekend, and not the night before, when travel and childcare are already arranged.
+
+Keep the reminder brief and re-send the link rather than restating the details, which invites contradictions between message and page.
+
+On the day before, the useful message is logistical rather than celebratory: which gate, where to park, what time to arrive for the muhurat, and the name and number of the family member handling directions. That last one diverts the day-of calls away from the couple and the parents, which is worth more than any other single line.
+
+After the wedding, leave the invitation live. Guests revisit it for photographs and details for weeks, and it is where many will look for the couple's new address or a thank-you note.`,
+      },
+    ],
+    checklist: [
+      'Tell immediate family and elders by phone as soon as the date is fixed',
+      'Save-the-date three to six months ahead for travelling guests',
+      'Commission printed cards early — printers book out in season',
+      'Main invitation four to six weeks before, in order of closeness',
+      'Both families send on the same day',
+      'Function-specific invitations two to three weeks before',
+      'Reminder two to three days before, not a week',
+      'Day-before message: gate, parking, arrival time, contact number',
+    ],
+    faq: [
+      {
+        q: 'When should Indian wedding invitations be sent?',
+        a: 'The main invitation goes out four to six weeks before the wedding, with a save-the-date three to six months ahead for guests who will travel. Immediate family and elders should be told by phone as soon as the date is fixed, well before anything circulates in groups. In peak season, push the save-the-date earlier — guests attending several weddings that month commit to whichever they heard about first.',
+      },
+      {
+        q: 'In what order should a wedding invitation go out?',
+        a: 'Immediate family and elders by phone, then close family in person with a printed card where that is the custom, then relatives individually with the digital link, then family groups, then friends and colleagues. Both families should send on the same day — a staggered send produces awkward conversations between guests who know each other across both sides.',
+      },
+      {
+        q: 'How far ahead should out-of-city guests be invited?',
+        a: 'Give them a save-the-date three to six months ahead, and the full invitation at the four-to-six week mark like everyone else. They are booking leave and flights, and Indian wedding season pushes fares up sharply closer to the date. The save-the-date needs only the date and city, not a venue or schedule.',
+      },
+      {
+        q: 'What should the final reminder before the wedding say?',
+        a: 'Send a short reminder with the link two to three days before. The more useful message is the day before, and it should be logistical: which gate, where to park, what time to arrive for the muhurat, and the name and number of a family member handling directions. That last detail diverts day-of calls away from the couple and their parents.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'music-ideas-for-wedding-invitation-websites': {
+    intro: `Background music on a wedding invitation is the feature people are most divided about. Done well, it turns a page of details into something that feels like an occasion. Done badly, it is a track that starts unexpectedly while a guest is sitting in a meeting.
+
+The difference is almost entirely about control — whether the guest chooses to play it, how loud it starts, and whether they can stop it easily. The music itself matters less than most people assume.
+
+Here is how to choose a track, and the settings that decide whether guests enjoy it or close the tab.`,
+    sections: [
+      {
+        heading: 'Never autoplay with sound',
+        body: `This is the one rule with no exceptions. A page that starts playing audio the moment it opens will be closed by a meaningful share of guests, and it is the single most common complaint about invitation websites.
+
+Most guests open an invitation in a context where sound is unwelcome — at work, on a commute, in bed with a sleeping child nearby. Audio that begins without permission is not a delightful surprise; it is a reason to shut the tab quickly and not come back.
+
+Mobile browsers largely block autoplay with sound anyway, so the practical outcome is inconsistent: silent for some guests, startling for others.
+
+The pattern that works is a small, visible play button, muted by default, positioned where a guest will notice it. Guests who want the music find it immediately. Guests who do not are never interrupted.`,
+      },
+      {
+        heading: 'Choosing the track',
+        body: `Three things make a track work on an invitation page.
+
+It should be instrumental, or at least not lyrically distracting. Guests are reading names, dates and an address; lyrics compete with that. Instrumental versions of film songs work particularly well because they carry familiarity without the words.
+
+It should start gently. A track that opens with a sudden percussion hit is jarring at any volume. Something with a soft opening gives the guest a moment to adjust or stop it.
+
+It should loop without an obvious seam. Guests spend two to four minutes on an invitation page; a ninety-second track will loop, and an abrupt restart is noticeable.
+
+For Indian weddings, sitar, flute and light instrumental arrangements of familiar wedding songs are the safe centre. If the couple have a song that genuinely means something to them, that beats any generic choice — but check it works instrumentally first.`,
+      },
+      {
+        heading: 'Licensing, briefly',
+        body: `An invitation page is a public web page, which means using a commercial recording is technically a public performance of copyrighted music.
+
+In practice, enforcement against a private wedding invitation is essentially unheard of. But it is worth knowing, and there are two straightforward ways to avoid the question entirely.
+
+Royalty-free instrumental libraries have large catalogues of Indian classical and light instrumental music, much of it free or inexpensive. The quality is generally good and the selection is wide enough to find something suitable.
+
+Alternatively, a locally recorded instrumental — a family member who plays, or a musician hired for the sangeet — is both properly licensed and genuinely personal.
+
+If you do use a commercial track, host the audio file rather than embedding a streaming player, which adds significant page weight and often shows unrelated recommendations.`,
+      },
+      {
+        heading: 'File size and performance',
+        body: `Audio is heavy, and invitation pages are opened on mobile data far more often than on wifi.
+
+Keep the file under about two megabytes. A three-minute track at a moderate bitrate lands comfortably in that range and sounds fine on phone speakers, which is what almost every guest will use.
+
+Load the audio only when the guest presses play, not when the page opens. Loading it upfront means every guest pays the download cost, including the large majority who never play it, and it slows down the content they actually came for.
+
+Test on mobile data rather than wifi. A file that loads instantly at home can take ten seconds on a patchy connection in a smaller town, and a play button that does nothing for ten seconds reads as broken.`,
+      },
+    ],
+    checklist: [
+      'Never autoplay with sound — use a visible play button, muted by default',
+      'Choose instrumental or lyrically unobtrusive music',
+      'Pick a track with a gentle opening and a clean loop',
+      'Consider royalty-free libraries or a locally recorded instrumental',
+      'Host the audio file rather than embedding a streaming player',
+      'Keep the file under about 2 MB',
+      'Load audio only on play, not on page load',
+      'Test on mobile data, not wifi',
+    ],
+    faq: [
+      {
+        q: 'Should a wedding invitation website play music automatically?',
+        a: 'No. Guests open invitations at work, on commutes and beside sleeping children, and unexpected audio is the most common reason people close an invitation page. Mobile browsers largely block autoplay anyway, so the result is inconsistent. Use a small, visible play button that is muted by default — guests who want the music will find it.',
+      },
+      {
+        q: 'What kind of music works best on a wedding invitation page?',
+        a: 'Instrumental, with a gentle opening and a clean loop. Guests are reading names and an address, so lyrics compete for attention; instrumental arrangements of familiar film or wedding songs carry the feeling without the distraction. Since guests spend two to four minutes on the page, a short track will loop and an abrupt restart is noticeable.',
+      },
+      {
+        q: 'Is it legal to use a film song on a wedding invitation website?',
+        a: 'An invitation page is a public web page, so a commercial recording is technically a public performance of copyrighted music, though enforcement against a private wedding invitation is essentially unheard of. Royalty-free instrumental libraries carry wide Indian classical and light instrumental catalogues, and a locally recorded instrumental is both properly licensed and more personal.',
+      },
+      {
+        q: 'How large should the audio file be?',
+        a: 'Under about two megabytes, which comfortably fits a three-minute track at a bitrate that sounds fine on phone speakers. Load it only when the guest presses play rather than on page load, so the majority who never play it do not pay the download cost — invitations are opened on mobile data far more often than on wifi.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Browse invitation templates', href: '/templates' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+    ],
+  },
+  'silver-anniversary-invitation-ideas': {
+    intro: `A twenty-fifth wedding anniversary is almost always organised by the children, often as a surprise, and usually for a guest list that has not been in one room since the wedding itself. That combination shapes everything about the invitation.
+
+The couple are not the hosts — their children are. The guests include people from every phase of a twenty-five year marriage. And the tone has to carry genuine warmth without slipping into a eulogy, which is the trap most silver anniversary invitations fall into.
+
+Here is how to handle the wording, the hosting question, and the details that matter for this particular guest list.`,
+    sections: [
+      {
+        heading: 'Who is inviting whom',
+        body: `The first decision is whose voice the invitation is in, and it changes the wording entirely.
+
+Children hosting for their parents is the most common: "We invite you to celebrate twenty-five years of our parents, Sunita and Rajesh." This is warm and clear, and it tells guests immediately that the couple are being honoured rather than hosting.
+
+The couple hosting themselves reads differently: "Twenty-five years ago you celebrated with us. We would love you with us again." This works well for couples who want a reunion rather than a tribute.
+
+A combined format — the family inviting on behalf of everyone — suits larger events with a formal programme.
+
+Decide this before writing anything, because guests read the hosting voice as a signal about what kind of event to expect. A tribute evening and a reunion dinner are different occasions.`,
+      },
+      {
+        heading: 'Wording you can adapt',
+        body: `Children hosting, warm and simple:
+
+- Twenty-five years ago, **Sunita and Rajesh** promised each other forever. We would love you to help us celebrate. Saturday 16 November, 7:30 PM, ITC Grand Maratha, Mumbai. Dinner and a few stories: [link]
+
+Formal, with blessings:
+
+- With gratitude for twenty-five years of love and togetherness, we invite you to the **Silver Jubilee Wedding Anniversary** of our beloved parents, **Smt Sunita and Sri Rajesh Sharma**, on Saturday 16 November at 7:30 PM, ITC Grand Maratha, Mumbai. Your presence and blessings would mean the world to our family.
+
+Couple hosting, reunion tone:
+
+- Twenty-five years, three cities and one very patient marriage later — we are still here, and we would love to see you. Saturday 16 November, 7:30 PM, ITC Grand Maratha, Mumbai: [link]
+
+For a surprise:
+
+- We are celebrating **Mummy and Papa's 25th** and they do not know. Please do not mention it to them. Saturday 16 November, 7:15 PM sharp, ITC Grand Maratha, Mumbai. Details: [link]
+
+For a surprise, put the secrecy request in the first two lines and give an arrival time fifteen minutes before the moment.`,
+      },
+      {
+        heading: 'Details this guest list needs',
+        body: `A silver anniversary guest list spans generations and usually several cities, which creates a specific set of needs.
+
+Travel notice. Guests coming from other cities need three to four weeks, not two. Many of these are people who attended the original wedding and will make the effort if given time.
+
+A programme, if there is one. Speeches, a slideshow, a renewal of vows — say so. Guests who expect a dinner and find a ninety-minute programme have made the wrong arrangements, and the people being asked to speak need notice.
+
+Photographs. Many families ask guests to send old photographs for a slideshow. This request belongs on the invitation with a deadline and a clear place to send them, not as an afterthought two days before.
+
+Gifts. Twenty-five years in, most couples want nothing. "Your presence is the only gift we need" is conventional; if you would prefer contributions to something, say that specifically.`,
+      },
+      {
+        heading: 'Tone: warm, not valedictory',
+        body: `The common failure of anniversary invitations is writing them like a tribute to people who are no longer here.
+
+"Celebrating a lifetime of love and sacrifice" is well meant and reads as heavy. Twenty-five years is a milestone in an ongoing marriage, not a conclusion, and the invitation should sound like the couple are in the room — because they will be.
+
+Specificity helps. "Twenty-five years, four house moves and an unresolved argument about the thermostat" tells guests something true and makes the couple sound alive rather than commemorated.
+
+Humour is welcome here in a way it is not on a wedding invitation. The guests know these two people well; an invitation that sounds like the family wrote it, rather than a template, sets the right tone for the evening.
+
+Keep the formal register for the parents' generation and elders. A separate covering message to that group, more respectful in tone, solves the problem without making the invitation stiff.`,
+      },
+    ],
+    checklist: [
+      'Decide whose voice the invitation is in before writing',
+      'Send three to four weeks ahead for out-of-city guests',
+      'State whether there is a programme, and who is speaking',
+      'Put any request for old photographs on the invitation, with a deadline',
+      'For a surprise, lead with the secrecy request and an early arrival time',
+      'Address the gifts question directly',
+      'Keep the tone celebratory rather than valedictory',
+    ],
+    faq: [
+      {
+        q: 'Who should host a 25th wedding anniversary invitation?',
+        a: 'Most often the children, and the wording should make that clear — "we invite you to celebrate twenty-five years of our parents" tells guests the couple are being honoured rather than hosting. A couple hosting themselves reads as a reunion instead. Decide first, because guests read the hosting voice as a signal about what kind of evening to expect.',
+      },
+      {
+        q: 'How do I word a silver anniversary invitation?',
+        a: 'Lead with the milestone and the couple’s names, then the date, time and venue, then a link. Keep it celebratory rather than valedictory — "celebrating a lifetime of love and sacrifice" reads like a tribute to people who are no longer here. Something specific and lightly humorous works better, because the couple will be in the room.',
+      },
+      {
+        q: 'How far in advance should a silver anniversary invitation go out?',
+        a: 'Three to four weeks, longer than for a local dinner, because the guest list usually spans several cities. Many of these guests attended the original wedding and will travel if given enough notice to arrange it.',
+      },
+      {
+        q: 'How do I ask guests for old photographs for the slideshow?',
+        a: 'Put the request on the invitation itself, with a deadline and a clear place to send them. Asking two days before the event, as an afterthought in a group chat, produces very few photographs and a lot of apologetic messages afterwards.',
+      },
+    ],
+    links: [
+      { label: 'Anniversary invitations', href: '/anniversary-invitation' },
+      { label: 'Anniversary invitation templates', href: '/anniversary-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'golden-anniversary-invitation-wording': {
+    intro: `Fifty years of marriage is a rarer milestone than it used to be, and the invitation carries a weight that a twenty-fifth does not. The guest list includes grandchildren who were not born when the couple married and, increasingly, a generation of the couple's own contemporaries who may find travel difficult.
+
+That changes both the wording and the logistics. The tone leans more formal and more grateful. The practical details — timing, seating, access — matter more than at any other family celebration.
+
+Here is wording for the common formats, and the details that make the day work for the people it is for.`,
+    sections: [
+      {
+        heading: 'Wording for a formal golden anniversary',
+        body: `Fifty years invites a more traditional register than twenty-five, and most families lean into it.
+
+- With hearts full of gratitude, we invite you to celebrate the **Golden Jubilee Wedding Anniversary** of our beloved parents, **Smt Kamala and Sri Venkatesh Rao**, who complete fifty years of married life on Sunday 17 November. Thanksgiving at 11:00 AM, followed by lunch, at Hotel Savera, Chennai. Your presence and blessings would be our greatest joy.
+
+- **Fifty years together.** We invite you to join our family in celebrating the golden wedding anniversary of **Mr and Mrs Joseph D'Souza** on Sunday 17 November. Thanksgiving Mass at 10:00 AM at St Mary's Church, followed by lunch at Hotel Savera. Your blessings mean everything to us: [link]
+
+Where there is a religious component — a thanksgiving service, a homam, a pooja — name it and give its time separately from the meal. Guests of the couple's generation will want to attend the service specifically, and they will plan their day around it.
+
+Name both partners in full, with the honorifics the family uses. At this milestone, formality reads as respect rather than distance.`,
+      },
+      {
+        heading: 'Wording for a warmer family celebration',
+        body: `Not every golden anniversary wants a formal register, particularly where the couple are in good health and the event is a family lunch rather than a reception.
+
+- **Fifty years!** Amma and Appa are celebrating half a century of marriage, and we would love you there. Sunday 17 November, 12:30 PM, at home in Adyar. Lunch, cake, and Appa's stories, which you have all heard before: [link]
+
+- Our grandparents **Kamala and Venkatesh** are completing fifty years together. Join us for lunch on Sunday 17 November, 12:30 PM, Hotel Savera, Chennai. Four children, nine grandchildren and one great-grandchild later, they are still the best thing that happened to this family.
+
+The specificity — the numbers, the detail about the stories — does the work. It tells guests this was written by the family rather than copied, and it sounds like the couple are present and well, which matters.
+
+Keep this register for family and friends, and send a more formal covering message to the couple's contemporaries and to elders.`,
+      },
+      {
+        heading: 'Logistics for the couple’s generation',
+        body: `The guests who matter most at a golden anniversary are often in their seventies and eighties. The invitation should be written with them in mind.
+
+Timing. Daytime is easier than evening. A lunch beginning at midday is far more accessible than a dinner ending at eleven, and most families schedule accordingly.
+
+Access. Say whether there are stairs, whether there is a lift, and whether seating is provided throughout rather than only at the meal. Guests will not ask; they will simply decide not to come.
+
+Drop-off and parking. Name the entrance where cars can drop guests, and whether there is assistance. For guests using walking aids, this is the detail that decides attendance.
+
+Duration. State a finish time. Guests planning to attend for two hours need to know whether the event runs to three or to six.
+
+Transport. If several guests are coming from one area, arranging shared transport and saying so on the invitation makes a real difference.`,
+      },
+      {
+        heading: 'Gifts, speeches and photographs',
+        body: `Three recurring questions, all better answered on the invitation than individually.
+
+Gifts. At fifty years, most couples genuinely want none. "Your presence and blessings are the only gift we need" is the standard phrasing. Families who would prefer a donation to a cause the couple care about should say so specifically, with the cause named.
+
+Speeches. If there is a programme, say who is speaking and roughly how long it runs. Guests who are being asked to speak need weeks of notice, not a mention at the venue.
+
+Photographs. Golden anniversaries almost always involve a slideshow, and the photographs come from the guests. Ask on the invitation, give a deadline several weeks out, and name one person to send them to. Photographs from fifty years ago are frequently in physical albums, and guests need time to find and scan them.
+
+Finally, leave the invitation page live afterwards. For an event like this, families often add the photographs from the day, and guests return to it.`,
+      },
+    ],
+    checklist: [
+      'Name both partners in full with the family’s honorifics',
+      'Give the service or pooja time separately from the meal',
+      'Schedule daytime rather than evening where possible',
+      'State stairs, lifts, seating and drop-off arrangements',
+      'Give a finish time as well as a start time',
+      'Ask for old photographs early, with a deadline and one contact',
+      'Name who is speaking if there is a programme',
+      'Address the gifts question directly on the page',
+    ],
+    faq: [
+      {
+        q: 'How do you word a golden wedding anniversary invitation?',
+        a: 'Fifty years invites a more formal register than twenty-five. Name both partners in full with the honorifics your family uses, state the milestone, give the thanksgiving service or pooja time separately from the meal, and ask for the guests’ blessings. Where the couple are in good health and the event is a family lunch, a warmer and more specific tone works well — the detail is what makes it sound written rather than copied.',
+      },
+      {
+        q: 'What time of day should a 50th anniversary celebration be?',
+        a: 'Daytime. A lunch beginning around midday is considerably more accessible than a dinner ending late, and the guests who matter most at this milestone are often in their seventies and eighties. Give a finish time as well as a start time so guests can plan how long to stay.',
+      },
+      {
+        q: 'What access details should a golden anniversary invitation include?',
+        a: 'Stairs and lifts, whether seating is available throughout rather than only at the meal, and where cars can drop guests near the entrance. Guests using walking aids will rarely ask about these — they will simply decide not to attend. If several guests are travelling from one area, arranging shared transport and saying so on the invitation makes a real difference.',
+      },
+      {
+        q: 'How early should I ask guests for old photographs?',
+        a: 'Several weeks ahead, with a deadline and one named person to send them to. Photographs from fifty years ago are usually in physical albums, so guests need time to find them and get them scanned. Asking a few days before produces very little.',
+      },
+    ],
+    links: [
+      { label: 'Anniversary invitations', href: '/anniversary-invitation' },
+      { label: 'Anniversary invitation templates', href: '/anniversary-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+    ],
+  },
+  'corporate-event-invitation-email-and-whatsapp-ideas': {
+    intro: `Corporate event invitations in India now travel on two channels at once — email for the record, WhatsApp for the response. Sending only one produces predictable failures: email-only invitations get buried and produce poor attendance, WhatsApp-only invitations look informal for anything client-facing and leave no trail.
+
+The two channels need different writing. An email can carry an agenda; a WhatsApp message cannot. An email is addressed to one person; a WhatsApp message gets forwarded to a team.
+
+Here is how to write for each, and how to sequence them.`,
+    sections: [
+      {
+        heading: 'What email does well',
+        body: `Email is the right channel when the invitation needs to be formal, carry detail, or exist as a record.
+
+Use it for client-facing events, anything with a registration requirement, anything where the agenda matters, and anything an attendee needs to forward to a manager for approval. The subject line does most of the work: put the event, the date and the action in it. "Annual Partner Meet — 14 Dec, Bengaluru — RSVP by 5 Dec" outperforms "You're invited!" by a wide margin.
+
+Keep the body short regardless. Event, date, time, venue, who it is for, what will happen, what you need from the recipient, and a link. An agenda belongs below that or on the linked page, not in the opening paragraph.
+
+Include a calendar attachment or an add-to-calendar link. For corporate attendees this is the single most useful element, and it is the one most often omitted.`,
+      },
+      {
+        heading: 'What WhatsApp does well',
+        body: `WhatsApp is where responses actually happen, and where internal events reach people who do not read internal email.
+
+Keep it to four lines: what, when, where, link. Anything longer is scrolled past on a phone.
+
+- *Annual Partner Meet* — Sat 14 Dec, 6 PM, The Leela, Bengaluru. Dinner and a short programme. Details and RSVP: [link]
+
+For internal team events, WhatsApp usually outperforms email substantially, because the team group is where people actually are. For external and client-facing events, WhatsApp should follow email rather than replace it — a first contact by WhatsApp reads as informal for a client relationship.
+
+Assume forwarding. A WhatsApp invitation to a partner will be passed to their team, so it needs to make sense without the context of your relationship with the recipient.`,
+      },
+      {
+        heading: 'Sequencing the two',
+        body: `The pattern that works for anything with an RSVP.
+
+Email first, two to three weeks out, with the full detail and the calendar link. This is the formal invitation and the record.
+
+WhatsApp second, a day or two later, short, with the same link. This is what generates the response. Reference the email briefly — "sent you the details by email as well" — so it does not read as a duplicate.
+
+Reminder on WhatsApp, two to three days before. Email reminders at this stage are largely ignored; a short WhatsApp message is not.
+
+Day-before message with the practical details: venue entrance, parking, dress code, what time to arrive. For corporate venues in business districts, parking information genuinely affects whether people come.
+
+Keep the RSVP in one place. Asking for replies to both an email and a WhatsApp message produces two partial lists that have to be reconciled.`,
+      },
+      {
+        heading: 'Wording for common corporate events',
+        body: `Client or partner event, email subject and opening:
+
+- Subject: **Annual Partner Meet — 14 Dec, Bengaluru — RSVP by 5 Dec**
+- Dear Mr Sharma, we would be glad to have you join us for our Annual Partner Meet on Saturday 14 December at The Leela Palace, Bengaluru, from 6:00 PM. The evening includes a short business update, dinner, and time to meet the wider team. Please let us know by 5 December if you are able to attend. Full details and directions: [link]
+
+Internal team event, WhatsApp:
+
+- Team — *Quarterly Offsite* is confirmed 🎉 Friday 20 Dec, 9 AM to 6 PM, Taj Yeshwantpur. Sessions in the morning, activities after lunch, dinner optional. Agenda and travel details: [link]
+
+Product launch or seminar:
+
+- Subject: **Invitation: Launch of [Product] — 14 Dec, 4 PM, Bengaluru**
+- We are launching [Product] on Saturday 14 December and would like you there. A short demonstration at 4:00 PM, followed by refreshments and Q&A. Register here: [link]
+
+In all three, the action required appears in the first two lines, and the link carries the agenda.`,
+      },
+    ],
+    checklist: [
+      'Put event, date and required action in the email subject line',
+      'Keep the email body short; agenda goes below or on the linked page',
+      'Include a calendar attachment or add-to-calendar link',
+      'Follow email with a short WhatsApp message carrying the same link',
+      'Keep WhatsApp to four lines: what, when, where, link',
+      'Collect RSVPs in one place, not across both channels',
+      'Send a day-before message with venue entrance, parking and dress code',
+    ],
+    faq: [
+      {
+        q: 'Should corporate invitations go by email or WhatsApp?',
+        a: 'Both, in that order. Email carries the formality, the detail and the record, and is what an attendee forwards to a manager for approval. WhatsApp is where responses actually happen and where internal events reach people who do not read internal email. For client-facing events, WhatsApp should follow email rather than replace it — a first approach by WhatsApp reads as informal for a client relationship.',
+      },
+      {
+        q: 'What should a corporate event email subject line say?',
+        a: 'The event, the date and the required action: "Annual Partner Meet — 14 Dec, Bengaluru — RSVP by 5 Dec". Subject lines like "You’re invited!" perform noticeably worse because they carry no information a recipient can act on while scanning an inbox.',
+      },
+      {
+        q: 'How long should a corporate WhatsApp invitation be?',
+        a: 'Four lines: what, when, where, and a link. Anything longer is scrolled past on a phone. Assume it will be forwarded to people who do not know your relationship with the original recipient, so it should make sense on its own.',
+      },
+      {
+        q: 'When should reminders be sent for a corporate event?',
+        a: 'A WhatsApp reminder two to three days before, and a short practical message the day before covering the venue entrance, parking and dress code. Email reminders at that stage are largely ignored. For venues in business districts, parking information genuinely affects attendance.',
+      },
+    ],
+    links: [
+      { label: 'Browse invitation templates', href: '/templates' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+    ],
+  },
+  'office-party-invitation-templates-for-teams': {
+    intro: `Office party invitations have a harder job than they look. They are addressed to people who are obliged to receive them, may not want to attend, and will read the tone carefully for signals about whether attendance is genuinely optional.
+
+Get it wrong and you produce either resentment — an invitation that reads as a mandatory evening — or an empty room. The difference is usually a few words about timing, cost and whether partners are included.
+
+Here are templates for the common occasions, and the details that decide turnout.`,
+    sections: [
+      {
+        heading: 'The four questions people actually have',
+        body: `Whatever the occasion, colleagues are silently asking the same things.
+
+Is this in work hours or my own time? An event ending at 6 PM reads very differently from one starting at 8. Say the finish time; its absence reads as open-ended.
+
+Do I have to pay for anything? If the company is covering everything, say so explicitly. If there is a contribution — a Secret Santa budget, a share of the bill — state the amount upfront rather than raising it afterwards.
+
+Are partners or families included? This is the most common unasked question, and silence is read as no. Say either way.
+
+Is it actually optional? If attendance is genuinely voluntary, the invitation should sound like it. "Hope you can make it" reads differently from "Attendance is expected."
+
+An invitation answering these four gets a far better response than one with a nicer design.`,
+      },
+      {
+        heading: 'Templates for common occasions',
+        body: `Year-end or Diwali party:
+
+- 🎉 *Team Diwali celebration* — Friday 25 Oct, 6:30 PM onwards, The Terrace, Koramangala. Dinner and drinks on the house, partners very welcome. Ends by 10 PM. Let us know if you are coming: [link]
+
+Team lunch or smaller gathering:
+
+- *Team lunch* this Friday 🍽 12:30 PM, Toit, Indiranagar. On the company. Blocking the afternoon so nobody has to rush back. RSVP by Wednesday: [link]
+
+Farewell:
+
+- After four years, *Priya is moving on*. Drinks to send her off — Thursday 14 Nov, 6:30 PM, Arbor Brewing. Come say goodbye properly: [link]
+
+Work anniversary or milestone:
+
+- *Ten years of [Company]* 🥂 Saturday 16 Nov, 7 PM, The Leela Palace. Dinner, a short programme, and partners welcome. Details: [link]
+
+Offsite:
+
+- *Quarterly offsite* confirmed — Friday 20 Dec, 9 AM to 6 PM, Taj Yeshwantpur. Sessions in the morning, activities after lunch, dinner optional. Travel arranged from the office at 8 AM. Agenda: [link]
+
+Each of these names the finish time, the cost position and whether partners are included, in under forty words.`,
+      },
+      {
+        heading: 'Timing that respects people’s lives',
+        body: `Turnout is decided more by when you schedule than by what you write.
+
+Weekday evenings work better than weekends. A Saturday office party takes a full day from people with families, and the resentment outweighs the goodwill the event was meant to build.
+
+Early evening beats late. Starting at 6:30 and finishing by 10 allows people with childcare or long commutes to attend. An 8 PM start effectively excludes them.
+
+Give two weeks' notice for anything outside work hours. Colleagues have lives that require arranging, and a Thursday invitation for a Friday evening reads as thoughtless.
+
+Avoid the week of major festivals and the last week of a quarter for sales teams. This sounds obvious and is scheduled over constantly.
+
+If attendance is genuinely voluntary and some people will not come, plan for that rather than chasing them. Chasing turns an optional event into an obligation, which is what the invitation was trying to avoid.`,
+      },
+      {
+        heading: 'Inclusion details that matter',
+        body: `A few things that decide whether people feel welcome.
+
+Food. Say what is available — vegetarian, Jain, halal, non-alcoholic options. Colleagues who cannot eat what is served will quietly not attend, and will not tell you why.
+
+Alcohol. If the event is built around drinking, say what else is available. Teams are mixed, and an invitation that mentions only drinks signals the evening is not for everyone.
+
+Partners and families. Be explicit. "Partners welcome" and "team only" are both fine; silence is read as exclusion.
+
+Accessibility. Venue with stairs and no lift, or floor seating, should be flagged.
+
+Venue choice itself. A loud bar excludes people who want to talk; a formal restaurant excludes people who want to relax. For a team event, somewhere with both a quieter area and a livelier one usually works better than either extreme.`,
+      },
+    ],
+    checklist: [
+      'State the finish time, not just the start',
+      'Say clearly who is paying and whether any contribution is expected',
+      'Say explicitly whether partners and families are included',
+      'Make clear whether attendance is genuinely optional',
+      'Give two weeks’ notice for anything outside work hours',
+      'Name the food options, including vegetarian and non-alcoholic',
+      'Flag stairs, lifts or floor seating',
+      'Avoid weekends, festival weeks and quarter-end',
+    ],
+    faq: [
+      {
+        q: 'What should an office party invitation include?',
+        a: 'The finish time as well as the start, who is paying and whether any contribution is expected, whether partners are included, and whether attendance is genuinely optional. Colleagues are silently asking those four questions, and an invitation that answers them gets a far better response than one with a nicer design.',
+      },
+      {
+        q: 'When is the best time to schedule an office party?',
+        a: 'A weekday evening starting around 6:30 and finishing by 10. Weekends take a full day from people with families, and a late start effectively excludes anyone with childcare or a long commute. Give two weeks’ notice for anything outside work hours, and avoid festival weeks and quarter-end.',
+      },
+      {
+        q: 'Should office party invitations say whether partners are invited?',
+        a: 'Always. It is the most common unasked question, and silence is read as no. Both "partners welcome" and "team only" are perfectly fine to state — what causes awkwardness is leaving people to guess and getting it wrong on the night.',
+      },
+      {
+        q: 'How do I make an office event feel optional rather than mandatory?',
+        a: 'Write it that way and then act accordingly. "Hope you can make it" reads very differently from "attendance is expected". If some people do not come, plan around it rather than chasing them — chasing converts an optional event into an obligation, which is the outcome the wording was meant to avoid.',
+      },
+    ],
+    links: [
+      { label: 'Browse invitation templates', href: '/templates' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+    ],
+  },
+  'best-fonts-for-indian-wedding-invitations': {
+    intro: `Font choice on an Indian wedding invitation used to be a print decision. Now it is mostly a screen decision, and the rules are different. A script that looks exquisite at 300 dpi on textured card can be genuinely unreadable at 14 pixels on a mid-range Android phone in daylight.
+
+The constraint that matters is not elegance. It is whether a sixty-eight year old relative can read the venue name without zooming, on a phone, outdoors.
+
+Here is how to pair fonts for invitations that are read on screens, and the specific failures to avoid.`,
+    sections: [
+      {
+        heading: 'The two-font structure',
+        body: `Almost every good invitation uses exactly two typefaces, each with a job.
+
+A display face for the names and the main heading. This carries the character — a serif with some warmth, or a restrained script. It appears at large sizes only, where its detail is visible and its quirks are an asset.
+
+A body face for everything else: dates, times, venue, address, schedule. This should be plainly legible and boring in the best sense. A clean sans-serif or a simple serif does this job; the reader should not notice it at all.
+
+The failure mode is using the display face for body text. A script that is beautiful on "Priya & Arjun" at 48 pixels becomes a struggle on "Sri Venkateswara Kalyana Mandapam, 4th Cross, Malleswaram" at 14. Guests then zoom, or give up and message you.
+
+Three or more typefaces almost always looks unresolved. Two, used consistently, looks deliberate.`,
+      },
+      {
+        heading: 'Scripts: where they work and where they do not',
+        body: `Scripts carry the romance of a wedding invitation, and there is a narrow band where they work well.
+
+Use them for: the couple's names, a single line such as "Together with our families", and the occasion heading. Large, short, and surrounded by space.
+
+Do not use them for: any address, any time, any number, any schedule, or anything in capitals. Scripts in all caps are close to unreadable, and script numerals are frequently ambiguous — a script 3 and 8 are easy to confuse, which matters a great deal on a date.
+
+Prefer scripts with moderate contrast between thick and thin strokes. Very high-contrast scripts lose their thin strokes entirely on low-density screens, which breaks letterforms apart.
+
+If the wedding has a traditional register, a well-set serif often carries more gravity than a script. Scripts read as romantic; serifs read as formal. Those are different things, and Indian wedding invitations frequently want the second.`,
+      },
+      {
+        heading: 'Devanagari, Tamil and other Indic scripts',
+        body: `Invitations that include Hindi, Tamil, Telugu, Kannada, Bengali or Gujarati text need care, because font support varies more than for Latin.
+
+Use a font that genuinely supports the script rather than relying on a fallback. A missing glyph renders as a box, and a box in a relative's name on a wedding invitation is not a small error. Check the rendered output on an actual phone, not only in the design tool.
+
+Match the visual weight between scripts. Latin and Devanagari set at the same point size often look mismatched, because Devanagari has a larger apparent size. Setting the Indic text slightly smaller usually balances it.
+
+Give Indic scripts more line spacing than Latin. Conjuncts and vowel marks extend above and below the line, and tight leading causes them to collide.
+
+Where an invitation is bilingual, keep one language's block complete rather than alternating line by line. Guests read one and skip the other.`,
+      },
+      {
+        heading: 'Sizes that work on phones',
+        body: `Concrete minimums for an invitation read on a phone.
+
+Body text: at least 16 pixels. Below that, older readers struggle, and it is the size at which most guests give up and message you instead of reading.
+
+Address and schedule: 16 pixels minimum, and preferably not in a light weight. Light weights at small sizes lose contrast badly on lower-quality screens.
+
+Names and headings: whatever looks right, usually 32 to 56 pixels on a phone. This is where the display face earns its place.
+
+Contrast matters as much as size. Cream text on a pale gold background is a recurring failure — it looks refined on a laptop and disappears in sunlight. Test the invitation outdoors on a phone at medium brightness. If you cannot read the venue at arm's length, neither can your guests.
+
+Avoid setting long lines in all capitals. Capitals slow reading substantially, and a venue address in caps is noticeably harder than the same text in sentence case.`,
+      },
+    ],
+    checklist: [
+      'Use exactly two typefaces — one display, one body',
+      'Never set addresses, times or numbers in a script face',
+      'Avoid very high-contrast scripts, which break up on low-density screens',
+      'Verify Indic script support on a real phone, not just the design tool',
+      'Set Indic text slightly smaller and with more line spacing than Latin',
+      'Keep body text at 16 pixels or larger',
+      'Avoid light weights at small sizes',
+      'Test outdoors on a phone at medium brightness',
+    ],
+    faq: [
+      {
+        q: 'What fonts work best for Indian wedding invitations?',
+        a: 'Two typefaces: a display face — a warm serif or a restrained script — for the couple’s names and the main heading, and a plainly legible body face for dates, times, venue and schedule. The most common mistake is using the display face for body text, where a script that looks beautiful at 48 pixels becomes a struggle on a venue address at 14.',
+      },
+      {
+        q: 'Should I use a script font on a wedding invitation?',
+        a: 'For the names, the occasion heading and perhaps one short line — large, short and surrounded by space. Never for addresses, times, numbers or anything in capitals. Script numerals are frequently ambiguous, which matters a great deal on a date, and scripts in all caps are close to unreadable.',
+      },
+      {
+        q: 'How do I handle Hindi or Tamil text on an invitation?',
+        a: 'Use a font that genuinely supports the script rather than relying on a fallback, and check the result on a real phone — a missing glyph renders as a box, and a box in a relative’s name is not a small error. Set Indic text slightly smaller than Latin at the same point size, and give it more line spacing, since conjuncts and vowel marks extend above and below the line.',
+      },
+      {
+        q: 'What is the minimum font size for a digital invitation?',
+        a: 'Sixteen pixels for body text, addresses and schedules, and avoid light weights at those sizes. Contrast matters as much as size: cream text on pale gold looks refined on a laptop and disappears outdoors. Test on a phone at medium brightness in daylight — if you cannot read the venue at arm’s length, neither can your guests.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+    ],
+  },
+  'color-palettes-for-indian-wedding-e-invites': {
+    intro: `Colour on a printed wedding card and colour on a digital invitation behave differently, and most palette advice is still written for print. Gold foil catches light on card; the same gold as a flat screen colour looks like mustard. Deep maroon is rich on paper and can be nearly black on a phone at low brightness.
+
+An e-invite palette has to survive being viewed on a cheap screen, outdoors, at whatever brightness the guest happens to have. That constraint rules out several combinations that look beautiful in a design tool.
+
+Here are palettes that hold up, and the specific pairings that fail.`,
+    sections: [
+      {
+        heading: 'Palettes that work on screens',
+        body: `Four combinations that consistently read well on phones and still feel like Indian wedding invitations.
+
+**Ivory and deep gold.** A warm off-white background with a strong gold for headings and a dark brown-grey for body text. The classic register, and the most forgiving because the background is light and body text can be genuinely dark.
+
+**Maroon and cream.** Deep maroon as an accent and section background, cream for text sitting on it, dark text on cream elsewhere. Traditional and high-contrast, provided the maroon is dark enough that cream text on it is clearly legible.
+
+**Teal and antique gold.** Less common and increasingly popular for South Indian weddings. Works because teal is dark enough to carry light text and distinct enough from the usual red-gold palette to feel considered.
+
+**Blush, sage and ivory.** The contemporary choice. Soft, but only workable if body text is a genuine dark grey rather than a mid-tone — soft palettes fail when the text is also soft.
+
+In each case the pattern is the same: a light background for the bulk of the text, with saturated colour used for accents and section blocks rather than behind paragraphs.`,
+      },
+      {
+        heading: 'Combinations that fail on phones',
+        body: `The recurring failures, all of which look fine on a laptop.
+
+Gold text on cream. The most common mistake on Indian invitations. Gold is a mid-tone and cream is a light tone, so contrast is low, and in sunlight it vanishes. Gold works as an accent, a border or a large heading — not as body text.
+
+White text on pale pink or peach. Same problem, and worse outdoors.
+
+Dark text on a dark photograph. Text over a background image is where invitations most often become unreadable, because the image varies behind the text. If you must, add a solid overlay behind the text rather than relying on the image being dark enough.
+
+Maroon text on maroon-tinted backgrounds. Tonal palettes look sophisticated and read as mush at 14 pixels.
+
+Pure black on pure white. Not unreadable, but harsh, and it reads as a document rather than an invitation. A very dark brown or grey on an off-white is warmer and just as legible.`,
+      },
+      {
+        heading: 'Using colour to structure the page',
+        body: `On a digital invitation, colour does a job it does not do on a card: it separates sections on a long scrolling page.
+
+Alternate background tones between sections — ivory for the names and date, a deeper tone for the schedule, back to ivory for the gallery. This gives guests a sense of progress as they scroll and makes individual sections findable when someone returns to check the venue.
+
+Keep the number of background tones to two or three. More reads as busy and makes the page feel longer than it is.
+
+Use one accent colour consistently for anything interactive — the Maps button, the RSVP button, links. If the accent is also used decoratively everywhere, guests stop noticing it and miss the buttons.
+
+Reserve the strongest colour for the single most important action. On most invitations that is the directions button.`,
+      },
+      {
+        heading: 'Checking a palette properly',
+        body: `Three tests, each of which catches a different failure.
+
+Outdoors on a phone at medium brightness. This is the real viewing condition for a large share of guests and it eliminates low-contrast pairings immediately.
+
+On a cheap Android screen. Colour reproduction on budget phones is noticeably different — saturated reds shift, subtle tonal differences disappear. If a palette depends on distinguishing two close tones, it will fail here.
+
+In greyscale. Convert a screenshot to black and white. If headings, body text and buttons are still clearly distinguishable, the contrast is carried by lightness rather than hue, which is what makes a palette robust — and what makes it work for colour-blind guests.
+
+If a palette passes all three, it will hold up on every device your guest list owns.`,
+      },
+    ],
+    checklist: [
+      'Keep a light background behind the bulk of the text',
+      'Use saturated colour for accents and section blocks, not behind paragraphs',
+      'Never set body text in gold on cream',
+      'Add a solid overlay behind any text sitting over a photograph',
+      'Limit background tones to two or three across the page',
+      'Reserve one accent colour for buttons and links only',
+      'Test outdoors, on a budget Android, and in greyscale',
+    ],
+    faq: [
+      {
+        q: 'What colour palettes work best for digital wedding invitations?',
+        a: 'Ivory with deep gold, maroon with cream, teal with antique gold, or blush and sage with ivory. In each case the structure is the same — a light background behind most of the text, with saturated colour used for accents and section blocks rather than behind paragraphs. Palettes that put mid-tone text on light backgrounds fail outdoors.',
+      },
+      {
+        q: 'Why does gold text not work on digital invitations?',
+        a: 'On a printed card, gold is foil that catches the light. On a screen it is a flat mid-tone, so gold text on a cream background has low contrast and becomes hard to read in sunlight. Gold works well as an accent, a border or a large heading — just not as body text.',
+      },
+      {
+        q: 'How do I make text readable over a background photograph?',
+        a: 'Put a solid or strongly tinted overlay behind the text rather than relying on the image being dark enough. Images vary behind the text as the page scrolls and across different crops on different screen widths, so text that is legible on one phone can disappear on another.',
+      },
+      {
+        q: 'How can I check whether an invitation palette works?',
+        a: 'Three tests. View it outdoors on a phone at medium brightness, which is the real condition for many guests. View it on a budget Android, where colour reproduction differs and close tones merge. And convert a screenshot to greyscale — if headings, text and buttons are still distinguishable, the contrast is carried by lightness rather than hue, which also makes it work for colour-blind guests.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+    ],
+  },
+  'minimal-wedding-invitation-design-ideas': {
+    intro: `Minimal wedding invitations are harder than ornate ones, because there is nothing to hide behind. An elaborate design can carry a weak layout; a minimal one cannot. Every spacing decision is visible.
+
+There is also a specifically Indian tension here. Minimal design signals restraint and contemporary taste, but an Indian wedding invitation still has obligations — both families named, the ceremony properly described, elders addressed. Minimalism done carelessly reads as omitting people, which is a different message from the one intended.
+
+Here is how to design a genuinely minimal invitation that still does everything an Indian invitation has to do.`,
+    sections: [
+      {
+        heading: 'What minimal actually means here',
+        body: `Minimal is not the same as sparse. It means every element earns its place, not that elements are deleted.
+
+An invitation that removes the parents' names to look cleaner has not become minimal; it has become incomplete, and in most Indian families it will be read as a slight. The same applies to dropping the invocation or compressing the ceremony schedule into one line.
+
+What minimalism should remove instead: decorative borders that do nothing, background patterns behind text, drop shadows, multiple accent colours, three typefaces where two would do, and photographs used as texture rather than content.
+
+The test is whether removing an element loses information or loses noise. A gold filigree border loses nothing. A parent's name loses a great deal.
+
+Done properly, a minimal Indian invitation carries the same information as an ornate one and simply presents it with more air and less ornament.`,
+      },
+      {
+        heading: 'Space is the design',
+        body: `In a minimal layout, the spacing does the work that decoration does elsewhere, which means the spacing has to be deliberate rather than default.
+
+Group related information tightly and separate unrelated information generously. The date and time belong close together; the venue block should sit clearly apart from them. Guests read groupings before they read words, and correct grouping is what makes a sparse layout feel organised rather than empty.
+
+Be consistent. If sections are separated by a given amount of space, use the same amount everywhere. Inconsistent spacing is invisible when there is ornament to distract from it and glaring when there is not.
+
+Give the names room. On a minimal invitation the couple's names are the single focal point, and crowding them with a date immediately below undercuts the whole approach.
+
+Do not fill space because it looks empty. Empty space on a minimal invitation is the point; the instinct to add a motif is what turns minimal into merely plain-with-decoration.`,
+      },
+      {
+        heading: 'A restrained palette',
+        body: `Minimal invitations usually work best with two colours and one accent, and on screens the choices narrow further.
+
+Off-white or warm ivory background, a dark warm grey or deep brown for text, and one accent — a muted gold, a sage, a terracotta — used for a rule, a heading, or the directions button.
+
+Avoid pure black on pure white. It is technically the most minimal and it reads as a document rather than an invitation. A very dark brown on ivory is warmer and equally legible.
+
+Resist the urge to make the accent subtle to the point of invisibility. A pale accent on a pale background is not restraint; it is a contrast failure, and it disappears entirely when a guest opens the invitation outdoors.
+
+Use the accent sparingly and consistently — ideally for the one action you want guests to take, which on most invitations is opening directions.`,
+      },
+      {
+        heading: 'Where minimal invitations go wrong',
+        body: `Four recurring failures.
+
+Too little information. Guests still need the schedule, the specific hall, parking and a map. Minimalism applies to visual treatment, not to content. An invitation that omits the schedule to look clean generates the messages the invitation was meant to prevent.
+
+Type too small. Minimal designs tend toward small, light type, which fails for older guests on phones. Keep body text at 16 pixels or above and avoid light weights.
+
+Thin rules that vanish. Hairline dividers at one pixel often disappear on lower-density screens. Use something with a little weight.
+
+Excessive centring. Every line centred on a long page makes the text hard to scan, because the eye has no consistent starting point. Centre the names and the headline; left-align the schedule and the address.`,
+      },
+    ],
+    checklist: [
+      'Keep every obligation — both families, invocation, full schedule',
+      'Remove ornament, not information',
+      'Group related details tightly; separate unrelated blocks generously',
+      'Use consistent spacing throughout',
+      'Two colours and one accent; avoid pure black on pure white',
+      'Keep body text at 16px or larger, and avoid light weights',
+      'Avoid hairline rules that disappear on low-density screens',
+      'Centre the names; left-align schedules and addresses',
+    ],
+    faq: [
+      {
+        q: 'What makes a minimal wedding invitation work?',
+        a: 'Deliberate spacing and a restrained palette, with every obligation still intact. Minimal means removing ornament — borders, background patterns, shadows, extra typefaces — not removing information. In a sparse layout the spacing does the work decoration does elsewhere, so it has to be consistent and considered rather than left at defaults.',
+      },
+      {
+        q: 'Can an Indian wedding invitation be minimal and still traditional?',
+        a: 'Yes, provided minimalism is applied to the visual treatment rather than the content. Both families’ names, the invocation and the full ceremony schedule should stay. Removing the parents’ names to achieve a cleaner look is the most common mistake, and in most Indian families it reads as excluding the people hosting the wedding.',
+      },
+      {
+        q: 'What colours suit a minimal wedding invitation?',
+        a: 'An off-white or ivory background, dark warm grey or deep brown text, and one muted accent such as gold, sage or terracotta used for a rule or the directions button. Avoid pure black on pure white, which reads as a document rather than an invitation, and avoid making the accent so pale that it disappears outdoors.',
+      },
+      {
+        q: 'What are the common mistakes in minimal invitation design?',
+        a: 'Type that is too small or too light for older guests on phones, hairline rules that vanish on low-density screens, centring every line so the text is hard to scan, and cutting genuinely useful information — the schedule, the specific hall, parking — in the name of looking clean.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+  'royal-wedding-invitation-design-ideas': {
+    intro: `Royal invitation design draws on a specific visual vocabulary — the palace card, the Art Deco border, the deep jewel tone and antique gold. It is the most popular register for Indian wedding invitations and the easiest to get wrong, because the line between opulent and cluttered is thin.
+
+The most common failure is additive: a gold border, plus a motif, plus a script, plus a textured background, plus a monogram, plus a foil effect. Each element is fine; together they compete, and the couple's names disappear into the decoration.
+
+Here is how the royal style works, and how to keep it grand without losing legibility.`,
+    sections: [
+      {
+        heading: 'The vocabulary and where it comes from',
+        body: `The royal register in Indian invitations borrows from a few identifiable sources, and knowing which you are drawing on keeps a design coherent.
+
+Rajasthani and Mughal court motifs — jharokha arches, jaali screens, paisley and floral borders. These carry warmth and are strongly associated with North Indian weddings.
+
+Art Deco and palace-hotel styling — symmetrical geometry, stepped forms, strong verticals in gold on navy or black. This is the register of the 1930s princely states and reads as more restrained and more modern.
+
+South Indian temple architecture — gopuram silhouettes, kolam patterns, deep red and gold. Distinct from the Mughal vocabulary and appropriate for a different set of ceremonies.
+
+Choose one and stay in it. Mixing a jaali border with Art Deco geometry and a temple silhouette produces something that reads as generically ornate rather than deliberately regal.`,
+      },
+      {
+        heading: 'Making gold work on a screen',
+        body: `Gold is central to the royal look and it behaves badly on screens, because on paper it is foil catching light and on screen it is a flat mid-tone yellow-brown.
+
+Use gold for ornament, borders, rules and large headings — never for body text. Gold on cream is the single most common legibility failure on Indian invitations, and outdoors it effectively disappears.
+
+A gradient rather than a flat fill helps considerably. A gold that shifts from a deeper bronze to a lighter champagne across a shape reads as metallic in a way a flat colour never does.
+
+Gold on dark backgrounds works far better than gold on light. Antique gold on deep navy, maroon or near-black carries genuine richness and gives enough contrast for larger text to be legible.
+
+Keep body text out of the gold entirely. On a dark royal palette, use a warm off-white or a pale champagne for paragraphs and reserve gold for the decorative layer.`,
+      },
+      {
+        heading: 'Dark palettes without losing readability',
+        body: `Royal designs are frequently dark, and dark backgrounds carry specific risks on phones.
+
+Body text on a dark background should be an off-white rather than pure white, which glares at night, and it needs a slightly larger size and a slightly heavier weight than the same text on a light background. Light text on dark reads thinner than it measures.
+
+Give dark designs more line spacing. Text on dark backgrounds is harder to track line to line, and generous leading compensates.
+
+Watch the schedule block in particular. A ceremony schedule set in a light weight on a dark maroon background at 14 pixels is where royal invitations most often become unreadable, and it is exactly the block guests return to.
+
+Test at low screen brightness. Many guests read invitations at night with brightness turned down, and a dark design that looks dramatic at full brightness can become an unreadable near-black rectangle.`,
+      },
+      {
+        heading: 'Keeping ornament in its place',
+        body: `The discipline that separates a grand invitation from a cluttered one is restricting ornament to the edges and the headings.
+
+Borders belong at the frame. Motifs belong at section breaks and corners. The centre of the composition — where the names, date, venue and schedule live — should be comparatively plain, because that is where reading happens.
+
+Never place a pattern behind body text. A jaali or paisley texture behind a paragraph destroys legibility even at low opacity, and it is the most frequent single mistake in the royal register.
+
+Use one ornamental motif and repeat it at different scales rather than introducing several. Repetition reads as a design system; variety reads as indecision.
+
+Symmetry carries a lot of the regal feeling on its own. A perfectly symmetrical layout with a single well-drawn border often reads as more expensive than a busier design with five decorative elements.`,
+      },
+    ],
+    checklist: [
+      'Choose one visual vocabulary — Mughal, Art Deco or temple — and stay in it',
+      'Use gold for ornament and headings, never for body text',
+      'Prefer a gold gradient over a flat gold fill',
+      'On dark backgrounds use off-white text, slightly larger and heavier',
+      'Give dark designs more line spacing',
+      'Never place a pattern behind body text',
+      'Keep ornament at the edges; keep the centre plain',
+      'Test at low screen brightness as well as full',
+    ],
+    faq: [
+      {
+        q: 'What makes a royal wedding invitation design work?',
+        a: 'Committing to one visual vocabulary — Mughal and Rajasthani motifs, Art Deco palace styling, or South Indian temple forms — and keeping ornament at the edges while the centre stays plain. The common failure is additive: a border plus a motif plus a script plus a texture plus a monogram, each fine alone, together burying the couple’s names.',
+      },
+      {
+        q: 'How do I make gold look good on a digital invitation?',
+        a: 'Use a gradient rather than a flat fill — gold that shifts from bronze to champagne across a shape reads as metallic, where a flat yellow-brown does not. Use it for borders, ornament and large headings only, and place it on a dark background rather than a light one. Gold body text on cream is the most common legibility failure on Indian invitations.',
+      },
+      {
+        q: 'How do I keep a dark royal invitation readable?',
+        a: 'Use off-white rather than pure white for body text, set it slightly larger and heavier than you would on a light background, and increase line spacing — light text on dark reads thinner than it measures and is harder to track line to line. Test at low screen brightness, since many guests read invitations at night with brightness turned down.',
+      },
+      {
+        q: 'Can I put a pattern behind the text on a royal invitation?',
+        a: 'No. A jaali, paisley or floral texture behind a paragraph destroys legibility even at low opacity, and it is the single most frequent mistake in this style. Keep patterns at the frame, at corners and at section breaks, and leave the area where guests actually read comparatively plain.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+    ],
+  },
+  'modern-south-indian-wedding-invitation-designs': {
+    intro: `South Indian wedding invitations have their own visual and structural conventions, and most "Indian wedding invitation" advice is written for North Indian weddings. The ceremony names differ, the timings differ, the muhurat matters more, and the design vocabulary draws on temple architecture rather than Mughal court motifs.
+
+Modern South Indian invitations are moving away from the dense, text-heavy format toward cleaner layouts — but the information density was never decorative. A Tamil or Telugu wedding invitation carries gotra references, ancestral details and a sequence of ceremonies that guests genuinely use.
+
+Here is how to modernise the design without losing what the format is for.`,
+    sections: [
+      {
+        heading: 'What the traditional format carries',
+        body: `Before simplifying, it helps to know what each block does.
+
+The invocation names the family deity or opens with a line to Ganesha, and it sets the religious register.
+
+The ancestral and family details — grandparents' names, native place, sometimes gotra — establish lineage. In many communities this is not ornamental; guests read it to place the family.
+
+The muhurat is stated precisely, often to the minute, because it is astrologically determined and the ceremony begins at that moment. This is the single most important time on the invitation.
+
+The ceremony sequence typically spans two or three days: Nischayathartham or engagement, Kashi Yatra, Muhurtham, Reception. Each has a time and often a different venue.
+
+Modernising means presenting these more clearly, not dropping them. A cleaner layout that omits the muhurat has made the invitation worse.`,
+      },
+      {
+        heading: 'A modern layout that keeps the substance',
+        body: `The structure that works on a phone, top to bottom.
+
+Invocation, brief and centred. One line, given space.
+
+The couple's names, large. This is the focal point in a modern layout, where traditional invitations often placed family details first.
+
+Family details, immediately below, in a smaller but clearly legible size. Both sets of parents, and grandparents or native place where that is the family custom. This is where modern designs most often over-compress — the text goes too small and older guests cannot read the names they are looking for.
+
+The muhurat, set apart in its own block with the date, exact time and venue. Give it visual weight; it is what guests come back to check.
+
+The full ceremony sequence as a timeline, each event with its own time and venue.
+
+Then gallery, directions and wishes.
+
+The change from traditional is mostly hierarchy and spacing rather than content.`,
+      },
+      {
+        heading: 'Design vocabulary',
+        body: `The South Indian visual register draws on different sources from the North Indian palace style.
+
+Temple architecture — gopuram silhouettes, pillar forms, stepped outlines. These read as distinctly South Indian and work well as a frame or a section divider.
+
+Kolam and rangoli geometry — linear, symmetrical, mathematical. Kolam patterns work particularly well as subtle section breaks, because they are line-based and stay legible at small sizes where a dense floral motif would blur.
+
+Temple jewellery motifs — mango, lakshmi coin, jasmine. Strong at small scale as a repeated element.
+
+Colour: deep maroon and gold remains the classic; mustard and teal, and off-white with temple gold, are the contemporary alternatives. Kanjeevaram palettes translate well to screens, since they are built on strong contrast between a saturated body colour and a gold border.
+
+Use one vocabulary consistently. A gopuram silhouette with a Mughal jaali border reads as generic.`,
+      },
+      {
+        heading: 'Practical details specific to these weddings',
+        body: `Four things that matter more at South Indian weddings than the general advice suggests.
+
+Early timings. Muhurtham is frequently between 5 AM and 9 AM. Guests are travelling in darkness, so the invitation should state arrival time explicitly and, where possible, whether transport is arranged.
+
+Multi-day and multi-venue. The ceremonies often span two or three days at different venues, sometimes in different towns. Each function needs its own Maps pin, not one link for the wedding.
+
+Sadhya timing. Guests plan around the meal, and lunch is usually a fixed sequence rather than an open buffet. Saying when sadhya is served is genuinely useful.
+
+Language. If the invitation carries Tamil, Telugu, Kannada or Malayalam text alongside English, verify the font renders correctly on an actual phone — a missing glyph in a family name is a serious error, and Indic font fallbacks are inconsistent across Android devices.`,
+      },
+    ],
+    checklist: [
+      'Keep the invocation, family details and gotra or native place',
+      'State the muhurat to the minute, in its own block',
+      'Keep family details legible — do not over-compress them',
+      'Give each function its own time, venue and Maps pin',
+      'Choose one design vocabulary: temple, kolam or jewellery motifs',
+      'State arrival time for early-morning muhurtham',
+      'Say when sadhya is served',
+      'Verify Indic fonts render on a real Android phone',
+    ],
+    faq: [
+      {
+        q: 'What should a South Indian wedding invitation include?',
+        a: 'The invocation, both sets of parents and often grandparents or the native place, the muhurat stated precisely, and the full ceremony sequence — commonly Nischayathartham, Kashi Yatra, Muhurtham and Reception — each with its own time and venue. The family details are not decorative; guests read them to place the family, so they should stay legible rather than being compressed to make room.',
+      },
+      {
+        q: 'How do I modernise a South Indian wedding invitation?',
+        a: 'Change the hierarchy and spacing rather than the content. Lead with the couple’s names at a large size, put family details clearly beneath, give the muhurat its own visual block, and present the ceremony sequence as a timeline. A cleaner layout that drops the muhurat or shrinks the family names has made the invitation less useful, not more modern.',
+      },
+      {
+        q: 'What design motifs suit a South Indian wedding invitation?',
+        a: 'Temple architecture such as gopuram silhouettes and pillar forms, kolam geometry, and temple jewellery motifs like mango and jasmine. Kolam patterns work especially well as section dividers because they are line-based and stay legible at small sizes. Kanjeevaram-inspired palettes translate well to screens, being built on strong contrast between a saturated colour and gold.',
+      },
+      {
+        q: 'What practical details matter for South Indian wedding invitations?',
+        a: 'Early muhurtham timings mean guests travel before dawn, so state arrival time and any transport arrangements. Ceremonies often span several days and venues, so each function needs its own Maps pin. Say when sadhya is served, and if the invitation includes Tamil, Telugu, Kannada or Malayalam text, check it renders on a real Android phone — Indic font fallbacks are inconsistent.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+  'eco-friendly-wedding-invitations-in-india': {
+    intro: `An Indian wedding invitation is rarely a single card. It is a box — the card, an inner envelope, a sweets container, a decorative ribbon, sometimes a dry fruit tray — multiplied by several hundred guests, couriered across the country.
+
+That is where the environmental cost of wedding invitations actually sits. Not in the paper, which is a small part of it, but in the packaging, the lamination, the foil and the transport.
+
+Here is an honest look at what makes an invitation more sustainable, what is largely symbolic, and how families in practice combine printed and digital.`,
+    sections: [
+      {
+        heading: 'Where the impact actually is',
+        body: `Breaking down a typical Indian invitation box, the paper card is a minor component.
+
+The packaging dominates. A rigid box, an inner tray, a ribbon and a sweets container weigh several times the card itself, and most of it is not recyclable — rigid boxes are usually laminated, and the tray is frequently moulded plastic.
+
+Lamination and foiling matter more than people expect. A laminated card cannot be recycled through normal paper streams, because the plastic film has to be separated. Gold foil has the same problem. A plain uncoated card is straightforwardly recyclable; a glossy foiled one is not.
+
+Transport is the third component. Courier delivery of a few hundred boxes across several cities carries a real footprint, and expedited delivery close to the wedding carries considerably more.
+
+The implication: a family printing a simple uncoated card and hand-delivering locally has a far smaller footprint than one sending elaborate boxes nationwide, even at the same guest count.`,
+      },
+      {
+        heading: 'What genuinely reduces it',
+        body: `In rough order of effect.
+
+Reduce the number of printed invitations rather than changing the material. Printing fifty cards for elders and close family instead of four hundred for everyone is the single largest reduction available, and it is what most Indian families are already converging on for other reasons.
+
+Drop the box. A card in a simple envelope, without a rigid outer, a tray or a sweets container, removes the majority of the weight and most of the non-recyclable material.
+
+Skip lamination and foil. Uncoated stock with letterpress or plain printing keeps the card recyclable and, incidentally, often looks more considered than a glossy finish.
+
+Use recycled or handmade paper. Genuine recycled stock and Indian handmade papers are widely available and appropriate for wedding printing.
+
+Deliver locally by hand where possible. This is also the culturally preferred approach for close family, so it costs nothing socially.
+
+Plantable seed paper is the option most often promoted. It is genuinely biodegradable, but it is expensive, limits printing quality, and only helps if guests actually plant it — which most do not. Treat it as a gesture rather than the main measure.`,
+      },
+      {
+        heading: 'The honest case for digital',
+        body: `A digital invitation is not zero impact. Hosting, data transfer and the energy used by the devices that display it are real, if small.
+
+But the comparison is not close. The footprint of a web page viewed a few hundred times is a small fraction of printing, packaging and couriering several hundred boxes. For a guest list in the hundreds, digital is substantially lower impact on any reasonable accounting.
+
+What digital also removes is waste from error. A venue change with printed cards means either reprinting or sending a correction; with a link, the page is edited and nothing is discarded. Over-ordering to be safe — the standard practice, since reprinting a short run is expensive — produces cards that are thrown away unused.
+
+The practical arrangement most families arrive at: a small run of good printed cards for elders and close family, hand-delivered, and a digital link for everyone else. This retains the cultural weight of the card where it matters and removes the bulk of the material.
+
+That arrangement is worth stating positively on the invitation if it matters to you. Framing it as a choice reads better than an apology for not printing.`,
+      },
+      {
+        heading: 'Talking about it without preaching',
+        body: `A short, warm line works. A paragraph about environmental responsibility on a wedding invitation reads as a lecture and puts guests on the defensive.
+
+Phrasings that land well:
+
+- We are sending our invitation digitally to keep things light on the planet — and so we can share photographs with you afterwards in the same place.
+- Choosing to send this one digitally. Fewer boxes, less courier, same excitement.
+
+Avoid framing it as a sacrifice or apologising for it. "Sorry we could not print cards for everyone" undercuts the invitation and suggests the digital version is a lesser substitute, which it is not.
+
+If elders in the family would find a digital-only invitation impersonal, do not fight it — print the small run for them. The environmental gain from those fifty cards is negligible, and the relational cost of skipping them is not.`,
+      },
+    ],
+    checklist: [
+      'Reduce the number of printed cards before changing materials',
+      'Drop the rigid box, tray and sweets container',
+      'Avoid lamination and foil so the card stays recyclable',
+      'Choose uncoated, recycled or handmade stock',
+      'Hand-deliver locally rather than couriering',
+      'Print a small run for elders; send digital to everyone else',
+      'State the choice warmly in one line, without apologising',
+    ],
+    faq: [
+      {
+        q: 'Are digital wedding invitations better for the environment?',
+        a: 'Substantially, for a guest list in the hundreds. A digital invitation is not zero impact — hosting and data transfer are real — but the footprint of a web page viewed a few hundred times is a small fraction of printing, packaging and couriering several hundred invitation boxes. Digital also removes waste from over-ordering and from reprints when details change.',
+      },
+      {
+        q: 'What is the least eco-friendly part of an Indian wedding invitation?',
+        a: 'The packaging, not the paper. A rigid box, inner tray, ribbon and sweets container weigh several times the card and are mostly non-recyclable, since rigid boxes are usually laminated and trays often moulded plastic. Lamination and foil on the card itself also prevent recycling through normal paper streams.',
+      },
+      {
+        q: 'Is seed paper a good option for wedding invitations?',
+        a: 'It is genuinely biodegradable, but it is expensive, limits printing quality, and only delivers a benefit if guests actually plant it, which most do not. Treat it as a gesture rather than the main measure — reducing the number of printed invitations and dropping the box achieve far more.',
+      },
+      {
+        q: 'How do I tell guests we are sending a digital invitation?',
+        a: 'One short, warm line stating it as a choice: "We are sending our invitation digitally to keep things light on the planet — and so we can share photographs with you afterwards in the same place." Avoid a paragraph about environmental responsibility, which reads as a lecture, and avoid apologising, which frames the digital invitation as a lesser substitute.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+  'free-online-invitation-maker-for-weddings': {
+    intro: `"Free online invitation maker" is one of the most searched phrases in this category, and almost every result bends the word free in some direction. Some tools are free until you remove a watermark. Some are free until you want more than twenty guests. Some are free to design and charge to download.
+
+It is worth knowing what each service actually means by it before you invest an evening building something.
+
+This guide explains the common models, what is genuinely free across the popular options in India, and — since we build one of these tools — exactly where ShareInvite charges and where it does not.`,
+    sections: [
+      {
+        heading: 'The four models behind the word free',
+        body: `Almost every invitation tool falls into one of four patterns.
+
+**Free with branding.** You can build and share at no cost, but the invitation carries the platform's name or watermark. Removing it is the paid upgrade.
+
+**Free with limits.** Free up to a guest count, a number of RSVPs, or a period of hosting. Beyond that it becomes paid, which frequently lands in the week before the wedding when you can least deal with it.
+
+**Free to design, paid to use.** You can build the whole thing and see it, but downloading, publishing or sharing requires payment. This is the most common model, and the one people most often feel misled by, because the cost only appears at the end.
+
+**Free trial.** Genuinely free for a period, then paid or expired.
+
+None of these is dishonest in itself. The problem is finding out which one you are in after you have spent two hours entering details.`,
+      },
+      {
+        heading: 'What to check before you start building',
+        body: `Five questions that determine whether a tool is actually free for your situation.
+
+Can you publish and share without paying, or only preview? This is the main one. Preview-only is common.
+
+Is there a watermark or platform branding on what guests see, and what does removing it cost?
+
+How long does the invitation stay live? An invitation that expires a month after the event is a problem — guests revisit the page for photographs and details afterwards.
+
+Is there a guest or RSVP limit? Indian weddings routinely exceed the limits set by tools designed for Western guest lists.
+
+Can you edit after sharing? If not, a venue change means starting again, which is when a free tool becomes expensive in time.
+
+Ask these before you build, not after. The answers are usually on the pricing page rather than the landing page.`,
+      },
+      {
+        heading: 'Where ShareInvite charges, plainly',
+        body: `We should be direct about our own model, since this article would be worthless otherwise.
+
+Building and previewing is genuinely free, with no account required to start. You can pick any template, enter every detail — names, date, venue, Google Maps link, schedule, photo gallery, music, personal message — and see the finished invitation exactly as guests would, without paying anything.
+
+Publishing is paid. Getting the shareable link that you send to guests is a one-time payment, starting at ₹99 and going up to ₹499 depending on the template. There is no subscription and no per-guest charge.
+
+That is the whole model. We do not have a permanently free publishing tier, and describing one would be inaccurate.
+
+What the one-time payment includes: the live invitation page, unlimited guests, RSVP and guest wishes, hosting through the event, and the ability to edit details after you have shared the link.
+
+Whether that is good value against a free-with-watermark alternative is your call. What matters is that you know before you build, rather than at the last step.`,
+      },
+      {
+        heading: 'When a paid invitation is worth it',
+        body: `A free tool is perfectly reasonable for a small, informal event. For a wedding, three things tend to justify paying.
+
+Editability. Indian wedding details change — a muhurat shifts, a hall changes, a function is added. A tool that lets you edit after sharing saves you sending corrections to several hundred people, and saves guests referring to an outdated version.
+
+Guest numbers. Indian wedding guest lists regularly run into the hundreds, which exceeds the free tiers of most tools built for a different market.
+
+Branding. A watermark on a wedding invitation is noticed. For many families that alone decides it.
+
+If none of these apply — a small registry office wedding, sixty guests, fixed details — a free tool with branding is a sensible choice, and we would rather say so than pretend otherwise.`,
+      },
+    ],
+    checklist: [
+      'Check whether you can publish, or only preview, without paying',
+      'Find out what branding guests will see and what removing it costs',
+      'Confirm how long the invitation stays live after the event',
+      'Check for guest or RSVP limits against your actual list',
+      'Confirm you can edit details after sharing the link',
+      'Read the pricing page before you start building, not after',
+    ],
+    faq: [
+      {
+        q: 'Is there a genuinely free online invitation maker for weddings?',
+        a: 'Several tools are free to publish if you accept platform branding on the invitation, or stay within a guest limit. The more common model is free to design and paid to publish, which is where people most often feel misled because the cost appears at the end. Before building, check specifically whether you can share without paying, what branding guests see, and whether there is a guest cap.',
+      },
+      {
+        q: 'Is ShareInvite free?',
+        a: 'Building and previewing is free, with no account needed to start — you can pick a template, enter every detail and see the finished invitation exactly as guests would, without paying. Publishing the shareable link is a one-time payment starting at ₹99, depending on the template. There is no subscription, no per-guest charge, and no permanently free publishing tier.',
+      },
+      {
+        q: 'What should I check before building on a free invitation tool?',
+        a: 'Whether you can publish or only preview, what branding appears on the guest-facing page, how long the invitation stays live after the event, whether there is a guest or RSVP limit, and whether you can edit after sharing. The last matters most for Indian weddings, where venues and timings change and corrections otherwise have to be sent to hundreds of people.',
+      },
+      {
+        q: 'When is it worth paying for a wedding invitation tool?',
+        a: 'When details are likely to change and you need to edit after sharing, when your guest list exceeds a free tier’s limits, or when platform branding on the invitation matters to your family. For a small event with fixed details and a short guest list, a free tool with branding is a perfectly reasonable choice.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+  'best-wedding-website-features-for-guests': {
+    intro: `Most wedding website feature lists are written from the host's point of view — what you can add, customise and configure. Guests experience something narrower. They open a link from WhatsApp, look for three or four specific things, and close it.
+
+Knowing which features guests actually use, rather than which ones sound impressive, is what separates an invitation that reduces your workload from one that just looks nice.
+
+Here is what guests genuinely use, in the order they look for it, and what tends to go unused.`,
+    sections: [
+      {
+        heading: 'What guests look for, in order',
+        body: `Watching how guests move through an invitation page, the sequence is consistent.
+
+First, whose wedding it is and when. This is usually settled in the first two seconds, from the names and the date.
+
+Second, where. Guests scan for the venue and, critically, for a way to get directions without typing an address.
+
+Third, what time they need to be there — which is not the same as the start time. For a multi-function wedding, guests want to know when the part they are attending begins.
+
+Fourth, what to wear, if a dress code is mentioned.
+
+Everything else — the story, the gallery, the music — comes after, and only for guests who are already engaged. Those features are not pointless, but they should never sit above the four things guests came for.
+
+The practical consequence: names, date, venue with a directions button, and schedule belong in the first screen and a half. A long story section before the venue actively works against you.`,
+      },
+      {
+        heading: 'The features that earn their place',
+        body: `Four features consistently reduce the number of messages a host receives.
+
+**A tappable directions button.** Not a written address. This removes the single largest category of guest questions and is the most used element on any invitation page.
+
+**A clear schedule with times.** Particularly for multi-day weddings, and particularly stating which functions each guest is invited to. Ambiguity here produces awkward individual messages.
+
+**A guest wishes section.** It doubles as a soft RSVP — a guest who leaves a blessing has both seen the invitation and signalled intent — and Indian guests engage with it far more readily than with a form.
+
+**A photo gallery.** The feature guests spend the most time on, and the one most likely to get the invitation shown to someone else in the room. Six to ten images, not thirty.
+
+A live countdown is a reasonable fifth. Guests do not need it, but it adds a sense of occasion at effectively no cost in page weight.`,
+      },
+      {
+        heading: 'Features that sound better than they are',
+        body: `A few things appear on most feature lists and go largely unused.
+
+**Background music that autoplays.** Guests open invitations at work and on commutes. Autoplaying audio is the most common reason people close an invitation page immediately. Music behind a play button is fine; music that starts on its own is not.
+
+**Elaborate RSVP forms.** Most Indian guests reply in the WhatsApp chat where they received the invitation, not in a form. A long form with meal choices and dietary fields usually collects a fraction of the guest list.
+
+**Guest books requiring registration.** Any feature that asks a guest to create an account will be skipped by almost everyone.
+
+**Long "our story" sections.** Close friends read them. Most guests scroll past to find the venue. Keep it, but keep it below the practical information.
+
+**Gift registries.** Common in Western wedding sites and still culturally awkward for many Indian families. If you include one, place it discreetly and make it clearly optional.`,
+      },
+      {
+        heading: 'The things nobody lists as features',
+        body: `Three properties matter more than any item on a feature list.
+
+**Speed.** Guests open invitations on mobile data, frequently on mid-range Android phones in smaller towns. A page that takes eight seconds loses a meaningful share of them. Photographs are almost always the cause.
+
+**Legibility.** Text over a background image, gold on cream, or 12-pixel type will defeat a sixty-eight year old relative regardless of how good the design is. This is the most common complaint older guests have and the one they least often voice.
+
+**Editability after sharing.** Indian wedding details change. The ability to update the page and have every guest see the new version — including those who opened it last week — is the single biggest practical advantage a digital invitation has over a card, and it is rarely listed as a feature at all.
+
+If a platform gets these three right, the feature list barely matters. If it gets them wrong, no feature list saves it.`,
+      },
+    ],
+    checklist: [
+      'Put names, date, venue and directions in the first screen and a half',
+      'Use a tappable directions button, never a written address alone',
+      'Publish a schedule and say which functions each guest is invited to',
+      'Include a wishes section as a soft RSVP',
+      'Keep the gallery to six to ten images',
+      'Never autoplay audio',
+      'Keep the story section below the practical details',
+      'Check the page loads fast on mobile data and reads well for older guests',
+    ],
+    faq: [
+      {
+        q: 'What features do wedding website guests actually use?',
+        a: 'A tappable directions button, the schedule with times, the photo gallery, and a wishes section. Guests look for who, when, where and what time to arrive — usually in that order — and close the page once they have them. Directions is the most used element on any invitation page and removes the largest single category of host messages.',
+      },
+      {
+        q: 'Should a wedding website have an RSVP form?',
+        a: 'A simple one at most. Most Indian guests reply in the WhatsApp chat where they received the invitation rather than filling a form, so long forms with meal and dietary fields typically collect a fraction of the guest list. A guest wishes section works better as a soft RSVP, because leaving a blessing is culturally natural in a way a form is not.',
+      },
+      {
+        q: 'Should a wedding invitation page play background music?',
+        a: 'Only behind a play button that is muted by default. Guests open invitations at work, on commutes and beside sleeping children, and audio starting without permission is the most common reason people close an invitation page immediately.',
+      },
+      {
+        q: 'What matters more than the feature list?',
+        a: 'Speed, legibility and editability. Guests open invitations on mobile data on mid-range phones, so a slow page — almost always because of large photographs — loses people. Small or low-contrast text defeats older guests. And being able to edit after sharing, so every guest sees updated details, is the biggest practical advantage over a printed card and is rarely listed as a feature at all.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+    ],
+  },
+  'destination-wedding-invitation-website-guide': {
+    intro: `A destination wedding invitation is doing a different job from a normal one. A local guest needs a date and an address. A destination guest needs to decide whether to spend three days and a significant amount of money — and they need to decide early enough to book.
+
+That turns the invitation into something closer to a travel brief. Flights, accommodation, what is covered, what is not, visas if the destination is overseas, and a schedule that spans days rather than hours.
+
+Here is what a destination wedding invitation page needs to carry, and when each piece has to go out.`,
+    sections: [
+      {
+        heading: 'The timeline is different',
+        body: `For a destination wedding the save-the-date is not a courtesy — it is the invitation that actually determines attendance.
+
+Send it four to six months ahead, and earlier for an overseas destination or peak season. Guests are booking flights, arranging leave and, for international destinations, applying for visas. A guest who learns about a Goa wedding six weeks out will frequently decline purely on logistics.
+
+The save-the-date needs more than a date. It needs the destination, rough dates including travel days, and an indication of cost — whether accommodation is covered, roughly what flights run to. Guests cannot decide on a date alone.
+
+The full invitation follows at two to three months, with the schedule, hotel details and booking information.
+
+Then a logistics message a few weeks out with arrival details, transfers and the final schedule. Three communications, not one.`,
+      },
+      {
+        heading: 'Be explicit about cost',
+        body: `This is where destination weddings create the most awkwardness, and vagueness makes it worse rather than gentler.
+
+State clearly what is covered. If you are hosting accommodation for two nights, say which nights and what happens if guests stay longer. If transfers from the airport are arranged, say so. If guests are paying for their own rooms, say that too — plainly, and early.
+
+Give an indicative cost. "Rooms at the resort are around ₹6,000 a night, and flights from Delhi are typically ₹8,000 to ₹12,000 return if booked now" lets a guest make a decision. Silence forces them to research or to ask, and many will simply decline instead.
+
+Where there is a room block or negotiated rate, give the booking code and the deadline prominently. Guests miss these and end up paying more, which is a bad outcome for everyone.
+
+Being direct about money is kinder than being vague about it. Guests who cannot afford to come would rather know at the save-the-date stage than after booking leave.`,
+      },
+      {
+        heading: 'What the page needs to carry',
+        body: `A destination invitation page is longer than a normal one, and the structure should reflect a guest planning a trip.
+
+Names, dates including travel days, and the destination, at the top.
+
+A travel section: nearest airport, typical flight routes and rough costs, train options where relevant, and how long the transfer from the airport takes.
+
+An accommodation section: the venue hotel, the room block and code, alternatives at different price points, and what is covered by the hosts.
+
+A full multi-day schedule, with each function's time, venue and dress code. Guests pack from this, so a Mehendi at a beach and a reception in a ballroom need to be distinguishable.
+
+Practical notes: weather at that time of year, what to pack, whether the venue is remote, mobile coverage, and whether there is an ATM nearby.
+
+For international destinations, a visa note with the type required and rough processing time. This is the detail most often omitted and the one that most often prevents attendance.`,
+      },
+      {
+        heading: 'Managing a smaller, more committed guest list',
+        body: `Destination weddings have shorter guest lists and higher commitment per guest, which changes the communication.
+
+Individual conversations matter more. For a guest list of sixty travelling people, a personal message to each family unit is feasible and far more effective than group broadcasts. These are people spending real money to attend.
+
+Confirm earlier and more firmly than for a local wedding. Since accommodation is usually blocked and catering committed well in advance, you need firmer numbers sooner — and guests who have booked flights are unlikely to change plans, so the numbers are more reliable once given.
+
+Create a group for attending guests. Once a guest has confirmed, a WhatsApp group for attendees is genuinely useful — for coordinating shared transfers, flagging flight changes and answering the questions that come up in the final week.
+
+Keep the invitation page live throughout, since it is where guests will check the schedule repeatedly during the event itself.`,
+      },
+    ],
+    checklist: [
+      'Save-the-date four to six months ahead, longer for overseas',
+      'Include destination, travel dates and indicative cost from the start',
+      'State plainly what is covered and what guests pay for',
+      'Give room block codes and booking deadlines prominently',
+      'Publish a multi-day schedule with venue and dress code per function',
+      'Add weather, packing and connectivity notes',
+      'Include visa type and processing time for international destinations',
+      'Set up an attendee group once guests confirm',
+    ],
+    faq: [
+      {
+        q: 'How far in advance should destination wedding invitations be sent?',
+        a: 'Send a save-the-date four to six months ahead, and earlier for an overseas destination or peak season. Guests are booking flights, arranging leave and possibly applying for visas, so a guest who hears six weeks out will often decline on logistics alone. Follow with the full invitation at two to three months and a logistics message a few weeks before.',
+      },
+      {
+        q: 'What should a destination wedding invitation include?',
+        a: 'Beyond the usual details: nearest airport and typical flight costs, transfer time, the venue hotel with any room block code and deadline, alternatives at different price points, a multi-day schedule with dress code per function, weather and packing notes, and — for international destinations — the visa type and processing time. Guests are planning a trip, not an evening.',
+      },
+      {
+        q: 'Should I tell guests how much a destination wedding will cost them?',
+        a: 'Yes, with indicative figures. "Rooms are around ₹6,000 a night and flights from Delhi typically ₹8,000 to ₹12,000 return" lets a guest decide. Vagueness forces them to research or ask, and many decline instead. Being direct about money is kinder than being vague — guests would rather know at the save-the-date stage than after booking leave.',
+      },
+      {
+        q: 'How do I manage RSVPs for a destination wedding?',
+        a: 'Individually, and earlier than for a local wedding. With a smaller guest list of people spending real money, a personal message to each family unit is feasible and far more effective than group broadcasts. Numbers are also more reliable once given, since guests who have booked flights rarely change plans. Set up a WhatsApp group for confirmed attendees to handle transfers and last-week questions.',
+      },
+    ],
+    links: [
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Online RSVP platform', href: '/online-rsvp' },
+      { label: 'Browse all templates', href: '/templates' },
+    ],
+  },
+  'invitation-landing-page-seo-for-wedding-planners': {
+    intro: `Wedding planners and invitation designers compete for a small set of high-intent searches — "wedding planner in Jaipur", "digital wedding invitation designer", "invitation card designer near me". The traffic is low volume and extremely high value, because someone searching those terms is weeks away from spending a great deal of money.
+
+Most planner websites are built as portfolios and rank for nothing. They have a gallery, an about page, a contact form, and no page that answers a question anyone is searching for.
+
+Here is how to structure pages that rank for the searches that matter in this business.`,
+    sections: [
+      {
+        heading: 'Build city pages, not one services page',
+        body: `Almost all searches in this category carry a location. Nobody searches "wedding planner"; they search "wedding planner in Udaipur" or "destination wedding planner Goa".
+
+A single services page cannot rank for multiple cities. A page per city can, provided each one is genuinely about that city rather than the same text with a name swapped — which search engines identify easily and which produces nothing.
+
+Real city content means: venues you have actually worked at, named; local logistics that matter, such as permissions, traffic or seasonality; typical costs in that market; and the ceremonies that community observes. A planner who has worked ten weddings in a city has all of this and can write it in an hour.
+
+If you have only worked in one city, build one city page and make it excellent. Three thin city pages perform worse than one strong one, and they dilute each other.`,
+      },
+      {
+        heading: 'Answer the questions people actually search',
+        body: `The highest-value pages in this business answer a specific question rather than describing a service.
+
+"How much does a wedding planner cost in India" is searched heavily and answered honestly by almost nobody. A page giving real ranges — with the variables that move them — will earn links and trust, and it pre-qualifies enquiries so you spend less time on people outside your range.
+
+Other questions with genuine volume: how far in advance to book a planner, what a planner does that a venue coordinator does not, how much a destination wedding costs per guest, and what the permissions are for a wedding at a particular kind of venue.
+
+Each of these deserves its own page. A single FAQ block on the homepage will not rank for any of them.
+
+Be specific and give numbers. Pages that hedge everything rank poorly and convert worse, because they signal you do not want to talk about money.`,
+      },
+      {
+        heading: 'Make the portfolio work as content',
+        body: `A gallery of images ranks for nothing, because there is no text for a search engine to read and nothing for a prospect to evaluate beyond aesthetics.
+
+Turn each wedding into a short case study instead. Name the venue, the city, the guest count, the functions, the specific problem you solved. Two or three hundred words per wedding.
+
+This ranks for venue names — a genuinely valuable search, since couples who have chosen a venue search for planners who have worked there — and it demonstrates competence in a way photographs alone do not.
+
+Add alt text describing what is in each image, including the venue and the function. This matters for image search, which carries real traffic in this category.
+
+Twelve well-described weddings outperform a gallery of three hundred images, both in search and in enquiries.`,
+      },
+      {
+        heading: 'The technical minimum',
+        body: `A few things that are worth getting right and are frequently wrong on planner sites.
+
+Speed. Portfolio sites are image-heavy and often extremely slow. Resize images before uploading — an unresized camera file is several megabytes, and a gallery of them will take many seconds on mobile. This affects both ranking and whether prospects stay.
+
+Text as text. Contact details, service descriptions and prices set inside images cannot be read by search engines. This is common on design-led sites and costs a great deal.
+
+A real title and description per page. Not the same title on every page with the studio name.
+
+LocalBusiness structured data with your actual city and service area, if you operate from a defined location.
+
+A phone number and WhatsApp link that work on mobile in one tap. Most enquiries in this business start on WhatsApp, and a number that has to be copied loses some of them.
+
+Finally, be accurate. Do not publish review counts, client numbers or awards you cannot substantiate — it is a small industry, and it is checked.`,
+      },
+    ],
+    checklist: [
+      'Build one genuinely specific page per city you work in',
+      'Write pages that answer searched questions, especially about cost',
+      'Give real numbers rather than hedging',
+      'Turn portfolio weddings into short case studies naming the venue',
+      'Write descriptive alt text including venue and function',
+      'Resize images — portfolio sites are usually far too slow',
+      'Never set contact details or prices inside images',
+      'Add a one-tap WhatsApp link, and keep all claims substantiable',
+    ],
+    faq: [
+      {
+        q: 'How do wedding planners rank higher on Google?',
+        a: 'By building pages that answer searched questions rather than describing services. Almost every search in this category carries a location, so a page per city — with real venues, local logistics and typical costs — outranks a single services page. Pages answering cost questions honestly perform particularly well, because almost no planner site answers them.',
+      },
+      {
+        q: 'Should a wedding planner create separate pages for each city?',
+        a: 'Yes, but only for cities where you have genuine experience to write about — venues you have worked at, local permissions, seasonality, typical costs. The same text with the city name swapped is easily identified and ranks for nothing. If you have worked in one city, build one excellent page rather than three thin ones that dilute each other.',
+      },
+      {
+        q: 'How should a wedding planner present a portfolio for SEO?',
+        a: 'As short case studies rather than a gallery. Name the venue, city, guest count and functions, and describe the problem you solved, in two or three hundred words each. This ranks for venue names — valuable because couples who have chosen a venue search for planners who have worked there — and demonstrates competence that images alone cannot.',
+      },
+      {
+        q: 'What technical issues hurt wedding planner websites most?',
+        a: 'Speed and text set inside images. Portfolio sites are image-heavy and frequently very slow on mobile, which affects both ranking and whether prospects stay. And contact details, service descriptions or prices placed inside images cannot be read by search engines at all — common on design-led sites and costly.',
+      },
+    ],
+    links: [
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Partner with ShareInvite', href: '/partners' },
+      { label: 'Browse invitation templates', href: '/templates' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+    ],
+  },
+  'digital-invitation-trends-for-indian-events': {
+    intro: `Digital invitations in India have moved through three distinct phases in a short time. First the forwarded JPEG, which is still the most common format by volume. Then the video invitation, which peaked around 2021. Now the invitation page — a link that opens a scrollable page with maps, schedule and RSVP.
+
+Each phase solved a problem the previous one had, and each introduced a new one. Understanding where the format is actually going is more useful than a list of design fashions.
+
+Here is what has changed, what is changing now, and which of the current trends are substantive rather than decorative.`,
+    sections: [
+      {
+        heading: 'From image to video to page',
+        body: `The forwarded image solved distribution. It was free, instant and worked on every phone, and it replaced the courier for the majority of the guest list. Its limitation was that it could not be updated and compressed badly, so addresses became unreadable.
+
+The video invitation, popular around 2020 and 2021, solved emotional impact. A thirty-second animated invitation with the couple's photographs felt like an event in itself. Its limitations were practical: large files that struggled on slower connections, no way to tap through to directions, and the same inability to correct a venue change.
+
+The invitation page solves the practical layer. It holds the map, the full schedule, the gallery and RSVP, it can be edited after sharing, and the same link keeps working however often it is forwarded.
+
+What is notable is that the formats coexist rather than replace each other. Many families now send a short video or image for emotional impact and a link for the details.`,
+      },
+      {
+        heading: 'What is genuinely changing now',
+        body: `Four shifts that are substantive rather than stylistic.
+
+**Editability is becoming the expected default.** Families that have used a link once do not go back to a format where a venue change means messaging three hundred people. This is the single strongest driver of the shift.
+
+**Multi-function schedules.** As invitations have become pages rather than cards, the full schedule across Mehendi, Haldi, Sangeet, wedding and reception is now published as standard, with per-function venues and dress codes. Printed cards rarely had room for this.
+
+**Soft RSVP over forms.** Formal RSVP forms have not worked well in the Indian context, and wishes or blessings sections have emerged as the mechanism guests actually engage with.
+
+**Regional language support.** Invitations carrying Tamil, Telugu, Kannada, Bengali or Hindi alongside English are increasingly common as font support has improved, reversing an earlier period where digital effectively meant English-only.
+
+**Smaller print runs.** Printed cards have not disappeared; they have narrowed to elders and close family, with the digital link covering everyone else. This looks stable rather than transitional.`,
+      },
+      {
+        heading: 'Trends that are mostly decorative',
+        body: `Several widely promoted trends make little practical difference.
+
+**3D and animated invitations.** Genuinely striking, and they work well for personal greetings sent to one person. For a wedding invitation with a broad guest list they are heavier, slower on mobile data, and sometimes harder for older guests to navigate. Worth it for a proposal or an anniversary card; less so for a wedding with four hundred guests.
+
+**Background music.** Pleasant when behind a play button and actively harmful when it autoplays. This is presented as a feature more often than it is used.
+
+**Elaborate entrance animations.** A page that takes three seconds to reveal itself is three seconds of a guest waiting on mobile data. Restraint reads as more expensive here.
+
+**Gift registries.** Common in Western wedding sites and still culturally awkward for many Indian families.
+
+**AI-generated invitation copy.** Widely offered and generally producing the same three sentences. For an invitation where names and relationships matter, generic warmth is worse than plain factual wording.`,
+      },
+      {
+        heading: 'Where this is heading',
+        body: `Two directions look durable.
+
+The invitation as a persistent page rather than a one-time message. Families increasingly keep the page live after the event and add photographs to it, which turns the invitation into the place guests return to rather than something consumed once. This is a meaningful change in what an invitation is for.
+
+Better mobile performance as the differentiator. As the format matures, the difference between platforms is less about templates and more about whether the page loads quickly on a mid-range phone on mobile data in a smaller town. That is where a large share of Indian guests actually are, and it is where most invitation tools are weakest.
+
+What is not changing: the obligations. Both families named, elders addressed, the muhurat stated, blessings requested. Every format that has ignored these has been quietly rejected, and the formats that have lasted are the ones that carried the tradition into a new medium rather than discarding it.`,
+      },
+    ],
+    checklist: [
+      'Prioritise editability — it is the strongest reason families switch',
+      'Publish the full multi-function schedule with per-function venues',
+      'Use a wishes section rather than a formal RSVP form',
+      'Include regional language text where the family uses it',
+      'Keep a small printed run for elders and close family',
+      'Avoid autoplaying audio and heavy entrance animations',
+      'Optimise for a mid-range phone on mobile data',
+      'Keep the traditional obligations intact whatever the format',
+    ],
+    faq: [
+      {
+        q: 'What are the current trends in digital invitations in India?',
+        a: 'The substantive shifts are editability becoming the expected default, full multi-function schedules published as standard, soft RSVP through wishes sections rather than formal forms, improving regional language support, and printed cards narrowing to elders and close family while the digital link covers everyone else. That combination of print and digital looks stable rather than transitional.',
+      },
+      {
+        q: 'Are video invitations still popular in India?',
+        a: 'They peaked around 2020 and 2021 and remain common for emotional impact, but they do not solve the practical layer — large files struggle on slower connections, there is no way to tap through to directions, and a venue change cannot be corrected. Many families now send a short video or image alongside a link that carries the details.',
+      },
+      {
+        q: 'Are 3D and animated wedding invitations worth it?',
+        a: 'For a personal greeting sent to one person — a proposal, an anniversary card — they work very well. For a wedding with a broad guest list they are heavier, slower on mobile data, and sometimes harder for older guests to navigate. The trade-off depends on the guest list rather than on taste.',
+      },
+      {
+        q: 'What has not changed about Indian invitations?',
+        a: 'The obligations. Both families named, elders addressed, the muhurat stated, blessings requested. Every format that has ignored these has been quietly rejected by Indian families, and the formats that lasted are those that carried the tradition into a new medium rather than discarding it.',
+      },
+    ],
+    links: [
+      { label: 'Digital invitation websites', href: '/digital-invitation' },
+      { label: 'Browse invitation templates', href: '/templates' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
 }
 
 /**
