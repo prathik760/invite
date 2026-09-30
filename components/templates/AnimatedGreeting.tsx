@@ -1,98 +1,117 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState, type ComponentType } from 'react'
+import { useEffect, useMemo, useRef, useState, type ComponentType, type CSSProperties } from 'react'
 import dynamic from 'next/dynamic'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Motif } from './greeting/GreetingScene3D'
+import { caveat } from './kit/fonts/caveat'
+import { cormorant } from './kit/fonts/cormorant'
+import { fraunces } from './kit/fonts/fraunces'
+import { instrument } from './kit/fonts/instrument'
+import { jost } from './kit/fonts/jost'
+import { tiro } from './kit/fonts/tiro'
+import { youngSerif } from './kit/fonts/youngSerif'
+import { Credit } from './kit/ui'
+import { SceneBoundary, useWebGL } from './kit/webgl'
 
 const GreetingScene3D = dynamic(() => import('./greeting/GreetingScene3D'), { ssr: false })
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
+const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const hand = caveat.style.fontFamily
+const sans = jost.style.fontFamily
 
-// ─── Theme definitions ────────────────────────────────────────────────────────
+// ─── Themes ───────────────────────────────────────────────────────────────────
 interface GreetingTheme {
   motif: Motif
   count: number
   bg: string
   objectColors: string[]
   accent: string
+  /** Text colour on the accent button. */
+  onAccent: string
   sparkle: string
   dark: boolean
+  /** The small line above the headline, set in the display italic. */
   eyebrow: string
+  display: string
+  /** Headline set in italic (the romantic themes) or upright. */
+  italic: boolean
   interactive?: 'propose'
+}
+
+const serif = {
+  instrument: instrument.style.fontFamily,
+  cormorant: cormorant.style.fontFamily,
+  fraunces: fraunces.style.fontFamily,
+  tiro: tiro.style.fontFamily,
+  young: youngSerif.style.fontFamily,
 }
 
 export const GREETING_THEMES: Record<string, GreetingTheme> = {
   love: {
-    motif: 'hearts', count: 30, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #5a1030 0%, #3a0f2a 50%, #1c0a18 100%)',
-    objectColors: ['#E4577B', '#B0324B', '#8E6BD1', '#F2A9C0'], accent: '#F2A9C0', sparkle: '#ffd0e0',
-    eyebrow: 'For you, with all my heart',
+    motif: 'hearts', count: 22, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #4d1129 0%, #2f0c21 55%, #170812 100%)',
+    objectColors: ['#D9587A', '#A8324A', '#E9A3B6', '#7E5BB8'], accent: '#F0B7C4', onAccent: '#2A0F1C', sparkle: '#ffd0e0',
+    eyebrow: 'for you, with all my heart', display: serif.instrument, italic: true,
   },
   valentine: {
-    motif: 'hearts', count: 32, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #7a1226 0%, #4a0f1f 55%, #240912 100%)',
-    objectColors: ['#E4577B', '#B0324B', '#F2A9C0', '#ffffff'], accent: '#F2A9C0', sparkle: '#ffd0e0',
-    eyebrow: 'Happy Valentine\'s Day',
+    motif: 'hearts', count: 24, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #6a1223 0%, #420e1c 55%, #200811 100%)',
+    objectColors: ['#D9587A', '#A8324A', '#F0B7C4', '#FFF4F4'], accent: '#F4C2CB', onAccent: '#2E0C16', sparkle: '#ffd0e0',
+    eyebrow: 'to my valentine', display: serif.instrument, italic: true,
   },
   anniversary: {
-    motif: 'hearts', count: 26, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #6a1030 0%, #3c1220 55%, #1a0a12 100%)',
-    objectColors: ['#8B0030', '#D9A441', '#B0324B', '#F2C14E'], accent: '#E8B84B', sparkle: '#ffe9b0',
-    eyebrow: 'Celebrating us',
+    motif: 'hearts', count: 20, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #5a1029 0%, #35101d 55%, #170910 100%)',
+    objectColors: ['#8B0030', '#D6A447', '#A8324A', '#EFC56A'], accent: '#E6BE6C', onAccent: '#2A1308', sparkle: '#ffe9b0',
+    eyebrow: 'celebrating us', display: serif.cormorant, italic: true,
   },
   propose: {
-    motif: 'rings', count: 22, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #5a1236 0%, #3a1030 55%, #1c0a1a 100%)',
-    objectColors: ['#E8B84B', '#F2C14E', '#E4577B', '#ffffff'], accent: '#E8B84B', sparkle: '#ffe9b0',
-    eyebrow: 'A question for you', interactive: 'propose',
+    motif: 'rings', count: 16, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #4a1030 0%, #2e0d26 55%, #160916 100%)',
+    objectColors: ['#E3B55A', '#F0CD7C', '#D9587A', '#FFFFFF'], accent: '#E8C178', onAccent: '#2A1308', sparkle: '#ffe9b0',
+    eyebrow: 'a question for you', display: serif.instrument, italic: true, interactive: 'propose',
   },
   promise: {
-    motif: 'rings', count: 24, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #123c3a 0%, #1a2a4a 55%, #0e1526 100%)',
-    objectColors: ['#2F766D', '#8E6BD1', '#E8B84B', '#7FC9BE'], accent: '#7FC9BE', sparkle: '#bfeee6',
-    eyebrow: 'My promise to you',
+    motif: 'rings', count: 18, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #10332f 0%, #16243f 55%, #0c1322 100%)',
+    objectColors: ['#2F766D', '#7E5BB8', '#E3B55A', '#7FC9BE'], accent: '#9ED4CB', onAccent: '#0C1F1D', sparkle: '#bfeee6',
+    eyebrow: 'a promise, kept close', display: serif.cormorant, italic: true,
   },
   sorry: {
-    motif: 'petals', count: 34, dark: false,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #eef4fb 0%, #e4ecf6 55%, #d7e2f0 100%)',
-    objectColors: ['#7FA8C9', '#C9B7D9', '#ffffff', '#A9C4DE'], accent: '#5E7FA8', sparkle: '#c9dcf0',
-    eyebrow: 'From my heart to yours',
+    motif: 'petals', count: 26, dark: false,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #f2f6fb 0%, #e6edf6 55%, #d9e3f0 100%)',
+    objectColors: ['#8FB0CE', '#C9B7D9', '#FFFFFF', '#AFC7DF'], accent: '#3F5F86', onAccent: '#FFFFFF', sparkle: '#c9dcf0',
+    eyebrow: 'from my heart to yours', display: serif.cormorant, italic: true,
   },
   congratulations: {
-    motif: 'confetti', count: 44, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #2a1a4a 0%, #3a1442 55%, #180e28 100%)',
-    objectColors: ['#E8B84B', '#E4577B', '#5AB7C9', '#57B98A', '#8E6BD1', '#F2A93B'], accent: '#E8B84B', sparkle: '#ffe9b0',
-    eyebrow: 'So proud of you',
+    motif: 'confetti', count: 36, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #231644 0%, #2e1238 55%, #140c22 100%)',
+    objectColors: ['#E3B55A', '#D9587A', '#5AB7C9', '#57B98A', '#8E6BD1', '#F2A93B'], accent: '#F0C35C', onAccent: '#1E1206', sparkle: '#ffe9b0',
+    eyebrow: 'so proud of you', display: serif.fraunces, italic: false,
   },
   festival: {
-    motif: 'diyas', count: 28, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #3a1a02 0%, #2a1240 55%, #140a1c 100%)',
-    objectColors: ['#FF8C00', '#E8B84B', '#F2C14E', '#FF6B35'], accent: '#F2C14E', sparkle: '#ffcf80',
-    eyebrow: 'Wishing you light & joy',
+    motif: 'diyas', count: 22, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #3b1a04 0%, #2a1236 55%, #140a18 100%)',
+    objectColors: ['#F08A1C', '#E3B55A', '#F2C14E', '#E8643A'], accent: '#F4C35E', onAccent: '#2A1204', sparkle: '#ffcf80',
+    eyebrow: 'wishing you light and joy', display: serif.tiro, italic: false,
   },
   family: {
-    motif: 'hearts', count: 24, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #6a3410 0%, #4a1e20 55%, #241010 100%)',
-    objectColors: ['#E8A44B', '#B0324B', '#F2C14E', '#E4577B'], accent: '#F2C14E', sparkle: '#ffe0b0',
-    eyebrow: 'To the ones I love most',
+    motif: 'hearts', count: 18, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #5a2c10 0%, #40191b 55%, #200e0e 100%)',
+    objectColors: ['#E0A04B', '#A8324A', '#F2C14E', '#D9587A'], accent: '#F1C872', onAccent: '#2A1308', sparkle: '#ffe0b0',
+    eyebrow: 'to the ones I love most', display: serif.young, italic: false,
   },
   friendship: {
-    motif: 'stars', count: 30, dark: true,
-    bg: 'radial-gradient(120% 90% at 50% 10%, #103a4a 0%, #1a2a5a 50%, #2a1040 100%)',
-    objectColors: ['#5AB7C9', '#E4577B', '#F2C14E', '#8E6BD1', '#57B98A'], accent: '#5AB7C9', sparkle: '#bfeeff',
-    eyebrow: 'Cheers to us',
+    motif: 'stars', count: 22, dark: true,
+    bg: 'radial-gradient(120% 90% at 50% 0%, #0f3444 0%, #182652 55%, #230e38 100%)',
+    objectColors: ['#5AB7C9', '#D9587A', '#F2C14E', '#8E6BD1', '#57B98A'], accent: '#8FD6E4', onAccent: '#0B1F2A', sparkle: '#bfeeff',
+    eyebrow: 'for my favourite people', display: serif.fraunces, italic: false,
   },
 }
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
-function useMounted() {
-  const [m, setM] = useState(false)
-  useEffect(() => setM(true), [])
-  return m
-}
-
 function formatDate(iso?: string): string | null {
   if (!iso) return null
   const [y, mth, d] = iso.split('-').map(Number)
@@ -100,148 +119,180 @@ function formatDate(iso?: string): string | null {
   return `${d} ${MONTHS[mth - 1]} ${y}`
 }
 
-// ─── Confetti / heart shower (DOM, lightweight) ───────────────────────────────
-function Confetti({ fire, colors }: { fire: boolean; colors: string[] }) {
-  const pieces = useMemo(
-    () => Array.from({ length: 48 }, (_, i) => ({
-      id: i, x: (i * 53) % 100, color: colors[i % colors.length],
-      delay: (i % 12) * 0.03, rot: (i * 47) % 360,
-    })),
-    [colors]
-  )
-  if (!fire) return null
+const lines = (v?: string) => (v || '').split('\n').map((s) => s.trim()).filter(Boolean)
+
+/** Hand-drawn line motif for each theme — the cover's tap target without 3D, and the finale mark. */
+function MotifMark({ motif, color, size = 96, strokeWidth = 1.6 }: { motif: Motif; color: string; size?: number; strokeWidth?: number }) {
+  const common = { fill: 'none', stroke: color, strokeWidth, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
   return (
-    <div className="pointer-events-none absolute inset-0 z-40 overflow-hidden">
-      {pieces.map((p) => (
-        <motion.div
-          key={p.id}
-          initial={{ y: '-10%', x: `${p.x}%`, opacity: 1, rotate: 0 }}
-          animate={{ y: '110%', opacity: [1, 1, 0], rotate: p.rot }}
-          transition={{ duration: 2.6, delay: p.delay, ease: 'easeIn' }}
-          className="absolute h-2.5 w-2 rounded-[1px]"
-          style={{ background: p.color, left: 0, top: 0 }}
-        />
-      ))}
-    </div>
+    <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden>
+      {motif === 'hearts' && (
+        <path {...common} d="M50 83 C 30 70, 11 55, 13 36 C 15 21, 33 15, 44 26 C 47 29, 49 32, 50 35 C 52 30, 56 25, 61 22 C 73 16, 88 24, 87 40 C 86 57, 68 70, 50 83 Z" />
+      )}
+      {motif === 'rings' && (
+        <g {...common}>
+          <circle cx="40" cy="60" r="21" />
+          <circle cx="60" cy="60" r="21" />
+          <path d="M44 30 L50 22 L56 30 L50 37 Z M44 30 H56" />
+        </g>
+      )}
+      {motif === 'stars' && (
+        <path {...common} d="M50 14 L59 39 L86 40 L65 56 L72 82 L50 67 L28 82 L35 56 L14 40 L41 39 Z" />
+      )}
+      {motif === 'petals' && (
+        <g {...common}>
+          <path d="M50 80 C 36 64, 36 42, 50 22 C 64 42, 64 64, 50 80 Z" />
+          <path d="M50 80 C 30 76, 18 62, 18 46 C 34 48, 46 60, 50 80 Z" />
+          <path d="M50 80 C 70 76, 82 62, 82 46 C 66 48, 54 60, 50 80 Z" />
+        </g>
+      )}
+      {motif === 'diyas' && (
+        <g {...common}>
+          <path d="M16 58 C 22 76, 78 76, 84 58 Z" />
+          <path d="M84 58 C 88 56, 92 52, 94 48" />
+          <path d="M50 52 C 42 42, 45 32, 50 20 C 55 32, 58 42, 50 52 Z" />
+          <path d="M50 46 C 47 42, 48 37, 50 33" opacity={0.6} />
+        </g>
+      )}
+      {motif === 'confetti' && (
+        <g {...common}>
+          <path d="M22 70 L40 30 L72 62 Z" />
+          <path d="M52 22 c 4 6 -4 8 0 14 s -4 8 0 14" />
+          <path d="M76 26 l 6 6 M82 26 l -6 6" />
+          <path d="M18 34 c 6 -2 8 4 14 2" />
+          <circle cx="78" cy="78" r="2.5" />
+          <circle cx="60" cy="14" r="2" />
+        </g>
+      )}
+    </svg>
   )
 }
 
-// ─── Shared UI atoms ──────────────────────────────────────────────────────────
-function Eyebrow({ children, color }: { children: React.ReactNode; color: string }) {
+function Button({ onClick, children, theme, variant = 'solid' }: {
+  onClick: () => void; children: React.ReactNode; theme: GreetingTheme; variant?: 'solid' | 'ghost'
+}) {
+  const style: CSSProperties = variant === 'solid'
+    ? { background: theme.accent, color: theme.onAccent }
+    : { color: theme.dark ? 'rgba(255,255,255,0.8)' : 'rgba(36,50,71,0.8)', border: `1px solid ${theme.dark ? 'rgba(255,255,255,0.28)' : 'rgba(36,50,71,0.25)'}` }
   return (
-    <p className="font-semibold uppercase" style={{ color, fontSize: 'clamp(0.6rem, 2.7cqw, 0.72rem)', letterSpacing: '0.34em' }}>
+    <motion.button
+      type="button"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.35, duration: 0.5, ease: EASE }}
+      whileTap={{ scale: 0.97 }}
+      onClick={onClick}
+      className="mt-9 rounded-full px-7 py-3.5 text-[15px] font-medium"
+      style={{ ...style, fontFamily: sans, pointerEvents: 'auto' }}
+    >
+      {children}
+    </motion.button>
+  )
+}
+
+function Small({ children, color, theme }: { children: React.ReactNode; color: string; theme: GreetingTheme }) {
+  return (
+    <p className="italic" style={{ color, fontFamily: theme.display, fontSize: 'clamp(17px, 5cqw, 20px)' }}>
       {children}
     </p>
   )
 }
 
-function ContinueButton({ onClick, label, accent }: { onClick: () => void; label: string; accent: string }) {
+const beatIn = {
+  initial: { opacity: 0, y: 14 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 },
+  transition: { duration: 0.5, ease: EASE },
+}
+
+// ─── Beats ────────────────────────────────────────────────────────────────────
+function CoverBeat({ theme, recipient, sender, textColor, subColor, has3D, onOpen }: {
+  theme: GreetingTheme; recipient: string; sender: string; textColor: string; subColor: string; has3D: boolean; onOpen: () => void
+}) {
   return (
     <motion.button
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.5, ease: BEZIER }}
-      whileHover={{ scale: 1.04 }}
-      whileTap={{ scale: 0.96 }}
-      onClick={onClick}
-      className="mt-9 rounded-full font-bold tracking-wide text-[#2a1420]"
-      style={{
-        background: `linear-gradient(135deg, ${accent}, #d89a2a)`,
-        padding: 'clamp(0.7rem, 2.6cqw, 0.85rem) clamp(1.6rem, 6cqw, 2.2rem)',
-        fontSize: 'clamp(0.82rem, 3.2cqw, 0.9rem)',
-        boxShadow: `0 10px 30px -6px ${accent}80, 0 0 0 1px rgba(255,255,255,0.15) inset`,
-        pointerEvents: 'auto',
-      }}
+      type="button"
+      {...beatIn}
+      onClick={onOpen}
+      aria-label={`Open the greeting for ${recipient}`}
+      className="flex min-h-[70svh] w-full flex-col items-center justify-end pb-[12svh] text-center"
+      style={{ pointerEvents: 'auto' }}
     >
-      {label}
+      {!has3D && (
+        <span className="mb-auto mt-[16svh] block">
+          <MotifMark motif={theme.motif} color={theme.accent} size={120} />
+        </span>
+      )}
+      {sender && <Small color={subColor} theme={theme}>a note from {sender}</Small>}
+      <p className="mt-1" style={{ color: theme.accent, fontFamily: hand, fontSize: 'clamp(40px, 13cqw, 56px)', lineHeight: 1.05 }}>
+        for {recipient}
+      </p>
+      <span
+        className="mt-7 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[14px]"
+        style={{ color: textColor, fontFamily: sans, border: `1px solid ${theme.dark ? 'rgba(255,255,255,0.3)' : 'rgba(36,50,71,0.25)'}` }}
+      >
+        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
+          <rect x="3" y="5.5" width="18" height="13" rx="1.5" />
+          <path d="m3.5 6.5 8.5 6.5 8.5-6.5" />
+        </svg>
+        Tap to open
+      </span>
     </motion.button>
   )
 }
 
-const beatIn = {
-  initial: { opacity: 0, scale: 0.98, y: 16 },
-  animate: { opacity: 1, scale: 1, y: 0 },
-  exit: { opacity: 0, scale: 1.02, y: -16 },
-  transition: { duration: 0.55, ease: BEZIER },
-}
-
-// ─── Beat: cover (tap the 3D hero to open) ────────────────────────────────────
-function CoverBeat({ recipient, sender, accent, textColor, subColor }: { recipient: string; sender: string; accent: string; textColor: string; subColor: string }) {
-  return (
-    <motion.div {...beatIn} className="pointer-events-none flex flex-col items-center justify-end pb-[18vh] text-center">
-      {sender && <Eyebrow color={subColor}>A letter from {sender}</Eyebrow>}
-      <motion.p
-        initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8 }}
-        className="mt-3 font-medium"
-        style={{ color: accent, fontFamily: 'var(--font-script)', fontSize: 'clamp(1.6rem, 8cqw, 2.6rem)' }}
-      >
-        For {recipient}
-      </motion.p>
-      <motion.p
-        animate={{ scale: [1, 1.09, 1], opacity: [0.65, 1, 0.65] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        className="mt-4 font-medium"
-        style={{ color: textColor, fontSize: 'clamp(0.85rem, 3.4cqw, 0.98rem)' }}
-      >
-        Tap to open 💌
-      </motion.p>
-    </motion.div>
-  )
-}
-
-// ─── Beat: the reveal (headline moment) ───────────────────────────────────────
 function RevealBeat({ theme, headline, subtitle, avatar, dateStr, dateBadge, textColor, subColor, onNext }: {
   theme: GreetingTheme; headline: string; subtitle: string; avatar: string; dateStr: string | null; dateBadge: string | null
   textColor: string; subColor: string; onNext: () => void
 }) {
-  const shimmer = theme.dark
-    ? `linear-gradient(100deg, ${theme.accent} 5%, #fff4d6 50%, ${theme.accent} 95%)`
-    : `linear-gradient(100deg, ${theme.accent} 5%, #93a9c6 50%, ${theme.accent} 95%)`
   return (
     <motion.div {...beatIn} className="flex flex-col items-center text-center" style={{ pointerEvents: 'none' }}>
       {avatar && (
         <motion.div
-          initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 180, damping: 14 }}
-          className="mb-5 overflow-hidden rounded-full"
-          style={{ width: 'clamp(72px, 22cqw, 104px)', height: 'clamp(72px, 22cqw, 104px)', border: `3px solid ${theme.accent}`, boxShadow: `0 0 30px -4px ${theme.accent}` }}
+          initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, ease: EASE }}
+          className="mb-6 overflow-hidden rounded-full p-[3px]"
+          style={{ width: 'clamp(84px, 26cqw, 116px)', height: 'clamp(84px, 26cqw, 116px)', border: `1px solid ${theme.accent}` }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={avatar} alt="" className="h-full w-full object-cover" />
+          <img src={avatar} alt="" className="h-full w-full rounded-full object-cover" />
         </motion.div>
       )}
-      <Eyebrow color={subColor}>{theme.eyebrow}</Eyebrow>
-      <div className="greet-float mt-5">
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.82, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          transition={{ delay: 0.15, duration: 0.95, ease: BEZIER }}
-          className="greet-shimmer font-bold"
-          style={{ backgroundImage: shimmer, fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 10cqw, 5rem)', lineHeight: 1.05 }}
-        >
-          {headline}
-        </motion.h1>
-      </div>
+      <Small color={subColor} theme={theme}>{theme.eyebrow}</Small>
+      <motion.h1
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.9, ease: EASE }}
+        className="mt-4"
+        style={{
+          color: textColor,
+          fontFamily: theme.display,
+          fontStyle: theme.italic ? 'italic' : 'normal',
+          fontWeight: theme.display === serif.fraunces ? 600 : 400,
+          fontSize: 'clamp(46px, 15cqw, 92px)',
+          lineHeight: 1,
+          letterSpacing: '-0.01em',
+          textWrap: 'balance',
+        } as CSSProperties}
+      >
+        {headline}
+      </motion.h1>
       {subtitle && (
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}
-          className="mt-3 italic" style={{ color: textColor, fontFamily: 'var(--font-display)', fontSize: 'clamp(1rem, 4cqw, 1.2rem)' }}>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
+          className="mt-4" style={{ color: theme.accent, fontFamily: hand, fontSize: 'clamp(24px, 7.5cqw, 32px)' }}>
           {subtitle}
         </motion.p>
       )}
       {dateStr && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
-          className="mt-5 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium"
-          style={{ background: theme.dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)', color: textColor }}>
-          <span>📅 {dateStr}</span>
-          {dateBadge && <span style={{ color: theme.accent }}>· {dateBadge}</span>}
-        </motion.div>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
+          className="mt-6 text-[14px]" style={{ color: subColor, fontFamily: sans, letterSpacing: '0.02em' }}>
+          {dateStr}{dateBadge && <span style={{ color: theme.accent }}> · {dateBadge}</span>}
+        </motion.p>
       )}
-      <ContinueButton onClick={onNext} label="Continue →" accent={theme.accent} />
+      <Button onClick={onNext} theme={theme}>Continue</Button>
     </motion.div>
   )
 }
 
-// ─── Beat: photo memory ───────────────────────────────────────────────────────
-// ─── Beat: photo memories (a tappable deck of polaroids) ──────────────────────
 const TILTS = [-4, 3, -2, 5, -3, 2]
 function MemoriesBeat({ theme, photos, subColor, onNext }: {
   theme: GreetingTheme; photos: string[]; subColor: string; onNext: () => void
@@ -251,10 +302,9 @@ function MemoriesBeat({ theme, photos, subColor, onNext }: {
 
   return (
     <motion.div {...beatIn} className="flex flex-col items-center text-center" style={{ pointerEvents: 'none' }}>
-      <Eyebrow color={subColor}>Moments I treasure with you</Eyebrow>
+      <Small color={subColor} theme={theme}>moments I keep coming back to</Small>
 
-      {/* Polaroid deck — remaining photos peek from behind the top one */}
-      <div className="relative mt-7" style={{ width: 'min(80cqw, 310px)', height: 'min(104cqw, 400px)' }}>
+      <div className="relative mt-7" style={{ width: 'min(78cqw, 300px)', height: 'min(100cqw, 386px)' }}>
         {photos.map((src, i) => {
           if (i < index) return null
           const depth = i - index
@@ -264,191 +314,201 @@ function MemoriesBeat({ theme, photos, subColor, onNext }: {
             <motion.div
               key={i}
               initial={false}
-              animate={{
-                scale: 1 - depth * 0.05,
-                y: depth * 14,
-                rotate: TILTS[i % TILTS.length],
-                opacity: 1,
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: BEZIER }}
+              animate={{ scale: 1 - depth * 0.04, y: depth * 12, rotate: TILTS[i % TILTS.length], opacity: 1 }}
+              transition={{ duration: 0.4, ease: EASE }}
               onClick={() => { if (isTop && !atEnd) setIndex((v) => v + 1) }}
-              className="absolute inset-0 rounded-lg bg-white p-3 pb-9 shadow-2xl"
-              style={{ zIndex: 10 - depth, pointerEvents: isTop ? 'auto' : 'none' }}
+              className="absolute inset-0 bg-[#FBF8F2] p-3 pb-12"
+              style={{ zIndex: 10 - depth, pointerEvents: isTop ? 'auto' : 'none', boxShadow: '0 24px 50px -24px rgba(0,0,0,0.6)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={src} alt={`Memory ${i + 1}`} className="h-[82%] w-full rounded-sm object-cover" />
-              <p className="mt-3 text-sm italic text-neutral-500" style={{ fontFamily: 'var(--font-script)', fontSize: '1.05rem' }}>
-                {index + 1} of {photos.length}
+              <img src={src} alt={`Memory ${i + 1}`} className="h-full w-full object-cover" />
+              <p className="absolute bottom-2.5 left-0 right-0 text-center text-[#3a3230]" style={{ fontFamily: hand, fontSize: 22 }}>
+                {index + 1} / {photos.length}
               </p>
             </motion.div>
           )
         })}
       </div>
 
-      <p className="mt-5 text-xs" style={{ color: subColor }}>{atEnd ? 'Every one of them, my favourite.' : 'Tap the photo for the next memory'}</p>
-      {atEnd && <ContinueButton onClick={onNext} label="There's more →" accent={theme.accent} />}
+      <p className="mt-6 text-[14px]" style={{ color: subColor, fontFamily: sans }}>
+        {atEnd ? 'Every one of them, a favourite.' : 'Tap the photo for the next one'}
+      </p>
+      {atEnd && <Button onClick={onNext} theme={theme}>There&apos;s more</Button>}
     </motion.div>
   )
 }
 
-// ─── Beat: reasons / confession (revealed one at a time) ──────────────────────
 function ReasonsBeat({ theme, reasons, recipient, textColor, subColor, onNext }: {
   theme: GreetingTheme; reasons: string[]; recipient: string; textColor: string; subColor: string; onNext: () => void
 }) {
-  const list = reasons.slice(0, 4) // show at most 4 reasons
+  const list = reasons.slice(0, 5)
   const [shown, setShown] = useState(1)
   const allShown = shown >= list.length
-  const heading = theme.interactive === 'propose' ? 'Before I ask…' : 'A few reasons why'
 
   return (
     <motion.div {...beatIn} className="flex w-full flex-col items-center text-center" style={{ pointerEvents: 'none' }}>
-      <Eyebrow color={subColor}>{heading}</Eyebrow>
-      <h3 className="mt-3" style={{ color: theme.accent, fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem, 6.5cqw, 2.2rem)' }}>
-        Why {recipient} 💛
-      </h3>
+      <Small color={subColor} theme={theme}>{theme.interactive === 'propose' ? 'before I ask…' : 'a few reasons why'}</Small>
+      <h2 className="mt-2" style={{ color: textColor, fontFamily: theme.display, fontStyle: theme.italic ? 'italic' : 'normal', fontSize: 'clamp(34px, 11cqw, 52px)', lineHeight: 1.05 }}>
+        {theme.interactive === 'propose' ? `${recipient},` : `Why ${recipient}`}
+      </h2>
 
-      <div className="mt-6 flex w-full max-w-md flex-col items-center gap-3">
-        <AnimatePresence>
+      <ol className="mt-7 w-full max-w-[26rem] text-left">
+        <AnimatePresence initial={false}>
           {list.slice(0, shown).map((r, i) => (
-            <motion.div
+            <motion.li
               key={i}
-              initial={{ opacity: 0, y: 18, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, ease: BEZIER }}
-              className="flex w-full items-center gap-3 rounded-2xl px-5 py-3.5 text-left"
-              style={{
-                background: theme.dark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.65)',
-                border: `1px solid ${theme.accent}33`,
-                backdropFilter: 'blur(6px)',
-              }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: EASE }}
+              className="flex items-baseline gap-4 border-t py-3.5"
+              style={{ borderColor: theme.dark ? 'rgba(255,255,255,0.16)' : 'rgba(36,50,71,0.14)' }}
             >
-              <span className="shrink-0 text-lg font-bold" style={{ color: theme.accent, fontFamily: 'var(--font-display)' }}>{i + 1}</span>
-              <span style={{ color: textColor, fontFamily: 'var(--font-display)', fontSize: 'clamp(0.95rem, 3.8cqw, 1.08rem)' }}>{r}</span>
-            </motion.div>
+              <span style={{ color: theme.accent, fontFamily: hand, fontSize: 26, lineHeight: 1 }}>{i + 1}</span>
+              <span style={{ color: textColor, fontFamily: theme.display, fontSize: 'clamp(19px, 5.4cqw, 22px)', lineHeight: 1.35 }}>{r}</span>
+            </motion.li>
           ))}
         </AnimatePresence>
-      </div>
+      </ol>
 
       {!allShown ? (
-        <ContinueButton onClick={() => setShown((v) => Math.min(v + 1, list.length))} label="One more reason 💫" accent={theme.accent} />
+        <Button onClick={() => setShown((v) => Math.min(v + 1, list.length))} theme={theme} variant="ghost">One more</Button>
       ) : (
-        <ContinueButton onClick={onNext} label="Read my letter →" accent={theme.accent} />
+        <Button onClick={onNext} theme={theme}>Read my note</Button>
       )}
     </motion.div>
   )
 }
 
-// ─── Beat: the letter (typewriter) ────────────────────────────────────────────
-function LetterBeat({ theme, recipient, message, subColor, onNext }: {
-  theme: GreetingTheme; recipient: string; message: string; subColor: string; onNext: () => void
+function LetterBeat({ theme, recipient, sender, message, onNext }: {
+  theme: GreetingTheme; recipient: string; sender: string; message: string; onNext: () => void
 }) {
+  // Write the note out at reading pace; tapping the paper finishes it at once.
   const [shown, setShown] = useState('')
   useEffect(() => {
     let i = 0
-    const id = setInterval(() => { i += 2; setShown(message.slice(0, i)); if (i >= message.length) clearInterval(id) }, 42)
+    const id = setInterval(() => { i += 2; setShown(message.slice(0, i)); if (i >= message.length) clearInterval(id) }, 38)
     return () => clearInterval(id)
   }, [message])
   const done = shown.length >= message.length
 
   return (
-    <motion.div {...beatIn} className="flex w-full flex-col items-center text-center" style={{ pointerEvents: 'none' }}>
-      <Eyebrow color={subColor}>A note for you</Eyebrow>
+    <motion.div {...beatIn} className="flex w-full flex-col items-center" style={{ pointerEvents: 'none' }}>
       <motion.div
-        initial={{ opacity: 0, y: 20, rotate: -1 }} animate={{ opacity: 1, y: 0, rotate: 0 }} transition={{ duration: 0.7, ease: BEZIER }}
-        className="mt-5 w-full rounded-2xl shadow-2xl"
+        initial={{ opacity: 0, y: 18, rotate: -1.2 }} animate={{ opacity: 1, y: 0, rotate: -0.6 }} transition={{ duration: 0.7, ease: EASE }}
+        onClick={() => setShown(message)}
+        className="w-full text-left"
         style={{
           maxWidth: 'min(92cqw, 30rem)',
-          background: theme.dark ? 'linear-gradient(180deg,#fffdf7,#fbf4e6)' : 'linear-gradient(180deg,#ffffff,#f4f8fd)',
-          padding: 'clamp(1.4rem, 5cqw, 2rem)',
-          maxHeight: '62vh', overflowY: 'auto',
-          borderTop: `3px solid ${theme.accent}`,
-          boxShadow: `0 30px 70px -20px rgba(0,0,0,0.5), 0 0 0 1px ${theme.accent}22`,
+          background: '#FBF7EE',
+          backgroundImage: 'repeating-linear-gradient(180deg, transparent 0 33px, rgba(80,110,160,0.14) 33px 34px)',
+          padding: 'clamp(22px, 6cqw, 32px)',
+          maxHeight: '66svh',
+          overflowY: 'auto',
+          boxShadow: '0 30px 60px -28px rgba(0,0,0,0.65)',
+          pointerEvents: 'auto',
         }}
       >
-        <p className="text-left" style={{ fontFamily: 'var(--font-script)', color: theme.accent, fontSize: 'clamp(1.3rem, 5.5cqw, 1.7rem)', marginBottom: '0.6rem' }}>
-          Dear {recipient},
+        <p style={{ fontFamily: hand, color: '#2d2a33', fontSize: 30, lineHeight: '34px' }}>Dear {recipient},</p>
+        <p className="mt-[34px] whitespace-pre-wrap" style={{ fontFamily: hand, color: '#2d2a33', fontSize: 24, lineHeight: '34px' }}>
+          {shown}
+          {!done && <span className="ml-0.5 inline-block h-5 w-px animate-pulse bg-[#2d2a33] align-middle" />}
         </p>
-        <p className="whitespace-pre-wrap text-left text-neutral-700" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(0.95rem, 3.7cqw, 1.05rem)', lineHeight: 1.75 }}>
-          {shown}{!done && <span className="animate-pulse">|</span>}
-        </p>
+        {done && sender && (
+          <p className="mt-[34px] text-right" style={{ fontFamily: hand, color: '#2d2a33', fontSize: 28, lineHeight: '34px' }}>— {sender}</p>
+        )}
       </motion.div>
-      {done && <ContinueButton onClick={onNext} label="One last thing →" accent={theme.accent} />}
+      {done && <Button onClick={onNext} theme={theme}>One last thing</Button>}
     </motion.div>
   )
 }
 
-// ─── Beat: finale (signature + interactive send-love / say-yes) ───────────────
-function FinaleBeat({ theme, sender, textColor, subColor, onReplay, onCelebrate, celebrated }: {
+function FinaleBeat({ theme, sender, textColor, subColor, onReplay, onCelebrate, celebrated, isPreview }: {
   theme: GreetingTheme; sender: string; textColor: string; subColor: string
-  onReplay: () => void; onCelebrate: () => void; celebrated: boolean
+  onReplay: () => void; onCelebrate: () => void; celebrated: boolean; isPreview?: boolean
 }) {
   const isPropose = theme.interactive === 'propose'
+  const title = isPropose ? (celebrated ? 'Yes!' : 'Will you marry me?') : celebrated ? 'Sent with love' : 'With all my love'
   return (
     <motion.div {...beatIn} className="flex flex-col items-center text-center" style={{ pointerEvents: 'none' }}>
-      <motion.div
-        initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 12 }}
-        className="text-5xl"
-      >
-        {isPropose ? (celebrated ? '💍' : '💍') : '💝'}
+      <motion.div initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.7, ease: EASE }}>
+        <MotifMark motif={theme.motif} color={theme.accent} size={84} />
       </motion.div>
-      <h2 className="mt-4 font-bold" style={{ color: theme.accent, fontFamily: 'var(--font-display)', fontSize: 'clamp(1.7rem, 7cqw, 2.4rem)' }}>
-        {isPropose ? (celebrated ? 'She said YES!' : 'Will you?') : celebrated ? 'Sent with love' : 'With all my love'}
+      <h2 className="mt-5" style={{ color: textColor, fontFamily: theme.display, fontStyle: theme.italic ? 'italic' : 'normal', fontSize: 'clamp(40px, 13cqw, 64px)', lineHeight: 1.02 }}>
+        {title}
       </h2>
       {sender && (
-        <p className="mt-3" style={{ color: textColor, fontFamily: 'var(--font-script)', fontSize: 'clamp(1.5rem, 6.5cqw, 2.1rem)' }}>{sender}</p>
+        <p className="mt-2" style={{ color: theme.accent, fontFamily: hand, fontSize: 'clamp(30px, 9cqw, 40px)' }}>{sender}</p>
       )}
-
+      {!celebrated && (
+        <Button onClick={onCelebrate} theme={theme}>{isPropose ? 'Say yes' : 'Send love back'}</Button>
+      )}
       <button
-        onClick={onCelebrate}
-        className="mt-8 rounded-full px-9 py-3.5 text-sm font-bold text-[#2a1420] shadow-xl transition-transform active:scale-95"
-        style={{ background: `linear-gradient(135deg, ${theme.accent}, #d89a2a)`, pointerEvents: 'auto' }}
-      >
-        {isPropose ? 'Say Yes 💍' : 'Send Love ❤️'}
-      </button>
-
-      <button
+        type="button"
         onClick={onReplay}
-        className="mt-4 text-xs font-medium underline underline-offset-4"
-        style={{ color: subColor, pointerEvents: 'auto' }}
+        className="mt-5 text-[14px] underline underline-offset-4"
+        style={{ color: subColor, fontFamily: sans, pointerEvents: 'auto' }}
       >
-        ↻ Play again
+        Play it again
       </button>
-
-      <a href="/" className="mt-8 text-[11px] underline underline-offset-4" style={{ color: subColor, pointerEvents: 'auto' }}>
-        Made with ShareInvite — create your own
-      </a>
+      <div className="mt-10" style={{ pointerEvents: 'auto' }}>
+        <Credit isPreview={isPreview} color={subColor} linkColor={textColor} />
+      </div>
     </motion.div>
+  )
+}
+
+// ─── Celebration shower (DOM, lightweight) ────────────────────────────────────
+function Confetti({ fire, colors }: { fire: boolean; colors: string[] }) {
+  const pieces = useMemo(
+    () => Array.from({ length: 40 }, (_, i) => ({ id: i, x: (i * 53) % 100, color: colors[i % colors.length], delay: (i % 10) * 0.035, rot: (i * 47) % 360 })),
+    [colors],
+  )
+  if (!fire) return null
+  return (
+    <div className="pointer-events-none absolute inset-0 z-40 overflow-hidden" aria-hidden>
+      {pieces.map((p) => (
+        <motion.div
+          key={p.id}
+          initial={{ y: '-10%', x: `${p.x}%`, opacity: 1, rotate: 0 }}
+          animate={{ y: '110%', opacity: [1, 1, 0], rotate: p.rot }}
+          transition={{ duration: 2.6, delay: p.delay, ease: 'easeIn' }}
+          className="absolute h-2.5 w-1.5"
+          style={{ background: p.color, left: 0, top: 0 }}
+        />
+      ))}
+    </div>
   )
 }
 
 // ─── The greeting experience ───────────────────────────────────────────────────
-function AnimatedGreeting({ theme, data, isPreview }: {
-  theme: GreetingTheme; data: Record<string, string>; isPreview?: boolean
-}) {
-  const mounted = useMounted()
+function AnimatedGreeting({ theme, data, isPreview }: { theme: GreetingTheme; data: Record<string, string>; isPreview?: boolean }) {
+  const webgl = useWebGL()
+  const [sceneFailed, setSceneFailed] = useState(false)
+  const has3D = webgl === true && !sceneFailed
   const [muted, setMuted] = useState(true)
   const [stage, setStage] = useState(0)
   const [celebrated, setCelebrated] = useState(false)
+  const [now, setNow] = useState<number | null>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  // Skip the tap-to-open cover in the editor so the creator sees the content live.
+  // The editor skips the envelope so the creator sees their words straight away.
   useEffect(() => { if (isPreview) setStage(1) }, [isPreview])
+  useEffect(() => setNow(Date.now()), [])
 
-  const recipient = data.recipientName || 'You'
-  const sender = data.senderName || ''
-  const headline = data.headline || 'A message for you'
-  const subtitle = data.subtitle || ''
-  const message = data.message || ''
-  const avatar = data.photo || ''
+  const recipient = data.recipientName?.trim() || 'you'
+  const sender = data.senderName?.trim() || ''
+  const headline = data.headline?.trim() || 'A message for you'
+  const subtitle = data.subtitle?.trim() || ''
+  const message = data.message?.trim() || ''
+  const avatar = /^(https?:)?\//.test(data.photo || '') ? data.photo : ''
   const dateStr = formatDate(data.date)
-  const textColor = theme.dark ? '#ffffff' : '#243247'
-  const subColor = theme.dark ? 'rgba(255,255,255,0.72)' : 'rgba(36,50,71,0.7)'
+  const textColor = theme.dark ? '#FFFFFF' : '#1F2D42'
+  const subColor = theme.dark ? 'rgba(255,255,255,0.72)' : 'rgba(31,45,66,0.72)'
 
-  const photos = useMemo(() => (data.galleryImages || '').split('\n').map((s) => s.trim()).filter(Boolean), [data.galleryImages])
-  const reasons = useMemo(() => (data.reasons || '').split('\n').map((s) => s.trim()).filter(Boolean), [data.reasons])
+  const photos = useMemo(() => lines(data.galleryImages).filter((u) => /^(https?:)?\//.test(u)), [data.galleryImages])
+  const reasons = useMemo(() => lines(data.reasons), [data.reasons])
 
-  // Beats build from the data available — the more they add, the richer the journey.
+  // The journey grows with what the sender added.
   const beats = useMemo(() => {
     const b: string[] = ['cover', 'reveal']
     if (photos.length) b.push('memories')
@@ -461,14 +521,14 @@ function AnimatedGreeting({ theme, data, isPreview }: {
   const current = beats[Math.min(stage, beats.length - 1)]
 
   const dateBadge = useMemo(() => {
-    if (!mounted || !data.date) return null
+    if (now === null || !data.date) return null
     const [y, m, d] = data.date.split('-').map(Number)
     if (!y || !m || !d) return null
-    const days = Math.round((new Date(y, m - 1, d).getTime() - Date.now()) / 86400000)
+    const days = Math.round((new Date(y, m - 1, d).getTime() - now) / 86400000)
     if (days > 0) return `${days} day${days !== 1 ? 's' : ''} to go`
-    if (days < 0) return `together ${Math.abs(days)} days & counting 💞`
-    return 'today 🎉'
-  }, [mounted, data.date])
+    if (days < 0) return `${Math.abs(days)} days and counting`
+    return 'today'
+  }, [now, data.date])
 
   const startMusic = () => {
     if (audioRef.current) { audioRef.current.muted = false; setMuted(false); audioRef.current.play().catch(() => {}) }
@@ -476,7 +536,6 @@ function AnimatedGreeting({ theme, data, isPreview }: {
   const advance = () => setStage((s) => Math.min(s + 1, beats.length - 1))
   const open = () => { startMusic(); advance() }
   const replay = () => { setCelebrated(false); setStage(1) }
-  const celebrate = () => setCelebrated(true)
 
   const toggleMute = () => {
     if (!audioRef.current) return
@@ -486,68 +545,56 @@ function AnimatedGreeting({ theme, data, isPreview }: {
     setMuted(next)
   }
 
+  const chrome = theme.dark ? 'rgba(255,255,255,0.14)' : 'rgba(31,45,66,0.08)'
+
   return (
     <div
       className="relative w-full overflow-hidden"
-      style={{
-        // In a bounded preview (editor / preview modal) fill the container height
-        // instead of 100svh, which would blow out of the small phone shell.
-        minHeight: isPreview ? '100%' : '100svh',
-        height: isPreview ? '100%' : undefined,
-        background: theme.bg,
-      }}
+      style={{ minHeight: isPreview ? '100%' : '100svh', height: isPreview ? '100%' : undefined, background: theme.bg }}
     >
-      {/* Dreamy bokeh light orbs (depth behind the 3D) */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <span className="greet-orb" style={{ width: '46vw', height: '46vw', top: '-8%', left: '-10%', background: theme.objectColors[0], animationDelay: '0s' }} />
-        <span className="greet-orb" style={{ width: '38vw', height: '38vw', bottom: '-6%', right: '-8%', background: theme.objectColors[1] ?? theme.accent, animationDelay: '3s' }} />
-        <span className="greet-orb" style={{ width: '30vw', height: '30vw', top: '35%', right: '20%', background: theme.objectColors[2] ?? theme.accent, animationDelay: '6s', opacity: 0.35 }} />
-      </div>
+      {has3D && (
+        <div className="absolute inset-0">
+          <SceneBoundary fallback={null} onError={() => setSceneFailed(true)}>
+            <GreetingScene3D
+              motif={theme.motif} colors={theme.objectColors} count={theme.count} sparkleColor={theme.sparkle}
+              opened={stage > 0} onOpen={open}
+            />
+          </SceneBoundary>
+        </div>
+      )}
 
-      {/* Interactive 3D scene — tap hero to open, parallax tilt, tap-to-burst */}
-      <div className="absolute inset-0">
-        <GreetingScene3D
-          motif={theme.motif} colors={theme.objectColors} count={theme.count} sparkleColor={theme.sparkle}
-          opened={stage > 0} onOpen={open}
-        />
-      </div>
-
-      {/* Readability veil (gently breathing) behind text */}
-      <div className="greet-breathe pointer-events-none absolute inset-0" style={{ background: theme.dark
-        ? 'radial-gradient(62% 55% at 50% 48%, rgba(0,0,0,0.55), transparent 80%)'
-        : 'radial-gradient(62% 55% at 50% 48%, rgba(255,255,255,0.62), transparent 80%)' }} />
-
-      {/* Cinematic film grain */}
+      {/* Keeps text readable over the 3D field. */}
+      <div className="pointer-events-none absolute inset-0" style={{ background: theme.dark
+        ? 'radial-gradient(70% 55% at 50% 50%, rgba(0,0,0,0.5), transparent 85%)'
+        : 'radial-gradient(70% 55% at 50% 50%, rgba(255,255,255,0.6), transparent 85%)' }} />
       <div className="greet-grain" style={{ zIndex: 15 }} />
 
-      {/* Progress rail */}
       {stage > 0 && (
-        <div className="absolute left-1/2 top-5 z-30 flex -translate-x-1/2 items-center gap-1.5">
+        <div className="absolute left-1/2 top-5 z-30 flex -translate-x-1/2 items-center gap-1.5" aria-hidden>
           {beats.slice(1).map((b, i) => (
-            <div key={b} className="h-1.5 rounded-full transition-all duration-500"
-              style={{ width: i === stage - 1 ? 22 : 8, background: i <= stage - 1 ? theme.accent : 'rgba(150,150,150,0.35)' }} />
+            <span key={b} className="block h-[3px] rounded-full transition-all duration-500"
+              style={{ width: i === stage - 1 ? 22 : 8, background: i <= stage - 1 ? theme.accent : chrome }} />
           ))}
         </div>
       )}
 
-      {/* Music */}
       {data.musicUrl && (
         <>
           <audio ref={audioRef} src={data.musicUrl} loop muted={muted} autoPlay />
-          <button onClick={toggleMute} aria-label={muted ? 'Unmute music' : 'Mute music'}
-            className="absolute right-4 top-4 z-30 flex h-9 w-9 items-center justify-center rounded-full"
-            style={{ background: theme.dark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)', color: textColor }}>
-            {muted ? '🔇' : '🔊'}
+          <button type="button" onClick={toggleMute} aria-label={muted ? 'Play music' : 'Mute music'}
+            className="absolute right-4 top-3.5 z-30 flex h-9 w-9 items-center justify-center rounded-full"
+            style={{ background: chrome, color: textColor }}>
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden>
+              <path strokeLinejoin="round" d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" />
+              {muted ? <path strokeLinecap="round" d="m16 10 4 4m0-4-4 4" /> : <path strokeLinecap="round" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10" />}
+            </svg>
           </button>
         </>
       )}
 
-      {/* Beats */}
       <div
         className={`relative z-10 flex items-center justify-center ${isPreview ? 'h-full min-h-full' : 'min-h-[100svh]'}`}
         style={{
-          // Query container so the beat text (sized in cqw) scales to THIS width —
-          // the small phone shell in a preview, or the full viewport on the live page.
           containerType: 'inline-size',
           paddingLeft: isPreview ? '1.25rem' : 'clamp(1.25rem, 5vw, 3rem)',
           paddingRight: isPreview ? '1.25rem' : 'clamp(1.25rem, 5vw, 3rem)',
@@ -557,50 +604,43 @@ function AnimatedGreeting({ theme, data, isPreview }: {
       >
         <AnimatePresence mode="wait">
           <motion.div key={current} {...beatIn} className="flex w-full items-center justify-center">
-            <div className="flex w-full items-center justify-center">
-              {current === 'cover' && <CoverBeat recipient={recipient} sender={sender} accent={theme.accent} textColor={textColor} subColor={subColor} />}
-              {current === 'reveal' && (
-                <RevealBeat theme={theme} headline={headline} subtitle={subtitle} avatar={avatar} dateStr={dateStr} dateBadge={dateBadge}
-                  textColor={textColor} subColor={subColor} onNext={advance} />
-              )}
-              {current === 'memories' && (
-                <MemoriesBeat theme={theme} photos={photos} subColor={subColor} onNext={advance} />
-              )}
-              {current === 'reasons' && (
-                <ReasonsBeat theme={theme} reasons={reasons} recipient={recipient} textColor={textColor} subColor={subColor} onNext={advance} />
-              )}
-              {current === 'letter' && (
-                <LetterBeat theme={theme} recipient={recipient} message={message} subColor={subColor} onNext={advance} />
-              )}
-              {current === 'finale' && (
-                <FinaleBeat theme={theme} sender={sender} textColor={textColor} subColor={subColor}
-                  onReplay={replay} onCelebrate={celebrate} celebrated={celebrated} />
-              )}
-            </div>
+            {current === 'cover' && (
+              <CoverBeat theme={theme} recipient={recipient} sender={sender} textColor={textColor} subColor={subColor} has3D={has3D} onOpen={open} />
+            )}
+            {current === 'reveal' && (
+              <RevealBeat theme={theme} headline={headline} subtitle={subtitle} avatar={avatar} dateStr={dateStr} dateBadge={dateBadge}
+                textColor={textColor} subColor={subColor} onNext={advance} />
+            )}
+            {current === 'memories' && <MemoriesBeat theme={theme} photos={photos} subColor={subColor} onNext={advance} />}
+            {current === 'reasons' && (
+              <ReasonsBeat theme={theme} reasons={reasons} recipient={recipient} textColor={textColor} subColor={subColor} onNext={advance} />
+            )}
+            {current === 'letter' && <LetterBeat theme={theme} recipient={recipient} sender={sender} message={message} onNext={advance} />}
+            {current === 'finale' && (
+              <FinaleBeat theme={theme} sender={sender} textColor={textColor} subColor={subColor}
+                onReplay={replay} onCelebrate={() => setCelebrated(true)} celebrated={celebrated} isPreview={isPreview} />
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
 
       <Confetti fire={celebrated} colors={theme.objectColors} />
 
-      {/* Preview-only quick navigation so the creator can inspect every beat.
-          Centered in a backdrop pill so it never sits on top of the beat content. */}
+      {/* Editor-only stepper, so the creator can check every beat. */}
       {isPreview && (
-        <div
-          className="absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1.5 rounded-full px-1.5 py-1"
-          style={{ background: theme.dark ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.6)', backdropFilter: 'blur(8px)' }}
-        >
-          <button onClick={() => setStage((s) => Math.max(0, s - 1))}
-            className="rounded-full px-3 py-1.5 text-[11px] font-semibold" style={{ background: theme.dark ? 'rgba(255,255,255,0.16)' : 'rgba(0,0,0,0.08)', color: textColor }}>‹ Prev</button>
-          <button onClick={advance}
-            className="rounded-full px-3 py-1.5 text-[11px] font-semibold" style={{ background: theme.dark ? 'rgba(255,255,255,0.16)' : 'rgba(0,0,0,0.08)', color: textColor }}>Next ›</button>
+        <div className="absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1.5 rounded-full p-1"
+          style={{ background: theme.dark ? 'rgba(0,0,0,0.45)' : 'rgba(255,255,255,0.7)' }}>
+          <button type="button" onClick={() => setStage((s) => Math.max(0, s - 1))}
+            className="rounded-full px-3 py-1.5 text-[11px] font-semibold" style={{ background: chrome, color: textColor, fontFamily: sans }}>Back</button>
+          <button type="button" onClick={advance}
+            className="rounded-full px-3 py-1.5 text-[11px] font-semibold" style={{ background: chrome, color: textColor, fontFamily: sans }}>Next</button>
         </div>
       )}
     </div>
   )
 }
 
-// ─── Bind each occasion to a themed component, exported as a registry map ─────
+// ─── One named export per occasion (Server Components import them as client refs) ─
 function bind(themeKey: string): ComponentType<{ data: Record<string, string>; eventId?: string; isPreview?: boolean }> {
   const theme = GREETING_THEMES[themeKey]
   const Bound = (props: { data: Record<string, string>; eventId?: string; isPreview?: boolean }) => (
@@ -610,9 +650,6 @@ function bind(themeKey: string): ComponentType<{ data: Record<string, string>; e
   return Bound
 }
 
-// Individual named exports so a Server Component can import each as a client
-// reference. (A plain-object export from a 'use client' module becomes an opaque
-// client reference on the server — spreading it yields nothing.)
 export const GreetingLove = bind('love')
 export const GreetingValentine = bind('valentine')
 export const GreetingAnniversary = bind('anniversary')

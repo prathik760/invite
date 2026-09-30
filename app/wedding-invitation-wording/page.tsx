@@ -2,8 +2,14 @@ import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import MidPageCTA from '@/components/wording/MidPageCTA'
+import WordingSample from '@/components/wording/WordingSample'
 import StickyCTA from '@/components/wording/StickyCTA'
 import SiteFooter from '@/components/landing/SiteFooter'
+import PageHero from '@/components/brand/PageHero'
+import TrustList from '@/components/brand/TrustList'
+import CtaBand from '@/components/brand/CtaBand'
+import { Section, SectionHeading } from '@/components/brand/Section'
+import FAQAccordion from '@/components/landing/FAQAccordion'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -64,7 +70,7 @@ const faqSchema = {
       name: 'Should I send the invitation message or a digital invitation link on WhatsApp?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Always send a digital invitation link, with a short 3–4 line message alongside it. A message alone can\'t show the venue on a map, list the full schedule, or let guests RSVP. A link does all of this and works for both the tech-savvy and older guests. The short message sets the emotional tone; the link carries all practical details.',
+        text: 'Always send a digital invitation link, with a short 3–4 line message alongside it. A message alone can\'t show the venue on a map, list the full schedule, or collect blessings from guests. A link does all of this and works for both the tech-savvy and older guests. The short message sets the emotional tone; the link carries all practical details.',
       },
     },
     {
@@ -80,136 +86,104 @@ const faqSchema = {
 
 export default function WeddingInvitationWordingPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-champagne text-foreground">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <SiteHeader createHref="/create?template=elegant-wedding" />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            30+ ready-to-copy samples · WhatsApp ready
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Wedding Invitation Wording &amp; Messages for Indian Families
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            30+ ready-to-copy wedding invitation samples — formal, casual, traditional, bilingual, and WhatsApp-ready. Copy, personalise, and share.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create?template=elegant-wedding" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Create Digital Wedding Invite →
-            </Link>
-            <span className="text-sm text-muted">Free to start · No credit card</span>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        align="center"
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Wedding invitation wording' }]} eyebrow="30+ ready-to-copy samples · WhatsApp ready"
+        title={<>Wedding Invitation Wording &amp; Messages for Indian Families</>}
+        lede={<>30+ ready-to-copy wedding invitation samples — formal, casual, traditional, bilingual, and WhatsApp-ready. Copy, personalise, and share.</>}
+        actions={<><Link href="/create?template=elegant-wedding" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
+              Create Digital Wedding Invite</Link></>}
+        footnote={<TrustList />}
+      />
 
       {/* Section 1: Formal Wedding Invitation Wording */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Formal Wedding Invitation Wording (English)</h2>
+          <h2 className="t-h2 mb-3">Formal Wedding Invitation Wording (English)</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             These formal samples use traditional language expected by elders and community invitations. Replace the bracketed placeholders with your own details.
           </p>
           <div className="space-y-6">
 
             {/* Sample 1 */}
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">1. Traditional Joint-Family Formal</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">Pan-India</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>With the blessings of the Almighty,</p>
-                <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                <p>along with</p>
-                <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                <p>joyfully request your presence at the wedding of their children</p>
-                <p className="font-semibold not-italic text-ink">[Bride&apos;s Full Name] &amp; [Groom&apos;s Full Name]</p>
-                <p>on [Day], [Date] at [Time]</p>
-                <p>[Venue Name], [Full Address]</p>
-                <p>Your blessings and presence will honour this occasion.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>1. Traditional Joint-Family Formal</>} tag="Pan-India">
+                  <p>With the blessings of the Almighty,</p>
+                  <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>along with</p>
+                  <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>joyfully request your presence at the wedding of their children</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Full Name] &amp; [Groom&apos;s Full Name]</p>
+                  <p>on [Day], [Date] at [Time]</p>
+                  <p>[Venue Name], [Full Address]</p>
+                  <p>Your blessings and presence will honour this occasion.</p>
+              
+            </WordingSample>
 
             {/* Sample 2 */}
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">2. Couple-Hosted Modern Formal</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">Modern</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>We are delighted to invite you to celebrate our wedding.</p>
-                <p className="font-semibold not-italic text-ink">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
-                <p>[Day], [Date] · [Time]</p>
-                <p>[Venue Name]</p>
-                <p>[Full Address]</p>
-                <p>Your presence would mean the world to us.</p>
-                <p>RSVP by [Date]: [Phone / WhatsApp Number]</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>2. Couple-Hosted Modern Formal</>} tag="Modern">
+                  <p>We are delighted to invite you to celebrate our wedding.</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
+                  <p>[Day], [Date] · [Time]</p>
+                  <p>[Venue Name]</p>
+                  <p>[Full Address]</p>
+                  <p>Your presence would mean the world to us.</p>
+                  <p>RSVP by [Date]: [Phone / WhatsApp Number]</p>
+              
+            </WordingSample>
 
             {/* Sample 3 */}
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">3. Religious Blessing Opening (Formal)</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">Hindu</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>॥ श्री गणेशाय नमः ॥</p>
-                <p>With the grace of God and the blessings of our ancestors,</p>
-                <p>[Father&apos;s Name] S/o [Grandfather&apos;s Name] &amp; Smt. [Mother&apos;s Name]</p>
-                <p>request the honour of your presence at the</p>
-                <p>auspicious wedding ceremony of their son / daughter</p>
-                <p className="font-semibold not-italic text-ink">[Groom&apos;s Name] / [Bride&apos;s Name]</p>
-                <p>with</p>
-                <p className="font-semibold not-italic text-ink">[Bride&apos;s Name] / [Groom&apos;s Name]</p>
-                <p>D/o [Father&apos;s Name] &amp; Smt. [Mother&apos;s Name]</p>
-                <p>Date: [Date] · Muhurat: [Time]</p>
-                <p>[Venue Name], [Address]</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>3. Religious Blessing Opening (Formal)</>} tag="Hindu">
+                  <p>॥ श्री गणेशाय नमः ॥</p>
+                  <p>With the grace of God and the blessings of our ancestors,</p>
+                  <p>[Father&apos;s Name] S/o [Grandfather&apos;s Name] &amp; Smt. [Mother&apos;s Name]</p>
+                  <p>request the honour of your presence at the</p>
+                  <p>auspicious wedding ceremony of their son / daughter</p>
+                  <p className="font-semibold text-charcoal">[Groom&apos;s Name] / [Bride&apos;s Name]</p>
+                  <p>with</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] / [Groom&apos;s Name]</p>
+                  <p>D/o [Father&apos;s Name] &amp; Smt. [Mother&apos;s Name]</p>
+                  <p>Date: [Date] · Muhurat: [Time]</p>
+                  <p>[Venue Name], [Address]</p>
+              
+            </WordingSample>
 
             {/* Sample 4 */}
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">4. South Indian Formal (Muhurtham)</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">South India</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>With the blessings of Sri [Family Deity],</p>
-                <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                <p>cordially invite you to the</p>
-                <p className="font-semibold not-italic text-ink">Muhurtham — Wedding Ceremony</p>
-                <p>of their daughter / son</p>
-                <p className="font-semibold not-italic text-ink">[Bride&apos;s Name] with [Groom&apos;s Name]</p>
-                <p>Muhurtham: [Day], [Date] at [Time]</p>
-                <p>Reception: [Date] at [Time]</p>
-                <p>[Kalyana Mandapam / Venue Name]</p>
-                <p>[Address]</p>
-                <p>Kindly grace us with your presence and blessings.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>4. South Indian Formal (Muhurtham)</>} tag="South India">
+                  <p>With the blessings of Sri [Family Deity],</p>
+                  <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>cordially invite you to the</p>
+                  <p className="font-semibold text-charcoal">Muhurtham — Wedding Ceremony</p>
+                  <p>of their daughter / son</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] with [Groom&apos;s Name]</p>
+                  <p>Muhurtham: [Day], [Date] at [Time]</p>
+                  <p>Reception: [Date] at [Time]</p>
+                  <p>[Kalyana Mandapam / Venue Name]</p>
+                  <p>[Address]</p>
+                  <p>Kindly grace us with your presence and blessings.</p>
+              
+            </WordingSample>
 
           </div>
         </div>
       </section>
 
       {/* Mid-page CTA 1 */}
-      <section className="px-5 py-2 border-b border-border bg-white">
+      <section className="px-5 py-2 border-b border-line bg-paper">
         <div className="mx-auto max-w-3xl">
           <MidPageCTA
             headline="Your wedding invitation sets the tone for the big day"
-            body="A plain text message tells guests the date. A digital wedding invite shows them the venue on a map, counts down to the wedding, and lets them RSVP — all from one link shared on WhatsApp."
+            body="A plain text message tells guests the date. A digital wedding invite shows them the venue on a map, counts down to the wedding, and lets them leave their blessings — all from one link shared on WhatsApp."
             features={[
               'Live wedding countdown',
               'Full photo gallery & couple story',
               'Google Maps tap-to-navigate',
-              'RSVP with guest tracking',
+              'Guest wishes on the invitation',
             ]}
             ctaHref="/wedding-invitation"
             ctaText="Start My Wedding Invite →"
@@ -218,94 +192,69 @@ export default function WeddingInvitationWordingPage() {
       </section>
 
       {/* Section 2: WhatsApp Messages */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Simple WhatsApp Wedding Invitation Message</h2>
+          <h2 className="t-h2 mb-3">Simple WhatsApp Wedding Invitation Message</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             WhatsApp messages should be short. 3–6 lines maximum. The full details go in your digital invitation link — these messages just open the conversation and set the tone.
           </p>
           <div className="space-y-6">
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">1. Short Casual</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">3–4 lines</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>We&apos;re getting married! 🎊</p>
-                <p>[Bride&apos;s Name] weds [Groom&apos;s Name]</p>
-                <p>[Date] · [Venue]</p>
-                <p>Your presence and blessings mean everything to us.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>1. Short Casual</>} tag="3–4 lines">
+                  <p>We&apos;re getting married! 🎊</p>
+                  <p>[Bride&apos;s Name] weds [Groom&apos;s Name]</p>
+                  <p>[Date] · [Venue]</p>
+                  <p>Your presence and blessings mean everything to us.</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">2. With Digital Invite Link</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">Recommended</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>We are overjoyed to share that [Bride&apos;s Name] &amp; [Groom&apos;s Name] are getting married on [Date].</p>
-                <p>Click the link below for full venue details, schedule, and Google Maps:</p>
-                <p>[Your ShareInvite Link]</p>
-                <p>We would be honoured to have you celebrate with us.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>2. With Digital Invite Link</>} tag="Recommended">
+                  <p>We are overjoyed to share that [Bride&apos;s Name] &amp; [Groom&apos;s Name] are getting married on [Date].</p>
+                  <p>Click the link below for full venue details, schedule, and Google Maps:</p>
+                  <p>[Your ShareInvite Link]</p>
+                  <p>We would be honoured to have you celebrate with us.</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">3. With RSVP Request</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">RSVP</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>[Bride&apos;s Name] &amp; [Groom&apos;s Name] are tying the knot on [Date] at [Venue].</p>
-                <p>We would love to have you there. Please let us know if you can make it by [RSVP Date].</p>
-                <p>Full invitation: [Link]</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>3. With RSVP Request</>} tag="RSVP">
+                  <p>[Bride&apos;s Name] &amp; [Groom&apos;s Name] are tying the knot on [Date] at [Venue].</p>
+                  <p>We would love to have you there. Please let us know if you can make it by [RSVP Date].</p>
+                  <p>Full invitation: [Link]</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">4. Hindi / English Mixed</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">Bilingual</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>बड़े हर्ष के साथ सूचित करते हैं कि</p>
-                <p>[Bride&apos;s Name] एवं [Groom&apos;s Name] का विवाह</p>
-                <p>[Date] को [Venue] में सम्पन्न होगा।</p>
-                <p>Kindly view the full invitation here: [Link]</p>
-                <p>आपका आशीर्वाद एवं उपस्थिति हमारे लिए अत्यंत महत्वपूर्ण है।</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>4. Hindi / English Mixed</>} tag="Bilingual">
+                  <p>बड़े हर्ष के साथ सूचित करते हैं कि</p>
+                  <p>[Bride&apos;s Name] एवं [Groom&apos;s Name] का विवाह</p>
+                  <p>[Date] को [Venue] में सम्पन्न होगा।</p>
+                  <p>Kindly view the full invitation here: [Link]</p>
+                  <p>आपका आशीर्वाद एवं उपस्थिति हमारे लिए अत्यंत महत्वपूर्ण है।</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">5. Friends-Only Informal</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">Friends</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>Guys, I&apos;m getting married!! 🥳</p>
-                <p>[Date] at [Venue] — it&apos;s going to be a mad time.</p>
-                <p>You are all invited. No excuses accepted.</p>
-                <p>Full invite here: [Link]</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>5. Friends-Only Informal</>} tag="Friends">
+                  <p>Guys, I&apos;m getting married!! 🥳</p>
+                  <p>[Date] at [Venue] — it&apos;s going to be a mad time.</p>
+                  <p>You are all invited. No excuses accepted.</p>
+                  <p>Full invite here: [Link]</p>
+              
+            </WordingSample>
 
           </div>
         </div>
       </section>
 
       {/* Mid-page CTA 2 */}
-      <section className="px-5 py-2 border-b border-border">
+      <section className="px-5 py-2 border-b border-line">
         <div className="mx-auto max-w-3xl">
           <MidPageCTA
-            headline="One link. Ceremonies, maps, schedule, and RSVP — all in one place."
+            headline="One link. Ceremonies, maps, schedule and wishes — all in one place."
             body="Share the same digital invite link across every WhatsApp group. Outstation family sees the hotel address; local guests see the venue map. One update reaches everyone instantly."
             features={[
               'Shaadi, mehendi & reception schedule',
-              'Hotel & venue addresses with maps',
+              'Venue address with Google Maps',
               'Background music & love story',
-              'Free — no credit card needed',
+              'Free to build & preview',
             ]}
             ctaHref="/wedding-invitation"
             ctaText="Get Your Wedding Invite Link →"
@@ -314,68 +263,60 @@ export default function WeddingInvitationWordingPage() {
       </section>
 
       {/* Section 3: Different Scenarios */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Wedding Invitation Wording for Different Scenarios</h2>
+          <h2 className="t-h2 mb-3">Wedding Invitation Wording for Different Scenarios</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             Not all weddings follow the standard format. Here are word-ready samples for specific situations.
           </p>
           <div className="space-y-6">
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <h3 className="font-heading text-lg text-ink mb-3">Second Marriage / Intimate Ceremony</h3>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>[Name] and [Name] joyfully invite you to celebrate their wedding.</p>
-                <p>This is an intimate ceremony, shared with close family and a few dear friends.</p>
-                <p>[Date] · [Time] · [Venue]</p>
-                <p>Your warm wishes and presence will make this moment complete.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>Second Marriage / Intimate Ceremony</>}>
+                  <p>[Name] and [Name] joyfully invite you to celebrate their wedding.</p>
+                  <p>This is an intimate ceremony, shared with close family and a few dear friends.</p>
+                  <p>[Date] · [Time] · [Venue]</p>
+                  <p>Your warm wishes and presence will make this moment complete.</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <h3 className="font-heading text-lg text-ink mb-3">Destination Wedding (Travel Note)</h3>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>We are getting married — and it is going to be a celebration you will remember.</p>
-                <p className="font-semibold not-italic text-ink">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
-                <p>[Date] at [Destination Hotel / Resort]</p>
-                <p>[City, State]</p>
-                <p>Travel &amp; stay details are included in our digital invitation. We have arranged group transport from [City] — please RSVP by [Date] so we can plan your arrangements.</p>
-                <p>Full details: [Link]</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>Destination Wedding (Travel Note)</>}>
+                  <p>We are getting married — and it is going to be a celebration you will remember.</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
+                  <p>[Date] at [Destination Hotel / Resort]</p>
+                  <p>[City, State]</p>
+                  <p>Travel &amp; stay details are included in our digital invitation. We have arranged group transport from [City] — please RSVP by [Date] so we can plan your arrangements.</p>
+                  <p>Full details: [Link]</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <h3 className="font-heading text-lg text-ink mb-3">Court Marriage / Legal Wedding Reception</h3>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>[Name] and [Name] were married on [Date] in a private ceremony.</p>
-                <p>We now invite you to join us for a reception celebration in honour of the occasion.</p>
-                <p>[Reception Date] · [Time]</p>
-                <p>[Venue Name &amp; Address]</p>
-                <p>Dinner will be served. Kindly confirm your attendance by [RSVP Date].</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>Court Marriage / Legal Wedding Reception</>}>
+                  <p>[Name] and [Name] were married on [Date] in a private ceremony.</p>
+                  <p>We now invite you to join us for a reception celebration in honour of the occasion.</p>
+                  <p>[Reception Date] · [Time]</p>
+                  <p>[Venue Name &amp; Address]</p>
+                  <p>Dinner will be served. Kindly confirm your attendance by [RSVP Date].</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <h3 className="font-heading text-lg text-ink mb-3">Late-Evening Reception Only (Parents&apos; Hosting)</h3>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>[Father&apos;s Name] &amp; [Mother&apos;s Name] request the pleasure of your company</p>
-                <p>at a reception in honour of the marriage of their son / daughter</p>
-                <p className="font-semibold not-italic text-ink">[Groom&apos;s Name] with [Bride&apos;s Name]</p>
-                <p>on [Day], [Date]</p>
-                <p>7:00 PM onwards</p>
-                <p>[Venue Name], [Address]</p>
-                <p>Kindly RSVP by [Date].</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>Late-Evening Reception Only (Parents&apos; Hosting)</>}>
+                  <p>[Father&apos;s Name] &amp; [Mother&apos;s Name] request the pleasure of your company</p>
+                  <p>at a reception in honour of the marriage of their son / daughter</p>
+                  <p className="font-semibold text-charcoal">[Groom&apos;s Name] with [Bride&apos;s Name]</p>
+                  <p>on [Day], [Date]</p>
+                  <p>7:00 PM onwards</p>
+                  <p>[Venue Name], [Address]</p>
+                  <p>Kindly RSVP by [Date].</p>
+              
+            </WordingSample>
 
           </div>
         </div>
       </section>
 
       {/* Section 4: What to Include */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">What to Include in a Wedding Invitation</h2>
+          <h2 className="t-h2 mb-3">What to Include in a Wedding Invitation</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             A complete Indian wedding invitation should cover every detail a guest needs — before they even have to ask. Here is each element explained.
           </p>
@@ -403,15 +344,15 @@ export default function WeddingInvitationWordingPage() {
               },
               {
                 item: "RSVP Instructions",
-                detail: "A WhatsApp number or RSVP button in your digital invite helps families manage catering, parking, and seating accurately.",
+                detail: "A WhatsApp number to confirm on, stated clearly in your invitation, helps families manage catering, parking, and seating accurately.",
               },
               {
                 item: "Personal Family Message",
                 detail: "A single heartfelt line — 'your presence would mean the world to us' — makes the invitation feel personal, not printed.",
               },
             ].map((c) => (
-              <div key={c.item} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <h3 className="font-heading text-base text-ink mb-2">✓ {c.item}</h3>
+              <div key={c.item} className="rounded-2xl border border-line bg-paper p-6 shadow-sm">
+                <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-2">✓ {c.item}</h3>
                 <p className="text-sm text-muted leading-7">{c.detail}</p>
               </div>
             ))}
@@ -420,9 +361,9 @@ export default function WeddingInvitationWordingPage() {
       </section>
 
       {/* Section 5: Common Mistakes */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Common Wedding Invitation Wording Mistakes</h2>
+          <h2 className="t-h2 mb-3">Common Wedding Invitation Wording Mistakes</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             These are real, recurring mistakes in Indian wedding invitations — most can be fixed in 2 minutes.
           </p>
@@ -454,10 +395,10 @@ export default function WeddingInvitationWordingPage() {
                 fix: 'Large wedding venues in metro cities often have confusing entry gates, valet-only parking, or colony road access restrictions. A short note in your digital invitation saves guests 20 minutes of confusion on the day.',
               },
             ].map((m) => (
-              <div key={m.n} className="rounded-2xl border border-border bg-background p-6 shadow-sm flex gap-5">
-                <div className="flex-shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#7A3E4A]/10 text-accent-strong font-heading text-sm font-bold">{m.n}</div>
+              <div key={m.n} className="rounded-2xl border border-line bg-champagne p-6 shadow-sm flex gap-5">
+                <div className="flex-shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#0B4A34]/10 text-accent-strong font-editorial font-semibold text-sm font-bold">{m.n}</div>
                 <div>
-                  <h3 className="font-heading text-base text-ink mb-1">{m.mistake}</h3>
+                  <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">{m.mistake}</h3>
                   <p className="text-sm text-muted leading-7">{m.fix}</p>
                 </div>
               </div>
@@ -467,15 +408,15 @@ export default function WeddingInvitationWordingPage() {
       </section>
 
       {/* Quotes, Lines & Captions */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Wedding Invitation Quotes, Lines &amp; Captions</h2>
+          <h2 className="t-h2 mb-3">Wedding Invitation Quotes, Lines &amp; Captions</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             Short one-liners to open your wedding invitation, use as a WhatsApp caption, or pair with your digital invite link.
           </p>
-          <div className="rounded-2xl border border-border bg-background p-6 sm:p-8 shadow-sm space-y-7">
+          <div className="rounded-2xl border border-line bg-champagne p-6 sm:p-8 shadow-sm space-y-7">
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Wedding invitation quotes</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Wedding invitation quotes</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>&ldquo;Two souls, one journey — begins with your blessings.&rdquo;</li>
                 <li>&ldquo;Come witness the start of our happily ever after.&rdquo;</li>
@@ -488,7 +429,7 @@ export default function WeddingInvitationWordingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Short invitation lines</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Short invitation lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>[Name] &amp; [Name] are getting married — join us on [Date]! 💍</li>
                 <li>You&apos;re invited to our wedding — [Date] at [Venue].</li>
@@ -501,7 +442,7 @@ export default function WeddingInvitationWordingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">WhatsApp &amp; Instagram captions</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">WhatsApp &amp; Instagram captions</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>Forever starts on [Date] 💍 You&apos;re invited!</li>
                 <li>She said yes, now the wedding&apos;s a date! 💛 [Date]</li>
@@ -515,29 +456,22 @@ export default function WeddingInvitationWordingPage() {
             <p className="text-xs text-muted leading-6 pt-1">
               Tip: open with any line, then paste your{' '}
               <Link href="/wedding-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital wedding invite link</Link>{' '}
-              below it — guests get the venue map, countdown, schedule and RSVP in one tap.
+              below it — guests get the venue map, countdown, schedule and a place to leave wishes in one tap.
             </p>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="px-5 py-16 border-b border-border">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Wedding Invitation Wording — FAQ</h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
+      <Section tone="paper" id="faq" aria-label="Questions">
+        <SectionHeading align="center" eyebrow="Questions" title={'Wedding Invitation Wording — FAQ'} />
+        <div className="mt-10">
+          <FAQAccordion faqs={faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))} />
         </div>
-      </section>
+      </Section>
 
       {/* Internal Links */}
-      <section className="bg-white border-b border-border px-5 py-12">
+      <section className="bg-paper border-b border-line px-5 py-12">
         <div className="mx-auto max-w-4xl">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6 text-center">Related guides &amp; tools</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -551,7 +485,7 @@ export default function WeddingInvitationWordingPage() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors"
+                className="rounded-xl border border-line bg-champagne px-4 py-3 text-sm font-medium text-foreground hover:border-[#A47945]/50 transition-colors"
               >
                 {l.label} →
               </Link>
@@ -561,15 +495,11 @@ export default function WeddingInvitationWordingPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-5 py-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Ready to Create Your Digital Wedding Invitation?</h2>
-          <p className="text-muted text-sm mb-7">Use any wording sample above. Add your details, photos, and music — and share in 5 minutes.</p>
-          <Link href="/create?template=elegant-wedding" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start My Wedding Invite →
-          </Link>
-        </div>
-      </section>
+      <CtaBand
+        title={'Ready to Create Your Digital Wedding Invitation?'}
+        sub={'Use any wording sample above. Add your details, photos, and music — and share in 5 minutes.'}
+        primary={{ href: '/create?template=elegant-wedding', label: 'Start My Wedding Invite' }}
+      />
 
       <StickyCTA href="/wedding-invitation" text="Start My Wedding Invite →" />
 

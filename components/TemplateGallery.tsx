@@ -1,10 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { templateImage } from '@/lib/templateMedia'
 import { formatTemplatePrice, templatePrice } from '@/lib/plans'
-import { trackCta } from '@/lib/analytics'
+import { is3D } from '@/lib/catalog'
+import type { CatalogItem } from '@/lib/catalogItems'
+import SiteHeader from '@/components/layout/SiteHeader'
+import SiteFooter from '@/components/landing/SiteFooter'
+import TemplateCard from '@/components/catalog/TemplateCard'
+import CtaBand from '@/components/brand/CtaBand'
 
 interface TemplateItem {
   name: string
@@ -32,6 +36,25 @@ interface TemplateGalleryProps {
   faq: FaqItem[]
 }
 
+/** Adapts this page family's hand-written items to the shared card. */
+function toCard(t: TemplateItem): CatalogItem {
+  return {
+    id: t.templateId,
+    name: t.name,
+    description: '',
+    price: templatePrice(t.templateId),
+    priceLabel: formatTemplatePrice(t.templateId),
+    slug: t.slug,
+    // Resolved from templateId. Every page in this gallery pointed at
+    // /templates/*-preview.jpg, a directory that does not exist in /public.
+    image: templateImage(t.templateId),
+    occasions: [],
+    occasionLabel: t.category,
+    style: t.theme,
+    is3D: is3D(t.templateId),
+  }
+}
+
 export default function TemplateGallery({
   title,
   subtitle,
@@ -48,136 +71,68 @@ export default function TemplateGallery({
     activeFilter === 'All' ? templates : templates.filter((t) => t.category === activeFilter)
 
   return (
-    <main className="min-h-screen bg-background pb-24 text-foreground">
-      {/* Header */}
-      <header className="border-b border-border bg-white px-5 py-5">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
-            <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
-          </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">
-            Create Invitation
-          </Link>
+    <>
+      <SiteHeader />
+      <main className="min-h-screen bg-champagne text-charcoal">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-14">
+          <h1 className="t-h1 enter-0">{title}</h1>
+          <p className="t-lede enter-1 mt-4 max-w-2xl">{subtitle}</p>
 
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-6xl px-5 py-14">
-        {/* Hero */}
-        <h1 className="font-display text-4xl font-normal text-ink sm:text-5xl">{title}</h1>
-        <p className="mt-4 max-w-2xl text-base leading-8 text-muted">{subtitle}</p>
-
-        {/* Filter chips */}
-        <div className="mt-8 flex flex-wrap gap-2">
-          {filters.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                activeFilter === filter
-                  ? 'bg-[#7A3E4A] text-white'
-                  : 'bg-white border border-border text-muted hover:text-foreground'
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
-
-        {/* Template grid */}
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((template) => (
-            <div
-              key={template.slug}
-              className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm"
-            >
-              {/* Resolved from templateId. Every page in this gallery pointed at
-                  /templates/*-preview.jpg, a directory that does not exist in
-                  /public — so all six wedding cards, and every card on the
-                  birthday, engagement, anniversary and griha pravesh galleries,
-                  rendered as a broken image. */}
-              <div className="aspect-[3/4] bg-[#FCF7F1] relative">
-                <img
-                  src={templateImage(template.templateId)}
-                  alt={`${template.name} digital invitation template`}
-                  loading="lazy"
-                  className="h-full w-full object-cover"
-                />
-                <span
-                  className="absolute right-3 top-3 rounded-full px-2.5 py-1 text-xs font-bold shadow-sm"
-                  style={{ background: 'rgba(255,255,255,0.94)', color: '#B87924' }}
-                >
-                  {formatTemplatePrice(template.templateId)}
-                </span>
-              </div>
-              <div className="p-5">
-                <span className="rounded-full border border-[#D9A441]/30 bg-[#FFFBF5] px-2.5 py-1 text-xs font-semibold text-accent-strong">
-                  {template.theme}
-                </span>
-                <h3 className="mt-3 font-heading text-base text-ink">{template.name}</h3>
-                <div className="mt-4 flex gap-2">
-                  <Link
-                    href={`/templates/${template.slug}`}
-                    className="flex-1 rounded-lg border border-border py-2 text-center text-sm text-muted transition-colors hover:text-foreground"
-                  >
-                    Preview
-                  </Link>
-                  <Link
-                    href={`/create?template=${template.templateId}&src=gallery`}
-                    onClick={() =>
-                      trackCta('Use This', 'template_gallery_card', {
-                        template_id: template.templateId,
-                        template_name: template.name,
-                        price: templatePrice(template.templateId),
-                        page_type: 'template_gallery',
-                      })
-                    }
-                    className="gold-button flex-1 rounded-lg py-2 text-center text-sm font-semibold"
-                  >
-                    Use This
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Cross-link CTA */}
-        <div className="mt-16 rounded-2xl border border-[#E8DCCD] bg-[#FFF9F2] px-8 py-8 text-center">
-          <p className="font-heading text-lg text-ink">Ready to create your invitation?</p>
-          <p className="mt-2 text-sm text-muted">
-            Choose a template, fill in your details, and share on WhatsApp in under 5 minutes.
-          </p>
-          <Link
-            href={singularPageHref}
-            className="mt-5 inline-block text-sm font-semibold text-accent-strong hover:underline"
-          >
-            {singularPageLabel} →
-          </Link>
-        </div>
-
-        {/* FAQ */}
-        <section className="mt-16">
-          <h2 className="font-heading text-2xl text-ink">Frequently asked questions</h2>
-          <div className="mt-6 space-y-3">
-            {faq.map((item, i) => (
-              <div key={i} className="overflow-hidden rounded-xl border border-border bg-white">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="flex w-full items-center justify-between px-6 py-4 text-left font-medium text-ink hover:bg-[#FAFAFA]"
-                >
-                  <span className="text-sm">{item.question}</span>
-                  <span className="ml-4 shrink-0 text-accent-strong">{openFaq === i ? '−' : '+'}</span>
-                </button>
-                {openFaq === i && (
-                  <div className="px-6 pb-5 text-sm leading-7 text-muted">{item.answer}</div>
-                )}
-              </div>
+          <div role="group" aria-label="Filter designs" className="scrollbar-hide -mx-4 mt-8 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                aria-pressed={activeFilter === filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`shrink-0 rounded-full border px-4 py-2 text-[0.85rem] font-semibold transition-colors ${
+                  activeFilter === filter
+                    ? 'border-emerald bg-emerald text-paper'
+                    : 'border-line bg-paper text-charcoal hover:border-burnished'
+                }`}
+              >
+                {filter}
+              </button>
             ))}
           </div>
-        </section>
-      </div>
-    </main>
+
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4" data-reveal-group>
+            {filtered.map((template, i) => (
+              <TemplateCard key={template.slug} item={toCard(template)} source="template_gallery_card" priority={i < 2} />
+            ))}
+          </div>
+
+          <section className="mt-14">
+            <h2 className="t-h2" data-reveal>Frequently asked questions</h2>
+            <div className="mt-6 space-y-3">
+              {faq.map((item, i) => (
+                <div key={i} className="overflow-hidden rounded-2xl border border-line bg-paper">
+                  <button
+                    type="button"
+                    aria-expanded={openFaq === i}
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="flex w-full items-center justify-between px-6 py-4 text-left font-semibold hover:bg-champagne"
+                  >
+                    <span className="text-[0.95rem]">{item.question}</span>
+                    <span className="ml-4 shrink-0 text-burnished" aria-hidden>{openFaq === i ? '−' : '+'}</span>
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-6 pb-5 text-[0.92rem] leading-7 text-charcoal/75">{item.answer}</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+        <CtaBand
+          title="Ready to create your invitation?"
+          sub="Choose a design, fill in your details, and share one link — free to build and preview."
+          primary={{ href: '/create', label: 'Create your invitation' }}
+          secondary={{ href: singularPageHref, label: singularPageLabel }}
+          location="template_gallery_closing"
+        />
+      </main>
+      <SiteFooter />
+    </>
   )
 }

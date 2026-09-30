@@ -37,13 +37,13 @@ function CopyableRef({ paymentId }: { paymentId: string }) {
           .then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000) })
           .catch(() => {})
       }}
-      className="mt-2.5 flex w-full items-center justify-between gap-2 rounded-lg border border-border bg-white px-3 py-2 text-left transition-colors hover:border-[#B87924]/40"
+      className="mt-2.5 flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-paper px-3 py-2 text-left transition-colors hover:border-[#0B4A34]/40"
     >
       <span className="min-w-0">
         <span className="block text-[9px] font-bold uppercase tracking-[0.16em] text-muted">Payment reference</span>
-        <span className="block truncate font-mono text-[11px] text-ink">{paymentId}</span>
+        <span className="block truncate font-mono text-[11px] text-charcoal">{paymentId}</span>
       </span>
-      <span className="shrink-0 text-[10px] font-bold" style={{ color: '#B87924' }}>
+      <span className="shrink-0 text-[10px] font-bold" style={{ color: '#0B4A34' }}>
         {copied ? 'Copied' : 'Copy'}
       </span>
     </button>
@@ -64,12 +64,12 @@ export default function PaymentProblem({
 
   // A cancelled payment is not a failure, so it must not be dressed in red.
   const tone = isCancelled
-    ? { bg: 'rgba(184,138,68,0.06)', border: 'rgba(184,138,68,0.28)', accent: '#B87924' }
-    : { bg: 'rgba(185,107,112,0.06)', border: 'rgba(185,107,112,0.30)', accent: '#B96B70' }
+    ? { bg: 'rgba(164,121,69,0.06)', border: 'rgba(164,121,69,0.28)', accent: '#0B4A34' }
+    : { bg: 'rgba(163,58,58,0.06)', border: 'rgba(163,58,58,0.30)', accent: '#A33A3A' }
 
   const supportMessage = isVerification
-    ? `Hi, my ShareInvite payment of ₹${price} did not go through properly.${error.paymentId ? ` Payment reference: ${error.paymentId}.` : ''}${templateName ? ` Template: ${templateName}.` : ''} Could you check it for me?`
-    : `Hi, I had trouble paying ₹${price} on ShareInvite${templateName ? ` for the ${templateName} template` : ''}. Could you help?`
+    ? `Hi, my ShareInvite payment of ₹${price.toLocaleString('en-IN')} did not go through properly.${error.paymentId ? ` Payment reference: ${error.paymentId}.` : ''}${templateName ? ` Template: ${templateName}.` : ''} Could you check it for me?`
+    : `Hi, I had trouble paying ₹${price.toLocaleString('en-IN')} on ShareInvite${templateName ? ` for the ${templateName} template` : ''}. Could you help?`
 
   return (
     <div
@@ -84,7 +84,7 @@ export default function PaymentProblem({
             : <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />}
         </svg>
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-bold text-ink">
+          <p className="text-xs font-bold text-charcoal">
             {isCancelled
               ? 'Payment cancelled'
               : isVerification
@@ -95,7 +95,7 @@ export default function PaymentProblem({
 
           {/* The single most important sentence on this screen. */}
           {isVerification && (
-            <p className="mt-2 text-[11px] font-semibold leading-5" style={{ color: '#2F766D' }}>
+            <p className="mt-2 text-[11px] font-semibold leading-5" style={{ color: '#0B4A34' }}>
               Your money is safe. If your account was charged, we will either unlock your
               template or refund you in full — send us the reference below and we will sort
               it out today.
@@ -112,7 +112,7 @@ export default function PaymentProblem({
           onClick={onRetry}
           disabled={retrying}
           className="rounded-lg px-3 py-1.5 text-[11px] font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-          style={{ background: 'linear-gradient(135deg,#B87924,#D9A441)' }}
+          style={{ background: '#052E20' }}
         >
           {retrying ? 'Opening…' : isCancelled ? `Try again — ₹${price.toLocaleString('en-IN')}` : 'Retry payment'}
         </button>
@@ -138,7 +138,7 @@ export default function PaymentProblem({
           <Link
             href="/refund-policy"
             target="_blank"
-            className="rounded-lg border border-border bg-white px-3 py-1.5 text-[11px] font-semibold text-muted transition-colors hover:text-foreground"
+            className="rounded-lg border border-line bg-paper px-3 py-1.5 text-[11px] font-semibold text-muted transition-colors hover:text-foreground"
           >
             Refund policy
           </Link>

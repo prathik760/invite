@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import SiteHeader from '@/components/layout/SiteHeader'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import StickyCTA from '@/components/seo/StickyCTA'
@@ -8,12 +8,24 @@ import TrackedLink from '@/components/ui/TrackedLink'
 import { templatePrice } from '@/lib/plans'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { blogDrafts, categorySlug, findBlogPost, type BlogCategory } from '@/content/blog'
-import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, templateSeoSlug } from '@/lib/seo'
+import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, slugify, templateSeoSlug } from '@/lib/seo'
 import { TEMPLATES } from '@/modules/templates/data'
 import { blogArticles, hasFullArticle } from '@/content/blog-articles'
-import { DemoViewButton } from '@/components/landing/DemoTrigger'
+import Image from 'next/image'
+import PreviewButton from '@/components/catalog/PreviewButton'
+import FAQAccordion from '@/components/landing/FAQAccordion'
+import BlogCard, { blogArt } from '@/components/blog/BlogCard'
+import CtaBand from '@/components/brand/CtaBand'
+import { Breadcrumbs } from '@/components/brand/PageHero'
+import { LogoMark } from '@/components/brand/Logo'
+import { CheckIcon, EyeIcon } from '@/components/ui/Icons'
+import { displayName, is3D } from '@/lib/catalog'
+import { templateImage } from '@/lib/templateMedia'
 
 type Props = { params: { slug: string } }
+
+// Related cards sit three across from md up, inside the 1088px shell.
+const RELATED_CARD_SIZES = '(min-width: 1088px) 340px, (min-width: 768px) 33vw, 100vw'
 
 export function generateStaticParams() {
   return blogDrafts.map((post) => ({ slug: post.slug }))
@@ -23,7 +35,9 @@ export function generateMetadata({ params }: Props): Metadata {
   const post = findBlogPost(params.slug)
   if (!post) return {}
   const url = absoluteUrl(`/blog/${post.slug}`)
+  // Post photos in public/blog are 1200x750; the brand card is 1200x630.
   const shareImage = post.image ? absoluteUrl(post.image) : DEFAULT_OG_IMAGE
+  const shareSize = post.image ? { width: 1200, height: 750 } : { width: 1200, height: 630 }
 
   return {
     title: { absolute: post.metaTitle ?? `${post.title} | ShareInvite Blog` },
@@ -41,7 +55,7 @@ export function generateMetadata({ params }: Props): Metadata {
       type: 'article',
       siteName: SITE_NAME,
       url,
-      images: [{ url: shareImage, width: 1200, height: 630, alt: post.title }],
+      images: [{ url: shareImage, ...shareSize, alt: post.title }],
       publishedTime: post.date,
     },
     twitter: {
@@ -69,7 +83,7 @@ function articleJsonLd(post: NonNullable<ReturnType<typeof findBlogPost>>) {
     publisher: {
       '@type': 'Organization',
       name: 'ShareInvite',
-      logo: { '@type': 'ImageObject', url: absoluteUrl('/logo1.png') },
+      logo: { '@type': 'ImageObject', url: absoluteUrl('/brand/mark-512.png') },
     },
     image: post.image ? absoluteUrl(post.image) : DEFAULT_OG_IMAGE,
     mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
@@ -162,7 +176,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'Last-minute changes are easy with a digital invite',
-            body: `A host can update the invitation page anytime — a change to the venue, a shift in ceremony timing, or an update to the dress code — and the same link stays accessible to all guests without needing to be resent. For a ${keyword}, this flexibility alone saves significant stress in the days before the wedding.`,
+            body: `Every guest gets the same complete page — venue, ceremony timings, dress code and a tap-to-open map — and can reopen it from the chat whenever they need it. For a ${keyword}, that alone saves a great many phone calls in the days before the wedding.`,
           },
         ],
         checklist: [
@@ -176,7 +190,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         faq: [
           { q: `How do I create a ${keyword}?`, a: `Go to shareinvite.in/create, choose a wedding template, fill in the couple's names, date, muhurat time, venue address, and ceremony schedule. Your invitation is live with a WhatsApp-ready link in under 5 minutes. No design skills needed.` },
           { q: 'How far in advance should I send a digital wedding invitation in India?', a: 'Send the digital wedding invitation 14–21 days before the wedding date, with a WhatsApp reminder 2–3 days before. For destination weddings, send 4–6 weeks in advance so guests can make travel arrangements.' },
-          { q: 'Can guests RSVP through the digital wedding invitation?', a: 'Yes. ShareInvite allows guests to leave wishes and respond on the invitation page itself, so you can track attendance without sending individual follow-up messages to each guest.' },
+          { q: 'Can guests RSVP through the digital wedding invitation?', a: 'Guests can leave a wish on the invitation page itself, and every message appears in your dashboard. There is no formal attendance tracker — for an exact headcount, ask guests to confirm on WhatsApp. The Luxury Wedding design also includes an RSVP section.' },
           { q: 'Should I still send printed wedding cards if I have a digital invitation?', a: 'Most Indian families use both — a printed card for close family, grandparents, and elders as a mark of respect, and a digital link for the broader guest list, colleagues, and friends. The digital invite serves as the practical reference guests use for venue and timing details.' },
         ],
         links: links[category],
@@ -360,7 +374,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'Why digital invitations are now the default for Indian events',
-            body: `${keyword} trends strongly toward digital formats. A well-designed invitation link shared on WhatsApp reaches all guests simultaneously, can be updated if details change, and works on any device without an app install. Hosts save on printing, courier, and coordination costs while delivering a more useful experience.`,
+            body: `${keyword} trends strongly toward digital formats. A well-designed invitation link shared on WhatsApp reaches all guests simultaneously, carries every detail on one page, and works on any device without an app install. Hosts save on printing, courier, and coordination costs while delivering a more useful experience.`,
           },
           {
             heading: 'How personalisation makes the difference',
@@ -409,7 +423,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'The future: invitation as event hub',
-            body: `The next evolution in ${keyword} involves more integration between the invitation and the event itself. RSVP tracking, guest messaging, live ceremony updates, and post-event photo sharing from the same URL are features that forward-thinking hosts already expect. ShareInvite is built with this full-lifecycle view in mind.`,
+            body: `The next evolution in ${keyword} involves more integration between the invitation and the event itself. Guest messages on the invitation page, clear directions and schedules, and a single link that works for every guest are what hosts increasingly expect.`,
           },
         ],
         checklist: [
@@ -464,7 +478,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a template for your event type, fill in the names, date, venue, and schedule. Your invitation is live with a WhatsApp-ready link in under 5 minutes. Guests open it in their phone browser — no app download needed.' },
-          { q: 'Are digital invitations free in India?', a: 'ShareInvite is free to build with. You can choose a template, add all your details, and preview the finished invitation at no cost. Publishing the link is a one-time payment starting at ₹99, with no template costing more than ₹499 — there is no subscription.' },
+          { q: 'Are digital invitations free in India?', a: 'ShareInvite is free to build with. You can choose a template, add all your details, and preview the finished invitation at no cost. Publishing the link is a one-time payment for the design you choose — most are ₹99 to ₹499, and the Signature wedding suites are ₹1,499 to ₹1,999. There is no subscription.' },
           { q: 'Can I update a digital invitation after sending it?', a: 'Yes — this is one of the biggest advantages over printed cards. You can update venue details, change a timing, correct a spelling, or add new information at any time. The same link continues to work for all guests who already received it, showing the updated information automatically.' },
         ],
         links: links['Digital Invitations'],
@@ -494,7 +508,7 @@ const CATEGORY_TEMPLATE: Record<string, string> = {
 function renderInline(text: string) {
   return text
     .split(/\*\*(.+?)\*\*/g)
-    .map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-semibold text-ink">{part}</strong> : part))
+    .map((part, i) => (i % 2 === 1 ? <strong key={i}>{part}</strong> : part))
 }
 
 /**
@@ -513,13 +527,13 @@ function ArticleBody({ body }: { body: string }) {
   const blocks = body.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean)
 
   return (
-    <div className="mt-3 space-y-4">
+    <>
       {blocks.map((block, i) => {
         const lines = block.split('\n').map((l) => l.trim()).filter(Boolean)
 
         if (lines.every((l) => l.startsWith('- '))) {
           return (
-            <ul key={i} className="ml-5 list-disc space-y-2 text-base leading-8 text-muted">
+            <ul key={i}>
               {lines.map((line, j) => (
                 <li key={j}>{renderInline(line.slice(2))}</li>
               ))}
@@ -528,7 +542,7 @@ function ArticleBody({ body }: { body: string }) {
         }
 
         return (
-          <p key={i} className="text-base leading-8 text-muted">
+          <p key={i}>
             {lines.map((line, j) => (
               <span key={j}>
                 {j > 0 && <br />}
@@ -538,7 +552,7 @@ function ArticleBody({ body }: { body: string }) {
           </p>
         )
       })}
-    </div>
+    </>
   )
 }
 
@@ -576,7 +590,7 @@ export default function BlogPostPage({ params }: Props) {
   const ctaPriceLine =
     ctaPrice === 0
       ? 'Free to publish · WhatsApp-ready link · No app for guests'
-      : `Build & preview free · ₹${ctaPrice} one-time to publish · No app for guests`
+      : `Build & preview free · ₹${ctaPrice.toLocaleString('en-IN')} one-time to publish · No app for guests`
   const content = blogArticles[post.slug] ?? buildPostContent(post.keyword, post.category)
 
   const faqJsonLd = {
@@ -589,8 +603,52 @@ export default function BlogPostPage({ params }: Props) {
     })),
   }
 
+  // Honest per-design highlights for the inline offer: the 3D greetings have
+  // no venue or countdown, and RSVP is not a general feature.
+  const ctaFeatures = is3D(ctaTemplateId)
+    ? ['3D animation', 'Your photo memories', 'A personal message', 'Background music', 'One WhatsApp link']
+    : ['Photo gallery', 'Live countdown', 'Google Maps directions', 'Background music', 'Guest wishes', 'One WhatsApp link']
+  const ctaName = ctaTemplate ? displayName(ctaTemplate.name) : 'your design'
+  const sections = content.sections.map((section) => ({ ...section, id: slugify(section.heading) }))
+  const relatedPosts = blogDrafts.filter((p) => p.category === post.category && p.slug !== post.slug).slice(0, 3)
+  const wordingGuides: Record<string, { label: string; href: string }[]> = {
+    Wedding: [
+      { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+    ],
+    Engagement: [
+      { label: 'Engagement invitation wording guide', href: '/engagement-invitation-wording' },
+      { label: 'Digital engagement invitations', href: '/engagement-invitation' },
+    ],
+    Birthday: [
+      { label: 'Birthday invitation wording guide', href: '/birthday-invitation-wording' },
+      { label: 'Digital birthday invitations', href: '/birthday-invitation' },
+    ],
+    Housewarming: [
+      { label: 'Griha Pravesh invitation wording guide', href: '/griha-pravesh-invitation-wording' },
+      { label: 'Digital Griha Pravesh invitations', href: '/griha-pravesh-invitation' },
+    ],
+    'Baby Shower': [
+      { label: 'Baby shower invitation wording guide', href: '/baby-shower-invitation-wording' },
+      { label: 'Create a digital invitation', href: '/create' },
+    ],
+    'Invitation Ideas': [
+      { label: 'Namakaran invitation wording guide', href: '/namakaran-invitation-wording' },
+      { label: 'Browse invitation designs', href: '/templates' },
+    ],
+    'Wedding Trends': [
+      { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
+      { label: 'Browse wedding designs', href: '/templates' },
+    ],
+    'Digital Invitations': [
+      { label: 'Digital invitation maker', href: '/digital-invitation' },
+      { label: 'Browse invitation designs', href: '/templates' },
+    ],
+  }
+  const guides = wordingGuides[post.category] ?? []
+
   return (
-    <main className="min-h-screen bg-background pb-28 text-foreground">
+    <main className="min-h-screen bg-champagne pb-28 text-charcoal">
       <JsonLd id="article-jsonld" data={articleJsonLd(post)} />
       <JsonLd id="blog-post-faq-jsonld" data={faqJsonLd} />
       <JsonLd
@@ -601,249 +659,181 @@ export default function BlogPostPage({ params }: Props) {
           { name: post.title, url: absoluteUrl(`/blog/${post.slug}`) },
         ])}
       />
-      <header className="border-b border-border bg-white px-5 py-5">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
-            <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
-          </Link>
-          <div className="flex items-center gap-2.5">
-            {demoTemplateId && (
-              <DemoViewButton
-                templateId={demoTemplateId}
-                accent="#7A3E4A"
-                label="View Live Demo"
-                className="hidden items-center justify-center gap-1.5 rounded-xl border px-5 py-2.5 text-sm font-semibold transition-all hover:-translate-y-0.5 sm:flex"
-                style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: 'rgba(122,62,74,0.05)' }}
-              />
-            )}
-            <Link href={createHref} className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
+      <SiteHeader createHref={createHref} />
+
+      {/* ─── ARTICLE HEADER ─── */}
+      <header className="relative overflow-hidden border-b border-line">
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_60%_at_85%_0%,rgba(232,200,102,0.18),transparent_70%)]" />
+        <div className="shell relative pb-10 pt-8 sm:pt-10">
+          <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Blog', href: '/blog' }, { name: post.category, href: `/blog/category/${categorySlug(post.category)}` }]} />
+          <div className="mt-8 max-w-3xl">
+            <Link href={`/blog/category/${categorySlug(post.category)}`} className="pill enter-0 border-transparent bg-peach text-burnished-deep">
+              {post.category}
+            </Link>
+            <h1 className="t-h1 enter-0 mt-5">{post.title}</h1>
+            <p className="t-lede enter-1 mt-5">{post.description}</p>
+            <div className="enter-2 mt-6 flex items-center gap-3 text-[0.85rem] text-muted">
+              <LogoMark className="h-8 w-8" />
+              <span className="font-semibold text-charcoal">ShareInvite</span>
+              <span aria-hidden>·</span>
+              <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+            </div>
+          </div>
+          <div className="enter-4 relative mt-10 aspect-[21/8] overflow-hidden rounded-[2rem] border border-line bg-peach">
+            <Image src={blogArt(post)} alt="" fill priority sizes="(min-width: 1088px) 1040px, 100vw" className="object-cover" />
           </div>
         </div>
       </header>
-      <article className="mx-auto max-w-3xl px-5 py-14">
-        <Link href={`/blog/category/${categorySlug(post.category)}`} className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-strong">
-          {post.category}
-        </Link>
-        <h1 className="mt-5 font-display text-4xl font-normal leading-tight text-ink sm:text-5xl">{post.title}</h1>
-        <p className="mt-5 text-lg leading-8 text-muted">{post.description}</p>
-        <div className="mt-2 flex items-center gap-3 text-xs text-muted">
-          <span>ShareInvite</span>
-          <span>·</span>
-          <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-        </div>
 
-        {/* Live demo showcase — see the actual template before reading */}
-        {demoTemplateId && (
-          <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-[#D9A441]/35 bg-[#FFFBF5] p-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0">
-              <p className="font-heading text-lg text-ink">See this template live</p>
-              <p className="mt-1 text-sm text-muted">Tap to open the real, interactive demo — exactly what your recipient sees.</p>
-            </div>
-            <div className="flex shrink-0 items-center gap-2.5">
-              <DemoViewButton
-                templateId={demoTemplateId}
-                accent="#7A3E4A"
-                label="View Live Demo"
-                className="inline-flex items-center justify-center gap-1.5 rounded-full border px-6 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5"
-                style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: '#fff' }}
-              />
-              <Link href={createHref} className="gold-button inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold">
-                Use this template →
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {/* Intro paragraph */}
-        <p className="mt-10 text-base leading-8 text-muted">{content.intro}</p>
-
-        {/* Body sections with H2 headings */}
-        <div className="mt-8 space-y-8">
-          {content.sections.map((section, i) => (
-            <div key={i}>
-              <h2 className="font-heading text-xl text-ink">{section.heading}</h2>
-              <ArticleBody body={section.body} />
-            </div>
-          ))}
-        </div>
-
-        {/* Inline CTA — the bridge from "I found my wording" to "I have an
-            invitation". Names what the reader gets and what it costs, so the
-            click is informed rather than a surprise later in the funnel. */}
-        <div className="mt-10 rounded-2xl border border-[#D9A441]/35 bg-[#FFFBF5] px-6 py-6">
-          <p className="font-heading text-base text-ink">Found the wording you want?</p>
-          <p className="mt-1.5 text-sm leading-6 text-muted">
-            Turn it into a live invitation page{ctaTemplate ? ` with the ${ctaTemplate.name.split('—')[0].trim()} template` : ''} — your message, photos and event details on one link you send to a WhatsApp group.
-          </p>
-          <ul className="mt-4 grid gap-x-5 gap-y-1.5 text-sm text-muted sm:grid-cols-2">
-            {['Photo gallery', 'Live countdown', 'Google Maps directions', 'Background music', 'Guest wishes & RSVP', 'One WhatsApp link'].map((f) => (
-              <li key={f} className="flex items-center gap-2">
-                <span className="text-[#2F766D]">✓</span>{f}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:items-center">
-            <TrackedLink
-              href={createHref}
-              location="blog_inline_cta"
-              meta={{ template_id: ctaTemplateId, price: ctaPrice, page_type: 'blog_post', blog_slug: post.slug }}
-              className="gold-button inline-flex shrink-0 justify-center rounded-full px-6 py-3 text-sm font-semibold"
-            >
-              Create my invitation →
-            </TrackedLink>
-            <TrackedLink
-              href={ctaTemplateHref}
-              location="blog_inline_template_link"
-              meta={{ template_id: ctaTemplateId, price: ctaPrice, page_type: 'blog_post', blog_slug: post.slug }}
-              className="inline-flex shrink-0 justify-center rounded-full border border-border bg-white px-6 py-3 text-sm font-semibold text-ink"
-            >
-              See the template first
-            </TrackedLink>
-          </div>
-          <p className="mt-3 text-xs text-muted">{ctaPriceLine}</p>
-        </div>
-
-        {/* Quick checklist */}
-        <div className="mt-10 rounded-lg border border-border bg-white p-6">
-          <h2 className="font-heading text-xl text-ink">Quick checklist</h2>
-          <ul className="mt-4 space-y-3">
-            {content.checklist.map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm leading-7 text-muted">
-                <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[#2F766D]" style={{ background: 'rgba(47,118,109,0.1)' }}>
-                  <svg className="h-2.5 w-2.5" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* FAQ section */}
-        <div className="mt-10">
-          <h2 className="font-heading text-xl text-ink">Frequently asked questions</h2>
-          <div className="mt-4 space-y-4">
-            {content.faq.map((item, i) => (
-              <div key={i} className="rounded-lg border border-border bg-white p-5">
-                <p className="font-heading text-sm text-ink">{item.q}</p>
-                <p className="mt-2 text-sm leading-7 text-muted">{item.a}</p>
+      {/* ─── BODY + SIDEBAR ─── */}
+      <div className="shell grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+        <article className="min-w-0 max-w-[46rem]">
+          {/* Live demo showcase — see the actual template before reading */}
+          {demoTemplateId && (
+            <div className="mb-10 flex flex-col gap-4 rounded-3xl border border-line bg-paper p-6 shadow-soft sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <p className="t-h3">See this design live</p>
+                <p className="mt-1 text-[0.9rem] text-charcoal/70">Open the real, interactive design — exactly what your recipient sees.</p>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Related links */}
-        <h2 className="mt-10 font-heading text-xl text-ink">Related guides</h2>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          {content.links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink transition-colors hover:text-accent-strong"
-            >
-              {link.label} →
-            </Link>
-          ))}
-        </div>
-
-        {/* Wording guides */}
-        {(() => {
-          const wordingGuides: Record<string, { label: string; href: string }[]> = {
-            Wedding: [
-              { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
-              { label: 'Create free wedding invitation', href: '/wedding-invitation' },
-            ],
-            Engagement: [
-              { label: 'Engagement invitation wording guide', href: '/engagement-invitation-wording' },
-              { label: 'Create free engagement invitation', href: '/engagement-invitation' },
-            ],
-            Birthday: [
-              { label: 'Birthday invitation wording guide', href: '/birthday-invitation-wording' },
-              { label: 'Create free birthday invitation', href: '/birthday-invitation' },
-            ],
-            Housewarming: [
-              { label: 'Griha Pravesh invitation wording guide', href: '/griha-pravesh-invitation-wording' },
-              { label: 'Create free Griha Pravesh invitation', href: '/griha-pravesh-invitation' },
-            ],
-            'Baby Shower': [
-              { label: 'Baby shower invitation wording guide', href: '/baby-shower-invitation-wording' },
-              { label: 'Create free digital invitation', href: '/create' },
-            ],
-            'Invitation Ideas': [
-              { label: 'Namakaran invitation wording guide', href: '/namakaran-invitation-wording' },
-              { label: 'Browse invitation templates', href: '/templates' },
-            ],
-            'Wedding Trends': [
-              { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
-              { label: 'Browse wedding templates', href: '/templates' },
-            ],
-            'Digital Invitations': [
-              { label: 'Free digital invitation maker', href: '/digital-invitation' },
-              { label: 'Browse invitation templates', href: '/templates' },
-            ],
-          }
-          const guides = wordingGuides[post.category] ?? []
-          if (guides.length === 0) return null
-          return (
-            <div className="mt-8 flex flex-wrap gap-3">
-              {guides.map(link => (
-                <Link key={link.href} href={link.href} className="rounded-full border border-[#D9A441]/40 bg-[#FFFBF5] px-4 py-2 text-sm font-semibold text-accent-strong hover:bg-[#FFF4E5] transition-colors">
-                  {link.label} →
+              <div className="flex shrink-0 flex-wrap items-center gap-2.5">
+                <PreviewButton templateId={demoTemplateId} source="blog_demo" className="btn-outline inline-flex items-center gap-1.5 rounded-full px-5 py-3 text-[0.9rem] font-semibold">
+                  <EyeIcon className="h-4 w-4" /> Live preview
+                </PreviewButton>
+                <Link href={createHref} className="btn-primary inline-flex items-center justify-center rounded-full px-5 py-3 text-[0.9rem] font-semibold">
+                  Use this design
                 </Link>
-              ))}
-            </div>
-          )
-        })()}
-
-        {/* Related articles */}
-        {(() => {
-          const relatedPosts = blogDrafts
-            .filter(p => p.category === post.category && p.slug !== post.slug)
-            .slice(0, 3)
-          if (relatedPosts.length === 0) return null
-          return (
-            <div className="mt-12 border-t border-border pt-10">
-              <h2 className="font-heading text-xl text-ink mb-6">Related Articles</h2>
-              <div className="grid gap-4 sm:grid-cols-3">
-                {relatedPosts.map(rp => (
-                  <Link key={rp.slug} href={`/blog/${rp.slug}`} className="rounded-xl border border-border bg-white p-5 hover:shadow-sm transition-shadow">
-                    <p className="text-xs font-semibold uppercase tracking-[0.15em] text-accent-strong mb-2">{rp.category}</p>
-                    <p className="font-heading text-base text-ink leading-snug">{rp.title}</p>
-                  </Link>
-                ))}
               </div>
             </div>
-          )
-        })()}
+          )}
 
-        {/* CTA */}
-        <div className="mt-10 rounded-2xl border border-[#E8DCCD] bg-[#FFF9F2] p-7 text-center">
-          <p className="font-heading text-lg text-ink">Ready to create your invitation?</p>
-          <p className="mt-2 text-sm text-muted">Choose a template, fill in your details, and share on WhatsApp in under 5 minutes.</p>
-          <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <TrackedLink
-              href={createHref}
-              location="blog_footer_cta"
-              meta={{ template_id: ctaTemplateId, price: ctaPrice, page_type: 'blog_post', blog_slug: post.slug }}
-              className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold"
-            >
-              Create my invitation →
-            </TrackedLink>
-            {demoTemplateId && (
-              <DemoViewButton
-                templateId={demoTemplateId}
-                accent="#7A3E4A"
-                label="View Live Demo"
-                className="inline-flex items-center justify-center gap-1.5 rounded-full border px-8 py-3.5 text-sm font-semibold transition-all hover:-translate-y-0.5"
-                style={{ borderColor: 'rgba(122,62,74,0.4)', color: '#7A3E4A', background: '#fff' }}
-              />
-            )}
+          <div className="prose-brand">
+            <p className="text-[1.1rem]">{content.intro}</p>
+            {sections.map((section) => (
+              <section key={section.id} aria-labelledby={section.id}>
+                <h2 id={section.id} className="scroll-mt-28">{section.heading}</h2>
+                <ArticleBody body={section.body} />
+              </section>
+            ))}
           </div>
-          <p className="mt-4 text-xs text-muted">{ctaPriceLine}</p>
-        </div>
-      </article>
+
+          {/* Inline CTA — the bridge from "I found my wording" to "I have an
+              invitation". Names what the reader gets and what it costs, so the
+              click is informed rather than a surprise later in the funnel. */}
+          <aside className="relative mt-12 overflow-hidden rounded-[2rem] bg-emerald p-7 text-paper shadow-lift sm:p-9" data-reveal>
+            <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gold-soft/10 blur-2xl" />
+            <p className="relative text-[0.75rem] font-bold uppercase tracking-[0.2em] text-gold-soft">Found the words you want?</p>
+            <p className="t-h3 relative mt-2">Turn them into a live invitation with the {ctaName} design</p>
+            <p className="relative mt-2 text-[0.95rem] leading-7 text-paper/75">Your message, photos and event details on one link you send to a WhatsApp group.</p>
+            <ul className="relative mt-5 grid gap-x-5 gap-y-2 text-[0.9rem] text-paper/85 sm:grid-cols-2">
+              {ctaFeatures.map((f) => (
+                <li key={f} className="flex items-center gap-2"><CheckIcon className="h-3.5 w-3.5 text-gold-soft" />{f}</li>
+              ))}
+            </ul>
+            <div className="relative mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center">
+              <TrackedLink
+                href={createHref}
+                location="blog_inline_cta"
+                meta={{ template_id: ctaTemplateId, price: ctaPrice, page_type: 'blog_post', blog_slug: post.slug }}
+                className="btn-gold inline-flex shrink-0 justify-center rounded-full px-6 py-3.5 text-[0.95rem] font-semibold"
+              >
+                Create my invitation
+              </TrackedLink>
+              <TrackedLink
+                href={ctaTemplateHref}
+                location="blog_inline_template_link"
+                meta={{ template_id: ctaTemplateId, price: ctaPrice, page_type: 'blog_post', blog_slug: post.slug }}
+                className="inline-flex shrink-0 justify-center rounded-full border border-paper/25 px-6 py-3.5 text-[0.95rem] font-semibold text-paper/90 hover:bg-paper/10"
+              >
+                See the design first
+              </TrackedLink>
+            </div>
+            <p className="relative mt-3 text-[0.8rem] text-paper/60">{ctaPriceLine}</p>
+          </aside>
+
+          {/* Quick checklist */}
+          <div className="card mt-12 p-6 sm:p-8" data-reveal>
+            <h2 className="t-h3">Quick checklist</h2>
+            <ul className="mt-5 space-y-3">
+              {content.checklist.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-[0.95rem] leading-7 text-charcoal/80">
+                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald text-paper">
+                    <CheckIcon className="h-3 w-3" />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* FAQ */}
+          <div className="mt-14">
+            <h2 className="t-h2 mb-6">Frequently asked questions</h2>
+            <FAQAccordion faqs={content.faq.map((item) => ({ question: item.q, answer: item.a }))} />
+          </div>
+
+          {/* Related links */}
+          <div className="mt-14">
+            <p className="eyebrow">Related guides</p>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {[...content.links, ...guides.filter((g) => !content.links.some((l) => l.href === g.href))].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="pill px-4 py-2 text-[0.88rem] hover:border-burnished">{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+
+        {/* Sticky sidebar: contents + the design this article points to. */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-28 space-y-6">
+            {sections.length > 2 && (
+              <nav aria-label="On this page" className="card-quiet p-6">
+                <p className="eyebrow">On this page</p>
+                <ol className="mt-4 space-y-2.5 text-[0.88rem]">
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <a href={`#${section.id}`} className="block leading-snug text-charcoal/75 hover:text-emerald-soft">{section.heading}</a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
+            <div className="card overflow-hidden">
+              <div className="relative aspect-[4/3] bg-peach">
+                <Image src={templateImage(ctaTemplateId)} alt="" fill sizes="320px" className="object-cover" />
+              </div>
+              <div className="p-5">
+                <p className="font-editorial text-[1.35rem] font-semibold leading-tight">{ctaName}</p>
+                <p className="mt-1 text-[0.85rem] text-muted">₹{ctaPrice.toLocaleString('en-IN')} one-time · everything included</p>
+                <Link href={createHref} className="btn-primary mt-4 flex items-center justify-center rounded-full py-3 text-[0.9rem] font-semibold">
+                  Use this design
+                </Link>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      {relatedPosts.length > 0 && (
+        <section className="border-t border-line bg-paper" aria-label="Related articles">
+          <div className="shell py-16">
+            <p className="eyebrow">Keep reading</p>
+            <h2 className="t-h2 mt-3">Related articles</h2>
+            <div className="mt-9 grid gap-5 md:grid-cols-3" data-reveal-group>
+              {relatedPosts.map((rp) => <BlogCard key={rp.slug} post={rp} sizes={RELATED_CARD_SIZES} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <CtaBand
+        title="Ready to create your invitation?"
+        sub={ctaPriceLine}
+        primary={{ href: createHref, label: 'Create my invitation' }}
+        secondary={{ href: ctaTemplateHref, label: 'See the design' }}
+        location="blog_footer_cta"
+      />
       <SiteFooter />
       <StickyCTA pageType="blog_post" />
     </main>

@@ -71,7 +71,7 @@ function LoginPage({ wrongToken }: { wrongToken: boolean }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '28px' }}>
           <div style={{
             width: '36px', height: '36px', borderRadius: '10px',
-            background: 'linear-gradient(135deg, #B87924, #D9A441)',
+            background: 'linear-gradient(135deg, #0B4A34, #A47945)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#fff" strokeWidth={2}>
@@ -81,7 +81,7 @@ function LoginPage({ wrongToken }: { wrongToken: boolean }) {
           </div>
           <div>
             <p style={{ fontSize: '11px', color: '#9B8F8A', letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: '1px' }}>ShareInvite</p>
-            <h1 style={{ fontSize: '17px', fontWeight: '700', color: '#221B17', lineHeight: 1 }}>Admin Panel</h1>
+            <h1 style={{ fontSize: '17px', fontWeight: '700', color: '#1E2726', lineHeight: 1 }}>Admin Panel</h1>
           </div>
         </div>
 
@@ -109,7 +109,7 @@ function LoginPage({ wrongToken }: { wrongToken: boolean }) {
               width: '100%', boxSizing: 'border-box',
               padding: '11px 14px', borderRadius: '10px',
               border: '1.5px solid rgba(44,32,28,0.16)',
-              background: '#FFFCF8', color: '#221B17',
+              background: '#FFFCF8', color: '#1E2726',
               fontSize: '14px', outline: 'none',
               marginBottom: '16px',
               fontFamily: 'inherit',
@@ -120,7 +120,7 @@ function LoginPage({ wrongToken }: { wrongToken: boolean }) {
             style={{
               width: '100%', padding: '12px',
               borderRadius: '10px', border: 'none',
-              background: 'linear-gradient(135deg, #B87924, #D9A441)',
+              background: 'linear-gradient(135deg, #0B4A34, #A47945)',
               color: '#fff', fontSize: '14px', fontWeight: '700',
               cursor: 'pointer', letterSpacing: '.02em',
             }}
@@ -151,7 +151,7 @@ function SetupPage() {
         padding: '36px 32px', border: '1px solid rgba(44,32,28,0.09)',
         boxShadow: '0 8px 32px rgba(44,32,28,0.07)',
       }}>
-        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#221B17', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#1E2726', marginBottom: '12px' }}>
           Admin not configured
         </h2>
         <p style={{ fontSize: '14px', color: '#6B5F58', lineHeight: '1.6', marginBottom: '20px' }}>
@@ -193,15 +193,15 @@ function RequestCard({ wish, index }: { wish: Wish; index: number }) {
           {/* Avatar circle */}
           <div style={{
             width: '36px', height: '36px', borderRadius: '50%', flexShrink: 0,
-            background: `linear-gradient(135deg, rgba(184,121,36,0.15), rgba(184,121,36,0.08))`,
-            border: '1.5px solid rgba(184,121,36,0.2)',
+            background: `linear-gradient(135deg, rgba(11,74,52,0.15), rgba(11,74,52,0.08))`,
+            border: '1.5px solid rgba(11,74,52,0.2)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '14px', fontWeight: '700', color: '#B87924',
+            fontSize: '14px', fontWeight: '700', color: '#0B4A34',
           }}>
             {name.charAt(0).toUpperCase()}
           </div>
           <div style={{ minWidth: 0 }}>
-            <p style={{ fontSize: '15px', fontWeight: '700', color: '#221B17', marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <p style={{ fontSize: '15px', fontWeight: '700', color: '#1E2726', marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {name}
             </p>
             <span style={{
@@ -283,7 +283,7 @@ function Dashboard({ requests, token }: { requests: Wish[]; token: string }) {
     }}>
       {/* Top bar */}
       <div style={{
-        background: '#221B17', padding: '0 24px',
+        background: '#1E2726', padding: '0 24px',
         position: 'sticky', top: 0, zIndex: 10,
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}>
@@ -293,7 +293,7 @@ function Dashboard({ requests, token }: { requests: Wish[]; token: string }) {
           height: '52px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '13px', fontWeight: '700', color: '#D9A441', letterSpacing: '.05em' }}>
+            <span style={{ fontSize: '13px', fontWeight: '700', color: '#A47945', letterSpacing: '.05em' }}>
               SHAREINVITE
             </span>
             <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '14px' }}>/</span>
@@ -303,7 +303,7 @@ function Dashboard({ requests, token }: { requests: Wish[]; token: string }) {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{
-              background: 'rgba(217,164,65,0.18)', color: '#D9A441',
+              background: 'rgba(164,121,69,0.18)', color: '#A47945',
               padding: '3px 10px', borderRadius: '99px',
               fontSize: '12px', fontWeight: '700',
             }}>
@@ -346,7 +346,7 @@ function Dashboard({ requests, token }: { requests: Wish[]; token: string }) {
               <p style={{ fontSize: '11px', color: '#9B8F8A', marginBottom: '4px', letterSpacing: '.04em', textTransform: 'uppercase' }}>
                 {stat.label}
               </p>
-              <p style={{ fontSize: '28px', fontWeight: '800', color: '#221B17', lineHeight: 1 }}>
+              <p style={{ fontSize: '28px', fontWeight: '800', color: '#1E2726', lineHeight: 1 }}>
                 {stat.value}
               </p>
             </div>
@@ -361,7 +361,7 @@ function Dashboard({ requests, token }: { requests: Wish[]; token: string }) {
             border: '1px solid rgba(44,32,28,0.09)',
           }}>
             <p style={{ fontSize: '40px', marginBottom: '12px' }}>📭</p>
-            <p style={{ fontSize: '16px', fontWeight: '600', color: '#221B17', marginBottom: '6px' }}>
+            <p style={{ fontSize: '16px', fontWeight: '600', color: '#1E2726', marginBottom: '6px' }}>
               No requests yet
             </p>
             <p style={{ fontSize: '14px', color: '#9B8F8A' }}>

@@ -1,10 +1,16 @@
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import SiteHeader from '@/components/layout/SiteHeader'
+import SiteFooter from '@/components/landing/SiteFooter'
+import TemplateCard from '@/components/catalog/TemplateCard'
+import PageHero from '@/components/brand/PageHero'
+import CtaBand from '@/components/brand/CtaBand'
+import { Section } from '@/components/brand/Section'
+import { buildCatalogItems } from '@/lib/catalogItems'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import { TEMPLATES } from '@/modules/templates/data'
-import { DEFAULT_OG_IMAGE, MIN_TEMPLATES_TO_INDEX, SITE_NAME, absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, templateCategorySlug, templateCountFor, templateSeoSlug } from '@/lib/seo'
+import { DEFAULT_OG_IMAGE, MIN_TEMPLATES_TO_INDEX, SITE_NAME, absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, templateCategoryLabel, templateCategorySlug, templateCountFor } from '@/lib/seo'
 import { TEMPLATE_CATEGORY_INTRO } from '@/content/category-intros'
 
 type Props = { params: { category: string } }
@@ -23,9 +29,9 @@ export function generateMetadata({ params }: Props): Metadata {
   const category = findCategory(params.category)
   if (!category) return {}
   const url = absoluteUrl(`/templates/category/${params.category}`)
-  const cat = category.charAt(0).toUpperCase() + category.slice(1)
+  const cat = templateCategoryLabel(category)
   const title = `${cat} Invitation Templates | ShareInvite`
-  const description = `Browse ${cat.toLowerCase()} digital invitation templates for Indian events — WhatsApp-ready links, venue details, photo gallery, live countdown, and RSVP guest flow.`
+  const description = `Browse ${cat} digital invitation designs — each one shared as a single WhatsApp-ready link, free to build and preview, with one price per design.`
 
   return {
     title: { absolute: title },
@@ -50,45 +56,41 @@ export default function TemplateCategoryPage({ params }: Props) {
   const category = findCategory(params.category)
   if (!category) notFound()
   const templates = TEMPLATES.filter((template) => (template.category || 'digital') === category)
+  const items = buildCatalogItems(templates.map((t) => t.id))
   const url = absoluteUrl(`/templates/category/${params.category}`)
+  const label = templateCategoryLabel(category)
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <JsonLd id="template-category-jsonld" data={collectionPageJsonLd(`${category} Invitation Templates`, `Digital ${category} invitation templates by ShareInvite.`, url)} />
+    <main className="min-h-screen bg-champagne text-charcoal">
+      <JsonLd id="template-category-jsonld" data={collectionPageJsonLd(`${label} Invitation Templates`, `Digital ${label} invitation designs by ShareInvite.`, url)} />
       <JsonLd
         id="template-category-breadcrumb-jsonld"
         data={breadcrumbJsonLd([
           { name: 'Home', url: absoluteUrl('/') },
           { name: 'Templates', url: absoluteUrl('/templates') },
-          { name: category, url },
+          { name: label, url },
         ])}
       />
-      <header className="border-b border-border bg-white px-5 py-5">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link href="/"><Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /></Link>
-          <Link href="/templates" className="rounded-xl border border-border px-5 py-2.5 text-sm font-semibold text-muted">All Templates</Link>
+      <SiteHeader />
+      <PageHero
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Templates', href: '/templates' }, { name: label }]}
+        eyebrow="Design collection"
+        title={<>{label} <em className="font-medium text-burnished">Invitation Templates</em></>}
+        lede={
+          TEMPLATE_CATEGORY_INTRO[category] ??
+          `Browse every ${label} invitation design on ShareInvite. Each design publishes to one shareable link with venue details, a photo gallery and WhatsApp sharing built in.`
+        }
+      />
+      <Section aria-label={`${label} designs`}>
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4" data-reveal-group>
+          {items.map((item, i) => <TemplateCard key={item.id} item={item} source="template_category" priority={i < 2} />)}
         </div>
-      </header>
-      <section className="px-5 py-14">
-        <div className="mx-auto max-w-7xl">
-          <h1 className="font-display text-4xl font-normal text-ink sm:text-5xl">{category} Invitation Templates</h1>
-          <p className="mt-4 max-w-3xl text-base leading-8 text-muted">
-            {TEMPLATE_CATEGORY_INTRO[category] ??
-              `Browse every ${category} invitation template on ShareInvite. Each design publishes to one shareable link with venue details, a photo gallery and WhatsApp sharing built in.`}
-          </p>
-          <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {templates.map((template) => (
-              <Link key={template.id} href={`/templates/${templateSeoSlug(template.id)}`} className="rounded-lg border border-border bg-white p-6 shadow-sm hover:shadow-card">
-                <h2 className="font-heading text-xl text-ink">{template.name}</h2>
-                <p className="mt-3 text-sm leading-7 text-muted">{template.description}</p>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-10">
-            <Link href="/" className="text-sm font-semibold text-accent-strong">Back to homepage</Link>
-          </div>
-        </div>
-      </section>
+        <p className="mt-10 text-center">
+          <Link href="/templates" className="link">Browse every design</Link>
+        </p>
+      </Section>
+      <CtaBand location="template_category_footer" />
+      <SiteFooter />
     </main>
   )
 }

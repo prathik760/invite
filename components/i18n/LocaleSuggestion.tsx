@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { LOCALE_CODES, getLocale, localePath, stripLocale } from '@/lib/i18n'
+import { LOCALE_CODES, LOCALISED_PATHS, getLocale, localeHref, stripLocale } from '@/lib/i18n'
 import { trackEvent } from '@/lib/analytics'
 
 const DISMISS_KEY = 'si-locale-suggestion'
@@ -40,7 +40,11 @@ export default function LocaleSuggestion() {
       /* private mode — fall through and show it */
     }
     if (EXCLUDED_PREFIXES.some((p) => pathname.startsWith(p))) return
-    const { locale: current } = stripLocale(pathname)
+    const { locale: current, path: basePath } = stripLocale(pathname)
+    // "View this page in Español?" is only a true offer where a Spanish
+    // version of this page exists. Elsewhere it would drop the visitor on a
+    // different page (or, before localeHref, a 404).
+    if (!LOCALISED_PATHS.includes(basePath)) return
     const browser = (navigator.language || '').slice(0, 2).toLowerCase()
     if (!browser || browser === current) return
     if (!LOCALE_CODES.includes(browser)) return
@@ -64,29 +68,39 @@ export default function LocaleSuggestion() {
     // after hydration — as a block element at the top of the document that
     // would push every page down and register as layout shift on each one.
     // Fixed positioning keeps Cumulative Layout Shift at zero.
+    //
+    // A bottom card, not a top strip: pinned over the top of the page at
+    // z-[70] it sat on the sticky header, hiding the CTA and menu button on
+    // phones, and even covered the open mobile menu's close button (the menu
+    // is z-overlay, 60). As a toast it clears any docked bar and stays under
+    // overlays.
     <div
-      className="fixed inset-x-0 top-0 z-[70] border-b border-border bg-[#FFF9F2] px-4 py-2.5 text-sm shadow-sm"
+      className="fixed inset-x-3 mx-auto max-w-md rounded-2xl border border-border bg-[#FFF9F2] px-4 py-2.5 text-sm shadow-lift"
+      style={{
+        zIndex: 'var(--z-toast)' as unknown as number,
+        bottom: 'calc(max(var(--bottom-dock-h, 0px), env(safe-area-inset-bottom, 0px)) + 0.75rem)',
+      }}
       role="region"
       aria-label="Language suggestion"
     >
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-3 gap-y-2">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-3 gap-y-1">
         <span className="text-muted" dir={target.dir}>
           {/* Shown in the language being offered, so it is legible to the
               person it is aimed at. */}
           {target.code === 'en' ? 'View this page in English?' : `${target.label} →`}
         </span>
         <Link
-          href={localePath(path, suggest)}
+          href={localeHref(path, suggest)}
           hrefLang={target.htmlLang}
           onClick={() => remember('switch')}
-          className="rounded-full bg-[#B87924] px-4 py-1.5 text-xs font-semibold text-white"
+          className="inline-flex min-h-[40px] items-center rounded-full bg-emerald px-4 text-xs font-semibold text-paper"
         >
           {target.label}
         </Link>
         <button
           type="button"
           onClick={() => remember('dismiss')}
-          className="text-xs text-muted underline-offset-2 hover:underline"
+          className="min-h-[40px] px-2 text-xs text-muted underline-offset-2 hover:underline"
         >
           No thanks
         </button>

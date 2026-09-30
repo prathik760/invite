@@ -2,6 +2,7 @@ import { NAV } from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
+import { Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
@@ -37,6 +38,18 @@ const LocaleSuggestion = dynamic(
   { ssr: false },
 )
 
+// The editorial display face for marketing headings. Self-hosted by next/font
+// at build time, so it adds no third-party request and no layout shift. It is
+// exposed only as --font-editorial: the invitation templates read
+// --font-display, which is deliberately left untouched.
+const editorial = Cormorant_Garamond({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-editorial',
+})
+
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-5377FL2P'
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-5NYQ140ED1'
@@ -45,11 +58,11 @@ const OG_IMAGE = `${APP_URL}/opengraph-image`
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: 'Free Digital Wedding Invitations India | ShareInvite',
+    default: 'Digital Invitation Maker for Every Celebration | ShareInvite',
     template: '%s | ShareInvite',
   },
   description:
-    'Create stunning digital wedding invitations, birthday invitations, engagement invitations, and event invites. Share instantly on WhatsApp with RSVP tracking.',
+    'Beautiful digital invitations for weddings, birthdays, engagements and every celebration. Build and preview free, pay once for your design, and share one link on WhatsApp.',
   keywords: [
     'digital invitation maker',
     'free digital invitation maker India',
@@ -80,7 +93,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
     description:
-      'Create stunning digital wedding invitations, birthday invitations, engagement invitations, and event invites. Share instantly on WhatsApp with RSVP tracking.',
+      'Beautiful digital invitations for weddings, birthdays, engagements and every celebration. Build and preview free, pay once for your design, and share one link on WhatsApp.',
     type: 'website',
     siteName: 'ShareInvite',
     url: APP_URL,
@@ -100,7 +113,7 @@ export const metadata: Metadata = {
     creator: '@shareinvite',
     title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
     description:
-      'Create stunning digital wedding invitations and share instantly on WhatsApp with RSVP tracking. Free to start.',
+      'Beautiful digital invitations for every celebration. Build and preview free, pay once for your design, share one link on WhatsApp.',
     images: [OG_IMAGE],
   },
   alternates: {
@@ -122,9 +135,9 @@ export const metadata: Metadata = {
     icon: [
       { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon-48.png', sizes: '48x48', type: 'image/png' },
-      { url: '/logo1.png', sizes: '1024x1024', type: 'image/png' },
+      { url: '/brand/mark-512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: { url: '/logo1.png', sizes: '1024x1024', type: 'image/png' },
+    apple: { url: '/brand/mark-180.png', sizes: '180x180', type: 'image/png' },
     shortcut: '/favicon-48.png',
   },
 }
@@ -138,15 +151,15 @@ const orgSchema = {
   logo: {
     '@type': 'ImageObject',
     '@id': `${APP_URL}/#logo`,
-    url: `${APP_URL}/logo1.png`,
-    contentUrl: `${APP_URL}/logo1.png`,
+    url: `${APP_URL}/brand/mark-512.png`,
+    contentUrl: `${APP_URL}/brand/mark-512.png`,
     width: 512,
     height: 512,
     caption: 'ShareInvite',
   },
-  description: 'Digital invitation website builder for Indian weddings, birthdays, and family events.',
+  description: 'Digital invitation maker for weddings, birthdays, festivals and every celebration — shared with one link, anywhere in the world.',
   foundingDate: '2026',
-  areaServed: { '@type': 'Country', name: 'India' },
+  areaServed: 'Worldwide',
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer support',
@@ -164,7 +177,7 @@ const websiteSchema = {
   '@id': `${APP_URL}/#website`,
   name: 'ShareInvite',
   url: APP_URL,
-  description: 'Digital invitation website builder for Indian weddings and events.',
+  description: 'Digital invitation maker for weddings, birthdays and every celebration.',
   publisher: { '@id': `${APP_URL}/#organization` },
   // No `potentialAction: SearchAction` here. It only ever powered the sitelinks
   // search box, which Google retired globally on 21 November 2024 — the markup
@@ -199,9 +212,11 @@ const navSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN">
+    // `en` matches the root's hreflang (lib/i18n.ts). `en-IN` told crawlers the
+    // English site was for India only while hreflang offered it as x-default.
+    <html lang="en" className={editorial.variable}>
       <head>
-        <meta name="theme-color" content="#7A3E4A" />
+        <meta name="theme-color" content="#052E20" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />

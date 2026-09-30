@@ -35,6 +35,9 @@ export default function ScrollPromoMount() {
     let shortPageTimer: ReturnType<typeof setTimeout> | undefined
 
     const fire = () => {
+      // Never interrupt an open dialog (the live preview, the mobile menu). The
+      // scroll listener stays attached, so the popup can still come later.
+      if (document.querySelector('[aria-modal="true"]')) return
       setTriggered(true)
       window.removeEventListener('scroll', onScroll)
       clearTimeout(shortPageTimer)

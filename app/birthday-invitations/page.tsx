@@ -51,7 +51,7 @@ const faq = [
   {
     question: 'Can guests RSVP through the birthday invitation?',
     answer:
-      'Yes. ShareInvite includes a guest wishes and response section on every invitation page. Guests open the link and leave a message or RSVP confirmation directly on the page. You can see all responses in your host dashboard.',
+      'Guests can leave a birthday wish right on the Janamdin invitation, and every message appears in your host dashboard. There is no attendance tracker, so for an exact headcount ask guests to confirm on WhatsApp. The 3D Surprise Journey is a personal greeting and has no wishes section.',
   },
 ]
 

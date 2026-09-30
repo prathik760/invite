@@ -1,15 +1,19 @@
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import SiteHeader from '@/components/layout/SiteHeader'
 import JsonLd from '@/components/seo/JsonLd'
 import SiteFooter from '@/components/landing/SiteFooter'
+import PageHero from '@/components/brand/PageHero'
+import CtaBand from '@/components/brand/CtaBand'
+import { Section, SectionHeading } from '@/components/brand/Section'
+import BlogCard from '@/components/blog/BlogCard'
 import { blogCategories, blogDrafts, categorySlug } from '@/content/blog'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: { absolute: 'Indian Invitation Ideas, Tips & Wording | ShareInvite Blog' },
   description:
-    'Guides on digital invitations for Indian weddings, birthdays, Griha Pravesh, engagements, and family events. Wording samples, WhatsApp tips, and RSVP ideas.',
+    'Guides on digital invitations for weddings, birthdays, Griha Pravesh, engagements and family events. Wording samples, WhatsApp tips and invitation ideas.',
   alternates: { canonical: absoluteUrl('/blog') },
   openGraph: {
     title: 'Indian Invitation Ideas, Tips & Wording | ShareInvite Blog',
@@ -28,8 +32,9 @@ export const metadata: Metadata = {
 }
 
 export default function BlogIndexPage() {
+  const [featured, ...rest] = blogDrafts
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-champagne text-charcoal">
       <JsonLd id="blog-collection-jsonld" data={collectionPageJsonLd('ShareInvite Blog', metadata.description as string, absoluteUrl('/blog'))} />
       <JsonLd
         id="blog-breadcrumb-jsonld"
@@ -38,48 +43,45 @@ export default function BlogIndexPage() {
           { name: 'Blog', url: absoluteUrl('/blog') },
         ])}
       />
-      <header className="border-b border-border bg-white px-5 py-5">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
-            <span className="font-display text-xl text-ink tracking-wide">ShareInvite</span>
-          </Link>
-          <Link href="/create" className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Create Invitation</Link>
-        </div>
-      </header>
-      <section className="px-5 py-14 text-center">
-        <div className="mx-auto max-w-4xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-strong">Invitation ideas</p>
-          <h1 className="mt-4 font-display text-4xl font-normal text-ink sm:text-6xl">Digital Invitation Blog</h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted">
-            Practical guides on creating digital invitations for Indian weddings, birthdays, engagements, housewarming ceremonies, baby showers, WhatsApp invitation cards, and online RSVP.
-          </p>
-        </div>
-      </section>
-      <section className="border-y border-border bg-white px-5 py-10">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-heading text-xl text-ink">Categories</h2>
-          <div className="mt-5 flex flex-wrap gap-3">
-            {blogCategories.map((category) => (
-              <Link key={category} href={`/blog/category/${categorySlug(category)}`} className="rounded-full border border-border bg-background px-4 py-2 text-sm font-semibold text-muted hover:text-foreground">
+      <SiteHeader />
+      <PageHero
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Blog' }]}
+        eyebrow="Ideas & inspiration"
+        title={<>Digital Invitation <em className="font-medium text-burnished">Blog</em></>}
+        lede="Practical guides, wording ideas and inspiration for weddings, birthdays, engagements, housewarmings, baby showers and every celebration you want to invite people to."
+      />
+
+      <Section size="sm" aria-label="Categories">
+        <ul className="flex flex-wrap gap-2" data-reveal>
+          {blogCategories.map((category) => (
+            <li key={category}>
+              <Link href={`/blog/category/${categorySlug(category)}`} className="pill px-4 py-2 text-[0.9rem] hover:border-burnished">
                 {category}
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="px-5 py-12">
-        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {blogDrafts.map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="rounded-lg border border-border bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-card">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong">{post.category}</p>
-              <h3 className="mt-3 font-heading text-xl text-ink">{post.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-muted">{post.description}</p>
-              <p className="mt-5 text-xs font-semibold text-[#B87924]">Read guide →</p>
-            </Link>
+            </li>
           ))}
+        </ul>
+      </Section>
+
+      {featured && (
+        <Section size="sm" aria-label="Featured article">
+          <div data-reveal><BlogCard post={featured} featured /></div>
+        </Section>
+      )}
+
+      <Section aria-label="All articles">
+        <SectionHeading eyebrow="Latest" title="All guides" />
+        {/* No `data-reveal-group` here. The reveal fires once 8% of the group
+            is on screen, and this grid of 60+ cards is 11,000–35,000px tall,
+            so 8% of it never fits in a viewport: the cards stayed at opacity 0
+            however far the reader scrolled. Cards render visible; the images
+            inside lazy-load as they approach. */}
+        <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {rest.map((post) => <BlogCard key={post.slug} post={post} />)}
         </div>
-      </section>
+      </Section>
+
+      <CtaBand eyebrow="From reading to sending" title="Put the perfect words in a beautiful design" location="blog_index_footer" />
       <SiteFooter />
     </main>
   )

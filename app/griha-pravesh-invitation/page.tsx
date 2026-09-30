@@ -1,8 +1,7 @@
-import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import OccasionPage from '@/components/landing/OccasionPage'
+import { templatePrice } from '@/lib/plans'
 import { ClockIcon, MapPinIcon, ClipboardIcon, CameraIcon, MessageIcon, ParkingIcon, MusicIcon, ShareIcon } from '@/components/ui/Icons'
-import SiteFooter from '@/components/landing/SiteFooter'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -73,7 +72,7 @@ const faqSchema = {
       name: 'How much does a digital Griha Pravesh invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Griha Pravesh template is ₹399 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
+        text: 'The Griha Pravesh template is ₹399 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step.',
       },
     },
   ],
@@ -99,133 +98,42 @@ const CEREMONY_NAMES = [
   { name: 'Satyanarayan Pooja', region: 'Pan-India', desc: 'Many families combine the housewarming with a Satyanarayan Pooja celebration' },
 ]
 
-export default function GrihaPraveshInvitationPage() {
+export default function Page() {
+  const faqs = faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-
-      <SiteHeader createHref="/create?template=griha-pravesh" />
-
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Build free · WhatsApp ready · No app download
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Digital Griha Pravesh Invitation<br />
-            <span className="gradient-accent italic">Housewarming · Ghar Pravesh</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital Griha Pravesh invitation in minutes. Share the muhurat time, full pooja schedule, new address with Google Maps, and family blessings — all from one WhatsApp link. Build and preview free — publish for ₹399 one-time.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create?template=griha-pravesh" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Start My Griha Pravesh Invite →
-            </Link>
-            <span className="text-sm text-muted">Free to build &amp; preview · ₹399 one-time to publish</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Regional names */}
-      <section className="bg-white border-y border-border px-5 py-14">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            Griha Pravesh Invitations for Every Regional Housewarming Tradition
-          </h2>
-          <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Griha Pravesh, Ghar Pravesh, Gruhapravesham, Vastu Puja — one digital invitation works for all regional traditions
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {CEREMONY_NAMES.map(c => (
-              <div key={c.name} className="rounded-2xl border border-border bg-background p-5 shadow-sm">
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <p className="font-heading text-lg text-ink">{c.name}</p>
-                  <span className="shrink-0 rounded-full bg-[#7A3E4A]/10 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-accent-strong whitespace-nowrap">
-                    {c.region}
-                  </span>
-                </div>
-                <p className="text-sm text-muted leading-6">{c.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What to include */}
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            What&apos;s Included in Your Digital Griha Pravesh Invitation
-          </h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURES.map(f => (
-              <div key={f.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
-                <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
-                <p className="text-sm text-muted leading-6">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="bg-white border-y border-border px-5 py-14">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            How to Create a Griha Pravesh Digital Invitation
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              { step: '01', title: 'Enter ceremony details', desc: 'Add muhurat time, new address, pooja schedule, host names, and a personal blessing message.' },
-              { step: '02', title: 'Preview instantly', desc: 'See your Griha Pravesh invitation come to life with the address, schedule, and map link.' },
-              { step: '03', title: 'Share on WhatsApp', desc: 'Copy your unique link and forward it to family groups, neighbours, and friends.' },
-            ].map(s => (
-              <div key={s.step} className="rounded-2xl border border-border bg-background p-7 shadow-sm">
-                <p className="font-heading text-5xl text-accent/60">{s.step}</p>
-                <h3 className="mt-5 font-heading text-xl text-ink">{s.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-muted">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Griha Pravesh Digital Invitation — FAQ
-          </h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-5 pb-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Create Your Griha Pravesh Invitation
-          </h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹399 one-time to publish · WhatsApp-ready in 5 minutes</p>
-          <Link href="/create?template=griha-pravesh" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start My Griha Pravesh Invite →
-          </Link>
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
+      <OccasionPage
+        occasion="home"
+        templateId="griha-pravesh"
+        pageKey="griha_pravesh_landing"
+        crumb="Griha Pravesh invitations"
+        eyebrow="Digital housewarming invitations"
+        title={<>Digital Griha Pravesh Invitation <em className="font-medium text-burnished">Housewarming · Ghar Pravesh</em></>}
+        lede={`Share the muhurat, the full pooja schedule, your new address with Google Maps and family blessings — all from one beautiful WhatsApp link. Build and preview free — publish for ₹${templatePrice('griha-pravesh')} one-time.`}
+        ctaLabel="Start my Griha Pravesh invite"
+        types={{
+          eyebrow: 'Every tradition',
+          title: 'Griha Pravesh invitations for every regional tradition',
+          sub: 'Griha Pravesh, Ghar Pravesh, Gruhapravesham, Vastu Puja — one digital invitation works for all regional traditions.',
+          items: CEREMONY_NAMES.map((t) => ({ name: t.name, tag: t.region, desc: t.desc })),
+        }}
+        features={{ title: "What's included in your Griha Pravesh invitation", items: FEATURES }}
+        steps={[
+          { title: 'Enter ceremony details', copy: 'Muhurat time, new address, pooja schedule, host names and a blessing message.' },
+          { title: 'Preview instantly', copy: 'See the address, schedule and map link come together as you type.' },
+          { title: 'Pay once & share', copy: 'Publish for a one-time price and send it to family groups, neighbours and friends.' },
+        ]}
+        faqTitle="Griha Pravesh invitation questions"
+        faqs={faqs}
+        cities={{ base: '/griha-pravesh-invitation', title: 'Griha Pravesh invitations by city', list: ['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'] }}
+        related={[
+          { href: '/griha-pravesh-invitation-wording', label: 'Griha Pravesh wording' },
+          { href: '/griha-pravesh-invitations', label: 'Housewarming designs gallery' },
+          { href: '/blog/category/housewarming', label: 'Housewarming ideas' },
+        ]}
+        closing={{ title: 'Create your Griha Pravesh invitation' }}
+      />
+    </>
   )
 }

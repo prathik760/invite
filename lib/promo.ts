@@ -76,9 +76,9 @@ export interface PromoCopy {
 }
 
 export const PROMO: Promo = {
-  enabled: true,
-  // Points at whichever festival is next on the calendar. Raksha Bandhan has
-  // passed; Ganesh Chaturthi is the live campaign.
+  // Off: Ganesh Chaturthi (14–25 Sep 2026) has passed. To run the next
+  // festival, point templateId and copy at it and switch this back on.
+  enabled: false,
   templateId: 'ganesh-chaturthi',
   originalPrice: null,
   endsAt: null,

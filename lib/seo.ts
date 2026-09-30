@@ -46,6 +46,38 @@ export function templateCategorySlug(category?: string) {
 }
 
 /**
+ * Human name for a template category. The category keys are internal
+ * ("ganeshchaturthi", "movie", "retro"); URLs keep using them via
+ * templateCategorySlug, but people should read proper names.
+ */
+const CATEGORY_LABELS: Record<string, string> = {
+  wedding: 'Wedding',
+  engagement: 'Engagement',
+  birthday: 'Birthday',
+  housewarming: 'Housewarming',
+  naming: 'Naming ceremony',
+  anniversary: 'Anniversary',
+  movie: 'Cinematic',
+  retro: 'Art Deco',
+  interactive: '3D surprise',
+  greeting: '3D greetings',
+  rakshabandhan: 'Raksha Bandhan',
+  ganeshchaturthi: 'Ganesh Chaturthi',
+  signature: 'Signature collection',
+  babyshower: 'Baby shower',
+  prewedding: 'Haldi, Mehendi & Sangeet',
+  pooja: 'Pooja',
+  festival: 'Festival',
+  retirement: 'Retirement',
+  digital: 'Digital',
+}
+
+export function templateCategoryLabel(category?: string) {
+  const key = (category || 'digital').toLowerCase()
+  return CATEGORY_LABELS[key] ?? key.charAt(0).toUpperCase() + key.slice(1)
+}
+
+/**
  * Return policy, modelled from the actual published policy at /refund-policy:
  * refund requests are accepted within 7 days of the transaction, at no cost to
  * the customer, for customers in India.

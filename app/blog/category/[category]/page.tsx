@@ -1,12 +1,16 @@
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import SiteHeader from '@/components/layout/SiteHeader'
 import { notFound } from 'next/navigation'
 import { blogCategories, blogDrafts, categorySlug, findBlogCategory, indexablePostCount, MIN_INDEXABLE_POSTS } from '@/content/blog'
 import { hasFullArticle } from '@/content/blog-articles'
 import { BLOG_CATEGORY_INTRO } from '@/content/category-intros'
 import JsonLd from '@/components/seo/JsonLd'
 import SiteFooter from '@/components/landing/SiteFooter'
+import PageHero from '@/components/brand/PageHero'
+import CtaBand from '@/components/brand/CtaBand'
+import { Section } from '@/components/brand/Section'
+import BlogCard from '@/components/blog/BlogCard'
 import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
 
 type Props = { params: { category: string } }
@@ -57,7 +61,7 @@ export default function BlogCategoryPage({ params }: Props) {
   const url = absoluteUrl(`/blog/category/${params.category}`)
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-champagne text-charcoal">
       <JsonLd id="blog-category-jsonld" data={collectionPageJsonLd(`${category} Invitation Ideas`, `ShareInvite guides for ${category.toLowerCase()} invitations.`, url)} />
       <JsonLd
         id="blog-category-breadcrumb-jsonld"
@@ -67,30 +71,32 @@ export default function BlogCategoryPage({ params }: Props) {
           { name: category, url },
         ])}
       />
-      <header className="border-b border-border bg-white px-5 py-5">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5"><Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /><span className="font-display text-xl text-ink tracking-wide">ShareInvite</span></Link>
-          <Link href="/blog" className="rounded-xl border border-border px-5 py-2.5 text-sm font-semibold text-muted">All Posts</Link>
+      <SiteHeader />
+      <PageHero
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Blog', href: '/blog' }, { name: category }]}
+        eyebrow="Ideas & inspiration"
+        title={<>{category} <em className="font-medium text-burnished">Invitation Ideas</em></>}
+        lede={
+          BLOG_CATEGORY_INTRO[category] ??
+          `Ideas, wording samples, and practical guides for ${category.toLowerCase()} invitations — from what to write to how to share on WhatsApp.`
+        }
+      />
+      <Section aria-label={`${category} guides`}>
+        {/* Not a `data-reveal-group`: the reveal needs 8% of the group on
+            screen, which a category of 20 cards (~11,000px on a phone) can
+            never show, so its cards stayed invisible. See app/blog/page.tsx. */}
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => <BlogCard key={post.slug} post={post} />)}
         </div>
-      </header>
-      <section className="px-5 py-14">
-        <div className="mx-auto max-w-7xl">
-          <h1 className="font-display text-4xl font-normal text-ink sm:text-5xl">{category} Invitation Ideas</h1>
-          <p className="mt-4 max-w-3xl text-base leading-8 text-muted">
-            {BLOG_CATEGORY_INTRO[category] ??
-              `Ideas, wording samples, and practical guides for ${category.toLowerCase()} invitations — from what to write to how to share on WhatsApp.`}
-          </p>
-          <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="rounded-lg border border-border bg-white p-6 shadow-sm hover:shadow-card">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong">{post.keyword}</p>
-                <h2 className="mt-3 font-heading text-xl text-ink">{post.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-muted">{post.description}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+        <ul className="mt-12 flex flex-wrap gap-2">
+          {blogCategories.filter((c) => c !== category).map((c) => (
+            <li key={c}>
+              <Link href={`/blog/category/${categorySlug(c)}`} className="pill px-4 py-2 text-[0.88rem] hover:border-burnished">{c}</Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
+      <CtaBand title={`Create your ${category.toLowerCase()} invitation`} location="blog_category_footer" />
       <SiteFooter />
     </main>
   )

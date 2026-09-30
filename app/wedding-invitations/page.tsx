@@ -86,7 +86,7 @@ const faq = [
   {
     question: 'Are the wedding invitation templates free?',
     answer:
-      'The Elegant Wedding template is ₹199, and the Ganesh Chaturthi Premium template is ₹99. Every other design — including Cinematic Night, KGF Royal Empire, and Royal Deco — is a one-time purchase between ₹299 and ₹499. All templates include maps, gallery, music, RSVP, and WhatsApp sharing, and you can build and preview any of them for free.',
+      'Wedding designs start at ₹199 for Elegant Wedding and go up to ₹499 for Luxury Wedding, KGF and Royal Deco. The Signature wedding suites — Rajwada, Kalyanam, Nikah and Garden Vows — are ₹1,499 to ₹1,999 and add every function, travel and stay, FAQs and a WhatsApp RSVP. Every design includes maps, a photo gallery, music and WhatsApp sharing, and you can build and preview any of them for free.',
   },
   {
     question: 'How long does it take to create a digital wedding invitation?',

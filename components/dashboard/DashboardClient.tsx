@@ -1,26 +1,48 @@
 'use client'
 
-import { PLAN_MAP, type PlanId } from '@/lib/plans'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getAppUrl, formatRelativeDate } from '@/lib/utils'
+import { templateImage } from '@/lib/templateMedia'
+import Logo from '@/components/brand/Logo'
+import { ArrowRightIcon, CheckIcon, EyeIcon, HeartIcon } from '@/components/ui/Icons'
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
+const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const POLL_INTERVAL = 30_000
 
-// ─── Template metadata ────────────────────────────────────────────────────────
+// ─── Template labels ──────────────────────────────────────────────────────────
+// Kept local (rather than importing TEMPLATES) so the dashboard bundle does not
+// carry every template's field config just to print a name.
+const TEMPLATE_LABEL: Record<string, string> = {
+  'elegant-wedding': 'Elegant Wedding',
+  'cinematic-night': 'Cinematic Night',
+  'indian-wedding': 'Shaadi',
+  'indian-engagement': 'Mangni',
+  'indian-birthday': 'Janamdin',
+  'griha-pravesh': 'Griha Pravesh',
+  'namakaran': 'Namakaran',
+  'anniversary': 'Saalgirah',
+  'kgf-wedding': 'KGF Royal Empire',
+  'royal-deco': 'Royal Deco',
+  'luxury-wedding': 'Luxury Wedding',
+  'surprise-journey': '3D Surprise Journey',
+  'rakshabandhan': 'Raksha Bandhan',
+  'ganesh-chaturthi': 'Ganesh Chaturthi',
+}
+function templateLabel(id: string) {
+  if (id.startsWith('greeting-')) return `3D greeting · ${id.slice(9).replace(/^\w/, (c) => c.toUpperCase())}`
+  return TEMPLATE_LABEL[id] ?? 'Invitation'
+}
 
-const TEMPLATE_META: Record<string, { label: string; dot: string; category: string }> = {
-  'elegant-wedding':    { label: 'Elegant Wedding',    dot: '#B87924', category: 'Wedding' },
-  'cinematic-night':    { label: 'Cinematic Night',    dot: '#C9A84C', category: 'Wedding' },
-  'indian-wedding':     { label: 'Shaadi — Wedding',   dot: '#C41E3A', category: 'Wedding' },
-  'indian-engagement':  { label: 'Mangni — Engagement',dot: '#C2185B', category: 'Engagement' },
-  'indian-birthday':    { label: 'Janamdin — Birthday',dot: '#FF8C00', category: 'Birthday' },
-  'griha-pravesh':      { label: 'Griha Pravesh',      dot: '#FF8F00', category: 'Housewarming' },
-  'namakaran':          { label: 'Namakaran',          dot: '#0288D1', category: 'Naming' },
-  'anniversary':        { label: 'Saalgirah — Anniversary', dot: '#8B0030', category: 'Anniversary' },
+// Mirrors isExpired() in app/e/[slug]/page.tsx: live until 3 days after the date.
+function isExpired(data: Record<string, string>): boolean {
+  if (!data.date) return false
+  const [year, month, day] = data.date.split('-').map(Number)
+  if (!year || !month || !day) return false
+  return Date.now() > new Date(year, month - 1, day).getTime() + 3 * 24 * 60 * 60 * 1000
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -55,24 +77,15 @@ function CopyButton({ text }: { text: string }) {
     setCopied(true); setTimeout(() => setCopied(false), 2000)
   }
   return (
-    <button onClick={copy} className="text-xs text-muted hover:text-foreground transition-colors flex items-center gap-1 shrink-0">
-      <AnimatePresence mode="wait" initial={false}>
-        {copied ? (
-          <motion.span key="d" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}
-            className="flex items-center gap-1 text-emerald-500">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg> Copied
-          </motion.span>
-        ) : (
-          <motion.span key="c" initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}
-            className="flex items-center gap-1">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
-            </svg> Copy
-          </motion.span>
-        )}
-      </AnimatePresence>
+    <button
+      type="button"
+      onClick={copy}
+      className={`shrink-0 rounded-full px-3 py-1 text-[0.75rem] font-semibold transition-colors ${
+        copied ? 'bg-emerald text-paper' : 'border border-line bg-paper text-charcoal hover:border-burnished'
+      }`}
+      aria-live="polite"
+    >
+      {copied ? 'Copied' : 'Copy link'}
     </button>
   )
 }
@@ -84,7 +97,15 @@ function getEventTitle(data: Record<string, string>): string {
   if (data.hostNames) return data.hostNames
   if (data.babyName) return `Namakaran — ${data.babyName}`
   if (data.coupleNames) return data.years ? `${data.coupleNames} — ${data.years} Years` : data.coupleNames
-  return 'Untitled Invitation'
+  if (data.recipientName) return `For ${data.recipientName}`
+  return 'Untitled invitation'
+}
+
+function formatEventDate(date?: string) {
+  if (!date) return null
+  const [y, m, d] = date.split('-').map(Number)
+  if (!y || !m || !d) return null
+  return new Date(y, m - 1, d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -93,18 +114,8 @@ interface Props {
   user: { name: string | null; email: string | null; plan?: string }
 }
 
-// Templates are bought individually, so there is no tier name to display. The
-// badge reports how many designs the account has unlocked instead — the thing a
-// customer can actually act on.
-const BADGE_STYLE = {
-  bg: 'rgba(184,121,36,0.12)',
-  color: '#B87924',
-  border: '1px solid rgba(184,121,36,0.25)',
-}
-
-function unlockedCount(plan: string): number {
-  return PLAN_MAP[plan as PlanId]?.templateIds.length ?? 0
-}
+// No "N templates unlocked" badge: each design is sold on its own, so a tier
+// count is not something the customer bought or can act on.
 
 export default function DashboardClient({ user }: Props) {
   const [events, setEvents] = useState<Event[]>([])
@@ -115,9 +126,10 @@ export default function DashboardClient({ user }: Props) {
   const [newWishIds, setNewWishIds] = useState<Set<string>>(new Set())
   const [lastChecked, setLastChecked] = useState<Date>(new Date())
   const [signingOut, setSigningOut] = useState(false)
-  const [userPlan, setUserPlan] = useState('free')
+  const [menuOpen, setMenuOpen] = useState(false)
   const prevWishCountRef = useRef<Record<string, number>>({})
   const wishBannerRef = useRef<HTMLDivElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
   const baseUrl = getAppUrl()
 
   const fetchEvents = useCallback(() => {
@@ -151,9 +163,18 @@ export default function DashboardClient({ user }: Props) {
   useEffect(() => {
     fetchEvents()
     const id = setInterval(fetchEvents, POLL_INTERVAL)
-    fetch('/api/user/subscription').then(r => r.json()).then((b: { plan: string }) => { if (b.plan) setUserPlan(b.plan) }).catch(() => {})
     return () => clearInterval(id)
   }, [fetchEvents])
+
+  // Close the account menu on outside click / Escape.
+  useEffect(() => {
+    if (!menuOpen) return
+    const onDown = (e: MouseEvent) => { if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false) }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenuOpen(false) }
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey) }
+  }, [menuOpen])
 
   // Removal is the only moderation action — wishes are live from the moment a
   // guest sends them, so there is nothing to approve.
@@ -174,6 +195,8 @@ export default function DashboardClient({ user }: Props) {
   }
 
   const totalNew = events.reduce((s, ev) => s + ev.wishes.filter(w => newWishIds.has(w.id)).length, 0)
+  const totalWishes = events.reduce((s, ev) => s + ev.wishes.length, 0)
+  const liveCount = events.filter(ev => !isExpired(ev.data)).length
   const initials = (user.name || user.email || 'U').slice(0, 2).toUpperCase()
 
   const scrollToNewWishes = () => {
@@ -186,64 +209,62 @@ export default function DashboardClient({ user }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-champagne text-charcoal">
 
       {/* ─── Header ─── */}
-      <header className="border-b border-border px-5 sm:px-6 h-16 flex items-center justify-between gap-4 sticky top-0 z-20 bg-background/95 backdrop-blur-xl">
-        <div className="flex items-center gap-4 min-w-0">
-          <Link href="/" className="font-heading text-xl text-ink hover:opacity-75 transition-opacity shrink-0">
-            ShareInvite
-          </Link>
-          <div className="hidden sm:block h-5 w-px bg-border" />
-          <p className="hidden sm:block text-sm font-medium text-muted truncate">Dashboard</p>
-        </div>
+      <header className="sticky top-0 z-20 border-b border-line bg-champagne/95 backdrop-blur-xl">
+        <div className="shell flex h-[4.6rem] items-center justify-between gap-4">
+          <div className="flex min-w-0 items-center gap-4">
+            <Link href="/" aria-label="ShareInvite home"><Logo /></Link>
+            <span className="hidden h-6 w-px bg-line sm:block" />
+            <p className="hidden text-[0.92rem] font-semibold text-charcoal/70 sm:block">My invitations</p>
+          </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          <Link href="/create"
-            className="gold-button inline-flex items-center gap-1.5 px-4 py-2 text-sm rounded-xl font-semibold">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            New Invite
-          </Link>
-
-          {/* User avatar */}
-          <div className="relative group">
-            <button className="flex items-center gap-2 pl-1 pr-2 py-1.5 rounded-xl hover:bg-border/50 transition-colors">
-              <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                style={{ background: 'linear-gradient(135deg,#B87924,#D9A441)' }}>
-                {initials}
-              </div>
-              <span className="hidden sm:block text-sm font-medium text-foreground truncate max-w-[120px]">
-                {user.name || user.email?.split('@')[0]}
-              </span>
-              <svg className="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          <div className="flex shrink-0 items-center gap-2.5">
+            <Link href="/create" className="btn-primary inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[0.88rem] font-semibold">
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
               </svg>
-            </button>
+              New invitation
+            </Link>
 
-            {/* Dropdown */}
-            <div className="absolute right-0 top-full mt-1.5 w-56 rounded-2xl border border-border bg-white shadow-card-md py-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
-              <div className="px-4 py-3 border-b border-border/60">
-                <p className="text-xs font-semibold text-ink truncate">{user.name || 'Welcome back'}</p>
-                <p className="text-xs text-muted truncate">{user.email}</p>
-                {unlockedCount(userPlan) > 0 && (
-                  <span className="mt-1.5 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
-                    style={{ background: BADGE_STYLE.bg, color: BADGE_STYLE.color, border: BADGE_STYLE.border }}>
-                    {unlockedCount(userPlan)} template{unlockedCount(userPlan) !== 1 ? 's' : ''} unlocked
-                  </span>
-                )}
-              </div>
+            <div ref={menuRef} className="relative">
               <button
-                onClick={async () => { setSigningOut(true); await signOut({ callbackUrl: '/' }) }}
-                disabled={signingOut}
-                className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-muted hover:text-foreground hover:bg-background transition-colors"
+                type="button"
+                onClick={() => setMenuOpen(o => !o)}
+                aria-expanded={menuOpen}
+                aria-haspopup="true"
+                className="flex items-center gap-2 rounded-full py-1 pl-1 pr-2.5 transition-colors hover:bg-peach"
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                </svg>
-                {signingOut ? 'Signing out…' : 'Sign out'}
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald text-[0.75rem] font-bold text-gold-soft">{initials}</span>
+                <span className="hidden max-w-[120px] truncate text-[0.88rem] font-semibold sm:block">
+                  {user.name || user.email?.split('@')[0]}
+                </span>
               </button>
+              <AnimatePresence>
+                {menuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2, ease: BEZIER }}
+                    className="absolute right-0 top-full z-50 mt-2 w-60 rounded-2xl border border-line bg-paper py-1.5 shadow-lift"
+                  >
+                    <div className="border-b border-line px-4 py-3">
+                      <p className="truncate text-[0.85rem] font-semibold">{user.name || 'Welcome back'}</p>
+                      <p className="truncate text-[0.8rem] text-muted">{user.email}</p>
+                    </div>
+                    <Link href="/templates" className="block px-4 py-2.5 text-[0.88rem] hover:bg-peach">Browse designs</Link>
+                    <Link href="/pricing" className="block px-4 py-2.5 text-[0.88rem] hover:bg-peach">Pricing</Link>
+                    <button
+                      type="button"
+                      onClick={async () => { setSigningOut(true); await signOut({ callbackUrl: '/' }) }}
+                      disabled={signingOut}
+                      className="block w-full border-t border-line px-4 py-2.5 text-left text-[0.88rem] text-charcoal/75 hover:bg-peach"
+                    >
+                      {signingOut ? 'Signing out…' : 'Sign out'}
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
@@ -257,247 +278,215 @@ export default function DashboardClient({ user }: Props) {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: BEZIER }}
-            className="overflow-hidden">
-            <div className="px-5 sm:px-6 py-3 flex items-center justify-between gap-4"
-              style={{ background: 'linear-gradient(135deg,rgba(217,164,65,0.12),rgba(184,121,36,0.08))', borderBottom: '1px solid rgba(217,164,65,0.2)' }}>
+            className="overflow-hidden bg-emerald text-paper">
+            <div className="shell flex items-center justify-between gap-4 py-3">
               <div className="flex items-center gap-2.5">
                 <span className="relative flex h-2.5 w-2.5 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: '#D9A441' }} />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ background: '#B87924' }} />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold-soft opacity-75" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-gold-soft" />
                 </span>
-                <p className="text-sm font-semibold text-ink">
+                <p className="text-[0.9rem] font-semibold">
                   {totalNew} new wish{totalNew !== 1 ? 'es' : ''} — already live on your invitation
                 </p>
-                <span className="hidden sm:block text-xs text-muted">· Last checked {formatRelativeDate(lastChecked.toISOString())}</span>
+                <span className="hidden text-[0.8rem] text-paper/60 sm:block">· Last checked {formatRelativeDate(lastChecked.toISOString())}</span>
               </div>
-              <button
-                onClick={scrollToNewWishes}
-                className="shrink-0 text-xs font-semibold px-3 py-1.5 rounded-xl transition-all"
-                style={{ background: 'rgba(184,121,36,0.12)', color: '#B87924', border: '1px solid rgba(184,121,36,0.22)' }}
-              >
-                See them →
+              <button type="button" onClick={scrollToNewWishes} className="btn-gold shrink-0 rounded-full px-4 py-1.5 text-[0.8rem] font-semibold">
+                See them
               </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <main className="max-w-4xl mx-auto px-5 sm:px-6 py-10">
+      <main className="shell max-w-5xl py-10 sm:py-14">
 
         {/* Page header */}
-        <div className="mb-8 flex items-end justify-between gap-4">
+        <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>
-            <h1 className="font-heading text-3xl text-ink mb-1">
-              {user.name ? `Welcome, ${user.name.split(' ')[0]}` : 'My Invitations'}
+            <p className="eyebrow">Your workspace</p>
+            <h1 className="t-h1 mt-2">
+              {user.name ? `Welcome, ${user.name.split(' ')[0]}` : 'My invitations'}
             </h1>
-            <p className="text-muted text-sm">Manage your invitations and read guest wishes as they arrive.</p>
+            <p className="mt-2 text-[0.98rem] text-charcoal/70">Every invitation you have published, and every wish your guests leave.</p>
           </div>
-          <div className="shrink-0 text-right hidden sm:flex items-center gap-3">
-            {!loading && events.length > 0 && (
-              <div className="text-right">
-                <p className="text-2xl font-heading text-ink">{events.length}</p>
-                <p className="text-xs text-muted">invitation{events.length !== 1 ? 's' : ''}</p>
-              </div>
-            )}
-            {unlockedCount(userPlan) > 0 && (
-              <span className="rounded-xl px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide"
-                style={{ background: BADGE_STYLE.bg, color: BADGE_STYLE.color, border: BADGE_STYLE.border }}>
-                {unlockedCount(userPlan)} unlocked
-              </span>
-            )}
-          </div>
+          {!loading && events.length > 0 && (
+            <dl className="grid shrink-0 grid-cols-3 divide-x divide-line overflow-hidden rounded-2xl border border-line bg-paper text-center">
+              {[
+                ['Invitations', events.length],
+                ['Live now', liveCount],
+                ['Wishes', totalWishes],
+              ].map(([label, value]) => (
+                <div key={label as string} className="px-5 py-3">
+                  <dt className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-muted">{label}</dt>
+                  <dd className="mt-0.5 font-editorial text-[1.8rem] font-semibold leading-none">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-28 gap-3 text-muted">
-            <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-            </svg>
-            <span className="text-sm">Loading your invitations…</span>
-          </div>
-
-        ) : fetchError ? (
-          <div className="text-center py-24 bg-surface rounded-2xl surface-border">
-            <div className="w-12 h-12 rounded-full bg-red-50 border border-red-200 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+        <div className="mt-10">
+          {loading ? (
+            <div className="flex items-center justify-center gap-3 py-28 text-muted">
+              <svg className="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden>
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
+              <span className="text-[0.92rem]">Loading your invitations…</span>
             </div>
-            <p className="font-heading text-xl text-foreground mb-2">Could not load invitations</p>
-            <p className="text-muted text-sm mb-6">{fetchError}</p>
-            <button onClick={() => { setLoading(true); fetchEvents() }}
-              className="gold-button inline-flex px-5 py-2.5 rounded-xl text-sm font-medium">
-              Try again
-            </button>
-          </div>
 
-        ) : events.length === 0 ? (
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: BEZIER }}
-            className="text-center py-28 bg-surface rounded-2xl surface-border">
-            <div className="w-14 h-14 rounded-full mx-auto mb-5 flex items-center justify-center text-2xl select-none"
-              style={{ background: 'rgba(217,164,65,0.12)', border: '1px solid rgba(184,121,36,0.2)' }} aria-hidden>
-              ♥
+          ) : fetchError ? (
+            <div className="card py-20 text-center">
+              <p className="t-h3">Could not load your invitations</p>
+              <p className="mb-6 mt-2 text-[0.9rem] text-muted">{fetchError}</p>
+              <button type="button" onClick={() => { setLoading(true); fetchEvents() }} className="btn-primary inline-flex rounded-full px-6 py-3 text-[0.9rem] font-semibold">
+                Try again
+              </button>
             </div>
-            <p className="font-heading text-2xl text-foreground mb-2">No invitations yet</p>
-            <p className="text-muted text-sm mb-7">Create your first beautiful invitation and start sharing.</p>
-            <Link href="/create" className="gold-button inline-flex px-6 py-3 rounded-xl text-sm font-semibold">
-              Create Invitation
-            </Link>
-          </motion.div>
 
-        ) : (
-          <div className="space-y-5">
-            {events.map((event, idx) => {
-              const d = event.data
-              const title = getEventTitle(d)
-              const eventUrl = `${baseUrl}/e/${event.slug}`
-              const waUrl = `https://wa.me/?text=${encodeURIComponent(`You're invited ❤️\n\n${title}\n\n${eventUrl}`)}`
-              // No pending/approved split any more — every wish is live. The
-              // only distinction the host cares about is which ones are unread.
-              const unreadWishes = event.wishes.filter(w => newWishIds.has(w.id))
-              const wishesExpanded = expandedWishes.has(event.id)
-              const meta = TEMPLATE_META[event.templateId]
-              const hasNewWishes = event.wishes.some(w => newWishIds.has(w.id))
+          ) : events.length === 0 ? (
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: BEZIER }}
+              className="relative overflow-hidden rounded-[2rem] border border-line bg-paper px-6 py-16 text-center shadow-soft sm:py-20">
+              <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(232,200,102,0.18),transparent_70%)]" />
+              <div className="relative mx-auto flex w-fit -space-x-6">
+                {['/templates/elegant-wedding.jpg', '/templates/indian-wedding.jpg', '/templates/indian-birthday.jpg'].map((src, i) => (
+                  <span key={src} className={`relative h-28 w-20 overflow-hidden rounded-xl border-4 border-paper shadow-soft ${i === 1 ? 'z-10 -translate-y-2' : i === 0 ? '-rotate-6' : 'rotate-6'}`}>
+                    <Image src={src} alt="" fill sizes="80px" className="object-cover" />
+                  </span>
+                ))}
+              </div>
+              <p className="t-h2 relative mt-8">Something wonderful starts here</p>
+              <p className="relative mx-auto mt-3 max-w-md text-[0.98rem] text-charcoal/70">
+                Choose a design, make it yours and share it with one link. It&apos;s free to build and preview.
+              </p>
+              <Link href="/create" className="btn-primary relative mt-8 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-[0.95rem] font-semibold">
+                Create your first invitation <ArrowRightIcon />
+              </Link>
+            </motion.div>
 
-              return (
-                <motion.div key={event.id} id={`event-${event.id}`}
-                  initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, delay: idx * 0.05, ease: BEZIER }}
-                  className="bg-surface rounded-2xl surface-border shadow-card overflow-hidden">
+          ) : (
+            <div className="space-y-5">
+              {events.map((event, idx) => {
+                const d = event.data
+                const title = getEventTitle(d)
+                const eventUrl = `${baseUrl}/e/${event.slug}`
+                const waUrl = `https://wa.me/?text=${encodeURIComponent(`You're invited ❤️\n\n${title}\n\n${eventUrl}`)}`
+                // No pending/approved split any more — every wish is live. The
+                // only distinction the host cares about is which ones are unread.
+                const unreadWishes = event.wishes.filter(w => newWishIds.has(w.id))
+                const wishesExpanded = expandedWishes.has(event.id)
+                const expired = isExpired(d)
+                const eventDate = formatEventDate(d.date)
 
-                  {/* New wish indicator stripe */}
-                  {hasNewWishes && (
-                    <div className="h-0.5" style={{ background: 'linear-gradient(90deg,#D9A441,#B87924)' }} />
-                  )}
+                return (
+                  <motion.article key={event.id} id={`event-${event.id}`}
+                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, delay: idx * 0.05, ease: BEZIER }}
+                    className="overflow-hidden rounded-3xl border border-line bg-paper shadow-soft">
 
-                  {/* Event header */}
-                  <div className="px-5 sm:px-6 py-5 border-b border-border">
-                    <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                          <h2 className="font-heading text-xl text-foreground">{title}</h2>
-                          {meta && (
-                            <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold"
-                              style={{ background: `${meta.dot}18`, color: meta.dot, border: `1px solid ${meta.dot}30` }}>
-                              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: meta.dot }} />
-                              {meta.label}
-                            </span>
-                          )}
+                    <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:p-6">
+                      <Link href={`/e/${event.slug}`} target="_blank" className="relative h-28 w-full shrink-0 overflow-hidden rounded-2xl border border-line bg-peach sm:h-24 sm:w-20">
+                        <Image src={templateImage(event.templateId)} alt="" fill sizes="(max-width: 640px) 100vw, 80px" className="object-cover" />
+                      </Link>
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[0.72rem] font-semibold ${expired ? 'bg-line text-charcoal/60' : 'bg-emerald/10 text-emerald-soft'}`}>
+                            <span className={`h-1.5 w-1.5 rounded-full ${expired ? 'bg-charcoal/40' : 'animate-pulse bg-emerald-soft'}`} />
+                            {expired ? 'Ended' : 'Live'}
+                          </span>
+                          <span className="text-[0.78rem] text-muted">{templateLabel(event.templateId)}</span>
                           {unreadWishes.length > 0 && (
-                            <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold"
-                              style={{ background: 'rgba(217,164,65,0.12)', color: '#B87924', border: '1px solid rgba(184,121,36,0.2)' }}>
-                              {hasNewWishes && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />}
+                            <span className="rounded-full bg-gold-soft/30 px-2 py-0.5 text-[0.72rem] font-semibold text-burnished-deep">
                               {unreadWishes.length} new
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-2 mt-1">
-                          <p className="text-muted text-xs truncate max-w-[220px] sm:max-w-sm">{eventUrl}</p>
+                        <h2 className="mt-1.5 truncate font-editorial text-[1.6rem] font-semibold leading-tight">{title}</h2>
+                        <p className="mt-0.5 text-[0.82rem] text-muted">
+                          {eventDate ? `${eventDate} · ` : ''}Created {formatRelativeDate(event.createdAt)}
+                        </p>
+                        <div className="mt-3 flex min-w-0 items-center gap-2">
+                          <p className="min-w-0 truncate rounded-full bg-champagne px-3 py-1 text-[0.8rem] text-charcoal/70">{eventUrl}</p>
                           <CopyButton text={eventUrl} />
                         </div>
-                        <p className="text-muted text-xs mt-0.5 opacity-70">Created {formatRelativeDate(event.createdAt)}</p>
                       </div>
 
                       {/* Action buttons */}
-                      <div className="flex flex-wrap items-center gap-2 shrink-0">
-                        <Link href={`/e/${event.slug}`} target="_blank"
-                          className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-background text-foreground text-xs rounded-xl border border-border hover:border-accent/40 transition-colors">
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                          View
+                      <div className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-stretch">
+                        <Link href={`/e/${event.slug}`} target="_blank" className="btn-outline inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[0.82rem] font-semibold">
+                          <EyeIcon className="h-3.5 w-3.5" /> View
                         </Link>
                         <a href={waUrl} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3.5 py-2 text-white text-xs rounded-xl transition-colors"
-                          style={{ background: 'rgb(22,163,74)' }}>
-                          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.126 1.528 5.861L0 24l6.336-1.502A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.787 9.787 0 01-5.004-1.373l-.359-.214-3.741.888.944-3.619-.234-.372A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z" />
-                          </svg>
-                          Share
+                          className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#128C4B] px-4 py-2 text-[0.82rem] font-semibold text-white transition-opacity hover:opacity-90">
+                          Share on WhatsApp
                         </a>
                         {event.wishes.length > 0 && (
-                          <button onClick={() => toggleWishes(event.id)}
-                            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-xl border border-border transition-colors hover:border-accent/40"
-                            style={{ color: unreadWishes.length > 0 ? '#B87924' : '#7E716B' }}>
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                            </svg>
+                          <button type="button" onClick={() => toggleWishes(event.id)}
+                            aria-expanded={wishesExpanded}
+                            className="btn-outline inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[0.82rem] font-semibold">
+                            <HeartIcon className="h-3.5 w-3.5 text-burnished" />
                             {event.wishes.length} wish{event.wishes.length !== 1 ? 'es' : ''}
-                            <svg className={`w-3 h-3 transition-transform ${wishesExpanded ? 'rotate-180' : ''}`}
-                              fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                            </svg>
                           </button>
                         )}
                       </div>
                     </div>
-                  </div>
 
-                  {/* Wishes panel */}
-                  <AnimatePresence>
-                    {wishesExpanded && event.wishes.length > 0 && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: BEZIER }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-5 sm:px-6 py-5">
-                          <div className="flex items-center justify-between mb-3">
-                            <p className="text-[10px] text-muted uppercase tracking-[0.22em]">
-                              Live on your invitation ({event.wishes.length})
-                            </p>
-                            <p className="text-[10px] text-muted/60">Every guest can see these · Remove any you don&apos;t want</p>
+                    {/* Wishes panel */}
+                    <AnimatePresence>
+                      {wishesExpanded && event.wishes.length > 0 && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: BEZIER }}
+                          className="overflow-hidden border-t border-line bg-champagne"
+                        >
+                          <div className="p-5 sm:p-6">
+                            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                              <p className="eyebrow">Live on your invitation ({event.wishes.length})</p>
+                              <p className="text-[0.78rem] text-muted">Every guest can see these · Remove any you don&apos;t want</p>
+                            </div>
+                            <ul className="space-y-3">
+                              {event.wishes.map(wish => (
+                                <li key={wish.id}
+                                  className={`group flex items-start gap-3 rounded-2xl border p-4 ${newWishIds.has(wish.id) ? 'border-gold-soft/60 bg-paper' : 'border-line bg-paper/70'}`}>
+                                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald font-editorial text-[1.1rem] font-semibold text-paper">
+                                    {wish.name.slice(0, 1).toUpperCase()}
+                                  </span>
+                                  <div className="min-w-0 flex-1">
+                                    <p className="flex items-center gap-2 text-[0.9rem] font-semibold">
+                                      {wish.name}
+                                      {newWishIds.has(wish.id) && <span className="rounded-full bg-gold-soft/30 px-1.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-burnished-deep">New</span>}
+                                    </p>
+                                    <p className="mt-0.5 text-[0.9rem] leading-6 text-charcoal/75">{wish.message}</p>
+                                    <p className="mt-1 text-[0.75rem] text-muted">{formatRelativeDate(wish.createdAt)}</p>
+                                  </div>
+                                  <button type="button" onClick={() => deleteWish(wish.id)} disabled={removingId === wish.id}
+                                    className="shrink-0 rounded-full border border-[#A33A3A]/25 bg-[#A33A3A]/[0.06] px-3 py-1.5 text-[0.75rem] font-semibold text-[#A33A3A] transition-opacity disabled:opacity-50 sm:opacity-0 sm:focus:opacity-100 sm:group-hover:opacity-100">
+                                    {removingId === wish.id ? 'Removing…' : 'Remove'}
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
                           </div>
-                          <div className="space-y-3">
-                            {event.wishes.map(wish => (
-                              <div key={wish.id}
-                                className="group flex items-start gap-3 rounded-xl p-4 border transition-all"
-                                style={{
-                                  background: newWishIds.has(wish.id) ? 'rgba(217,164,65,0.04)' : 'rgba(255,255,255,0.7)',
-                                  borderColor: newWishIds.has(wish.id) ? 'rgba(217,164,65,0.25)' : '#E8DCCD',
-                                }}
-                              >
-                                {newWishIds.has(wish.id) && (
-                                  <span className="shrink-0 mt-1.5 text-[10px] font-bold uppercase tracking-[0.18em] px-1.5 py-0.5 rounded-md"
-                                    style={{ background: 'rgba(217,164,65,0.14)', color: '#B87924' }}>New</span>
-                                )}
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-semibold text-foreground mb-0.5">{wish.name}</p>
-                                  <p className="text-sm text-muted leading-relaxed">{wish.message}</p>
-                                  <p className="text-xs text-muted/50 mt-1">{formatRelativeDate(wish.createdAt)}</p>
-                                </div>
-                                <button onClick={() => deleteWish(wish.id)} disabled={removingId === wish.id}
-                                  className="shrink-0 px-3 py-1.5 text-xs rounded-lg border transition-all disabled:opacity-50 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
-                                  style={{ background: 'rgba(185,107,112,0.08)', color: '#B96B70', borderColor: 'rgba(185,107,112,0.22)' }}>
-                                  Remove
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* No wishes nudge */}
+                    {event.wishes.length === 0 && (
+                      <div className="flex items-center gap-2 border-t border-line px-5 py-3.5 text-[0.82rem] text-muted sm:px-6">
+                        <CheckIcon className="h-3.5 w-3.5 text-emerald-soft" />
+                        No wishes yet — share your invitation to start collecting them.
+                      </div>
                     )}
-                  </AnimatePresence>
-
-                  {/* No wishes nudge */}
-                  {event.wishes.length === 0 && (
-                    <div className="px-5 sm:px-6 py-4 flex items-center gap-2">
-                      <svg className="w-3.5 h-3.5 text-muted/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                      </svg>
-                      <p className="text-muted text-xs">No wishes yet — share your invitation to start collecting them.</p>
-                    </div>
-                  )}
-                </motion.div>
-              )
-            })}
-          </div>
-        )}
+                  </motion.article>
+                )
+              })}
+            </div>
+          )}
+        </div>
       </main>
     </div>
   )

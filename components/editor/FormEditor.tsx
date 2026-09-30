@@ -18,7 +18,7 @@ interface ScheduleRow { id: string; name: string; time: string }
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const WHEN_WHERE_KEYS = new Set(['date', 'time', 'venue', 'venueAddress', 'mapsUrl', 'dressCode', 'theme', 'pooja', 'visarjanDate', 'visarjanTime'])
+const WHEN_WHERE_KEYS = new Set(['date', 'time', 'venue', 'venueAddress', 'destination', 'mapsUrl', 'dressCode', 'theme', 'pooja', 'visarjanDate', 'visarjanTime', 'whatsappNumber'])
 const EXTRAS_KEYS = new Set(['message'])
 // Interactive "3D Surprise Journey" fields — routed to the right wizard steps.
 const UNLOCK_KEYS = new Set(['pin', 'pinHint'])
@@ -70,6 +70,13 @@ function serializeSchedule(rows: ScheduleRow[]): string {
     .join('\n')
 }
 
+interface FieldGroup {
+  title: string
+  section: 'people' | 'details' | 'enrich'
+  hint?: string
+  fields: TemplateField[]
+}
+
 function groupFields(fields: TemplateField[]) {
   const people: TemplateField[] = []
   const images: TemplateField[] = []
@@ -81,9 +88,15 @@ function groupFields(fields: TemplateField[]) {
   const unlock: TemplateField[] = []
   const journeyExtras: TemplateField[] = []
   const greetingExtras: TemplateField[] = []
+  const groups: FieldGroup[] = []
 
   for (const f of fields) {
-    if (f.key === 'schedule') scheduleField = f
+    if (f.group) {
+      const existing = groups.find(g => g.title === f.group)
+      if (existing) existing.fields.push(f)
+      else groups.push({ title: f.group, section: f.section ?? 'details', hint: f.hint, fields: [f] })
+    }
+    else if (f.key === 'schedule') scheduleField = f
     else if (f.key === 'galleryImages') galleryField = f
     else if (f.key === 'musicUrl') musicField = f
     else if (UNLOCK_KEYS.has(f.key)) unlock.push(f)
@@ -94,13 +107,18 @@ function groupFields(fields: TemplateField[]) {
     else if (EXTRAS_KEYS.has(f.key)) extras.push(f)
     else people.push(f)
   }
-  return { people, images, whenWhere, scheduleField, galleryField, musicField, extras, unlock, journeyExtras, greetingExtras }
+  return { people, images, whenWhere, scheduleField, galleryField, musicField, extras, unlock, journeyExtras, greetingExtras, groups }
 }
 
 function getPeopleLabel(fields: TemplateField[]): string {
   const keys = fields.map(f => f.key)
   if (keys.some(k => k === 'headline')) return 'Your Greeting'
   if (keys.some(k => k === 'recipientName' || k === 'senderName')) return 'Who is it for?'
+  if (keys.includes('celebrantName') && keys.includes('parentNames')) return 'The Birthday Child'
+  if (keys.some(k => k === 'motherName')) return 'The Mother-to-be'
+  if (keys.some(k => k === 'honoreeName')) return 'The Guest of Honour'
+  if (keys.some(k => k === 'poojaName')) return 'The Pooja'
+  if (keys.some(k => k === 'brideParents')) return 'The Couple & Families'
   if (keys.some(k => k.includes('baby') || k.includes('parent'))) return 'About the Baby'
   if (keys.some(k => k.includes('host'))) return 'The Hosts'
   if (keys.some(k => k.includes('celebrant') || k === 'age' || k === 'theme')) return 'The Celebrant'
@@ -116,28 +134,28 @@ const FIELD_HINTS: Record<string, string> = {
   theme: 'e.g. Bollywood Glam, Royal, Garden Party',
   pooja: 'e.g. Ganesh Pooja at 9:00 AM sharp',
   venueAddress: 'Full address helps guests find the venue easily',
+  destination: 'The town or region your postcard is "from" — e.g. Lake Como, Udaipur, Goa',
   age: 'The age being celebrated',
   years: 'Number of years together',
   babyGender: 'Boy or Girl — affects the invite colour scheme',
+  whatsappNumber: 'Guests tap RSVP and a WhatsApp message to this number opens, ready to send',
 }
 
 // ─── Section wrapper ──────────────────────────────────────────────────────────
 
 function Section({ number, label, hint, children }: { number: number; label: string; hint?: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-2xl border border-border bg-white/80 shadow-card overflow-hidden">
-      <div className="px-5 py-4 border-b border-border/60 flex items-start gap-3"
-        style={{ background: 'linear-gradient(135deg,rgba(255,248,241,0.8),rgba(255,255,255,0.9))' }}>
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-body text-xs font-bold"
-          style={{ background: 'rgba(217,164,65,0.16)', color: '#B87924' }}>
+    <section className="overflow-hidden rounded-3xl border border-line bg-paper shadow-soft">
+      <div className="flex items-start gap-3.5 border-b border-line px-5 py-4">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald font-editorial text-[1.05rem] font-semibold text-paper">
           {number}
         </div>
         <div>
-          <p className="text-base font-bold text-ink leading-tight">{label}</p>
-          {hint && <p className="mt-0.5 text-xs leading-5 text-muted">{hint}</p>}
+          <p className="font-editorial text-[1.35rem] font-semibold leading-tight text-charcoal">{label}</p>
+          {hint && <p className="mt-0.5 text-[0.82rem] leading-5 text-muted">{hint}</p>}
         </div>
       </div>
-      <div className="p-5 space-y-4">{children}</div>
+      <div className="space-y-4 p-5">{children}</div>
     </section>
   )
 }
@@ -148,11 +166,13 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
   const hint = FIELD_HINTS[field.key]
   const isUrl = field.type === 'url' || field.key === 'mapsUrl'
 
+  if (field.columns?.length) return <RowsEditor field={field} initial={value} onChange={onChange} />
+
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+      <label className="field-label">
         {field.label}
-        {field.required && <span className="ml-1" style={{ color: '#B87924' }}>*</span>}
+        {field.required && <span className="ml-1 text-burnished-deep" aria-hidden>*</span>}
       </label>
 
       {field.type === 'textarea' ? (
@@ -161,7 +181,7 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
           onChange={e => onChange(e.target.value)}
           placeholder={field.placeholder || ''}
           rows={3}
-          className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3.5 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+          className="field-input resize-none"
         />
       ) : isUrl ? (
         <div className="relative">
@@ -175,7 +195,7 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
             value={value}
             onChange={e => onChange(e.target.value)}
             placeholder={field.placeholder || 'https://…'}
-            className="w-full rounded-xl border border-border bg-surface pl-10 pr-4 py-3.5 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+            className="field-input pl-10"
           />
         </div>
       ) : (
@@ -184,12 +204,12 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={field.placeholder || ''}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-3.5 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+          className="field-input"
         />
       )}
 
       {hint && field.type !== 'textarea' && field.type !== 'date' && field.type !== 'time' && (
-        <p className="mt-1.5 text-xs text-muted/70 leading-4">{hint}</p>
+        <p className="field-hint">{hint}</p>
       )}
     </div>
   )
@@ -229,7 +249,7 @@ const SingleImageUploader = memo(function SingleImageUploader({
           <img
             src={value}
             alt={label}
-            className="w-20 h-20 rounded-full object-cover ring-2 ring-[#D9A441]/40 ring-offset-2"
+            className="w-20 h-20 rounded-full object-cover ring-2 ring-burnished/40 ring-offset-2"
           />
           <button
             type="button"
@@ -246,7 +266,7 @@ const SingleImageUploader = memo(function SingleImageUploader({
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="text-[10px] font-medium px-2 py-1 rounded-lg border border-border hover:border-accent/40 text-muted hover:text-accent-strong transition-colors"
+          className="text-[10px] font-medium px-2 py-1 rounded-lg border border-line hover:border-emerald-soft/40 text-muted hover:text-emerald-soft transition-colors"
         >
           Change photo
         </button>
@@ -264,13 +284,13 @@ const SingleImageUploader = memo(function SingleImageUploader({
         onClick={() => !uploading && inputRef.current?.click()}
         className="w-20 h-20 rounded-full border-2 border-dashed flex items-center justify-center transition-all select-none"
         style={{
-          borderColor: '#E8DCCD',
+          borderColor: '#EADFD2',
           background: 'rgba(255,248,241,0.5)',
           cursor: uploading ? 'wait' : 'pointer',
         }}
       >
         {uploading ? (
-          <svg className="w-5 h-5 animate-spin" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 animate-spin" style={{ color: '#0B4A34' }} fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
           </svg>
@@ -281,9 +301,113 @@ const SingleImageUploader = memo(function SingleImageUploader({
         )}
       </div>
       <p className="text-[10px] text-muted/60 text-center leading-tight">{label}<br /><span className="text-[9px]">Tap to upload</span></p>
-      {uploadError && <p className="text-[10px] font-medium" style={{ color: '#B96B70' }}>{uploadError}</p>}
+      {uploadError && <p className="text-[10px] font-medium" style={{ color: '#A33A3A' }}>{uploadError}</p>}
       <input ref={inputRef} type="file" accept="image/*" className="hidden"
         onChange={e => handleFile(e.target.files?.[0])} />
+    </div>
+  )
+})
+
+// ─── Rows editor (functions, story, FAQs, contacts…) ───────────────────────────
+
+/** "a | b | c" per line ⇄ rows of cells. Pipes inside a cell become slashes. */
+function parseRows(value: string, width: number): string[][] {
+  const rows = (value || '').split('\n').filter(l => l.trim()).map(l => {
+    const cells = l.split('|').map(c => c.trim())
+    return Array.from({ length: width }, (_, i) => cells[i] ?? '')
+  })
+  return rows.length ? rows : [Array(width).fill('')]
+}
+
+function serializeRows(rows: string[][]): string {
+  return rows
+    .filter(r => r.some(c => c.trim()))
+    .map(r => r.map(c => c.replace(/\|/g, '/').replace(/\n/g, ' ').trim()).join(' | ').replace(/(\s\|\s)+$/, ''))
+    .join('\n')
+}
+
+const RowsEditor = memo(function RowsEditor({ field, initial, onChange }: { field: TemplateField; initial: string; onChange: (v: string) => void }) {
+  const columns = field.columns ?? []
+  const [rows, setRows] = useState<string[][]>(() => parseRows(initial, columns.length))
+
+  const update = (next: string[][]) => {
+    setRows(next)
+    onChange(serializeRows(next))
+  }
+  const setCell = (r: number, c: number, v: string) => update(rows.map((row, i) => (i === r ? row.map((cell, j) => (j === c ? v : cell)) : row)))
+  const removeRow = (r: number) => {
+    const next = rows.filter((_, i) => i !== r)
+    update(next.length ? next : [Array(columns.length).fill('')])
+  }
+  const noun = field.label.replace(/s$/, '').toLowerCase()
+  // Two cells per line; long fields (and any cell that would sit alone) span both.
+  const wide = (() => {
+    const flags = columns.map(c => c.type === 'textarea' || c.key === 'venue' || c.key === 'name' || c.key === 'title' || c.key === 'q')
+    let open = -1
+    flags.forEach((w, i) => {
+      if (w) { if (open !== -1) flags[open] = true; open = -1 }
+      else if (open === -1) open = i
+      else open = -1
+    })
+    if (open !== -1) flags[open] = true
+    return flags
+  })()
+
+  return (
+    <div>
+      <p className="field-label">{field.label}</p>
+      {/* The remove button sits on the first label's line (the first column is
+          always full-width), so the fields keep the card's whole width —
+          reserving a right gutter for it clipped the date and time inputs on
+          phones. Below 360px paired cells stack. */}
+      <div className="space-y-3">
+        {rows.map((row, r) => (
+          <div key={r} className="relative rounded-2xl border border-line bg-champagne/60 p-3.5">
+            {/* The only paired cells are date + time, and a date needs the
+                wider half: at 360px an even split cut "dd/mm/yyyy" short. */}
+            <div className="grid grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-2.5">
+              {columns.map((col, c) => {
+                const common = {
+                  value: row[c] ?? '',
+                  placeholder: col.placeholder || col.label,
+                  'aria-label': `${col.label}, row ${r + 1}`,
+                  className: 'field-input px-3',
+                }
+                return (
+                  <label key={col.key} className={wide[c] ? 'col-span-2' : 'max-[359px]:col-span-2'}>
+                    <span className={`mb-1.5 block text-[0.72rem] font-medium text-muted ${c === 0 ? 'pr-10' : ''}`}>{col.label}</span>
+                    {col.type === 'textarea' ? (
+                      <textarea {...common} rows={2} className="field-input resize-none px-3" onChange={e => setCell(r, c, e.target.value)} />
+                    ) : (
+                      <input {...common} type={col.type ?? 'text'} onChange={e => setCell(r, c, e.target.value)} />
+                    )}
+                  </label>
+                )
+              })}
+            </div>
+            <button
+              type="button"
+              onClick={() => removeRow(r)}
+              aria-label={`Remove row ${r + 1}`}
+              className="absolute right-1.5 top-1.5 flex h-8 w-10 items-center justify-center rounded-xl text-muted transition-colors hover:bg-paper hover:text-charcoal"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => update([...rows, Array(columns.length).fill('')])}
+        className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl border border-dashed border-line px-4 py-2.5 text-xs font-semibold text-muted transition-all hover:border-emerald-soft/40 hover:text-emerald-soft"
+      >
+        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        Add another {noun}
+      </button>
     </div>
   )
 })
@@ -321,7 +445,7 @@ const ScheduleEditor = memo(function ScheduleEditor({ initial, onChange }: { ini
         {rows.map((row, idx) => (
           <div key={row.id} className="flex items-center gap-2">
             <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold"
-              style={{ background: 'rgba(217,164,65,0.12)', color: '#B87924' }}>
+              style={{ background: 'rgba(11,74,52,0.08)', color: '#0B4A34' }}>
               {idx + 1}
             </div>
             <input
@@ -329,14 +453,14 @@ const ScheduleEditor = memo(function ScheduleEditor({ initial, onChange }: { ini
               value={row.name}
               onChange={e => updateRow(row.id, 'name', e.target.value)}
               placeholder="e.g. Baraat Arrival"
-              className="flex-1 rounded-xl border border-border bg-surface px-3 py-3 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/45 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+              className="field-input flex-1 px-3"
             />
             <input
               type="text"
               value={row.time}
               onChange={e => updateRow(row.id, 'time', e.target.value)}
               placeholder="6:30 PM"
-              className="w-24 shrink-0 rounded-xl border border-border bg-surface px-3 py-3 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/45 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+              className="field-input w-24 shrink-0 px-3"
             />
             <button
               type="button"
@@ -354,7 +478,7 @@ const ScheduleEditor = memo(function ScheduleEditor({ initial, onChange }: { ini
       <button
         type="button"
         onClick={addRow}
-        className="mt-3 flex items-center gap-1.5 rounded-xl border border-dashed border-border px-4 py-2.5 text-xs font-semibold text-muted hover:border-accent/40 hover:text-accent-strong transition-all w-full justify-center"
+        className="mt-3 flex items-center gap-1.5 rounded-xl border border-dashed border-line px-4 py-2.5 text-xs font-semibold text-muted hover:border-emerald-soft/40 hover:text-emerald-soft transition-all w-full justify-center"
       >
         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -413,26 +537,26 @@ const GalleryUploader = memo(function GalleryUploader({ initial, onChange }: { i
         onClick={() => !uploading && inputRef.current?.click()}
         className="cursor-pointer rounded-2xl border-2 border-dashed transition-all flex flex-col items-center justify-center gap-2 py-8 px-4 text-center select-none"
         style={{
-          borderColor: dragging ? '#D9A441' : '#E8DCCD',
-          background: dragging ? 'rgba(217,164,65,0.06)' : 'rgba(255,248,241,0.5)',
+          borderColor: dragging ? '#A47945' : '#EADFD2',
+          background: dragging ? 'rgba(164,121,69,0.06)' : 'rgba(255,248,241,0.5)',
           cursor: uploading ? 'wait' : 'pointer',
         }}
       >
         <div className="w-10 h-10 rounded-full flex items-center justify-center"
-          style={{ background: 'rgba(217,164,65,0.12)' }}>
+          style={{ background: 'rgba(11,74,52,0.08)' }}>
           {uploading ? (
-            <svg className="w-5 h-5 animate-spin" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 animate-spin" style={{ color: '#0B4A34' }} fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
             </svg>
           ) : (
-            <svg className="w-5 h-5" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <svg className="w-5 h-5" style={{ color: '#0B4A34' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
             </svg>
           )}
         </div>
         <div>
-          <p className="text-sm font-semibold text-ink">
+          <p className="text-sm font-semibold text-charcoal">
             {uploading ? 'Uploading…' : dragging ? 'Drop photos here' : 'Upload photos'}
           </p>
           <p className="text-xs text-muted mt-0.5">Drag &amp; drop or click — JPG, PNG, WebP · max 5 MB each</p>
@@ -442,21 +566,24 @@ const GalleryUploader = memo(function GalleryUploader({ initial, onChange }: { i
       </div>
 
       {uploadError && (
-        <p className="mt-2 text-xs font-medium" style={{ color: '#B96B70' }}>{uploadError}</p>
+        <p className="mt-2 text-xs font-medium" style={{ color: '#A33A3A' }}>{uploadError}</p>
       )}
 
       {/* Thumbnails */}
       {images.length > 0 && (
         <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
           {images.map((src, idx) => (
-            <div key={`${idx}-${src.slice(-8)}`} className="group relative aspect-square overflow-hidden rounded-xl border border-border bg-surface">
+            <div key={`${idx}-${src.slice(-8)}`} className="group relative aspect-square overflow-hidden rounded-xl border border-line bg-champagne">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={src} alt={`Photo ${idx + 1}`} className="h-full w-full object-cover" />
               <button
                 type="button"
                 onClick={e => { e.stopPropagation(); removeImage(idx) }}
-                className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80"
+                // Always visible on touch screens, which have no hover to reveal it —
+                // there it was an invisible 20px target.
+                className="absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white transition-opacity hover:bg-black/80 [@media(hover:hover)]:h-6 [@media(hover:hover)]:w-6 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:focus-visible:opacity-100"
                 title="Remove"
+                aria-label={`Remove photo ${idx + 1}`}
               >
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -509,16 +636,16 @@ const MusicUploader = memo(function MusicUploader({ initial, onChange }: { initi
 
   if (value) {
     return (
-      <div className="rounded-2xl border border-border bg-surface p-4">
+      <div className="rounded-2xl border border-line bg-champagne p-4">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
-            style={{ background: 'rgba(217,164,65,0.12)' }}>
-            <svg className="w-4.5 h-4.5 w-[18px] h-[18px]" style={{ color: '#B87924' }} fill="currentColor" viewBox="0 0 24 24">
+            style={{ background: 'rgba(11,74,52,0.08)' }}>
+            <svg className="w-4.5 h-4.5 w-[18px] h-[18px]" style={{ color: '#0B4A34' }} fill="currentColor" viewBox="0 0 24 24">
               <path d="M19.952 1.651a.75.75 0 01.298.599V16.303a3 3 0 01-2.176 2.884l-1.32.377a2.553 2.553 0 11-1.403-4.909l2.311-.66a1.5 1.5 0 001.088-1.442V6.994l-9 2.572v9.737a3 3 0 01-2.176 2.884l-1.32.377a2.553 2.553 0 11-1.402-4.909l2.31-.66a1.5 1.5 0 001.088-1.442V5.25a.75.75 0 01.544-.721l10.5-3a.75.75 0 01.658.122z" />
             </svg>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-ink truncate">{filename || 'Background Music'}</p>
+            <p className="text-sm font-semibold text-charcoal truncate">{filename || 'Background Music'}</p>
             <p className="text-xs text-muted">Ready to play for your guests</p>
           </div>
           <button onClick={clear} className="shrink-0 text-xs text-muted hover:text-rose transition-colors px-2 py-1 rounded-lg hover:bg-rose/8">
@@ -539,26 +666,26 @@ const MusicUploader = memo(function MusicUploader({ initial, onChange }: { initi
         onClick={() => !uploading && inputRef.current?.click()}
         className="cursor-pointer rounded-2xl border-2 border-dashed transition-all flex flex-col items-center justify-center gap-2 py-8 px-4 text-center select-none"
         style={{
-          borderColor: dragging ? '#D9A441' : '#E8DCCD',
-          background: dragging ? 'rgba(217,164,65,0.06)' : 'rgba(255,248,241,0.5)',
+          borderColor: dragging ? '#A47945' : '#EADFD2',
+          background: dragging ? 'rgba(164,121,69,0.06)' : 'rgba(255,248,241,0.5)',
           cursor: uploading ? 'wait' : 'pointer',
         }}
       >
         <div className="w-10 h-10 rounded-full flex items-center justify-center"
-          style={{ background: 'rgba(217,164,65,0.12)' }}>
+          style={{ background: 'rgba(11,74,52,0.08)' }}>
           {uploading ? (
-            <svg className="w-5 h-5 animate-spin" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 animate-spin" style={{ color: '#0B4A34' }} fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
             </svg>
           ) : (
-            <svg className="w-5 h-5" style={{ color: '#B87924' }} fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" style={{ color: '#0B4A34' }} fill="currentColor" viewBox="0 0 24 24">
               <path d="M19.952 1.651a.75.75 0 01.298.599V16.303a3 3 0 01-2.176 2.884l-1.32.377a2.553 2.553 0 11-1.403-4.909l2.311-.66a1.5 1.5 0 001.088-1.442V6.994l-9 2.572v9.737a3 3 0 01-2.176 2.884l-1.32.377a2.553 2.553 0 11-1.402-4.909l2.31-.66a1.5 1.5 0 001.088-1.442V5.25a.75.75 0 01.544-.721l10.5-3a.75.75 0 01.658.122z" />
             </svg>
           )}
         </div>
         <div>
-          <p className="text-sm font-semibold text-ink">
+          <p className="text-sm font-semibold text-charcoal">
             {uploading ? 'Uploading…' : dragging ? 'Drop audio here' : 'Upload background music'}
           </p>
           <p className="text-xs text-muted mt-0.5">MP3, AAC, WAV · max 15 MB · plays softly for guests</p>
@@ -567,7 +694,7 @@ const MusicUploader = memo(function MusicUploader({ initial, onChange }: { initi
           onChange={e => handleFile(e.target.files?.[0])} />
       </div>
       {uploadError && (
-        <p className="mt-2 text-xs font-medium" style={{ color: '#B96B70' }}>{uploadError}</p>
+        <p className="mt-2 text-xs font-medium" style={{ color: '#A33A3A' }}>{uploadError}</p>
       )}
     </div>
   )
@@ -592,34 +719,34 @@ export default function FormEditor({ config, data, onChange, compact = false, se
     <div className={compact ? 'space-y-4 p-4 sm:p-5' : 'space-y-5 p-5 sm:p-6'}>
 
       {!compact && (
-      <div className="rounded-2xl border border-border/60 overflow-hidden"
+      <div className="rounded-2xl border border-line/60 overflow-hidden"
         style={{ background: 'linear-gradient(135deg,rgba(255,248,241,0.95),rgba(255,255,255,0.98))', boxShadow: '0 2px 16px rgba(60,36,20,0.07)' }}>
-        <div className="h-[2px] bg-gradient-to-r from-[#B87924] via-[#D9A441] to-[#B96B70]" />
+        <div className="h-[2px] bg-gradient-to-r from-emerald via-burnished to-gold-soft" />
         <div className="px-5 py-4">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex-1 min-w-0">
-              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: '#B87924' }}>Invitation Builder</p>
-              <h2 className="text-2xl font-bold text-ink tracking-tight">Make it personal.</h2>
+              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: '#0B4A34' }}>Invitation Builder</p>
+              <h2 className="t-h3">Make it personal.</h2>
               <p className="mt-1 text-sm leading-6 text-muted">
                 Fill in your details — the invite updates live as you type.
               </p>
             </div>
             <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 mt-1"
-              style={{ background: 'rgba(217,164,65,0.12)' }}>
-              <span style={{ color: '#B87924', fontSize: '18px', lineHeight: 1 }}>♥</span>
+              style={{ background: 'rgba(11,74,52,0.08)' }}>
+              <span style={{ color: '#0B4A34', fontSize: '18px', lineHeight: 1 }}>♥</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 pt-3 border-t border-border/40">
+          <div className="flex items-center gap-2 pt-3 border-t border-line/40">
             <div className="flex items-center gap-1 shrink-0">
               <div className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
-                style={{ background: '#2F766D', color: '#fff' }}>✓</div>
+                style={{ background: '#0B4A34', color: '#fff' }}>✓</div>
               <span className="text-[10px] font-medium text-muted/70">Choose style</span>
             </div>
             <div className="h-px flex-1 bg-border/60" />
             <div className="flex items-center gap-1 shrink-0">
               <div className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
-                style={{ background: '#B87924', color: '#fff' }}>2</div>
-              <span className="text-[10px] font-semibold" style={{ color: '#B87924' }}>Fill details</span>
+                style={{ background: '#0B4A34', color: '#fff' }}>2</div>
+              <span className="text-[10px] font-semibold" style={{ color: '#0B4A34' }}>Fill details</span>
             </div>
             <div className="h-px flex-1 bg-border/60" />
             <div className="flex items-center gap-1 shrink-0">
@@ -636,7 +763,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       {show('people') && (grouped.people.length > 0 || grouped.images.length > 0) && (
         <Section number={n()} label={peopleLabel}>
           {grouped.images.length > 0 && (
-            <div className="flex justify-center gap-6 pb-3 border-b border-border/40 mb-1">
+            <div className="flex justify-center gap-6 pb-3 border-b border-line/40 mb-1">
               {grouped.images.map(field => (
                 <SingleImageUploader
                   key={field.key}
@@ -656,6 +783,16 @@ export default function FormEditor({ config, data, onChange, compact = false, se
           </div>
         </Section>
       )}
+
+      {show('people') && grouped.groups.filter(g => g.section === 'people').map(g => (
+        <Section key={g.title} number={n()} label={g.title} hint={g.hint}>
+          <div className="space-y-4">
+            {g.fields.map(field => (
+              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
+            ))}
+          </div>
+        </Section>
+      ))}
 
       {/* 2. When & Where */}
       {show('details') && grouped.whenWhere.length > 0 && (
@@ -702,6 +839,16 @@ export default function FormEditor({ config, data, onChange, compact = false, se
         </Section>
       )}
 
+      {show('details') && grouped.groups.filter(g => g.section === 'details').map(g => (
+        <Section key={g.title} number={n()} label={g.title} hint={g.hint}>
+          <div className="space-y-4">
+            {g.fields.map(field => (
+              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
+            ))}
+          </div>
+        </Section>
+      ))}
+
       {/* 4. Photo Gallery */}
       {show('enrich') && grouped.galleryField && (
         <Section number={n()} label="Photo Gallery" hint="Add beautiful photos that appear in the invitation slideshow.">
@@ -725,11 +872,21 @@ export default function FormEditor({ config, data, onChange, compact = false, se
               onChange={e => handleChange(field.key, e.target.value)}
               placeholder={field.placeholder || 'Write a warm message for your guests…'}
               rows={4}
-              className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3.5 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+              className="field-input resize-none"
             />
             <p className="mt-1.5 text-xs text-muted/60">
               {(data[field.key] ?? '').length > 0 ? `${(data[field.key] ?? '').length} characters` : 'e.g. "With joy in our hearts, we invite you to share in our happiness."'}
             </p>
+          </div>
+        </Section>
+      ))}
+
+      {show('enrich') && grouped.groups.filter(g => g.section === 'enrich').map(g => (
+        <Section key={g.title} number={n()} label={g.title} hint={g.hint}>
+          <div className="space-y-4">
+            {g.fields.map(field => (
+              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
+            ))}
           </div>
         </Section>
       ))}
@@ -743,7 +900,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
               onChange={e => handleChange(field.key, e.target.value)}
               placeholder={field.placeholder || 'One reason per line…'}
               rows={5}
-              className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3.5 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+              className="field-input resize-none"
             />
             <p className="mt-1.5 text-xs text-muted/60">Each line becomes a reveal card in the greeting.</p>
           </div>

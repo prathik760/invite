@@ -1,696 +1,433 @@
 'use client'
 
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { formatDate, formatTime } from '@/lib/utils'
-import { PortraitRow } from './PortraitRow'
+import { useMemo, type CSSProperties } from 'react'
+import WishesSection from './WishesSection'
+import { bodoni } from './kit/fonts/bodoni'
+import { oswald } from './kit/fonts/oswald'
+import {
+  calendarHref,
+  dateParts,
+  galleryImages,
+  mapsHref,
+  pad2,
+  parseSchedule,
+  timeLabel,
+  useCountdown,
+  type InviteProps,
+} from './kit/core'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
+import type { InviteTheme } from './kit/theme'
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
+/*
+ * Cinematic Night — the opening title card of a film.
+ * Letterboxed black, warm projector white and one tungsten amber. The names
+ * fade up from black like a title; the programme runs as end credits; the
+ * venue is a ticket stub; photographs sit in a strip of film.
+ */
 
 const C = {
-  bg: '#08080F',
-  bgMid: '#0E0E17',
-  bgSurface: '#141420',
-  bgCard: '#1A1A28',
-  text: '#F2EEE6',
-  textMuted: 'rgba(242,238,230,0.52)',
-  textFaint: 'rgba(242,238,230,0.26)',
-  gold: '#C9A84C',
-  goldMuted: 'rgba(201,168,76,0.6)',
-  goldFaint: 'rgba(201,168,76,0.14)',
-  goldBorder: 'rgba(201,168,76,0.2)',
-  border: 'rgba(255,255,255,0.06)',
+  black: '#0B0B0C',
+  bar: '#000000',
+  film: '#050505',
+  ink: '#EFE8DC',
+  soft: 'rgba(239,232,220,0.72)',
+  faint: 'rgba(239,232,220,0.46)',
+  rule: 'rgba(239,232,220,0.16)',
+  amber: '#E0A458',
+  amberFill: 'rgba(224,164,88,0.16)',
+  paper: '#ECE4D3',
+  paperInk: '#1C1914',
+  paperSoft: 'rgba(28,25,20,0.64)',
+  paperRule: 'rgba(28,25,20,0.24)',
 }
 
-// ── Stars ─────────────────────────────────────────────────────
-interface StarDef { id: number; x: number; y: number; r: number; delay: number; dur: number }
+const serif = bodoni.style.fontFamily
+const sans = oswald.style.fontFamily
 
-const STARS: StarDef[] = Array.from({ length: 70 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  r: Math.random() * 1.5 + 0.4,
-  delay: Math.random() * 5,
-  dur: 2.5 + Math.random() * 4,
-}))
+const WISHES_THEME: InviteTheme = {
+  bg: 'transparent',
+  surface: 'rgba(239,232,220,0.035)',
+  ink: C.ink,
+  muted: C.soft,
+  line: 'rgba(239,232,220,0.14)',
+  accent: C.amber,
+  onAccent: '#14110C',
+  heading: serif,
+  body: sans,
+  headingStyle: { fontStyle: 'italic', fontWeight: 400, fontSize: 34 },
+}
 
-const StarField = memo(function StarField() {
-  const reduced = useReducedMotion()
-  if (reduced) return null
+/** Light film grain — the kit's grain is dark ink, which vanishes on black. */
+function filmGrain(opacity: number, size = 160): CSSProperties {
+  return {
+    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 ${opacity} 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+    backgroundSize: `${size}px ${size}px`,
+  }
+}
+
+/** Sprocket holes for one edge of the film strip, as a repeating tile. */
+const SPROCKETS = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='22'%3E%3Crect x='1.5' y='7' width='11' height='8' rx='1.6' fill='%23141414'/%3E%3C/svg%3E")`
+
+/** Fit the title to the names: short names run large, long ones step down. */
+function titleSize(...names: string[]) {
+  const n = Math.max(...names.map((s) => Math.max(...s.split(/\s+/).map((w) => w.length), s.length * 0.7)))
+  const cqi = n <= 6 ? 18 : n <= 8 ? 15.5 : n <= 10 ? 13 : n <= 13 ? 10.5 : 9
+  return `clamp(34px, ${cqi}cqi, ${Math.round(cqi * 5.4)}px)`
+}
+
+function Caps({ children, className = '', style }: { children: React.ReactNode; className?: string; style?: CSSProperties }) {
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {STARS.map((s) => (
-        <motion.div
-          key={s.id}
-          className="absolute rounded-full bg-white"
-          style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.r * 2, height: s.r * 2 }}
-          animate={{ opacity: [0.08, 0.75, 0.08] }}
-          transition={{ duration: s.dur, delay: s.delay, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      ))}
-    </div>
+    <p className={`uppercase ${className}`} style={{ fontFamily: sans, fontSize: 12, letterSpacing: '0.32em', color: C.faint, ...style }}>
+      {children}
+    </p>
   )
-})
+}
 
-// ── Film grain ────────────────────────────────────────────────
-const FilmGrain = memo(function FilmGrain() {
+export default function CinematicWedding({ data, eventId, isPreview = false }: InviteProps) {
+  const bride = data.brideName?.trim() || 'Emily'
+  const groom = data.groomName?.trim() || 'James'
+  const date = dateParts(data.date)
+  const time = timeLabel(data.time)
+  const countdown = useCountdown(data.date, data.time, !isPreview)
+  const schedule = useMemo(() => parseSchedule(data.schedule), [data.schedule])
+  const stills = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
+  const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
+  const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
+  const calendar = calendarHref(`${bride} & ${groom} — Wedding`, data.date, data.time, place)
+  const cast = [
+    { src: data.bridePhoto, name: bride },
+    { src: data.groomPhoto, name: groom },
+  ].filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; name: string }[]
+
+  const hour = Number((data.time || '').split(':')[0])
+  const billing = !Number.isNaN(hour) && hour >= 17 ? 'One night only' : 'The premiere'
+  const serial = date ? `${date.dayPadded}${pad2(new Date(`${data.date}T00:00:00`).getMonth() + 1)}${String(date.year).slice(2)}` : '0001'
+  const titleFont = titleSize(bride, groom)
+  const venue = data.venue?.trim() || 'The venue'
+
   return (
     <div
-      className="pointer-events-none absolute inset-0 select-none"
-      aria-hidden
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E")`,
-        backgroundRepeat: 'repeat',
-        backgroundSize: '200px',
-        mixBlendMode: 'overlay',
-        opacity: 0.8,
-        zIndex: 1,
-      }}
-    />
-  )
-})
-
-// ── Gold divider ──────────────────────────────────────────────
-const GoldDivider = memo(function GoldDivider({ className = '' }: { className?: string }) {
-  return (
-    <div className={`flex items-center justify-center gap-2 sm:gap-3 ${className}`}>
-      <div className="h-px w-20" style={{ background: `linear-gradient(90deg,transparent,${C.goldMuted})` }} />
-      <span className="select-none" style={{ color: C.gold, fontSize: '9px', letterSpacing: '0.5em' }}>✦</span>
-      <div className="h-px w-20" style={{ background: `linear-gradient(270deg,transparent,${C.goldMuted})` }} />
-    </div>
-  )
-})
-
-// ── Countdown ─────────────────────────────────────────────────
-function useCountdown(dateStr: string, timeStr: string) {
-  const [diff, setDiff] = useState(0)
-  useEffect(() => {
-    if (!dateStr) return
-    const target = new Date(`${dateStr}T${timeStr || '00:00'}:00`)
-    const tick = () => setDiff(Math.max(0, target.getTime() - Date.now()))
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [dateStr, timeStr])
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff % 86400000) / 3600000),
-    minutes: Math.floor((diff % 3600000) / 60000),
-    seconds: Math.floor((diff % 60000) / 1000),
-  }
-}
-
-// ── Music player ──────────────────────────────────────────────
-const MusicButton = memo(function MusicButton({ src }: { src: string }) {
-  const [playing, setPlaying] = useState(false)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
-
-  useEffect(() => {
-    if (!src) return
-    audioRef.current = new Audio(src)
-    audioRef.current.loop = true
-    return () => { audioRef.current?.pause(); audioRef.current = null }
-  }, [src])
-
-  const toggle = useCallback(() => {
-    const a = audioRef.current
-    if (!a) return
-    if (playing) { a.pause(); setPlaying(false) }
-    else a.play().then(() => setPlaying(true)).catch(() => {})
-  }, [playing])
-
-  return (
-    <motion.button
-      onClick={toggle}
-      className="flex items-center gap-2 sm:gap-3 rounded-full px-4 sm:px-6 md:px-8 py-2.5 select-none"
-      style={{ background: C.bgSurface, border: `1px solid ${C.goldBorder}`, color: C.text }}
-      whileHover={{ scale: 1.04 }}
-      whileTap={{ scale: 0.96 }}
+      className="cn relative overflow-x-hidden"
+      style={{ background: C.black, color: C.ink, fontFamily: sans, containerType: 'inline-size', ...filmGrain(0.06) }}
     >
-      <span style={{ color: C.gold }}>
-        {playing ? (
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-            <rect x="6" y="4" width="4" height="16" rx="1" />
-            <rect x="14" y="4" width="4" height="16" rx="1" />
-          </svg>
-        ) : (
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        )}
-      </span>
-      <div className="flex items-end gap-[3px] h-4">
-        {[4, 7, 10, 7, 4].map((h, i) => (
-          <motion.div
-            key={i}
-            className="w-[3px] rounded-full"
-            style={{ background: playing ? C.gold : C.textFaint }}
-            animate={playing
-              ? { height: [`${h * 0.6}px`, `${h}px`, `${h * 0.6}px`], opacity: [0.6, 1, 0.6] }
-              : { height: '3px', opacity: 0.3 }}
-            transition={{ duration: 0.55 + i * 0.1, delay: i * 0.08, repeat: playing ? Infinity : 0, ease: 'easeInOut' }}
-          />
-        ))}
-      </div>
-      <span className="text-[11px] tracking-[0.18em]" style={{ color: C.textMuted }}>
-        {playing ? 'NOW PLAYING' : 'PLAY'}
-      </span>
-    </motion.button>
-  )
-})
+      <style>{`
+        .cn .cn-black { animation: cn-black 1.7s ease-out 150ms forwards; }
+        .cn .cn-in { opacity: 0; animation: cn-up 1.3s ease forwards; }
+        @keyframes cn-black { to { opacity: 0; visibility: hidden; } }
+        .cn .cn-rule { transform: scaleX(0); animation: cn-rule 1.1s cubic-bezier(.2,.7,.2,1) forwards; }
+        @keyframes cn-up { to { opacity: 1; } }
+        @keyframes cn-rule { to { transform: none; } }
+        .cn .cn-link { transition: background-color .2s ease; }
+        .cn .cn-link:hover { background-color: rgba(28,25,20,0.06); }
+        @media (prefers-reduced-motion: reduce) {
+          .cn .cn-in, .cn .cn-rule { animation: none; opacity: 1; transform: none; }
+          .cn .cn-black { display: none; }
+        }
+      `}</style>
 
-// ── Helpers ───────────────────────────────────────────────────
-function parseList(v?: string): string[] {
-  if (!v) return []
-  return v.split(/\n|,/).map(s => s.trim()).filter(Boolean)
-}
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.ink} background="rgba(0,0,0,0.6)" border={C.rule} />
 
-function fadeUp(delay = 0) {
-  return {
-    initial: { opacity: 0, y: 28 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-40px' },
-    transition: { duration: 0.9, delay, ease: BEZIER },
-  } as const
-}
+      {/* ── Title card, letterboxed ───────────────────────────────── */}
+      <section className="relative flex flex-col" style={{ minHeight: isPreview ? 560 : '100svh' }}>
+        <div aria-hidden className="shrink-0" style={{ height: 'clamp(44px, 14cqi, 72px)', background: C.bar }} />
 
-// ── Cinematic wishes (dark-themed inline) ─────────────────────
-function CinematicWishes({ eventId }: { eventId: string }) {
-  const [wishes, setWishes] = useState<Array<{ id: string; name: string; message: string }>>([])
-  const [name, setName] = useState('')
-  const [message, setMessage] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const MAX = 320
-  const charsLeft = MAX - message.length
+        <div className="relative flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">
+          {/* The frame fades up from black before the title appears. */}
+          {!isPreview && <div aria-hidden className="cn-black pointer-events-none absolute inset-0" style={{ background: C.bar }} />}
+          <Caps className="cn-in" style={{ color: C.soft, animationDelay: '300ms' }}>
+            Together with their families
+          </Caps>
 
-  useEffect(() => {
-    if (eventId === '__preview__') return
-    fetch(`/api/wishes?eventId=${eventId}`)
-      .then(r => r.json())
-      .then(data => setWishes(Array.isArray(data) ? data : []))
-      .catch(() => {})
-  }, [eventId])
+          <h1 className="mt-8" style={{ fontFamily: serif, fontWeight: 400, overflowWrap: 'break-word' }}>
+            <span className="cn-in block italic" style={{ fontSize: titleFont, lineHeight: 0.98, animationDelay: '800ms' }}>
+              {bride}
+            </span>
+            <span
+              className="cn-in block italic"
+              style={{ fontSize: 'clamp(26px, 9cqi, 46px)', lineHeight: 1.25, color: C.amber, animationDelay: '1100ms' }}
+            >
+              &amp;
+            </span>
+            <span className="cn-in block italic" style={{ fontSize: titleFont, lineHeight: 0.98, animationDelay: '1300ms' }}>
+              {groom}
+            </span>
+          </h1>
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name.trim() || !message.trim()) return
-    if (eventId === '__preview__') { setSubmitted(true); return }
-    setLoading(true)
-    setError('')
-    try {
-      const res = await fetch('/api/wishes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, name: name.trim(), message: message.trim() }),
-      })
-      if (!res.ok) throw new Error()
-      // Wishes publish on arrival — add it to the wall immediately.
-      const created = await res.json()
-      setWishes(prev => [created, ...prev.filter(w => w.id !== created.id)])
-      setSubmitted(true)
-      setName('')
-      setMessage('')
-    } catch {
-      setError('Could not send your wish. Please try again.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-18 md:py-24" style={{ background: C.bgMid }}>
-      <div className="max-w-xl mx-auto">
-        <motion.div {...fadeUp()} className="text-center mb-14">
-          <p className="text-[11px] uppercase tracking-[0.38em] mb-4" style={{ color: C.goldMuted }}>
-            Leave a Message
+          <p
+            className="cn-in mx-auto mt-8 max-w-[17rem] italic leading-[1.45]"
+            style={{ fontFamily: serif, fontSize: 18, color: C.soft, animationDelay: '1800ms' }}
+          >
+            request the pleasure of your company at their wedding
           </p>
-          <h2 className="font-heading text-3xl sm:text-4xl mb-6" style={{ color: C.text }}>
-            Heartfelt Wishes
-          </h2>
-          <GoldDivider />
-        </motion.div>
 
-        <motion.div
-          {...fadeUp(0.1)}
-          className="mb-8 sm:mb-10 rounded-lg sm:rounded-2xl p-5 sm:p-7 sm:p-6 sm:p-9"
-          style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}
-        >
-          <AnimatePresence mode="wait">
-            {submitted ? (
-              <motion.div
-                key="thanks"
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-center py-8"
-              >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: [0, 1.3, 1] }}
-                  transition={{ duration: 0.5, ease: BEZIER }}
-                  className="text-3xl sm:text-4xl md:text-5xl select-none mb-6"
-                  style={{ color: C.gold }}
-                  aria-hidden
-                >
-                  ✦
-                </motion.div>
-                <p className="font-heading text-2xl mb-3" style={{ color: C.text }}>Thank You</p>
-                <p className="text-sm mb-7" style={{ color: C.textMuted, lineHeight: 1.8 }}>
-                  Your wish is now live on this invitation.<br />
-                  Every guest who opens the link will see it.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="text-xs tracking-[0.12em] transition-opacity hover:opacity-100"
-                  style={{ color: C.goldMuted }}
-                >
-                  Send another wish →
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleSubmit}
-                className="space-y-7"
-              >
-                {[
-                  { label: 'Your Name', value: name, onChange: (v: string) => setName(v), placeholder: 'e.g. Anjali & Rahul', type: 'text' },
-                ].map(({ label, value, onChange, placeholder, type }) => (
-                  <div key={label}>
-                    <label className="block text-[10px] uppercase tracking-[0.22em] mb-2.5" style={{ color: C.textMuted }}>
-                      {label}
-                    </label>
-                    <input
-                      type={type}
-                      value={value}
-                      onChange={e => onChange(e.target.value)}
-                      placeholder={placeholder}
-                      required
-                      className="w-full bg-transparent border-0 border-b py-3 text-sm focus:outline-none transition-all"
-                      style={{ color: C.text, borderBottom: `1px solid rgba(255,255,255,0.1)` }}
-                      onFocus={e => (e.currentTarget.style.borderBottomColor = C.goldMuted)}
-                      onBlur={e => (e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,0.1)')}
-                    />
-                  </div>
-                ))}
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.22em] mb-2.5" style={{ color: C.textMuted }}>
-                    Your Wish
-                  </label>
-                  <textarea
-                    value={message}
-                    onChange={e => setMessage(e.target.value.slice(0, MAX))}
-                    placeholder="Write something from the heart…"
-                    required
-                    rows={4}
-                    className="w-full bg-transparent border-0 border-b py-3 text-sm focus:outline-none resize-none transition-all"
-                    style={{ color: C.text, borderBottom: `1px solid rgba(255,255,255,0.1)` }}
-                    onFocus={e => (e.currentTarget.style.borderBottomColor = C.goldMuted)}
-                    onBlur={e => (e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,0.1)')}
-                  />
-                  <div className="flex justify-end mt-1.5">
-                    <span className="text-[10px] tabular-nums" style={{ color: charsLeft <= 40 ? C.gold : C.textFaint }}>
-                      {charsLeft} left
-                    </span>
-                  </div>
-                </div>
-                {error && <p className="text-xs" style={{ color: '#E87070' }}>{error}</p>}
-                <motion.button
-                  type="submit"
-                  disabled={loading}
-                  whileHover={{ scale: loading ? 1 : 1.015 }}
-                  whileTap={{ scale: loading ? 1 : 0.985 }}
-                  className="w-full py-3.5 rounded-xl text-sm tracking-[0.12em] font-medium transition-all disabled:opacity-50"
-                  style={{ background: C.goldFaint, border: `1px solid ${C.goldBorder}`, color: C.gold }}
-                >
-                  {loading ? 'Sending…' : 'SEND WISH ✦'}
-                </motion.button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {wishes.length > 0 && (
-          <div className="space-y-4">
-            {wishes.map((wish, i) => (
-              <motion.div
-                key={wish.id}
-                {...fadeUp(i * 0.07)}
-                className="rounded-lg sm:rounded-2xl px-7 py-7 relative overflow-hidden"
-                style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}
-              >
-                <div className="absolute top-0 inset-x-0 h-px" style={{ background: `linear-gradient(90deg,transparent 15%,${C.goldMuted} 50%,transparent 85%)` }} />
-                <div className="font-heading select-none mb-2 leading-none" style={{ fontSize: '3.5rem', color: 'rgba(201,168,76,0.1)', marginTop: '-0.3rem' }} aria-hidden>&ldquo;</div>
-                <p className="text-sm italic leading-relaxed mb-5" style={{ color: C.textMuted }}>{wish.message}</p>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] shrink-0" style={{ background: C.goldFaint, border: `1px solid ${C.goldBorder}`, color: C.gold }}>
-                    {wish.name.charAt(0).toUpperCase()}
-                  </div>
-                  <p className="text-xs tracking-wider" style={{ color: C.goldMuted }}>{wish.name}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div className="mt-10 w-full max-w-[28rem]">
+            <span aria-hidden className="cn-rule mx-auto block h-px w-12" style={{ background: C.amber, animationDelay: '2100ms' }} />
+            <div className="cn-in" style={{ animationDelay: '2200ms' }}>
+              <Caps className="mt-5" style={{ color: C.amber, letterSpacing: '0.36em' }}>{billing}</Caps>
+              <p className="mt-3 text-balance uppercase" style={{ fontSize: 'clamp(17px, 5.4cqi, 22px)', letterSpacing: '0.14em', fontWeight: 400 }}>
+                {date ? `${date.weekday} · ${date.day} ${date.month} ${date.year}` : 'Date to be announced'}
+              </p>
+              <p className="mt-2 text-balance uppercase leading-[1.5]" style={{ fontSize: 15, letterSpacing: '0.12em', color: C.soft, fontWeight: 300 }}>
+                {[time, venue].filter(Boolean).join('  ·  ')}
+              </p>
+            </div>
           </div>
-        )}
-      </div>
-    </section>
-  )
-}
-
-// ── Main component ────────────────────────────────────────────
-interface Props {
-  data: Record<string, string>
-  eventId?: string
-  isPreview?: boolean
-}
-
-export default function CinematicWedding({ data, eventId, isPreview = false }: Props) {
-  const brideName = data.brideName || 'Emily'
-  const groomName = data.groomName || 'James'
-  const { date, time, venue, venueAddress, mapsUrl, dressCode, schedule, galleryImages, musicUrl, message } = data
-
-  const formattedDate = useMemo(() => formatDate(date), [date])
-  const formattedTime = useMemo(() => formatTime(time), [time])
-  const gallery = useMemo(() => parseList(galleryImages), [galleryImages])
-  const scheduleItems = useMemo(() => parseList(schedule), [schedule])
-  const { days, hours, minutes, seconds } = useCountdown(date, time)
-
-  const weddingYear = date ? new Date(date + 'T00:00:00').getFullYear() : new Date().getFullYear()
-
-  const details = [
-    { label: 'Date', value: formattedDate },
-    { label: 'Time', value: formattedTime },
-    ...(venue ? [{ label: 'Venue', value: venue, sub: venueAddress }] : []),
-    ...(dressCode ? [{ label: 'Dress Code', value: dressCode }] : []),
-  ].filter(d => d.value)
-
-  return (
-    <div className="relative min-h-screen font-body" style={{ background: C.bg, color: C.text }}>
-
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className={`relative flex ${isPreview ? 'min-h-[380px] py-12' : 'min-h-screen'} flex-col items-center justify-center overflow-hidden px-4 sm:px-6 md:px-8 text-center`}>
-        <StarField />
-        <FilmGrain />
-
-        {/* Letterbox bars */}
-        <div className="pointer-events-none absolute top-0 inset-x-0 z-10" style={{ height: isPreview ? '18px' : 'clamp(36px,7vh,72px)', background: '#000' }} aria-hidden />
-        <div className="pointer-events-none absolute bottom-0 inset-x-0 z-10" style={{ height: isPreview ? '18px' : 'clamp(36px,7vh,72px)', background: '#000' }} aria-hidden />
-
-        {/* Ambient bloom */}
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 65% 55% at 50% 42%, rgba(201,168,76,0.07) 0%, transparent 68%)' }} aria-hidden />
-
-        <div className="relative z-[2] flex flex-col items-center">
-          {/* Year */}
-          <motion.p
-            initial={{ opacity: 0, letterSpacing: '1em' }}
-            animate={{ opacity: 1, letterSpacing: '0.5em' }}
-            transition={{ duration: 1.5, delay: 0.2, ease: BEZIER }}
-            className="mb-8 text-[10px] uppercase select-none"
-            style={{ color: C.goldMuted }}
-          >
-            Est. {weddingYear}
-          </motion.p>
-
-          {/* Music */}
-          {musicUrl && (
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: BEZIER }}
-              className="mb-8 sm:mb-10"
-            >
-              <MusicButton src={musicUrl} />
-            </motion.div>
-          )}
-
-          <PortraitRow data={data} dark={true} />
-
-          {/* Names */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.45, ease: BEZIER }}
-            className="font-heading"
-            style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7.5rem)', lineHeight: 1.05, color: C.text, letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}
-          >
-            {brideName}
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.75, ease: BEZIER }}
-            className="select-none my-1"
-            style={{ color: C.gold, fontSize: isPreview ? '1.6rem' : 'clamp(2.2rem,7vw,5.5rem)', fontFamily: 'var(--font-cormorant), Georgia, serif' }}
-            aria-hidden
-          >
-            &amp;
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 1.0, ease: BEZIER }}
-            className="font-heading"
-            style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7.5rem)', lineHeight: 1.05, color: C.text, letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}
-          >
-            {groomName}
-          </motion.h1>
-
-          {/* Divider */}
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.9, delay: 1.25, ease: BEZIER }}
-            className="my-8 w-full"
-          >
-            <GoldDivider />
-          </motion.div>
-
-          {/* Date + venue tagline */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.4 }}
-            className="text-sm uppercase tracking-[0.42em]"
-            style={{ color: C.textMuted }}
-          >
-            {formattedDate || 'The Wedding Day'}
-          </motion.p>
-          {venue && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.6 }}
-              className="mt-2 text-xs uppercase tracking-[0.3em]"
-              style={{ color: C.textFaint }}
-            >
-              {venue}
-            </motion.p>
-          )}
         </div>
 
-        {/* Scroll cue */}
-        <motion.div
-          animate={{ opacity: [0, 0.55, 0], y: [0, 10, 0] }}
-          transition={{ duration: 2.2, delay: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-24 z-[2]"
-          aria-hidden
-        >
-          <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke={C.goldMuted} strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M7 2v18m0 0l-4-5m4 5l4-5" />
-          </svg>
-        </motion.div>
+        <div aria-hidden className="shrink-0" style={{ height: 'clamp(44px, 14cqi, 72px)', background: C.bar }} />
       </section>
 
-      {/* ── COUNTDOWN ─────────────────────────────────────────── */}
-      {date && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-6' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bgMid }}>
-          <div className="max-w-lg mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-8 sm:mb-10" style={{ color: C.goldMuted }}>
-              Counting Down to Forever
-            </motion.p>
-            <div className={`grid gap-2 ${isPreview ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-4 sm:gap-3'}`}>
-              {[
-                { v: days, l: 'Days' },
-                { v: hours, l: 'Hours' },
-                { v: minutes, l: 'Mins' },
-                { v: seconds, l: 'Secs' },
-              ].map(({ v, l }, i) => (
-                <motion.div
-                  key={l}
-                  {...fadeUp(i * 0.07)}
-                  className="rounded-lg sm:rounded-2xl flex flex-col items-center justify-center py-4 sm:py-6 relative overflow-hidden"
-                  style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}
-                >
-                  <div className="absolute inset-x-0 bottom-0 h-px" style={{ background: `linear-gradient(90deg,transparent 10%,${C.goldBorder} 50%,transparent 90%)` }} />
-                  <span className="font-heading tabular-nums" style={{ fontSize: isPreview ? '1.3rem' : 'clamp(1.6rem,5vw,2.6rem)', color: C.text, lineHeight: 1 }}>
-                    {String(v).padStart(2, '0')}
-                  </span>
-                  <span className="mt-1.5 text-[9px] uppercase tracking-[0.2em]" style={{ color: C.textFaint }}>{l}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+      {/* ── Epigraph: the couple's own words ──────────────────────── */}
+      {data.message && (
+        <Reveal disabled={isPreview} as="section" className="mx-auto max-w-[30rem] px-7 py-20 text-center">
+          <p className="italic leading-[1.45]" style={{ fontFamily: serif, fontSize: 'clamp(21px, 6.2cqi, 27px)' }}>
+            {data.message}
+          </p>
+          <Caps className="mt-6" style={{ color: C.amber }}>
+            {bride} &amp; {groom}
+          </Caps>
+        </Reveal>
       )}
 
-      {/* ── DETAILS ──────────────────────────────────────────── */}
-      {details.length > 0 && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-6' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bg }}>
-          <div className="max-w-2xl mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>
-              The Details
-            </motion.p>
-            <motion.h2 {...fadeUp(0.08)} className={`font-heading text-center ${isPreview ? 'text-lg mb-5' : 'text-2xl sm:text-3xl md:text-4xl mb-8 sm:mb-12'}`} style={{ color: C.text }}>
-              Your Presence is Requested
-            </motion.h2>
-
-            <div className={`grid gap-2 ${isPreview ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 sm:gap-4'}`}>
-              {details.map((detail, i) => (
-                <motion.div
-                  key={detail.label}
-                  {...fadeUp(i * 0.07)}
-                  className={`relative overflow-hidden ${isPreview ? 'rounded-lg p-3' : 'rounded-lg sm:rounded-2xl p-4 sm:p-6'}`}
-                  style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}
-                >
-                  <div className="absolute top-0 inset-x-0 h-px" style={{ background: `linear-gradient(90deg,transparent 15%,${C.goldBorder} 50%,transparent 85%)` }} />
-                  <p className="text-[10px] uppercase tracking-[0.28em] mb-2" style={{ color: C.goldMuted }}>{detail.label}</p>
-                  <p className="text-base font-medium leading-snug" style={{ color: C.text }}>{detail.value}</p>
-                  {'sub' in detail && detail.sub && (
-                    <p className="mt-1 text-sm" style={{ color: C.textMuted }}>{detail.sub as string}</p>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-
-            {mapsUrl && (
-              <motion.div {...fadeUp(0.32)} className="mt-8 text-center">
-                <a
-                  href={mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 rounded-full px-4 sm:px-6 md:px-8 py-3 text-sm tracking-[0.12em] transition-all"
-                  style={{ background: C.goldFaint, border: `1px solid ${C.goldBorder}`, color: C.gold }}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-                  </svg>
-                  VIEW ON MAP
-                </a>
-              </motion.div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* ── SCHEDULE ─────────────────────────────────────────── */}
-      {scheduleItems.length > 0 && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-8 sm:py-10' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bgMid }}>
-          <div className="max-w-md mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>
-              The Programme
-            </motion.p>
-            <motion.h2 {...fadeUp(0.07)} className="font-heading text-center text-2xl sm:text-3xl mb-8 sm:mb-12" style={{ color: C.text }}>
-              Sequence of Events
-            </motion.h2>
-
-            <div className="relative pl-5 sm:pl-7">
-              <div className="absolute left-0 top-2 bottom-2 w-px" style={{ background: `linear-gradient(180deg,transparent,${C.goldBorder} 20%,${C.goldBorder} 80%,transparent)` }} />
-              <div className="space-y-7">
-                {scheduleItems.map((item, i) => {
-                  const parts = item.split(/[-–—]/).map(s => s.trim())
-                  const timePart = parts.length > 1 ? parts[0] : null
-                  const desc = parts.length > 1 ? parts.slice(1).join(' ') : item
-                  return (
-                    <motion.div key={i} {...fadeUp(i * 0.07)} className="relative">
-                      <div className="absolute -left-[1.75rem] top-1.5 w-3 h-3 rounded-full" style={{ background: C.bg, border: `1.5px solid ${C.gold}` }} />
-                      {timePart && (
-                        <p className="text-[10px] uppercase tracking-[0.22em] mb-0.5" style={{ color: C.goldMuted }}>{timePart}</p>
-                      )}
-                      <p className="text-sm leading-relaxed" style={{ color: C.text }}>{desc}</p>
-                    </motion.div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── GALLERY ──────────────────────────────────────────── */}
-      {gallery.length > 0 && (
-        <section className="py-12 sm:py-16 md:py-20 overflow-hidden" style={{ background: C.bg }}>
-          <motion.p {...fadeUp()} className="px-4 sm:px-6 md:px-8 text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>
-            Captured Moments
-          </motion.p>
-          <motion.h2 {...fadeUp(0.07)} className="px-4 sm:px-6 md:px-8 font-heading text-center text-2xl sm:text-3xl mb-8 sm:mb-10" style={{ color: C.text }}>
-            Our Story in Frames
-          </motion.h2>
-
-          {/* Filmstrip scroll */}
-          <div className="flex gap-2 sm:gap-3 px-4 sm:px-6 md:px-8 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {gallery.map((src, i) => (
-              <motion.div
-                key={`${src}-${i}`}
-                initial={{ opacity: 0, x: 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-20px' }}
-                transition={{ duration: 0.7, delay: i * 0.06, ease: BEZIER }}
-                className="shrink-0 overflow-hidden rounded-xl"
-                style={{
-                  width: i % 3 === 0 ? 240 : 190,
-                  height: i % 3 === 0 ? 320 : 252,
-                  border: `1px solid ${C.goldBorder}`,
-                }}
-              >
+      {/* ── Starring ─────────────────────────────────────────────── */}
+      {cast.length > 0 && (
+        <Reveal disabled={isPreview} as="section" className="mx-auto max-w-[30rem] px-6 pb-16 pt-4 text-center">
+          <Caps>Starring</Caps>
+          <div className={`mx-auto mt-6 grid gap-3 ${cast.length === 2 ? 'grid-cols-2' : 'w-3/5 grid-cols-1'}`}>
+            {cast.map((p) => (
+              <figure key={p.name}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Memory ${i + 1}`} className="h-full w-full object-cover" loading="lazy" />
-              </motion.div>
+                <img
+                  src={p.src}
+                  alt={p.name}
+                  loading="lazy"
+                  className="aspect-[4/5] w-full object-cover"
+                  style={{ filter: 'saturate(0.8) contrast(1.05)' }}
+                />
+                <figcaption className="mt-3 uppercase leading-[1.3]" style={{ fontSize: 'clamp(13px, 4.2cqi, 16px)', letterSpacing: '0.16em', overflowWrap: 'anywhere' }}>
+                  {p.name}
+                </figcaption>
+              </figure>
             ))}
           </div>
-        </section>
+        </Reveal>
       )}
 
-      {/* ── MESSAGE ──────────────────────────────────────────── */}
-      {message && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-8 sm:py-10' : 'py-12 sm:py-18 md:py-24'}`} style={{ background: C.bgMid }}>
-          <div className="max-w-xl mx-auto text-center">
-            <motion.div {...fadeUp()}>
-              <div className="font-heading select-none mb-1 leading-none" style={{ fontSize: '6rem', color: 'rgba(201,168,76,0.09)', marginTop: '-1.5rem' }} aria-hidden>&ldquo;</div>
-              <p className="font-heading text-xl sm:text-2xl italic leading-relaxed" style={{ color: C.textMuted }}>
-                {message}
-              </p>
-              <p className="mt-7 text-sm uppercase tracking-[0.32em]" style={{ color: C.goldMuted }}>
-                — {brideName} &amp; {groomName}
-              </p>
-            </motion.div>
+      {/* ── Countdown on an Academy leader ──────────────────────── */}
+      {countdown && (
+        <Reveal disabled={isPreview} as="section" className="px-6 py-16 text-center">
+          <Caps>Opening in</Caps>
+          <div className="relative mx-auto mt-7 h-[208px] w-[208px]">
+            <div
+              aria-hidden
+              className="absolute inset-[14px] rounded-full"
+              style={{ background: `conic-gradient(rgba(224,164,88,0.09) ${countdown.seconds * 6}deg, transparent 0)` }}
+            />
+            <svg viewBox="0 0 208 208" className="absolute inset-0 h-full w-full" fill="none" aria-hidden>
+              <rect x="0.5" y="0.5" width="207" height="207" stroke={C.rule} />
+              <circle cx="104" cy="104" r="90" stroke={C.rule} />
+              <circle cx="104" cy="104" r="74" stroke="rgba(239,232,220,0.1)" />
+              <path d="M104 0v40M104 168v40M0 104h40M168 104h40" stroke="rgba(239,232,220,0.14)" />
+              <path d="M104 46V14" stroke={C.amber} strokeOpacity={0.8} transform={`rotate(${countdown.seconds * 6} 104 104)`} />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="tabular-nums leading-none" style={{ fontSize: 76, fontWeight: 300 }}>
+                {countdown.days}
+              </span>
+              <span className="mt-2 uppercase" style={{ fontSize: 13, letterSpacing: '0.3em', color: C.soft }}>
+                {countdown.days === 1 ? 'day' : 'days'}
+              </span>
+            </div>
           </div>
+          <p className="mt-6 italic" style={{ fontFamily: serif, fontSize: 18, color: C.soft }}>
+            {countdown.hours} {countdown.hours === 1 ? 'hour' : 'hours'}, {countdown.minutes} min and{' '}
+            <span className="tabular-nums">{pad2(countdown.seconds)}</span> sec
+          </p>
+        </Reveal>
+      )}
+
+      {/* ── The ticket ───────────────────────────────────────────── */}
+      <Reveal disabled={isPreview} as="section" className="px-5 py-14">
+        <div className="mx-auto max-w-[24rem]" style={{ color: C.paperInk }}>
+          <div className="relative rounded-t-[6px] px-6 pb-7 pt-5" style={{ background: C.paper }}>
+            <div className="flex items-baseline justify-between border-b pb-3 uppercase" style={{ borderColor: C.paperRule, fontSize: 12, letterSpacing: '0.26em', color: C.paperSoft }}>
+              <span>The wedding of</span>
+              <span className="tabular-nums" style={{ letterSpacing: '0.14em' }}>Nº {serial}</span>
+            </div>
+
+            <p className="mt-5 italic leading-[1.05]" style={{ fontFamily: serif, fontSize: 'clamp(26px, 8.4cqi, 31px)', overflowWrap: 'break-word' }}>
+              {bride} <span style={{ color: '#A8672A' }}>&amp;</span> {groom}
+            </p>
+
+            <dl className="mt-6 grid grid-cols-2 gap-x-5 gap-y-5">
+              <div className="col-span-2">
+                <TicketLabel>Date</TicketLabel>
+                <dd className="mt-1 uppercase" style={{ fontSize: 19, letterSpacing: '0.06em' }}>
+                  {date ? `${date.weekday}, ${date.day} ${date.month} ${date.year}` : 'To be announced'}
+                </dd>
+              </div>
+              {time && (
+                <div className={data.dressCode ? '' : 'col-span-2'}>
+                  <TicketLabel>Time</TicketLabel>
+                  <dd className="mt-1 uppercase tabular-nums" style={{ fontSize: 18, letterSpacing: '0.06em' }}>{time}</dd>
+                </div>
+              )}
+              {data.dressCode && (
+                <div className={time ? '' : 'col-span-2'}>
+                  <TicketLabel>Dress</TicketLabel>
+                  <dd className="mt-1 uppercase leading-[1.3]" style={{ fontSize: 18, letterSpacing: '0.06em' }}>{data.dressCode}</dd>
+                </div>
+              )}
+              <div className="col-span-2 border-t pt-5" style={{ borderColor: C.paperRule }}>
+                <TicketLabel>Venue</TicketLabel>
+                <dd className="mt-1.5 leading-[1.15]" style={{ fontFamily: serif, fontSize: 25, fontWeight: 500 }}>{venue}</dd>
+                {data.venueAddress && (
+                  <dd className="mt-1.5 leading-[1.45]" style={{ fontSize: 16, fontWeight: 300, color: C.paperSoft }}>
+                    {data.venueAddress}
+                  </dd>
+                )}
+              </div>
+            </dl>
+          </div>
+
+          {/* Perforation: notched both sides, a row of punched dots between. */}
+          <div
+            aria-hidden
+            className="relative h-[22px]"
+            style={{
+              background: `radial-gradient(circle at 0 50%, transparent 10px, ${C.paper} 10.5px) left / 51% 100% no-repeat, radial-gradient(circle at 100% 50%, transparent 10px, ${C.paper} 10.5px) right / 51% 100% no-repeat`,
+            }}
+          >
+            <span
+              className="absolute left-[18px] right-[18px] top-1/2 h-[3px] -translate-y-1/2"
+              style={{ backgroundImage: `radial-gradient(circle, ${C.paperRule} 1.3px, transparent 1.6px)`, backgroundSize: '9px 3px' }}
+            />
+          </div>
+
+          <div className="flex rounded-b-[6px]" style={{ background: C.paper }}>
+            <DirectionsLink
+              href={directions}
+              isPreview={isPreview}
+              className="cn-link flex min-h-[56px] flex-1 items-center justify-center gap-2 rounded-bl-[6px] uppercase"
+              style={{ fontSize: 'clamp(12.5px, 3.9cqi, 14px)', letterSpacing: '0.14em', whiteSpace: 'nowrap' }}
+            >
+              Directions
+              <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
+                <path d="M4 12 12 4M6 4h6v6" />
+              </svg>
+            </DirectionsLink>
+            {directions && calendar && <span aria-hidden className="my-3 w-px" style={{ background: C.paperRule }} />}
+            <DirectionsLink
+              href={calendar}
+              isPreview={isPreview}
+              className="cn-link flex min-h-[56px] flex-1 items-center justify-center gap-2 rounded-br-[6px] uppercase"
+              style={{ fontSize: 'clamp(12.5px, 3.9cqi, 14px)', letterSpacing: '0.14em', whiteSpace: 'nowrap' }}
+            >
+              Add to calendar
+            </DirectionsLink>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* ── The programme, as end credits ───────────────────────── */}
+      {schedule.length > 0 && (
+        <Reveal disabled={isPreview} as="section" className="mx-auto max-w-[30rem] px-6 py-14 text-center">
+          <h2 className="italic" style={{ fontFamily: serif, fontSize: 32, fontWeight: 400 }}>In order of appearance</h2>
+          <ol className="mt-9 space-y-6">
+            {schedule.map((item, i) =>
+              item.time ? (
+                <li key={`${item.title}-${i}`} className="grid grid-cols-2 items-baseline gap-x-5">
+                  <span className="text-right uppercase tabular-nums" style={{ fontSize: 15, letterSpacing: '0.14em', color: C.amber, fontWeight: 300 }}>
+                    {item.time}
+                  </span>
+                  <span className="text-left uppercase leading-[1.3]" style={{ fontSize: 17, letterSpacing: '0.12em' }}>
+                    {item.title}
+                    {item.note && (
+                      <span className="mt-1 block normal-case italic" style={{ fontFamily: serif, fontSize: 15, letterSpacing: 0, color: C.soft }}>
+                        {item.note}
+                      </span>
+                    )}
+                  </span>
+                </li>
+              ) : (
+                <li key={`${item.title}-${i}`} className="uppercase" style={{ fontSize: 17, letterSpacing: '0.12em' }}>
+                  {item.title}
+                  {item.note && (
+                    <span className="mt-1 block normal-case italic" style={{ fontFamily: serif, fontSize: 15, letterSpacing: 0, color: C.soft }}>
+                      {item.note}
+                    </span>
+                  )}
+                </li>
+              ),
+            )}
+          </ol>
+        </Reveal>
+      )}
+
+      {/* ── Stills, on a strip of film ──────────────────────────── */}
+      {stills.length > 0 && (
+        <section className="py-14">
+          <Reveal disabled={isPreview}>
+            <h2 className="text-center italic" style={{ fontFamily: serif, fontSize: 32, fontWeight: 400 }}>Stills</h2>
+          </Reveal>
+          <Reveal disabled={isPreview} className="mx-auto mt-8 max-w-[26rem] px-4">
+            <div
+              className="relative px-[30px] py-[10px]"
+              style={{
+                background: `${SPROCKETS} left 4px top 0 / 14px 22px repeat-y, ${SPROCKETS} right 4px top 0 / 14px 22px repeat-y, ${C.film}`,
+              }}
+            >
+              <div className="space-y-[10px]">
+                {stills.map((src, i) => (
+                  <figure key={`${src}-${i}`} className="relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={src} alt="" loading="lazy" className="block aspect-[4/3] w-full object-cover" />
+                    <span
+                      aria-hidden
+                      className="absolute -right-[27px] top-1 tabular-nums"
+                      style={{ fontSize: 9, letterSpacing: '0.1em', color: 'rgba(224,164,88,0.7)', writingMode: 'vertical-rl' }}
+                    >
+                      {i + 1} ▸ {i + 1}A
+                    </span>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </section>
       )}
 
-      {/* ── WISHES ───────────────────────────────────────────── */}
-      {eventId && <CinematicWishes eventId={eventId} />}
+      {eventId && (
+        <div className="border-t" style={{ borderColor: C.rule }}>
+          <WishesSection eventId={eventId} theme={WISHES_THEME} title="Wishes for the couple" />
+        </div>
+      )}
 
-      {/* ── FOOTER ───────────────────────────────────────────── */}
-      <footer className="px-4 sm:px-6 md:px-8 py-12 text-center" style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
-        <GoldDivider className="mb-7" />
-        <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>
-          {brideName} &amp; {groomName}
-        </p>
-        {formattedDate && (
-          <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(242,238,230,0.18)' }}>{formattedDate}</p>
-        )}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(242,238,230,0.12)' }}>
-          Made with ShareInvite
-        </p>
+      {/* ── Closing card, letterboxed like the opening ──────────── */}
+      <footer className="text-center">
+        <div className="px-6 pb-14 pt-16">
+          <span aria-hidden className="mx-auto block h-px w-10" style={{ background: C.amber }} />
+          <p className="mt-6 italic leading-[1.1]" style={{ fontFamily: serif, fontSize: 30 }}>
+            {bride} <span style={{ color: C.amber }}>&amp;</span> {groom}
+          </p>
+          {date && (
+            <Caps className="mt-3 tabular-nums" style={{ letterSpacing: '0.3em' }}>
+              {date.dayPadded} · {date.monthShort} · {date.year}
+            </Caps>
+          )}
+        </div>
+        <div className="py-5" style={{ background: C.bar }}>
+          <Credit isPreview={isPreview} color={C.faint} linkColor={C.soft} />
+        </div>
       </footer>
     </div>
+  )
+}
+
+function TicketLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <dt className="uppercase" style={{ fontSize: 11, letterSpacing: '0.28em', color: C.paperSoft }}>
+      {children}
+    </dt>
   )
 }

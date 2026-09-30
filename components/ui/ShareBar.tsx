@@ -108,13 +108,12 @@ export default function ShareBar({ url, names, templateId, source = 'unknown' }:
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleWhatsAppShare}
-        className="flex-1 flex items-center justify-center gap-2.5 py-3.5 rounded-xl text-sm font-medium font-body transition-all active:scale-95"
+        className="flex-1 flex items-center justify-center gap-2.5 py-3.5 rounded-full text-sm font-semibold transition-all active:scale-95"
         style={{
           background: 'rgba(37,211,102,0.08)',
           border: '1px solid rgba(37,211,102,0.25)',
           color: 'rgb(22,163,74)',
-          letterSpacing: '0.04em',
-        }}
+                  }}
         onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(37,211,102,0.14)' }}
         onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(37,211,102,0.08)' }}
       >
@@ -124,13 +123,12 @@ export default function ShareBar({ url, names, templateId, source = 'unknown' }:
 
       <button
         onClick={handleCopy}
-        className="flex-1 flex items-center justify-center gap-2.5 py-3.5 rounded-xl text-sm font-medium font-body transition-all active:scale-95 relative overflow-hidden"
+        className="flex-1 flex items-center justify-center gap-2.5 py-3.5 rounded-full text-sm font-semibold transition-all active:scale-95 relative overflow-hidden"
         style={{
-          background: 'rgba(44,32,28,0.05)',
-          border: '1px solid rgba(44,32,28,0.12)',
-          color: copied ? 'rgba(44,32,28,0.82)' : 'rgba(44,32,28,0.58)',
-          letterSpacing: '0.04em',
-        }}
+          background: copied ? 'rgba(11,74,52,0.08)' : '#FFFDF9',
+          border: copied ? '1px solid rgba(11,74,52,0.3)' : '1px solid #EADFD2',
+          color: copied ? '#0B4A34' : '#1E2726',
+                  }}
       >
         <AnimatePresence mode="wait">
           {copied ? (

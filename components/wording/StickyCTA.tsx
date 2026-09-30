@@ -9,6 +9,7 @@ interface StickyCTAProps {
   text: string
 }
 
+/** Mobile-only bottom bar that appears once the reader is into the guide. */
 export default function StickyCTA({ href, text }: StickyCTAProps) {
   const [visible, setVisible] = useState(false)
 
@@ -20,20 +21,15 @@ export default function StickyCTA({ href, text }: StickyCTAProps) {
 
   return (
     <BottomDock
-      className={`px-4 pt-2 bg-background/95 backdrop-blur-md border-t border-border sm:hidden transition-transform duration-300 ${
+      className={`border-t border-line bg-paper/95 px-4 pt-2.5 backdrop-blur-md transition-transform duration-300 sm:hidden ${
         visible ? 'translate-y-0' : 'translate-y-full'
       }`}
       style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 0px))' }}
     >
-      <Link
-        href={href}
-        className="gold-button flex w-full items-center justify-center rounded-xl py-3.5 text-sm font-semibold"
-      >
-        {text}
+      <Link href={href} className="btn-primary flex w-full items-center justify-center rounded-full py-3.5 text-sm font-semibold">
+        {text.replace(/\s*→$/, '')}
       </Link>
-      <p className="mt-1 text-center text-[10px] text-muted">
-        Free to build · No credit card · WhatsApp-ready in 5 min
-      </p>
+      <p className="mt-1.5 text-center text-[0.72rem] text-muted">Free to build & preview · Pay once when you publish</p>
     </BottomDock>
   )
 }

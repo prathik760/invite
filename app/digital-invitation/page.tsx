@@ -1,8 +1,19 @@
-import SiteHeader from '@/components/layout/SiteHeader'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { RingIcon, HeartIcon, CakeIcon, HomeIcon, FlowerIcon, UsersIcon } from '@/components/ui/Icons'
+import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/landing/SiteFooter'
+import FAQAccordion from '@/components/landing/FAQAccordion'
+import TemplateBrowser from '@/components/catalog/TemplateBrowser'
+import PageHero from '@/components/brand/PageHero'
+import OfferCard from '@/components/brand/OfferCard'
+import HowItWorks from '@/components/brand/HowItWorks'
+import TrustList from '@/components/brand/TrustList'
+import CtaBand from '@/components/brand/CtaBand'
+import { Section, SectionHeading } from '@/components/brand/Section'
+import { ArrowRightIcon } from '@/components/ui/Icons'
+import { OCCASIONS } from '@/lib/catalog'
+import { buildCatalogItems, occasionChips } from '@/lib/catalogItems'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -33,15 +44,6 @@ export const metadata: Metadata = {
   },
 }
 
-const OCCASIONS = [
-  { name: 'Wedding', href: '/wedding-invitation', desc: 'Muhurat, schedule & Google Maps', icon: <RingIcon /> },
-  { name: 'Engagement', href: '/engagement-invitation', desc: 'Roka · Sagai · Nishchayathartham', icon: <HeartIcon /> },
-  { name: 'Birthday', href: '/birthday-invitation', desc: 'Party invite with countdown & wishes', icon: <CakeIcon /> },
-  { name: 'Griha Pravesh', href: '/griha-pravesh-invitation', desc: 'Housewarming pooja schedule', icon: <HomeIcon /> },
-  { name: 'Namakaran', href: '/namakaran-invitation', desc: 'Baby naming ceremony invite', icon: <FlowerIcon /> },
-  { name: 'Anniversary', href: '/create', desc: 'Milestone celebration invite', icon: <UsersIcon /> },
-]
-
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -67,7 +69,7 @@ const faqSchema = {
       name: 'Which occasions can I create digital invitations for on ShareInvite?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'ShareInvite supports 10 Indian event types: weddings, engagements (Mangni), birthdays (Janamdin), house warmings (Griha Pravesh), naming ceremonies (Namakaran), anniversaries, and more. New templates are added regularly.',
+        text: 'ShareInvite supports 10 Indian event types: weddings, engagements (Mangni), birthdays (Janamdin), house warmings (Griha Pravesh), naming ceremonies (Namakaran), anniversaries, festivals such as Ganesh Chaturthi and Raksha Bandhan, and animated 3D greetings. For anything else, you can request a custom design.',
       },
     },
     {
@@ -75,86 +77,83 @@ const faqSchema = {
       name: 'How much does a digital invitation cost in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Building and previewing any template is completely free. Publishing is a one-time payment starting at ₹99 for the Ganesh Chaturthi template and ₹199 for Elegant Wedding, with gallery, music, and countdown templates from ₹299 — and no template costs more than ₹499. No monthly fees, no hidden charges.',
+        text: 'Building and previewing any template is completely free. Publishing is a one-time payment for the design you choose — each design has its own price, from ₹99 for Ganesh Chaturthi up to ₹1,999 for the Rajwada Signature wedding suite. No monthly fees, no hidden charges.',
       },
     },
   ],
 }
 
 export default function DigitalInvitationPage() {
+  const items = buildCatalogItems(['luxury-wedding', 'indian-birthday', 'indian-engagement', 'griha-pravesh', 'namakaran', 'anniversary', 'greeting-love', 'ganesh-chaturthi'], { keepOrder: true })
+  const faqs = faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))
+
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-champagne text-charcoal">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <SiteHeader />
 
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Free to build &amp; preview · WhatsApp ready · No app needed
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Digital Invitation Website<br />
-            <span className="gradient-accent italic">for Every Indian Occasion</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Build a free digital invitation preview for any Indian occasion — wedding, birthday, Griha Pravesh, Namakaran, engagement, or anniversary. WhatsApp-ready in 5 minutes.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Start My Digital Invite →
+      <PageHero
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Digital invitations' }]}
+        eyebrow="Online invitation maker"
+        title={<>Digital Invitation Website <em className="font-medium text-burnished">for Every Occasion</em></>}
+        lede="A beautiful invitation page for your wedding, birthday, housewarming, naming ceremony or festival — shared as one WhatsApp link that opens on any phone, anywhere."
+        actions={
+          <>
+            <Link href="/create" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
+              Create your invitation <ArrowRightIcon />
             </Link>
-            <span className="text-sm text-muted">No credit card · No app download</span>
-          </div>
-        </div>
-      </section>
+            <a href="#occasions" className="btn-outline inline-flex items-center justify-center rounded-full px-8 py-4 text-[1rem] font-semibold">
+              Find your occasion
+            </a>
+          </>
+        }
+        footnote={<TrustList />}
+        aside={<OfferCard cta="Create your invitation" location="digital_invitation_offer" />}
+      />
 
-      <section className="px-5 py-16 border-y border-border bg-white">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            Free Digital Invitation Templates for Every Indian Occasion
-          </h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {OCCASIONS.map(o => (
-              <Link key={o.name} href={o.href}
-                className="group rounded-2xl border border-border bg-background p-6 shadow-sm hover:shadow-card hover:-translate-y-1 transition-all duration-200 flex items-center gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{o.icon}</div>
-                <div>
-                  <h3 className="font-heading text-lg text-ink group-hover:text-accent-strong transition-colors">{o.name}</h3>
-                  <p className="text-xs text-muted mt-0.5">{o.desc}</p>
-                </div>
+      <Section id="occasions" aria-label="Occasions">
+        <SectionHeading eyebrow="Every occasion" title="Digital invitation templates for every occasion" />
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5" data-reveal-group>
+          {OCCASIONS.map((o) => (
+            <li key={o.key}>
+              <Link href={o.href} className="lift group block overflow-hidden rounded-3xl border border-line bg-paper">
+                <span className="relative block aspect-[384/300] overflow-hidden bg-peach">
+                  <Image src={o.image} alt="" fill sizes="(max-width: 640px) 50vw, 20vw" className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105" />
+                </span>
+                <span className="block px-4 py-3.5">
+                  <span className="block font-editorial text-[1.3rem] font-semibold leading-tight">{o.label}</span>
+                  <span className="mt-0.5 block truncate text-[0.8rem] text-muted">{o.blurb}</span>
+                </span>
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Free Digital Invitation Maker — Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
+      <Section tone="paper" aria-label="Designs">
+        <SectionHeading
+          eyebrow="The designs"
+          title="Choose a design you love"
+          sub="Open any design in a live preview. Each has one price, paid once when you publish."
+          action={{ href: '/templates', label: 'Every design' }}
+        />
+        <div className="mt-9">
+          <TemplateBrowser items={items} chips={occasionChips(items)} source="digital_invitation_gallery" limit={8} showCount={false} />
         </div>
-      </section>
+      </Section>
 
-      <section className="px-5 pb-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Free Digital Invitation Today</h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · Paid templates from ₹99 one-time · WhatsApp-ready</p>
-          <Link href="/create" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Create Digital Invitation →
-          </Link>
-        </div>
-      </section>
+      <Section tone="peach" aria-label="How it works">
+        <SectionHeading align="center" eyebrow="How it works" title="Three steps to your invitation" />
+        <div className="mt-12"><HowItWorks /></div>
+      </Section>
 
+      <Section tone="paper" id="faq" aria-label="Questions">
+        <SectionHeading align="center" eyebrow="Questions" title="Digital invitation maker — questions" />
+        <div className="mt-10"><FAQAccordion faqs={faqs} /></div>
+      </Section>
+
+      <CtaBand title="Create your digital invitation today" location="digital_invitation_footer" />
       <SiteFooter />
     </main>
   )

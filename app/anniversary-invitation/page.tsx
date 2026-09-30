@@ -1,8 +1,7 @@
-import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import OccasionPage from '@/components/landing/OccasionPage'
+import { templatePrice } from '@/lib/plans'
 import { CameraIcon, ClockIcon, MapPinIcon, MusicIcon, MessageIcon, ClipboardIcon, ShareIcon, SparklesIcon } from '@/components/ui/Icons'
-import SiteFooter from '@/components/landing/SiteFooter'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -71,7 +70,7 @@ const faqSchema = {
       name: 'How much does a digital anniversary invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Anniversary template is ₹499 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
+        text: 'The Anniversary template is ₹499 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step.',
       },
     },
   ],
@@ -99,189 +98,43 @@ const MILESTONES = [
 
 const CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 'pune', 'kolkata', 'ahmedabad']
 
-export default function AnniversaryInvitationPage() {
+export default function Page() {
+  const faqs = faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-
-      <SiteHeader createHref="/create?template=anniversary" />
-
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Build free · WhatsApp ready · No app download
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Digital Anniversary Invitation<br />
-            <span className="gradient-accent italic">Silver · Golden · Milestone</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital anniversary invitation in minutes. Mark 25, 50, or any milestone year with a shareable WhatsApp link — complete with couple photos, story, countdown, and guest wishes.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create?template=anniversary" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Start My Anniversary Invite →
-            </Link>
-            <span className="text-sm text-muted">Free to build &amp; preview · ₹499 one-time to publish</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="px-5 py-16 border-b border-border bg-white">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            What&apos;s Included in Your Digital Anniversary Invitation
-          </h2>
-          <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Every feature is designed to make your milestone celebration feel as special as it truly is.
-          </p>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURES.map(f => (
-              <div key={f.title} className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#D9A441]/10 text-[#D9A441]">{f.icon}</div>
-                <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
-                <p className="text-sm text-muted leading-6">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Milestones */}
-      <section className="px-5 py-16 border-b border-border">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            Anniversary Milestones Worth Celebrating
-          </h2>
-          <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Every year together is worth celebrating — and some milestones deserve a proper invitation.
-          </p>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {MILESTONES.map(m => (
-              <div key={m.year} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <p className="font-heading text-3xl text-accent-strong">{m.year}</p>
-                    <p className="font-heading text-lg text-ink mt-0.5">{m.name}</p>
-                  </div>
-                  <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong shrink-0">{m.theme}</span>
-                </div>
-                <p className="text-sm text-muted leading-7">{m.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="bg-white border-b border-border px-5 py-14">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            How to Create a Digital Anniversary Invitation
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              {
-                step: '01',
-                title: 'Add couple details',
-                desc: 'Enter both names, anniversary year/date, venue, story highlights, and a celebration message.',
-              },
-              {
-                step: '02',
-                title: 'Upload milestone photos',
-                desc: 'Add couple photos from across the years — wedding, milestones, family. The gallery brings the celebration to life.',
-              },
-              {
-                step: '03',
-                title: 'Share on WhatsApp',
-                desc: 'Send the invite to all family, friends, and children\'s groups in one tap. No app needed for guests to view it.',
-              },
-            ].map(s => (
-              <div key={s.step} className="rounded-2xl border border-border bg-background p-7 shadow-sm">
-                <p className="font-heading text-5xl text-accent/60">{s.step}</p>
-                <h3 className="mt-5 font-heading text-xl text-ink">{s.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-muted">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="px-5 py-16 border-b border-border">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Anniversary Invitation — Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* City links */}
-      <section className="border-b border-border bg-white px-5 py-12">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-4">Anniversary invitations by city</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {CITIES.map(city => (
-              <Link
-                key={city}
-                href={`/anniversary-invitation/${city}`}
-                className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground capitalize hover:border-[#D9A441]/50 transition-colors"
-              >
-                {city.charAt(0).toUpperCase() + city.slice(1)}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Internal links */}
-      <section className="border-b border-border px-5 py-12">
-        <div className="mx-auto max-w-4xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6 text-center">Explore more invitation types</p>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { href: '/wedding-invitation', label: 'Digital Wedding Invitation' },
-              { href: '/engagement-invitation', label: 'Digital Engagement Invitation' },
-              { href: '/digital-invitation', label: 'All Digital Invitations' },
-              { href: '/templates', label: 'Browse All Templates' },
-              { href: '/create', label: 'Create Your Anniversary Invitation' },
-            ].map(l => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors"
-              >
-                {l.label} →
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-5 py-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Anniversary Invitation Today</h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹499 one-time to publish · WhatsApp-ready in 5 minutes</p>
-          <Link href="/create?template=anniversary" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start My Anniversary Invite →
-          </Link>
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
+      <OccasionPage
+        occasion="anniversary"
+        templateId="anniversary"
+        pageKey="anniversary_landing"
+        crumb="Anniversary invitations"
+        eyebrow="Digital anniversary invitations"
+        title={<>Digital Anniversary Invitation <em className="font-medium text-burnished">Silver · Golden · Milestone</em></>}
+        lede={`Mark 25, 50 or any milestone year with a beautiful invitation — couple photos, your story, a countdown and guest wishes, all on one WhatsApp link. Build and preview free — publish for ₹${templatePrice('anniversary')} one-time.`}
+        ctaLabel="Start my anniversary invite"
+        types={{
+          eyebrow: 'Milestones',
+          title: 'Anniversary milestones worth celebrating',
+          sub: 'Every year together is worth celebrating — and some milestones deserve a proper invitation.',
+          items: MILESTONES.map((m) => ({ name: `${m.year} · ${m.name}`, tag: m.theme !== m.name ? m.theme : undefined, desc: m.desc })),
+        }}
+        features={{ title: "What's included in your digital anniversary invitation", items: FEATURES }}
+        steps={[
+          { title: 'Add couple details', copy: 'Both names, the anniversary year and date, venue, story highlights and a message.' },
+          { title: 'Upload milestone photos', copy: 'Photos from across the years — wedding, milestones, family — bring the celebration to life.' },
+          { title: 'Pay once & share', copy: 'Publish for a one-time price and send it to every family and friends group.' },
+        ]}
+        faqTitle="Digital anniversary invitation questions"
+        faqs={faqs}
+        cities={{ base: '/anniversary-invitation', title: 'Anniversary invitations by city', list: CITIES }}
+        related={[
+          { href: '/wedding-invitation', label: 'Wedding invitations' },
+          { href: '/engagement-invitation', label: 'Engagement invitations' },
+          { href: '/digital-invitation', label: 'All digital invitations' },
+          { href: '/templates', label: 'Browse every design' },
+        ]}
+        closing={{ title: 'Create your anniversary invitation today' }}
+      />
+    </>
   )
 }

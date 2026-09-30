@@ -17,7 +17,7 @@ export const blogArticles: Record<string, ContentBlock> = {
         heading: 'Why send a Ganesh Chaturthi invitation online this year',
         body: `Every year the same thing happens. You send a pretty Ganpati image to the family group, and then you spend the next week answering the same four questions on WhatsApp: what time is the sthapana, which day is the aarti you want us at, what is the exact address, and when is the visarjan. The image could not answer any of them, so you did.
 
-A digital invitation answers them once, for everyone, and keeps answering them. It is **instant** — no printing, no courier, no trip to the press. It is **editable** — if the visarjan shifts by a day or the evening aarti moves to 8pm, you change it on the page and the same link updates for every single person you already sent it to. Nobody gets a correction message. It is **built for WhatsApp**, which is where your family group, your building group and your cousins abroad already live. And it works beautifully for **NRI relatives** — a link opens instantly in Dubai, London, New Jersey or Melbourne, so family who cannot fly down for Ganeshotsav can still see the mandap, read the aarti timings and leave a blessing on the page.
+A digital invitation answers them once, for everyone, and keeps answering them. It is **instant** — no printing, no courier, no trip to the press. It is **complete** — the aarti timings, the visarjan date and a map to the mandap sit on one page, so nobody has to ask twice. It is **built for WhatsApp**, which is where your family group, your building group and your cousins abroad already live. And it works beautifully for **NRI relatives** — a link opens instantly in Dubai, London, New Jersey or Melbourne, so family who cannot fly down for Ganeshotsav can still see the mandap, read the aarti timings and leave a blessing on the page.
 
 At ₹99 one-time it also costs less than almost anything else you will buy for the festival — which is the honest reason most people switch.`,
       },
@@ -159,7 +159,7 @@ You can build the entire page, fill in every detail, upload your photos and prev
       { q: 'How much does the Ganesh Chaturthi invitation card cost?', a: 'The Ganesh Chaturthi Premium template on ShareInvite is ₹99 — a one-time payment with no subscription and no per-guest charge. It is the lowest-priced premium template on the site. You can build the whole invitation, add your photos and preview it on your own phone before you pay, and payment is only requested at the final publish step.' },
       { q: 'How do I make a Ganesh Chaturthi invitation card online?', a: 'Open the Ganesh Chaturthi template on ShareInvite, add your family or mandal name, upload a photo of your Bappa, set the sthapana date and muhurat, fill in the utsav schedule day by day, add the mandap address with a Google Maps link and the visarjan date, then write your message. Preview it and publish for ₹99 to get a WhatsApp-ready link. It takes about five minutes.' },
       { q: 'Can I use it for a housing society or Ganesh mandal invitation?', a: 'Yes — it is one of the best uses. Put the society or mandal name as the host, list your full multi-day programme in the utsav schedule, and share one link into every building group. When the programme changes mid-festival you edit the page once instead of sending corrected notices to every group.' },
-      { q: 'Can I add the visarjan date separately?', a: 'Yes. Visarjan has its own card in the darshan section with its own date and time, because it is a separate event that is often confirmed later. If you leave it blank the card reads "date to be announced", and you can fill it in later — the same link updates for everyone who already has it.' },
+      { q: 'Can I add the visarjan date separately?', a: 'Yes. Visarjan has its own card in the darshan section with its own date and time, because it is a separate event that is often confirmed later. If you leave it blank the card reads "date to be announced". Published invitations cannot be edited, so once the date is fixed, publish a corrected version with the same design — it stays unlocked on your account, so there is no second charge — and share the new link.' },
       { q: 'What if the muhurat or aarti timing changes after I have shared it?', a: 'You edit the page and the same link shows the new version to everyone. Nobody needs a corrected message, and nobody is left reading an out-of-date time in a WhatsApp thread. This is the main practical advantage over a forwarded image or a printed card.' },
       { q: 'Can I send it to relatives living abroad?', a: 'Yes. It is a web link that opens instantly in any browser anywhere in the world, with no app and no download. NRI family in the US, UK, Dubai, Canada, Australia or Singapore can open it with one tap, see the mandap photos and aarti timings, and leave a blessing on the wishes wall that everyone at home can read.' },
       { q: 'Do my guests need to install an app to open it?', a: 'No. The invitation opens directly in any phone or laptop browser from the WhatsApp link. There is nothing to download or install, which matters most for elders and less tech-savvy relatives.' },
@@ -1081,7 +1081,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
       {
         q: 'What if the baby girl\'s name has not been decided yet when we are creating the invitation?',
-        a: 'This is common — many families keep the name deliberation going until the ceremony day itself, especially when the astrologer\'s input is involved. In this case, create the invitation without the baby\'s name and use phrases like "our daughter," "our little one," or "Ghar Ki Lakshmi" as placeholders. Once the name is decided (even hours before the ceremony), you can update the invitation page with the name, and the same link will show the update automatically. If you decide the name during the ceremony itself, the invitation does not need to be updated — it has already served its purpose.',
+        a: 'This is common — many families keep the name deliberation going until the ceremony day itself, especially when the astrologer\'s input is involved. In this case, create the invitation without the baby\'s name and use phrases like "our daughter," "our little one," or "Ghar Ki Lakshmi" as placeholders. Published invitations cannot be edited, so if you would like the name on the page once it is decided, publish a corrected version with the same design — it stays unlocked on your account, so there is no second charge — and share the new link. If the name is decided during the ceremony itself, the invitation does not need changing — it has already served its purpose.',
       },
     ],
     links: [
@@ -1108,7 +1108,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
       {
         heading: 'The invitation link vs the WhatsApp image — why the link is better',
-        body: `Most families have the habit of creating a graphic or video invitation and sending it as a file in WhatsApp. This approach has several problems: image files do not contain the venue address, map, or schedule — guests need to ask separately; the image quality often degrades when forwarded multiple times; and the image gets buried in the media section and is hard to retrieve on the day of the event. A link, by contrast, always works: it opens the same page every time, contains the map, schedule, and full details, and the host can update it if anything changes. The WhatsApp preview card for the link — the thumbnail image with the title — is often more visually striking than the image file anyway, because it shows on a clean card without the compression artefacts of a forwarded image.`,
+        body: `Most families have the habit of creating a graphic or video invitation and sending it as a file in WhatsApp. This approach has several problems: image files do not contain the venue address, map, or schedule — guests need to ask separately; the image quality often degrades when forwarded multiple times; and the image gets buried in the media section and is hard to retrieve on the day of the event. A link, by contrast, always works: it opens the same page every time, contains the map, schedule, and full details, and is easy to find again in the chat. The WhatsApp preview card for the link — the thumbnail image with the title — is often more visually striking than the image file anyway, because it shows on a clean card without the compression artefacts of a forwarded image.`,
       },
     ],
     checklist: [
@@ -1127,7 +1127,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
       {
         q: 'Can I track who opened the invitation?',
-        a: 'ShareInvite shows you the number of views your invitation page has received, so you can see the total number of guests who have opened the link. This is useful for gauging reach and deciding whether to send reminders to groups that may have missed the invitation. Detailed per-person tracking (who specifically opened it) is not available for guest privacy reasons, but the aggregate view count is visible in your dashboard.',
+        a: 'No. ShareInvite does not track who opens an invitation or count views, out of respect for guest privacy. What you do see in your dashboard is every wish guests leave on the invitation — a good sign of who has read it. For groups you have not heard from, a short reminder two to three days before the event is the simplest follow-up.',
       },
     ],
     links: [
@@ -1250,7 +1250,7 @@ For anyone planning an engagement in India right now, whether it is a ring cerem
   'best-engagement-invitation-ideas': {
     intro: `Most engagement invitations get scrolled past in about two seconds. The couple's names appear, the date appears, and the guest moves on to the next notification in their WhatsApp. The invitations that actually get read — that get screenshotted and forwarded and talked about at the event itself — are doing something specific. They feel like they were made by someone who cared, not by someone who filled in a template and hit send.
 
-After seeing thousands of engagement invitations created on ShareInvite, the pattern is consistent. It is not the most ornate designs that generate the most wishes and the most genuine responses. It is the ones where the couple uploaded a real photo, wrote one personal line, and used the right name for their ceremony. A couple from Pune who used a photo from their road trip to Coorg got three times more wishes than couples who used a formal portrait from a studio — not because the photo was technically better, but because it communicated something true about who they are.
+Across the engagement invitations created on ShareInvite, the pattern is consistent. It is not the most ornate designs that generate the most wishes and the most genuine responses. It is the ones where the couple uploaded a real photo, wrote one personal line, and used the right name for their ceremony. A couple from Pune who used a photo from their road trip to Coorg got three times more wishes than couples who used a formal portrait from a studio — not because the photo was technically better, but because it communicated something true about who they are.
 
 This guide is about the ideas that actually work for engagement invitations in Indian families — across ceremony types, family structures, and how people actually share things on WhatsApp. It will also tell you what does not work, because there are a few common mistakes that are easy to avoid once you know what to look for.`,
     sections: [
@@ -1348,17 +1348,17 @@ One practical point: wishes appear on the page the moment a guest sends them, so
   'why-digital-invitations-are-growing-in-india': {
     intro: `The first time I noticed the shift was not in a survey or a market report. It was watching my neighbour's family — a joint household of three generations in a three-bedroom flat in Pune — trying to figure out what to do when the wedding hall changed six days before the ceremony. They had already printed and distributed three hundred physical cards. The new venue was on the other side of the city. The uncle who had done the card printing was not happy. The mother-in-law, who had hand-delivered forty cards to relatives in her colony, was even less happy. By the time everything was explained via individual phone calls, two elderly relatives still showed up at the wrong address on the wedding morning.
 
-That story is not unusual. I have heard versions of it from hundreds of families since I started ShareInvite in 2026 — the venue that changed, the muhurat that shifted by an hour, the hall whose name was spelled wrong on a thousand printed cards. Physical invitations are beautiful objects and genuinely meaningful in Indian culture. But they are also fragile in ways that nobody talks about. The shift to digital is not happening because Indians have stopped caring about tradition. It is happening because the practical problems with physical cards were always real, and now there is a better option.
+That story is not unusual. I have heard versions of it from many families since I started ShareInvite — the venue that changed, the muhurat that shifted by an hour, the hall whose name was spelled wrong on a thousand printed cards. Physical invitations are beautiful objects and genuinely meaningful in Indian culture. But they are also fragile in ways that nobody talks about. The shift to digital is not happening because Indians have stopped caring about tradition. It is happening because the practical problems with physical cards were always real, and now there is a better option.
 
 What I want to write about here is the actual texture of that shift — not the version that shows up in tech press releases about India's digital adoption rate, but the version I have observed in the way real families navigate a real cultural tension. How convenience came first, how culture caught up, and why the acceleration happened faster than even I expected when I started building this.`,
     sections: [
       {
         heading: 'It started with convenience, not culture',
-        body: `Nobody decided that digital invitations were culturally acceptable and then switched. It happened the other way around. Families switched because something went wrong — a date change, a venue change, an out-of-city family member who needed directions at 7 AM on the wedding day — and the WhatsApp link was already there, already sent, already updateable. The cultural acceptance came quietly, after the fact, once enough people had experienced it working.
+        body: `Nobody decided that digital invitations were culturally acceptable and then switched. It happened the other way around. Families switched because something went wrong — a date change, a venue change, an out-of-city family member who needed directions at 7 AM on the wedding day — and the WhatsApp link was already there, already sent, already holding every detail. The cultural acceptance came quietly, after the fact, once enough people had experienced it working.
 
 The Bengaluru tech worker whose parents are in Hyderabad and whose in-laws are in Chennai is the clearest case study of why geography drove this before anything else. Printed cards require someone to physically deliver them, or to post them, or to bring them on a visit. For families spread across cities — which is now a majority of urban Indian families in their thirties — the logistics of physically distributing a card to everyone who matters is genuinely complicated. You end up with a two-tier system where close local relatives get a proper printed card and distant relatives get a photo of the card on WhatsApp. Once you are already sharing the card on WhatsApp, the question becomes: why not share something better on WhatsApp?
 
-The other driver was last-minute logistics, which are a structural feature of Indian event planning rather than an exception. Venues get double-booked. Muhurats get revised when the astrologer recalculates. Caterers change. The baraat timing shifts because the groom's side negotiated a later start. None of this is unusual — it is simply how events unfold when you are coordinating between multiple families, priests, venues, and caterers simultaneously. A printed card cannot handle any of these changes. A digital invitation, with the same link all guests already have, updates for everyone at once.`,
+The other driver was last-minute logistics, which are a structural feature of Indian event planning rather than an exception. Venues get double-booked. Muhurats get revised when the astrologer recalculates. Caterers change. The baraat timing shifts because the groom's side negotiated a later start. None of this is unusual — it is simply how events unfold when you are coordinating between multiple families, priests, venues, and caterers simultaneously. A printed card cannot handle any of these changes. A digital invitation can be corrected and re-sent to every group in minutes.`,
       },
       {
         heading: 'WhatsApp changed what an invitation could do',
@@ -1392,7 +1392,7 @@ The third pattern is the one that surprised me most: older guests are not the ho
         heading: 'Why the shift accelerated faster than anyone expected',
         body: `When I started ShareInvite, I expected the adoption curve to be slow. Indian families are, reasonably, conservative about changing rituals that carry social and emotional weight. I built for a five-year timeline to reach the point where digital invitations would feel normal rather than novel.
 
-It happened much faster than that. The acceleration had several causes, but the most significant was the pandemic. Two years of weddings conducted under guest limits and last-minute permission changes created a generation of Indian families who had direct experience of what happens when your physical invitations are useless the moment conditions change. Families who had printed cards that became invalid when guest caps changed, who had to manage real-time communication with hundreds of guests about whether the event was happening and in what form, learned in the most direct way possible why updateable digital invitations matter.
+It happened much faster than that. The acceleration had several causes, but the most significant was the pandemic. Two years of weddings conducted under guest limits and last-minute permission changes created a generation of Indian families who had direct experience of what happens when your physical invitations are useless the moment conditions change. Families who had printed cards that became invalid when guest caps changed, who had to manage real-time communication with hundreds of guests about whether the event was happening and in what form, learned in the most direct way possible why digital invitations matter.
 
 The second accelerant was the smartphone camera. As the quality of phone cameras improved and pre-wedding photography became a standard part of middle-class wedding culture, couples had genuinely beautiful images they wanted to share. A printed card could carry one photo, at low resolution, with significant printing cost. A digital invitation could carry a gallery of photos at full resolution, with background music, for a fraction of the cost. The invitation became a better canvas for the content families actually wanted to share.
 
@@ -1402,10 +1402,10 @@ There is something else worth saying, which is less comfortable to state plainly
       },
     ],
     checklist: [
-      'Send the invitation as a WhatsApp link, not an image file — a link stays navigable and updateable; an image gets buried in media.',
+      'Send the invitation as a WhatsApp link, not an image file — a link stays navigable; an image gets buried in media.',
       'Include a Google Maps pin to the exact gate or entrance, not just the venue name — this is the feature guests use most on the wedding day itself.',
       'Enable the guest wishes section so the invitation becomes interactive and the host sees who has engaged with it.',
-      'Update the invitation rather than resend it if details change — all guests who already have the link will see the update automatically.',
+      'Check every detail in the free preview before publishing — a published invitation cannot be edited, so a change means sharing a corrected link.',
       'List every sub-event with timings on the invitation page: Mehendi, Sangeet, Baraat, Pheras, Reception — one page does all of it.',
       'Upload a couple photo or family photo to the invitation — the visual is what makes guests feel they received something personal rather than a logistics notice.',
       'Send a reminder two to three days before the event via the same link — most guests look up venue details on the day or the day before.',
@@ -1426,7 +1426,7 @@ There is something else worth saying, which is less comfortable to state plainly
       },
       {
         q: 'What happens if event details change after the digital invitation has been sent?',
-        a: 'This is one of the strongest practical arguments for digital invitations. Update the invitation page and the same link all guests already have will show the new information immediately — no resending, no explaining, no follow-up calls to everyone who received the old version. For a venue or muhurat change, send a short WhatsApp message to your groups noting what has changed and pointing to the same link for updated details. Guests who ignored the original link will often open it when they receive the update message, so the notification of a change also catches up stragglers who had not read the full invitation.',
+        a: 'Published invitations on ShareInvite cannot be edited, so publish a corrected version with the same design — it stays unlocked on your account, so there is no second charge — and share the new link, with a short WhatsApp message noting what has changed. It is still far easier than a printed card: one message to each group, rather than a round of phone calls. Guests who ignored the original link will often open it when they receive the update message, so the notification of a change also catches up stragglers who had not read the full invitation.',
       },
     ],
     links: [
@@ -1480,7 +1480,7 @@ The third thing is the guest wishes section. A printed card generates no respons
 
 But there is a hidden cost that rarely gets calculated: the time and coordination involved in printing, distributing, and tracking down who has and has not received a card. In joint households where the responsibility is split between family members, this coordination is real labour. The cousin who is supposed to deliver forty cards to relatives in another neighbourhood. The aunt who was going to bring cards to her colony but forgot. The ten cards that need to be posted to out-of-city family, requiring someone to go to the post office. This time has a cost even if it is not a line item.
 
-A digital invitation on ShareInvite starts at ₹199, and no template costs more than ₹499 — you can build and preview any of them for free before paying. At that price point, the comparison to printed cards is not competitive; it is absurd. The premium invitation costs less than the printing cost for ten printed cards, can be shared with any number of guests, and updates automatically if anything changes.
+A digital wedding invitation on ShareInvite starts at ₹199; most designs are ₹499 or less, and the Signature wedding suites are ₹1,499 to ₹1,999 — you can build and preview any of them for free before paying. At that price point, the comparison to printed cards is not competitive; it is absurd. The premium invitation costs less than the printing cost for ten printed cards, can be shared with any number of guests, and updates automatically if anything changes.
 
 What most families end up doing is a hybrid: twenty-five to thirty printed cards for the inner circle, costing ₹2,000 to ₹5,000 with quality printing, and a ShareInvite link for everyone else. This combination costs a fraction of a full printed run and does the communication job better for ninety percent of the guest list.`,
       },
@@ -1501,7 +1501,7 @@ The families who are still printing five hundred cards and also sending a WhatsA
       'Always pin Google Maps to the main gate or entrance, not the building centre — especially for new venues.',
       'Enable the guest wishes section — it is what guests remember most after the event.',
       'Test the WhatsApp link preview before sharing to any group.',
-      'If anything changes (venue, timing), update the digital invitation immediately — the same link updates for all guests.',
+      'If anything changes (venue, timing), publish a corrected invitation and share the new link with a one-line note on what changed.',
       'Send a reminder reshare of the link 2 days before the event — this is when most guests look up the venue.',
       'Budget for 20–30 quality printed cards rather than 500 mid-range ones — the savings are significant.',
     ],
@@ -1512,7 +1512,7 @@ The families who are still printing five hundred cards and also sending a WhatsA
       },
       {
         q: 'What does a digital wedding invitation actually cost in India?',
-        a: 'On ShareInvite, a digital wedding invitation starts at ₹199 as a one-time cost, and the most elaborate templates are ₹499 — you can build and preview any of them for free before paying. This covers unlimited guest access, all features (Maps, music, gallery, wishes, RSVP), and the ability to update the invitation if details change. Compare this to printed cards: a mid-range print run of three hundred cards typically costs ₹15,000 to ₹40,000 with design and delivery.',
+        a: 'On ShareInvite, a digital wedding invitation starts at ₹199 as a one-time cost, most designs are ₹499 or less, and the Signature wedding suites — every function, travel and stay, FAQs and RSVP — are ₹1,499 to ₹1,999. You can build and preview any of them for free before paying. This covers unlimited guests and every feature in the design you choose — Maps, gallery, countdown and guest wishes — through the event and for three days after. Compare this to printed cards: a mid-range print run of three hundred cards typically costs ₹15,000 to ₹40,000 with design and delivery.',
       },
       {
         q: 'Can I do both — send printed cards and a digital invitation?',
@@ -1536,7 +1536,7 @@ The families who are still printing five hundred cards and also sending a WhatsA
 
 This is not a complaint. It is just the reality of how Indian family event attendance works, and any guide to RSVP for Indian weddings has to start from this reality rather than from the assumption that guests respond in a linear, predictable way. The tools and systems that work for Western event RSVPs mostly do not work here, because they are built on different assumptions about how people commit to attending things.
 
-What does work — what I have seen work repeatedly across hundreds of weddings on ShareInvite — is a combination of digital wishlist-style response, WhatsApp-native sharing, and a host mindset that treats RSVP as a conversation rather than a form. Here is what that actually looks like in practice.`,
+What does work — repeatedly, across Indian weddings — is a combination of digital wishlist-style response, WhatsApp-native sharing, and a host mindset that treats RSVP as a conversation rather than a form. Here is what that actually looks like in practice.`,
     sections: [
       {
         heading: 'Why standard RSVP tools fail for Indian weddings',
@@ -1624,7 +1624,7 @@ For large guest lists, the reminder across all WhatsApp groups takes fifteen min
 
 The good news is that the options available in 2026 make it genuinely possible to have a high-quality wedding invitation experience at a fraction of what families were spending five years ago. Not because anyone lowered their standards, but because digital invitations changed the economics of the whole category. The budget-friendly path now is not to compromise on quality; it is to allocate the invitation budget more carefully between what guests actually notice and what they do not.
 
-Having worked with thousands of families on ShareInvite, I can tell you what guests notice. It is not the weight of the paper. It is not whether the envelope has a wax seal. It is whether the invitation tells them where to go, when to be there, and whether it feels like it was made by someone who cared. All of that is achievable without the budget that most families assume they need.`,
+Working with families on ShareInvite, I can tell you what guests notice. It is not the weight of the paper. It is not whether the envelope has a wax seal. It is whether the invitation tells them where to go, when to be there, and whether it feels like it was made by someone who cared. All of that is achievable without the budget that most families assume they need.`,
     sections: [
       {
         heading: 'Where the invitation budget actually goes — and where it does not need to',
@@ -1786,7 +1786,7 @@ Unlike an ordinary e-card, the Surprise Journey is *earned* — the small moment
         heading: 'How to create your 3D digital gift in 5 minutes',
         body: `Creating a Surprise Journey on ShareInvite takes about five minutes and no design skill. Here is the flow: (1) Pick the 3D Surprise Journey template and enter the occasion and their name. (2) Set the secret PIN and a hint — a shared inside date works best. (3) Upload your photo memories; the same gallery powers both the photo carousel and the sliding puzzle. (4) Write your balloon messages (one short line per balloon), your scratch-card reveal, and your handwritten letter. (5) Preview it live, then publish to get a shareable link.
 
-Every field is optional beyond the basics, so you can make it as short or as elaborate as you like. Once published you get a clean link — paste it into WhatsApp, iMessage, Instagram DM or email. You can edit the details later, and the same link keeps working, so there is no pressure to get every word perfect before you send it.`,
+Every field is optional beyond the basics, so you can make it as short or as elaborate as you like. Once published you get a clean link — paste it into WhatsApp, iMessage, Instagram DM or email. Building and previewing is free, so take your time getting every word right — a published invitation cannot be edited afterwards.`,
       },
       {
         heading: 'Best occasions for an interactive digital gift',
@@ -2509,7 +2509,7 @@ A generic preview — a bare domain name and no image — reads as spam, particu
 
 This is worth checking before you send. Paste the link into a chat with yourself and look at what appears. If the preview is wrong or missing, the page is missing its Open Graph tags, and you will get noticeably fewer opens. On ShareInvite the preview is generated per invitation, so it shows the names and event rather than a site-wide card.
 
-One caveat: WhatsApp caches previews. If you edit the invitation title and resend the same link, the old preview may persist for a while. Get the preview right before the first send.`,
+One caveat: WhatsApp caches link previews, and the preview is what guests see before they tap. Get it right before the first send.`,
       },
       {
         heading: 'Reminders without nagging',
@@ -3068,7 +3068,7 @@ Leave off: setup details, vendor timings, and anything that might change. A sche
 
 End time is the single most valuable line and the most commonly omitted. For children's parties it is essential — parents are arranging pick-up. For adult events it signals the register of the evening: a party ending at 11 PM is a different event from one with no stated end.
 
-If the schedule is genuinely uncertain, publish it on the invitation page rather than in the message, so you can adjust it without resending anything.`,
+If the schedule is genuinely uncertain, hold the invitation until it is confirmed — a published invitation cannot be edited, and a corrected link is one more message in every group.`,
       },
     ],
     checklist: [
@@ -3314,7 +3314,7 @@ Tagging everyone. Using @ to tag every member of a large group generates a notif
 
 Asking for RSVPs in the group. Guests then reply in the group, producing fifty messages everyone has to read. Ask for responses in direct messages or through the invitation page.
 
-Correcting details by new message. Each correction competes with the original, and some guests will keep referring to the first version. Edit the invitation page instead, so the same link always shows the current details.
+Correcting details by new message. Each correction competes with the original, and some guests will keep referring to the first version. Get the details right in the preview before the first send; if something genuinely changes, send one corrected link with a clear note on what changed.
 
 Posting to Status for a small event. Status reaches every contact, including people who are not invited, which creates an awkwardness that is difficult to undo.`,
       },
@@ -3352,7 +3352,7 @@ For a house warming or a milestone birthday where guests will ask what to bring,
       },
       {
         q: 'How many times should I send an invitation to a WhatsApp group?',
-        a: 'Once, plus a single reminder two to three days before the event. Repeated sends push other conversations out of view and read as shouting. If details change, edit the invitation page rather than posting a correction, so the same link always shows current information.',
+        a: 'Once, plus a single reminder two to three days before the event. Repeated sends push other conversations out of view and read as shouting. If details change, share one corrected invitation link with a short note saying what changed, rather than a series of corrections.',
       },
       {
         q: 'Where should gift preferences be mentioned?',
@@ -3580,7 +3580,7 @@ Mehendi and Sangeet invitations often go to a narrower circle than the wedding. 
 
 This is also the window for accommodation and travel coordination with out-of-city guests — who is staying where, whether transport is being arranged, whether anyone needs help. These are individual conversations, not group messages.
 
-If anything has changed since the invitation went out — a venue, a timing, an added function — update the invitation page now rather than sending a correction message. Guests who open the link get the current version, including those who opened it three weeks ago.`,
+If anything has changed since the invitation went out — a venue, a timing, an added function — say so plainly in this reminder and include the corrected invitation link, so nobody is working from the first version.`,
       },
       {
         heading: 'The final week',
@@ -4709,7 +4709,7 @@ How long does the invitation stay live? An invitation that expires a month after
 
 Is there a guest or RSVP limit? Indian weddings routinely exceed the limits set by tools designed for Western guest lists.
 
-Can you edit after sharing? If not, a venue change means starting again, which is when a free tool becomes expensive in time.
+Can you edit after sharing? If not, check every detail in the preview before you publish, and find out what a corrected version costs.
 
 Ask these before you build, not after. The answers are usually on the pricing page rather than the landing page.`,
       },
@@ -4719,11 +4719,11 @@ Ask these before you build, not after. The answers are usually on the pricing pa
 
 Building and previewing is genuinely free, with no account required to start. You can pick any template, enter every detail — names, date, venue, Google Maps link, schedule, photo gallery, music, personal message — and see the finished invitation exactly as guests would, without paying anything.
 
-Publishing is paid. Getting the shareable link that you send to guests is a one-time payment, starting at ₹99 and going up to ₹499 depending on the template. There is no subscription and no per-guest charge.
+Publishing is paid. Getting the shareable link that you send to guests is a one-time payment, from ₹99 for most occasions to ₹1,999 for the most elaborate Signature wedding suite, depending on the design. There is no subscription and no per-guest charge.
 
 That is the whole model. We do not have a permanently free publishing tier, and describing one would be inaccurate.
 
-What the one-time payment includes: the live invitation page, unlimited guests, RSVP and guest wishes, hosting through the event, and the ability to edit details after you have shared the link.
+What the one-time payment includes: the live invitation page for that design, unlimited guests, guest wishes on the page, and hosting through the event and for three days after. A published invitation cannot be edited; if a detail changes, you publish a corrected version with the same design, which stays unlocked on your account at no second charge.
 
 Whether that is good value against a free-with-watermark alternative is your call. What matters is that you know before you build, rather than at the last step.`,
       },
@@ -4731,7 +4731,7 @@ Whether that is good value against a free-with-watermark alternative is your cal
         heading: 'When a paid invitation is worth it',
         body: `A free tool is perfectly reasonable for a small, informal event. For a wedding, three things tend to justify paying.
 
-Editability. Indian wedding details change — a muhurat shifts, a hall changes, a function is added. A tool that lets you edit after sharing saves you sending corrections to several hundred people, and saves guests referring to an outdated version.
+Design. A wedding invitation is the first thing guests see of the celebration. Paid designs are usually built with more care — animation, typography, a properly laid-out schedule — and families notice.
 
 Guest numbers. Indian wedding guest lists regularly run into the hundreds, which exceeds the free tiers of most tools built for a different market.
 
@@ -4745,7 +4745,7 @@ If none of these apply — a small registry office wedding, sixty guests, fixed 
       'Find out what branding guests will see and what removing it costs',
       'Confirm how long the invitation stays live after the event',
       'Check for guest or RSVP limits against your actual list',
-      'Confirm you can edit details after sharing the link',
+      'Find out whether you can edit after sharing, and what a corrected version costs',
       'Read the pricing page before you start building, not after',
     ],
     faq: [
@@ -4759,11 +4759,11 @@ If none of these apply — a small registry office wedding, sixty guests, fixed 
       },
       {
         q: 'What should I check before building on a free invitation tool?',
-        a: 'Whether you can publish or only preview, what branding appears on the guest-facing page, how long the invitation stays live after the event, whether there is a guest or RSVP limit, and whether you can edit after sharing. The last matters most for Indian weddings, where venues and timings change and corrections otherwise have to be sent to hundreds of people.',
+        a: 'Whether you can publish or only preview, what branding appears on the guest-facing page, how long the invitation stays live after the event, whether there is a guest or RSVP limit, and whether you can edit after sharing — and if not, what a corrected version costs. That matters for Indian weddings, where venues and timings do change.',
       },
       {
         q: 'When is it worth paying for a wedding invitation tool?',
-        a: 'When details are likely to change and you need to edit after sharing, when your guest list exceeds a free tier’s limits, or when platform branding on the invitation matters to your family. For a small event with fixed details and a short guest list, a free tool with branding is a perfectly reasonable choice.',
+        a: 'When the design matters to your family, when your guest list exceeds a free tier’s limits, or when platform branding on the invitation matters to your family. For a small event with fixed details and a short guest list, a free tool with branding is a perfectly reasonable choice.',
       },
     ],
     links: [
@@ -4832,7 +4832,7 @@ A live countdown is a reasonable fifth. Guests do not need it, but it adds a sen
 
 **Legibility.** Text over a background image, gold on cream, or 12-pixel type will defeat a sixty-eight year old relative regardless of how good the design is. This is the most common complaint older guests have and the one they least often voice.
 
-**Editability after sharing.** Indian wedding details change. The ability to update the page and have every guest see the new version — including those who opened it last week — is the single biggest practical advantage a digital invitation has over a card, and it is rarely listed as a feature at all.
+**A preview with your real details.** An Indian wedding invitation carries several functions, muhurat times and venue addresses. Seeing the finished page with your own details, on your own phone, before it goes out catches the mistakes that are hardest to correct once hundreds of guests have the link.
 
 If a platform gets these three right, the feature list barely matters. If it gets them wrong, no feature list saves it.`,
       },
@@ -4862,7 +4862,7 @@ If a platform gets these three right, the feature list barely matters. If it get
       },
       {
         q: 'What matters more than the feature list?',
-        a: 'Speed, legibility and editability. Guests open invitations on mobile data on mid-range phones, so a slow page — almost always because of large photographs — loses people. Small or low-contrast text defeats older guests. And being able to edit after sharing, so every guest sees updated details, is the biggest practical advantage over a printed card and is rarely listed as a feature at all.',
+        a: 'Speed, legibility and a proper preview. Guests open invitations on mobile data on mid-range phones, so a slow page — almost always because of large photographs — loses people. Small or low-contrast text defeats older guests. And checking the finished page with your real details before sharing catches the mistakes that are hardest to correct once the link is out.',
       },
     ],
     links: [

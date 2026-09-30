@@ -39,7 +39,7 @@ export default function FloatingShareBar({ url, names, templateId }: FloatingSha
               border: '1px solid rgba(232,220,205,0.92)',
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
-              boxShadow: '0 -4px 44px rgba(34,27,23,0.14), 0 1px 0 rgba(255,255,255,0.8) inset',
+              boxShadow: '0 -4px 44px rgba(3,25,15,0.14), 0 1px 0 rgba(255,255,255,0.8) inset',
             }}
           >
             <AnimatePresence mode="wait">
@@ -53,7 +53,7 @@ export default function FloatingShareBar({ url, names, templateId }: FloatingSha
                   className="group flex w-full items-center justify-between px-5 py-4"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full text-lg select-none" style={{ color: '#B87924', background: 'rgba(217,164,65,0.13)' }} aria-hidden>♥</span>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full text-lg select-none" style={{ color: '#0B4A34', background: 'rgba(164,121,69,0.13)' }} aria-hidden>♥</span>
                     <span
                       className="font-body text-sm"
                       style={{ color: 'rgba(44,32,28,0.72)', letterSpacing: '0.02em' }}
@@ -63,7 +63,7 @@ export default function FloatingShareBar({ url, names, templateId }: FloatingSha
                   </div>
                   <span
                     className="font-body text-xs transition-colors"
-                    style={{ color: 'rgba(184,121,36,0.84)', letterSpacing: '0.08em' }}
+                    style={{ color: 'rgba(11,74,52,0.84)', letterSpacing: '0.08em' }}
                   >
                     Open
                   </span>
@@ -83,12 +83,12 @@ export default function FloatingShareBar({ url, names, templateId }: FloatingSha
                       <div>
                         <p
                           className="font-body text-xs mb-0.5"
-                          style={{ color: 'rgba(184,121,36,0.86)', letterSpacing: '0.18em', textTransform: 'uppercase' }}
+                          style={{ color: 'rgba(11,74,52,0.86)', letterSpacing: '0.18em', textTransform: 'uppercase' }}
                         >
                           Share Invitation
                         </p>
                         {names && (
-                          <p className="font-heading text-sm" style={{ color: '#2C201C' }}>
+                          <p className="font-editorial font-semibold text-sm" style={{ color: '#1E2726' }}>
                             {names}
                           </p>
                         )}

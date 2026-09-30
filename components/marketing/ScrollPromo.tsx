@@ -118,7 +118,7 @@ export default function ScrollPromo() {
         aria-hidden
         className="fixed inset-0 z-[60]"
         style={{
-          background: 'rgba(34,27,23,0.55)',
+          background: 'rgba(3,25,15,0.55)',
           backdropFilter: 'blur(6px)',
           WebkitBackdropFilter: 'blur(6px)',
           animation: reducedMotion ? 'none' : 'si-promo-fade 0.3s ease',
@@ -134,8 +134,8 @@ export default function ScrollPromo() {
         style={{ animation: anim }}
       >
         <div
-          className="overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl"
-          style={{ border: '1px solid #E8DCCD' }}
+          className="overflow-hidden rounded-t-3xl bg-paper shadow-2xl sm:rounded-3xl"
+          style={{ border: '1px solid #EADFD2' }}
         >
           {/* Banner: the template's own colours, so the popup looks like the
               product rather than a generic interstitial. */}
@@ -155,7 +155,7 @@ export default function ScrollPromo() {
                 <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/80">
                   {copy.eyebrow}
                 </p>
-                <p id="si-promo-title" className="mt-0.5 font-display text-xl leading-tight">
+                <p id="si-promo-title" className="mt-0.5 font-editorial font-semibold text-xl leading-tight">
                   {copy.headline}
                 </p>
               </div>
@@ -182,7 +182,7 @@ export default function ScrollPromo() {
             {/* Price. Strike-through appears only when a real prior price is
                 configured in lib/promo.ts — never invented for urgency. */}
             <div className="mt-4 flex flex-wrap items-baseline gap-2">
-              <span className="font-display text-3xl text-ink">₹{price}</span>
+              <span className="font-editorial font-semibold text-3xl text-charcoal">₹{price.toLocaleString('en-IN')}</span>
               {hasRealDiscount() && (
                 <>
                   <span className="text-base text-muted line-through">₹{PROMO.originalPrice}</span>
@@ -211,7 +211,7 @@ export default function ScrollPromo() {
             <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs text-muted">
               {copy.features.map((f) => (
                 <li key={f} className="flex items-center gap-1.5">
-                  <span style={{ color: '#2F766D' }}>✓</span>{f}
+                  <span style={{ color: '#0B4A34' }}>✓</span>{f}
                 </li>
               ))}
             </ul>

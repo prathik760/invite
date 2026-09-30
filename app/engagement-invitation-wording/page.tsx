@@ -3,8 +3,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import WordingCopyCard from '@/components/wording/WordingCopyCard'
 import MidPageCTA from '@/components/wording/MidPageCTA'
+import WordingSample from '@/components/wording/WordingSample'
 import StickyCTA from '@/components/wording/StickyCTA'
 import SiteFooter from '@/components/landing/SiteFooter'
+import PageHero from '@/components/brand/PageHero'
+import TrustList from '@/components/brand/TrustList'
+import CtaBand from '@/components/brand/CtaBand'
+import { Section, SectionHeading } from '@/components/brand/Section'
+import FAQAccordion from '@/components/landing/FAQAccordion'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -73,133 +79,101 @@ const faqSchema = {
 
 export default function EngagementInvitationWordingPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-champagne text-foreground">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <SiteHeader createHref="/create?template=indian-engagement" />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            100+ copy-ready samples · Roka · Sagai · Mangni
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Engagement Invitation Messages &amp;<br />
-            <span className="gradient-accent italic">Wording — Roka, Ring Ceremony</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            100+ ready-to-copy engagement invitation messages for WhatsApp — Roka, Mangni, Sagai,
-            Ring Ceremony and Nishchayam, plus simple &amp; short samples for son and daughter, and quotes &amp; captions in English.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create?template=indian-engagement" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Start My Engagement Invite →
-            </Link>
-            <span className="text-sm text-muted">Free to start · No credit card</span>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        align="center"
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Engagement invitation wording' }]} eyebrow="100+ copy-ready samples · Roka · Sagai · Mangni"
+        title={<>Engagement Invitation Messages &amp;<br />
+            <em className="font-medium text-burnished">Wording — Roka, Ring Ceremony</em></>}
+        lede={<>100+ ready-to-copy engagement invitation messages for WhatsApp — Roka, Mangni, Sagai,
+            Ring Ceremony and Nishchayam, plus simple &amp; short samples for son and daughter, and quotes &amp; captions in English.</>}
+        actions={<><Link href="/create?template=indian-engagement" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
+              Start My Engagement Invite</Link></>}
+        footnote={<TrustList />}
+      />
 
       {/* Section 1: Ring Ceremony / Mangni Formal */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Ring Ceremony / Mangni Invitation Message (Formal)</h2>
+          <h2 className="t-h2 mb-3">Ring Ceremony / Mangni Invitation Message (Formal)</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             These formal samples are suitable for the main invitation — shared with all family, extended family, and guests at the ceremony.
           </p>
           <div className="space-y-6">
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">1. North Indian Mangni — Both Families Hosting</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">North India</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>॥ श्री गणेशाय नमः ॥</p>
-                <p>With immense joy and God&apos;s blessings,</p>
-                <p>[Bride&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                <p>along with</p>
-                <p>[Groom&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                <p>cordially invite you to the</p>
-                <p className="font-semibold not-italic text-ink">Mangni / Ring Ceremony</p>
-                <p>of their children</p>
-                <p className="font-semibold not-italic text-ink">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
-                <p>[Day], [Date] · [Time]</p>
-                <p>[Venue Name], [Address]</p>
-                <p>Lunch / Dinner will be served. Kindly grace us with your presence.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>1. North Indian Mangni — Both Families Hosting</>} tag="North India">
+                  <p>॥ श्री गणेशाय नमः ॥</p>
+                  <p>With immense joy and God&apos;s blessings,</p>
+                  <p>[Bride&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>along with</p>
+                  <p>[Groom&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>cordially invite you to the</p>
+                  <p className="font-semibold text-charcoal">Mangni / Ring Ceremony</p>
+                  <p>of their children</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
+                  <p>[Day], [Date] · [Time]</p>
+                  <p>[Venue Name], [Address]</p>
+                  <p>Lunch / Dinner will be served. Kindly grace us with your presence.</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">2. South Indian Nishchayam (Tamil/Telugu Families)</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">South India</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>With the blessings of Sri [Family Deity],</p>
-                <p>[Bride&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                <p>joyfully announce the</p>
-                <p className="font-semibold not-italic text-ink">Nishchayathartham (Engagement Ceremony)</p>
-                <p>of their daughter</p>
-                <p className="font-semibold not-italic text-ink">[Bride&apos;s Name]</p>
-                <p>with</p>
-                <p className="font-semibold not-italic text-ink">[Groom&apos;s Name]</p>
-                <p>Son of [Groom&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                <p>Date: [Date] · Time: [Time]</p>
-                <p>[Kalyana Mandapam / Venue], [Address]</p>
-                <p>Kindly bless the couple with your presence.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>2. South Indian Nishchayam (Tamil/Telugu Families)</>} tag="South India">
+                  <p>With the blessings of Sri [Family Deity],</p>
+                  <p>[Bride&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>joyfully announce the</p>
+                  <p className="font-semibold text-charcoal">Nishchayathartham (Engagement Ceremony)</p>
+                  <p>of their daughter</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name]</p>
+                  <p>with</p>
+                  <p className="font-semibold text-charcoal">[Groom&apos;s Name]</p>
+                  <p>Son of [Groom&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>Date: [Date] · Time: [Time]</p>
+                  <p>[Kalyana Mandapam / Venue], [Address]</p>
+                  <p>Kindly bless the couple with your presence.</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">3. Modern Couple-Hosted Ring Ceremony</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">Modern</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>We&apos;re officially saying yes to forever.</p>
-                <p className="font-semibold not-italic text-ink">[Name] &amp; [Name]</p>
-                <p>invite you to our Ring Ceremony</p>
-                <p>[Date] · [Time]</p>
-                <p>[Venue], [Address]</p>
-                <p>Followed by dinner. We would love to celebrate with you.</p>
-                <p>RSVP: [WhatsApp Number]</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>3. Modern Couple-Hosted Ring Ceremony</>} tag="Modern">
+                  <p>We&apos;re officially saying yes to forever.</p>
+                  <p className="font-semibold text-charcoal">[Name] &amp; [Name]</p>
+                  <p>invite you to our Ring Ceremony</p>
+                  <p>[Date] · [Time]</p>
+                  <p>[Venue], [Address]</p>
+                  <p>Followed by dinner. We would love to celebrate with you.</p>
+                  <p>RSVP: [WhatsApp Number]</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">4. Religious Blessing Opening (Formal)</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">Traditional</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>By the grace of God and with the blessings of our elders,</p>
-                <p>we joyfully announce the engagement ceremony of</p>
-                <p className="font-semibold not-italic text-ink">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
-                <p>[Day], [Date] at [Time]</p>
-                <p>[Venue Name], [City]</p>
-                <p>Your blessings will make this occasion truly special.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>4. Religious Blessing Opening (Formal)</>} tag="Traditional">
+                  <p>By the grace of God and with the blessings of our elders,</p>
+                  <p>we joyfully announce the engagement ceremony of</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
+                  <p>[Day], [Date] at [Time]</p>
+                  <p>[Venue Name], [City]</p>
+                  <p>Your blessings will make this occasion truly special.</p>
+              
+            </WordingSample>
 
           </div>
         </div>
       </section>
 
       {/* Mid-page CTA 1 */}
-      <section className="px-5 py-2 border-b border-border bg-white">
+      <section className="px-5 py-2 border-b border-line bg-paper">
         <div className="mx-auto max-w-4xl">
           <MidPageCTA
             headline="Make your engagement announcement as beautiful as the moment"
-            body="A WhatsApp text disappears in the chat. A digital invite link can be reopened any time — guests check the venue map, confirm the ring ceremony time, and RSVP without calling you."
+            body="A WhatsApp text disappears in the chat. A digital invite link can be reopened any time — guests check the venue map, confirm the ring ceremony time, and leave their blessings without calling you."
             features={[
               'Ring ceremony schedule & timeline',
               'Couple photos & gallery',
               'Tap-to-open Google Maps',
-              'RSVP — track who confirmed',
+              'Guest blessings on the invitation',
             ]}
             ctaHref="/engagement-invitation"
             ctaText="Start My Engagement Invite →"
@@ -208,149 +182,114 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section 2: Roka */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Roka Ceremony Invitation Wording</h2>
-          <div className="rounded-2xl border border-[#D9A441]/20 bg-[#FFF9F2] p-5 mb-8">
+          <h2 className="t-h2 mb-3">Roka Ceremony Invitation Wording</h2>
+          <div className="rounded-2xl border border-[#A47945]/20 bg-[#FFFAF4] p-5 mb-8">
             <p className="text-sm text-muted leading-7">
-              <strong className="text-ink">What is Roka?</strong> Roka is an intimate family-only ceremony that formally marks the beginning of the wedding alliance. It typically happens before the engagement and involves only the immediate families of both sides. A Roka invitation is therefore short, warm, and meant for a very close circle — not the full guest list.
+              <strong className="text-charcoal">What is Roka?</strong> Roka is an intimate family-only ceremony that formally marks the beginning of the wedding alliance. It typically happens before the engagement and involves only the immediate families of both sides. A Roka invitation is therefore short, warm, and meant for a very close circle — not the full guest list.
             </p>
           </div>
           <div className="space-y-6">
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">1. Short Roka WhatsApp Message (Close Family Only)</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">Family only</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>With God&apos;s blessings, we are happy to share that [Name]&apos;s Roka is on [Date] at [Time].</p>
-                <p>Venue: [Home / Hall Name, Address]</p>
-                <p>We request your presence and blessings on this auspicious occasion.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>1. Short Roka WhatsApp Message (Close Family Only)</>} tag="Family only">
+                  <p>With God&apos;s blessings, we are happy to share that [Name]&apos;s Roka is on [Date] at [Time].</p>
+                  <p>Venue: [Home / Hall Name, Address]</p>
+                  <p>We request your presence and blessings on this auspicious occasion.</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">2. Formal Roka with Family Names</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">Formal</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                <p>request your presence at the Roka ceremony of their son / daughter</p>
-                <p className="font-semibold not-italic text-ink">[Name]</p>
-                <p>[Day], [Date] at [Time]</p>
-                <p>[Venue / Home Address]</p>
-                <p>A small family lunch will follow. Your blessings mean everything.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>2. Formal Roka with Family Names</>} tag="Formal">
+                  <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>request your presence at the Roka ceremony of their son / daughter</p>
+                  <p className="font-semibold text-charcoal">[Name]</p>
+                  <p>[Day], [Date] at [Time]</p>
+                  <p>[Venue / Home Address]</p>
+                  <p>A small family lunch will follow. Your blessings mean everything.</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">3. Simple English Roka</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">Casual</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>It&apos;s official! We&apos;re celebrating [Name]&apos;s Roka with a small family gathering.</p>
-                <p>[Date] · [Time] · [Venue]</p>
-                <p>Please join us for this special moment. See you there!</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>3. Simple English Roka</>} tag="Casual">
+                  <p>It&apos;s official! We&apos;re celebrating [Name]&apos;s Roka with a small family gathering.</p>
+                  <p>[Date] · [Time] · [Venue]</p>
+                  <p>Please join us for this special moment. See you there!</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">4. Hindi/English Bilingual Roka</h3>
-                <span className="rounded-full bg-[#2F766D]/10 px-3 py-0.5 text-xs font-semibold text-[#2F766D]">Bilingual</span>
-              </div>
-              <blockquote className="border-l-2 border-[#2F766D] pl-5 text-sm text-muted leading-8 italic">
-                <p>ईश्वर की कृपा से हमारे पुत्र/पुत्री [Name] की रोका की रस्म</p>
-                <p>[दिन], [तारीख] को [समय] बजे</p>
-                <p>[स्थान का नाम एवं पता] पर होगी।</p>
-                <p>We warmly request your presence and blessings on this happy occasion.</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>4. Hindi/English Bilingual Roka</>} tag="Bilingual">
+                  <p>ईश्वर की कृपा से हमारे पुत्र/पुत्री [Name] की रोका की रस्म</p>
+                  <p>[दिन], [तारीख] को [समय] बजे</p>
+                  <p>[स्थान का नाम एवं पता] पर होगी।</p>
+                  <p>We warmly request your presence and blessings on this happy occasion.</p>
+              
+            </WordingSample>
 
           </div>
         </div>
       </section>
 
       {/* Section 3: Sagai */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Sagai Invitation Message</h2>
+          <h2 className="t-h2 mb-3">Sagai Invitation Message</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             Sagai is the term commonly used in Rajasthan and Gujarat for the formal engagement ceremony. These samples reflect the regional warmth and tradition of Sagai invitations.
           </p>
           <div className="space-y-6">
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">1. Traditional Joint-Family Sagai</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">Rajasthan / Gujarat</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>॥ श्री गणेशाय नमः ॥</p>
-                <p>[Father&apos;s Name] परिवार एवं [Other Family&apos;s Name] परिवार</p>
-                <p>सहर्ष सूचित करते हैं कि</p>
-                <p className="font-semibold not-italic text-ink">[Name] एवं [Name]</p>
-                <p>की सगाई की रस्म</p>
-                <p>[दिन], [तारीख] को [समय] बजे</p>
-                <p>[स्थान], [पता]</p>
-                <p>पर आयोजित होगी।</p>
-                <p>आपकी उपस्थिति एवं आशीर्वाद की प्रार्थना है।</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>1. Traditional Joint-Family Sagai</>} tag="Rajasthan / Gujarat">
+                  <p>॥ श्री गणेशाय नमः ॥</p>
+                  <p>[Father&apos;s Name] परिवार एवं [Other Family&apos;s Name] परिवार</p>
+                  <p>सहर्ष सूचित करते हैं कि</p>
+                  <p className="font-semibold text-charcoal">[Name] एवं [Name]</p>
+                  <p>की सगाई की रस्म</p>
+                  <p>[दिन], [तारीख] को [समय] बजे</p>
+                  <p>[स्थान], [पता]</p>
+                  <p>पर आयोजित होगी।</p>
+                  <p>आपकी उपस्थिति एवं आशीर्वाद की प्रार्थना है।</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">2. Simple WhatsApp Sagai Message</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">WhatsApp</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>With great joy, we announce the Sagai of [Bride&apos;s Name] and [Groom&apos;s Name].</p>
-                <p>[Date] · [Time] · [Venue, City]</p>
-                <p>We humbly request your presence and blessings.</p>
-                <p>Full invitation: [Link]</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>2. Simple WhatsApp Sagai Message</>} tag="WhatsApp">
+                  <p>With great joy, we announce the Sagai of [Bride&apos;s Name] and [Groom&apos;s Name].</p>
+                  <p>[Date] · [Time] · [Venue, City]</p>
+                  <p>We humbly request your presence and blessings.</p>
+                  <p>Full invitation: [Link]</p>
+              
+            </WordingSample>
 
-            <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-heading text-base text-ink">3. Formal Sagai with Ceremony Schedule</h3>
-                <span className="rounded-full bg-[#D9A441]/10 px-3 py-0.5 text-xs font-semibold text-accent-strong">Full schedule</span>
-              </div>
-              <blockquote className="border-l-2 border-[#D9A441] pl-5 text-sm text-muted leading-8 italic">
-                <p>[Father&apos;s Name] &amp; [Mother&apos;s Name] cordially invite you to the</p>
-                <p className="font-semibold not-italic text-ink">Sagai Ceremony of [Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
-                <p>[Day], [Date] at [Venue Name], [City]</p>
-                <p className="mt-2 not-italic">Ceremony Schedule:</p>
-                <p>11:00 AM — Tilak / Sagan Ritual</p>
-                <p>12:00 PM — Ring Exchange</p>
-                <p>1:00 PM — Family Lunch</p>
-                <p className="mt-1">Kindly confirm your attendance at [WhatsApp Number].</p>
-              </blockquote>
-            </div>
+            <WordingSample title={<>3. Formal Sagai with Ceremony Schedule</>} tag="Full schedule">
+                  <p>[Father&apos;s Name] &amp; [Mother&apos;s Name] cordially invite you to the</p>
+                  <p className="font-semibold text-charcoal">Sagai Ceremony of [Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
+                  <p>[Day], [Date] at [Venue Name], [City]</p>
+                  <p className="mt-2">Ceremony Schedule:</p>
+                  <p>11:00 AM — Tilak / Sagan Ritual</p>
+                  <p>12:00 PM — Ring Exchange</p>
+                  <p>1:00 PM — Family Lunch</p>
+                  <p className="mt-1">Kindly confirm your attendance at [WhatsApp Number].</p>
+              
+            </WordingSample>
 
           </div>
         </div>
       </section>
 
       {/* Section: Simple & Short Engagement Messages */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Simple &amp; Short Engagement Invitation Messages for WhatsApp</h2>
+          <h2 className="t-h2 mb-3">Simple &amp; Short Engagement Invitation Messages for WhatsApp</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             Short, ready-to-send engagement messages for WhatsApp groups — clear date, time and venue, warm tone. Copy, add your details and share.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Simplest one-liner</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Simplest one-liner</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             We&apos;re engaged! 💍 Join us to celebrate [Name] &amp; [Name]&apos;s engagement.{'\n'}
             📅 [Date] · 🕖 [Time] · 📍 [Venue, City]{'\n'}
             Your presence and blessings mean the world to us.
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Simple &amp; warm</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Simple &amp; warm</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             With joy in our hearts, we invite you to the engagement of{'\n'}
             [Bride&apos;s Name] &amp; [Groom&apos;s Name]. 💍{'\n\n'}
@@ -359,14 +298,14 @@ export default function EngagementInvitationWordingPage() {
             Come bless the couple as they begin their journey together.
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Short WhatsApp group message</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Short WhatsApp group message</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             [Name] &amp; [Name] are getting engaged! 🎉{'\n'}
             [Date] · [Time] · [Venue]{'\n'}
             Full details 👉 [Digital Invite Link]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Casual &amp; modern</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Casual &amp; modern</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             He asked, she said yes! 💍 (or she asked — either way, it&apos;s happening!){'\n\n'}
             Join us for [Name] &amp; [Name]&apos;s ring ceremony{'\n'}
@@ -374,7 +313,7 @@ export default function EngagementInvitationWordingPage() {
             Come celebrate love, laughter and lots of food!
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">5. With RSVP</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">5. With RSVP</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             You&apos;re invited to the engagement of [Name] &amp; [Name]! 💍{'\n\n'}
             📅 [Date] · 🕖 [Time]{'\n'}
@@ -382,7 +321,7 @@ export default function EngagementInvitationWordingPage() {
             Kindly confirm your presence: [Phone / WhatsApp]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">6. Bilingual simple (Hindi + English)</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">6. Bilingual simple (Hindi + English)</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             [Name] एवं [Name] की सगाई की रस्म पर आप सादर आमंत्रित हैं! 💍{'\n'}
             दिनांक: [Date] · समय: [Time] · स्थान: [Venue]{'\n\n'}
@@ -392,14 +331,14 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section: Daughter Engagement */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Engagement Invitation Message for Daughter</h2>
+          <h2 className="t-h2 mb-3">Engagement Invitation Message for Daughter</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             For parents announcing their daughter&apos;s engagement — warm, proud and ready to share with family and friends.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Proud parents — warm</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Proud parents — warm</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             With hearts full of joy, we invite you to the engagement of our beloved daughter{'\n\n'}
             [Daughter&apos;s Name] with [Groom&apos;s Name]{'\n\n'}
@@ -409,14 +348,14 @@ export default function EngagementInvitationWordingPage() {
             — [Parents&apos; Names]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Simple in English</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Simple in English</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             Our daughter [Name] is getting engaged to [Name]! 💍{'\n'}
             Join us on [Date] at [Time], [Venue].{'\n'}
             Come shower the couple with your love and blessings.
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Traditional with family names</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Traditional with family names</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             [Father&apos;s Name] &amp; [Mother&apos;s Name]{'\n'}
             joyfully invite you to the engagement ceremony of their daughter{'\n\n'}
@@ -429,14 +368,14 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section: Son Engagement */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Engagement Invitation Message for Son</h2>
+          <h2 className="t-h2 mb-3">Engagement Invitation Message for Son</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             For parents announcing their son&apos;s engagement — dignified and warm wording for every family group.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Proud parents — warm</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Proud parents — warm</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             With great happiness, we invite you to the engagement of our beloved son{'\n\n'}
             [Son&apos;s Name] with [Bride&apos;s Name]{'\n\n'}
@@ -446,14 +385,14 @@ export default function EngagementInvitationWordingPage() {
             — [Parents&apos; Names]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Simple in English</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Simple in English</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             Our son [Name] is getting engaged to [Name]! 💍{'\n'}
             Join us on [Date] at [Time], [Venue].{'\n'}
             Your presence will make the day complete.
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Traditional with family names</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Traditional with family names</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             [Father&apos;s Name] &amp; [Mother&apos;s Name]{'\n'}
             cordially invite you to the engagement ceremony of their son{'\n\n'}
@@ -466,14 +405,14 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section: Modern & Unique */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Modern &amp; Unique Engagement Invitation Wording</h2>
+          <h2 className="t-h2 mb-3">Modern &amp; Unique Engagement Invitation Wording</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             For couples who want something a little different — playful, heartfelt and unmistakably yours.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Playful &amp; unique</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Playful &amp; unique</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             Plot twist: we&apos;re getting engaged! 💍{'\n\n'}
             After [X] years of [inside joke], [Name] &amp; [Name] are making it official.{'\n\n'}
@@ -481,7 +420,7 @@ export default function EngagementInvitationWordingPage() {
             Come for the rings, stay for the food. RSVP: [Number]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Heartfelt &amp; modern</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Heartfelt &amp; modern</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             Two families, one beautiful beginning.{'\n\n'}
             [Name] &amp; [Name] are getting engaged, and we&apos;d love you there{'\n'}
@@ -489,7 +428,7 @@ export default function EngagementInvitationWordingPage() {
             [Date] · [Time] · [Venue, City]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Save-the-date style</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Save-the-date style</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             She said yes! 💍 (Finally, some good news to share.){'\n\n'}
             Save the date for [Name] &amp; [Name]&apos;s ring ceremony{'\n'}
@@ -497,7 +436,7 @@ export default function EngagementInvitationWordingPage() {
             Formal invite &amp; details to follow 👉 [Digital Invite Link]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Elegant &amp; minimal</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Elegant &amp; minimal</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             [Name] &amp; [Name]{'\n'}
             are engaged.{'\n\n'}
@@ -509,14 +448,14 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section: Formal "We Cordially Invite You" */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">&ldquo;We Cordially Invite You&rdquo; — Formal Engagement Wording</h2>
+          <h2 className="t-h2 mb-3">&ldquo;We Cordially Invite You&rdquo; — Formal Engagement Wording</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             Classic formal phrasing for the engagement ceremony invitation — ideal for printed cards and formal digital invites alike.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Classic formal</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Classic formal</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             We cordially invite you to the engagement ceremony of{'\n\n'}
             [Bride&apos;s Name] &amp; [Groom&apos;s Name]{'\n\n'}
@@ -525,7 +464,7 @@ export default function EngagementInvitationWordingPage() {
             Your gracious presence is requested. RSVP: [Phone]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Formal — hosted by both families</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Formal — hosted by both families</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             [Bride&apos;s Family Name] &amp; [Groom&apos;s Family Name]{'\n'}
             request the honour of your presence{'\n'}
@@ -536,7 +475,7 @@ export default function EngagementInvitationWordingPage() {
             Dinner to follow. Kindly confirm your attendance.
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Formal with religious blessing</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Formal with religious blessing</h3>
           <WordingCopyCard ctaHref="/engagement-invitation">
             By the grace of God and the blessings of our elders,{'\n'}
             we cordially invite you to the engagement ceremony of{'\n\n'}
@@ -549,16 +488,16 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section: Quotes, Lines & Captions */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Engagement Quotes, Lines &amp; Instagram Captions</h2>
+          <h2 className="t-h2 mb-3">Engagement Quotes, Lines &amp; Instagram Captions</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             Short one-liners for your invitation opener, WhatsApp status, or Instagram — including Roka and &ldquo;rokafied&rdquo; captions to announce the big news.
           </p>
 
-          <div className="rounded-2xl border border-border bg-background p-6 sm:p-8 shadow-sm space-y-7">
+          <div className="rounded-2xl border border-line bg-champagne p-6 sm:p-8 shadow-sm space-y-7">
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Engagement quotes</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Engagement quotes</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>&ldquo;Two hearts, one promise — the beginning of forever.&rdquo;</li>
                 <li>&ldquo;And so the adventure begins — we&apos;re engaged!&rdquo;</li>
@@ -579,7 +518,7 @@ export default function EngagementInvitationWordingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Short invitation lines</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Short invitation lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>Join us as [Name] &amp; [Name] say &ldquo;yes&rdquo; to forever! 💍</li>
                 <li>You&apos;re invited to our engagement — [Date] at [Venue]!</li>
@@ -600,7 +539,7 @@ export default function EngagementInvitationWordingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">WhatsApp status captions</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">WhatsApp status captions</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>Engaged! 💍 [Date] — you&apos;re invited!</li>
                 <li>She said yes 💍 Come celebrate on [Date]!</li>
@@ -619,7 +558,7 @@ export default function EngagementInvitationWordingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Roka &amp; engagement captions for Instagram</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Roka &amp; engagement captions for Instagram</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>#Rokafied ✨ The beginning of forever.</li>
                 <li>Rokafied and overjoyed 💍 [Names] · [Date]</li>
@@ -642,7 +581,7 @@ export default function EngagementInvitationWordingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Hindi &amp; bilingual lines</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Hindi &amp; bilingual lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>बड़े हर्ष के साथ सूचित करते हैं कि [Name] एवं [Name] की सगाई तय हुई है।</li>
                 <li>आपकी उपस्थिति एवं आशीर्वाद प्रार्थनीय है। 🙏</li>
@@ -659,23 +598,23 @@ export default function EngagementInvitationWordingPage() {
             <p className="text-xs text-muted leading-6 pt-1">
               Tip: use any line as your opener, then paste your{' '}
               <Link href="/engagement-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital engagement invite link</Link>{' '}
-              below it — guests get the venue map, schedule and RSVP in one tap.
+              below it — guests get the venue map, schedule and a place to leave wishes in one tap.
             </p>
           </div>
         </div>
       </section>
 
       {/* Mid-page CTA 2 */}
-      <section className="px-5 py-2 border-b border-border">
+      <section className="px-5 py-2 border-b border-line">
         <div className="mx-auto max-w-4xl">
           <MidPageCTA
             headline="One link. Every guest. All the details — without the phone calls."
             body="Create a digital engagement invite once. Share the same link across family groups, friend circles, and office colleagues. Everyone sees the updated details; you answer zero repeated questions."
             features={[
               'One link works for all groups',
-              'Update details without resharing',
+              'Venue map & schedule in one place',
               'No app install for guests',
-              'Free to create and share',
+              'Free to build & preview',
             ]}
             ctaHref="/engagement-invitation"
             ctaText="Get Your Engagement Invite Link →"
@@ -684,9 +623,9 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section 4: What to Include */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">What to Include in an Engagement Invitation</h2>
+          <h2 className="t-h2 mb-3">What to Include in an Engagement Invitation</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             A complete engagement invitation removes every reason a guest might need to call and ask. Here is what each element does.
           </p>
@@ -721,8 +660,8 @@ export default function EngagementInvitationWordingPage() {
                 detail: "Embed a Google Maps link in your digital invitation. Venues in residential areas or community halls are often hard to find without GPS.",
               },
             ].map((c) => (
-              <div key={c.item} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <h3 className="font-heading text-base text-ink mb-2">✓ {c.item}</h3>
+              <div key={c.item} className="rounded-2xl border border-line bg-paper p-6 shadow-sm">
+                <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-2">✓ {c.item}</h3>
                 <p className="text-sm text-muted leading-7">{c.detail}</p>
               </div>
             ))}
@@ -731,9 +670,9 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section 5: Mistakes to Avoid */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Engagement Invitation Mistakes to Avoid</h2>
+          <h2 className="t-h2 mb-3">Engagement Invitation Mistakes to Avoid</h2>
           <p className="text-sm text-muted leading-7 mb-10">
             These are real, common mistakes — easy to fix before you hit send.
           </p>
@@ -765,10 +704,10 @@ export default function EngagementInvitationWordingPage() {
                 fix: 'A Roka is a small family gathering. A five-paragraph formal invitation feels out of place. Keep Roka invitations warm, short, and personal.',
               },
             ].map((m) => (
-              <div key={m.n} className="rounded-2xl border border-border bg-background p-6 shadow-sm flex gap-5">
-                <div className="flex-shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#7A3E4A]/10 text-accent-strong font-heading text-sm font-bold">{m.n}</div>
+              <div key={m.n} className="rounded-2xl border border-line bg-champagne p-6 shadow-sm flex gap-5">
+                <div className="flex-shrink-0 flex h-9 w-9 items-center justify-center rounded-full bg-[#0B4A34]/10 text-accent-strong font-editorial font-semibold text-sm font-bold">{m.n}</div>
                 <div>
-                  <h3 className="font-heading text-base text-ink mb-1">{m.mistake}</h3>
+                  <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">{m.mistake}</h3>
                   <p className="text-sm text-muted leading-7">{m.fix}</p>
                 </div>
               </div>
@@ -778,22 +717,15 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* FAQ */}
-      <section className="px-5 py-16 border-b border-border">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Engagement Invitation Wording — FAQ</h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
+      <Section tone="paper" id="faq" aria-label="Questions">
+        <SectionHeading align="center" eyebrow="Questions" title={'Engagement Invitation Wording — FAQ'} />
+        <div className="mt-10">
+          <FAQAccordion faqs={faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))} />
         </div>
-      </section>
+      </Section>
 
       {/* Internal Links */}
-      <section className="bg-white border-b border-border px-5 py-12">
+      <section className="bg-paper border-b border-line px-5 py-12">
         <div className="mx-auto max-w-4xl">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6 text-center">Related guides &amp; tools</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -807,7 +739,7 @@ export default function EngagementInvitationWordingPage() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors"
+                className="rounded-xl border border-line bg-champagne px-4 py-3 text-sm font-medium text-foreground hover:border-[#A47945]/50 transition-colors"
               >
                 {l.label} →
               </Link>
@@ -817,15 +749,11 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-5 py-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Ready to Create Your Digital Engagement Invitation?</h2>
-          <p className="text-muted text-sm mb-7">Use any wording sample above. Add photos, venue map, and schedule — share in 5 minutes.</p>
-          <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start My Engagement Invite →
-          </Link>
-        </div>
-      </section>
+      <CtaBand
+        title={'Ready to Create Your Digital Engagement Invitation?'}
+        sub={'Use any wording sample above. Add photos, venue map, and schedule — share in 5 minutes.'}
+        primary={{ href: '/create?template=indian-engagement', label: 'Start My Engagement Invite' }}
+      />
 
       <StickyCTA href="/engagement-invitation" text="Start My Engagement Invite →" />
 

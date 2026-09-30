@@ -1,12 +1,22 @@
-import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import SiteHeader from '@/components/layout/SiteHeader'
+import SiteFooter from '@/components/landing/SiteFooter'
+import FAQAccordion from '@/components/landing/FAQAccordion'
 import JsonLd from '@/components/seo/JsonLd'
 import StickyCTA from '@/components/seo/StickyCTA'
 import TrackedLink from '@/components/ui/TrackedLink'
-import SiteFooter from '@/components/landing/SiteFooter'
-import { TEMPLATES } from '@/modules/templates/data'
+import TemplateCard from '@/components/catalog/TemplateCard'
+import PageHero from '@/components/brand/PageHero'
+import OfferCard from '@/components/brand/OfferCard'
+import HowItWorks from '@/components/brand/HowItWorks'
+import TrustList from '@/components/brand/TrustList'
+import CtaBand from '@/components/brand/CtaBand'
+import { Section, SectionHeading } from '@/components/brand/Section'
+import { ArrowRightIcon, GlobeIcon, LinkIcon, PhoneIcon } from '@/components/ui/Icons'
+import { OCCASIONS } from '@/lib/catalog'
+import { buildCatalogItems } from '@/lib/catalogItems'
 import {
   findLocationPage,
   findSeoPage,
@@ -23,7 +33,6 @@ import {
   DEFAULT_OG_IMAGE,
   faqJsonLd,
   SITE_NAME,
-  templateSeoSlug,
 } from '@/lib/seo'
 
 type Props = { params: { slug: string } }
@@ -66,35 +75,15 @@ export function generateMetadata({ params }: Props): Metadata {
   }
 }
 
-function Header() {
-  return (
-    <SiteHeader />
-  )
-}
-
-function TemplateLinks({ ids }: { ids: string[] }) {
-  const templates = ids
-    .map((id) => TEMPLATES.find((template) => template.id === id))
-    .filter(Boolean) as typeof TEMPLATES
-
-  return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {templates.map((template) => (
-        <Link
-          key={template.id}
-          href={`/templates/${templateSeoSlug(template.id)}`}
-          className="rounded-lg border border-border bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-card"
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong">
-            {template.category || 'template'}
-          </p>
-          <h3 className="mt-2 font-heading text-lg text-ink">{template.name}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted">{template.description}</p>
-        </Link>
-      ))}
-    </div>
-  )
-}
+// Shared value props for these pages. The old copy promised an "online RSVP
+// workflow" on every invitation (RSVP exists on one design), a "loads under
+// 2 seconds" figure nobody measured, and that pages could be updated after
+// sharing — none of which is true today.
+const VALUES = [
+  { Icon: LinkIcon, title: 'One link, shared anywhere', desc: 'A rich preview in WhatsApp chats shows your names and design before guests even open it.' },
+  { Icon: PhoneIcon, title: 'Made for phones', desc: 'Maps, countdown, gallery and schedule are laid out for the screen guests actually use.' },
+  { Icon: GlobeIcon, title: 'Guests anywhere', desc: 'Opens in any browser, in any country — no app, no account, no sign-up.' },
+]
 
 function LandingPage({ page }: { page: SeoPage }) {
   const url = absoluteUrl(`/${page.slug}`)
@@ -106,143 +95,113 @@ function LandingPage({ page }: { page: SeoPage }) {
       { name: page.h1, url },
     ]),
   ]
-
-  const useCases = [
-    `A strong ${page.occasion} invitation needs more than attractive colors. Guests need the date, time, venue, direction link, family note, ceremony schedule, and a clear way to respond. ShareInvite turns those details into a polished mobile page that feels natural when opened from WhatsApp.`,
-    `For ${page.audience}, the biggest problem is coordination. Printed cards, PDFs, and static image invitations are easy to forward but hard to update. A ShareInvite page can hold the latest venue note, map link, timings, photos, and RSVP context in one place.`,
-    `Every ${page.primaryKeyword} page is built to load quickly on mobile networks in India. The design avoids unnecessary steps for guests: one link opens the invitation, one tap opens Google Maps, and one action lets them share or send wishes.`,
-  ]
+  const items = buildCatalogItems(page.templateLinks, { keepOrder: true }).filter((i) => page.templateLinks.includes(i.id))
 
   return (
-    <main className="min-h-screen bg-background pb-28 text-foreground">
+    <main className="min-h-screen bg-champagne text-charcoal">
       {schemas.map((schema, index) => (
         <JsonLd key={index} id={`landing-jsonld-${index}`} data={schema} />
       ))}
-      <Header />
+      <SiteHeader />
 
-      <section className="bg-[#FCF7F1] px-5 py-16 sm:py-24">
-        <div className="mx-auto max-w-5xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-strong">
-            {page.primaryKeyword} India
-          </p>
-          <h1 className="mt-5 font-display text-4xl font-normal leading-tight text-ink sm:text-6xl">
-            {page.h1}
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted">
-            {page.description} Built for WhatsApp sharing, RSVP tracking, Indian event details, fast mobile loading, and beautiful invitation templates that are ready to publish in minutes.
-          </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <PageHero
+        crumbs={[{ name: 'Home', href: '/' }, { name: page.h1 }]}
+        eyebrow={page.primaryKeyword}
+        title={page.h1}
+        lede={`${page.description} Choose a design, add your details, preview it free and share one link.`}
+        actions={
+          <>
             <TrackedLink
               href="/create?src=seo_landing"
               location="seo_landing_hero"
               meta={{ page_type: 'seo_landing', landing_slug: page.slug, event_type: page.occasion }}
-              className="gold-button rounded-full px-9 py-4 text-base font-semibold"
+              className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold"
             >
-              Create Invitation
+              Create your invitation <ArrowRightIcon />
             </TrackedLink>
             <TrackedLink
               href="/templates"
               location="seo_landing_hero_secondary"
               meta={{ page_type: 'seo_landing', landing_slug: page.slug }}
-              className="rounded-full border border-border bg-white px-9 py-4 text-base font-semibold text-ink"
+              className="btn-outline inline-flex items-center justify-center rounded-full px-8 py-4 text-[1rem] font-semibold"
             >
-              View Templates
+              See the designs
             </TrackedLink>
+          </>
+        }
+        footnote={<TrustList />}
+        aside={<OfferCard cta="Create your invitation" location="seo_landing_offer" />}
+      />
+
+      <Section tone="paper" aria-label="Why a digital invitation">
+        <ul className="grid gap-4 md:grid-cols-3" data-reveal-group>
+          {VALUES.map(({ Icon, title, desc }) => (
+            <li key={title} className="card-quiet p-6">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald text-gold-soft"><Icon className="h-5 w-5" /></span>
+              <h2 className="t-h3 mt-5">{title}</h2>
+              <p className="mt-2 text-[0.93rem] leading-7 text-charcoal/75">{desc}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section aria-label={`About ${page.occasion} invitations`}>
+        <div className="mx-auto max-w-3xl" data-reveal>
+          <p className="eyebrow">Why it works</p>
+          <h2 className="t-h2 mt-3">A better {page.occasion} invitation</h2>
+          <div className="prose-brand mt-6">
+            <p>
+              A good {page.occasion} invitation needs more than attractive colours. Guests need the date, time, venue, a
+              direction link, a note from the family and the schedule. ShareInvite turns those details into one polished
+              page that feels natural when it is opened from WhatsApp.
+            </p>
+            <p>
+              For {page.audience}, the hard part is coordination. Printed cards and static images are easy to forward but
+              hide details inside a compressed picture. One invitation page keeps the map link, timings, photos and
+              message together — readable, tappable and easy to reopen before the event.
+            </p>
+            <p>
+              The experience is calm for guests: one link opens the invitation, one tap opens Google Maps, and on event
+              designs they can leave you a wish right on the page.
+            </p>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section className="border-y border-border bg-white px-5 py-14">
-        <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-3">
-          {[
-            {
-              title: 'WhatsApp-ready link',
-              desc: 'Every invitation gets a short URL with WhatsApp preview metadata — guests see the couple names, event date, and venue before they even open it.',
-            },
-            {
-              title: 'Online RSVP workflow',
-              desc: 'Guests confirm attendance, leave wishes, and share the invite from the same page — no separate form, no third-party app, no friction.',
-            },
-            {
-              title: 'Mobile-first invite pages',
-              desc: 'Pages load under 2 seconds on Indian mobile networks. Maps, countdown, gallery, and schedule are all optimised for phone screens.',
-            },
-          ].map((feature) => (
-            <div key={feature.title} className="rounded-lg border border-border bg-background p-5">
-              <h3 className="font-heading text-xl text-ink">{feature.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-muted">{feature.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <article className="mx-auto max-w-4xl px-5 py-16">
-        <h2 className="font-display text-3xl font-normal text-ink">Why this page works for {page.occasion} invitations</h2>
-        <div className="mt-7 space-y-6 text-base leading-8 text-muted">
-          {useCases.map((copy) => (
-            <p key={copy}>{copy}</p>
-          ))}
-          <p>
-            The best invitation experience is calm, complete, and easy to forward. ShareInvite combines the emotional parts of an invitation, such as photos, story, music, colors, and personal message, with practical event details like schedule, venue address, Google Maps, and RSVP-ready interactions. This is especially useful for Indian celebrations where guests may travel across cities, coordinate with family groups, and check timings multiple times before the event.
-          </p>
-          <p>
-            A traditional card is beautiful, but it cannot adapt after printing. A static WhatsApp image is convenient, but it often hides important details inside a compressed graphic. A digital invitation page solves both problems. Hosts get a premium invitation that can be shared instantly, while guests get readable information, clear calls to action, and a page they can revisit whenever they need.
-          </p>
-          <p>
-            ShareInvite pages are also structured for search engines with clean canonical URLs, descriptive metadata, internal links, FAQ schema, and event-focused content. For hosts and planners, that means the platform is not just a design tool. It is a growth-ready invitation system for digital invitations, wedding cards, RSVP pages, and WhatsApp invitation campaigns.
-          </p>
-        </div>
-      </article>
-
-      <section className="bg-white px-5 py-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8 flex flex-col justify-between gap-3 md:flex-row md:items-end">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-strong">Templates</p>
-              <h2 className="mt-2 font-display text-3xl font-normal text-ink">Recommended invitation templates</h2>
-            </div>
-            <Link href="/templates" className="text-sm font-semibold text-accent-strong">Browse all templates</Link>
+      {items.length > 0 && (
+        <Section tone="paper" aria-label="Recommended designs">
+          <SectionHeading eyebrow="Recommended" title="Designs for this invitation" action={{ href: '/templates', label: 'Every design' }} />
+          <div className="mt-9 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4" data-reveal-group>
+            {items.map((item) => <TemplateCard key={item.id} item={item} source="seo_landing_gallery" />)}
           </div>
-          <TemplateLinks ids={page.templateLinks} />
-        </div>
-      </section>
+          <p className="mt-8 text-[0.92rem] text-charcoal/70">
+            Planning something we don&apos;t have a design for yet? <Link href="/#custom-template" className="link">Request a custom design</Link>.
+          </p>
+        </Section>
+      )}
 
-      <section className="mx-auto max-w-6xl px-5 py-16">
-        <h2 className="font-display text-3xl font-normal text-ink">Explore more invitation types</h2>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <Section tone="peach" aria-label="How it works">
+        <SectionHeading align="center" eyebrow="How it works" title="Three steps to your invitation" />
+        <div className="mt-12"><HowItWorks /></div>
+      </Section>
+
+      <Section tone="paper" id="faq" aria-label="Questions">
+        <SectionHeading align="center" eyebrow="Questions" title="Frequently asked questions" />
+        <div className="mt-10"><FAQAccordion faqs={page.faqs} /></div>
+      </Section>
+
+      <Section size="sm" aria-label="Related pages">
+        <p className="eyebrow">Explore more invitation types</p>
+        <ul className="mt-4 flex flex-wrap gap-2">
           {page.relatedLinks.map((link) => (
-            <Link key={`${link.href}-${link.label}`} href={link.href} className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink transition-colors hover:text-accent-strong">
-              {link.label}
-            </Link>
+            <li key={`${link.href}-${link.label}`}>
+              <Link href={link.href} className="pill px-4 py-2 text-[0.88rem] hover:border-burnished">{link.label}</Link>
+            </li>
           ))}
-        </div>
-      </section>
+        </ul>
+      </Section>
 
-      <section className="bg-white px-5 py-16">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="font-display text-3xl font-normal text-ink">Frequently asked questions</h2>
-          <div className="mt-7 space-y-4">
-            {page.faqs.map((faq) => (
-              <div key={faq.question} className="rounded-lg border border-border bg-background p-6">
-                <h3 className="font-heading text-lg text-ink">{faq.question}</h3>
-                <p className="mt-3 text-sm leading-7 text-muted">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-16 text-center">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-4xl font-normal text-ink">Start your invitation in minutes</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-muted">
-            Choose a template, add your event details, preview the page, and publish a WhatsApp-ready invitation link with RSVP tracking.
-          </p>
-          <Link href="/create" className="gold-button mt-8 inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start Free
-          </Link>
-        </div>
-      </section>
+      <CtaBand title="Start your invitation in minutes" location="seo_landing_footer" />
       <SiteFooter />
       <StickyCTA pageType="seo_landing" />
     </main>
@@ -259,95 +218,81 @@ function LocationLandingPage({ page }: { page: LocationPage }) {
       { name: page.title, url },
     ]),
   ]
-
-  const events = ['weddings', 'engagements', 'birthdays', 'Griha Pravesh', 'baby showers', 'naming ceremonies', 'anniversaries', 'corporate events']
+  const items = buildCatalogItems(['luxury-wedding', 'indian-birthday', 'indian-engagement', 'griha-pravesh'], { keepOrder: true }).slice(0, 4)
 
   return (
-    <main className="min-h-screen bg-background pb-28 text-foreground">
+    <main className="min-h-screen bg-champagne text-charcoal">
       {schemas.map((schema, index) => (
         <JsonLd key={index} id={`location-jsonld-${index}`} data={schema} />
       ))}
-      <Header />
+      <SiteHeader />
 
-      <section className="bg-[#FCF7F1] px-5 py-16 sm:py-24">
-        <div className="mx-auto max-w-5xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-strong">
-            Digital invitations in {page.city}
-          </p>
-          <h1 className="mt-5 font-display text-4xl font-normal leading-tight text-ink sm:text-6xl">
-            Digital Invitations in {page.city}
-          </h1>
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted">
-            {page.description} Build a beautiful invitation page for guests across {page.city}, nearby cities, and family groups anywhere in the world.
-          </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/create" className="gold-button rounded-full px-9 py-4 text-base font-semibold">
-              Create Invitation
+      <PageHero
+        crumbs={[{ name: 'Home', href: '/' }, { name: `Digital invitations in ${page.city}` }]}
+        eyebrow={`Digital invitations in ${page.city}`}
+        title={<>Digital Invitations <em className="font-medium text-burnished">in {page.city}</em></>}
+        lede={`${page.description} One beautiful invitation page for guests across ${page.city}, other cities and family anywhere in the world.`}
+        actions={
+          <>
+            <Link href="/create" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
+              Create your invitation <ArrowRightIcon />
             </Link>
-            <Link href="/wedding-invitations" className="rounded-full border border-border bg-white px-9 py-4 text-base font-semibold text-ink">
-              Wedding Invites
+            <Link href="/templates" className="btn-outline inline-flex items-center justify-center rounded-full px-8 py-4 text-[1rem] font-semibold">
+              See the designs
             </Link>
+          </>
+        }
+        footnote={<TrustList />}
+        aside={<OfferCard cta="Create your invitation" location="city_landing_offer" />}
+      />
+
+      <Section tone="paper" aria-label={`Why ${page.city} hosts choose digital invitations`}>
+        <div className="mx-auto max-w-3xl" data-reveal>
+          <p className="eyebrow">Made for {page.city}</p>
+          <h2 className="t-h2 mt-3">Why {page.city} hosts choose digital invitations</h2>
+          <div className="prose-brand mt-6">
+            <p>
+              Events in {page.city} move fast. Families coordinate on WhatsApp, guests travel from different
+              neighbourhoods, and the venue details get checked more than once. One invitation link holds the date,
+              time, address, map, schedule, message and photos.
+            </p>
+            <p>
+              Guests open it straight from a chat, tap the map, read the schedule and come back to the same link before
+              they leave for the venue. There is no printing, courier or round of image edits to wait for.
+            </p>
+            <p>
+              The designs carry the details Indian celebrations need — muhurat, pooja timing, ceremony schedule, dress
+              code, reception and family notes — for local guests, relatives in other cities and family abroad alike.
+            </p>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <article className="mx-auto max-w-4xl px-5 py-16">
-        <h2 className="font-display text-3xl font-normal text-ink">Why {page.city} hosts choose digital invitations</h2>
-        <div className="mt-7 space-y-6 text-base leading-8 text-muted">
-          <p>
-            Events in {page.city} move fast. Families coordinate through WhatsApp, guests travel from different neighborhoods, and venue details often need to be checked more than once. A ShareInvite page gives hosts one reliable invitation link that contains the date, time, address, map, schedule, message, photos, and RSVP-ready actions.
-          </p>
-          <p>
-            For {events.join(', ')}, a digital invitation is easier to manage than printed cards or static images. Guests can open the invite from WhatsApp, tap the map button, read the schedule, and revisit the same URL before leaving for the venue. Hosts can publish without waiting for printing, courier delivery, or multiple rounds of image edits.
-          </p>
-          <p>
-            ShareInvite is built for Indian celebrations, so the page can carry details such as muhurat, pooja timing, ceremony schedule, dress code, reception, lunch, dinner, and family notes. This matters in {page.city}, where many events combine traditional rituals with modern venues and mobile-first guest communication.
-          </p>
-          <p>
-            Search-friendly structure is included by default. Each page has a clean URL, canonical metadata, Open Graph previews for social sharing, FAQ schema, and internal links to templates, categories, blog guides, RSVP pages, and the homepage. That makes the platform easier for guests to navigate and easier for search engines to understand.
-          </p>
-          <p>
-            If you are planning an event in {page.city}, start with a template, add your event details, preview the invite on mobile, and publish the link. From there, you can share on WhatsApp groups, individual chats, email, or social media. The experience remains consistent for local guests, relatives in other Indian cities, and international family members.
-          </p>
-        </div>
-      </article>
-
-      <section className="bg-white px-5 py-16">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="font-display text-3xl font-normal text-ink">Popular invitation types in {page.city}</h2>
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {events.map((event) => (
-              <Link key={event} href={event === 'weddings' ? '/wedding-invitations' : '/templates'} className="rounded-lg border border-border bg-background p-5 text-sm font-semibold text-ink hover:text-accent-strong">
-                {event}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-4xl px-5 py-16">
-        <h2 className="font-display text-3xl font-normal text-ink">Frequently asked questions</h2>
-        <div className="mt-7 space-y-4">
-          {page.faqs.map((faq) => (
-            <div key={faq.question} className="rounded-lg border border-border bg-white p-6">
-              <h3 className="font-heading text-lg text-ink">{faq.question}</h3>
-              <p className="mt-3 text-sm leading-7 text-muted">{faq.answer}</p>
-            </div>
+      <Section aria-label={`Invitations in ${page.city}`}>
+        <SectionHeading eyebrow="By occasion" title={`Popular invitations in ${page.city}`} />
+        <ul className="mt-8 flex flex-wrap gap-2" data-reveal>
+          {OCCASIONS.map((o) => (
+            <li key={o.key}>
+              <Link href={o.href} className="pill px-4 py-2 text-[0.9rem] hover:border-burnished">{o.label}</Link>
+            </li>
           ))}
+        </ul>
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-4" data-reveal-group>
+          {items.map((item) => <TemplateCard key={item.id} item={item} source="city_landing_gallery" />)}
         </div>
-      </section>
+      </Section>
 
-      <section className="px-5 py-16 text-center">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-4xl font-normal text-ink">Create a {page.city} invitation today</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-muted">
-            Publish a beautiful mobile invitation page and share it instantly with guests on WhatsApp.
-          </p>
-          <Link href="/create" className="gold-button mt-8 inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start Free
-          </Link>
-        </div>
-      </section>
+      <Section tone="peach" aria-label="How it works">
+        <SectionHeading align="center" eyebrow="How it works" title="Three steps to your invitation" />
+        <div className="mt-12"><HowItWorks /></div>
+      </Section>
+
+      <Section tone="paper" id="faq" aria-label="Questions">
+        <SectionHeading align="center" eyebrow="Questions" title="Frequently asked questions" />
+        <div className="mt-10"><FAQAccordion faqs={page.faqs} /></div>
+      </Section>
+
+      <CtaBand title={`Create a ${page.city} invitation today`} location="city_landing_footer" />
       <SiteFooter />
       <StickyCTA pageType="city_landing" />
     </main>

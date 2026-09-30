@@ -8,6 +8,7 @@ interface WordingCopyCardProps {
   ctaHref?: string
 }
 
+/** A wording sample as a quote card, with one-tap copy. */
 export default function WordingCopyCard({ children, ctaHref = '/create' }: WordingCopyCardProps) {
   const textRef = useRef<HTMLParagraphElement>(null)
   const [copied, setCopied] = useState(false)
@@ -30,27 +31,26 @@ export default function WordingCopyCard({ children, ctaHref = '/create' }: Wordi
   }
 
   return (
-    <div className="rounded-xl border border-border bg-[#FFFBF5] p-5 my-4 relative group">
+    <figure className="group relative my-5 rounded-3xl border border-line bg-paper p-6 pl-7 shadow-soft sm:p-7 sm:pl-8">
+      <span aria-hidden className="absolute inset-y-6 left-0 w-1 rounded-r-full bg-gradient-to-b from-gold-soft to-burnished" />
       <button
+        type="button"
         onClick={handleCopy}
-        aria-label="Copy message"
-        className={`absolute top-3 right-3 rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide transition-all duration-200 ${
-          copied
-            ? 'bg-[#2F766D]/15 text-[#2F766D]'
-            : 'bg-[#D9A441]/15 text-[#7A5C1E] hover:bg-[#D9A441]/35 cursor-pointer'
+        aria-label={copied ? 'Copied' : 'Copy this wording'}
+        className={`absolute right-3 top-3 rounded-full px-4 py-2.5 text-[0.72rem] font-semibold transition-colors ${
+          copied ? 'bg-emerald text-paper' : 'border border-line bg-champagne text-charcoal hover:border-burnished'
         }`}
       >
-        {copied ? '✓ Copied!' : 'Copy'}
+        {copied ? 'Copied' : 'Copy'}
       </button>
-      <p ref={textRef} className="text-sm text-foreground leading-7 pr-16 whitespace-pre-line">
+      <p ref={textRef} className="whitespace-pre-line pr-16 font-editorial text-[1.22rem] leading-[1.6] text-charcoal">
         {children}
       </p>
-      <Link
-        href={ctaHref}
-        className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-[#2F766D] hover:text-[#246059] hover:underline transition-colors"
-      >
-        Send this as a beautiful digital invite →
-      </Link>
-    </div>
+      <figcaption className="mt-4">
+        <Link href={ctaHref} className="link inline-flex items-center gap-1 text-[0.85rem]">
+          Use these words in a beautiful design →
+        </Link>
+      </figcaption>
+    </figure>
   )
 }

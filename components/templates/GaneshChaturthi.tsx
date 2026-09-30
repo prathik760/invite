@@ -1,864 +1,710 @@
 'use client'
 
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { formatDate, formatTime } from '@/lib/utils'
+import { useMemo } from 'react'
+import WishesSection from './WishesSection'
+import { tiro } from './kit/fonts/tiro'
+import { mukta } from './kit/fonts/mukta'
+import {
+  calendarHref,
+  dateParts,
+  galleryImages,
+  grain,
+  mapsHref,
+  pad2,
+  parseLines,
+  parseSchedule,
+  timeLabel,
+  useCountdown,
+  type InviteProps,
+} from './kit/core'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
+import type { InviteTheme } from './kit/theme'
 
-// ─────────────────────────────────────────────────────────────────────────────
-// GaneshChaturthi — a premium Ganesh Chaturthi / Ganeshotsav invitation.
-//
-// Saffron + vermilion + gold on warm cream, a temple-arch mandap hero, the
-// Vakratunda shloka, a countdown to sthapana, the utsav schedule, darshan
-// details with the visarjan day called out separately, a gallery and a live
-// wishes wall.
-//
-// Same contract as every other ShareInvite template:
-//   props { data, eventId?, isPreview? }, `data` is a flat Record<string,string>,
-//   guest interaction goes through the existing /api/wishes endpoint.
-// ─────────────────────────────────────────────────────────────────────────────
-
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
+/*
+ * Ganesh Chaturthi — the household mandap.
+ * A painted mandap frames Bappa: a vermilion canopy with its saffron jhalar,
+ * a cusped arch, marigold ladis down the pillars and a mango-leaf toran; a
+ * plate of modaks at his feet. Below it the invitation is set like a family
+ * festival card, the shloka on its own card, and the visarjan kept apart as
+ * the farewell it is. The ladis unfurl and the arch is traced on arrival.
+ */
 
 const C = {
-  cream: '#FFF7EC',          // warm saffron cream (page bg)
-  creamDeep: '#FBEAD0',
-  paper: '#FFFDF8',
-  ink: '#5E3A1E',            // deep sandal brown text
-  inkSoft: 'rgba(94,58,30,0.72)',
-  inkFaint: 'rgba(94,58,30,0.45)',
-  gold: '#C89331',
-  goldSoft: '#E8BE63',
-  goldBorder: 'rgba(200,147,49,0.30)',
-  saffron: '#E4761B',
-  saffronSoft: '#F5B968',
-  saffronBg: '#FDEBD3',
-  saffronBgSoft: '#FEF4E6',
-  vermilion: '#B4232A',      // sindoor red — headings
-  vermilionDeep: '#8E1A20',  // buttons
-  vermilionBorder: 'rgba(180,35,42,0.20)',
-  leaf: '#4E7A3A',           // mango-leaf green for the toran
-  white: '#FFFFFF',
+  paper: '#F9EFDD',
+  card: '#FFF8EB',
+  ink: '#46190F',
+  soft: 'rgba(70,25,15,0.74)',
+  faint: 'rgba(70,25,15,0.52)',
+  saffron: '#E1791C',
+  saffronLight: '#FBE2BD',
+  vermilion: '#B3261D',
+  vermDeep: '#8C1B14',
+  marigold: '#F1A526',
+  marigoldDeep: '#DC7F19',
+  durva: '#5C7C2C',
+  leaf: '#50712F',
+  rule: '#E8CDA3',
 }
 
-// Saffron → vermilion gradient for the hero title
-const TITLE_GRADIENT = 'linear-gradient(130deg, #F0A32A 0%, #E4761B 48%, #B4232A 100%)'
+const serif = tiro.style.fontFamily
+const sans = mukta.style.fontFamily
 
-// ── Decorative: floating marigold petals ─────────────────────────────────────
-const PETALS = Array.from({ length: 18 }, (_, i) => ({
-  id: i,
-  x: (i * 53) % 100,
-  delay: (i % 9) * 1.3,
-  dur: 11 + (i % 5) * 2.4,
-  drift: (i % 2 === 0 ? 1 : -1) * (22 + (i % 4) * 15),
-  size: 7 + (i % 4) * 4,
-  color: i % 3 === 0 ? '#F0A32A' : i % 3 === 1 ? '#E4761B' : '#EFCB63',
-}))
-
-const FloatingPetals = memo(function FloatingPetals() {
-  const reduced = useReducedMotion()
-  if (reduced) return null
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {PETALS.map((p) => (
-        <motion.span
-          key={p.id}
-          className="absolute block"
-          style={{ left: `${p.x}%`, top: -24, width: p.size, height: p.size, background: p.color, borderRadius: '50% 0 50% 0', opacity: 0.55 }}
-          animate={{
-            y: ['0vh', '112vh'],
-            x: [0, p.drift, p.drift * 0.3, -p.drift * 0.4, 0],
-            rotate: [0, 120, 240, 360],
-          }}
-          transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'linear' }}
-        />
-      ))}
-    </div>
-  )
-})
-
-// ── Decorative: toran (mango leaves + marigold) strung across the top ────────
-const TORAN_ITEMS = Array.from({ length: 14 }, (_, i) => i)
-
-const Toran = memo(function Toran() {
-  const reduced = useReducedMotion()
-  return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 z-[3] hidden select-none sm:block" aria-hidden>
-      <div className="flex justify-between px-2 md:px-6">
-        {TORAN_ITEMS.map((i) => (
-          <motion.div
-            key={i}
-            className="flex flex-col items-center"
-            style={{ transformOrigin: 'top center' }}
-            animate={reduced ? undefined : { rotate: [-2.5, 2.5, -2.5] }}
-            transition={{ duration: 4.5 + (i % 3), repeat: Infinity, ease: 'easeInOut', delay: (i % 5) * 0.3 }}
-          >
-            {/* marigold bead */}
-            <span
-              className="block rounded-full"
-              style={{ width: 9, height: 9, background: i % 2 === 0 ? C.saffron : C.goldSoft, boxShadow: `0 0 0 2px rgba(255,255,255,0.5)` }}
-            />
-            {/* mango leaf */}
-            <span
-              className="block"
-              style={{
-                width: 13,
-                height: 26 + (i % 3) * 7,
-                marginTop: 2,
-                background: `linear-gradient(180deg, ${C.leaf}, #35561F)`,
-                borderRadius: '0 100% 0 100%',
-                opacity: 0.9,
-              }}
-            />
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  )
-})
-
-// ── Utilities ────────────────────────────────────────────────────────────────
-function parseList(v?: string): string[] {
-  if (!v) return []
-  return v.split(/\n/).map((s) => s.trim()).filter(Boolean)
+const WISHES_THEME: InviteTheme = {
+  // Transparent so the paper grain carries on under the wishes.
+  bg: 'transparent',
+  surface: C.card,
+  ink: C.ink,
+  muted: C.soft,
+  line: C.rule,
+  accent: C.vermilion,
+  onAccent: '#FFF6E8',
+  heading: serif,
+  body: sans,
+  headingStyle: { fontSize: 32, color: C.ink },
 }
 
-interface ScheduleItem { title: string; time: string }
-
-/**
- * The builder's schedule editor serialises rows as "Name - Time", so parsing
- * on the last " - " keeps names that contain a hyphen intact.
- */
-function parseSchedule(v?: string): ScheduleItem[] {
-  return parseList(v)
-    .map((line) => {
-      const idx = line.lastIndexOf(' - ')
-      return idx === -1
-        ? { title: line, time: '' }
-        : { title: line.slice(0, idx).trim(), time: line.slice(idx + 3).trim() }
-    })
-    .filter((s) => s.title)
-}
-
-interface SampleWish { name: string; message: string }
-function parseWishes(v?: string): SampleWish[] {
-  return parseList(v)
-    .map((line) => {
-      const [name = '', message = ''] = line.split('|').map((s) => s.trim())
-      return { name, message }
-    })
-    .filter((w) => w.name && w.message)
-}
-
-function useCountdown(dateStr?: string, timeStr?: string) {
-  const [diff, setDiff] = useState(0)
-  useEffect(() => {
-    if (!dateStr) return
-    const target = new Date(`${dateStr}T${timeStr || '00:00'}:00`)
-    const tick = () => setDiff(Math.max(0, target.getTime() - Date.now()))
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [dateStr, timeStr])
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff % 86400000) / 3600000),
-    minutes: Math.floor((diff % 3600000) / 60000),
-    seconds: Math.floor((diff % 60000) / 1000),
-    active: diff > 0,
+// ── Seeded irregularity ─────────────────────────────────────────────────────
+function rng(seed: number) {
+  let s = seed >>> 0
+  return () => {
+    s = (s * 1664525 + 1013904223) >>> 0
+    return s / 4294967296
   }
 }
+const f1 = (n: number) => n.toFixed(1)
 
-function fadeUp(delay = 0) {
-  return {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-40px' },
-    transition: { duration: 0.85, delay, ease: BEZIER },
-  } as const
+function leafPath(len: number, width: number, bend = 0) {
+  const w = width / 2
+  return `M0 0 C${f1(len * 0.3)} ${f1(-w * 1.2 + bend)} ${f1(len * 0.72)} ${f1(-w + bend)} ${f1(len)} ${f1(bend * 0.6)} C${f1(len * 0.7)} ${f1(w + bend * 0.4)} ${f1(len * 0.28)} ${f1(w * 1.1)} 0 0Z`
 }
 
-// Mount-based reveal for the hero, so it shows even inside the editor's preview
-// frame where whileInView may never fire.
-function heroIn(delay = 0) {
-  return {
-    initial: { opacity: 0, y: 24 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.8, delay, ease: BEZIER },
-  } as const
+/** A ruffled marigold head centred on the origin. */
+function marigoldPath(r: number, seed: number) {
+  const rand = rng(seed)
+  const n = 22
+  let d = ''
+  for (let i = 0; i <= n; i++) {
+    const a = (i / n) * Math.PI * 2
+    const rr = r * (0.9 + 0.1 * Math.cos(a * 11) + (rand() - 0.5) * 0.08)
+    d += `${i === 0 ? 'M' : 'L'}${f1(rr * Math.cos(a))} ${f1(rr * Math.sin(a))}`
+  }
+  return `${d}Z`
 }
 
-// ── Inline SVG icons (no emoji — coloured via currentColor) ──────────────────
-type IconProps = { className?: string; style?: React.CSSProperties }
-const svgBase = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
+// ── The mandap, drawn in a 320×400 box ─────────────────────────────────────
+const VB = { w: 320, h: 400 }
+const OPEN = { x0: 46, x1: 274, spring: 196, apex: 72, bottom: 368, top: 58 }
 
-// ॐ is a Devanagari glyph rather than an emoji, and every stroke-path
-// approximation of it reads as an abstract swirl. Setting the real character in
-// SVG text keeps it unmistakable while still scaling with h-*/w-* and taking
-// its colour from currentColor like the other icons.
-const IconOm = (p: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" {...p}>
-    <text x="12" y="19.5" textAnchor="middle" fontSize="22" fill="currentColor">ॐ</text>
-  </svg>
-)
-const IconModak = (p: IconProps) => (
-  <svg {...svgBase} {...p}><path d="M12 3.5c2.6 3.2 5.5 7.4 5.5 10.3 0 3-2.5 5.2-5.5 5.2s-5.5-2.2-5.5-5.2C6.5 10.9 9.4 6.7 12 3.5Z" /><path d="M6.8 15.5h10.4" /></svg>
-)
-const IconDiya = (p: IconProps) => (
-  <svg {...svgBase} {...p}><path d="M3.5 14.5c2 1.4 5 2.2 8.5 2.2s6.5-.8 8.5-2.2c-1.1-1.5-4.3-2.5-8.5-2.5s-7.4 1-8.5 2.5Z" /><path d="M12 12c1.1-1 1.4-2.3.6-3.6-.9 1-1.6 1.8-1.6 3" /></svg>
-)
-const IconLotus = (p: IconProps) => (
-  <svg {...svgBase} {...p}><path d="M12 5.5c1.9 2 2.6 4.3 2.6 6.6M12 5.5c-1.9 2-2.6 4.3-2.6 6.6" /><path d="M3.5 12.6c1.6 3.4 4.8 5.6 8.5 5.6s6.9-2.2 8.5-5.6" /><path d="M6.2 8.8c.4 1.5 1.2 2.8 2.2 3.8M17.8 8.8c-.4 1.5-1.2 2.8-2.2 3.8" /></svg>
-)
-const IconDhol = (p: IconProps) => (
-  <svg {...svgBase} {...p}><rect x="4" y="8" width="16" height="8" rx="2.6" /><path d="M4 10.6h16M4 13.4h16M7 8V6.4M17 8V6.4M7 16v1.6M17 16v1.6" /></svg>
-)
-const IconVisarjan = (p: IconProps) => (
-  <svg {...svgBase} {...p}><path d="M3 15c1.6 0 1.6 1.4 3.2 1.4S7.8 15 9.4 15s1.6 1.4 3.2 1.4S14.2 15 15.8 15s1.6 1.4 3.2 1.4S20.6 15 21 15" /><path d="M3 19c1.6 0 1.6 1.4 3.2 1.4S7.8 19 9.4 19s1.6 1.4 3.2 1.4S14.2 19 15.8 19s1.6 1.4 3.2 1.4" /><path d="M12 3.5c1.8 2.2 3.4 4.6 3.4 6.4 0 2-1.5 3.4-3.4 3.4S8.6 11.9 8.6 9.9c0-1.8 1.6-4.2 3.4-6.4Z" /></svg>
-)
-const IconCalendar = (p: IconProps) => (
-  <svg {...svgBase} {...p}><rect x="3.5" y="5" width="17" height="15.5" rx="2" /><path d="M3.5 9.5h17M8 3v4m8-4v4" /></svg>
-)
-const IconPin = (p: IconProps) => (
-  <svg {...svgBase} {...p}><path d="M12 21s6.5-6.1 6.5-10.4A6.5 6.5 0 0 0 5.5 10.6C5.5 14.9 12 21 12 21Z" /><circle cx="12" cy="10.4" r="2.4" /></svg>
-)
-const IconClock = (p: IconProps) => (
-  <svg {...svgBase} {...p}><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 1.8" /></svg>
-)
-const IconPhotos = (p: IconProps) => (
-  <svg {...svgBase} {...p}><rect x="3" y="5" width="18" height="14" rx="2" /><circle cx="8.5" cy="10" r="1.5" /><path d="m4 17 5-4 4 3 3-2 4 3" /></svg>
-)
-const IconHeart = (p: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M12 21s-7-4.35-9.5-8.5C.6 9.3 2.2 5.6 5.6 5.6c2 0 3.2 1.2 4.4 2.8 1.2-1.6 2.4-2.8 4.4-2.8 3.4 0 5 3.7 3.1 6.9C19 16.65 12 21 12 21Z" /></svg>
-)
-const IconSend = (p: IconProps) => (
-  <svg {...svgBase} {...p}><path d="M21.5 2.5 10.8 13.2M21.5 2.5 14.7 21.5l-3.9-8.3-8.3-3.9z" /></svg>
-)
-const IconCheck = (p: IconProps) => (
-  <svg {...svgBase} {...p}><circle cx="12" cy="12" r="9" /><path d="m8.3 12 2.6 2.6L15.7 9" /></svg>
-)
+type Pt = [number, number]
 
-// Cycled across the utsav schedule so each day reads at a glance.
-const SCHEDULE_ICONS = [IconOm, IconDiya, IconModak, IconDhol, IconLotus, IconVisarjan]
+/** A cusped (multifoil) arch: seven lobes along a pointed arch, sides dropping to `bottom`. */
+function cuspedArch(x0: number, x1: number, spring: number, apex: number, bottom: number, depth: number): string {
+  const cx = (x0 + x1) / 2
+  const bez = (t: number): Pt => {
+    const p0: Pt = [x0, spring], p1: Pt = [x0, spring - (spring - apex) * 0.6]
+    const p2: Pt = [x0 + (cx - x0) * 0.42, apex + (spring - apex) * 0.08], p3: Pt = [cx, apex]
+    const u = 1 - t
+    return [
+      u * u * u * p0[0] + 3 * u * u * t * p1[0] + 3 * u * t * t * p2[0] + t * t * t * p3[0],
+      u * u * u * p0[1] + 3 * u * u * t * p1[1] + 3 * u * t * t * p2[1] + t * t * t * p3[1],
+    ]
+  }
+  const left = [0, 0.3, 0.57, 0.82].map(bez)
+  const right = left.map(([x, y]) => [2 * cx - x, y] as Pt).reverse()
+  const pts = [...left, ...right]
+  const centre: Pt = [cx, spring + 40]
+  let d = `M${x0} ${bottom}L${f1(pts[0][0])} ${f1(pts[0][1])}`
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [ax, ay] = pts[i], [bx, by] = pts[i + 1]
+    const mx = (ax + bx) / 2, my = (ay + by) / 2
+    if (i === 3) {
+      // The crown: two half-lobes rising to a soft point.
+      const tip: Pt = [cx, apex - depth * 0.9]
+      d += `Q${f1(ax + (cx - ax) * 0.25)} ${f1(tip[1] - 2)} ${f1(tip[0])} ${f1(tip[1])}`
+      d += `Q${f1(bx - (bx - cx) * 0.25)} ${f1(tip[1] - 2)} ${f1(bx)} ${f1(by)}`
+      continue
+    }
+    let nx = -(by - ay), ny = bx - ax
+    const len = Math.hypot(nx, ny)
+    nx /= len
+    ny /= len
+    if (nx * (mx - centre[0]) + ny * (my - centre[1]) < 0) {
+      nx = -nx
+      ny = -ny
+    }
+    d += `Q${f1(mx + nx * depth)} ${f1(my + ny * depth)} ${f1(bx)} ${f1(by)}`
+  }
+  return `${d}L${x1} ${bottom}Z`
+}
 
-const SHAREINVITE_URL = 'https://shareinvite.in'
-const SHAREINVITE_LINKEDIN = 'https://www.linkedin.com/company/share-invite'
-const SHAREINVITE_INSTAGRAM = 'https://www.instagram.com/shareinvite.in'
+const INNER_ARCH = cuspedArch(OPEN.x0, OPEN.x1, OPEN.spring, OPEN.apex, OPEN.bottom, 9)
+const OUTER_ARCH = cuspedArch(OPEN.x0 - 11, OPEN.x1 + 11, OPEN.spring, OPEN.apex - 13, OPEN.bottom, 9)
 
-const SOCIAL_ICONS: { label: string; href: string; path: React.ReactNode }[] = [
-  { label: 'Instagram', href: SHAREINVITE_INSTAGRAM, path: <path d="M12 2.2c3.2 0 3.6 0 4.9.07 3.25.15 4.77 1.69 4.92 4.92.06 1.28.07 1.66.07 4.86s-.01 3.58-.07 4.86c-.15 3.23-1.66 4.77-4.92 4.92-1.3.06-1.68.07-4.9.07s-3.6-.01-4.9-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.12 15.6 2.11 15.2 2.11 12s.01-3.58.07-4.86C2.33 3.9 3.84 2.36 7.1 2.21 8.4 2.15 8.8 2.14 12 2.14zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.3.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 114-4 4 4 0 01-4 4zm6.4-11.85a1.44 1.44 0 101.44 1.44 1.44 1.44 0 00-1.44-1.44z" /> },
-  { label: 'LinkedIn', href: SHAREINVITE_LINKEDIN, path: <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0z" /> },
-]
-
-// ── Music button (floating) ──────────────────────────────────────────────────
-const MusicButton = memo(function MusicButton({ src }: { src: string }) {
-  const [playing, setPlaying] = useState(false)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
-  useEffect(() => {
-    if (!src) return
-    audioRef.current = new Audio(src)
-    audioRef.current.loop = true
-    return () => { audioRef.current?.pause(); audioRef.current = null }
-  }, [src])
-  const toggle = useCallback(() => {
-    const a = audioRef.current
-    if (!a) return
-    if (playing) { a.pause(); setPlaying(false) }
-    else a.play().then(() => setPlaying(true)).catch(() => { })
-  }, [playing])
-  return (
-    <button
-      onClick={toggle}
-      aria-label={playing ? 'Pause background aarti' : 'Play background aarti'}
-      className="flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95"
-      style={{ background: C.white, border: `1px solid ${C.goldBorder}`, boxShadow: '0 6px 18px rgba(180,35,42,0.18)', color: C.vermilion }}
-    >
-      {playing
-        ? <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
-        : <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></svg>}
-    </button>
-  )
+/** The inner arch re-expressed in the opening's own 0–1 box, for clipping the photo. */
+const ARCH_CLIP = INNER_ARCH.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (_, x: string, y: string) => {
+  const w = OPEN.x1 - OPEN.x0, h = OPEN.bottom - OPEN.top
+  return `${((Number(x) - OPEN.x0) / w).toFixed(4)} ${((Number(y) - OPEN.top) / h).toFixed(4)}`
 })
 
-// ── Section eyebrow + heading ────────────────────────────────────────────────
-function SectionHead({ title, className = '' }: { title: string; className?: string }) {
+const JHALAR = (() => {
+  let d = ''
+  for (let x = 0; x < VB.w; x += 12) d += `M${x} 30a6 6 0 0 0 12 0Z`
+  return d
+})()
+
+// Marigold ladis hanging down the pillars.
+const LADI = Array.from({ length: 13 }, (_, i) => ({ y: 44 + i * 17.5, r: 7.4 - i * 0.12, tone: i % 2 }))
+
+// Toran strung under the canopy.
+const TORAN = (() => {
+  const r = rng(29)
+  const p0: Pt = [14, 42], p1: Pt = [160, 60], p2: Pt = [306, 42]
+  const at = (t: number): Pt => {
+    const u = 1 - t
+    return [u * u * p0[0] + 2 * u * t * p1[0] + t * t * p2[0], u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1]]
+  }
+  const n = 15
+  return {
+    cord: `M${p0[0]} ${p0[1]}Q${p1[0]} ${p1[1]} ${p2[0]} ${p2[1]}`,
+    leaves: Array.from({ length: n }, (_, i) => {
+      const [x, y] = at((i + 0.5) / n)
+      return { x, y, a: 90 + (r() - 0.5) * 18, len: 17 + r() * 4, w: 7.5 + r() * 1.5, bend: (r() - 0.5) * 3 }
+    }),
+    flowers: Array.from({ length: n + 1 }, (_, i) => {
+      const [x, y] = at(i / n)
+      return { x, y, r: 4.6 + r() * 0.8, tone: i % 2 }
+    }),
+  }
+})()
+
+const MARIGOLD = [marigoldPath(10, 3), marigoldPath(10, 8), marigoldPath(10, 13)]
+
+function Marigold({ x, y, r, tone, seed = 0 }: { x: number; y: number; r: number; tone: number; seed?: number }) {
   return (
-    <motion.div {...fadeUp()} className={`text-center ${className}`}>
-      <div className="mb-3 flex items-center justify-center gap-3" aria-hidden>
-        <span className="h-px w-10" style={{ background: `linear-gradient(90deg,transparent,${C.goldBorder})` }} />
-        <IconOm className="h-4 w-4" style={{ color: C.gold }} />
-        <span className="h-px w-10" style={{ background: `linear-gradient(270deg,transparent,${C.goldBorder})` }} />
-      </div>
-      <h2 className="font-heading" style={{ color: C.vermilion, fontSize: 'clamp(1.5rem, 5vw, 2.4rem)' }}>{title}</h2>
-    </motion.div>
+    <g transform={`translate(${f1(x)} ${f1(y)}) scale(${(r / 10).toFixed(3)})`}>
+      <path d={MARIGOLD[seed % 3]} fill={tone ? C.marigold : C.marigoldDeep} stroke={C.ink} strokeWidth={0.9} />
+      <circle r={4.2} fill={tone ? C.marigoldDeep : '#C8651A'} opacity={0.75} />
+    </g>
   )
 }
 
-interface Props { data: Record<string, string>; eventId?: string; isPreview?: boolean }
+function Modak({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg viewBox="0 0 24 26" className={className} style={style} aria-hidden>
+      <path d="M12 1.5C13.6 5.4 21 11 21 17.6 21 22 17 24.6 12 24.6S3 22 3 17.6C3 11 10.4 5.4 12 1.5Z" fill="#FFF3DD" stroke={C.vermDeep} strokeWidth={1.1} strokeLinejoin="round" />
+      <path d="M12 1.5C10.2 9 7.6 15 7.8 24M12 1.5C11.4 10 10.9 17 11.1 24.6M12 1.5C13 10 14 17 14.6 24.4M12 1.5C14.6 9 17 15 17.4 23.4" fill="none" stroke={C.vermDeep} strokeWidth={0.8} strokeLinecap="round" opacity={0.7} />
+    </svg>
+  )
+}
 
-export default function GaneshChaturthi({ data, eventId, isPreview = false }: Props) {
-  const hosts = data.hostNames || 'The Joshi Family'
-  const tagline = data.tagline || 'Ganpati Bappa Morya'
-  const title = data.title || 'Ganesh Chaturthi'
-  const subtitle = data.subtitle || 'Welcoming Bappa home — join us for darshan, aarti and prasad'
+function Durva({ className, flip = false }: { className?: string; flip?: boolean }) {
+  return (
+    <svg viewBox="0 0 24 26" className={className} style={flip ? { transform: 'scaleX(-1)' } : undefined} aria-hidden>
+      <g fill="none" stroke={C.durva} strokeWidth={1.4} strokeLinecap="round">
+        <path d="M12 25C11 17 8.2 9.6 3.6 3.4" />
+        <path d="M12 25C12.1 16 12.6 8.4 13.4 1.2" />
+        <path d="M12 25C13.2 18 16 12.2 20.6 7" />
+        <path d="M12 25C10.6 20.4 8.4 17.4 5.4 15.2" />
+      </g>
+    </svg>
+  )
+}
 
-  const gallery = useMemo(() => parseList(data.galleryImages), [data.galleryImages])
+/** Durva, modak, durva — the section mark. */
+function Offering({ className = '' }: { className?: string }) {
+  return (
+    <div className={`flex items-end justify-center gap-1.5 ${className}`} aria-hidden>
+      <Durva className="h-[22px] w-[20px]" />
+      <Modak className="h-[28px] w-[26px]" />
+      <Durva className="h-[22px] w-[20px]" flip />
+    </div>
+  )
+}
+
+function Mandap({ photo, alt, animate }: { photo: string; alt: string; animate: boolean }) {
+  const pct = (v: number, of: number) => `${((v / of) * 100).toFixed(3)}%`
+  const drop = (i: number) => (animate ? { className: 'gc-drop', style: { animationDelay: `${300 + i * 55}ms` } } : {})
+  return (
+    <div className="relative mx-auto w-[min(86%,330px)]" style={{ aspectRatio: `${VB.w} / ${VB.h}` }}>
+      <svg width="0" height="0" className="absolute" aria-hidden>
+        <clipPath id="gc-arch" clipPathUnits="objectBoundingBox">
+          <path d={ARCH_CLIP} />
+        </clipPath>
+      </svg>
+
+      {/* What sits inside the arch: Bappa's photo, or a painted ॐ on a lotus. */}
+      <div
+        className={`absolute overflow-hidden ${animate ? 'gc-fade' : ''}`}
+        style={{
+          left: pct(OPEN.x0, VB.w),
+          width: pct(OPEN.x1 - OPEN.x0, VB.w),
+          top: pct(OPEN.top, VB.h),
+          height: pct(OPEN.bottom - OPEN.top, VB.h),
+          clipPath: 'url(#gc-arch)',
+          background: C.saffronLight,
+        }}
+      >
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={photo} alt={alt} className="h-full w-full object-cover" />
+        ) : (
+          <svg viewBox="0 0 228 310" className="h-full w-full" aria-hidden>
+            <text x="114" y="176" textAnchor="middle" fontSize="118" fill={C.vermilion} style={{ fontFamily: serif }}>
+              ॐ
+            </text>
+            <g transform="translate(114 236)" fill="none" stroke={C.vermDeep} strokeWidth={1.3} strokeLinejoin="round">
+              <path d="M0 -22C9 -12 9 2 0 10C-9 2 -9 -12 0 -22Z" fill={C.marigold} />
+              <path d="M-4 8C-14 4 -22 -6 -24 -16C-12 -14 -4 -8 -1 2" fill={C.saffron} />
+              <path d="M4 8C14 4 22 -6 24 -16C12 -14 4 -8 1 2" fill={C.saffron} />
+              <path d="M-6 10C-20 12 -34 6 -42 -2C-28 -6 -14 -2 -4 6" fill={C.marigoldDeep} />
+              <path d="M6 10C20 12 34 6 42 -2C28 -6 14 -2 4 6" fill={C.marigoldDeep} />
+              <path d="M-40 14C-20 20 20 20 40 14" />
+            </g>
+            <g transform="translate(40 256)" fill="none" stroke={C.durva} strokeWidth={1.4} strokeLinecap="round">
+              <path d="M12 25C11 17 8.2 9.6 3.6 3.4M12 25C12.1 16 12.6 8.4 13.4 1.2M12 25C13.2 18 16 12.2 20.6 7M12 25C10.6 20.4 8.4 17.4 5.4 15.2" />
+            </g>
+            <g transform="translate(188 256) scale(-1 1)" fill="none" stroke={C.durva} strokeWidth={1.4} strokeLinecap="round">
+              <path d="M12 25C11 17 8.2 9.6 3.6 3.4M12 25C12.1 16 12.6 8.4 13.4 1.2M12 25C13.2 18 16 12.2 20.6 7M12 25C10.6 20.4 8.4 17.4 5.4 15.2" />
+            </g>
+          </svg>
+        )}
+      </div>
+
+      <svg viewBox={`0 0 ${VB.w} ${VB.h}`} className="absolute inset-0 h-full w-full" style={{ overflow: 'visible' }} aria-hidden>
+        {/* spandrels and pillars, painted cream */}
+        <path d={`M8 30H312V${OPEN.bottom}H8Z ${OUTER_ARCH}`} fillRule="evenodd" fill={C.card} />
+        {/* the arch band */}
+        <path d={`${OUTER_ARCH} ${INNER_ARCH}`} fillRule="evenodd" fill={C.vermilion} />
+        <path d={INNER_ARCH} fill="none" stroke={C.marigold} strokeWidth={2} pathLength={1} className={animate ? 'gc-draw' : undefined} />
+        <path d={OUTER_ARCH} fill="none" stroke={C.ink} strokeWidth={1} />
+        {/* spandrel dots */}
+        <g fill={C.saffron}>
+          {[
+            [56, 86], [70, 74], [48, 104], [264, 86], [250, 74], [272, 104],
+          ].map(([x, y]) => (
+            <circle key={`${x}-${y}`} cx={x} cy={y} r={2.2} />
+          ))}
+        </g>
+        {/* pillars */}
+        <g fill="none" stroke={C.ink} strokeWidth={1}>
+          <path d={`M8 30V${OPEN.bottom}M34 60V${OPEN.bottom}M286 60V${OPEN.bottom}M312 30V${OPEN.bottom}`} />
+          <path d={`M4 ${OPEN.bottom - 18}H38V${OPEN.bottom}H4ZM282 ${OPEN.bottom - 18}H316V${OPEN.bottom}H282Z`} fill={C.saffronLight} />
+          <path d={`M21 ${OPEN.bottom - 18}V60M299 ${OPEN.bottom - 18}V60`} opacity={0.35} />
+        </g>
+        {/* canopy with its jhalar */}
+        <path d="M0 0H320V30H0Z" fill={C.vermilion} />
+        <path d="M0 7H320M0 23H320" stroke={C.marigold} strokeWidth={1.2} strokeDasharray="1 5" strokeLinecap="round" />
+        <path d={JHALAR} fill={C.saffron} stroke={C.ink} strokeWidth={0.8} />
+        {/* ladis */}
+        {[21, 299].map((x, side) => (
+          <g key={x}>
+            <path d={`M${x} 30V${LADI[LADI.length - 1].y}`} stroke={C.ink} strokeWidth={0.8} />
+            {LADI.map((m, i) => (
+              <g key={i} {...drop(i)}>
+                <Marigold x={x} y={m.y} r={m.r} tone={(m.tone + side) % 2} seed={i + side} />
+              </g>
+            ))}
+            <g {...drop(LADI.length)}>
+              <path d={leafPath(18, 8)} transform={`translate(${x} ${LADI[LADI.length - 1].y + 5}) rotate(90)`} fill={C.leaf} stroke={C.ink} strokeWidth={0.8} />
+            </g>
+          </g>
+        ))}
+        {/* toran */}
+        <path d={TORAN.cord} fill="none" stroke={C.ink} strokeWidth={1} />
+        {TORAN.leaves.map((l, i) => (
+          <g key={i} transform={`translate(${f1(l.x)} ${f1(l.y)}) rotate(${f1(l.a)})`}>
+            <g {...(animate ? { className: 'gc-leaf', style: { animationDelay: `${900 + Math.abs(i - 7) * 60}ms` } } : {})}>
+              <path d={leafPath(l.len, l.w, l.bend)} fill={C.leaf} stroke={C.ink} strokeWidth={0.8} strokeLinejoin="round" />
+              <path d={`M1 0L${f1(l.len * 0.8)} ${f1(l.bend * 0.4)}`} stroke={C.card} strokeWidth={0.6} opacity={0.7} />
+            </g>
+          </g>
+        ))}
+        {TORAN.flowers.map((m, i) => (
+          <Marigold key={i} x={m.x} y={m.y} r={m.r} tone={m.tone} seed={i} />
+        ))}
+        {/* plinth */}
+        <path d={`M0 ${OPEN.bottom}H320V${OPEN.bottom + 14}H0Z`} fill={C.saffronLight} stroke={C.ink} strokeWidth={1} />
+        <path d={`M-6 ${OPEN.bottom + 14}H326V${OPEN.bottom + 26}H-6Z`} fill={C.rule} stroke={C.ink} strokeWidth={1} />
+        {/* a plate of modaks at Bappa's feet */}
+        <g transform={`translate(160 ${OPEN.bottom + 2})`}>
+          <path d="M-36 0C-30 9 30 9 36 0Z" fill={C.marigold} stroke={C.ink} strokeWidth={1} />
+          {[-19, 0, 19].map((x, i) => (
+            <g key={x} transform={`translate(${x - 9} ${i === 1 ? -25 : -21}) scale(0.76)`}>
+              <path d="M12 1.5C13.6 5.4 21 11 21 17.6 21 22 17 24.6 12 24.6S3 22 3 17.6C3 11 10.4 5.4 12 1.5Z" fill="#FFF3DD" stroke={C.vermDeep} strokeWidth={1.3} />
+              <path d="M12 1.5C10.2 9 7.6 15 7.8 24M12 1.5C11.4 10 10.9 17 11.1 24.6M12 1.5C13 10 14 17 14.6 24.4M12 1.5C14.6 9 17 15 17.4 23.4" fill="none" stroke={C.vermDeep} strokeWidth={0.9} opacity={0.7} />
+            </g>
+          ))}
+        </g>
+      </svg>
+    </div>
+  )
+}
+
+function Heading({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="text-center leading-[1.1]" style={{ fontFamily: serif, fontSize: 'clamp(30px, 9cqi, 38px)', color: C.ink }}>
+      {children}
+    </h2>
+  )
+}
+
+const hasDevanagari = (s: string) => /[ऀ-ॿ]/.test(s)
+
+export default function GaneshChaturthi({ data, eventId, isPreview = false }: InviteProps) {
+  const hosts = data.hostNames?.trim() || 'The Joshi Family'
+  const tagline = data.tagline?.trim()
+  const title = data.title?.trim() || 'Ganesh Chaturthi'
+  const subtitle = data.subtitle?.trim()
+  const date = dateParts(data.date)
+  const time = timeLabel(data.time)
+  const visarjan = dateParts(data.visarjanDate)
+  const visarjanTime = timeLabel(data.visarjanTime)
+  const countdown = useCountdown(data.date, data.time, !isPreview)
   const schedule = useMemo(() => parseSchedule(data.schedule), [data.schedule])
-  const sampleWishes = useMemo(() => parseWishes(data.sampleWishes), [data.sampleWishes])
-  const invocationLines = useMemo(() => parseList(data.invocation), [data.invocation])
-  const { days, hours, minutes, seconds } = useCountdown(data.date, data.time)
+  const shloka = useMemo(() => parseLines(data.invocation), [data.invocation])
+  const photos = useMemo(() => galleryImages(data.galleryImages, 7), [data.galleryImages])
+  const featured = useMemo(
+    () =>
+      parseLines(data.sampleWishes)
+        .map((line) => {
+          const [name = '', ...rest] = line.split('|')
+          return { name: name.trim(), message: rest.join('|').trim() }
+        })
+        .filter((w) => w.name && w.message),
+    [data.sampleWishes],
+  )
+  const idol = data.idolImage && /^(https?:)?\//.test(data.idolImage) ? data.idolImage : ''
+  const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
+  const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
+  const calendar = calendarHref(`${title} — ${hosts}`, data.date, data.time, place || undefined)
+  const animate = !isPreview
 
-  const hasVisarjan = Boolean(data.visarjanDate || data.visarjanTime)
-
-  const [lightbox, setLightbox] = useState<number | null>(null)
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'Aarti', href: '#invocation' },
-    { label: 'Schedule', href: '#schedule' },
-    { label: 'Darshan', href: '#darshan' },
-    ...(gallery.length ? [{ label: 'Gallery', href: '#gallery' }] : []),
-    { label: 'Wishes', href: '#wishes' },
-  ]
+  const button = 'inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold transition-colors'
 
   return (
     <div
-      id="home"
-      className="relative overflow-x-hidden font-body"
-      style={{ background: C.cream, color: C.ink }}
+      className="gc relative overflow-x-hidden"
+      style={{ background: C.paper, color: C.ink, fontFamily: sans, containerType: 'inline-size', ...grain(0.05) }}
     >
-      {/* ══════════════════════ NAVIGATION ══════════════════════ */}
-      <nav
-        className={`${isPreview ? 'relative' : 'sticky top-0'} z-40 flex items-center justify-between gap-3 px-4 py-2.5 sm:px-8`}
-        style={{ background: 'rgba(255,247,236,0.88)', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.goldBorder}` }}
-      >
-        <div className="flex items-center gap-2.5">
-          {/* Hamburger — mobile only */}
-          <button
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-            className="flex h-9 w-9 items-center justify-center rounded-full md:hidden"
-            style={{ color: C.vermilion, background: C.white, border: `1px solid ${C.vermilionBorder}` }}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
-              {menuOpen
-                ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />}
-            </svg>
-          </button>
-          <span className="font-heading text-lg italic sm:text-xl" style={{ color: C.vermilion }}>ShareInvite</span>
-        </div>
-        {/* Links — tablet & desktop (hidden in the compact editor preview) */}
-        <div className={`${isPreview ? 'hidden' : 'hidden md:flex'} items-center gap-4 lg:gap-5`}>
-          {navLinks.map((l) => (
-            <a key={l.href} href={l.href} className="text-[13px] font-medium transition-colors hover:opacity-70" style={{ color: C.ink }}>
-              {l.label}
-            </a>
-          ))}
-        </div>
-        {data.musicUrl ? <MusicButton src={data.musicUrl} /> : <span className="h-9 w-9" />}
+      <style>{`
+        .gc .gc-drop { opacity: 0; transform: translateY(-14px); animation: gc-drop 620ms cubic-bezier(.2,.8,.3,1.2) forwards; }
+        .gc .gc-leaf { opacity: 0; transform: translateX(-5px); animation: gc-drop 520ms cubic-bezier(.2,.7,.2,1) forwards; }
+        .gc .gc-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: gc-draw 1.6s cubic-bezier(.45,.1,.3,1) forwards 200ms; }
+        .gc .gc-fade { opacity: 0; animation: gc-fade 900ms ease forwards 500ms; }
+        .gc .gc-in { opacity: 0; transform: translateY(8px); animation: gc-drop 900ms cubic-bezier(.2,.7,.2,1) forwards; }
+        .gc .gc-btn:hover { background: ${C.vermDeep}; }
+        .gc .gc-btn-line:hover { background: rgba(179,38,29,0.06); }
+        @keyframes gc-drop { to { opacity: 1; transform: none; } }
+        @keyframes gc-draw { to { stroke-dashoffset: 0; } }
+        @keyframes gc-fade { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+          .gc .gc-drop, .gc .gc-leaf, .gc .gc-draw, .gc .gc-fade, .gc .gc-in { animation: none; opacity: 1; transform: none; stroke-dashoffset: 0; }
+        }
+      `}</style>
 
-        {/* Mobile dropdown menu */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-              className="absolute inset-x-0 top-full grid grid-cols-2 gap-1 p-3 md:hidden"
-              style={{ background: 'rgba(255,247,236,0.98)', backdropFilter: 'blur(10px)', borderBottom: `1px solid ${C.goldBorder}` }}
-            >
-              {navLinks.map((l) => (
-                <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}
-                  className="rounded-xl px-4 py-2.5 text-sm font-medium"
-                  style={{ color: C.ink, background: C.white, border: `1px solid ${C.vermilionBorder}` }}>
-                  {l.label}
-                </a>
-              ))}
-            </motion.div>
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.vermDeep} background="rgba(255,248,235,0.9)" border={C.rule} />
+
+      {/* ── The mandap ────────────────────────────────────────────── */}
+      <header className="mx-auto max-w-[32rem] pb-12 text-center" style={{ minHeight: isPreview ? 560 : '100svh' }}>
+        <Mandap photo={idol} alt={`Ganpati Bappa at ${hosts}`} animate={animate} />
+
+        <div className="px-6">
+          {tagline && (
+            <p className="gc-in mt-8 italic" style={{ fontFamily: serif, fontSize: 20, color: C.vermilion, animationDelay: '600ms' }}>
+              {tagline}
+            </p>
           )}
-        </AnimatePresence>
-      </nav>
-
-      {/* ══════════════════════ HERO ══════════════════════ */}
-      <section
-        className={`relative overflow-hidden px-4 sm:px-8 ${isPreview ? 'py-10' : 'py-16 sm:py-20'}`}
-        style={{ background: `radial-gradient(ellipse 90% 70% at 50% 18%, ${C.creamDeep}, ${C.cream})` }}
-      >
-        {/* paper texture */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
-          mixBlendMode: 'multiply',
-        }} />
-        {!isPreview && <FloatingPetals />}
-        {!isPreview && <Toran />}
-
-        <div className={`relative z-[5] mx-auto grid max-w-5xl items-center gap-8 ${isPreview ? '' : 'md:grid-cols-2'}`}>
-          {/* Left — copy */}
-          <div className="text-center md:text-left">
-            <motion.p {...heroIn(0)} className="mb-2 text-[12px] font-semibold uppercase tracking-[0.28em]" style={{ color: C.saffron }}>
-              ॐ {tagline} ॐ
-            </motion.p>
-            <motion.h1
-              {...heroIn(0.08)}
-              className="font-heading leading-[1.02]"
-              style={{
-                fontSize: isPreview ? '1.9rem' : 'clamp(2.3rem, 8.5vw, 4.6rem)',
-                background: TITLE_GRADIENT,
-                WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent',
-              }}
-            >
-              {title}
-            </motion.h1>
-            <motion.p {...heroIn(0.16)} className="mx-auto mt-4 max-w-sm text-[15px] leading-relaxed md:mx-0" style={{ color: C.inkSoft }}>
-              {subtitle}
-            </motion.p>
-            <motion.p {...heroIn(0.22)} className="mt-4 font-heading text-lg italic" style={{ color: C.vermilion }}>
-              {hosts}
-            </motion.p>
-            <motion.div {...heroIn(0.28)} className="mt-5 flex flex-wrap items-center justify-center gap-2.5 md:justify-start">
-              {data.date && (
-                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2"
-                  style={{ background: C.white, border: `1px solid ${C.vermilionBorder}`, color: C.vermilionDeep }}>
-                  <IconCalendar className="h-4 w-4" style={{ color: C.gold }} />
-                  <span className="text-sm font-medium">{formatDate(data.date)}</span>
-                </span>
-              )}
-              {data.time && (
-                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2"
-                  style={{ background: C.white, border: `1px solid ${C.vermilionBorder}`, color: C.vermilionDeep }}>
-                  <IconClock className="h-4 w-4" style={{ color: C.gold }} />
-                  <span className="text-sm font-medium">{formatTime(data.time)}</span>
-                </span>
-              )}
-            </motion.div>
-          </div>
-
-          {/* Right — temple-arch mandap + idol */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2, ease: BEZIER }}
-            className="relative mx-auto w-full max-w-sm"
+          <h1
+            className={`gc-in leading-[1.02] ${tagline ? 'mt-2' : 'mt-8'}`}
+            style={{ fontFamily: serif, fontSize: 'clamp(36px, 10.4cqi, 56px)', color: C.ink, animationDelay: '700ms' }}
           >
-            <div className="relative overflow-hidden" style={{
-              aspectRatio: '4/5',
-              borderRadius: '50% 50% 12px 12px / 44% 44% 12px 12px',
-              background: `linear-gradient(180deg, ${C.saffronBgSoft}, ${C.creamDeep})`,
-              border: `2px solid ${C.goldBorder}`,
-              boxShadow: `inset 0 0 40px rgba(200,147,49,0.18), 0 20px 50px rgba(180,35,42,0.14)`,
-            }}>
-              {/* aarti glow behind the idol */}
-              <div className="absolute inset-0" style={{ background: `radial-gradient(circle at 50% 34%, rgba(240,163,42,0.32), transparent 62%)` }} />
-              {data.idolImage ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={data.idolImage} alt={`Ganpati Bappa at ${hosts}`} className="absolute inset-0 h-full w-full object-cover" loading="eager" />
-              ) : (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                  <IconOm className="h-14 w-14" style={{ color: C.saffronSoft }} />
-                  <p className="text-[11px] uppercase tracking-[0.24em]" style={{ color: C.inkFaint }}>Add your Bappa photo</p>
-                </div>
-              )}
-            </div>
-            {/* mandap plinth */}
-            <div className="mx-auto -mt-3 h-4 w-4/5 rounded-full" style={{ background: `linear-gradient(180deg, ${C.creamDeep}, #E9D2AC)`, boxShadow: '0 10px 20px rgba(180,35,42,0.12)' }} />
-            {/* two diyas at the foot of the mandap */}
-            {!isPreview && (
-              <div className="mt-4 flex items-center justify-center gap-10" aria-hidden>
-                {[0, 1].map((i) => (
-                  <motion.span
-                    key={i}
-                    animate={{ opacity: [0.55, 1, 0.55], scale: [1, 1.08, 1] }}
-                    transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.5, ease: 'easeInOut' }}
-                    style={{ color: C.saffron }}
-                  >
-                    <IconDiya className="h-6 w-6" />
-                  </motion.span>
-                ))}
-              </div>
-            )}
-          </motion.div>
-        </div>
+            {title}
+          </h1>
+          {subtitle && (
+            <p className="gc-in mx-auto mt-3 max-w-[21rem] text-balance leading-[1.5]" style={{ fontSize: 17, color: C.soft, animationDelay: '800ms' }}>
+              {subtitle}
+            </p>
+          )}
 
-        {!isPreview && (
-          <motion.div animate={{ y: [0, 8, 0], opacity: [0.4, 0.9, 0.4] }} transition={{ duration: 2, repeat: Infinity }}
-            className="relative z-[5] mx-auto mt-8 flex w-8 justify-center" aria-hidden>
-            <div className="flex h-8 w-5 items-start justify-center rounded-full border-2 pt-1.5" style={{ borderColor: C.goldBorder }}>
-              <span className="h-1.5 w-1.5 rounded-full" style={{ background: C.gold }} />
-            </div>
-          </motion.div>
-        )}
-      </section>
+          <div className="gc-in mt-7" style={{ animationDelay: '850ms' }}>
+            <Offering />
+          </div>
 
-      {/* ══════════════════════ INVOCATION (shloka) ══════════════════════ */}
-      {(invocationLines.length > 0 || data.message) && (
-        <section id="invocation" className={isPreview ? 'px-3 py-8' : 'px-4 py-14 sm:px-8 sm:py-20'}>
-          <div className="mx-auto max-w-3xl">
-            <motion.div
-              {...fadeUp()}
-              className={`relative overflow-hidden rounded-3xl text-center ${isPreview ? 'p-6' : 'p-8 sm:p-12'}`}
-              style={{ background: C.paper, border: `1px solid ${C.goldBorder}`, boxShadow: '0 16px 44px rgba(180,35,42,0.08)' }}
-            >
-              <div className="pointer-events-none absolute inset-0 opacity-[0.06]" aria-hidden
-                style={{ background: `radial-gradient(circle at 50% 0%, ${C.saffron}, transparent 65%)` }} />
-              <IconOm className="mx-auto h-8 w-8" style={{ color: C.gold }} />
-              <div className="mt-5 space-y-2.5">
-                {invocationLines.map((line, i) => (
-                  <p key={i} className="font-heading text-[17px] leading-relaxed sm:text-xl" style={{ color: C.vermilion }}>{line}</p>
-                ))}
-              </div>
-              {data.message && (
+          <div className="gc-in mt-6" style={{ animationDelay: '900ms' }}>
+            <p className="leading-[1.15]" style={{ fontFamily: serif, fontSize: 'clamp(24px, 7cqi, 29px)', color: C.vermDeep }}>
+              {hosts}
+            </p>
+            <p className="mx-auto mt-1.5 max-w-[20rem] text-balance leading-[1.5]" style={{ fontSize: 17, color: C.soft }}>
+              invite you and your family home for Bappa&rsquo;s sthapana
+            </p>
+          </div>
+
+          <div className="gc-in mx-auto mt-7 max-w-[22rem] border-y py-5" style={{ borderColor: C.rule, animationDelay: '1000ms' }}>
+            <p className="leading-[1.15]" style={{ fontFamily: serif, fontSize: 'clamp(24px, 7.4cqi, 30px)' }}>
+              {date ? (
                 <>
-                  <div className="mx-auto my-6 h-px w-20" style={{ background: C.goldBorder }} />
-                  <p className="mx-auto max-w-xl text-[14.5px] italic leading-relaxed" style={{ color: C.inkSoft }}>{data.message}</p>
+                  {date.weekday},
+                  <br />
+                  {date.day} {date.month} {date.year}
                 </>
+              ) : (
+                'Date to be announced'
               )}
-            </motion.div>
+            </p>
+            {time && (
+              <p className="mt-2" style={{ fontSize: 17, color: C.soft }}>
+                Sthapana muhurat <span style={{ fontWeight: 600, color: C.vermilion }}>{time}</span>
+              </p>
+            )}
           </div>
-        </section>
-      )}
 
-      {/* ══════════════════════ COUNTDOWN ══════════════════════ */}
-      {data.date && (
-        <section className="px-4 py-6 sm:px-8">
-          <motion.div {...fadeUp()} className="mx-auto max-w-4xl overflow-hidden rounded-3xl px-5 py-9 text-center sm:py-11"
-            style={{ background: `linear-gradient(130deg, ${C.saffron} 0%, #D4501F 52%, ${C.vermilion} 100%)`, boxShadow: '0 20px 50px rgba(212,80,31,0.30)' }}>
-            <p className="mb-6 font-heading text-xl text-white sm:text-2xl">Bappa Arrives In</p>
-            <div className="mx-auto grid max-w-2xl grid-cols-4 gap-2 sm:gap-4">
-              {[{ v: days, l: 'Days' }, { v: hours, l: 'Hours' }, { v: minutes, l: 'Minutes' }, { v: seconds, l: 'Seconds' }].map(({ v, l }) => (
-                <div key={l} className="rounded-2xl px-1 py-4 sm:py-5" style={{ background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.35)', backdropFilter: 'blur(6px)' }}>
-                  <div className="font-heading tabular-nums text-white" style={{ fontSize: 'clamp(1.5rem, 7vw, 2.6rem)' }}>{String(v).padStart(2, '0')}</div>
-                  <div className="mt-1 text-[10px] uppercase tracking-[0.18em] text-white/80 sm:text-xs">{l}</div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-      )}
+          <div className="gc-in mt-6" style={{ animationDelay: '1100ms' }}>
+            <p className="italic" style={{ fontFamily: serif, fontSize: 17, color: C.faint }}>at</p>
+            <p className="leading-[1.2]" style={{ fontFamily: serif, fontSize: 'clamp(22px, 6.6cqi, 27px)' }}>
+              {data.venue || 'our home'}
+            </p>
+            {data.venueAddress && (
+              <p className="mx-auto mt-1.5 max-w-[20rem] text-balance leading-[1.45]" style={{ fontSize: 16, color: C.soft }}>
+                {data.venueAddress}
+              </p>
+            )}
+          </div>
+        </div>
+      </header>
 
-      {/* ══════════════════════ UTSAV SCHEDULE ══════════════════════ */}
-      {schedule.length > 0 && (
-        <section id="schedule" className="px-4 py-14 sm:px-8 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <SectionHead title="Utsav Schedule" className="mb-10" />
-            <div className="relative">
-              {/* golden connector (desktop) */}
-              <div className={`absolute left-0 right-0 top-7 h-px ${isPreview ? 'hidden' : 'hidden lg:block'}`} style={{ background: `linear-gradient(90deg, transparent, ${C.goldSoft}, transparent)` }} aria-hidden />
-              <div className={`grid items-stretch gap-5 ${isPreview ? '' : 'grid-cols-2 lg:grid-cols-5 lg:gap-3'}`}>
-                {schedule.slice(0, 10).map((s, i) => {
-                  const StepIcon = SCHEDULE_ICONS[i % SCHEDULE_ICONS.length]
-                  return (
-                    <motion.div key={`${s.title}-${i}`} {...fadeUp(i * 0.08)} className="flex h-full flex-col items-center text-center">
-                      <div className="relative z-[2] mb-4 flex h-14 w-14 shrink-0 items-center justify-center rounded-full"
-                        style={{ background: C.white, border: `2px solid ${C.goldBorder}`, boxShadow: '0 6px 16px rgba(200,147,49,0.22)', color: C.vermilion }}>
-                        <StepIcon className="h-6 w-6" />
-                      </div>
-                      <div className="flex w-full flex-1 flex-col rounded-2xl px-4 py-4 transition-transform hover:-translate-y-1"
-                        style={{ background: C.paper, border: `1px solid ${C.vermilionBorder}`, boxShadow: '0 10px 28px rgba(180,35,42,0.07)' }}>
-                        <p className="font-heading text-[15px]" style={{ color: C.vermilionDeep }}>{s.title}</p>
-                        {s.time && <p className="mt-1 text-xs font-semibold" style={{ color: C.gold }}>{s.time}</p>}
-                      </div>
-                    </motion.div>
-                  )
-                })}
+      <div className="mx-auto max-w-[32rem] px-6">
+        {/* ── The shloka card ────────────────────────────────────── */}
+        {shloka.length > 0 && (
+          <Reveal disabled={isPreview} as="section" className="pb-14 pt-4">
+            <div className="relative px-5 pb-9 pt-10 text-center" style={{ background: C.card, boxShadow: '0 18px 40px -30px rgba(70,25,15,0.5)' }}>
+              <span aria-hidden className="pointer-events-none absolute inset-[7px] border" style={{ borderColor: C.vermilion }} />
+              <span aria-hidden className="pointer-events-none absolute inset-[11px] border" style={{ borderColor: 'rgba(179,38,29,0.35)' }} />
+              <div className="absolute left-1/2 top-[9px] -translate-x-1/2 -translate-y-1/2 px-2" style={{ background: C.card }}>
+                <Modak className="block h-[28px] w-[26px]" />
+              </div>
+              <div className="relative space-y-3">
+                {shloka.map((line, i) =>
+                  hasDevanagari(line) ? (
+                    <p key={i} lang="sa" className="leading-[1.5]" style={{ fontFamily: serif, fontSize: 'clamp(21px, 6cqi, 25px)', color: C.vermilion }}>
+                      {line}
+                    </p>
+                  ) : (
+                    <p key={i} className="text-balance italic leading-[1.45]" style={{ fontFamily: serif, fontSize: 'clamp(18px, 5.4cqi, 21px)' }}>
+                      {line}
+                    </p>
+                  ),
+                )}
               </div>
             </div>
-          </div>
-        </section>
-      )}
+          </Reveal>
+        )}
 
-      {/* ══════════════════════ DARSHAN DETAILS ══════════════════════ */}
-      {(data.venue || data.pooja || hasVisarjan) && (
-        <section id="darshan" className={isPreview ? 'px-3 py-8' : 'px-4 py-14 sm:px-8 sm:py-20'} style={{ background: C.paper }}>
-          <SectionHead title="Darshan Details" className="mb-10" />
-          <div className={`mx-auto grid max-w-5xl gap-5 ${isPreview ? '' : 'sm:grid-cols-2'}`}>
-            {data.venue && (
-              <DetailCard icon={<IconPin className="h-5 w-5" />} title="Mandap / Venue">
-                <p className="font-heading text-lg" style={{ color: C.vermilionDeep }}>{data.venue}</p>
-                {data.venueAddress && <p className="mt-1.5 text-[13.5px] leading-relaxed" style={{ color: C.inkSoft }}>{data.venueAddress}</p>}
-                {data.mapsUrl && (
-                  <a href={data.mapsUrl} target="_blank" rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
-                    style={{ background: `linear-gradient(135deg, ${C.saffron}, ${C.vermilion})`, boxShadow: '0 8px 22px rgba(180,35,42,0.26)' }}>
-                    Open in Maps →
-                  </a>
-                )}
-              </DetailCard>
-            )}
-            {data.pooja && (
-              <DetailCard icon={<IconOm className="h-5 w-5" />} title="Pooja & Muhurat">
-                <p className="text-[14.5px] leading-relaxed" style={{ color: C.inkSoft }}>{data.pooja}</p>
-              </DetailCard>
-            )}
-            {hasVisarjan && (
-              <DetailCard icon={<IconVisarjan className="h-5 w-5" />} title="Visarjan">
-                <p className="font-heading text-lg" style={{ color: C.vermilionDeep }}>
-                  {data.visarjanDate ? formatDate(data.visarjanDate) : 'Date to be announced'}
-                </p>
-                {data.visarjanTime && (
-                  <p className="mt-1.5 text-[13.5px]" style={{ color: C.inkSoft }}>
-                    Procession begins at {formatTime(data.visarjanTime)}
-                  </p>
-                )}
-                <p className="mt-3 text-[13px] italic leading-relaxed" style={{ color: C.inkFaint }}>
-                  Join us as we send Bappa off with dhol, colour and one last aarti.
-                </p>
-              </DetailCard>
-            )}
-            {data.dressCode && (
-              <DetailCard icon={<IconLotus className="h-5 w-5" />} title="What to Wear">
-                <p className="text-[14.5px] leading-relaxed" style={{ color: C.inkSoft }}>{data.dressCode}</p>
-              </DetailCard>
+        {/* ── A word from the family ─────────────────────────────── */}
+        {data.message && (
+          <Reveal disabled={isPreview} as="section" className="pb-14 pt-2 text-center">
+            <p className="mx-auto max-w-[25rem] text-balance leading-[1.6]" style={{ fontSize: 19 }}>
+              {data.message}
+            </p>
+            <p className="mt-4 italic" style={{ fontFamily: serif, fontSize: 19, color: C.vermilion }}>
+              — {hosts}
+            </p>
+          </Reveal>
+        )}
+
+        {/* ── Countdown ──────────────────────────────────────────── */}
+        {countdown && (
+          <Reveal disabled={isPreview} as="section" className="border-t py-12 text-center" style={{ borderColor: C.rule }}>
+            <div className="flex items-end justify-center gap-4">
+              <Durva className="mb-2 h-[30px] w-[26px]" />
+              <span className="leading-[0.8]" style={{ fontFamily: serif, fontSize: 84, color: C.vermilion }}>
+                {countdown.days}
+              </span>
+              <Durva className="mb-2 h-[30px] w-[26px]" flip />
+            </div>
+            <p className="mt-4 italic" style={{ fontFamily: serif, fontSize: 21 }}>
+              {countdown.days === 1 ? 'day' : 'days'} until Bappa comes home
+            </p>
+            <p className="mt-1.5 tabular-nums" style={{ fontSize: 14, color: C.faint, letterSpacing: '0.04em' }}>
+              {countdown.hours} h · {pad2(countdown.minutes)} m · {pad2(countdown.seconds)} s
+            </p>
+          </Reveal>
+        )}
+
+        {/* ── Utsav schedule, strung like a ladi ─────────────────── */}
+        {schedule.length > 0 && (
+          <Reveal disabled={isPreview} as="section" className="border-t py-14" style={{ borderColor: C.rule }}>
+            <Heading>Utsav schedule</Heading>
+            <ol className="relative mx-auto mt-9 w-fit max-w-full pr-2">
+              <span aria-hidden className="absolute bottom-4 left-[11px] top-4 w-px" style={{ background: C.saffron, opacity: 0.6 }} />
+              {schedule.map((item, i) => (
+                <li key={`${item.title}-${i}`} className="relative grid grid-cols-[23px_1fr] gap-4 py-3">
+                  <svg viewBox="-12 -12 24 24" className="relative mt-[3px] h-[23px] w-[23px]" aria-hidden>
+                    <Marigold x={0} y={0} r={10.5} tone={i % 2} seed={i} />
+                  </svg>
+                  <div>
+                    {item.time && (
+                      <p className="tabular-nums" style={{ fontSize: 15, fontWeight: 600, color: C.vermilion }}>
+                        {item.time}
+                      </p>
+                    )}
+                    <p className="leading-[1.3]" style={{ fontFamily: serif, fontSize: 21 }}>
+                      {item.title}
+                    </p>
+                    {item.note && (
+                      <p className="mt-1 leading-[1.45]" style={{ fontSize: 15, color: C.soft }}>
+                        {item.note}
+                      </p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        )}
+
+        {/* ── Darshan ───────────────────────────────────────────── */}
+        <Reveal disabled={isPreview} as="section" className="border-t py-14 text-center" style={{ borderColor: C.rule }}>
+          <Heading>Darshan</Heading>
+          <p className="mt-6 leading-[1.2]" style={{ fontFamily: serif, fontSize: 'clamp(24px, 7cqi, 29px)', color: C.vermDeep }}>
+            {data.venue || 'At our home'}
+          </p>
+          {data.venueAddress && (
+            <p className="mx-auto mt-2 max-w-[20rem] text-balance leading-[1.5]" style={{ fontSize: 16, color: C.soft }}>
+              {data.venueAddress}
+            </p>
+          )}
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+            <DirectionsLink
+              href={directions}
+              isPreview={isPreview}
+              className={`gc-btn ${button}`}
+              style={{ background: C.vermilion, color: '#FFF6E8' }}
+            >
+              Get directions
+            </DirectionsLink>
+            {calendar && (
+              <a
+                href={isPreview ? undefined : calendar}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-disabled={isPreview || undefined}
+                className={`gc-btn-line ${button} border`}
+                style={{ borderColor: C.vermilion, color: C.vermilion }}
+              >
+                Add to calendar
+              </a>
             )}
           </div>
-        </section>
-      )}
 
-      {/* ══════════════════════ GALLERY ══════════════════════ */}
-      {gallery.length > 0 && (
-        <section id="gallery" className="py-14 sm:py-20" style={{ background: `linear-gradient(180deg, ${C.saffronBgSoft}, ${C.saffronBg})` }}>
-          <SectionHead title="Moments of Devotion" className="mb-10 px-4" />
-          <div className="flex gap-4 overflow-x-auto px-4 pb-4 sm:px-8" style={{ scrollbarWidth: 'none' }}>
-            {gallery.slice(0, 8).map((src, i) => (
-              <motion.button
+          {(data.pooja || data.dressCode) && (
+            <dl className="mx-auto mt-10 max-w-[24rem] space-y-6">
+              {data.pooja && (
+                <div>
+                  <dt className="italic" style={{ fontFamily: serif, fontSize: 18, color: C.vermilion }}>Pooja &amp; aarti</dt>
+                  <dd className="mt-1 text-balance leading-[1.5]" style={{ fontSize: 17 }}>{data.pooja}</dd>
+                </div>
+              )}
+              {data.dressCode && (
+                <div>
+                  <dt className="italic" style={{ fontFamily: serif, fontSize: 18, color: C.vermilion }}>What to wear</dt>
+                  <dd className="mt-1 text-balance leading-[1.5]" style={{ fontSize: 17 }}>{data.dressCode}</dd>
+                </div>
+              )}
+            </dl>
+          )}
+        </Reveal>
+      </div>
+
+      {/* ── Visarjan, kept apart ───────────────────────────────────── */}
+      <Reveal disabled={isPreview} as="section" className="relative overflow-hidden px-6 pb-20 pt-14 text-center" style={{ background: C.saffronLight }}>
+        <div className="mx-auto max-w-[30rem]">
+          <Heading>Visarjan</Heading>
+          <p className="mt-5 leading-[1.2]" style={{ fontFamily: serif, fontSize: 'clamp(22px, 6.6cqi, 27px)' }}>
+            {visarjan ? `${visarjan.weekday}, ${visarjan.day} ${visarjan.month}` : 'Date to be announced'}
+          </p>
+          {visarjanTime && (
+            <p className="mt-2" style={{ fontSize: 17, color: C.soft }}>
+              The procession leaves at <span style={{ fontWeight: 600, color: C.vermilion }}>{visarjanTime}</span>
+            </p>
+          )}
+          <p className="mx-auto mt-5 max-w-[20rem] text-balance italic leading-[1.5]" style={{ fontFamily: serif, fontSize: 18, color: C.vermDeep }}>
+            Ganpati Bappa Morya, pudhchya varshi lavkar ya.
+          </p>
+        </div>
+        <svg viewBox="0 0 400 40" preserveAspectRatio="none" className="absolute inset-x-0 bottom-0 h-[34px] w-full" aria-hidden>
+          <path d="M0 14C25 6 50 6 75 14S125 22 150 14 200 6 225 14 275 22 300 14 350 6 400 14" fill="none" stroke={C.saffron} strokeWidth={1.3} vectorEffect="non-scaling-stroke" />
+          <path d="M0 26C25 18 50 18 75 26S125 34 150 26 200 18 225 26 275 34 300 26 350 18 400 26" fill="none" stroke={C.vermilion} strokeWidth={1.3} vectorEffect="non-scaling-stroke" opacity={0.6} />
+        </svg>
+      </Reveal>
+
+      {/* ── Photographs ───────────────────────────────────────────── */}
+      {photos.length > 0 && (
+        <section className="mx-auto max-w-[34rem] px-5 py-14">
+          <Reveal disabled={isPreview}>
+            <Offering className="mb-5" />
+            <Heading>From our mandap</Heading>
+          </Reveal>
+          <div className="mt-9 grid grid-cols-2 gap-2.5">
+            {photos.map((src, i) => (
+              <Reveal
                 key={`${src}-${i}`}
-                initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-20px' }}
-                transition={{ duration: 0.6, delay: i * 0.05, ease: BEZIER }}
-                onClick={() => setLightbox(i)}
-                className="group relative h-40 w-56 shrink-0 overflow-hidden rounded-2xl transition-transform hover:-translate-y-1.5"
-                style={{ border: `1px solid ${C.goldBorder}`, boxShadow: '0 10px 26px rgba(180,35,42,0.1)' }}
-                aria-label={`View photo ${i + 1}`}
+                disabled={isPreview}
+                delay={(i % 2) * 80}
+                className={i === 0 || (i === photos.length - 1 && photos.length % 2 === 0) ? 'col-span-2' : ''}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Ganesh Utsav moment ${i + 1}`} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-              </motion.button>
+                <img
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  className={`w-full object-cover ${i === 0 ? 'aspect-[4/5]' : i === photos.length - 1 && photos.length % 2 === 0 ? 'aspect-[3/2]' : 'aspect-square'}`}
+                  style={i === 0 ? { clipPath: 'url(#gc-arch)' } : { borderRadius: 3 }}
+                />
+              </Reveal>
             ))}
-            <button
-              onClick={() => setLightbox(0)}
-              className="flex h-40 w-56 shrink-0 flex-col items-center justify-center gap-2 rounded-2xl text-white transition-transform hover:-translate-y-1.5"
-              style={{ background: `linear-gradient(135deg, ${C.saffron}, ${C.vermilion})`, boxShadow: '0 10px 26px rgba(180,35,42,0.2)' }}
-            >
-              <IconPhotos className="h-6 w-6" />
-              <span className="text-sm font-semibold">View All Photos</span>
-            </button>
           </div>
         </section>
       )}
 
-      {/* ══════════════════════ WISHES ══════════════════════ */}
-      <WishesWall eventId={eventId} sampleWishes={sampleWishes} isPreview={isPreview} />
+      {/* ── Blessings the family chose to share ─────────────────────── */}
+      {featured.length > 0 && (
+        <Reveal disabled={isPreview} as="section" className="mx-auto max-w-[30rem] border-t px-6 py-14 text-center" style={{ borderColor: C.rule }}>
+          <Heading>From family &amp; friends</Heading>
+          <ul className="mt-8 space-y-8">
+            {featured.map((w, i) => (
+              <li key={`${w.name}-${i}`}>
+                <p className="text-balance italic leading-[1.5]" style={{ fontFamily: serif, fontSize: 19 }}>
+                  &ldquo;{w.message}&rdquo;
+                </p>
+                <p className="mt-2" style={{ fontSize: 15, fontWeight: 600, color: C.vermilion }}>
+                  {w.name}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      )}
 
-      {/* ══════════════════════ FOOTER ══════════════════════ */}
-      <footer className={isPreview ? 'px-4 py-8' : 'px-4 py-12 sm:px-8'} style={{ background: C.creamDeep, borderTop: `1px solid ${C.goldBorder}` }}>
-        <div className={`mx-auto grid max-w-5xl gap-8 ${isPreview ? 'grid-cols-1' : 'sm:grid-cols-2 lg:grid-cols-4'}`}>
-          <div>
-            <a href={SHAREINVITE_URL} target="_blank" rel="noopener noreferrer"
-              className="font-heading text-xl italic transition-opacity hover:opacity-80" style={{ color: C.vermilion }}>
-              ShareInvite
-            </a>
-            <p className="mt-2 text-sm leading-relaxed" style={{ color: C.inkSoft }}>Creating beautiful memories for your special moments.</p>
-          </div>
-          <FooterCol title="Quick Links" links={[['Home', '#home'], ['Aarti', '#invocation'], ['Schedule', '#schedule']]} />
-          <FooterCol title="Explore" links={[['Darshan', '#darshan'], ...(gallery.length ? [['Gallery', '#gallery'] as [string, string]] : []), ['Wishes', '#wishes']]} />
-          <div>
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: C.gold }}>Follow Us</p>
-            <div className="flex gap-2.5">
-              {SOCIAL_ICONS.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full transition-opacity hover:opacity-80"
-                  style={{ background: C.vermilion, color: C.white }}>
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">{s.path}</svg>
-                </a>
-              ))}
-            </div>
-          </div>
+      {eventId && (
+        <div className="border-t" style={{ borderColor: C.rule }}>
+          <WishesSection
+            eventId={eventId}
+            theme={WISHES_THEME}
+            title="Wishes for the family"
+            intro="Leave a few words for the family. Every guest who opens this invitation will see them."
+          />
         </div>
-        <div className="mt-10 flex items-center justify-between gap-4 border-t pt-6" style={{ borderColor: C.goldBorder }}>
-          <IconDiya className="h-5 w-5 shrink-0" style={{ color: C.gold }} />
-          <p className="flex items-center justify-center gap-1.5 text-center text-xs" style={{ color: C.inkFaint }}>
-            Made with <IconHeart className="h-3.5 w-3.5" style={{ color: C.vermilion }} /> by ShareInvite
-          </p>
-          <IconDiya className="h-5 w-5 shrink-0" style={{ color: C.gold }} />
+      )}
+
+      <footer className="px-6 pb-10 pt-12 text-center">
+        <Offering />
+        <p className="mt-5 leading-[1.2]" style={{ fontFamily: serif, fontSize: 24 }}>
+          {hosts}
+        </p>
+        <div className="mt-8">
+          <Credit isPreview={isPreview} color={C.faint} linkColor={C.vermilion} />
         </div>
       </footer>
-
-      {/* ══════════════════════ LIGHTBOX ══════════════════════ */}
-      <AnimatePresence>
-        {lightbox !== null && gallery[lightbox] && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] flex items-center justify-center p-4"
-            style={{ background: 'rgba(46,22,12,0.86)', backdropFilter: 'blur(6px)' }}
-            onClick={() => setLightbox(null)}
-          >
-            <button onClick={() => setLightbox(null)} aria-label="Close" className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full text-xl text-white" style={{ background: 'rgba(255,255,255,0.16)' }}>✕</button>
-            <button onClick={(e) => { e.stopPropagation(); setLightbox((v) => (v! - 1 + gallery.length) % gallery.length) }} aria-label="Previous" className="absolute left-3 flex h-11 w-11 items-center justify-center rounded-full text-xl text-white sm:left-6" style={{ background: 'rgba(255,255,255,0.16)' }}>‹</button>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <motion.img key={lightbox} initial={{ scale: 0.94, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} src={gallery[lightbox]} alt={`Photo ${lightbox + 1}`} className="max-h-[82vh] max-w-[90vw] rounded-2xl object-contain" onClick={(e) => e.stopPropagation()} />
-            <button onClick={(e) => { e.stopPropagation(); setLightbox((v) => (v! + 1) % gallery.length) }} aria-label="Next" className="absolute right-3 flex h-11 w-11 items-center justify-center rounded-full text-xl text-white sm:right-6" style={{ background: 'rgba(255,255,255,0.16)' }}>›</button>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
-  )
-}
-
-// ── Detail card ──────────────────────────────────────────────────────────────
-function DetailCard({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
-  return (
-    <motion.div {...fadeUp(0.06)} className="rounded-3xl p-6 sm:p-7"
-      style={{ background: C.cream, border: `1px solid ${C.goldBorder}`, boxShadow: '0 12px 34px rgba(180,35,42,0.07)' }}>
-      <div className="mb-4 flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-          style={{ background: C.white, border: `1px solid ${C.vermilionBorder}`, color: C.vermilion }}>
-          {icon}
-        </span>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: C.gold }}>{title}</p>
-      </div>
-      {children}
-    </motion.div>
-  )
-}
-
-function FooterCol({ title, links }: { title: string; links: [string, string][] }) {
-  return (
-    <div>
-      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: C.gold }}>{title}</p>
-      <ul className="space-y-2">
-        {links.map(([label, href]) => (
-          <li key={href}><a href={href} className="text-sm transition-opacity hover:opacity-70" style={{ color: C.inkSoft }}>{label}</a></li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-// ── WISHES wall (live wishes + guest submission) ─────────────────────────────
-//
-// Live wishes replace the host's sample wishes as soon as the first guest
-// writes one, so a freshly published invitation is never an empty section and a
-// busy one is never padded with placeholder copy.
-function WishesWall({ eventId, sampleWishes, isPreview }: { eventId?: string; sampleWishes: SampleWish[]; isPreview?: boolean }) {
-  const isLive = Boolean(eventId) && eventId !== '__preview__'
-  const [wishes, setWishes] = useState<SampleWish[]>([])
-  const [name, setName] = useState('')
-  const [message, setMessage] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const trackRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!isLive) return
-    fetch(`/api/wishes?eventId=${eventId}`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (Array.isArray(d)) setWishes(d.map((w: { name: string; message: string }) => ({ name: w.name, message: w.message })))
-      })
-      .catch(() => { })
-  }, [eventId, isLive])
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name.trim() || !message.trim()) { setStatus('error'); return }
-    if (!isLive) { setStatus('success'); return }
-    setStatus('loading')
-    try {
-      const res = await fetch('/api/wishes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, name: name.trim(), message: message.trim() }),
-      })
-      if (!res.ok) throw new Error()
-      setWishes((prev) => [{ name: name.trim(), message: message.trim() }, ...prev])
-      setName(''); setMessage('')
-      setStatus('success')
-    } catch { setStatus('error') }
-  }
-
-  const list = wishes.length ? wishes : sampleWishes
-  const scrollBy = (dir: number) => {
-    const el = trackRef.current
-    if (!el) return
-    el.scrollBy({ left: dir * (el.clientWidth * 0.85), behavior: 'smooth' })
-  }
-
-  const inputStyle = { background: C.white, border: `1px solid ${C.vermilionBorder}`, color: C.ink }
-
-  return (
-    <section id="wishes" className={isPreview ? 'px-3 py-8' : 'px-4 py-14 sm:px-8 sm:py-20'} style={{ background: C.cream }}>
-      <div className="mx-auto max-w-5xl">
-        <SectionHead title="Wishes & Blessings" className="mb-10" />
-
-        {list.length > 0 && (
-          <div className="relative mb-10">
-            <button onClick={() => scrollBy(-1)} aria-label="Previous wishes" className="absolute -left-1 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-lg text-white sm:flex" style={{ background: C.vermilion }}>‹</button>
-            <div ref={trackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
-              {list.map((w, i) => (
-                <motion.div
-                  key={`${w.name}-${i}`}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-                  className={`w-[85%] shrink-0 snap-center rounded-2xl p-6 ${isPreview ? '' : 'sm:w-[calc(33.333%-11px)]'}`}
-                  style={{ background: C.paper, border: `1px solid ${C.goldBorder}`, boxShadow: '0 10px 26px rgba(180,35,42,0.08)' }}
-                >
-                  <div className="mb-3 flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white"
-                      style={{ background: `linear-gradient(135deg, ${C.saffronSoft}, ${C.vermilion})` }}>
-                      {w.name.charAt(0).toUpperCase()}
-                    </div>
-                    <p className="text-sm font-semibold" style={{ color: C.vermilionDeep }}>{w.name}</p>
-                  </div>
-                  <p className="text-[13.5px] leading-relaxed" style={{ color: C.inkSoft }}>{w.message}</p>
-                  <IconLotus className="mt-3 h-4 w-4" style={{ color: C.saffron }} />
-                </motion.div>
-              ))}
-            </div>
-            <button onClick={() => scrollBy(1)} aria-label="Next wishes" className="absolute -right-1 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-lg text-white sm:flex" style={{ background: C.vermilion }}>›</button>
-          </div>
-        )}
-
-        {/* Guest wish form */}
-        <motion.div {...fadeUp(0.08)} className={`mx-auto max-w-xl rounded-3xl ${isPreview ? 'p-5' : 'p-7 sm:p-9'}`}
-          style={{ background: C.paper, border: `1px solid ${C.vermilionBorder}`, boxShadow: '0 16px 44px rgba(180,35,42,0.08)' }}>
-          <AnimatePresence mode="wait">
-            {status === 'success' ? (
-              <motion.div key="ok" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="py-8 text-center">
-                <div className="mb-3 flex justify-center"><IconCheck className="h-10 w-10" style={{ color: C.saffron }} /></div>
-                <p className="font-heading text-xl" style={{ color: C.vermilionDeep }}>Ganpati Bappa Morya!</p>
-                <p className="mt-2 text-sm" style={{ color: C.inkSoft }}>Your blessing is now on this invitation for everyone to see.</p>
-                <button onClick={() => setStatus('idle')} className="mt-5 text-sm font-semibold" style={{ color: C.vermilion }}>
-                  Send another wish →
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onSubmit={submit} className="space-y-3">
-                <p className="mb-4 text-center text-sm" style={{ color: C.inkSoft }}>Leave a blessing for the family and Bappa.</p>
-                <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value.slice(0, 100))}
-                  required
-                  placeholder="Your Name"
-                  className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none"
-                  style={inputStyle}
-                />
-                <textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value.slice(0, 320))}
-                  required
-                  rows={3}
-                  placeholder="Your wish or blessing…"
-                  className="w-full resize-none rounded-xl px-4 py-3 text-sm focus:outline-none"
-                  style={inputStyle}
-                />
-                {status === 'error' && <p className="text-xs" style={{ color: C.vermilionDeep }}>Please add your name and a message, then try again.</p>}
-                <button type="submit" disabled={status === 'loading'}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.01] disabled:opacity-60"
-                  style={{ background: `linear-gradient(135deg, ${C.saffron}, ${C.vermilion})`, boxShadow: '0 8px 22px rgba(180,35,42,0.26)' }}>
-                  {status === 'loading' ? 'Sending…' : <>Send Wish <IconSend className="h-4 w-4" /></>}
-                </button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </section>
   )
 }

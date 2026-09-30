@@ -1,17 +1,22 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import {
-  GLOBAL_TEMPLATE_IDS,
-  getLocale,
-  localePath,
-} from '@/lib/i18n'
+import { GLOBAL_TEMPLATE_IDS, getLocale } from '@/lib/i18n'
 import { t } from '@/content/translations'
 import { templateSeoSlug } from '@/lib/seo'
 import { TEMPLATES } from '@/modules/templates/data'
-import { LOWEST_PAID_PRICE, templatePrice } from '@/lib/plans'
+import { LOWEST_PAID_PRICE, formatTemplatePrice } from '@/lib/plans'
 import { templateImage } from '@/lib/templateMedia'
-import LanguageSwitcher from '@/components/i18n/LanguageSwitcher'
+import { displayName } from '@/lib/catalog'
+import SiteHeader from '@/components/layout/SiteHeader'
+import SiteFooter from '@/components/landing/SiteFooter'
 import TrackedLink from '@/components/ui/TrackedLink'
+import CtaBand from '@/components/brand/CtaBand'
+import { LogoMark } from '@/components/brand/Logo'
+import { ArrowRightIcon, CheckIcon } from '@/components/ui/Icons'
+
+// `value.editAnytime` was listed here, but a published invitation cannot be
+// edited today — replaced with a promise the product keeps.
+const VALUES = ['value.noApp', 'value.oneLink', 'price.freeToBuild', 'price.noSubscription']
 
 export default function LocalisedHome({ locale: L }: { locale: string }) {
   const locale = getLocale(L)
@@ -19,121 +24,100 @@ export default function LocalisedHome({ locale: L }: { locale: string }) {
   const templates = GLOBAL_TEMPLATE_IDS
     .map((id) => TEMPLATES.find((tpl) => tpl.id === id))
     .filter(Boolean)
-    .slice(0, 9) as typeof TEMPLATES
+    .slice(0, 8) as typeof TEMPLATES
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border bg-white px-5 py-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
-          <Link href={localePath('/', L)} className="flex items-center gap-2.5">
-            <Image src="/logo1.png" alt="" aria-hidden width={120} height={32} className="h-8 w-auto" />
-            <span className="font-display text-xl tracking-wide text-ink">ShareInvite</span>
-          </Link>
-          <div className="flex items-center gap-2">
-            <LanguageSwitcher />
-            <Link href="/create?src=global" className="gold-button rounded-xl px-4 py-2 text-sm font-semibold">
-              {t('cta.createInvitation', L)}
-            </Link>
-          </div>
-        </div>
-      </header>
+    <main className="min-h-screen bg-champagne text-charcoal" dir={locale.dir} lang={locale.htmlLang}>
+      <SiteHeader locale={L} createHref="/create?src=global" />
 
-      <section className="bg-[#FCF7F1] px-5 py-16 text-center sm:py-24">
-        <div className="mx-auto max-w-3xl">
-          <h1 className="font-display text-4xl font-normal leading-tight text-ink sm:text-5xl">
+      <section className="relative overflow-hidden border-b border-line px-4 py-16 text-center sm:py-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_60%_at_80%_10%,rgba(232,200,102,0.2),transparent_70%)]"
+        />
+        <div className="relative mx-auto max-w-3xl">
+          <LogoMark className="enter-0 mx-auto mb-6 h-14 w-14" />
+          <h1 className="t-h1 enter-0">
             {t('hero.tagline', L)}
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-muted">
+          <p className="t-lede enter-1 mx-auto mt-6 max-w-2xl">
             {t('hero.sub', L)}
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="enter-2 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <TrackedLink
               href="/create?src=global_home"
               location="global_home_hero"
               meta={{ locale: L, page_type: 'localised_home' }}
-              className="gold-button rounded-full px-9 py-4 text-base font-semibold"
+              className="btn-primary inline-flex items-center gap-2 rounded-full px-9 py-4 text-[1rem] font-semibold"
             >
               {t('cta.createInvitation', L)}
+              <ArrowRightIcon className="h-4 w-4 rtl:rotate-180" />
             </TrackedLink>
-            <Link
-              href={localePath('/', L)}
-              className="rounded-full border border-border bg-white px-9 py-4 text-base font-semibold text-ink"
-            >
+            {/* Was a link to this same page. */}
+            <a href="#templates" className="btn-outline inline-flex rounded-full px-9 py-4 text-[1rem] font-semibold">
               {t('cta.browseTemplates', L)}
-            </Link>
+            </a>
           </div>
-          <p className="mt-4 text-sm text-muted">
+          <p className="mt-5 text-[0.9rem] text-muted">
             {t('price.freeToBuild', L)} · {t('price.oneTime', L)} · {t('price.noSubscription', L)}
           </p>
         </div>
       </section>
 
-      <section className="border-y border-border bg-white px-5 py-12">
-        <div className="mx-auto grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {['value.noApp', 'value.oneLink', 'value.editAnytime', 'value.rsvp'].map((key) => (
-            <div key={key} className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-ink">
+      <section className="border-b border-line bg-paper px-4 py-10">
+        <ul className="mx-auto grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-4" data-reveal-group>
+          {VALUES.map((key) => (
+            <li key={key} className="flex items-center gap-2.5 rounded-2xl border border-line bg-champagne p-4 text-[0.95rem] font-medium">
+              <CheckIcon className="h-4 w-4 shrink-0 text-emerald-soft" />
               {t(key, L)}
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
-      <section className="px-5 py-16">
+      <section id="templates" className="px-4 py-16 sm:px-6">
         <div className="mx-auto max-w-6xl">
-          <h2 className="font-display text-3xl font-normal text-ink">{t('nav.templates', L)}</h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="t-h2" data-reveal>{t('nav.templates', L)}</h2>
+          <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4" data-reveal-group>
             {templates.map((tpl) => (
-              <Link
-                key={tpl.id}
-                href={`/templates/${templateSeoSlug(tpl.id)}`}
-                className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-all hover:-translate-y-0.5"
-              >
-                <div className="relative aspect-[3/4] bg-[#FCF7F1]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={templateImage(tpl.id)}
-                    alt={tpl.name}
-                    loading="lazy"
-                    className="h-full w-full object-cover"
-                  />
-                  <span
-                    className="absolute right-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-xs font-bold"
-                    style={{ color: '#B87924' }}
-                  >
-                    ₹{templatePrice(tpl.id)}
+              <li key={tpl.id}>
+                <Link
+                  href={`/templates/${templateSeoSlug(tpl.id)}`}
+                  className="lift group block overflow-hidden rounded-3xl border border-line bg-paper shadow-soft"
+                >
+                  <span className="relative block aspect-[4/5] overflow-hidden bg-peach">
+                    <Image
+                      src={templateImage(tpl.id)}
+                      alt={tpl.name}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                    <span className="absolute end-3 top-3 rounded-full bg-charcoal/85 px-2.5 py-1 text-[0.78rem] font-bold text-paper" dir="ltr">
+                      {formatTemplatePrice(tpl.id)}
+                    </span>
                   </span>
-                </div>
-                <div className="p-4">
-                  <p className="font-heading text-base text-ink">{tpl.name}</p>
-                  <p className="mt-1 text-xs leading-5 text-muted">{tpl.description}</p>
-                </div>
-              </Link>
+                  <span className="block p-4">
+                    <span className="block font-editorial text-[1.3rem] font-semibold leading-tight" dir="ltr">{displayName(tpl.name)}</span>
+                    <span className="mt-1 block text-[0.8rem] leading-5 text-muted" dir="ltr">{tpl.description}</span>
+                  </span>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section className="border-t border-border bg-white px-5 py-16 text-center">
-        <div className="mx-auto max-w-2xl">
-          <h2 className="font-display text-3xl font-normal text-ink">{t('cta.createInvitation', L)}</h2>
-          <p className="mt-4 text-sm leading-7 text-muted">
-            {t('price.freeToBuild', L)} · {t('price.oneTime', L)} — ₹{LOWEST_PAID_PRICE}+
-          </p>
-          <TrackedLink
-            href="/create?src=global_home_footer"
-            location="global_home_footer"
-            meta={{ locale: L, page_type: 'localised_home' }}
-            className="gold-button mt-7 inline-flex rounded-full px-10 py-4 text-base font-semibold"
-          >
-            {t('cta.start', L)}
-          </TrackedLink>
-          <p className="mt-8 text-xs text-muted" dir={locale.dir}>
-            <Link href="/" hrefLang="en" className="underline-offset-2 hover:underline">
-              English
-            </Link>
-          </p>
-        </div>
-      </section>
+      <CtaBand
+        eyebrow={t('price.noSubscription', L)}
+        title={t('cta.createInvitation', L)}
+        sub={`${t('price.freeToBuild', L)} · ${t('price.oneTime', L)} — ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}+`}
+        primary={{ href: '/create?src=global_home_footer', label: t('cta.start', L) }}
+        secondary={null}
+        location="global_home_footer"
+      />
+
+      <SiteFooter />
     </main>
   )
 }

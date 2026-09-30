@@ -13,13 +13,13 @@ export default function StepProgress({ currentStep }: { currentStep: number }) {
         <div key={step.n} className="flex items-center">
           <div
             className="flex items-center gap-1.5 px-2 py-1 rounded-full transition-all"
-            style={{ background: step.n === currentStep ? 'rgba(184,121,36,0.09)' : 'transparent' }}
+            style={{ background: step.n === currentStep ? 'rgba(11,74,52,0.08)' : 'transparent' }}
           >
             <span
               className="w-[18px] h-[18px] rounded-full flex items-center justify-center font-bold shrink-0"
               style={{
                 fontSize: '8px',
-                background: step.n < currentStep ? '#2F766D' : step.n === currentStep ? '#B87924' : 'rgba(44,32,28,0.08)',
+                background: step.n < currentStep ? '#2F766D' : step.n === currentStep ? '#052E20' : 'rgba(44,32,28,0.08)',
                 color: step.n < currentStep || step.n === currentStep ? '#fff' : 'rgba(44,32,28,0.22)',
               }}
             >
@@ -28,7 +28,7 @@ export default function StepProgress({ currentStep }: { currentStep: number }) {
             <span
               className="text-[11px] font-semibold hidden md:inline"
               style={{
-                color: step.n === currentStep ? '#B87924' : step.n < currentStep ? '#2F766D' : 'rgba(44,32,28,0.28)',
+                color: step.n === currentStep ? '#052E20' : step.n < currentStep ? '#2F766D' : 'rgba(44,32,28,0.28)',
               }}
             >
               {step.label}

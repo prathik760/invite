@@ -13,6 +13,7 @@ import { CREATE_STEPS, seoEvents, trackEvent } from '@/lib/analytics'
 import BottomDock from '@/components/ui/BottomDock'
 import PaymentProblem, { type PayError } from '@/components/create/PaymentProblem'
 import { supportWhatsAppUrl } from '@/lib/support'
+import { carryOverDetails } from '@/lib/carryOver'
 
 import StepProgress from '@/components/create/StepProgress'
 import Step1Templates from '@/components/create/Step1Templates'
@@ -22,6 +23,9 @@ import Step4Enrich from '@/components/create/Step4Enrich'
 import Step5Publish from '@/components/create/Step5Publish'
 import MobilePreviewStrip from '@/components/create/MobilePreviewStrip'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from '@/components/create/templateVisuals'
+import Logo, { LogoMark } from '@/components/brand/Logo'
+import { CheckIcon, ShieldIcon } from '@/components/ui/Icons'
+import { OFFER_INCLUDES } from '@/lib/offer'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -37,59 +41,75 @@ function Spinner() {
   )
 }
 
-// ─── Login prompt modal ────────────────────────────────────────────────────────
-function LoginPromptModal({ onClose, onContinueAsGuest }: { onClose: () => void; onContinueAsGuest: () => void }) {
+// ─── Shared modal frame ────────────────────────────────────────────────────────
+function ModalFrame({ onClose, children, label }: { onClose: () => void; children: React.ReactNode; label: string }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 flex items-center justify-center px-4"
-      style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)', zIndex: 'var(--z-overlay)' as unknown as number }}
-      onClick={e => { if (e.target === e.currentTarget) onClose() }}>
-      <motion.div initial={{ scale: 0.96, y: 16, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }}
-        exit={{ scale: 0.96, y: 16, opacity: 0 }} transition={{ duration: 0.3, ease: BEZIER }}
-        className="w-full max-w-sm overflow-y-auto rounded-3xl p-6 sm:p-7"
+      className="fixed inset-0 flex items-end justify-center px-3 sm:items-center sm:px-4"
+      style={{ background: 'rgba(3,25,15,0.62)', backdropFilter: 'blur(14px)', zIndex: 'var(--z-overlay)' as unknown as number }}
+      onClick={e => { if (e.target === e.currentTarget) onClose() }}
+      role="dialog" aria-modal="true" aria-label={label}>
+      <motion.div initial={{ y: 28, opacity: 0, scale: 0.98 }} animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 28, opacity: 0, scale: 0.98 }} transition={{ duration: 0.35, ease: BEZIER }}
+        className="card relative w-full max-w-md overflow-y-auto rounded-b-none p-6 sm:rounded-3xl sm:p-8"
         style={{
-          background: '#FFF',
-          border: '1px solid #E8DCCD',
-          boxShadow: '0 32px 80px rgba(34,27,23,0.28)',
           // Without a cap the card overflows the viewport on short screens
           // (landscape phones, small laptops) and the pay button is unreachable.
-          maxHeight: 'calc(100dvh - 2rem)',
+          maxHeight: 'calc(100dvh - 1rem)',
+          paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))',
         }}>
-        <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5"
-          style={{ background: 'linear-gradient(135deg, rgba(217,164,65,0.15), rgba(184,121,36,0.10))' }}>
-          <svg className="w-7 h-7" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-peach hover:text-charcoal"
+        >
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
-        </div>
-        <h2 className="text-2xl font-bold text-ink text-center mb-1">Almost there!</h2>
-        <p className="text-sm text-muted text-center mb-6 leading-6">
-          Sign in to save your invite, track guest wishes, and access your dashboard.
-        </p>
-        <div className="space-y-2.5">
-          <Link href="/auth/login?callbackUrl=/create"
-            className="gold-button flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-semibold">
-            Sign in to my account
-          </Link>
-          <Link href="/auth/signup?callbackUrl=/create"
-            className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-semibold border border-border hover:border-[#D9A441]/40 transition-colors"
-            style={{ color: '#2C201C' }}>
-            Create free account →
-          </Link>
-        </div>
-        <div className="mt-4 pt-4 border-t border-border/40 text-center">
-          <button onClick={onContinueAsGuest} className="text-xs text-muted hover:text-foreground transition-colors">
-            Continue without account — invite won&apos;t be saved to dashboard
-          </button>
-        </div>
+        </button>
+        {children}
       </motion.div>
     </motion.div>
   )
 }
 
-// ─── Upgrade modal ─────────────────────────────────────────────────────────────
+// ─── Login prompt modal ────────────────────────────────────────────────────────
+function LoginPromptModal({ onClose, onContinueAsGuest }: { onClose: () => void; onContinueAsGuest: () => void }) {
+  return (
+    <ModalFrame onClose={onClose} label="Sign in to publish">
+      <LogoMark className="h-12 w-12" />
+      <p className="eyebrow mt-5">Almost there</p>
+      <h2 className="t-h2 mt-2">Sign in to publish</h2>
+      <p className="mt-3 text-[0.95rem] leading-7 text-charcoal/70">
+        Your design and details are saved. An account keeps your invitation, your purchase and your guests&apos; wishes together.
+      </p>
+      <div className="mt-7 space-y-2.5">
+        <Link href="/auth/login?callbackUrl=/create"
+          className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[0.95rem] font-semibold">
+          Sign in to my account
+        </Link>
+        <Link href="/auth/signup?callbackUrl=/create"
+          className="btn-outline flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[0.95rem] font-semibold">
+          Create a free account
+        </Link>
+      </div>
+      <div className="mt-5 border-t border-line pt-4 text-center">
+        <button type="button" onClick={onContinueAsGuest} className="text-[0.82rem] text-muted underline-offset-4 transition-colors hover:text-charcoal hover:underline">
+          Continue without an account — the invitation won&apos;t be saved to a dashboard
+        </button>
+      </div>
+    </ModalFrame>
+  )
+}
+
+// ─── Checkout modal ─────────────────────────────────────────────────────────────
+// Named UpgradeModal historically; it sells exactly one design. No plan, tier or
+// upgrade language reaches the customer.
 function UpgradeModal({
-  templateName, requiredPlan, isLoggedIn, onClose, onPay, paying, payError,
+  templateId, templateName, requiredPlan, isLoggedIn, onClose, onPay, paying, payError,
 }: {
+  templateId: string
   templateName: string
   requiredPlan: typeof PLANS[number]
   isLoggedIn: boolean
@@ -98,50 +118,38 @@ function UpgradeModal({
   paying: boolean
   payError: PayError | null
 }) {
+  const visual = TEMPLATE_VISUALS[templateId] ?? TEMPLATE_VISUALS['elegant-wedding']
+  const price = `₹${requiredPlan.price.toLocaleString('en-IN')}`
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      className="fixed inset-0 flex items-center justify-center px-4"
-      style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)', zIndex: 'var(--z-overlay)' as unknown as number }}
-      onClick={e => { if (e.target === e.currentTarget) onClose() }}>
-      <motion.div initial={{ scale: 0.96, y: 16, opacity: 0 }} animate={{ scale: 1, y: 0, opacity: 1 }}
-        exit={{ scale: 0.96, y: 16, opacity: 0 }} transition={{ duration: 0.3, ease: BEZIER }}
-        className="w-full max-w-sm overflow-y-auto rounded-3xl p-6 sm:p-7"
-        style={{
-          background: '#FFF',
-          border: '1px solid #E8DCCD',
-          boxShadow: '0 32px 80px rgba(34,27,23,0.28)',
-          // Without a cap the card overflows the viewport on short screens
-          // (landscape phones, small laptops) and the pay button is unreachable.
-          maxHeight: 'calc(100dvh - 2rem)',
-        }}>
-        <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-5"
-          style={{ background: 'rgba(217,164,65,0.12)' }}>
-          <svg className="w-6 h-6" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-          </svg>
+    <ModalFrame onClose={onClose} label={`Get the ${templateName} design`}>
+      <p className="eyebrow">One design · one price</p>
+      <div className="mt-4 flex items-center gap-4">
+        <span className="relative h-20 w-16 shrink-0 overflow-hidden rounded-2xl border border-line bg-peach shadow-soft">
+          <Image src={visual.image} alt="" fill sizes="64px" className="object-cover" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <h2 className="t-h3 truncate">{templateName.split('—')[0].trim()}</h2>
+          <p className="mt-1 flex items-baseline gap-1.5">
+            <span className="font-editorial text-[2.2rem] font-semibold leading-none">{price}</span>
+            <span className="text-[0.85rem] text-muted">one-time</span>
+          </p>
         </div>
-        <h2 className="text-2xl font-bold text-ink text-center mb-1">{templateName}</h2>
-        <p className="text-sm text-muted text-center mb-6 leading-6">
-          A one-time payment for this design. No plan, no subscription — you buy the
-          template you want and every feature is included.
-        </p>
-        <div className="rounded-2xl border border-border bg-surface p-4 mb-5">
-          <div className="flex items-baseline justify-between mb-4">
-            <p className="text-sm font-medium text-muted">This template</p>
-            <p className="text-2xl font-bold text-ink">₹{requiredPlan.price.toLocaleString()}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-y-2 gap-x-3">
-            {['Background music', 'Photo gallery', 'Live countdown', 'Guest wishes', 'Google Maps', 'WhatsApp sharing'].map(f => (
-              <div key={f} className="flex items-center gap-1.5 text-xs text-muted">
-                <svg className="w-3.5 h-3.5 shrink-0" style={{ color: '#2F766D' }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
-                {f}
-              </div>
-            ))}
-          </div>
-        </div>
-        {payError && (
+      </div>
+
+      <div className="mt-6 rounded-2xl border border-line bg-champagne p-4">
+        <p className="text-[0.75rem] font-bold uppercase tracking-[0.16em] text-muted">Everything included</p>
+        <ul className="mt-3 space-y-2">
+          {OFFER_INCLUDES.map(f => (
+            <li key={f} className="flex items-start gap-2 text-[0.86rem] text-charcoal/85">
+              <CheckIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-soft" />
+              {f}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {payError && (
+        <div className="mt-5">
           <PaymentProblem
             error={payError}
             price={requiredPlan.price}
@@ -149,64 +157,81 @@ function UpgradeModal({
             onRetry={() => onPay(requiredPlan.id)}
             retrying={paying}
           />
-        )}
+        </div>
+      )}
 
+      <div className="mt-6">
         {!isLoggedIn ? (
           <div className="space-y-2">
             <Link href="/auth/login?callbackUrl=/create"
-              className="gold-button flex items-center justify-center w-full py-3.5 rounded-xl text-sm font-semibold">
-              Sign in to unlock
+              className="btn-primary flex w-full items-center justify-center rounded-full py-4 text-[0.95rem] font-semibold">
+              Sign in to get this design
             </Link>
-            <p className="text-center text-xs text-muted">
-              Don&apos;t have an account?{' '}
-              <Link href="/auth/signup?callbackUrl=/create" className="font-semibold" style={{ color: '#B87924' }}>Sign up free →</Link>
+            <p className="text-center text-[0.82rem] text-muted">
+              New here?{' '}
+              <Link href="/auth/signup?callbackUrl=/create" className="link">Create a free account</Link>
             </p>
           </div>
         ) : (
-          <button onClick={() => onPay(requiredPlan.id)} disabled={paying}
-            className="gold-button flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-semibold disabled:opacity-60">
+          <button type="button" onClick={() => onPay(requiredPlan.id)} disabled={paying}
+            className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-4 text-[1rem] font-semibold disabled:opacity-60">
             {paying && <Spinner />}
-            {paying ? 'Opening payment…' : `Pay ₹${requiredPlan.price.toLocaleString()} — One Time`}
+            {paying ? 'Opening secure payment…' : `Pay ${price} — one time`}
           </button>
         )}
-        {/* Trust row. This modal is the moment of decision and until now it
-            offered no refund policy, no support route and no payment marks —
-            all of which exist elsewhere on the site but not where they count. */}
-        <div className="mt-4 border-t border-border/50 pt-4">
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10px] text-muted">
-            <span className="inline-flex items-center gap-1">
-              <svg className="h-3 w-3" style={{ color: '#2F766D' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-              </svg>
-              Secured by Razorpay
-            </span>
-            <span aria-hidden>·</span>
-            <span>UPI · Card · Net banking</span>
-            <span aria-hidden>·</span>
-            <span>One-time — no subscription</span>
-          </div>
-          <div className="mt-2.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px]">
-            <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline" style={{ color: '#B87924' }}>
-              7-day refund policy
-            </Link>
-            <span className="text-muted" aria-hidden>·</span>
-            <a
-              href={supportWhatsAppUrl(`Hi, I have a question about the ${templateName} template (₹${requiredPlan.price}) before I pay.`)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold underline-offset-2 hover:underline"
-              style={{ color: 'rgb(22,163,74)' }}
-            >
-              Question? Chat with us
-            </a>
-          </div>
-        </div>
+      </div>
 
-        <button onClick={onClose} className="mt-2 w-full py-2.5 text-sm text-muted hover:text-foreground transition-colors">
-          Maybe later
-        </button>
-      </motion.div>
-    </motion.div>
+      {/* Trust row. This modal is the moment of decision and until now it
+          offered no refund policy, no support route and no payment marks —
+          all of which exist elsewhere on the site but not where they count. */}
+      <div className="mt-5 border-t border-line pt-4">
+        <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.78rem] text-muted">
+          <ShieldIcon className="h-3.5 w-3.5 text-emerald-soft" />
+          Secured by Razorpay
+          <span aria-hidden>·</span> UPI · Card · Net banking
+          <span aria-hidden>·</span> No subscription
+        </p>
+        <p className="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.8rem]">
+          <Link href="/refund-policy" target="_blank" className="link">7-day refund policy</Link>
+          <span className="text-muted" aria-hidden>·</span>
+          <a
+            href={supportWhatsAppUrl(`Hi, I have a question about the ${templateName} design (₹${requiredPlan.price.toLocaleString('en-IN')}) before I pay.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-[#128C4B] underline-offset-4 hover:underline"
+          >
+            Question? Chat with us
+          </a>
+        </p>
+      </div>
+
+      <button type="button" onClick={onClose} className="mt-3 w-full py-2.5 text-[0.88rem] text-muted transition-colors hover:text-charcoal">
+        Maybe later
+      </button>
+    </ModalFrame>
+  )
+}
+
+// ─── Success link with copy feedback ───────────────────────────────────────────
+function SuccessLink({ url }: { url: string }) {
+  const [copied, setCopied] = useState(false)
+  return (
+    <div className="flex items-center gap-2 rounded-2xl border border-line bg-champagne p-2 pl-4">
+      <span className="min-w-0 flex-1 truncate text-[0.85rem] text-charcoal/75">{url}</span>
+      <button
+        type="button"
+        onClick={() => {
+          navigator.clipboard?.writeText(url).then(() => {
+            setCopied(true)
+            setTimeout(() => setCopied(false), 1800)
+          }).catch(() => {})
+        }}
+        className="btn-primary shrink-0 rounded-full px-4 py-2 text-[0.8rem] font-semibold"
+        aria-live="polite"
+      >
+        {copied ? 'Copied' : 'Copy link'}
+      </button>
+    </div>
   )
 }
 
@@ -215,6 +240,18 @@ export default function CreatePage() {
   const { data: session } = useSession()
   const [currentStep, setCurrentStep] = useState(1)
   const [previewOpen, setPreviewOpen] = useState(false)  // mobile full-screen live preview
+  // Which preview is on screen. Each layout's preview used to stay mounted but
+  // hidden at the other size, so phones rendered the design two or three times
+  // while the host typed, and designs whose SVG art uses ids resolved them into
+  // the hidden copy and lost their gradients. Only the visible one is mounted.
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null)
+  useEffect(() => {
+    const m = window.matchMedia('(min-width: 768px)')
+    const on = () => setIsDesktop(m.matches)
+    on()
+    m.addEventListener('change', on)
+    return () => m.removeEventListener('change', on)
+  }, [])
   const [selectedId, setSelectedId] = useState(TEMPLATES[0].id)
   const selectedTemplate = TEMPLATES.find(t => t.id === selectedId) ?? TEMPLATES[0]
   const [data, setData] = useState<Record<string, string>>(selectedTemplate.config.defaultData)
@@ -308,16 +345,22 @@ export default function CreatePage() {
   }, [draftLoaded, selectedId, data, currentStep, createdSlug])
 
   const handleTemplateChange = useCallback((id: string) => {
+    // Re-selecting the current design used to reset it to sample data, wiping
+    // everything typed so far on a single stray tap.
+    if (id === selectedId) return
     const tpl = TEMPLATES.find(t => t.id === id) ?? TEMPLATES[0]
+    const prev = TEMPLATES.find(t => t.id === selectedId)
     setSelectedId(id)
-    setData(tpl.config.defaultData)
+    // Keep what the user typed (names, date, venue…) wherever the new design
+    // has the same kind of field, so designs can be compared with real details.
+    setData(carryOverDetails(prev, data, tpl))
     setError('')
     trackEvent(seoEvents.templateView, {
       template_id: tpl.id,
       template_name: tpl.name,
       template_category: tpl.category,
     })
-  }, [])
+  }, [selectedId, data])
 
   /**
    * Put the user at the top of the step they just moved to.
@@ -490,7 +533,7 @@ export default function CreatePage() {
         description: `${upgradeTarget?.templateName ?? 'Invitation template'} — one-time`,
         order_id: order.orderId as string,
         prefill: { email: session?.user?.email ?? undefined, name: session?.user?.name ?? undefined },
-        theme: { color: '#B87924' },
+        theme: { color: '#0B4A34' },
         handler: async (response: RazorpayResponse) => {
           try {
             const verRes = await fetch('/api/payments/verify', {
@@ -567,21 +610,20 @@ export default function CreatePage() {
   const isSplitStep = currentStep === 2 || currentStep === 3 || currentStep === 4
 
   return (
-    <div className="min-h-screen bg-background flex flex-col text-foreground">
+    <div className="min-h-screen bg-champagne flex flex-col text-foreground">
 
       {/* Gold accent bar */}
       <div
-        className="sticky top-0 h-[3px] shrink-0 bg-gradient-to-r from-[#B87924] via-[#D9A441] to-[#B96B70]"
+        className="sticky top-0 h-[3px] shrink-0 bg-gradient-to-r from-emerald via-burnished to-gold-soft"
         style={{ zIndex: 'var(--z-sticky-header)' as unknown as number }}
       />
 
       {/* ─── Header ─────────────────────────────────────────────────────────── */}
-      <header className="sticky top-[3px] z-40 h-14 sm:h-16 border-b border-border bg-background/95 backdrop-blur-xl flex items-center justify-between px-4 sm:px-6 shrink-0 gap-3">
+      <header className="sticky top-[3px] z-40 h-14 sm:h-16 border-b border-line bg-champagne/95 backdrop-blur-xl flex items-center justify-between px-4 sm:px-6 shrink-0 gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <Link href="/" className="flex items-center gap-2 hover:opacity-75 transition-opacity shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" />
-            <span className="font-display text-lg sm:text-xl text-ink tracking-wide">ShareInvite</span>
+            <Logo markClassName="h-8 w-8" className="[&>span:last-child]:text-[1.35rem] sm:[&>span:last-child]:text-[1.55rem]" />
           </Link>
           {!createdSlug && (
             <div className="hidden sm:block">
@@ -593,12 +635,12 @@ export default function CreatePage() {
         <div className="flex items-center gap-2 shrink-0">
           {session ? (
             <Link href="/dashboard"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-muted border border-border hover:border-[#D9A441]/40 transition-colors">
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-muted border border-line hover:border-[#A47945]/40 transition-colors">
               Dashboard
             </Link>
           ) : (
             <Link href="/auth/login"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-muted border border-border hover:border-[#D9A441]/40 transition-colors">
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-muted border border-line hover:border-[#A47945]/40 transition-colors">
               Sign in
             </Link>
           )}
@@ -622,9 +664,9 @@ export default function CreatePage() {
               (the "See the full design" button) clears the fixed bottom nav bar. */}
           <aside
             ref={formPanelRef}
-            className="w-full md:w-[360px] lg:w-[420px] xl:w-[460px] shrink-0 md:border-r border-border overflow-y-auto scrollbar-hide md:pb-0"
+            className="w-full md:w-[380px] lg:w-[440px] xl:w-[480px] shrink-0 md:border-r border-line overflow-y-auto scrollbar-hide md:pb-0"
             style={{
-              background: '#FDFBF8',
+              background: '#FFFAF4',
               // dvh, not vh: on mobile Safari `100vh` is the *expanded* viewport,
               // so the panel ran taller than the visible area and its last field
               // sat under the browser chrome.
@@ -633,46 +675,25 @@ export default function CreatePage() {
               paddingBottom: 'calc(var(--bottom-dock-h, 0px) + 1.5rem)',
             }}
           >
-            {/* "Now editing" accent strip — desktop only */}
-            <div className="hidden md:flex items-center gap-3 px-5 py-3 shrink-0"
-              style={{
-                borderBottom: `1px solid rgba(${tv.rgb},0.12)`,
-                background: `linear-gradient(90deg, rgba(${tv.rgb},0.07) 0%, rgba(${tv.rgb},0.02) 55%, transparent 100%)`,
-              }}>
-              <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: tv.gradient }}>
-                <div className="text-white/90 scale-90">{tv.icon}</div>
-              </div>
+            {/* Now editing — with one-tap access back to the design picker, so
+                trying another design (details carry over) is always one step away. */}
+            <div className="mx-4 mt-4 flex items-center gap-3 rounded-2xl border border-line bg-paper px-3 py-2.5 shadow-soft sm:mx-5 md:mx-0 md:mt-0 md:rounded-none md:border-x-0 md:border-t-0 md:px-5 md:py-3 md:shadow-none">
+              <span className="relative h-11 w-9 shrink-0 overflow-hidden rounded-lg border border-line bg-peach">
+                <Image src={tv.image} alt="" fill sizes="36px" className="object-cover" />
+              </span>
               <div className="min-w-0 flex-1">
-                <p className="text-[9px] font-bold uppercase tracking-[0.22em]" style={{ color: tv.color }}>Editing</p>
-                <p className="text-[13px] font-semibold text-ink truncate leading-tight">{selectedTemplate.name.split('—')[0].trim()}</p>
+                <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-soft">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-soft" /> Editing live
+                </p>
+                <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{selectedTemplate.name.split('—')[0].trim()}</p>
               </div>
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full shrink-0"
-                style={{ background: 'rgba(47,118,109,0.10)' }}>
-                <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#2F766D' }} />
-                <span className="text-[9px] font-bold" style={{ color: '#2F766D' }}>Live</span>
-              </div>
-            </div>
-
-            {/* Mobile: template label strip */}
-            <div className="md:hidden flex items-center gap-2.5 mx-4 mt-4 px-3 py-2.5 rounded-2xl"
-              style={{
-                background: `linear-gradient(90deg, rgba(${tv.rgb},0.08) 0%, rgba(${tv.rgb},0.03) 100%)`,
-                border: `1px solid rgba(${tv.rgb},0.15)`,
-              }}>
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-                style={{ background: tv.gradient }}>
-                <div className="text-white/90 scale-75">{tv.icon}</div>
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-[9px] font-bold uppercase tracking-[0.18em]" style={{ color: tv.color }}>Editing</p>
-                <p className="text-xs font-semibold text-ink truncate">{selectedTemplate.name.split('—')[0].trim()}</p>
-              </div>
-              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full shrink-0"
-                style={{ background: 'rgba(47,118,109,0.10)' }}>
-                <span className="h-1 w-1 rounded-full animate-pulse" style={{ background: '#2F766D' }} />
-                <span className="text-[8px] font-bold" style={{ color: '#2F766D' }}>Live</span>
-              </div>
+              <button
+                type="button"
+                onClick={() => goToStep(1)}
+                className="btn-outline shrink-0 rounded-full px-3.5 py-2 text-[0.78rem] font-semibold"
+              >
+                Change design
+              </button>
             </div>
 
             {/* Step content */}
@@ -716,16 +737,15 @@ export default function CreatePage() {
               className="block w-full cursor-pointer md:hidden"
               aria-label="Open full-screen preview of your invitation"
             >
-              <MobilePreviewStrip
-                templateId={selectedId}
-                data={data}
-                isDark={isDark}
-                color={tv.color}
-              />
-              <span
-                className="mx-4 mb-6 flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white"
-                style={{ background: 'linear-gradient(135deg,#B87924,#D9A441)', boxShadow: '0 8px 22px rgba(184,121,36,0.32)' }}
-              >
+              {isDesktop === false && !previewOpen && (
+                <MobilePreviewStrip
+                  templateId={selectedId}
+                  data={data}
+                  isDark={isDark}
+                  color={tv.color}
+                />
+              )}
+              <span className="btn-primary mx-4 mb-6 flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold">
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -742,18 +762,18 @@ export default function CreatePage() {
               maxHeight: 'calc(100dvh - 67px)',
               background: isDark
                 ? `radial-gradient(ellipse 90% 65% at 50% -5%, rgba(${tv.rgb},0.40) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 85% 90%, rgba(${tv.rgb},0.14) 0%, transparent 55%), #06060E`
-                : `radial-gradient(ellipse 90% 60% at 50% -5%, rgba(${tv.rgb},0.22) 0%, transparent 60%), radial-gradient(ellipse 55% 45% at 88% 85%, rgba(217,164,65,0.13) 0%, transparent 55%), linear-gradient(175deg,#FFF9F2 0%,#F5EDE2 100%)`,
+                : `radial-gradient(ellipse 90% 60% at 50% -5%, rgba(${tv.rgb},0.20) 0%, transparent 60%), radial-gradient(ellipse 55% 45% at 88% 85%, rgba(232,200,102,0.16) 0%, transparent 55%), linear-gradient(175deg,#FFFAF4 0%,#FBEFE3 100%)`,
             }}>
 
             {/* Preview top bar */}
             <div className="sticky top-0 z-10 px-5 py-3 flex items-center justify-between backdrop-blur-xl shrink-0"
               style={{
                 borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(44,32,28,0.07)',
-                background: isDark ? 'rgba(6,6,14,0.86)' : 'rgba(255,249,242,0.86)',
+                background: isDark ? 'rgba(6,6,14,0.86)' : 'rgba(255,250,244,0.86)',
               }}>
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="w-2 h-2 rounded-full shrink-0" style={{ background: tv.color }} />
-                <p className="text-xs font-semibold truncate" style={{ color: isDark ? 'rgba(255,255,255,0.80)' : '#221B17' }}>
+                <p className="text-xs font-semibold truncate" style={{ color: isDark ? 'rgba(255,255,255,0.80)' : '#1E2726' }}>
                   {selectedTemplate.name.split('—')[0].trim()}
                 </p>
                 <span className="hidden sm:inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0"
@@ -765,9 +785,9 @@ export default function CreatePage() {
                 </span>
               </div>
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full shrink-0"
-                style={{ background: isDark ? 'rgba(255,255,255,0.07)' : 'rgba(47,118,109,0.10)' }}>
-                <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#2F766D' }} />
-                <span className="text-[10px] font-semibold" style={{ color: isDark ? 'rgba(255,255,255,0.55)' : '#2F766D' }}>
+                style={{ background: isDark ? 'rgba(255,255,255,0.07)' : 'rgba(11,74,52,0.08)' }}>
+                <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#0B4A34' }} />
+                <span className="text-[10px] font-semibold" style={{ color: isDark ? 'rgba(255,255,255,0.55)' : '#0B4A34' }}>
                   Updates live
                 </span>
               </div>
@@ -795,10 +815,10 @@ export default function CreatePage() {
                       <div style={{ marginTop: '8px', width: '88px', height: '22px', background: '#1C1C1E', borderRadius: '11px' }} />
                     </div>
 
-                    <div className="overflow-hidden relative bg-white"
+                    <div className="overflow-hidden relative bg-paper"
                       style={{ borderRadius: 'clamp(22px, 10%, 36px)', height: 'min(590px, max(360px, calc(100dvh - 290px)))' }}>
                       <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
-                        <PreviewPane templateId={selectedId} data={data} />
+                        {isDesktop === true && <PreviewPane templateId={selectedId} data={data} />}
                       </div>
                       {!is3DTemplate(selectedId) && (
                         <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none z-10"
@@ -837,16 +857,16 @@ export default function CreatePage() {
         <div className="fixed inset-0 flex flex-col md:hidden" style={{ zIndex: 'var(--z-overlay)' as unknown as number }}>
           {/* Top bar */}
           <div className="flex items-center justify-between gap-3 px-4 py-3 shrink-0"
-            style={{ background: 'rgba(253,251,248,0.98)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(44,32,28,0.09)' }}>
+            style={{ background: 'rgba(255,250,244,0.98)', backdropFilter: 'blur(16px)', borderBottom: '1px solid #EADFD2' }}>
             <div className="flex items-center gap-2 min-w-0">
-              <span className="h-2 w-2 shrink-0 rounded-full animate-pulse" style={{ background: '#2F766D' }} />
-              <p className="truncate text-sm font-semibold text-ink">
+              <span className="h-2 w-2 shrink-0 rounded-full animate-pulse" style={{ background: '#0B4A34' }} />
+              <p className="truncate text-sm font-semibold text-charcoal">
                 Preview · {selectedTemplate.name.split('—')[0].trim()}
               </p>
             </div>
             <button
               onClick={() => setPreviewOpen(false)}
-              className="gold-button flex shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold"
+              className="btn-primary flex shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold"
             >
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -860,7 +880,7 @@ export default function CreatePage() {
             style={{
               background: isDark
                 ? `radial-gradient(ellipse 90% 55% at 50% 0%, rgba(${tv.rgb},0.38), transparent 60%), #06060E`
-                : `radial-gradient(ellipse 90% 55% at 50% 0%, rgba(${tv.rgb},0.20), transparent 60%), linear-gradient(175deg,#FFF9F2,#F5EDE2)`,
+                : `radial-gradient(ellipse 90% 55% at 50% 0%, rgba(${tv.rgb},0.20), transparent 60%), linear-gradient(175deg,#FFFAF4,#FBEFE3)`,
             }}
           >
             <div className="relative h-fit" style={{ width: 'min(320px, calc(100vw - 2rem))' }}>
@@ -868,9 +888,9 @@ export default function CreatePage() {
                 <div className="flex justify-center" style={{ height: '24px', marginBottom: '-24px', position: 'relative', zIndex: 10 }}>
                   <div style={{ marginTop: '7px', width: '82px', height: '20px', background: '#1C1C1E', borderRadius: '10px' }} />
                 </div>
-                <div className="overflow-hidden bg-white" style={{ borderRadius: 'clamp(20px, 9%, 32px)', height: 'calc(100dvh - 210px)' }}>
+                <div className="overflow-hidden bg-paper" style={{ borderRadius: 'clamp(20px, 9%, 32px)', height: 'calc(100dvh - 210px)' }}>
                   <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
-                    <PreviewPane templateId={selectedId} data={data} />
+                    {isDesktop === false && <PreviewPane templateId={selectedId} data={data} />}
                   </div>
                 </div>
                 <div className="flex justify-center" style={{ paddingTop: '7px', paddingBottom: '2px' }}>
@@ -902,9 +922,9 @@ export default function CreatePage() {
         <BottomDock
           className="md:hidden"
           style={{
-            background: 'rgba(253,251,248,0.98)',
+            background: 'rgba(255,250,244,0.98)',
             backdropFilter: 'blur(20px)',
-            borderTop: '1px solid rgba(44,32,28,0.09)',
+            borderTop: '1px solid #EADFD2',
             paddingLeft: '16px',
             paddingRight: '16px',
             paddingTop: '10px',
@@ -914,13 +934,13 @@ export default function CreatePage() {
           <div className="flex gap-3">
             <button
               onClick={() => goToStep(currentStep - 1)}
-              className="flex-1 py-3.5 rounded-xl text-sm font-semibold border border-border text-muted"
+              className="btn-outline flex-1 rounded-full py-3.5 text-sm font-semibold"
             >
               ← Back
             </button>
             <button
               onClick={() => goToStep(currentStep + 1)}
-              className="gold-button flex-[2] py-3.5 rounded-xl text-sm font-semibold"
+              className="btn-primary flex-[2] rounded-full py-3.5 text-sm font-semibold"
             >
               {currentStep === 4 ? 'Preview & Publish →' : 'Continue →'}
             </button>
@@ -938,27 +958,26 @@ export default function CreatePage() {
         <BottomDock
           className="md:hidden"
           style={{
-            background: 'rgba(253,251,248,0.98)',
+            background: 'rgba(255,250,244,0.98)',
             backdropFilter: 'blur(20px)',
-            borderTop: '1px solid rgba(44,32,28,0.09)',
+            borderTop: '1px solid #EADFD2',
             paddingLeft: '16px',
             paddingRight: '16px',
             paddingTop: '10px',
             paddingBottom: 'max(14px, env(safe-area-inset-bottom, 0px))',
           }}
         >
-          {error && <p className="mb-2 text-xs text-red-500 text-center font-medium">{error}</p>}
+          {error && <p role="alert" className="mb-2 text-center text-xs font-medium text-[#A33A3A]">{error}</p>}
           <button
             onClick={handleCreate}
             disabled={loading}
-            className="gold-button flex items-center justify-center gap-2 w-full rounded-2xl py-4 font-bold disabled:opacity-50"
-            style={{ fontSize: '15px' }}
+            className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-4 text-[15px] font-semibold disabled:opacity-50"
           >
             {loading && <Spinner />}
             {loading ? 'Creating your invitation…' : (
               <>
                 {needsPayment
-                  ? `Continue to payment — ₹${requiredPlanForSelected.price.toLocaleString('en-IN')}`
+                  ? `Pay ₹${requiredPlanForSelected.price.toLocaleString('en-IN')} & publish`
                   : 'Get my invitation link'}
                 <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -969,7 +988,7 @@ export default function CreatePage() {
           {needsPayment && (
             <p className="mt-1.5 text-center text-[10px] leading-4 text-muted">
               {!session ? 'Sign in first · ' : ''}Razorpay secured · UPI, card &amp; net banking ·{' '}
-              <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline" style={{ color: '#B87924' }}>
+              <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline text-emerald-soft">
                 7-day refunds
               </Link>
             </p>
@@ -991,13 +1010,13 @@ export default function CreatePage() {
             transition={{ duration: 0.25, ease: BEZIER }}
             className="fixed left-1/2 flex max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full px-4 py-2.5 shadow-lg"
             style={{
-              background: '#221B17',
+              background: '#052E20',
               color: '#fff',
               zIndex: 'var(--z-toast)' as unknown as number,
               bottom: 'calc(var(--bottom-dock-h, 0px) + 1.25rem)',
             }}
           >
-            <span className="text-[10px]" style={{ color: '#2F766D' }}>✓</span>
+            <span className="text-[10px]" style={{ color: '#0B4A34' }}>✓</span>
             <span className="text-xs font-semibold whitespace-nowrap">Progress saved</span>
           </motion.div>
         )}
@@ -1016,6 +1035,7 @@ export default function CreatePage() {
       <AnimatePresence>
         {upgradeTarget && upgradeRequiredPlan && (
           <UpgradeModal
+            templateId={upgradeTarget.templateId}
             templateName={upgradeTarget.templateName}
             requiredPlan={upgradeRequiredPlan}
             isLoggedIn={!!session}
@@ -1031,70 +1051,81 @@ export default function CreatePage() {
       <AnimatePresence>
         {createdSlug && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-end sm:items-center justify-center px-4"
-            style={{ background: 'rgba(34,27,23,0.65)', backdropFilter: 'blur(16px)', zIndex: 'var(--z-overlay)' as unknown as number }}>
+            className="fixed inset-0 flex items-end justify-center px-3 sm:items-center sm:px-4"
+            style={{ background: 'rgba(3,25,15,0.66)', backdropFilter: 'blur(16px)', zIndex: 'var(--z-overlay)' as unknown as number }}
+            role="dialog" aria-modal="true" aria-label="Your invitation is live">
             <motion.div initial={{ y: 40, opacity: 0, scale: 0.97 }} animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 40, opacity: 0 }} transition={{ duration: 0.45, ease: BEZIER }}
-              className="w-full max-w-md rounded-t-3xl p-7 pb-10 sm:rounded-3xl sm:p-8"
-              style={{ background: '#FFFFFF', border: '1px solid #E8DCCD', boxShadow: '0 -8px 80px rgba(34,27,23,0.24)' }}>
+              exit={{ y: 40, opacity: 0 }} transition={{ duration: 0.5, ease: BEZIER }}
+              className="card w-full max-w-md overflow-hidden rounded-b-none sm:rounded-3xl"
+              style={{ maxHeight: 'calc(100dvh - 1rem)', overflowY: 'auto' }}>
 
-              <motion.div initial={{ scale: 0 }} animate={{ scale: [0, 1.3, 1] }}
-                transition={{ duration: 0.5, delay: 0.2, ease: BEZIER }}
-                className="text-4xl text-center mb-4 select-none" style={{ color: '#B87924' }} aria-hidden>♥</motion.div>
-
-              <h2 className="text-2xl font-bold text-center text-foreground mb-1">Your invitation is live!</h2>
-              {names && <p className="text-center mb-5 text-sm text-muted">{names}</p>}
-
-              <div className="flex items-center gap-2 px-4 py-3 rounded-xl mb-4 overflow-hidden"
-                style={{ background: 'rgba(44,32,28,0.04)', border: '1px solid rgba(44,32,28,0.08)' }}>
-                <span className="text-xs truncate flex-1" style={{ color: 'rgba(44,32,28,0.42)' }}>{shareUrl}</span>
-                <button
-                  onClick={() => navigator.clipboard?.writeText(shareUrl)}
-                  className="shrink-0 text-[10px] font-semibold px-2 py-1 rounded-lg transition-colors"
-                  style={{ background: 'rgba(217,164,65,0.12)', color: '#B87924' }}>
-                  Copy
-                </button>
+              {/* Celebration header: the seal, with a burst of gold sparks. */}
+              <div className="relative overflow-hidden bg-emerald px-7 pb-8 pt-9 text-center text-paper">
+                <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_70%_at_50%_0%,rgba(232,200,102,0.22),transparent_70%)]" />
+                <div className="relative mx-auto h-16 w-16">
+                  {Array.from({ length: 10 }).map((_, i) => {
+                    const angle = (i / 10) * Math.PI * 2
+                    return (
+                      <motion.span
+                        key={i}
+                        aria-hidden
+                        className="absolute left-1/2 top-1/2 text-[0.8rem] text-gold-soft"
+                        initial={{ x: '-50%', y: '-50%', opacity: 0, scale: 0.4 }}
+                        animate={{ x: `calc(-50% + ${Math.cos(angle) * 62}px)`, y: `calc(-50% + ${Math.sin(angle) * 46}px)`, opacity: [0, 1, 0], scale: [0.4, 1.1, 0.8] }}
+                        transition={{ duration: 1.4, delay: 0.25 + i * 0.03, ease: BEZIER }}
+                      >
+                        ✦
+                      </motion.span>
+                    )
+                  })}
+                  <motion.div initial={{ scale: 0, rotate: -20 }} animate={{ scale: [0, 1.15, 1], rotate: 0 }}
+                    transition={{ duration: 0.6, delay: 0.15, ease: BEZIER }}>
+                    <LogoMark className="h-16 w-16 drop-shadow-[0_10px_20px_rgba(3,25,15,0.5)]" />
+                  </motion.div>
+                </div>
+                <p className="relative mt-5 text-[0.78rem] font-bold uppercase tracking-[0.22em] text-gold-soft">It&apos;s live</p>
+                <h2 className="t-h2 relative mt-2">Your invitation is ready to share</h2>
+                {names && <p className="relative mt-2 font-editorial text-[1.3rem] italic text-paper/80">{names}</p>}
               </div>
 
-              <ShareBar url={shareUrl} names={names} templateId={selectedId} source="create_success" />
+              <div className="p-6 sm:p-7">
+                <SuccessLink url={shareUrl} />
 
-              {/* No branding notice: every template is a paid publish, so no
-                  newly created invitation carries the "Made with ShareInvite"
-                  banner. */}
+                <div className="mt-4">
+                  <ShareBar url={shareUrl} names={names} templateId={selectedId} source="create_success" />
+                </div>
 
-              <div className="mt-2 space-y-2">
-                <Link href={`/e/${createdSlug}`}
-                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold transition-all"
-                  style={{ background: 'rgba(217,164,65,0.12)', border: '1px solid rgba(184,121,36,0.28)', color: '#2C201C' }}>
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  View Invitation
-                </Link>
+                {/* No branding notice: every design is a paid publish, so no
+                    newly created invitation carries the free-plan banner. */}
 
-                {session ? (
-                  <Link href="/dashboard"
-                    className="gold-button flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-                    </svg>
-                    Go to Dashboard
+                <div className="mt-4 space-y-2.5">
+                  <Link href={`/e/${createdSlug}`}
+                    className="btn-outline flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[0.95rem] font-semibold">
+                    View your invitation
                   </Link>
-                ) : (
-                  <div className="rounded-xl px-4 py-3 flex items-start gap-3"
-                    style={{ background: 'rgba(217,164,65,0.06)', border: '1px solid rgba(184,121,36,0.20)' }}>
-                    <svg className="w-4 h-4 shrink-0 mt-0.5" style={{ color: '#B87924' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                    </svg>
-                    <div className="flex-1">
-                      <p className="text-xs font-semibold text-foreground">Sign in to track guest wishes</p>
-                      <p className="text-xs text-muted mt-0.5">Get notified when guests send wishes and manage your invites.</p>
-                      <Link href="/auth/signup" className="mt-1.5 inline-flex items-center gap-1 text-xs font-bold" style={{ color: '#B87924' }}>
-                        Create free account →
-                      </Link>
+
+                  {session ? (
+                    <Link href="/dashboard"
+                      className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[0.95rem] font-semibold">
+                      Go to my invitations
+                    </Link>
+                  ) : (
+                    <div className="flex items-start gap-3 rounded-2xl border border-line bg-peach/60 px-4 py-3.5">
+                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald text-paper">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6} aria-hidden>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                        </svg>
+                      </span>
+                      <div className="flex-1">
+                        <p className="text-[0.88rem] font-semibold text-charcoal">Keep track of guest wishes</p>
+                        <p className="mt-0.5 text-[0.8rem] leading-5 text-charcoal/70">Create a free account to manage your invitations in one place.</p>
+                        <Link href="/auth/signup" className="link mt-1.5 inline-flex text-[0.82rem]">
+                          Create a free account
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </motion.div>
           </motion.div>

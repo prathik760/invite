@@ -27,7 +27,7 @@ export const landingPages: SeoPage[] = [
     slug: 'wedding-invitations',
     title: 'Digital Wedding Invitations India | Wedding Card Maker',
     description:
-      'Create premium digital wedding invitations for Indian weddings. Add venue, gallery, music, WhatsApp sharing, RSVP tracking, and guest wishes.',
+      'Create premium digital wedding invitations for Indian weddings. Add venue, gallery, music, WhatsApp sharing and a live guest wishes wall.',
     h1: 'Digital Wedding Invitations for Indian Weddings',
     primaryKeyword: 'digital wedding invitation',
     occasion: 'wedding',
@@ -48,7 +48,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Is RSVP tracking included with digital wedding invitations?',
         answer:
-          'ShareInvite is built as an online RSVP platform, so invitation pages can collect guest responses, wishes, and sharing actions without requiring guests to install an app.',
+          'Guests reply by leaving a wish right on the invitation — no app to install — and every message appears in your dashboard, where you can also remove any. The Luxury Wedding design adds a one-tap RSVP to you on WhatsApp. A full headcount tracker is not included.',
       },
       {
         question: 'Can I share the invitation as a WhatsApp wedding card?',
@@ -129,7 +129,7 @@ export const landingPages: SeoPage[] = [
     slug: 'anniversary-invitations',
     title: 'Anniversary Invitation Maker | Digital Anniversary Invites',
     description:
-      'Create elegant digital anniversary invitations for milestone celebrations. Add couple story, venue, photos, music, WhatsApp sharing, and RSVP tracking.',
+      'Create elegant digital anniversary invitations for milestone celebrations. Add couple story, venue, photos, music, WhatsApp sharing and guest wishes.',
     h1: 'Digital Anniversary Invitations for Milestone Celebrations',
     primaryKeyword: 'anniversary invitation online',
     occasion: 'anniversary',
@@ -155,7 +155,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Does ShareInvite support RSVP for anniversary parties?',
         answer:
-          'Yes. The platform is structured for RSVP and guest response tracking so hosts can plan attendance with less follow-up.',
+          'Guests can reply with a wish on the invitation, and every message appears in your dashboard. For a formal headcount, share the invitation and ask guests to confirm on WhatsApp — there is no separate attendance tracker.',
       },
     ],
   },
@@ -265,7 +265,7 @@ export const landingPages: SeoPage[] = [
     slug: 'corporate-event-invitations',
     title: 'Corporate Event Invitation Maker | Online RSVP Platform',
     description:
-      'Create digital corporate event invitations for launches, team parties, conferences, and office celebrations with RSVP tracking and WhatsApp sharing.',
+      'Create digital corporate event invitations for launches, team parties, conferences, and office celebrations, shared on WhatsApp with one link.',
     h1: 'Corporate Event Invitations with Online RSVP',
     primaryKeyword: 'event invitation website',
     occasion: 'corporate event',
@@ -281,7 +281,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Can I track RSVPs for business guests?',
         answer:
-          'ShareInvite is designed for RSVP workflows, making it easier to estimate attendance and coordinate follow-ups.',
+          'Not as a headcount tool. Guests can leave a message on the invitation and you see every one in your dashboard, but there is no attendance tracker — for a precise count, ask guests to confirm directly.',
       },
       {
         question: 'Can I include agenda and venue details?',
@@ -299,7 +299,7 @@ export const landingPages: SeoPage[] = [
     slug: 'whatsapp-invitation-maker',
     title: 'WhatsApp Invitation Card Maker | Share Digital Invites',
     description:
-      'Make WhatsApp invitation cards as live web pages for weddings, birthdays, engagements, Griha Pravesh, baby showers, corporate events, and RSVP tracking.',
+      'Make WhatsApp invitation cards as live web pages for weddings, birthdays, engagements, Griha Pravesh, baby showers and corporate events.',
     h1: 'WhatsApp Invitation Maker for Digital Invitation Cards',
     primaryKeyword: 'whatsapp invitation card',
     occasion: 'WhatsApp invitation',
@@ -315,7 +315,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Is a web invitation better than sending an image?',
         answer:
-          'Yes. A web invitation can include live countdown, maps, guest wishes, RSVP tracking, photos, music, and updated details, while an image is static.',
+          'Yes. A web invitation can include a live countdown, maps, a guest wishes wall, photos and music, and every detail stays readable, while an image is static.',
       },
       {
         question: 'Will guests need to download an app?',
@@ -333,10 +333,10 @@ export const landingPages: SeoPage[] = [
     slug: 'online-rsvp',
     title: 'Online RSVP Platform India | Track Event Responses',
     description:
-      'Use ShareInvite as an online RSVP platform for weddings, birthdays, housewarming & naming ceremonies. Create invites and track responses easily.',
+      'Collect guest replies on your invitation for weddings, birthdays, housewarming & naming ceremonies. Guests leave a wish on the page; you see every message in your dashboard.',
     h1: 'Online RSVP Platform for Indian Events',
     primaryKeyword: 'online RSVP',
-    occasion: 'RSVP tracking',
+    occasion: 'event',
     audience: 'hosts, wedding planners, families, and teams coordinating attendance',
     templateLinks: ['elegant-wedding', 'indian-wedding', 'indian-birthday', 'griha-pravesh'],
     relatedLinks: commonRelated,
@@ -344,7 +344,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'How does online RSVP help event planning?',
         answer:
-          'Online RSVP reduces manual follow-up by collecting responses, wishes, and guest activity on the invitation page, helping hosts estimate attendance more accurately.',
+          'Instead of chasing replies across chats, guests respond in one place: they leave a wish on the invitation page and you see every message in your dashboard. It is a replies wall rather than a headcount tracker.',
       },
       {
         question: 'Can RSVP be used for weddings and family functions?',
@@ -354,7 +354,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Can guests respond from WhatsApp?',
         answer:
-          'Guests open the invitation link from WhatsApp and complete response actions on the web page without installing any app.',
+          'Yes. Guests open the invitation link from WhatsApp and leave their reply on the page without installing any app. On the Luxury Wedding design they can also RSVP to you directly on WhatsApp.',
       },
       {
         question: 'Does ShareInvite include invitation creation too?',
@@ -390,7 +390,7 @@ export const locationPages: LocationPage[] = cities.map((city) => {
     slug: `digital-invitations-${city}`,
     city: cityName,
     title: `Digital Invitations in ${cityName} | Wedding & Event Maker`,
-    description: `Create digital invitations in ${cityName} for weddings, birthdays, Griha Pravesh & engagements. WhatsApp-ready with RSVP tracking. Free to start.`,
+    description: `Create digital invitations in ${cityName} for weddings, birthdays, Griha Pravesh & engagements. WhatsApp-ready with guest wishes. Free to build and preview.`,
     faqs: [
       {
         question: `Can I create a digital wedding invitation in ${cityName}?`,

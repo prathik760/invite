@@ -1,8 +1,7 @@
-import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import OccasionPage from '@/components/landing/OccasionPage'
+import { templatePrice } from '@/lib/plans'
 import { PersonIcon, ClockIcon, MapPinIcon, CameraIcon, ClipboardIcon, MessageIcon, MusicIcon, ShareIcon } from '@/components/ui/Icons'
-import SiteFooter from '@/components/landing/SiteFooter'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -72,7 +71,7 @@ const faqSchema = {
       name: 'How much does a digital Namakaran invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Namakaran template is ₹299 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
+        text: 'The Namakaran template is ₹299 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step.',
       },
     },
   ],
@@ -98,133 +97,41 @@ const CEREMONY_NAMES = [
   { name: 'Annaprashan', region: 'Bengal / East India', desc: 'Bengali rice ceremony often combined with the naming ritual' },
 ]
 
-export default function NamakaranInvitationPage() {
+export default function Page() {
+  const faqs = faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-
-      <SiteHeader createHref="/create?template=namakaran" />
-
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Build free · WhatsApp ready · No app download
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Digital Namakaran Invitation<br />
-            <span className="gradient-accent italic">Naming Ceremony · Cradle Ceremony</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital Namakaran invitation for your baby&apos;s naming ceremony in minutes. Share the muhurat time, ceremony schedule, venue map, and the baby&apos;s first photos — all from one WhatsApp link. Build and preview free — publish for ₹299 one-time.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create?template=namakaran" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Start My Namakaran Invite →
-            </Link>
-            <span className="text-sm text-muted">Free to build &amp; preview · ₹299 one-time to publish</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Regional names */}
-      <section className="bg-white border-y border-border px-5 py-14">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            Namakaran Invitations for Every Indian Baby Naming Tradition
-          </h2>
-          <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Namakaran, Naamkaran, Cradle Ceremony, Namakarana — one digital invitation works for every regional baby naming tradition
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {CEREMONY_NAMES.map(c => (
-              <div key={c.name} className="rounded-2xl border border-border bg-background p-5 shadow-sm">
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <p className="font-heading text-lg text-ink">{c.name}</p>
-                  <span className="shrink-0 rounded-full bg-[#7A3E4A]/10 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-accent-strong whitespace-nowrap">
-                    {c.region}
-                  </span>
-                </div>
-                <p className="text-sm text-muted leading-6">{c.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            What&apos;s Included in Your Digital Namakaran Invitation
-          </h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURES.map(f => (
-              <div key={f.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
-                <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
-                <p className="text-sm text-muted leading-6">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="bg-white border-y border-border px-5 py-14">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            How to Create a Digital Namakaran Invitation
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              { step: '01', title: 'Enter ceremony details', desc: 'Add baby\'s name, parents\' names, muhurat time, venue, ceremony schedule, and a blessing message.' },
-              { step: '02', title: 'Upload baby photos', desc: 'Add the baby\'s first photos to the gallery — makes the invite personal and unforgettable.' },
-              { step: '03', title: 'Share on WhatsApp', desc: 'Forward the link to all family groups and friends in one tap. No app needed.' },
-            ].map(s => (
-              <div key={s.step} className="rounded-2xl border border-border bg-background p-7 shadow-sm">
-                <p className="font-heading text-5xl text-accent/60">{s.step}</p>
-                <h3 className="mt-5 font-heading text-xl text-ink">{s.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-muted">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Namakaran Invitation — Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-5 pb-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Create Your Digital Namakaran Invitation
-          </h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹299 one-time to publish · WhatsApp-ready in 5 minutes</p>
-          <Link href="/create?template=namakaran" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start My Namakaran Invite →
-          </Link>
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
+      <OccasionPage
+        occasion="baby"
+        templateId="namakaran"
+        pageKey="namakaran_landing"
+        crumb="Namakaran invitations"
+        eyebrow="Digital naming ceremony invitations"
+        title={<>Digital Namakaran Invitation <em className="font-medium text-burnished">Naming · Cradle Ceremony</em></>}
+        lede={`Share the muhurat, ceremony schedule, venue map and your baby's first photos — a beautiful naming ceremony invitation on one WhatsApp link. Build and preview free — publish for ₹${templatePrice('namakaran')} one-time.`}
+        ctaLabel="Start my Namakaran invite"
+        types={{
+          eyebrow: 'Every tradition',
+          title: 'Namakaran invitations for every naming tradition',
+          sub: 'Namakaran, Naamkaran, Cradle Ceremony, Namakarana — one digital invitation works for every regional tradition.',
+          items: CEREMONY_NAMES.map((t) => ({ name: t.name, tag: t.region, desc: t.desc })),
+        }}
+        features={{ title: "What's included in your Namakaran invitation", items: FEATURES }}
+        steps={[
+          { title: 'Enter ceremony details', copy: 'Baby\'s name, parents\' names, muhurat, venue, schedule and a blessing message.' },
+          { title: 'Upload baby photos', copy: 'The baby\'s first photos make the invitation personal and unforgettable.' },
+          { title: 'Pay once & share', copy: 'Publish for a one-time price and send it to every family group in one tap.' },
+        ]}
+        faqTitle="Namakaran invitation questions"
+        faqs={faqs}
+        related={[
+          { href: '/namakaran-invitation-wording', label: 'Namakaran invitation wording' },
+          { href: '/baby-shower-invitation-wording', label: 'Baby shower wording' },
+          { href: '/digital-invitation', label: 'All digital invitations' },
+        ]}
+        closing={{ title: 'Create your digital Namakaran invitation' }}
+      />
+    </>
   )
 }

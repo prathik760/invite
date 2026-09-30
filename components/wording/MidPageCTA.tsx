@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import { LogoMark } from '@/components/brand/Logo'
+import { CheckIcon } from '@/components/ui/Icons'
+import { LOWEST_PAID_PRICE } from '@/lib/plans'
 
 interface MidPageCTAProps {
   headline: string
@@ -8,35 +11,33 @@ interface MidPageCTAProps {
   ctaText: string
 }
 
+/** Inline offer between wording sections: "use these words in a real design". */
 export default function MidPageCTA({ headline, body, features, ctaHref, ctaText }: MidPageCTAProps) {
   return (
-    <div className="my-10 rounded-2xl border border-[#E8DCCD] bg-gradient-to-br from-[#FFF7EE] to-[#FFF3E4] px-7 py-8 shadow-sm">
-      <p className="mb-2 text-[10px] font-bold uppercase tracking-[.18em] text-[#7A5C1E]">
-        Why stop at plain text?
-      </p>
-      <h3 className="font-display font-normal text-xl text-ink leading-snug mb-2">
-        {headline}
-      </h3>
-      <p className="text-sm text-muted leading-6 mb-6">{body}</p>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 mb-7">
-        {features.map((f, i) => (
-          <div key={i} className="flex items-start gap-2 text-xs text-foreground leading-5">
-            <span className="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-[#2F766D]/15 text-[9px] font-bold text-[#2F766D]">
-              ✓
-            </span>
-            {f}
-          </div>
-        ))}
+    <aside className="relative my-10 overflow-hidden rounded-[2rem] bg-emerald p-7 text-paper shadow-lift sm:p-9" data-reveal>
+      <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gold-soft/10 blur-2xl" />
+      <div className="relative grid gap-6 sm:grid-cols-[1fr_auto] sm:items-start">
+        <div>
+          <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-gold-soft">Why stop at plain text?</p>
+          <h3 className="t-h3 mt-2">{headline}</h3>
+          <p className="mt-2 text-[0.95rem] leading-7 text-paper/75">{body}</p>
+        </div>
+        <LogoMark className="hidden h-12 w-12 sm:block" />
       </div>
-      <Link
-        href={ctaHref}
-        className="gold-button inline-flex rounded-full px-7 py-3 text-sm font-semibold"
-      >
-        {ctaText}
-      </Link>
-      <p className="mt-2.5 text-[11px] text-muted">
-        Free to build · Ready in 5 min · No credit card needed
-      </p>
-    </div>
+      <ul className="relative mt-6 grid gap-x-5 gap-y-2.5 sm:grid-cols-2">
+        {features.map((f, i) => (
+          <li key={i} className="flex items-start gap-2 text-[0.9rem] leading-6 text-paper/85">
+            <CheckIcon className="mt-1 h-3.5 w-3.5 shrink-0 text-gold-soft" />
+            {f}
+          </li>
+        ))}
+      </ul>
+      <div className="relative mt-7 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+        <Link href={ctaHref} className="btn-gold inline-flex items-center justify-center rounded-full px-7 py-3.5 text-[0.95rem] font-semibold">
+          {ctaText.replace(/\s*→$/, '')}
+        </Link>
+        <p className="text-[0.8rem] text-paper/60">Free to build · Pay once, from ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}</p>
+      </div>
+    </aside>
   )
 }

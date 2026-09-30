@@ -1,21 +1,33 @@
 import Script from 'next/script'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import PricingSection from '@/components/landing/PricingSection'
+import SiteHeader from '@/components/layout/SiteHeader'
+import SiteFooter from '@/components/landing/SiteFooter'
 import FAQAccordion from '@/components/landing/FAQAccordion'
+import PageHero from '@/components/brand/PageHero'
+import OfferCard from '@/components/brand/OfferCard'
+import CtaBand from '@/components/brand/CtaBand'
+import TrustList from '@/components/brand/TrustList'
+import { Section, SectionHeading } from '@/components/brand/Section'
+import { ArrowRightIcon, CheckIcon, EyeIcon, GlobeIcon, LinkIcon, ShieldIcon } from '@/components/ui/Icons'
 import { TEMPLATES } from '@/modules/templates/data'
-import { templatePrice } from '@/lib/plans'
+import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE, formatTemplatePrice, templatePrice } from '@/lib/plans'
 import { digitalOffer, templateSeoSlug } from '@/lib/seo'
-import { templateImageUrl } from '@/lib/templateMedia'
+import { templateImage, templateImageUrl } from '@/lib/templateMedia'
+import { OCCASIONS, displayName, primaryOccasion } from '@/lib/catalog'
+import { OFFER } from '@/lib/offer'
+import { priceByDesignSentence, priceRangeSentence } from '@/lib/priceCopy'
+import SignatureShowcase from '@/components/brand/SignatureShowcase'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
-  title: { absolute: 'Pricing — Digital Invitation Templates | ShareInvite' },
+  title: { absolute: 'Pricing — One Design, One Price | ShareInvite' },
   description:
-    'Simple one-time pricing for digital invitation templates. Build and preview any design free — publish from ₹99, and never more than ₹499. No subscription, no hidden charges. Built for Indian weddings, birthdays, and family events.',
+    `Simple one-time pricing for digital invitation designs. Build and preview any design free, then pay once for the one you publish. ${priceRangeSentence()} No subscription, no hidden charges.`,
   keywords: [
     'digital invitation price india',
     'wedding invitation cost online india',
@@ -26,9 +38,9 @@ export const metadata: Metadata = {
     'digital invitation maker price',
   ],
   openGraph: {
-    title: 'ShareInvite Pricing — One-Time Payment for Digital Invitations',
+    title: 'ShareInvite Pricing — One Design, One Price, Everything Included',
     description:
-      'Create beautiful digital invitations for Indian weddings, birthdays, and family events. Free to build and preview. Publish from ₹99 one-time — every template under ₹500, no subscription.',
+      `Free to build and preview. Pay once for the design you publish. ${priceRangeSentence()} No plans, bundles or subscription.`,
     type: 'website',
     locale: 'en_IN',
     url: `${APP_URL}/pricing`,
@@ -92,28 +104,28 @@ const pricingSchema = {
 
 const PRICING_FAQS = [
   {
-    question: 'How much does a digital wedding invitation cost in India?',
-    answer: 'Every ShareInvite template is a one-time payment, and no template costs more than ₹499: ₹99 for Ganesh Chaturthi Premium; ₹199 for Elegant Wedding and Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin (birthday), Namakaran, and the interactive 3D Surprise Journey; ₹399 for Shaadi, Mangni (engagement), Griha Pravesh, and the animated 3D Greeting Cards; ₹499 for Saalgirah, KGF Royal Empire, Royal Deco, and Luxury Wedding. There are no monthly fees, and you can build and preview any template in full before deciding to pay.',
+    question: 'How much does a digital invitation cost?',
+    answer: `Each design has its own one-time price, shown on the design: ${priceByDesignSentence()}. You can build and preview any design in full before deciding to pay.`,
   },
   {
-    question: 'Is it a one-time payment or a monthly subscription?',
-    answer: 'All templates are a one-time payment. You pay once for your template — there are no monthly subscriptions, no recurring charges, and no hidden fees.',
+    question: 'What does "one design, one price" mean?',
+    answer: 'You pay for the single design you publish — nothing else. That one payment covers everything in that design: your invitation on its own link, every feature the design has, and sharing with as many guests as you like. There are no plans, bundles, add-ons or upgrades to choose between.',
   },
   {
-    question: 'Is anything free, and what exactly do I pay for?',
-    answer: 'Building and previewing is completely free: you can pick any template, fill in every detail, add photos, and see the finished invitation on your own phone without paying or entering card details. Payment is only requested at the final publish step, when you get your shareable link. Prices start at ₹99 and go no higher than ₹499, and no ShareInvite branding appears on any paid invitation.',
+    question: 'Is it a one-time payment or a subscription?',
+    answer: 'A one-time payment. You pay once for your design — there are no monthly subscriptions, renewals or recurring charges.',
   },
   {
-    question: 'Can I upgrade my template after paying?',
-    answer: 'Yes. You can upgrade to any other template anytime from your dashboard by paying the one-time price for that template. Buying a higher tier never removes access to templates you already own.',
+    question: 'Is anything free?',
+    answer: 'Building and previewing is completely free: pick any design, fill in every detail, add photos, and see the finished invitation on your own phone without paying or entering card details. Payment is only requested at the final publish step, when you get your shareable link.',
   },
   {
     question: 'Can I get a refund?',
-    answer: 'Yes, in genuine cases. Refund requests can be raised within 7 days of the transaction at no cost to you — for example if you were charged twice or the template did not work as described. Approved refunds are returned to your original payment method via Razorpay. Full details are on our Refund & Cancellation Policy page.',
+    answer: 'Yes, in genuine cases. Refund requests can be raised within 7 days of the transaction at no cost to you — for example if you were charged twice or the design did not work as described. Approved refunds are returned to your original payment method via Razorpay. Full details are on our Refund & Cancellation Policy page.',
   },
   {
     question: 'Is the payment secure?',
-    answer: 'Yes. All payments are processed through Razorpay — India\'s most trusted payment gateway. ShareInvite never stores your card details. You can pay via UPI, credit card, debit card, or net banking.',
+    answer: 'Yes. All payments are processed through Razorpay, and ShareInvite never sees or stores your card details. You can pay via UPI, credit card, debit card, or net banking. Prices are charged in Indian rupees.',
   },
 ]
 
@@ -127,284 +139,191 @@ const faqSchema = {
   })),
 }
 
-// ─── Everything Included features ────────────────────────────────────────────
-
-const ALL_FEATURES = [
-  'Digital invitation website',
-  'WhatsApp share link',
-  'Google Maps integration',
-  'Background music player',
-  'Live countdown timer',
-  'Photo gallery (up to 20 images)',
-  'Guest wishes & blessings wall',
-  'Event schedule timeline',
-  'Mobile responsive design',
-  'Edit anytime',
-  '1-year page hosting',
-  'Secure & fast loading',
+// "What's included" is split in two because features genuinely vary by design:
+// the 3D greetings have no venue, schedule or guest wishes wall, and RSVP is on
+// one design only. A published invitation also cannot currently be edited.
+const BY_DESIGN = [
+  'Live countdown',
+  'Venue & Google Maps',
+  'Event schedule',
+  'Photo gallery',
+  'Background music',
+  'Guest wishes wall',
+  'RSVP via WhatsApp',
+  '3D animation & interactive reveals',
 ]
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function PricingPage() {
+  // Price list by occasion — every design once, under its primary occasion.
+  const byOccasion = OCCASIONS.map((o) => ({
+    occasion: o,
+    designs: TEMPLATES.filter((t) => primaryOccasion(t.id)?.key === o.key),
+  })).filter((g) => g.designs.length > 0)
+
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+    <main className="min-h-screen bg-champagne text-charcoal">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      {/* ─── BREADCRUMB NAV ─── */}
-      <div className="border-b border-border bg-white px-5 py-3">
-        <div className="mx-auto max-w-7xl">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-muted">
-            <Link href="/" className="transition-colors hover:text-ink">Home</Link>
-            <svg className="h-3 w-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-            <span className="font-medium text-ink">Pricing</span>
-          </nav>
-        </div>
-      </div>
+      <SiteHeader />
 
-      {/* ─── PAGE HEADER ─── */}
-      <section className="px-5 pt-16 pb-6 text-center" style={{ background: '#FCF7F1' }}>
-        <div className="mx-auto max-w-3xl">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
-            Transparent pricing
-          </p>
-          <h1 className="font-display font-normal text-4xl text-ink sm:text-5xl lg:text-6xl">
-            Simple one-time pricing.
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-muted">
-            Choose the invitation template you love and pay only for that design. Every template includes all premium features — no subscriptions, no hidden charges.
-          </p>
-          {/* Trust chips */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
-            {[
-              { text: 'One-time payment' },
-              { text: 'No monthly subscription' },
-              { text: '1-year hosting included' },
-              { text: 'Edit anytime' },
-              { text: 'Razorpay secured' },
-            ].map(({ text }) => (
-              <span
-                key={text}
-                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3.5 py-1.5 text-xs font-medium text-foreground shadow-sm"
-              >
-                <svg className="h-3 w-3 shrink-0 text-accent-strong" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
-                {text}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── TEMPLATE PRICING CARDS ─── */}
-      <PricingSection />
-
-      {/* ─── EVERYTHING INCLUDED ─── */}
-      <section className="px-5 py-20 sm:py-28" style={{ background: '#FCF7F1' }}>
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-12 text-center">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
-              No feature gating
-            </p>
-            <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl">
-              Everything Included With Every Template
-            </h2>
-            <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-muted">
-              Whichever template you choose, you get the same premium features. The price reflects the design, not the features.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-            {ALL_FEATURES.map((feature) => (
-              <div
-                key={feature}
-                className="flex items-start gap-2.5 rounded-2xl border border-border bg-white px-4 py-3.5 shadow-sm"
-              >
-                <svg className="mt-0.5 h-4 w-4 shrink-0 text-accent-strong" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
-                <span className="text-sm font-medium text-foreground">{feature}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── WHY DIFFERENT PRICES ─── */}
-      <section className="border-y border-border bg-white px-5 py-14">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display font-normal text-2xl text-ink sm:text-3xl mb-5">
-            Why do templates have different prices?
-          </h2>
-          <p className="text-base leading-8 text-muted">
-            The price reflects the uniqueness, craftsmanship, animations, and visual design of each template. Every template includes the same premium features — you simply choose the design that best matches your celebration.
-          </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/create" className="gold-button inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold">
-              Browse all templates
-            </Link>
-            <Link href="/templates" className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-8 py-3.5 text-sm font-semibold text-ink shadow-sm transition-all hover:border-[#D9A441]/60">
-              See template gallery →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PAYMENT TRUST STRIP ─── */}
-      <section className="px-5 py-10">
-        <div className="mx-auto max-w-4xl">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                icon: (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                  </svg>
-                ),
-                title: 'Secure payment',
-                desc: 'Razorpay — UPI, cards & net banking',
-              },
-              {
-                icon: (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3" />
-                  </svg>
-                ),
-                title: 'No app needed',
-                desc: 'Guests open the link in any browser',
-              },
-              {
-                icon: (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
-                  </svg>
-                ),
-                title: 'Edit any time',
-                desc: 'Update details before or after sharing',
-              },
-              {
-                icon: (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
-                  </svg>
-                ),
-                title: 'One-time payment',
-                desc: 'No subscription, no monthly charges',
-              },
-            ].map((item) => (
-              <div key={item.title} className="flex items-start gap-3.5">
-                <div
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-accent-strong"
-                  style={{ background: 'rgba(217,164,65,0.12)' }}
-                >
-                  {item.icon}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-ink">{item.title}</p>
-                  <p className="mt-0.5 text-xs leading-5 text-muted">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── DEMO CTA ─── */}
-      <section className="px-5 py-14 text-center" style={{ background: '#FCF7F1' }}>
-        <div className="mx-auto max-w-2xl">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
-            See before you buy
-          </p>
-          <h2 className="font-display font-normal text-2xl text-ink sm:text-3xl">
-            Not sure which template to pick?
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-muted">
-            Build and preview any template free — no credit card needed. See the full invitation experience before you decide which design to publish.
-          </p>
-          <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Link
-              href="/create"
-              className="gold-button inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold"
-            >
+      <PageHero
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Pricing' }]}
+        eyebrow="Pricing"
+        title={<>One design. One price.<br /><em className="font-medium text-burnished">Everything included.</em></>}
+        lede={`Build and preview any design for free. When it's ready, pay once for that design — from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')} — and it's yours. No plans, no bundles, no subscription.`}
+        actions={
+          <>
+            <Link href="/create" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
               Start building — free
+              <ArrowRightIcon />
             </Link>
-            <Link
-              href="/demo/elegant-wedding"
-              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-8 py-3.5 text-sm font-semibold text-ink shadow-sm transition-all hover:border-[#D9A441]/60"
-            >
-              View a live example
-              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
+            <Link href="/templates" className="btn-outline inline-flex items-center justify-center rounded-full px-8 py-4 text-[1rem] font-semibold">
+              See the designs
             </Link>
+          </>
+        }
+        footnote={<TrustList />}
+        aside={<OfferCard cta="Start building — free" location="pricing_hero_offer" />}
+      />
+
+      {/* ─── HOW PAYING WORKS ─── */}
+      <Section aria-label="How paying works">
+        <SectionHeading align="center" eyebrow="How it works" title="Pay only when you love it" />
+        <ol className="mt-12 grid gap-4 md:grid-cols-3" data-reveal-group>
+          {[
+            { Icon: EyeIcon, title: 'Build & preview free', copy: 'Choose any design, add your real details and photos, and see the finished invitation. No card needed.' },
+            { Icon: ShieldIcon, title: 'Pay once for your design', copy: 'The price is on the design. One secure payment by UPI, card or net banking — no renewal, ever.' },
+            { Icon: LinkIcon, title: 'Your invitation, handed over', copy: 'Get your link and share it on WhatsApp, Instagram, email or text with as many guests as you like.' },
+          ].map(({ Icon, title, copy }, i) => (
+            <li key={title} className="card p-7">
+              <div className="flex items-center justify-between">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald text-paper">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="font-editorial text-[3rem] font-semibold leading-none text-burnished/25">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <h3 className="t-h3 mt-6">{title}</h3>
+              <p className="mt-2 text-[0.95rem] leading-7 text-charcoal/75">{copy}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* ─── PRICE BY DESIGN ─── */}
+      <Section tone="paper" id="prices" aria-label="Price of each design">
+        <SectionHeading
+          eyebrow="Transparent prices"
+          title="Every design, with its price"
+          sub="What you see is what you pay — once. Tap a design to preview it live."
+          action={{ href: '/templates', label: 'Browse with previews' }}
+        />
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2" data-reveal-group>
+          {byOccasion.map(({ occasion, designs }) => (
+            <div key={occasion.key} className="card-quiet p-5 sm:p-6">
+              <p className="eyebrow">{occasion.label}</p>
+              <ul className="mt-3 divide-y divide-line">
+                {designs.map((t) => (
+                  <li key={t.id}>
+                    <Link href={`/templates/${templateSeoSlug(t.id)}`} className="group flex items-center gap-3.5 py-3">
+                      <span className="relative h-12 w-10 shrink-0 overflow-hidden rounded-lg border border-line bg-peach">
+                        <Image src={templateImage(t.id)} alt="" fill sizes="40px" className="object-cover" />
+                      </span>
+                      <span className="min-w-0 flex-1 truncate font-editorial text-[1.2rem] font-semibold group-hover:text-emerald-soft">
+                        {displayName(t.name)}
+                      </span>
+                      <span className="shrink-0 font-editorial text-[1.35rem] font-semibold">{formatTemplatePrice(t.id)}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 text-center text-[0.85rem] text-muted">All prices in Indian rupees, one-time, per design.</p>
+      </Section>
+
+      <SignatureShowcase />
+
+      {/* ─── WHAT'S INCLUDED ─── */}
+      <Section aria-label="What's included">
+        <SectionHeading
+          align="center"
+          eyebrow="What you get"
+          title="What's included"
+          sub="The price reflects the design — its artwork, animation and craft. Here is what comes with it."
+        />
+        <div className="mt-12 grid gap-4 md:grid-cols-2" data-reveal-group>
+          <div className="card p-7 sm:p-9">
+            <h3 className="t-h3">With every design</h3>
+            <ul className="mt-6 space-y-3">
+              {['A private link you can share anywhere', 'Every feature in the design — nothing locked', 'Opens on any phone — no app for guests', 'Rich preview card in WhatsApp chats', 'No ShareInvite banner or ads', 'Live through your event, and three days after', 'Secure one-time checkout'].map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-[0.98rem]">
+                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-soft" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-3xl border border-line bg-peach/60 p-7 sm:p-9">
+            <h3 className="t-h3">Depending on the design</h3>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+              {BY_DESIGN.map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-[0.98rem]">
+                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-burnished" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-7 text-[0.9rem] leading-7 text-charcoal/70">
+              Open any design&apos;s live preview to see exactly which of these it includes before you decide.
+            </p>
           </div>
         </div>
-      </section>
+      </Section>
+
+      {/* ─── PAYMENT & GLOBAL ─── */}
+      <Section tone="peach" size="sm" aria-label="Payment">
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-reveal-group>
+          {[
+            { Icon: ShieldIcon, t: 'Secure by Razorpay', c: 'UPI, cards and net banking' },
+            { Icon: CheckIcon, t: '7-day refund policy', c: 'For genuine problems', href: '/refund-policy' },
+            { Icon: GlobeIcon, t: 'Guests anywhere', c: 'Charged in INR, opens worldwide' },
+            { Icon: LinkIcon, t: 'Help when you need it', c: 'Chat with us on WhatsApp' },
+          ].map(({ Icon, t, c, href }) => (
+            <li key={t} className="flex items-center gap-3.5">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-burnished/40 bg-paper text-burnished">
+                <Icon className="h-5 w-5" />
+              </span>
+              <span>
+                <span className="block font-semibold">{href ? <Link href={href} className="hover:underline">{t}</Link> : t}</span>
+                <span className="block text-[0.85rem] text-charcoal/70">{c}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
       {/* ─── FAQ ─── */}
-      <section className="px-5 py-20 sm:py-28" style={{ background: '#fff' }}>
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-strong">
-              FAQ
-            </p>
-            <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl">
-              Pricing — Frequently Asked Questions
-            </h2>
-            <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-muted">
-              Everything you need to know about templates, pricing, and payment.
-            </p>
-          </div>
+      <Section tone="paper" id="faq" aria-label="Pricing questions">
+        <SectionHeading align="center" eyebrow="FAQ" title="Pricing questions" />
+        <div className="mt-10">
           <FAQAccordion faqs={PRICING_FAQS} />
         </div>
-      </section>
+      </Section>
 
-      {/* ─── FINAL CTA ─── */}
-      <section className="px-5 py-20">
-        <div
-          className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl px-8 py-16 text-center text-white shadow-card-md sm:px-16"
-          style={{ background: 'linear-gradient(135deg, #221B17 0%, #3D2A1A 50%, #221B17 100%)' }}
-        >
-          <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl" aria-hidden>
-            <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#D9A441]/20" />
-            <div className="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#D9A441]/15" />
-          </div>
-          <p className="relative mb-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
-            Ready to start?
-          </p>
-          <h2 className="relative mx-auto max-w-xl font-display font-normal text-3xl sm:text-4xl">
-            Your invitation is 5 minutes away.
-          </h2>
-          <p className="relative mx-auto mt-5 max-w-md text-sm leading-7 text-white/60">
-            Free to build and preview. One-time payment from ₹99 to publish.
-            No monthly fees. No hidden charges.
-          </p>
-          <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/create" className="gold-button w-full rounded-xl px-8 py-4 text-sm font-semibold sm:w-auto">
-              Build Your Invitation Free
-            </Link>
-            <Link
-              href="/templates"
-              className="w-full rounded-xl border border-white/20 bg-white/[0.08] px-8 py-4 text-sm font-semibold text-white/85 transition-colors hover:bg-white/[0.12] sm:w-auto"
-            >
-              Browse templates
-            </Link>
-          </div>
-          <p className="relative mt-4 text-xs text-white/40">
-            Build and preview free — no credit card required
-          </p>
-        </div>
-      </section>
+      <CtaBand
+        eyebrow="See before you buy"
+        title={OFFER.headline}
+        sub={`Free to build and preview. Pay once, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}, when you publish.`}
+        primary={{ href: '/create', label: 'Build your invitation free' }}
+        secondary={{ href: '/demo/elegant-wedding', label: 'View a live example' }}
+        location="pricing_closing"
+      />
+
+      <SiteFooter />
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
     </main>
   )

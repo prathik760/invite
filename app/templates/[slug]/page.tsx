@@ -1,6 +1,20 @@
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import type { ComponentType } from 'react'
+import PreviewButton from '@/components/catalog/PreviewButton'
+import TemplateCard from '@/components/catalog/TemplateCard'
+import FAQAccordion from '@/components/landing/FAQAccordion'
+import OfferCard from '@/components/brand/OfferCard'
+import HowItWorks from '@/components/brand/HowItWorks'
+import TrustList from '@/components/brand/TrustList'
+import CtaBand from '@/components/brand/CtaBand'
+import { Breadcrumbs } from '@/components/brand/PageHero'
+import { Section, SectionHeading } from '@/components/brand/Section'
+import { ArrowRightIcon, CalendarIcon, CameraIcon, ClockIcon, EyeIcon, HeartIcon, MapPinIcon, MusicIcon, PenIcon, ShirtIcon, SparklesIcon, UsersIcon, PhoneIcon, GlobeIcon, LaptopIcon, ClipboardIcon } from '@/components/ui/Icons'
+import { displayName, is3D, primaryOccasion, styleTag } from '@/lib/catalog'
+import { buildCatalogItems } from '@/lib/catalogItems'
+import SiteHeader from '@/components/layout/SiteHeader'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import StickyCTA from '@/components/seo/StickyCTA'
@@ -8,7 +22,7 @@ import SiteFooter from '@/components/landing/SiteFooter'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { TEMPLATES } from '@/modules/templates/data'
 import { absoluteUrl, breadcrumbJsonLd, digitalOffer, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
-import { getRequiredPlan, HIGHEST_PAID_PRICE } from '@/lib/plans'
+import { getRequiredPlan } from '@/lib/plans'
 import { templateImage, templateImageUrl } from '@/lib/templateMedia'
 
 type Props = { params: { slug: string } }
@@ -26,7 +40,7 @@ export function generateMetadata({ params }: Props): Metadata {
   if (!template) return {}
   const url = absoluteUrl(`/templates/${params.slug}`)
   const plan = getRequiredPlan(template.id)
-  const priceLabel = plan.price === 0 ? 'Free' : `₹${plan.price}`
+  const priceLabel = plan.price === 0 ? 'Free' : `₹${plan.price.toLocaleString('en-IN')}`
   // Price in the title earns the click on commercial queries — "cost"/"price"
   // is the most common qualifier on these searches, and a visible price
   // pre-qualifies the visitor instead of surprising them at step 5.
@@ -94,6 +108,30 @@ function productJsonLd(template: NonNullable<ReturnType<typeof findTemplateBySlu
  * by what they are actually for, not by a swapped noun.
  */
 const CATEGORY_CONTEXT: Record<string, { intro: string; guests: string }> = {
+  signature: {
+    intro: 'A wedding of several days asks guests to plan: which functions they are invited to, what to wear to each, where to stay and how to get there.',
+    guests: 'Guests — especially those travelling from other cities or abroad — want every function, venue, dress code, hotel and contact in one link they can reopen all week.',
+  },
+  babyshower: {
+    intro: 'A Godh Bharai or baby shower is planned around the mother’s comfort, often at home and at short notice.',
+    guests: 'Family and friends want the time, the address and a note on the theme or colours so they can bring the right blessings.',
+  },
+  prewedding: {
+    intro: 'Haldi, Mehendi and Sangeet are the most relaxed and the most crowded days of a wedding, and they move around more than the wedding itself.',
+    guests: 'Guests want the timing, the venue and above all the dress code — yellow for the Haldi, green for the Mehendi, glamour for the Sangeet.',
+  },
+  pooja: {
+    intro: 'A home pooja is fixed around its muhurat, so the start time matters more than anything else on the invitation.',
+    guests: 'Guests want the pooja and aarti timings, the address and whether prasad or lunch will be served.',
+  },
+  festival: {
+    intro: 'Festival evenings — Diwali, Eid and the rest — are planned in a busy week, with many invitations arriving at once.',
+    guests: 'Guests want the time, the address and a sense of the evening, so an invitation that stands out gets the answer first.',
+  },
+  retirement: {
+    intro: 'A retirement or farewell gathers colleagues, friends and family who rarely meet in one place.',
+    guests: 'Guests want the venue, the time and a place to leave a message for the person of the evening.',
+  },
   wedding: {
     intro: 'Indian weddings run across several days and several venues, and the details move right up to the last week — a muhurat shifts, a hall changes, a function gets added.',
     guests: 'Guests travelling in from other cities need the venue address, a map pin and the ceremony timings in one place they can reopen on the morning of the wedding.',
@@ -149,7 +187,7 @@ function fieldHighlights(template: NonNullable<ReturnType<typeof findTemplateByS
   const keys = new Set(template.config.fields.map((f) => f.key))
   const out: string[] = []
   if (keys.has('mehendiDate') || keys.has('haldiDate') || keys.has('sangeetDate')) out.push('separate Mehendi, Haldi, Sangeet and Reception blocks, each with its own date, time and venue')
-  if (keys.has('brideFamily') || keys.has('groomFamily') || keys.has('brideFamilyDetails') || keys.has('groomFamilyDetails')) out.push('family name panels for both sides')
+  if (keys.has('brideFamily') || keys.has('groomFamily') || keys.has('brideFamilyDetails') || keys.has('groomFamilyDetails') || keys.has('brideParents')) out.push('family name panels for both sides')
   if (keys.has('coupleStory')) out.push('a couple story section')
   if (keys.has('pooja')) out.push('muhurat and pooja timing details')
   if (keys.has('babyGender')) out.push("the baby's name reveal and parents' names")
@@ -157,8 +195,8 @@ function fieldHighlights(template: NonNullable<ReturnType<typeof findTemplateByS
   if (keys.has('age')) out.push('a milestone age display')
   if (keys.has('years')) out.push('a years-together count')
   if (keys.has('pin')) out.push('a secret PIN with a hint, balloon pops, a sliding puzzle, a scratch card and a handwritten letter')
-  if (keys.has('reasons')) out.push('a list of personal notes that reveal as the recipient scrolls')
-  if (keys.has('upiId')) out.push('an optional UPI, QR and bank panel for shagun')
+  if (keys.has('reasons')) out.push('personal notes revealed one at a time')
+  if (keys.has('whatsappNumber')) out.push('an RSVP button that opens a WhatsApp reply to you')
   if (keys.has('timeline') || keys.has('schedule')) out.push('an event schedule timeline')
   if (keys.has('galleryImages')) out.push('a photo gallery')
   if (keys.has('musicUrl')) out.push('background music')
@@ -167,18 +205,61 @@ function fieldHighlights(template: NonNullable<ReturnType<typeof findTemplateByS
   return out
 }
 
+/** Designs with an RSVP action (WhatsApp) built into the page. Raksha
+ *  Bandhan's RSVP + gift section exists in code but is currently disabled. */
+
+type Feature = { Icon: ComponentType<{ className?: string }>; title: string; copy: string }
+
+/**
+ * What this design actually contains, read from its own field set and the
+ * template's behaviour — never a generic list. Every event design renders a
+ * live countdown; the 3D greetings and the Surprise Journey do not.
+ */
+function designFeatures(template: NonNullable<ReturnType<typeof findTemplateBySlug>>): Feature[] {
+  const keys = new Set(template.config.fields.map((f) => f.key))
+  const out: Feature[] = []
+  if (is3D(template.id)) out.push({ Icon: SparklesIcon, title: '3D animation', copy: 'An animated experience that plays as they open it.' })
+  if (keys.has('pin')) out.push({ Icon: SparklesIcon, title: 'Secret unlock & surprises', copy: 'A PIN with a hint, balloon pops, a puzzle, a scratch card and a letter.' })
+  if (!is3D(template.id)) out.push({ Icon: ClockIcon, title: 'Live countdown', copy: 'Days, hours and minutes to the moment.' })
+  if (keys.has('mapsUrl')) out.push({ Icon: MapPinIcon, title: 'Venue & Google Maps', copy: 'The address with one-tap directions.' })
+  if (keys.has('events')) out.push({ Icon: CalendarIcon, title: 'Every function', copy: 'Each function on its own card — date, time, venue, dress code, map and calendar link.' })
+  else if (keys.has('sangeetDate') || keys.has('haldiDate')) out.push({ Icon: CalendarIcon, title: 'Every function', copy: 'Mehendi, Haldi, Sangeet and Reception, each with its own date and venue.' })
+  else if (keys.has('mehendiDate')) out.push({ Icon: CalendarIcon, title: 'Haldi and Mehendi', copy: 'Both functions, each with its own time and venue.' })
+  else if (keys.has('schedule') || keys.has('timeline')) out.push({ Icon: CalendarIcon, title: 'Event schedule', copy: 'Each moment of the day, in order.' })
+  if (keys.has('galleryImages')) out.push({ Icon: CameraIcon, title: 'Photo gallery', copy: 'Your photos, beautifully laid out.' })
+  if (keys.has('musicUrl')) out.push({ Icon: MusicIcon, title: 'Background music', copy: 'A song that plays softly for guests.' })
+  // Every event design posts to /api/wishes; the 3D greetings and the
+  // Surprise Journey are one-to-one gifts with no guest wall.
+  if (!is3D(template.id)) out.push({ Icon: HeartIcon, title: 'Guest wishes wall', copy: 'Messages from guests appear live on the invitation.' })
+  if (keys.has('whatsappNumber')) out.push({ Icon: PhoneIcon, title: 'RSVP on WhatsApp', copy: 'Guests reply to you with one tap.' })
+  if (keys.has('travel') || keys.has('faq')) out.push({ Icon: GlobeIcon, title: 'Travel, stay & FAQs', copy: 'Hotels, airport pickups, who to call and answers to guests’ questions.' })
+  if (keys.has('livestreamUrl')) out.push({ Icon: LaptopIcon, title: 'Livestream link', copy: 'Family abroad can watch the ceremony live.' })
+  if (keys.has('registryUrl')) out.push({ Icon: ClipboardIcon, title: 'Gift registry', copy: 'A link to your registry, if you have one.' })
+  if (keys.has('brideFamily') || keys.has('groomFamily') || keys.has('brideFamilyDetails') || keys.has('groomFamilyDetails') || keys.has('brideParents')) out.push({ Icon: UsersIcon, title: 'Both families', copy: 'Family names for both sides.' })
+  if (keys.has('coupleStory') || keys.has('story')) out.push({ Icon: PenIcon, title: 'Your story', copy: 'A section for how it all began.' })
+  if (keys.has('reasons')) out.push({ Icon: PenIcon, title: 'Little notes', copy: 'Personal lines that reveal one at a time.' })
+  if (keys.has('dressCode')) out.push({ Icon: ShirtIcon, title: 'Dress code', copy: 'So guests know what to wear.' })
+  return out
+}
+
 export default function TemplateSeoPage({ params }: Props) {
   const template = findTemplateBySlug(params.slug)
   if (!template) notFound()
   const url = absoluteUrl(`/templates/${params.slug}`)
   const categoryHref = `/templates/category/${templateCategorySlug(template.category)}`
-  const fields = template.config.fields.slice(0, 8)
   const plan = getRequiredPlan(template.id)
+  const price = plan.price
+  const name = displayName(template.name)
   const context = CATEGORY_CONTEXT[template.category ?? ''] ?? CATEGORY_CONTEXT.wedding
   const highlights = fieldHighlights(template)
-  const siblings = TEMPLATES.filter(
-    (t) => t.category === template.category && t.id !== template.id,
-  ).slice(0, 3)
+  const features = designFeatures(template)
+  const occasionInfo = primaryOccasion(template.id)
+  const createHref = `/create?template=${template.id}&src=template_page`
+
+  // Related designs from the same occasion (falls back to the whole catalogue).
+  const relatedIds = (occasionInfo?.templateIds ?? []).filter((id) => id !== template.id)
+  const related = buildCatalogItems(relatedIds.length ? relatedIds : undefined).filter((i) => i.id !== template.id).slice(0, 4)
+
   // Route back up to the matching occasion landing page, completing the
   // landing page → template → create loop instead of always pointing at the
   // wedding page regardless of what this template is for.
@@ -200,42 +281,32 @@ export default function TemplateSeoPage({ params }: Props) {
     href: '/whatsapp-invitation-maker',
     label: 'WhatsApp invitation maker',
   }
-  const occasionHref = occasion.href
-  const occasionLabel = occasion.label
 
+  // Visible FAQ and FAQPage JSON-LD come from this one list. The price answer
+  // used to say the design was "included in the <plan> plan" — plans are not
+  // sold; each design has its own one-time price.
+  const faqs = [
+    {
+      question: `How much does the ${template.name} template cost?`,
+      answer: `The ${name} design is ₹${price.toLocaleString('en-IN')}, paid once when you publish. There is no subscription. You can build and preview the whole invitation for free before you pay.`,
+    },
+    {
+      question: `How do I create an invitation with the ${template.name} template?`,
+      answer: `Choose "Use this design", fill in your details — names, date, venue, schedule and photos — and preview the invitation as you type. When you're happy, pay once and publish to get your link, ready to share on WhatsApp.`,
+    },
+    {
+      question: 'Do guests need to download an app to view the invitation?',
+      answer: 'No app download required. Guests open the invitation link in their phone browser — it works on any Android or iOS device, in any country.',
+    },
+  ]
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: `How much does the ${template.name} template cost?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `The ${template.name} template is included in the ${plan.name} plan at ₹${plan.price}. This is a one-time payment — no subscription, and no template costs more than ₹${HIGHEST_PAID_PRICE}. You can build and preview the whole invitation for free before you pay.`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: `How do I create an invitation with the ${template.name} template?`,
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: `Go to shareinvite.in/create, select the ${template.name} template, fill in the event details — names, date, venue, schedule, and photos — and your invitation is live in under 5 minutes. Share it directly on WhatsApp.`,
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Do guests need to download an app to view the invitation?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'No app download required. Guests open the invitation link in their phone browser — it works on any Android or iOS device. The page loads fast even on slower mobile networks.',
-        },
-      },
-    ],
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
   }
 
   return (
-    <main className="min-h-screen bg-background pb-28 text-foreground">
+    <main className="min-h-screen bg-champagne text-charcoal">
       <JsonLd id="template-product-jsonld" data={productJsonLd(template, url)} />
       <JsonLd id="template-faq-jsonld" data={faqJsonLd} />
       <JsonLd
@@ -246,136 +317,186 @@ export default function TemplateSeoPage({ params }: Props) {
           { name: template.name, url },
         ])}
       />
-      <header className="border-b border-border bg-white px-5 py-5">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <Link href="/"><Image priority src="/logo1.png" alt="ShareInvite" className="h-8 w-auto" width="120" height="32" /></Link>
-          <TrackedLink href={`/create?template=${template.id}&src=template_header`} location="template_page_header" meta={{ template_id: template.id, price: plan.price, page_type: 'template_detail' }} className="gold-button rounded-xl px-5 py-2.5 text-sm font-semibold">Use Template</TrackedLink>
-        </div>
-      </header>
-      <section className="px-5 py-14">
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-          <div>
-            <Link href={categoryHref} className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-strong">
-              {template.category} templates
-            </Link>
-            <h1 className="mt-5 font-display text-4xl font-normal leading-tight text-ink sm:text-6xl">{template.name} Template</h1>
-            <p className="mt-5 text-lg leading-8 text-muted">{template.description} Create it as a mobile-first digital invitation page with WhatsApp sharing, venue details, gallery, schedule, and RSVP-ready guest flow.</p>
-            {/* Price badge. States the model plainly — the previous "Free
-                forever" wording appeared on paid templates' sibling pages and
-                set an expectation the checkout then contradicted. */}
-            <div className="mt-5 inline-flex flex-wrap items-center gap-2 rounded-full border border-[#D9A441]/40 bg-[#FFFBF5] px-4 py-2">
-              <span className="text-sm font-bold text-ink">
-                {plan.price === 0 ? 'Free — no payment needed' : `₹${plan.price} one-time`}
-              </span>
-              <span className="text-xs text-muted">
-                {plan.price === 0 ? '· Publish and share at no cost' : '· No subscription · Build & preview free before paying'}
-              </span>
-            </div>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <TrackedLink
-                href={`/create?template=${template.id}&src=template_page`}
-                location="template_page_hero"
-                meta={{ template_id: template.id, template_name: template.name, price: plan.price, page_type: 'template_detail' }}
-                className="gold-button rounded-full px-9 py-4 text-center text-base font-semibold"
-              >
-                {plan.price === 0 ? 'Create with this template — free' : 'Create with this template'}
-              </TrackedLink>
-              <Link href="/templates" className="rounded-full border border-border bg-white px-9 py-4 text-center text-base font-semibold text-ink">All Templates</Link>
-            </div>
-            {/* Removes the "what happens after I click?" hesitation. */}
-            <p className="mt-4 text-sm leading-6 text-muted">
-              Next: pick your details, see a live preview of your invitation, then publish.
-              {plan.price > 0 && ' Payment is only asked for at the final publish step.'}
-            </p>
-          </div>
-          {/* The template itself. This page previously showed only a list of
-              field names — a visitor could not see the design they were being
-              asked to buy anywhere above the fold. */}
-          <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-card">
-            <Image
-              src={templateImage(template.id)}
-              alt={`${template.name} digital invitation template preview`}
-              width={800}
-              height={600}
-              priority
-              sizes="(max-width: 1024px) 100vw, 45vw"
-              className="w-full object-cover"
-            />
-            <div className="border-t border-border p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong">You can customise</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {fields.map((field) => (
-                  <span key={field.key} className="rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-ink">
-                    {field.label}
-                  </span>
-                ))}
+      <SiteHeader createHref={`/create?template=${template.id}&src=template_header`} createLabel="Use this design" />
+
+      {/* ─── PRODUCT HERO ─── */}
+      <section className="relative overflow-hidden border-b border-line">
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_20%_20%,rgba(232,200,102,0.2),transparent_70%)]" />
+        <div className="shell relative pb-16 pt-8 sm:pt-10">
+          <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: 'Templates', href: '/templates' }, { name }]} />
+          <div className="mt-8 grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
+            {/* The design itself, large, with the live preview one tap away. */}
+            <div className="enter-4 relative mx-auto w-full max-w-[30rem]">
+              <div aria-hidden className="absolute -inset-6 rounded-[2.5rem] bg-gold-soft/15 blur-2xl" />
+              <div className="relative rounded-[2rem] bg-paper p-3 shadow-lift">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-peach">
+                  <Image
+                    src={templateImage(template.id)}
+                    alt={`${template.name} digital invitation template preview`}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 90vw, 30rem"
+                    className="object-cover"
+                  />
+                  {is3D(template.id) && (
+                    <span className="absolute left-4 top-4 rounded-full bg-emerald px-3 py-1 text-[0.75rem] font-bold text-paper">3D</span>
+                  )}
+                  {/* Centred by a flex row, not translate-x: the button's hover lift sets its own transform. */}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
+                    <PreviewButton
+                      templateId={template.id}
+                      source="template_page"
+                      className="btn-gold pointer-events-auto inline-flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-3 text-[0.9rem] font-semibold"
+                    >
+                      <EyeIcon className="h-4 w-4" /> Open live preview
+                    </PreviewButton>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="border-y border-border bg-white px-5 py-14">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="font-display text-3xl font-normal text-ink">About this template</h2>
-          <div className="mt-6 space-y-5 text-base leading-8 text-muted">
-            <p>{template.description} {context.intro}</p>
-            <p>{context.guests}</p>
-            {highlights.length > 0 && (
-              <p>
-                Specific to this design, the {template.name.split('—')[0].trim()} template gives you {highlights.slice(0, -1).join(', ')}
-                {highlights.length > 1 ? ' and ' : ''}{highlights[highlights.length - 1]}.
+              <p className="mt-4 text-center text-[0.85rem] text-muted">
+                Or <Link href={`/demo/${template.id}`} className="link">open the full demo</Link> in a new view.
               </p>
-            )}
-            <p>
-              Everything is edited from one form and published to a single link. If a detail changes after you have sent it,
-              you update the page and the same link shows the new version — nobody needs a corrected card, and nobody is
-              left reading an out-of-date message in a WhatsApp thread.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section className="px-5 py-12">
-        <div className="mx-auto max-w-4xl">
-          {/* Same-category siblings with their real prices. Replaces four
-              hardcoded links that were byte-identical on all 23 template pages
-              and gave Google nothing to tell these pages apart. */}
-          <h2 className="font-display text-2xl font-normal text-ink mb-6">
-            {siblings.length > 0 ? `Other ${template.category} templates` : 'Other templates to explore'}
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {siblings.map((sibling) => (
-              <Link
-                key={sibling.id}
-                href={`/templates/${templateSeoSlug(sibling.id)}`}
-                className="rounded-lg border border-border bg-white p-4 transition-colors hover:border-[#D9A441]/60"
-              >
-                <p className="text-sm font-semibold text-ink">{sibling.name}</p>
-                <p className="mt-1 text-xs leading-5 text-muted">{sibling.description}</p>
-                <p className="mt-2 text-xs font-bold text-accent-strong">
-                  {getRequiredPlan(sibling.id).price === 0 ? 'Free' : `₹${getRequiredPlan(sibling.id).price}`}
-                </p>
-              </Link>
-            ))}
-            <Link href="/templates" className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink hover:text-accent-strong">Browse all templates →</Link>
-            <Link href={occasionHref} className="rounded-lg border border-border bg-white p-4 text-sm font-semibold text-ink hover:text-accent-strong">{occasionLabel} →</Link>
-          </div>
-        </div>
-      </section>
-      <section className="border-t border-border bg-white px-5 py-14">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-2xl font-normal text-ink mb-8">Frequently asked questions</h2>
-          <div className="space-y-4">
-            {faqJsonLd.mainEntity.map((item, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-background p-6">
-                <p className="font-heading text-base text-ink">{item.name}</p>
-                <p className="mt-2 text-sm leading-7 text-muted">{item.acceptedAnswer.text}</p>
+            </div>
+
+            <div>
+              <p className="enter-0 flex flex-wrap items-center gap-2">
+                <Link href={categoryHref} className="pill hover:border-burnished">{occasionInfo?.label ?? template.category}</Link>
+                <span className="pill border-transparent bg-peach text-burnished-deep">{styleTag(template.id)}</span>
+              </p>
+              <h1 className="t-h1 enter-0 mt-5">{template.name} Template</h1>
+              <p className="t-lede enter-1 mt-5 max-w-xl">{template.description}</p>
+
+              {/* Price. States the model plainly: one design, one payment. */}
+              <div className="enter-2 mt-7 flex items-end gap-3">
+                <span className="font-editorial text-[3.6rem] font-semibold leading-none">₹{price.toLocaleString('en-IN')}</span>
+                <span className="pb-2 text-[0.95rem] text-muted">one-time · everything in this design included</span>
               </div>
-            ))}
+
+              <div className="enter-2 mt-7 flex flex-col gap-3 sm:flex-row">
+                <TrackedLink
+                  href={createHref}
+                  location="template_page_hero"
+                  meta={{ template_id: template.id, template_name: template.name, price, page_type: 'template_detail' }}
+                  className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold"
+                >
+                  Use this design
+                  <ArrowRightIcon />
+                </TrackedLink>
+                <PreviewButton
+                  templateId={template.id}
+                  source="template_page_secondary"
+                  className="btn-outline inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold"
+                >
+                  Live preview
+                </PreviewButton>
+              </div>
+              {/* Removes the "what happens after I click?" hesitation. */}
+              <p className="mt-4 text-[0.9rem] leading-6 text-charcoal/70">
+                Next: add your details and watch the invitation come to life. Payment is only asked for when you publish.
+              </p>
+              <TrustList className="mt-6" />
+            </div>
           </div>
         </div>
       </section>
+
+      {/* ─── WHAT'S IN THIS DESIGN ─── */}
+      <Section aria-label="What's in this design">
+        <SectionHeading
+          eyebrow="What's in this design"
+          title={`Everything the ${name} design includes`}
+          sub="Taken from the design itself — nothing here is an add-on, and nothing is locked once it's yours."
+        />
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+          {features.map(({ Icon, title, copy }) => (
+            <li key={title} className="flex items-start gap-4 rounded-3xl border border-line bg-paper p-5">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald text-gold-soft">
+                <Icon className="h-5 w-5" />
+              </span>
+              <span>
+                <span className="block font-editorial text-[1.3rem] font-semibold leading-tight">{title}</span>
+                <span className="mt-1 block text-[0.9rem] leading-6 text-charcoal/70">{copy}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* ─── ABOUT + OFFER ─── */}
+      <Section tone="paper" aria-label="About this design">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div data-reveal>
+            <p className="eyebrow">About this design</p>
+            <h2 className="t-h2 mt-3">Made for the way this celebration really happens</h2>
+            <div className="prose-brand mt-6">
+              <p>{template.description} {context.intro}</p>
+              <p>{context.guests}</p>
+              {highlights.length > 0 && (
+                <p>
+                  Specific to this design, the {name} template gives you {highlights.slice(0, -1).join(', ')}
+                  {highlights.length > 1 ? ' and ' : ''}{highlights[highlights.length - 1]}.
+                </p>
+              )}
+              <p>
+                You fill everything in on one form, watch it take shape in a live preview, and publish it to a single
+                link that opens on any phone.
+              </p>
+            </div>
+          </div>
+          <div data-reveal="scale">
+            <OfferCard price={price} designName={name} href={createHref} cta="Use this design" location="template_page_offer" />
+          </div>
+        </div>
+      </Section>
+
+      {/* ─── HOW IT WORKS ─── */}
+      <Section tone="peach" aria-label="How it works">
+        <SectionHeading align="center" eyebrow="How it works" title="Three steps to your invitation" />
+        <div className="mt-12"><HowItWorks /></div>
+      </Section>
+
+      {/* ─── RELATED DESIGNS ─── */}
+      {related.length > 0 && (
+        <Section aria-label="Related designs">
+          {/* Real sibling designs with their prices. Replaces hardcoded links
+              that were byte-identical on every template page and gave Google
+              nothing to tell these pages apart. */}
+          <SectionHeading
+            eyebrow="You might also love"
+            title={occasionInfo ? `More ${occasionInfo.short.toLowerCase()} designs` : 'More designs to explore'}
+            action={{ href: occasion.href, label: occasion.label }}
+          />
+          <div className="mt-9 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-4" data-reveal-group>
+            {related.map((item) => <TemplateCard key={item.id} item={item} source="template_page_related" />)}
+          </div>
+          <p className="mt-8 text-center">
+            <Link href="/templates" className="link inline-flex items-center gap-1.5">Browse every design <ArrowRightIcon /></Link>
+          </p>
+        </Section>
+      )}
+
+      {/* ─── FAQ ─── */}
+      <Section tone="paper" aria-label="Questions about this design">
+        <SectionHeading align="center" eyebrow="Questions" title="About this design" />
+        <div className="mt-10"><FAQAccordion faqs={faqs} /></div>
+      </Section>
+
+      <CtaBand
+        eyebrow={`${name} · ₹${price.toLocaleString('en-IN')} one-time`}
+        title="Make this design yours"
+        sub="Free to build and preview. Pay once when you publish — every feature in the design is included."
+        primary={{ href: createHref, label: 'Use this design' }}
+        secondary={{ href: `/demo/${template.id}`, label: 'Open the full demo' }}
+        location="template_page_closing"
+      />
       <SiteFooter />
-      <StickyCTA pageType="template_detail" />
+      <StickyCTA
+        pageType="template_detail"
+        title={`${name} · ₹${price.toLocaleString('en-IN')}`}
+        sub="One-time · everything in this design included"
+        href={`/create?template=${template.id}&src=sticky_bar`}
+        label="Use this design"
+      />
     </main>
   )
 }

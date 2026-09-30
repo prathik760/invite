@@ -1,18 +1,22 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import Link from 'next/link'
 import type { Session } from 'next-auth'
 import type { TemplateData } from '@/modules/templates/data'
 import { canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
 import { supportWhatsAppUrl } from '@/lib/support'
+import { OFFER_INCLUDES } from '@/lib/offer'
+import { displayName } from '@/lib/catalog'
+import { ArrowRightIcon, CheckIcon, ShieldIcon } from '@/components/ui/Icons'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
 function Spinner() {
   return (
-    <svg className="animate-spin w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24">
+    <svg className="animate-spin w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" aria-hidden>
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
     </svg>
@@ -38,203 +42,168 @@ export default function Step5Publish({
   const requiredPlan = getRequiredPlan(selectedTemplate.id)
   const userHasAccess = canAccess(selectedTemplate.id, userPlan)
   const mustPay = !userHasAccess
+  const name = displayName(selectedTemplate.name)
+  const price = `₹${requiredPlan.price.toLocaleString('en-IN')}`
 
   return (
-    <div
-      className="flex-1 flex flex-col"
-      style={{
-        background: isDark
-          ? `radial-gradient(ellipse 90% 65% at 50% -5%, rgba(${tv.rgb},0.40) 0%, transparent 55%), #06060E`
-          : `radial-gradient(ellipse 90% 60% at 50% -5%, rgba(${tv.rgb},0.20) 0%, transparent 60%), linear-gradient(175deg,#FFF9F2 0%,#F5EDE2 100%)`,
-      }}
-    >
-      {/* Preview top bar */}
+    // overflow-x-clip: the preview's glow (-inset-12) reaches ~48px past a
+    // phone-width screen and made the whole step scroll sideways. `clip`, not
+    // `hidden`, so the summary card's md:sticky keeps working.
+    <div className="flex-1 overflow-x-clip bg-champagne">
       <div
-        className="sticky top-0 z-10 px-5 py-3 flex items-center justify-between backdrop-blur-xl shrink-0"
-        style={{
-          borderBottom: isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(44,32,28,0.07)',
-          background: isDark ? 'rgba(6,6,14,0.86)' : 'rgba(255,249,242,0.86)',
-        }}
+        className="shell grid grid-cols-1 gap-10 pb-10 pt-8 md:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] md:items-start md:gap-12 md:pt-12"
+        style={{ paddingBottom: 'calc(var(--bottom-dock-h, 0px) + 2.5rem)' }}
       >
-        <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-2 h-2 rounded-full shrink-0" style={{ background: tv.color }} />
-          <p className="text-xs font-semibold truncate" style={{ color: isDark ? 'rgba(255,255,255,0.80)' : '#221B17' }}>
-            {selectedTemplate.name.split('—')[0].trim()}
-          </p>
-          <span
-            className="hidden sm:inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0"
-            style={{
-              background: isDark ? 'rgba(255,255,255,0.07)' : 'rgba(44,32,28,0.05)',
-              color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(44,32,28,0.38)',
-            }}
-          >
-            Step 5 of 5
-          </span>
-        </div>
-        <button
-          onClick={onBack}
-          className="shrink-0 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
-          style={{
-            background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(44,32,28,0.06)',
-            color: isDark ? 'rgba(255,255,255,0.65)' : '#706861',
-          }}
-        >
-          ← Edit
-        </button>
-      </div>
+        {/* ── Live preview ── */}
+        <div className="relative flex flex-col items-center">
+          <div className="mb-5 flex w-full max-w-sm items-center justify-between gap-3">
+            <div>
+              <p className="eyebrow">Step 5 of 5</p>
+              <h1 className="t-h3 mt-1">Your invitation is ready</h1>
+            </div>
+            <button type="button" onClick={onBack} className="btn-outline shrink-0 rounded-full px-4 py-2 text-[0.85rem] font-semibold">
+              Edit details
+            </button>
+          </div>
 
-      {/* Phone mockup + CTA */}
-      <div className="flex-1 flex flex-col items-center justify-start pt-8 pb-8 px-4">
-        <div className="relative">
-          {/* Ambient glow */}
-          <div
-            className="absolute -inset-10 rounded-full blur-3xl pointer-events-none"
-            style={{
-              background: `radial-gradient(ellipse, rgba(${tv.rgb},${isDark ? '0.60' : '0.28'}), transparent 65%)`,
-              opacity: isDark ? 0.75 : 0.65,
-            }}
-          />
-
-          {/* iPhone shell */}
-          <div className="relative" style={{ width: 'min(288px, calc(100vw - 3rem))' }}>
-            <div style={{
-              borderRadius: 'clamp(30px, 12%, 44px)',
-              background: '#1C1C1E',
-              padding: '10px',
-              boxShadow: isDark
-                ? '0 60px 120px rgba(0,0,0,0.82), 0 0 0 1px rgba(255,255,255,0.07), inset 0 1px 0 rgba(255,255,255,0.09)'
-                : '0 48px 96px rgba(0,0,0,0.24), 0 0 0 1px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.10)',
-            }}>
-              {/* Dynamic island */}
-              <div className="flex justify-center" style={{ height: '28px', marginBottom: '-28px', position: 'relative', zIndex: 10 }}>
-                <div style={{ marginTop: '8px', width: '88px', height: '22px', background: '#1C1C1E', borderRadius: '11px' }} />
-              </div>
-
-              {/* Screen */}
-              <div
-                className="overflow-hidden relative bg-white"
-                style={{ borderRadius: 'clamp(22px, 10%, 36px)', height: 'min(590px, max(360px, calc(100dvh - 300px)))' }}
-              >
-                <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
-                  <PreviewPane templateId={selectedTemplate.id} data={data} />
+          <div className="relative">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-12 rounded-full blur-3xl"
+              style={{ background: `radial-gradient(ellipse, rgba(${tv.rgb},${isDark ? '0.45' : '0.25'}), transparent 65%)` }}
+            />
+            <div className="relative" style={{ width: 'min(290px, calc(100vw - 3rem))' }}>
+              <div className="rounded-[2.6rem] bg-charcoal p-[9px] shadow-[0_50px_90px_-30px_rgba(3,25,15,0.65)]">
+                <div className="relative z-10 flex h-6 justify-center" style={{ marginBottom: '-24px' }}>
+                  <div className="mt-2 h-5 w-20 rounded-full bg-charcoal" />
                 </div>
-                {/* Scroll hint — only for scrollable (2D) templates */}
-                {!is3DTemplate(selectedTemplate.id) && (
-                  <div
-                    className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none z-10"
-                    style={{ background: isDark ? 'linear-gradient(to top, rgba(6,6,14,0.90), transparent)' : 'linear-gradient(to top, rgba(255,255,255,0.92), transparent)' }}
-                  >
-                    <div className="absolute bottom-2 left-0 right-0 flex justify-center">
-                      <span className="flex items-center gap-1 text-[8px] font-semibold" style={{ color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(44,32,28,0.38)' }}>
-                        <svg className="w-3 h-3 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                <div
+                  className="relative overflow-hidden rounded-[2.1rem] bg-white"
+                  style={{ height: 'min(590px, max(360px, calc(100dvh - 300px)))' }}
+                >
+                  <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
+                    <PreviewPane templateId={selectedTemplate.id} data={data} />
+                  </div>
+                  {/* Scroll hint — only for scrollable (2D) templates */}
+                  {!is3DTemplate(selectedTemplate.id) && (
+                    <div
+                      className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12"
+                      style={{ background: isDark ? 'linear-gradient(to top, rgba(6,6,14,0.9), transparent)' : 'linear-gradient(to top, rgba(255,255,255,0.92), transparent)' }}
+                    >
+                      <span
+                        className="absolute inset-x-0 bottom-2 flex justify-center text-[8px] font-semibold"
+                        style={{ color: isDark ? 'rgba(255,255,255,0.5)' : 'rgba(30,39,38,0.45)' }}
+                      >
                         scroll to explore
                       </span>
                     </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Home indicator */}
-              <div className="flex justify-center" style={{ paddingTop: '8px', paddingBottom: '2px' }}>
-                <div style={{ width: '80px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.22)' }} />
+                  )}
+                </div>
+                <div className="flex justify-center pb-0.5 pt-2">
+                  <div className="h-1 w-20 rounded-full bg-paper/25" />
+                </div>
               </div>
             </div>
           </div>
+          <p className="mt-5 text-center text-[0.85rem] text-muted">This is exactly what your guests will see.</p>
         </div>
 
-        {/* Plan badge + CTA. The bottom padding on mobile clears the docked
-            CTA bar, whose real height is published as --bottom-dock-h. */}
-        <div
-          className="w-full max-w-xs mt-8 flex flex-col items-center gap-3"
-          style={{ paddingBottom: 'calc(var(--bottom-dock-h, 0px) + 1rem)' }}
-        >
-
-          {/* No plan badge. Pricing is per template, not per tier, so there is
-              no "plan" to report and nothing to upgrade to — the price of the
-              design they picked is already on the button. */}
-
-          {/* No branding warning: every template is a paid publish, so no new
-              invitation carries the "Made with ShareInvite" banner. */}
-
-          {/* Error */}
-          {error && (
-            <div className="w-full rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-center text-xs text-red-600">
-              {error}
+        {/* ── Summary ── */}
+        <aside className="card overflow-hidden md:sticky md:top-24" aria-label="Your design">
+          <div className="flex items-center gap-4 border-b border-line p-6">
+            <span className="relative h-16 w-12 shrink-0 overflow-hidden rounded-xl border border-line bg-peach">
+              <Image src={tv.image} alt="" fill sizes="48px" className="object-cover" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="eyebrow">Your design</p>
+              <p className="mt-0.5 truncate font-editorial text-[1.5rem] font-semibold leading-tight">{name}</p>
             </div>
-          )}
+            <div className="text-right">
+              <p className="font-editorial text-[2rem] font-semibold leading-none">{mustPay ? price : 'Owned'}</p>
+              <p className="mt-1 text-[0.72rem] text-muted">{mustPay ? 'one-time' : 'already yours'}</p>
+            </div>
+          </div>
 
-          {/* Primary CTA — desktop only. On mobile the identical action is
-              docked to the bottom of the viewport by the create page, and
-              rendering both produced two buttons for one action with the
-              off-screen one carrying the price. */}
-          <button
-            onClick={onPublish}
-            disabled={loading}
-            className="gold-button hidden w-full md:flex items-center justify-center gap-2.5 rounded-2xl py-4 font-bold disabled:opacity-50"
-            style={{ fontSize: '15px', letterSpacing: '0.01em' }}
-          >
-            {loading ? (
-              <><Spinner />Creating your invitation…</>
-            ) : (
-              <>
-                {mustPay ? `Continue to payment — ₹${requiredPlan.price.toLocaleString('en-IN')}` : 'Get my invitation link'}
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </>
+          <div className="p-6">
+            <p className="text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-muted">Everything included</p>
+            <ul className="mt-3 space-y-2.5">
+              {OFFER_INCLUDES.map((line) => (
+                <li key={line} className="flex items-start gap-2.5 text-[0.9rem] text-charcoal/85">
+                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-soft" />
+                  {line}
+                </li>
+              ))}
+            </ul>
+
+            {/* No plan badge. Pricing is per design, not per tier, so there is
+                no "plan" to report and nothing to upgrade to — the price of the
+                design they picked is already on the button. */}
+
+            {error && (
+              <div role="alert" className="mt-5 rounded-xl border border-[#A33A3A]/20 bg-[#A33A3A]/[0.06] px-4 py-2.5 text-center text-[0.85rem] font-medium text-[#A33A3A]">
+                {error}
+              </div>
             )}
-          </button>
 
-          {/* Tell the user exactly what the next tap does. The old copy said
-              "No account needed" while the button in fact opened a sign-in
-              modal — the single most common reason to abandon at step 5.
-              A logged-out user on a paid template meets the sign-in step first,
-              so say so rather than promising the payment sheet. */}
-          <p className="hidden md:block text-center text-[11px] leading-4" style={{ color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(44,32,28,0.42)' }}>
-            {!session
-              ? 'You’ll sign in first, so your invitation and payment stay linked to your account'
-              : mustPay
-                ? 'Secure one-time payment via Razorpay · Your invitation publishes right after'
-                : 'Publishes instantly · Share the link on WhatsApp'}
-          </p>
+            {/* Primary CTA — desktop only. On mobile the identical action is
+                docked to the bottom of the viewport by the create page, and
+                rendering both produced two buttons for one action with the
+                off-screen one carrying the price. */}
+            <button
+              type="button"
+              onClick={onPublish}
+              disabled={loading}
+              className="btn-primary mt-6 hidden w-full items-center justify-center gap-2.5 rounded-full py-4 text-[1rem] font-semibold disabled:opacity-50 md:flex"
+            >
+              {loading ? (
+                <><Spinner />Creating your invitation…</>
+              ) : (
+                <>
+                  {mustPay ? `Pay ${price} & publish` : 'Publish & get my link'}
+                  <ArrowRightIcon />
+                </>
+              )}
+            </button>
+
+            {/* Tell the user exactly what the next tap does. The old copy said
+                "No account needed" while the button in fact opened a sign-in
+                modal — the single most common reason to abandon at step 5.
+                A logged-out user on a paid design meets the sign-in step first,
+                so say so rather than promising the payment sheet. */}
+            <p className="mt-3 text-center text-[0.8rem] leading-5 text-muted">
+              {!session
+                ? 'You’ll sign in first, so your invitation and payment stay linked to your account.'
+                : mustPay
+                  ? 'Secure one-time payment via Razorpay — your invitation publishes right after.'
+                  : 'Publishes instantly — share the link on WhatsApp.'}
+            </p>
+          </div>
 
           {/* Reassurance at the point of payment. All of this existed on the
               marketing pages and none of it was reachable from the one screen
               where the customer actually parts with money — /create does not
               even render the site footer. */}
           {mustPay && (
-            <div className="hidden md:block w-full pt-1">
-              <div
-                className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px]"
-                style={{ color: isDark ? 'rgba(255,255,255,0.42)' : 'rgba(44,32,28,0.48)' }}
-              >
-                <span className="inline-flex items-center gap-1">
-                  <svg className="h-3 w-3" style={{ color: '#2F766D' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                  </svg>
-                  UPI · Card · Net banking
-                </span>
-                <span aria-hidden>·</span>
-                <span>No subscription</span>
-              </div>
-              <div className="mt-1.5 flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px]">
-                <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline" style={{ color: '#B87924' }}>
-                  7-day refund policy
-                </Link>
-                <span aria-hidden style={{ color: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(44,32,28,0.3)' }}>·</span>
+            <div className="border-t border-line bg-peach/50 px-6 py-4">
+              <p className="flex items-center justify-center gap-1.5 text-[0.8rem] text-charcoal/75">
+                <ShieldIcon className="h-4 w-4 text-emerald-soft" />
+                UPI · Cards · Net banking · No subscription
+              </p>
+              <p className="mt-1.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.8rem]">
+                <Link href="/refund-policy" target="_blank" className="link">7-day refund policy</Link>
+                <span aria-hidden className="text-muted">·</span>
                 <a
-                  href={supportWhatsAppUrl(`Hi, I have a question about the ${selectedTemplate.name} template (₹${requiredPlan.price}) before I pay.`)}
+                  href={supportWhatsAppUrl(`Hi, I have a question about the ${selectedTemplate.name} design (₹${requiredPlan.price.toLocaleString('en-IN')}) before I pay.`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold underline-offset-2 hover:underline"
-                  style={{ color: 'rgb(22,163,74)' }}
+                  className="font-semibold text-[#128C4B] underline-offset-4 hover:underline"
                 >
                   Talk to a human first
                 </a>
-              </div>
+              </p>
             </div>
           )}
-        </div>
+        </aside>
       </div>
     </div>
   )

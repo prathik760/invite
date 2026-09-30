@@ -26,7 +26,8 @@ export default function WhatsAppButton() {
   // Hidden on published invitations (the guest's view, never the host's) and in
   // the builder, where the checkout already offers a contextual support link
   // and a second floating button only competes with the pay button.
-  if (pathname?.startsWith('/e/') || pathname?.startsWith('/create')) return null
+  // Invitations (and their demos) belong to the host; the builder has its own help.
+  if (pathname?.startsWith('/e/') || pathname?.startsWith('/demo/') || pathname?.startsWith('/create')) return null
 
   return (
     <a

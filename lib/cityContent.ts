@@ -205,7 +205,7 @@ export const BIRTHDAY_CITIES: Record<CitySlug, BirthdayCityData> = {
       },
       {
         q: "How do I add a live countdown and photo gallery to my Pune birthday invitation?",
-        a: "After creating your invitation, add a live countdown timer and upload photos directly in the ShareInvite editor. Guests see the countdown and your chosen photos when they open the WhatsApp link — making it a personal, premium experience.",
+        a: "While you build your invitation, the live countdown is added automatically and you upload photos right in the ShareInvite builder. Guests see the countdown and your chosen photos when they open the WhatsApp link — making it a personal, premium experience.",
       },
     ],
     ctaTagline: "Koregaon Park to Kothrud — one Pune birthday invite on WhatsApp.",

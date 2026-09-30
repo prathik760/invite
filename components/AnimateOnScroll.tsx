@@ -3,6 +3,10 @@
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
+// `data-reveal` / `data-reveal-group` are the brand motion system (see the
+// "Motion: reveal on scroll" block in globals.css); `data-animate` is legacy.
+const SELECTOR = '[data-animate], [data-reveal], [data-reveal-group]'
+
 export default function AnimateOnScroll() {
   const pathname = usePathname()
 
@@ -10,13 +14,14 @@ export default function AnimateOnScroll() {
     // Clear stale is-visible from any previous visit to this route so
     // all [data-animate] elements replay their entrance animation.
     // Done before the RAF so there's no paint with them hidden.
-    document.querySelectorAll('[data-animate]').forEach((el) => {
-      el.classList.remove('is-visible')
+    document.querySelectorAll(SELECTOR).forEach((el) => {
+      el.classList.remove('is-visible', 'reveal-done')
     })
 
     let io: IntersectionObserver | null = null
+    const timers: number[] = []
     const rafId = requestAnimationFrame(() => {
-      const els = Array.from(document.querySelectorAll<Element>('[data-animate]'))
+      const els = Array.from(document.querySelectorAll<Element>(SELECTOR))
 
       // Pre-mark elements already in viewport so they are never hidden.
       //
@@ -31,7 +36,7 @@ export default function AnimateOnScroll() {
         const rect = el.getBoundingClientRect()
         return rect.top < viewportH && rect.bottom > 0
       })
-      inViewport.forEach((el) => el.classList.add('is-visible'))
+      inViewport.forEach((el) => el.classList.add('is-visible', 'reveal-done'))
 
       document.body.classList.add('js-animate')
 
@@ -39,12 +44,19 @@ export default function AnimateOnScroll() {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible')
-              io!.unobserve(entry.target)
+              const el = entry.target
+              el.classList.add('is-visible')
+              io!.unobserve(el)
+              // Stagger delays exist for the entrance only. Once it has played,
+              // drop them so hover transitions on those elements are immediate.
+              timers.push(window.setTimeout(() => el.classList.add('reveal-done'), 1600))
             }
           })
         },
-        { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
+        // Reveal once an element's top is 10% up the screen. A ratio threshold
+        // (it was 8%) can never be met by a group taller than ~12 screens — the
+        // blog's article grid stayed invisible however far you scrolled.
+        { threshold: 0, rootMargin: '0px 0px -10% 0px' },
       )
 
       els
@@ -54,6 +66,7 @@ export default function AnimateOnScroll() {
 
     return () => {
       cancelAnimationFrame(rafId)
+      timers.forEach((t) => window.clearTimeout(t))
       io?.disconnect()
       document.body.classList.remove('js-animate')
     }

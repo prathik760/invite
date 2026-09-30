@@ -1,7 +1,10 @@
 import SiteHeader from '@/components/layout/SiteHeader'
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import SiteFooter from '@/components/landing/SiteFooter'
+import Logo from '@/components/brand/Logo'
+import PageHero from '@/components/brand/PageHero'
+import TrustList from '@/components/brand/TrustList'
+import CtaBand from '@/components/brand/CtaBand'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -46,42 +49,25 @@ const coverageTopics = [
 
 export default function PressPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-champagne text-foreground">
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-3xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Press & Media
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            ShareInvite<br />
-            <span className="gradient-accent italic">Press & Media Kit</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Resources for journalists, bloggers, and media professionals covering Indian weddings, event technology, and digital transformation for Indian families.
-          </p>
-          <div className="mt-6">
-            <a
-              href="mailto:shareinvite123@gmail.com"
-              className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold"
-            >
-              Contact Press Team →
-            </a>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Press & media' }]} eyebrow="Press & Media"
+        title={<>ShareInvite<br />
+            <span className="text-burnished italic">Press & Media Kit</span></>}
+        lede={<>Resources for journalists, bloggers, and media professionals covering Indian weddings, event technology, and digital transformation for Indian families.</>}
+        footnote={<TrustList />}
+      />
 
       {/* About */}
-      <section className="bg-white border-y border-border px-5 py-14">
+      <section className="bg-paper border-y border-line px-5 py-14">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-6">About ShareInvite</h2>
+          <h2 className="t-h2 mb-6">About ShareInvite</h2>
           <div className="space-y-5 text-base leading-8 text-muted">
             <p>
-              ShareInvite was founded in 2026 by <strong className="text-ink font-semibold">Prathik Thelkar</strong> with one straightforward observation: Indian families were spending thousands on printed wedding cards while the link they actually shared with guests was a blurry WhatsApp image. There had to be a better way.
+              ShareInvite was founded in 2026 by <strong className="text-charcoal font-semibold">Prathik Thelkar</strong> with one straightforward observation: Indian families were spending thousands on printed wedding cards while the link they actually shared with guests was a blurry WhatsApp image. There had to be a better way.
             </p>
             <p>
               ShareInvite is an Indian digital invitation platform that lets families create beautiful invitation websites for weddings, engagements, birthdays, Griha Pravesh, Namakaran, and all life events — and share them instantly on WhatsApp. One link. Everything guests need: venue map, ceremony schedule, photo gallery, background music, countdown, and a wishes section where family can leave blessings.
@@ -96,11 +82,13 @@ export default function PressPage() {
       {/* Company facts */}
       <section className="px-5 py-16">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-8">Company facts</h2>
-          <div className="divide-y divide-border rounded-2xl border border-border bg-white overflow-hidden">
+          <h2 className="t-h2 mb-8">Company facts</h2>
+          <div className="divide-y divide-border rounded-2xl border border-line bg-paper overflow-hidden">
             {facts.map(f => (
-              <div key={f.label} className="flex items-start gap-6 px-6 py-4">
-                <span className="w-40 shrink-0 text-xs font-semibold uppercase tracking-[0.18em] text-muted pt-0.5">{f.label}</span>
+              // Label above value on phones: side by side, the fixed 10rem
+              // label left ~130px for values like the invitation-types list.
+              <div key={f.label} className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-start sm:gap-6 sm:px-6">
+                <span className="shrink-0 text-xs sm:w-40 font-semibold uppercase tracking-[0.18em] text-muted pt-0.5">{f.label}</span>
                 <span className="text-sm text-foreground leading-6">{f.value}</span>
               </div>
             ))}
@@ -109,14 +97,14 @@ export default function PressPage() {
       </section>
 
       {/* Coverage angles */}
-      <section className="bg-white border-y border-border px-5 py-14">
+      <section className="bg-paper border-y border-line px-5 py-14">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3">Story angles</h2>
+          <h2 className="t-h2 mb-3">Story angles</h2>
           <p className="text-sm text-muted mb-8">Topics our team is happy to comment on and provide data for</p>
           <ul className="space-y-3">
             {coverageTopics.map((topic, i) => (
               <li key={i} className="flex items-start gap-3 text-sm leading-7 text-muted">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D9A441]" />
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#A47945]" />
                 {topic}
               </li>
             ))}
@@ -127,62 +115,52 @@ export default function PressPage() {
       {/* Logo download */}
       <section className="px-5 py-16">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3">Logos & brand assets</h2>
+          <h2 className="t-h2 mb-3">Logos & brand assets</h2>
           <p className="text-sm text-muted mb-8">
             Use ShareInvite brand assets only to refer to our products and services. Do not modify colours, proportions, or apply effects to the logo.
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-border bg-white p-8 flex flex-col items-center gap-4 shadow-sm">
-              <div className="rounded-xl bg-white border border-border p-4">
-                <Image src="/logo1.png" alt="ShareInvite logo" className="h-12 w-auto" width="160" height="48" />
-              </div>
-              <p className="text-sm text-muted text-center">Primary logo (dark)</p>
-              <a
-                href="/logo1.png"
-                download="shareinvite-logo.png"
-                className="text-xs font-semibold text-accent-strong hover:underline"
-              >
-                Download PNG →
+            <div className="card flex flex-col items-center gap-5 p-8">
+              <div className="flex h-24 items-center"><Logo /></div>
+              <p className="text-center text-[0.9rem] text-muted">Logo on light backgrounds</p>
+              <a href="/brand/mark-512.png" download="shareinvite-mark.png" className="link text-[0.85rem]">
+                Download the mark (PNG, 512px)
               </a>
             </div>
-            <div className="rounded-2xl border border-border bg-ink p-8 flex flex-col items-center gap-4 shadow-sm">
-              <div className="rounded-xl bg-ink p-4">
-                <Image src="/logo1.png" alt="ShareInvite logo on dark" className="h-12 w-auto brightness-0 invert" width={160} height={48} />
-              </div>
-              <p className="text-sm text-white/60 text-center">Logo on dark background</p>
-              <a
-                href="/logo1.png"
-                download="shareinvite-logo-white.png"
-                className="text-xs font-semibold text-[#D9A441] hover:underline"
-              >
-                Download PNG →
+            <div className="flex flex-col items-center gap-5 rounded-3xl bg-emerald p-8 shadow-soft">
+              <div className="flex h-24 items-center"><Logo tone="light" /></div>
+              <p className="text-center text-[0.9rem] text-paper/65">Logo on emerald or dark backgrounds</p>
+              <a href="/brand/mark-512.png" download="shareinvite-mark.png" className="text-[0.85rem] font-semibold text-gold-soft underline-offset-4 hover:underline">
+                Download the mark (PNG, 512px)
               </a>
             </div>
+          </div>
+          <div className="mt-6 grid gap-3 sm:grid-cols-4">
+            {[
+              ['Emerald', '#052E20'],
+              ['Burnished gold', '#A47945'],
+              ['Soft gold', '#E8C866'],
+              ['Champagne', '#FFFAF4'],
+            ].map(([name, hex]) => (
+              <div key={hex} className="overflow-hidden rounded-2xl border border-line bg-paper">
+                <div className="h-16" style={{ background: hex }} />
+                <p className="px-4 pt-3 text-[0.85rem] font-semibold">{name}</p>
+                <p className="px-4 pb-3 font-mono text-[0.78rem] text-muted">{hex}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Contact */}
-      <section className="px-5 pb-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Media enquiries
-          </h2>
-          <p className="text-muted text-sm mb-7 max-w-md mx-auto">
-            For press enquiries, interview requests, data, or brand assets, contact our media team at{' '}
-            <a href="mailto:shareinvite123@gmail.com" className="text-accent-strong hover:underline">
-              shareinvite123@gmail.com
-            </a>
-            . We typically respond within 24 hours.
-          </p>
-          <a
-            href="mailto:shareinvite123@gmail.com?subject=Press Enquiry"
-            className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold"
-          >
-            Email Press Team →
-          </a>
-        </div>
-      </section>
+      <CtaBand
+        eyebrow="Press & media"
+        title="Media enquiries"
+        sub="For press enquiries, interview requests or brand assets, email shareinvite123@gmail.com. We typically respond within 24 hours."
+        primary={{ href: 'mailto:shareinvite123@gmail.com', label: 'Email the media team' }}
+        secondary={{ href: '/', label: 'Visit ShareInvite' }}
+        location="press_footer"
+      />
 
       <SiteFooter />
     </main>

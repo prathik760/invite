@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { LogoMark } from '@/components/brand/Logo'
 
 export const metadata: Metadata = {
   title: 'Invitation not available | ShareInvite',
@@ -21,44 +22,34 @@ export const metadata: Metadata = {
  */
 export default function InvitationNotFound() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background px-5 py-16 text-foreground">
-      <div className="w-full max-w-md text-center">
-        <div
-          className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl text-2xl"
-          style={{ background: 'rgba(217,164,65,0.12)', color: '#B87924' }}
-          aria-hidden
-        >
-          ✉
-        </div>
-        <h1 className="font-display text-3xl font-normal leading-tight text-ink">
-          This invitation isn&apos;t available
-        </h1>
-        <p className="mt-4 text-base leading-7 text-muted">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-champagne px-5 py-16 text-charcoal">
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_55%_at_50%_0%,rgba(232,200,102,0.2),transparent_70%)]" />
+      <div className="relative w-full max-w-md text-center">
+        <LogoMark className="mx-auto h-14 w-14" />
+        <h1 className="t-h2 mt-6">This invitation isn&apos;t available</h1>
+        <p className="mt-4 text-[0.98rem] leading-7 text-charcoal/70">
           The link may have been removed by the host, or the event may have already passed.
           If you were expecting an invitation, ask the host to resend their link.
         </p>
 
-        <div className="mt-8 rounded-2xl border border-[#E8DCCD] bg-[#FFF9F2] p-6">
-          <p className="font-heading text-base text-ink">Planning something yourself?</p>
-          <p className="mt-2 text-sm leading-6 text-muted">
+        <div className="card mt-9 p-6 text-left sm:p-7">
+          <p className="t-h3">Planning something yourself?</p>
+          <p className="mt-2 text-[0.92rem] leading-6 text-charcoal/70">
             Create a digital invitation with a live countdown, photo gallery, Google Maps
             directions and guest wishes — one link you can share on WhatsApp.
           </p>
-          <Link
-            href="/create?src=invite_not_found"
-            className="gold-button mt-5 inline-flex rounded-full px-7 py-3 text-sm font-semibold"
-          >
-            Create an invitation →
+          <Link href="/create?src=invite_not_found" className="btn-primary mt-5 inline-flex rounded-full px-7 py-3 text-[0.9rem] font-semibold">
+            Create an invitation
           </Link>
-          <p className="mt-3 text-xs text-muted">
-            Free to build &amp; preview · Paid templates from ₹99 one-time
+          <p className="mt-3 text-[0.78rem] text-muted">
+            Free to build &amp; preview · One price per design, from ₹99
           </p>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm">
-          <Link href="/templates" className="font-semibold text-accent-strong hover:underline">Browse templates</Link>
-          <Link href="/pricing" className="font-semibold text-accent-strong hover:underline">Pricing</Link>
-          <Link href="/" className="font-semibold text-accent-strong hover:underline">ShareInvite home</Link>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.9rem]">
+          <Link href="/templates" className="link">Browse designs</Link>
+          <Link href="/pricing" className="link">Pricing</Link>
+          <Link href="/" className="link">ShareInvite home</Link>
         </div>
       </div>
     </main>

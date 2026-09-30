@@ -67,6 +67,24 @@ export function localePath(path: string, locale: string): string {
   return clean === '/' ? `/${locale}` : `/${locale}${clean}`
 }
 
+/**
+ * Paths that exist under every locale prefix. Only the homepage is translated
+ * today (app/es/page.tsx, app/hi/page.tsx, …) — /es/pricing does not exist.
+ * Add a path here only once its localised routes do.
+ */
+export const LOCALISED_PATHS = ['/']
+
+/**
+ * Where a language link should go from `path`: the same page in that language
+ * when it has been translated, otherwise that language's homepage. Using
+ * `localePath` directly sent a Spanish visitor on /pricing to /es/pricing — a
+ * 404 — from both the switcher and the language suggestion banner.
+ */
+export function localeHref(path: string, locale: string): string {
+  if (locale === DEFAULT_LOCALE) return localePath(path, locale)
+  return localePath(LOCALISED_PATHS.includes(path) ? path : '/', locale)
+}
+
 /** Strips any locale prefix, returning the canonical English path. */
 export function stripLocale(pathname: string): { locale: string; path: string } {
   const parts = pathname.split('/').filter(Boolean)

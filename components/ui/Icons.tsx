@@ -274,3 +274,99 @@ export function HeartIcon({ className = 'h-7 w-7', ...p }: P) {
     </svg>
   )
 }
+
+// ─── Interface icons (redesign) ──────────────────────────────────────────────
+// All decorative: callers pair them with visible text, so they are aria-hidden.
+
+export function ArrowRightIcon({ className = 'h-4 w-4', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  )
+}
+
+export function EyeIcon({ className = 'h-4 w-4', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  )
+}
+
+export function CheckIcon({ className = 'h-4 w-4', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M4.5 12.5l5 5 10-11" />
+    </svg>
+  )
+}
+
+export function GlobeIcon({ className = 'h-4 w-4', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <circle cx="12" cy="12" r="9.5" />
+      <path d="M2.5 12h19M12 2.5c2.6 3 2.6 16 0 19M12 2.5c-2.6 3-2.6 16 0 19" />
+    </svg>
+  )
+}
+
+export function LinkIcon({ className = 'h-4 w-4', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M10 14a4.5 4.5 0 006.4 0l3.2-3.2a4.5 4.5 0 00-6.4-6.4L11.6 6" />
+      <path d="M14 10a4.5 4.5 0 00-6.4 0l-3.2 3.2a4.5 4.5 0 006.4 6.4l1.6-1.6" />
+    </svg>
+  )
+}
+
+export function ShieldIcon({ className = 'h-4 w-4', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M12 2.5l8 3v6c0 5-3.4 8.7-8 10-4.6-1.3-8-5-8-10v-6l8-3z" />
+      <path d="M8.5 12l2.5 2.5 4.5-5" />
+    </svg>
+  )
+}
+
+export function MenuIcon({ className = 'h-5 w-5', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M3.5 7h17M3.5 12h17M3.5 17h17" />
+    </svg>
+  )
+}
+
+export function CloseIcon({ className = 'h-5 w-5', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  )
+}
+
+export function ChevronDownIcon({ className = 'h-3.5 w-3.5', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  )
+}
+
+export function WandIcon({ className = 'h-4 w-4', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M4 20L15 9M13 7l4 4" />
+      <path d="M18 2.5v3M16.5 4h3M20.5 8.5v2M19.5 9.5h2M9 3v2M8 4h2" />
+    </svg>
+  )
+}
+
+export function SwapIcon({ className = 'h-4 w-4', ...p }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden {...d} {...p}>
+      <path d="M4 8h14l-4-4M20 16H6l4 4" />
+    </svg>
+  )
+}

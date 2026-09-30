@@ -73,8 +73,8 @@ export default function MobilePreviewStrip({ templateId, data, isDark = false }:
       ref={wrapRef}
       className="mx-4 my-4 flex flex-col items-center rounded-2xl px-3 py-5"
       style={{
-        background: isDark ? 'rgba(6,6,14,0.6)' : 'rgba(184,138,68,0.05)',
-        border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(184,138,68,0.15)'}`,
+        background: isDark ? 'rgba(6,6,14,0.6)' : 'rgba(164,121,69,0.05)',
+        border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(164,121,69,0.15)'}`,
       }}
     >
       <p

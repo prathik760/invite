@@ -1,416 +1,404 @@
 'use client'
 
-import { memo, useEffect, useMemo, useState } from 'react'
-import { PortraitRow } from './PortraitRow'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { formatDate, formatTime } from '@/lib/utils'
+import { useMemo } from 'react'
+import WishesSection from './WishesSection'
+import { italiana } from './kit/fonts/italiana'
+import { jost } from './kit/fonts/jost'
+import {
+  calendarHref,
+  dateParts,
+  galleryImages,
+  grain,
+  mapsHref,
+  pad2,
+  parseSchedule,
+  timeLabel,
+  useCountdown,
+  type InviteProps,
+} from './kit/core'
+import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import type { InviteTheme } from './kit/theme'
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
+/*
+ * Mangni — a modern engagement card. Blush stock, plum ink, rose-gold line.
+ * An arched window holds the couple (or their initials); two interlocking
+ * rings are drawn in fine line on arrival, and that is the only flourish.
+ */
 
 const C = {
-  bg: '#0A0010',
-  bgMid: '#110018',
-  bgCard: '#1A0024',
-  bgSurface: '#200030',
-  text: '#FDF0F8',
-  textMuted: 'rgba(253,240,248,0.55)',
-  textFaint: 'rgba(253,240,248,0.28)',
-  gold: '#E8C4B8',
-  goldMuted: 'rgba(232,196,184,0.65)',
-  goldFaint: 'rgba(232,196,184,0.1)',
-  goldBorder: 'rgba(232,196,184,0.2)',
-  rose: '#C2185B',
-  roseMuted: 'rgba(194,24,91,0.55)',
-  roseFaint: 'rgba(194,24,91,0.1)',
-  roseBorder: 'rgba(194,24,91,0.25)',
-  border: 'rgba(255,255,255,0.06)',
+  paper: '#F5E7E1',
+  card: '#FBF3EF',
+  plum: '#3D1B38',
+  soft: 'rgba(61,27,56,0.74)',
+  faint: 'rgba(61,27,56,0.52)',
+  line: 'rgba(61,27,56,0.16)',
+  rose: '#B0705F',
+  roseLight: '#DDAE9F',
+  blush: '#F5E7E1',
 }
 
-// ── Rose petals ───────────────────────────────────────────────
-const PETALS = Array.from({ length: 16 }, (_, i) => ({
-  id: i, x: Math.random() * 100, delay: Math.random() * 10, dur: 9 + Math.random() * 8,
-  drift: (Math.random() - 0.5) * 70, rotate: Math.random() * 360,
-  color: i % 2 === 0 ? '#FFB3C6' : '#FF6FA3',
-}))
+const display = italiana.style.fontFamily
+const sans = jost.style.fontFamily
 
-const FloatingPetals = memo(function FloatingPetals() {
-  const reduced = useReducedMotion()
-  if (reduced) return null
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {PETALS.map((p) => (
-        <motion.div key={p.id} className="absolute select-none text-[10px]" style={{ left: `${p.x}%`, bottom: -20, color: p.color }}
-          animate={{ y: -900, x: [0, p.drift, p.drift * 0.4, -p.drift * 0.3, 0], rotate: [p.rotate, p.rotate + 180, p.rotate + 360], opacity: [0, 0.75, 0.5, 0.15, 0] }}
-          transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'easeOut' }}>
-          ❀
-        </motion.div>
-      ))}
-    </div>
-  )
-})
+const WISHES_THEME: InviteTheme = {
+  bg: C.paper,
+  surface: C.card,
+  ink: C.plum,
+  muted: C.soft,
+  line: C.line,
+  accent: C.plum,
+  onAccent: C.blush,
+  heading: display,
+  body: sans,
+  headingStyle: { fontSize: 36, fontWeight: 400 },
+}
 
-// ── Film grain ────────────────────────────────────────────────
-const FilmGrain = memo(function FilmGrain() {
-  return (
-    <div className="pointer-events-none absolute inset-0 select-none" aria-hidden style={{
-      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E")`,
-      backgroundRepeat: 'repeat', backgroundSize: '200px', mixBlendMode: 'overlay', opacity: 0.6, zIndex: 1,
-    }} />
-  )
-})
+/* ── Rings ──────────────────────────────────────────────────────────── */
+const RA = { x: 47, y: 52 }
+const RB = { x: 73, y: 52 }
+const R_OUT = 25
+const R_IN = 21.6
+const R_MID = (R_OUT + R_IN) / 2
 
-// ── Divider ───────────────────────────────────────────────────
-const RoseDivider = memo(function RoseDivider({ className = '' }: { className?: string }) {
-  return (
-    <div className={`flex items-center justify-center gap-2 sm:gap-3 ${className}`}>
-      <div className="h-px w-16" style={{ background: `linear-gradient(90deg,transparent,${C.roseMuted})` }} />
-      <span className="select-none text-[12px]" style={{ color: C.rose }}>♥</span>
-      <div className="h-px w-8" style={{ background: `linear-gradient(90deg,${C.roseMuted},${C.goldMuted})` }} />
-      <span className="select-none text-[10px]" style={{ color: C.gold }}>✦</span>
-      <div className="h-px w-8" style={{ background: `linear-gradient(270deg,${C.roseMuted},${C.goldMuted})` }} />
-      <span className="select-none text-[12px]" style={{ color: C.rose }}>♥</span>
-      <div className="h-px w-16" style={{ background: `linear-gradient(270deg,transparent,${C.roseMuted})` }} />
-    </div>
-  )
-})
+function arc(cx: number, cy: number, r: number, a0: number, a1: number) {
+  const p = (a: number) => `${(cx + r * Math.cos((a * Math.PI) / 180)).toFixed(2)} ${(cy + r * Math.sin((a * Math.PI) / 180)).toFixed(2)}`
+  return `M${p(a0)} A${r} ${r} 0 0 1 ${p(a1)}`
+}
 
-// ── Ring icon ─────────────────────────────────────────────────
-function RingIcon() {
+/** Angle, from ring A's centre, of the upper point where the two bands cross. */
+const HALF = (RB.x - RA.x) / 2
+const LIFT = Math.sqrt(R_MID ** 2 - HALF ** 2)
+const CROSS_A = (Math.atan2(-LIFT, HALF) * 180) / Math.PI
+/** …and, from ring B's centre, of the lower crossing. */
+const CROSS_B = (Math.atan2(LIFT, -HALF) * 180) / Math.PI
+
+/**
+ * Two bands, linked: A passes over B at the top crossing, B over A at the
+ * bottom. The crossing is made by knocking B out under a short arc of A in
+ * the backing colour. The solitaire sits on A.
+ */
+function Rings({ draw, backing, className }: { draw: boolean; backing: string; className?: string }) {
+  const stroke = { fill: 'none', stroke: C.rose, strokeWidth: 1.3, strokeLinecap: 'round' as const }
+  const d = (i: number) => (draw ? { className: 'ie-draw', style: { animationDelay: `${250 + i * 260}ms` } } : {})
   return (
-    <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10">
-      <circle cx="20" cy="20" r="14" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
-      <circle cx="20" cy="20" r="9" stroke="currentColor" strokeWidth="2" />
-      <path d="M14 17 L18 14 L22 17 L26 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="20" cy="17" r="2.5" fill="currentColor" opacity="0.7" />
+    <svg viewBox="12 10 96 76" className={className} aria-hidden style={{ overflow: 'visible' }}>
+      <circle cx={RA.x} cy={RA.y} r={R_OUT} pathLength={1} {...stroke} {...d(0)} />
+      <circle cx={RA.x} cy={RA.y} r={R_IN} pathLength={1} {...stroke} strokeWidth={0.9} {...d(0.4)} />
+      <circle cx={RB.x} cy={RB.y} r={R_OUT} pathLength={1} {...stroke} {...d(1.2)} transform={`rotate(180 ${RB.x} ${RB.y})`} />
+      <circle cx={RB.x} cy={RB.y} r={R_IN} pathLength={1} {...stroke} strokeWidth={0.9} {...d(1.6)} transform={`rotate(180 ${RB.x} ${RB.y})`} />
+      {/* A over B at the top */}
+      <g className={draw ? 'ie-fade' : undefined} style={draw ? { animationDelay: '1500ms' } : undefined}>
+        <path d={arc(RA.x, RA.y, R_MID, CROSS_A - 20, CROSS_A + 20)} fill="none" stroke={backing} strokeWidth={R_OUT - R_IN + 3.2} />
+        <path d={arc(RA.x, RA.y, R_OUT, CROSS_A - 22, CROSS_A + 22)} {...stroke} />
+        <path d={arc(RA.x, RA.y, R_IN, CROSS_A - 22, CROSS_A + 22)} {...stroke} strokeWidth={0.9} />
+      </g>
+      {/* B over A at the bottom */}
+      <g className={draw ? 'ie-fade' : undefined} style={draw ? { animationDelay: '1500ms' } : undefined}>
+        <path d={arc(RB.x, RB.y, R_MID, CROSS_B - 20, CROSS_B + 20)} fill="none" stroke={backing} strokeWidth={R_OUT - R_IN + 3.2} />
+        <path d={arc(RB.x, RB.y, R_OUT, CROSS_B - 22, CROSS_B + 22)} {...stroke} />
+        <path d={arc(RB.x, RB.y, R_IN, CROSS_B - 22, CROSS_B + 22)} {...stroke} strokeWidth={0.9} />
+      </g>
+      {/* the solitaire, set on ring A */}
+      <g
+        transform={`translate(${RA.x - 9} ${RA.y - R_OUT - 1.5}) rotate(-20)`}
+        className={draw ? 'ie-fade' : undefined}
+        style={draw ? { animationDelay: '1750ms' } : undefined}
+      >
+        <path d="M-2.6 1.4 L-1.2 -1 M2.6 1.4 L1.2 -1" stroke={C.rose} strokeWidth={0.9} fill="none" />
+        <path d="M-6 -1 L-3.6 -5 L3.6 -5 L6 -1 L0 7Z" fill={backing} stroke={C.rose} strokeWidth={1} strokeLinejoin="round" />
+        <path d="M-6 -1 H6 M-3.6 -5 L-1.8 -1 L0 -5 L1.8 -1 L3.6 -5 M-1.8 -1 L0 7 L1.8 -1" stroke={C.rose} strokeWidth={0.6} fill="none" strokeLinejoin="round" />
+      </g>
     </svg>
   )
 }
 
-// ── Countdown ─────────────────────────────────────────────────
-function useCountdown(dateStr: string, timeStr: string) {
-  const [diff, setDiff] = useState(0)
-  useEffect(() => {
-    if (!dateStr) return
-    const target = new Date(`${dateStr}T${timeStr || '00:00'}:00`)
-    const tick = () => setDiff(Math.max(0, target.getTime() - Date.now()))
-    tick(); const id = setInterval(tick, 1000); return () => clearInterval(id)
-  }, [dateStr, timeStr])
-  return { days: Math.floor(diff / 86400000), hours: Math.floor((diff % 86400000) / 3600000), minutes: Math.floor((diff % 3600000) / 60000), seconds: Math.floor((diff % 60000) / 1000) }
-}
-
-// ── Helpers ───────────────────────────────────────────────────
-function parseList(v?: string): string[] {
-  if (!v) return []
-  return v.split(/\n|,/).map(s => s.trim()).filter(Boolean)
-}
-
-function fadeUp(delay = 0) {
-  return { initial: { opacity: 0, y: 28 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '-40px' }, transition: { duration: 0.9, delay, ease: BEZIER } } as const
-}
-
-// ── Wishes ────────────────────────────────────────────────────
-function EngagementWishes({ eventId }: { eventId: string }) {
-  const [wishes, setWishes] = useState<Array<{ id: string; name: string; message: string }>>([])
-  const [name, setName] = useState('')
-  const [message, setMessage] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const MAX = 320
-
-  useEffect(() => {
-    if (eventId === '__preview__') return
-    fetch(`/api/wishes?eventId=${eventId}`).then(r => r.json()).then(d => setWishes(Array.isArray(d) ? d : [])).catch(() => {})
-  }, [eventId])
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name.trim() || !message.trim()) return
-    if (eventId === '__preview__') { setSubmitted(true); return }
-    setLoading(true); setError('')
-    try {
-      const res = await fetch('/api/wishes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ eventId, name: name.trim(), message: message.trim() }) })
-      if (!res.ok) throw new Error()
-      // Wishes publish on arrival — add it to the wall immediately.
-      const created = await res.json()
-      setWishes(prev => [created, ...prev.filter(w => w.id !== created.id)])
-      setSubmitted(true); setName(''); setMessage('')
-    } catch { setError('Could not send your wish. Please try again.') }
-    finally { setLoading(false) }
-  }
-
-  const is = { color: C.text, borderBottom: `1px solid rgba(255,255,255,0.1)`, background: 'transparent' }
-  const fo = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => { e.currentTarget.style.borderBottomColor = C.roseMuted }
-  const bl = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => { e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,0.1)' }
-
+function Diamond({ size = 7, color = C.rose }: { size?: number; color?: string }) {
   return (
-    <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-18 md:py-24" style={{ background: C.bgMid }}>
-      <div className="max-w-xl mx-auto">
-        <motion.div {...fadeUp()} className="text-center mb-14">
-          <p className="text-[11px] uppercase tracking-[0.38em] mb-4" style={{ color: C.goldMuted }}>Badhai</p>
-          <h2 className="font-heading text-3xl sm:text-4xl mb-6" style={{ color: C.text }}>Send Your Wishes</h2>
-          <RoseDivider />
-        </motion.div>
-        <motion.div {...fadeUp(0.1)} className="mb-8 sm:mb-10 rounded-lg sm:rounded-2xl p-5 sm:p-7 sm:p-6 sm:p-9" style={{ background: C.bgCard, border: `1px solid ${C.roseBorder}` }}>
-          <AnimatePresence mode="wait">
-            {submitted ? (
-              <motion.div key="thanks" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="text-center py-8">
-                <motion.div initial={{ scale: 0 }} animate={{ scale: [0, 1.3, 1] }} transition={{ duration: 0.5, ease: BEZIER }} className="text-3xl sm:text-4xl md:text-5xl select-none mb-6" style={{ color: C.rose }}>♥</motion.div>
-                <p className="font-heading text-2xl mb-3" style={{ color: C.text }}>Shukriya!</p>
-                <p className="text-sm mb-7" style={{ color: C.textMuted, lineHeight: 1.8 }}>Your wishes have been received.<br />The couple will cherish them forever.</p>
-                <button onClick={() => setSubmitted(false)} className="text-xs tracking-[0.12em] transition-opacity" style={{ color: C.goldMuted }}>Send another wish →</button>
-              </motion.div>
-            ) : (
-              <motion.form key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onSubmit={handleSubmit} className="space-y-7">
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.22em] mb-2.5" style={{ color: C.textMuted }}>Your Name</label>
-                  <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" required className="w-full border-0 border-b py-3 text-sm focus:outline-none" style={is} onFocus={fo} onBlur={bl} />
-                </div>
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.22em] mb-2.5" style={{ color: C.textMuted }}>Your Wish</label>
-                  <textarea value={message} onChange={e => setMessage(e.target.value.slice(0, MAX))} placeholder="Write something beautiful…" required rows={4} className="w-full border-0 border-b py-3 text-sm focus:outline-none resize-none" style={is} onFocus={fo} onBlur={bl} />
-                  <div className="flex justify-end mt-1.5">
-                    <span className="text-[10px] tabular-nums" style={{ color: MAX - message.length <= 40 ? C.rose : C.textFaint }}>{MAX - message.length} left</span>
-                  </div>
-                </div>
-                {error && <p className="text-xs" style={{ color: '#E87070' }}>{error}</p>}
-                <motion.button type="submit" disabled={loading} whileHover={{ scale: loading ? 1 : 1.015 }} whileTap={{ scale: loading ? 1 : 0.985 }}
-                  className="w-full py-3.5 rounded-xl text-sm tracking-[0.12em] font-medium disabled:opacity-50"
-                  style={{ background: C.roseFaint, border: `1px solid ${C.roseBorder}`, color: C.rose }}>
-                  {loading ? 'Sending…' : 'SEND WISHES ♥'}
-                </motion.button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
-        {wishes.length > 0 && (
-          <div className="space-y-4">
-            {wishes.map((wish, i) => (
-              <motion.div key={wish.id} {...fadeUp(i * 0.07)} className="rounded-lg sm:rounded-2xl px-7 py-7 relative overflow-hidden" style={{ background: C.bgCard, border: `1px solid ${C.roseBorder}` }}>
-                <div className="absolute top-0 inset-x-0 h-px" style={{ background: `linear-gradient(90deg,transparent 15%,${C.roseMuted} 50%,transparent 85%)` }} />
-                <div className="font-heading select-none mb-2 leading-none" style={{ fontSize: '3.5rem', color: 'rgba(194,24,91,0.1)' }} aria-hidden>&ldquo;</div>
-                <p className="text-sm italic leading-relaxed mb-5" style={{ color: C.textMuted }}>{wish.message}</p>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] shrink-0" style={{ background: C.roseFaint, border: `1px solid ${C.roseBorder}`, color: C.rose }}>
-                    {wish.name.charAt(0).toUpperCase()}
-                  </div>
-                  <p className="text-xs tracking-wider" style={{ color: C.goldMuted }}>{wish.name}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+    <span
+      aria-hidden
+      className="inline-block rotate-45"
+      style={{ width: size, height: size, border: `1px solid ${color}` }}
+    />
   )
 }
 
-// ── Main ──────────────────────────────────────────────────────
-interface Props { data: Record<string, string>; eventId?: string; isPreview?: boolean }
+function Heading({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="text-center leading-[1.1]" style={{ fontFamily: display, fontSize: 'clamp(34px, 10cqi, 44px)', color: C.plum }}>
+      {children}
+    </h2>
+  )
+}
 
-export default function IndianEngagement({ data, eventId, isPreview = false }: Props) {
-  const partner1 = data.partner1Name || 'Meera'
-  const partner2 = data.partner2Name || 'Rohan'
-  const { date, time, venue, venueAddress, mapsUrl, dressCode, schedule, galleryImages, message } = data
+/** The arched window: photographs if the couple added them, their initials if not. */
+function ArchWindow({ photos, initials }: { photos: { src: string; alt: string }[]; initials: [string, string] }) {
+  return (
+    <div className="relative mx-auto aspect-[5/6] w-[min(74cqi,300px)] overflow-hidden rounded-t-full" style={{ background: C.plum }}>
+      {photos.length > 0 ? (
+        <div className={`grid h-full ${photos.length > 1 ? 'grid-cols-2 gap-[3px]' : ''}`} style={{ background: C.blush }}>
+          {photos.map((p) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={p.alt} src={p.src} alt={p.alt} className="h-full w-full object-cover" />
+          ))}
+        </div>
+      ) : (
+        <div className="absolute inset-0 flex flex-col items-center justify-center pb-6 text-center">
+          <span className="leading-none" style={{ fontFamily: display, fontSize: 'clamp(76px, 25cqi, 110px)', color: C.blush }}>{initials[0]}</span>
+          <span className="my-1 leading-none" style={{ fontFamily: display, fontSize: 'clamp(26px, 8cqi, 34px)', color: C.roseLight }}>&amp;</span>
+          <span className="leading-none" style={{ fontFamily: display, fontSize: 'clamp(76px, 25cqi, 110px)', color: C.blush }}>{initials[1]}</span>
+        </div>
+      )}
+      <span aria-hidden className="pointer-events-none absolute inset-[9px] rounded-t-full border" style={{ borderColor: photos.length ? 'rgba(245,231,225,0.7)' : 'rgba(221,174,159,0.55)' }} />
+    </div>
+  )
+}
 
-  const formattedDate = useMemo(() => formatDate(date), [date])
-  const formattedTime = useMemo(() => formatTime(time), [time])
-  const gallery = useMemo(() => parseList(galleryImages), [galleryImages])
-  const scheduleItems = useMemo(() => parseList(schedule), [schedule])
-  const { days, hours, minutes, seconds } = useCountdown(date, time)
-
-  const details = [
-    { label: 'Mangni Tithi', value: formattedDate },
-    { label: 'Muhurat', value: formattedTime },
-    ...(venue ? [{ label: 'Venue', value: venue, sub: venueAddress }] : []),
-    ...(dressCode ? [{ label: 'Dress Code', value: dressCode }] : []),
-  ].filter(d => d.value)
+export default function IndianEngagement({ data, eventId, isPreview = false }: InviteProps) {
+  const p1 = data.partner1Name?.trim() || 'Meera'
+  const p2 = data.partner2Name?.trim() || 'Rohan'
+  const date = dateParts(data.date)
+  const time = timeLabel(data.time)
+  const countdown = useCountdown(data.date, data.time, !isPreview)
+  const schedule = useMemo(() => parseSchedule(data.schedule), [data.schedule])
+  const photos = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
+  const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
+  const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
+  const calendar = calendarHref(`${p1} & ${p2} — Engagement`, data.date, data.time, place || undefined, 4)
+  const portraits = [
+    { src: data.partner1Photo, alt: p1 },
+    { src: data.partner2Photo, alt: p2 },
+  ].filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; alt: string }[]
+  const venue = data.venue?.trim() || 'The venue'
 
   return (
-    <div className="relative min-h-screen font-body" style={{ background: C.bg, color: C.text }}>
+    <div
+      className="ie relative overflow-x-hidden"
+      style={{ background: C.paper, color: C.plum, fontFamily: sans, containerType: 'inline-size', ...grain(0.05) }}
+    >
+      <style>{`
+        .ie .ie-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ie-draw 1.5s cubic-bezier(.45,.05,.3,1) forwards; }
+        .ie .ie-fade { opacity: 0; animation: ie-fade 600ms ease forwards; }
+        .ie .ie-in { opacity: 0; transform: translateY(10px); animation: ie-in 1s cubic-bezier(.2,.7,.2,1) forwards; }
+        @keyframes ie-draw { to { stroke-dashoffset: 0; } }
+        @keyframes ie-fade { to { opacity: 1; } }
+        @keyframes ie-in { to { opacity: 1; transform: none; } }
+        .ie .ie-btn { transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+        .ie .ie-btn-solid:hover { background: ${C.blush}; }
+        .ie .ie-btn-line:hover { background: rgba(245,231,225,0.1); }
+        @media (prefers-reduced-motion: reduce) {
+          .ie .ie-draw, .ie .ie-fade, .ie .ie-in { animation: none; opacity: 1; transform: none; stroke-dashoffset: 0; }
+        }
+      `}</style>
 
-      {/* ── HERO ── */}
-      <section className={`relative flex ${isPreview ? 'min-h-[380px] py-12' : 'min-h-screen'} flex-col items-center justify-center overflow-hidden px-4 sm:px-6 md:px-8 text-center`}>
-        <FilmGrain />
-        {!isPreview && <FloatingPetals />}
+      {/* ── The card ─────────────────────────────────────────────── */}
+      <section
+        className="mx-auto flex max-w-[32rem] flex-col items-center justify-center px-6 pb-14 pt-10 text-center"
+        style={{ minHeight: isPreview ? 560 : '100svh' }}
+      >
+        <p className="ie-in text-[12px] uppercase" style={{ letterSpacing: '0.3em', color: C.rose, animationDelay: '100ms' }}>
+          Mangni <span className="mx-1.5" style={{ color: C.faint }}>·</span> Ring ceremony
+        </p>
 
-        {/* Concentric circles */}
-        {[isPreview ? '260px' : '600px', isPreview ? '180px' : '420px', isPreview ? '110px' : '270px'].map((s, i) => (
-          <div key={i} className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{ width: s, height: s, border: `1px solid rgba(194,24,91,${0.15 - i * 0.04})` }} aria-hidden />
-        ))}
+        <div className="ie-in relative mt-6 w-full" style={{ animationDelay: '150ms' }}>
+          <ArchWindow photos={portraits} initials={[p1.charAt(0).toUpperCase(), p2.charAt(0).toUpperCase()]} />
+          <div
+            className="absolute left-1/2 top-full flex h-[108px] w-[108px] -translate-x-1/2 -translate-y-[46%] items-center justify-center rounded-full"
+            style={{ background: C.paper }}
+          >
+            <Rings draw={!isPreview} backing={C.paper} className="w-[82px]" />
+          </div>
+        </div>
 
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 40%, rgba(194,24,91,0.09) 0%, transparent 65%)' }} aria-hidden />
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 55%, rgba(232,196,184,0.05) 0%, transparent 70%)' }} aria-hidden />
+        <p className="ie-in mt-[72px] text-[15px]" style={{ color: C.soft, animationDelay: '500ms' }}>
+          Together with their families
+        </p>
 
-        <div className="relative z-[2] flex flex-col items-center">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2, ease: BEZIER }} className="mb-6 flex items-center justify-center" style={{ color: C.rose }}>
-            <RingIcon />
-          </motion.div>
+        <h1 className="mt-3" style={{ fontFamily: display, fontWeight: 400 }}>
+          <span className="ie-in block leading-[1]" style={{ fontSize: 'clamp(46px, 15cqi, 72px)', animationDelay: '650ms' }}>{p1}</span>
+          <span className="ie-in my-1 block leading-none" style={{ fontSize: 'clamp(26px, 8cqi, 36px)', color: C.rose, animationDelay: '750ms' }}>&amp;</span>
+          <span className="ie-in block leading-[1]" style={{ fontSize: 'clamp(46px, 15cqi, 72px)', animationDelay: '850ms' }}>{p2}</span>
+        </h1>
 
-          <motion.p initial={{ opacity: 0, letterSpacing: '1.5em' }} animate={{ opacity: 1, letterSpacing: '0.5em' }} transition={{ duration: 1.4, delay: 0.3, ease: BEZIER }}
-            className="mb-4 text-[10px] uppercase select-none" style={{ color: C.goldMuted }}>
-            Mangni Samaroh
-          </motion.p>
+        <p className="ie-in mx-auto mt-5 max-w-[16rem] text-balance text-[17px] leading-[1.5]" style={{ color: C.soft, animationDelay: '1000ms' }}>
+          invite you to celebrate their engagement
+        </p>
 
-          <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.7, delay: 0.45, ease: BEZIER }} className="mb-7 w-full">
-            <RoseDivider />
-          </motion.div>
-
-          <PortraitRow data={data} dark={true} />
-
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.55, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(194,24,91,0.25)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-            {partner1}
-          </motion.h1>
-
-          <motion.p initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.8, ease: BEZIER }}
-            className="select-none my-2 font-heading" style={{ fontSize: isPreview ? '1.5rem' : 'clamp(2rem,6vw,4.5rem)', color: C.rose }}>
-            &amp;
-          </motion.p>
-
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 1.0, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(194,24,91,0.25)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-            {partner2}
-          </motion.h1>
-
-          <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.9, delay: 1.2, ease: BEZIER }} className="my-8 w-full">
-            <RoseDivider />
-          </motion.div>
-
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.35 }}
-            className="text-sm uppercase tracking-[0.42em]" style={{ color: C.textMuted }}>
-            {formattedDate || 'The Auspicious Day'}
-          </motion.p>
-          {venue && (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.5 }}
-              className="mt-2 text-xs uppercase tracking-[0.3em]" style={{ color: C.textFaint }}>
-              {venue}
-            </motion.p>
+        <div className="ie-in mt-8" style={{ animationDelay: '1150ms' }}>
+          {date ? (
+            <div className="flex items-center justify-center gap-4">
+              <span className="leading-none tabular-nums" style={{ fontWeight: 300, fontSize: 'clamp(54px, 16cqi, 68px)', letterSpacing: '-0.02em' }}>{date.day}</span>
+              <span aria-hidden className="h-[58px] w-px" style={{ background: C.rose }} />
+              <span className="text-left leading-[1.45]">
+                <span className="block text-[16px] uppercase" style={{ letterSpacing: '0.16em' }}>{date.month} {date.year}</span>
+                <span className="block text-[16px]" style={{ color: C.soft }}>
+                  {date.weekday}{time && <> · {time}</>}
+                </span>
+              </span>
+            </div>
+          ) : (
+            <p className="text-[17px]" style={{ color: C.soft }}>
+              Date to be announced{time && <> · {time}</>}
+            </p>
           )}
         </div>
 
-        <motion.div animate={{ opacity: [0, 0.5, 0], y: [0, 10, 0] }} transition={{ duration: 2.2, delay: 2.5, repeat: Infinity }} className="absolute bottom-24 z-[2]" aria-hidden>
-          <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke={C.goldMuted} strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M7 2v18m0 0l-4-5m4 5l4-5" />
-          </svg>
-        </motion.div>
+        <div className="ie-in mt-7" style={{ animationDelay: '1250ms' }}>
+          <p className="text-[15px] font-medium uppercase" style={{ letterSpacing: '0.14em' }}>{venue}</p>
+          {data.venueAddress && (
+            <p className="mx-auto mt-1 max-w-[18rem] text-[15px] leading-[1.5]" style={{ color: C.soft }}>{data.venueAddress}</p>
+          )}
+        </div>
+
+        {data.dressCode && (
+          <p className="ie-in mt-5 text-[15px]" style={{ color: C.soft, animationDelay: '1350ms' }}>
+            Dress code <span className="mx-1" style={{ color: C.rose }}>—</span> {data.dressCode}
+          </p>
+        )}
       </section>
 
-      {/* ── COUNTDOWN ── */}
-      {date && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-6' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bgMid }}>
-          <div className="max-w-lg mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-8 sm:mb-10" style={{ color: C.goldMuted }}>
-              Celebrating Love In
-            </motion.p>
-            <div className={`grid gap-2 ${isPreview ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-4 sm:gap-3'}`}>
-              {[{ v: days, l: 'Days' }, { v: hours, l: 'Hours' }, { v: minutes, l: 'Mins' }, { v: seconds, l: 'Secs' }].map(({ v, l }, i) => (
-                <motion.div key={l} {...fadeUp(i * 0.07)} className="rounded-lg sm:rounded-2xl flex flex-col items-center justify-center py-4 sm:py-6 relative overflow-hidden" style={{ background: C.bgCard, border: `1px solid ${C.roseBorder}` }}>
-                  <div className="absolute inset-x-0 bottom-0 h-px" style={{ background: `linear-gradient(90deg,transparent 10%,${C.roseBorder} 50%,transparent 90%)` }} />
-                  <span className="font-heading tabular-nums" style={{ fontSize: isPreview ? '1.3rem' : 'clamp(1.6rem,5vw,2.6rem)', color: C.text, lineHeight: 1 }}>{String(v).padStart(2, '0')}</span>
-                  <span className="mt-1.5 text-[9px] uppercase tracking-[0.2em]" style={{ color: C.textFaint }}>{l}</span>
-                </motion.div>
+      <div className="mx-auto max-w-[30rem] px-6">
+        {/* ── Countdown ───────────────────────────────────────────── */}
+        {countdown && (
+          <section className="border-y py-9 text-center" style={{ borderColor: C.line }}>
+            <p className="text-[12px] uppercase" style={{ letterSpacing: '0.3em', color: C.rose }}>Counting the days</p>
+            <div className="mt-4 flex items-start justify-center">
+              {[
+                { v: String(countdown.days), l: countdown.days === 1 ? 'day' : 'days' },
+                { v: pad2(countdown.hours), l: 'hours' },
+                { v: pad2(countdown.minutes), l: 'minutes' },
+              ].map((u, i) => (
+                <div key={u.l} className="flex items-start">
+                  {i > 0 && <span aria-hidden className="mx-5 mt-5"><Diamond size={6} /></span>}
+                  <div className="min-w-[3.2rem]">
+                    <p className="leading-none tabular-nums" style={{ fontWeight: 300, fontSize: 'clamp(40px, 11.5cqi, 50px)' }}>{u.v}</p>
+                    <p className="mt-2 text-[14px]" style={{ color: C.soft }}>{u.l}</p>
+                  </div>
+                </div>
               ))}
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )}
 
-      {/* ── DETAILS ── */}
-      {details.length > 0 && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-6' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bg }}>
-          <div className="max-w-2xl mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Vivaran</motion.p>
-            <motion.h2 {...fadeUp(0.08)} className={`font-heading text-center ${isPreview ? 'text-lg mb-5' : 'text-2xl sm:text-3xl md:text-4xl mb-8 sm:mb-12'}`} style={{ color: C.text }}>The Details</motion.h2>
-            <div className={`grid gap-2 ${isPreview ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 sm:gap-4'}`}>
-              {details.map((detail, i) => (
-                <motion.div key={detail.label} {...fadeUp(i * 0.07)} className={`relative overflow-hidden ${isPreview ? 'rounded-lg p-3' : 'rounded-lg sm:rounded-2xl p-4 sm:p-6'}`} style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}>
-                  <div className="absolute top-0 inset-x-0 h-px" style={{ background: `linear-gradient(90deg,transparent 15%,${C.roseMuted} 50%,transparent 85%)` }} />
-                  <p className="text-[10px] uppercase tracking-[0.28em] mb-2" style={{ color: C.goldMuted }}>{detail.label}</p>
-                  <p className="text-base font-medium leading-snug" style={{ color: C.text }}>{detail.value}</p>
-                  {'sub' in detail && detail.sub && <p className="mt-1 text-sm" style={{ color: C.textMuted }}>{detail.sub as string}</p>}
-                </motion.div>
+        {/* ── A note from the couple ─────────────────────────────── */}
+        {data.message && (
+          <Reveal disabled={isPreview} as="section" className="pt-16 text-center">
+            <Diamond size={8} />
+            <p className="mx-auto mt-5 max-w-[23rem] text-balance leading-[1.4]" style={{ fontFamily: display, fontSize: 'clamp(24px, 7cqi, 28px)' }}>
+              {data.message}
+            </p>
+            <p className="mt-4 text-[15px]" style={{ color: C.soft }}>{p1} &amp; {p2}</p>
+          </Reveal>
+        )}
+
+        {/* ── The evening ───────────────────────────────────────── */}
+        {schedule.length > 0 && (
+          <Reveal disabled={isPreview} as="section" className="pt-16 text-center">
+            <Heading>The evening</Heading>
+            <ol className="mt-7">
+              {schedule.map((item, i) => (
+                <li key={`${item.title}-${i}`} className="flex flex-col items-center">
+                  {i > 0 && <span aria-hidden className="my-5 block h-7 w-px" style={{ background: C.roseLight }} />}
+                  {item.time && (
+                    <span className="text-[15px] font-medium uppercase tabular-nums" style={{ letterSpacing: '0.14em', color: C.rose }}>{item.time}</span>
+                  )}
+                  <span className="mt-1 leading-[1.15]" style={{ fontFamily: display, fontSize: 28 }}>{item.title}</span>
+                  {item.note && <span className="mt-1 text-[15px]" style={{ color: C.soft }}>{item.note}</span>}
+                </li>
               ))}
-            </div>
-            {mapsUrl && (
-              <motion.div {...fadeUp(0.32)} className="mt-8 text-center">
-                <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 rounded-full px-4 sm:px-6 md:px-8 py-3 text-sm tracking-[0.12em]" style={{ background: C.roseFaint, border: `1px solid ${C.roseBorder}`, color: C.rose }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
-                  VIEW ON MAP
-                </a>
-              </motion.div>
-            )}
+            </ol>
+          </Reveal>
+        )}
+      </div>
+
+      {/* ── Photographs ───────────────────────────────────────────── */}
+      {photos.length > 0 && (
+        <section className="mx-auto max-w-[34rem] px-5 pt-16">
+          <Reveal disabled={isPreview}>
+            <Heading>Moments</Heading>
+          </Reveal>
+          <div className="mt-8 grid grid-cols-2 gap-3">
+            {photos.map((src, i) => {
+              const wide = i === 0 || (photos.length % 2 === 0 && i === photos.length - 1)
+              return (
+                <Reveal
+                  key={`${src}-${i}`}
+                  disabled={isPreview}
+                  delay={(i % 2) * 90}
+                  className={wide ? 'col-span-2' : i % 2 === 0 ? 'mt-10' : ''}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    className={`w-full object-cover ${wide ? 'aspect-[4/5]' : 'aspect-[3/4]'} ${i % 3 === 0 ? 'rounded-t-full' : ''}`}
+                  />
+                </Reveal>
+              )
+            })}
           </div>
         </section>
       )}
 
-      {/* ── SCHEDULE ── */}
-      {scheduleItems.length > 0 && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-8 sm:py-10' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bgMid }}>
-          <div className="max-w-md mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Karyakram</motion.p>
-            <motion.h2 {...fadeUp(0.07)} className="font-heading text-center text-2xl sm:text-3xl mb-8 sm:mb-12" style={{ color: C.text }}>Programme</motion.h2>
-            <div className="relative pl-5 sm:pl-7">
-              <div className="absolute left-0 top-2 bottom-2 w-px" style={{ background: `linear-gradient(180deg,transparent,${C.roseBorder} 20%,${C.roseBorder} 80%,transparent)` }} />
-              <div className="space-y-7">
-                {scheduleItems.map((item, i) => {
-                  const parts = item.split(/[-–—]/).map(s => s.trim())
-                  const timePart = parts.length > 1 ? parts[0] : null
-                  const desc = parts.length > 1 ? parts.slice(1).join(' ') : item
-                  return (
-                    <motion.div key={i} {...fadeUp(i * 0.07)} className="relative">
-                      <div className="absolute -left-[1.75rem] top-1.5 w-3 h-3 rounded-full" style={{ background: C.bg, border: `1.5px solid ${C.rose}` }} />
-                      {timePart && <p className="text-[10px] uppercase tracking-[0.22em] mb-0.5" style={{ color: C.goldMuted }}>{timePart}</p>}
-                      <p className="text-sm leading-relaxed" style={{ color: C.text }}>{desc}</p>
-                    </motion.div>
-                  )
-                })}
-              </div>
-            </div>
+      {/* ── Venue, on plum ────────────────────────────────────────── */}
+      <Reveal disabled={isPreview} as="section" className="mt-16 px-6 py-16 text-center" style={{ background: C.plum, color: C.blush }}>
+        <div className="mx-auto max-w-[28rem]">
+          <p className="text-[12px] uppercase" style={{ letterSpacing: '0.3em', color: C.roseLight }}>The venue</p>
+          <p className="mt-4 leading-[1.1]" style={{ fontFamily: display, fontSize: 'clamp(34px, 10.5cqi, 46px)' }}>{venue}</p>
+          {data.venueAddress && (
+            <p className="mx-auto mt-3 max-w-[20rem] text-[16px] leading-[1.55]" style={{ color: 'rgba(245,231,225,0.78)' }}>{data.venueAddress}</p>
+          )}
+          <p className="mt-4 text-[16px]" style={{ color: 'rgba(245,231,225,0.9)' }}>
+            {date ? date.long : 'Date to be announced'}
+            {time && <> · {time}</>}
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <DirectionsLink
+              href={directions}
+              isPreview={isPreview}
+              className="ie-btn ie-btn-solid inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-medium"
+              style={{ background: C.roseLight, color: C.plum }}
+            >
+              Directions
+              <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
+                <path d="M4 12 12 4M6 4h6v6" />
+              </svg>
+            </DirectionsLink>
+            <DirectionsLink
+              href={calendar}
+              isPreview={isPreview}
+              className="ie-btn ie-btn-line inline-flex items-center gap-2 rounded-full border px-6 py-3 text-[15px] font-medium"
+              style={{ borderColor: 'rgba(245,231,225,0.5)', color: C.blush }}
+            >
+              Add to calendar
+            </DirectionsLink>
           </div>
-        </section>
+        </div>
+      </Reveal>
+
+      {eventId && (
+        <WishesSection
+          eventId={eventId}
+          theme={WISHES_THEME}
+          title="Wishes for the couple"
+          intro={`Leave a few words for ${p1} and ${p2}. Your wish appears here for every guest.`}
+        />
       )}
 
-      {/* ── GALLERY ── */}
-      {gallery.length > 0 && (
-        <section className="py-12 sm:py-16 md:py-20 overflow-hidden" style={{ background: C.bg }}>
-          <motion.p {...fadeUp()} className="px-4 sm:px-6 md:px-8 text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Tasveerein</motion.p>
-          <motion.h2 {...fadeUp(0.07)} className="px-4 sm:px-6 md:px-8 font-heading text-center text-2xl sm:text-3xl mb-8 sm:mb-10" style={{ color: C.text }}>Our Journey</motion.h2>
-          <div className="flex gap-2 sm:gap-3 px-4 sm:px-6 md:px-8 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none' }}>
-            {gallery.map((src, i) => (
-              <motion.div key={`${src}-${i}`} initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-20px' }} transition={{ duration: 0.7, delay: i * 0.06, ease: BEZIER }}
-                className="shrink-0 overflow-hidden rounded-xl" style={{ width: i % 3 === 0 ? 240 : 190, height: i % 3 === 0 ? 320 : 252, border: `1px solid ${C.roseBorder}` }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Memory ${i + 1}`} className="h-full w-full object-cover" loading="lazy" />
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ── MESSAGE ── */}
-      {message && (
-        <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-18 md:py-24" style={{ background: C.bgMid }}>
-          <div className="max-w-xl mx-auto text-center">
-            <motion.div {...fadeUp()}>
-              <div className="font-heading select-none mb-1 leading-none" style={{ fontSize: '6rem', color: 'rgba(194,24,91,0.09)' }} aria-hidden>&ldquo;</div>
-              <p className="font-heading text-xl sm:text-2xl italic leading-relaxed" style={{ color: C.textMuted }}>{message}</p>
-              <p className="mt-7 text-sm uppercase tracking-[0.32em]" style={{ color: C.goldMuted }}>— {partner1} &amp; {partner2}</p>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* ── WISHES ── */}
-      {eventId && <EngagementWishes eventId={eventId} />}
-
-      {/* ── FOOTER ── */}
-      <footer className="px-4 sm:px-6 md:px-8 py-12 text-center" style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
-        <RoseDivider className="mb-7" />
-        <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>{partner1} &amp; {partner2}</p>
-        {formattedDate && <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(253,240,248,0.18)' }}>{formattedDate}</p>}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(253,240,248,0.12)' }}>Made with ShareInvite</p>
+      {/* ── Foot ──────────────────────────────────────────────────── */}
+      <footer className="px-6 pb-10 pt-12 text-center">
+        <Rings draw={false} backing={C.paper} className="mx-auto w-[54px]" />
+        <p className="mt-4 leading-none" style={{ fontFamily: display, fontSize: 30 }}>
+          {p1} <span style={{ color: C.rose }}>&amp;</span> {p2}
+        </p>
+        {date && (
+          <p className="mt-3 text-[13px] uppercase tabular-nums" style={{ letterSpacing: '0.24em', color: C.faint }}>
+            {pad2(date.day)} · {date.monthShort} · {date.year}
+          </p>
+        )}
+        <div className="mt-8">
+          <Credit isPreview={isPreview} color={C.faint} linkColor={C.soft} />
+        </div>
       </footer>
     </div>
   )

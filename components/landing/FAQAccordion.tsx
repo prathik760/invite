@@ -22,11 +22,11 @@ const defaultFaqs: Faq[] = [
   },
   {
     question: 'Which template should I choose, and what does it cost?',
-    answer: 'Build and preview any template for free, then pay once for the one you publish — ₹99 for Ganesh Chaturthi Premium; ₹199 for Elegant Wedding or Raksha Bandhan Premium; ₹299 for Cinematic Night, Janamdin, Namakaran, or the interactive 3D Surprise Journey; ₹399 for Shaadi, Mangni, Griha Pravesh, or the animated 3D Greeting Cards; ₹499 for Saalgirah, KGF Royal Empire, Royal Deco, or Luxury Wedding.',
+    answer: 'Build and preview any design for free, then pay once for the one you publish. Each design shows its own price — most are ₹99 to ₹499, and the Signature wedding suites are ₹1,499 to ₹1,999.',
   },
   {
     question: 'How much does a digital invitation cost in India?',
-    answer: 'Building and previewing is completely free — no credit card, no expiry. Publishing is a one-time payment starting at ₹99, and no template costs more than ₹499. There are no monthly fees or hidden charges.',
+    answer: 'Building and previewing is completely free — no credit card, no expiry. Publishing is a one-time payment for the design you choose, shown on the design. There are no monthly fees or hidden charges.',
   },
   {
     question: 'Can I add bride and groom photos to the invitation?',
@@ -52,78 +52,46 @@ export default function FAQAccordion({ faqs = defaultFaqs }: { faqs?: Faq[] }) {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
-    <div className="mx-auto max-w-3xl space-y-3">
+    <div className="mx-auto max-w-3xl divide-y divide-line border-y border-line" data-reveal>
       {faqs.map((faq, i) => {
         const isOpen = open === i
+        const id = `faq-${i}`
         return (
-          <div
-            key={i}
-            className="relative overflow-hidden rounded-2xl border transition-all duration-300"
-            style={{
-              borderColor: isOpen ? 'rgba(184,121,36,0.35)' : '#E8DCCD',
-              background: isOpen
-                ? 'linear-gradient(135deg, rgba(255,248,241,0.9), #ffffff)'
-                : '#ffffff',
-              boxShadow: isOpen ? '0 4px 24px rgba(184,121,36,0.09)' : '0 1px 4px rgba(60,36,20,0.05)',
-            }}
-          >
-            {/* Gold left accent bar when open */}
-            {isOpen && (
-              <div
-                className="absolute inset-y-0 left-0 w-1 rounded-l-2xl"
-                style={{ background: 'linear-gradient(180deg, #B87924, #D9A441)' }}
-              />
-            )}
-
-            <button
-              onClick={() => setOpen(isOpen ? null : i)}
-              className="flex w-full items-start gap-5 px-7 py-5 text-left"
-              aria-expanded={isOpen}
-            >
-              {/* Ghost number decoration */}
-              <span
-                className="font-display text-4xl font-bold leading-none tabular-nums mt-0.5 w-10 shrink-0 transition-colors duration-200"
-                style={{ color: isOpen ? 'rgba(184,121,36,0.35)' : 'rgba(44,32,28,0.1)' }}
-                aria-hidden
+          <div key={i}>
+            <h3>
+              <button
+                type="button"
+                onClick={() => setOpen(isOpen ? null : i)}
+                className="group flex w-full items-center gap-5 py-6 text-left"
+                aria-expanded={isOpen}
+                aria-controls={id}
               >
-                {String(i + 1).padStart(2, '0')}
-              </span>
-
-              <div className="flex-1 min-w-0">
-                <h3
-                  className="font-heading text-[1.05rem] leading-snug transition-colors duration-200"
-                  style={{ color: isOpen ? '#221B17' : '#2C201C' }}
-                >
+                <span className="flex-1 font-editorial text-[1.35rem] font-semibold leading-snug text-charcoal transition-colors group-hover:text-emerald-soft sm:text-[1.5rem]">
                   {faq.question}
-                </h3>
-
-                {/* Answer — animated height via max-height trick */}
-                <div
-                  className="overflow-hidden transition-all duration-300"
-                  style={{ maxHeight: isOpen ? '600px' : '0px', opacity: isOpen ? 1 : 0 }}
+                </span>
+                <span
+                  aria-hidden
+                  className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                    isOpen ? 'rotate-45 border-emerald bg-emerald text-paper' : 'border-line bg-paper text-charcoal group-hover:border-burnished'
+                  }`}
                 >
-                  <p className="mt-3.5 text-sm leading-[1.85] text-muted pr-2">
-                    {faq.answer}
-                  </p>
-                </div>
+                  <span className="absolute h-[1.5px] w-3.5 rounded bg-current" />
+                  <span className="absolute h-3.5 w-[1.5px] rounded bg-current" />
+                </span>
+              </button>
+            </h3>
+            {/* grid-rows 0fr → 1fr animates to the answer's real height,
+                where a max-height guess either clipped long answers or lagged. */}
+            <div
+              id={id}
+              className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
+                isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+              }`}
+            >
+              <div className="overflow-hidden">
+                <p className="max-w-2xl pb-7 pr-12 text-[0.98rem] leading-8 text-charcoal/75">{faq.answer}</p>
               </div>
-
-              {/* Toggle icon */}
-              <div
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full mt-0.5 transition-all duration-200"
-                style={{
-                  background: isOpen ? 'rgba(184,121,36,0.14)' : 'rgba(44,32,28,0.06)',
-                  color: isOpen ? '#B87924' : '#7E716B',
-                }}
-              >
-                <svg
-                  className={`h-3.5 w-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </button>
+            </div>
           </div>
         )
       })}

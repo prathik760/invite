@@ -16,10 +16,11 @@ export default function GoogleButton({
       type="button"
       onClick={() => { setLoading(true); signIn('google', { callbackUrl }) }}
       disabled={loading}
-      className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-white px-5 py-3 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-surface-warm hover:shadow disabled:opacity-60"
+      aria-busy={loading || undefined}
+      className="btn-outline flex w-full items-center justify-center gap-3 rounded-full px-5 py-3.5 text-[0.95rem] font-semibold shadow-[0_1px_2px_rgba(30,39,38,0.05)] disabled:cursor-wait disabled:opacity-60 disabled:hover:translate-y-0"
     >
       {loading ? (
-        <svg className="h-4 w-4 shrink-0 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden>
+        <svg className="h-4 w-4 shrink-0 animate-spin text-emerald-soft" fill="none" viewBox="0 0 24 24" aria-hidden>
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
         </svg>

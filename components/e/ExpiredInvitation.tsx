@@ -1,5 +1,8 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { formatTemplatePrice, templatePrice } from '@/lib/plans'
+import Logo, { LogoMark } from '@/components/brand/Logo'
+import { templateImage } from '@/lib/templateMedia'
+import { formatTemplatePrice } from '@/lib/plans'
 
 // ─── Template recommendation data ────────────────────────────────────────────
 // Pick 3 recs per original category: same-category first, then cross-sell
@@ -103,147 +106,70 @@ export default function ExpiredInvitation({ templateId, data }: ExpiredInvitatio
   const dateFormatted = data.date ? formatDate(data.date) : null
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#F8F5F0' }}>
-
+    <div className="flex min-h-screen flex-col bg-champagne text-charcoal">
       {/* Header */}
-      <header className="flex items-center justify-between px-5 py-4 border-b border-[#E8DCCD] bg-white/80 backdrop-blur-sm">
-        <Link href="/" className="flex items-center gap-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo1.png" alt="ShareInvite" className="h-7 w-auto" width="110" height="28" />
-        </Link>
-        <Link
-          href="/create"
-          className="text-xs font-semibold px-4 py-2 rounded-xl transition-colors"
-          style={{ background: 'rgba(184,138,68,0.12)', color: '#B87924', border: '1px solid rgba(184,138,68,0.25)' }}
-        >
-          Create yours →
-        </Link>
+      <header className="border-b border-line bg-champagne/95 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
+          <Link href="/" aria-label="ShareInvite home"><Logo markClassName="h-8 w-8" /></Link>
+          <Link href="/create" className="btn-outline rounded-full px-4 py-2 text-[0.82rem] font-semibold">
+            Create yours
+          </Link>
+        </div>
       </header>
 
       {/* Expired message */}
-      <section className="flex flex-col items-center text-center px-5 pt-14 pb-12">
-        {/* Soft hourglass icon */}
-        <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
-          style={{ background: 'rgba(184,138,68,0.10)', border: '1px solid rgba(184,138,68,0.20)' }}>
-          <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="#B87924" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-
-        <p className="text-[10px] font-bold uppercase tracking-[0.28em] mb-3" style={{ color: '#B87924' }}>
-          Invitation expired
-        </p>
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#1F1A17] mb-2 max-w-sm leading-snug">
-          This celebration has taken place
-        </h1>
-        <p className="text-sm text-[#706861] max-w-xs leading-6">
-          <strong className="font-semibold text-[#2C201C]">{eventLabel}</strong>
-          {dateFormatted && <> · {dateFormatted}</>}
-          <br />
-          Invitation links expire a few days after the event.
-        </p>
-
-        {/* Divider */}
-        <div className="mt-10 flex items-center gap-4 w-full max-w-sm">
-          <div className="flex-1 h-px bg-[#E8DCCD]" />
-          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#B0A090]">
-            Planning a celebration?
-          </span>
-          <div className="flex-1 h-px bg-[#E8DCCD]" />
+      <section className="relative overflow-hidden px-5 pb-12 pt-16 text-center">
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(232,200,102,0.2),transparent_70%)]" />
+        <div className="relative mx-auto max-w-lg">
+          <LogoMark className="mx-auto h-14 w-14" />
+          <p className="eyebrow mt-6">This celebration has taken place</p>
+          <h1 className="t-h1 mt-3">Thank you for being part of it</h1>
+          <p className="mt-4 text-[0.98rem] leading-7 text-charcoal/70">
+            <strong className="font-semibold text-charcoal">{eventLabel}</strong>
+            {dateFormatted && <> · {dateFormatted}</>}
+            <br />
+            Invitation links close a few days after the event.
+          </p>
         </div>
       </section>
 
       {/* Template recommendations */}
-      <section className="px-5 pb-16">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-center text-sm text-[#706861] mb-6">
-            Create a beautiful digital invitation for your next {categoryLabel} — build it free in 5 minutes.
-          </p>
+      <section className="border-t border-line bg-paper px-5 py-14">
+        <div className="mx-auto max-w-3xl">
+          <p className="eyebrow text-center">Planning a celebration?</p>
+          <p className="t-h3 mt-2 text-center">A beautiful invitation for your next {categoryLabel}</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {recommendations.map((tpl) => (
               <Link
                 key={tpl.id}
                 href={`/create?template=${tpl.id}`}
-                className="group flex flex-col overflow-hidden rounded-2xl transition-all duration-200 hover:-translate-y-1"
-                style={{ border: '1px solid rgba(44,32,28,0.10)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}
+                className="lift group flex flex-col overflow-hidden rounded-3xl border border-line bg-champagne"
               >
-                {/* Swatch */}
-                <div
-                  className="relative h-[90px] flex flex-col items-center justify-center gap-1"
-                  style={{ background: tpl.gradient }}
-                >
-                  <p className="text-[8px] uppercase tracking-[0.3em] font-semibold"
-                    style={{ color: `rgba(${tpl.rgb},0.75)` }}>
-                    shareinvite
-                  </p>
-                  <p className="font-bold text-[15px] italic"
-                    style={{ color: '#fff' }}>
-                    {tpl.name}
-                  </p>
-                  {/* Hover CTA */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{ background: 'rgba(0,0,0,0.35)' }}>
-                    <span className="text-[10px] font-bold text-white px-3 py-1.5 rounded-full"
-                      style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)' }}>
-                      Use this template →
-                    </span>
-                  </div>
-                </div>
-
-                {/* Card body */}
-                <div className="px-3.5 py-3 bg-white flex items-center justify-between gap-2">
-                  <div className="min-w-0">
-                    <p className="text-[12px] font-semibold text-[#221B17] truncate">{tpl.name}</p>
-                    <p className="text-[10px] text-[#706861] truncate">{tpl.tagline}</p>
-                  </div>
-                  <span
-                    className="shrink-0 text-[9px] font-bold uppercase tracking-[0.08em] px-2 py-0.5 rounded-full"
-                    style={
-                      templatePrice(tpl.id) <= 199
-                        ? { background: 'rgba(47,118,109,0.12)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.22)' }
-                        : templatePrice(tpl.id) <= 299
-                        ? { background: 'rgba(184,138,68,0.12)', color: '#B87924', border: '1px solid rgba(184,138,68,0.25)' }
-                        : templatePrice(tpl.id) <= 399
-                        ? { background: 'rgba(47,118,109,0.10)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.20)' }
-                        : { background: 'rgba(201,168,76,0.14)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.30)' }
-                    }
-                  >
+                <span className="relative block aspect-[4/5] overflow-hidden bg-peach">
+                  <Image src={templateImage(tpl.id)} alt="" fill sizes="(max-width: 640px) 100vw, 220px" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                  <span className="absolute right-3 top-3 rounded-full bg-charcoal/85 px-2.5 py-1 text-[0.75rem] font-bold text-paper">
                     {formatTemplatePrice(tpl.id)}
                   </span>
-                </div>
+                </span>
+                <span className="block px-4 py-3.5">
+                  <span className="block truncate font-editorial text-[1.25rem] font-semibold leading-tight">{tpl.name}</span>
+                  <span className="mt-0.5 block truncate text-[0.78rem] text-muted">{tpl.tagline}</span>
+                </span>
               </Link>
             ))}
           </div>
 
-          {/* Primary CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              href="/create"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-sm transition-all"
-              style={{
-                background: 'linear-gradient(135deg,#B87924,#D9A441)',
-                color: '#fff',
-                boxShadow: '0 4px 14px rgba(184,121,36,0.35)',
-              }}
-            >
+          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link href="/create" className="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
               Start building — free
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
             </Link>
-            <Link
-              href="/templates"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-xl text-sm font-semibold border text-[#2C201C] transition-colors hover:border-[#D9A441]/60 bg-white"
-              style={{ borderColor: '#E8DCCD' }}
-            >
-              Browse all templates
+            <Link href="/templates" className="btn-outline inline-flex w-full items-center justify-center rounded-full px-7 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
+              Browse designs
             </Link>
           </div>
-
-          {/* Trust line */}
-          <p className="mt-5 text-center text-[11px] text-[#B0A090]">
-            Free to build &amp; preview · Publish from ₹99 · Share via WhatsApp
+          <p className="mt-5 text-center text-[0.8rem] text-muted">
+            Free to build &amp; preview · One price per design, paid once · Share via WhatsApp
           </p>
         </div>
       </section>

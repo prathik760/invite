@@ -3,64 +3,56 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { motion, AnimatePresence } from 'framer-motion'
+import { caveat } from './kit/fonts/caveat'
+import { fraunces } from './kit/fonts/fraunces'
+import { jost } from './kit/fonts/jost'
+import { Credit } from './kit/ui'
+import { SceneBoundary, useWebGL } from './kit/webgl'
 
-// WebGL stages are code-split so three.js only loads for this template,
-// never for the other (2D) invitation templates sharing the /e route bundle.
-const GiftBox3D = dynamic(() => import('./journey/GiftBox3D'), { ssr: false, loading: () => <CanvasFallback label="Wrapping your gift…" /> })
-const Balloons3D = dynamic(() => import('./journey/Balloons3D'), { ssr: false, loading: () => <CanvasFallback label="Inflating balloons…" /> })
+// WebGL stages are code-split so three.js only loads for this template.
+const GiftBox3D = dynamic(() => import('./journey/GiftBox3D'), { ssr: false, loading: () => <Loading label="Wrapping your gift…" /> })
+const Balloons3D = dynamic(() => import('./journey/Balloons3D'), { ssr: false, loading: () => <Loading label="Blowing up balloons…" /> })
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
-const GOLD = '#E8B84B'
+const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number]
+const GOLD = '#EBC37A'
+const ROSE = '#C9405F'
+const display = fraunces.style.fontFamily
+const hand = caveat.style.fontFamily
+const sans = jost.style.fontFamily
 
-// ─── Types & helpers ──────────────────────────────────────────────────────────
 type StageKey = 'gift' | 'pin' | 'photos' | 'balloons' | 'puzzle' | 'scratch' | 'letter'
-
-const STAGES: { key: StageKey; label: string; emoji: string }[] = [
-  { key: 'gift', label: 'Open', emoji: '🎁' },
-  { key: 'pin', label: 'Unlock', emoji: '🔒' },
-  { key: 'photos', label: 'Memories', emoji: '💕' },
-  { key: 'balloons', label: 'Wishes', emoji: '🎈' },
-  { key: 'puzzle', label: 'Puzzle', emoji: '🧩' },
-  { key: 'scratch', label: 'Scratch', emoji: '✨' },
-  { key: 'letter', label: 'Letter', emoji: '💌' },
-]
 
 function parseList(value?: string): string[] {
   if (!value?.trim()) return []
   return value.split('\n').map((s) => s.trim()).filter(Boolean)
 }
 
-function CanvasFallback({ label }: { label: string }) {
+function Loading({ label }: { label: string }) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-[#E8B84B]" />
-      <p className="text-sm text-white/60">{label}</p>
+      <div className="h-7 w-7 animate-spin rounded-full border-2 border-white/15" style={{ borderTopColor: GOLD }} />
+      <p className="text-[13px] text-white/60" style={{ fontFamily: sans }}>{label}</p>
     </div>
   )
 }
 
-// ─── Confetti burst (lightweight, framer-motion) ──────────────────────────────
 function Confetti({ fire }: { fire: boolean }) {
   const pieces = useMemo(
-    () => Array.from({ length: 40 }, (_, i) => ({
-      id: i,
-      x: (i * 53) % 100,
-      color: ['#E4577B', '#E8B84B', '#5AB7C9', '#8E6BD1', '#57B98A'][i % 5],
-      delay: (i % 10) * 0.03,
-      rot: (i * 47) % 360,
+    () => Array.from({ length: 36 }, (_, i) => ({
+      id: i, x: (i * 53) % 100, color: [ROSE, GOLD, '#5AB7C9', '#8E6BD1', '#57B98A'][i % 5], delay: (i % 10) * 0.03, rot: (i * 47) % 360,
     })),
-    []
+    [],
   )
   if (!fire) return null
   return (
-    <div className="pointer-events-none absolute inset-0 z-40 overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 z-40 overflow-hidden" aria-hidden>
       {pieces.map((p) => (
         <motion.div
           key={p.id}
           initial={{ y: '-10%', x: `${p.x}%`, opacity: 1, rotate: 0 }}
           animate={{ y: '110%', opacity: [1, 1, 0], rotate: p.rot }}
           transition={{ duration: 2.4, delay: p.delay, ease: 'easeIn' }}
-          className="absolute h-2.5 w-2 rounded-[1px]"
+          className="absolute h-2.5 w-1.5"
           style={{ background: p.color, left: 0, top: 0 }}
         />
       ))}
@@ -68,88 +60,153 @@ function Confetti({ fire }: { fire: boolean }) {
   )
 }
 
-// ─── Progress rail ────────────────────────────────────────────────────────────
-function ProgressRail({ current }: { current: number }) {
-  return (
-    <div className="absolute left-1/2 top-5 z-30 flex -translate-x-1/2 items-center gap-1.5">
-      {STAGES.map((s, i) => (
-        <div
-          key={s.key}
-          className="h-1.5 rounded-full transition-all duration-500"
-          style={{
-            width: i === current ? 22 : 8,
-            background: i <= current ? GOLD : 'rgba(255,255,255,0.22)',
-          }}
-        />
-      ))}
-    </div>
-  )
-}
-
-// ─── Shared stage shell ───────────────────────────────────────────────────────
 function Stage({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 1.02 }}
-      transition={{ duration: 0.5, ease: BEZIER }}
-      className="absolute inset-0 flex flex-col items-center justify-center px-6 pb-10 pt-16"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.5, ease: EASE }}
+      className="absolute inset-0 flex flex-col items-center justify-center px-6 pb-10 pt-16 text-center"
     >
       {children}
     </motion.div>
   )
 }
 
-function ContinueButton({ onClick, label = 'Continue' }: { onClick: () => void; label?: string }) {
+function Title({ children, sub }: { children: React.ReactNode; sub?: React.ReactNode }) {
+  return (
+    <div className="mb-6">
+      <h2 className="text-white" style={{ fontFamily: display, fontWeight: 500, fontSize: 30, lineHeight: 1.1 }}>{children}</h2>
+      {sub && <p className="mt-2 text-[14px] text-white/65" style={{ fontFamily: sans }}>{sub}</p>}
+    </div>
+  )
+}
+
+function Next({ onClick, children = 'Continue' }: { onClick: () => void; children?: React.ReactNode }) {
   return (
     <motion.button
-      initial={{ opacity: 0, y: 12 }}
+      type="button"
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3, duration: 0.5, ease: BEZIER }}
+      transition={{ delay: 0.3, duration: 0.5, ease: EASE }}
       onClick={onClick}
-      className="mt-8 rounded-full px-8 py-3 text-sm font-bold tracking-wide text-[#2a1420] shadow-lg transition-transform active:scale-95"
-      style={{ background: `linear-gradient(135deg, ${GOLD}, #d89a2a)` }}
+      className="mt-8 rounded-full px-8 py-3.5 text-[15px] font-medium active:scale-[0.97]"
+      style={{ background: GOLD, color: '#2A1420', fontFamily: sans }}
     >
-      {label} →
+      {children}
     </motion.button>
   )
 }
 
-// ─── Stage 1: Gift box ────────────────────────────────────────────────────────
-function GiftStage({ occasion, recipient, tagLine, onOpen }: {
-  occasion: string; recipient: string; tagLine: string; onOpen: () => void
+// ─── 2D stand-ins when the phone can't do WebGL ───────────────────────────────
+function GiftBox2D({ onOpened }: { onOpened: () => void }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <button
+      type="button"
+      aria-label="Open the gift"
+      onClick={() => { if (!open) { setOpen(true); setTimeout(onOpened, 650) } }}
+      className="mx-auto block h-full max-h-[300px] w-full"
+    >
+      <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden>
+        <ellipse cx="100" cy="182" rx="62" ry="8" fill="rgba(0,0,0,0.3)" />
+        <rect x="42" y="92" width="116" height="86" rx="4" fill={ROSE} />
+        <rect x="92" y="92" width="16" height="86" fill={GOLD} />
+        <g style={{ transformOrigin: '100px 92px', transform: open ? 'translateY(-46px) rotate(-14deg)' : 'none', transition: 'transform 600ms cubic-bezier(.2,.8,.2,1)' }}>
+          <rect x="34" y="70" width="132" height="26" rx="4" fill="#B3324F" />
+          <rect x="92" y="70" width="16" height="26" fill={GOLD} />
+          <path d="M100 70 C 76 44, 58 58, 76 70 Z M100 70 C 124 44, 142 58, 124 70 Z" fill={GOLD} />
+        </g>
+      </svg>
+    </button>
+  )
+}
+
+const BALLOON_COLORS = [ROSE, '#E8A33D', '#5AB7C9', '#8E6BD1', '#57B98A', '#F08A6C']
+function Balloons2D({ count, onPop, onAllPopped }: { count: number; onPop: (i: number) => void; onAllPopped: () => void }) {
+  const [popped, setPopped] = useState<boolean[]>(() => Array(count).fill(false))
+  const pop = (i: number) => {
+    if (popped[i]) return
+    const next = [...popped]
+    next[i] = true
+    setPopped(next)
+    onPop(i)
+    if (next.every(Boolean)) setTimeout(onAllPopped, 700)
+  }
+  return (
+    <div className="absolute inset-x-0 top-[26%] flex flex-wrap justify-center gap-x-3 gap-y-6 px-6">
+      <style>{`@keyframes sj-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }`}</style>
+      {Array.from({ length: count }, (_, i) => (
+        <button
+          key={i}
+          type="button"
+          aria-label={`Pop balloon ${i + 1}`}
+          onClick={() => pop(i)}
+          style={{ animation: `sj-bob ${3 + (i % 3) * 0.6}s ease-in-out ${i * 0.3}s infinite`, visibility: popped[i] ? 'hidden' : 'visible' }}
+        >
+          <svg viewBox="0 0 60 110" width="60" height="110" aria-hidden>
+            <path d="M30 4 C 50 4, 56 26, 52 40 C 48 56, 36 66, 30 68 C 24 66, 12 56, 8 40 C 4 26, 10 4, 30 4 Z" fill={BALLOON_COLORS[i % BALLOON_COLORS.length]} />
+            <path d="M18 18 C 16 24, 16 30, 18 34" stroke="rgba(255,255,255,0.5)" strokeWidth="3" strokeLinecap="round" fill="none" />
+            <path d="M27 68 L33 68 L30 73 Z" fill={BALLOON_COLORS[i % BALLOON_COLORS.length]} />
+            <path d="M30 73 C 26 84, 34 92, 30 108" stroke="rgba(255,255,255,0.45)" strokeWidth="1" fill="none" />
+          </svg>
+        </button>
+      ))}
+    </div>
+  )
+}
+
+// ─── Stages ───────────────────────────────────────────────────────────────────
+function GiftStage({ occasion, recipient, tagLine, has3D, onFail, onOpen }: {
+  occasion: string; recipient: string; tagLine: string; has3D: boolean; onFail: () => void; onOpen: () => void
 }) {
   const [opened, setOpened] = useState(false)
+  const handle = () => { setOpened(true); onOpen() }
   return (
     <Stage>
-      <div className="mb-1 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/50">{occasion}</p>
-        <h1 className="mt-2 font-serif text-3xl font-bold text-white sm:text-4xl">{recipient}</h1>
-      </div>
-      <div className="relative h-[46vh] max-h-[420px] w-full">
-        <GiftBox3D onOpened={() => { setOpened(true); onOpen() }} />
+      <p className="italic text-white/70" style={{ fontFamily: display, fontSize: 19 }}>{occasion}</p>
+      <h1 className="mt-1" style={{ color: GOLD, fontFamily: hand, fontSize: 'clamp(44px, 13cqi, 60px)', lineHeight: 1 }}>{recipient}</h1>
+      <div className="relative mt-4 h-[44svh] max-h-[400px] w-full">
+        {has3D ? (
+          <SceneBoundary fallback={<GiftBox2D onOpened={handle} />} onError={onFail}>
+            <GiftBox3D onOpened={handle} />
+          </SceneBoundary>
+        ) : (
+          <GiftBox2D onOpened={handle} />
+        )}
       </div>
       <Confetti fire={opened} />
       {!opened && (
-        <motion.p
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-          className="mt-1 text-center text-sm text-white/70"
-        >
-          {tagLine || 'Tap the gift to open it 🎁'}
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
+          className="mt-2 max-w-[18rem] text-[15px] text-white/75" style={{ fontFamily: sans }}>
+          {tagLine || 'Tap the gift to open it'}
         </motion.p>
       )}
     </Stage>
   )
 }
 
-// ─── Stage 2: Secret PIN ──────────────────────────────────────────────────────
+function Key({ onClick, children, quiet, label }: { onClick: () => void; children: React.ReactNode; quiet?: boolean; label?: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="flex h-14 w-14 items-center justify-center rounded-full text-[22px] text-white transition-transform active:scale-90"
+      style={{ fontFamily: sans, background: quiet ? 'transparent' : 'rgba(255,255,255,0.08)', border: quiet ? 'none' : '1px solid rgba(255,255,255,0.14)' }}
+    >
+      {children}
+    </button>
+  )
+}
+
 function PinStage({ pin, hint, onUnlock }: { pin: string; hint: string; onUnlock: () => void }) {
   const [entry, setEntry] = useState('')
   const [shake, setShake] = useState(false)
   const [showHint, setShowHint] = useState(false)
   const [unlocked, setUnlocked] = useState(false)
-  const target = pin.replace(/\s/g, '')
+  const target = pin.replace(/\s/g, '') || '0000'
 
   const press = (d: string) => {
     if (unlocked) return
@@ -168,65 +225,35 @@ function PinStage({ pin, hint, onUnlock }: { pin: string; hint: string; onUnlock
 
   return (
     <Stage>
-      <div className="text-5xl">{unlocked ? '🔓' : '🔒'}</div>
-      <h2 className="mt-4 font-serif text-2xl font-bold text-white">Enter the secret code</h2>
-      <p className="mt-1 text-sm text-white/60">Only they would know it 💫</p>
+      <svg viewBox="0 0 48 48" className="h-12 w-12" fill="none" stroke={GOLD} strokeWidth={1.8} strokeLinecap="round" aria-hidden>
+        <rect x="10" y="21" width="28" height="20" rx="3" />
+        <path d={unlocked ? 'M16 21v-5a8 8 0 0 1 15.5-2.8' : 'M16 21v-5a8 8 0 0 1 16 0v5'} />
+        <circle cx="24" cy="31" r="2" fill={GOLD} />
+      </svg>
+      <div className="mt-4"><Title sub="Only you would know it">Enter the secret code</Title></div>
 
-      <motion.div
-        animate={shake ? { x: [-8, 8, -8, 8, 0] } : {}}
-        transition={{ duration: 0.4 }}
-        className="mt-6 flex gap-2.5"
-      >
+      <motion.div animate={shake ? { x: [-8, 8, -8, 8, 0] } : {}} transition={{ duration: 0.4 }} className="flex gap-3" aria-live="polite">
         {Array.from({ length: target.length }).map((_, i) => (
-          <div
-            key={i}
-            className="h-3.5 w-3.5 rounded-full transition-all"
-            style={{ background: i < entry.length ? GOLD : 'rgba(255,255,255,0.2)' }}
-          />
+          <span key={i} className="block h-3 w-3 rounded-full transition-colors" style={{ background: i < entry.length ? GOLD : 'rgba(255,255,255,0.22)' }} />
         ))}
       </motion.div>
 
-      <div className="mt-8 grid grid-cols-3 gap-3">
-        {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d) => (
-          <button
-            key={d}
-            onClick={() => press(d)}
-            className="h-14 w-14 rounded-2xl text-xl font-semibold text-white transition-all active:scale-90"
-            style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
-          >
-            {d}
-          </button>
-        ))}
-        <button
-          onClick={() => setShowHint((s) => !s)}
-          className="h-14 w-14 rounded-2xl text-xs font-medium text-white/70 transition-all active:scale-90"
-          style={{ background: 'rgba(255,255,255,0.04)' }}
-        >
-          Hint
-        </button>
-        <button
-          onClick={() => press('0')}
-          className="h-14 w-14 rounded-2xl text-xl font-semibold text-white transition-all active:scale-90"
-          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
-        >
-          0
-        </button>
-        <button
-          onClick={() => setEntry((e) => e.slice(0, -1))}
-          className="h-14 w-14 rounded-2xl text-xl text-white/70 transition-all active:scale-90"
-          style={{ background: 'rgba(255,255,255,0.04)' }}
-        >
-          ⌫
-        </button>
+      <div className="mt-8 grid grid-cols-3 gap-4">
+        {['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d) => <Key key={d} onClick={() => press(d)}>{d}</Key>)}
+        <Key quiet onClick={() => setShowHint((s) => !s)}><span className="text-[13px] text-white/70">Hint</span></Key>
+        <Key onClick={() => press('0')}>0</Key>
+        <Key quiet label="Delete" onClick={() => setEntry((e) => e.slice(0, -1))}>
+          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round" aria-hidden>
+            <path d="M9 5h11v14H9l-6-7z" /><path strokeLinecap="round" d="m12 9 5 6m0-6-5 6" />
+          </svg>
+        </Key>
       </div>
 
       <AnimatePresence>
         {showHint && hint && (
-          <motion.p
-            initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="mt-5 max-w-xs text-center text-sm italic text-white/70"
-          >
-            💡 {hint}
+          <motion.p initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            className="mt-6 max-w-xs text-white/80" style={{ fontFamily: hand, fontSize: 24 }}>
+            {hint}
           </motion.p>
         )}
       </AnimatePresence>
@@ -234,47 +261,40 @@ function PinStage({ pin, hint, onUnlock }: { pin: string; hint: string; onUnlock
   )
 }
 
-// ─── Stage 3: Photo memories ──────────────────────────────────────────────────
 function PhotosStage({ photos, onDone }: { photos: string[]; onDone: () => void }) {
   const [index, setIndex] = useState(0)
-  const list = photos.length ? photos : ['']
-  const atEnd = index >= list.length - 1
-
+  const atEnd = index >= photos.length - 1
   return (
     <Stage>
-      <h2 className="mb-5 font-serif text-2xl font-bold text-white">Our favourite moments</h2>
-      <div className="relative h-[46vh] max-h-[420px] w-full max-w-xs">
+      <Title>Our favourite moments</Title>
+      <div className="relative h-[46svh] max-h-[420px] w-full max-w-[300px]">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={index}
-            initial={{ opacity: 0, rotate: -4, y: 24, scale: 0.95 }}
-            animate={{ opacity: 1, rotate: -2, y: 0, scale: 1 }}
-            exit={{ opacity: 0, rotate: 4, y: -24, scale: 0.95 }}
-            transition={{ duration: 0.5, ease: BEZIER }}
-            className="absolute inset-0 rounded-lg bg-white p-3 pb-10 shadow-2xl"
+            initial={{ opacity: 0, rotate: -4, y: 24 }}
+            animate={{ opacity: 1, rotate: -2, y: 0 }}
+            exit={{ opacity: 0, rotate: 4, y: -24 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="absolute inset-0 bg-[#FBF8F2] p-3 pb-12"
+            style={{ boxShadow: '0 26px 50px -24px rgba(0,0,0,0.7)' }}
             onClick={() => !atEnd && setIndex((i) => i + 1)}
           >
-            {list[index] ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={list[index]} alt={`Memory ${index + 1}`} className="h-full w-full rounded-sm object-cover" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center rounded-sm bg-gradient-to-br from-rose-200 to-amber-100 text-4xl">💕</div>
-            )}
-            <p className="absolute bottom-3 left-0 w-full text-center font-serif text-sm text-neutral-500">
-              {index + 1} of {list.length}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={photos[index]} alt={`Memory ${index + 1}`} className="h-full w-full object-cover" />
+            <p className="absolute bottom-2.5 left-0 w-full text-center text-[#3a3230]" style={{ fontFamily: hand, fontSize: 22 }}>
+              {index + 1} / {photos.length}
             </p>
           </motion.div>
         </AnimatePresence>
       </div>
-      <p className="mt-4 text-xs text-white/50">{atEnd ? '' : 'Tap the photo for the next memory'}</p>
-      {atEnd && <ContinueButton onClick={onDone} label="Keep going" />}
+      <p className="mt-5 text-[14px] text-white/60" style={{ fontFamily: sans }}>{atEnd ? '' : 'Tap the photo for the next one'}</p>
+      {atEnd && <Next onClick={onDone}>Keep going</Next>}
     </Stage>
   )
 }
 
-// ─── Stage 4: Balloon wishes ──────────────────────────────────────────────────
-function BalloonsStage({ messages, onDone }: { messages: string[]; onDone: () => void }) {
-  const list = useMemo(() => (messages.length ? messages : ['A wish, just for you ✨']), [messages])
+function BalloonsStage({ messages, has3D, onFail, onDone }: { messages: string[]; has3D: boolean; onFail: () => void; onDone: () => void }) {
+  const list = useMemo(() => (messages.length ? messages : ['A wish, just for you']), [messages])
   const [toast, setToast] = useState<string | null>(null)
   const [poppedCount, setPoppedCount] = useState(0)
 
@@ -283,27 +303,29 @@ function BalloonsStage({ messages, onDone }: { messages: string[]; onDone: () =>
     setPoppedCount((c) => c + 1)
   }, [list])
 
+  const flat = <Balloons2D count={list.length} onPop={handlePop} onAllPopped={onDone} />
   return (
     <Stage>
-      <h2 className="absolute top-14 z-20 w-full text-center font-serif text-2xl font-bold text-white">
-        Pop a balloon 🎈
-      </h2>
-      <p className="absolute top-[5.6rem] z-20 w-full text-center text-xs text-white/50">
-        {poppedCount} of {list.length} popped
-      </p>
+      <div className="absolute top-14 z-20 w-full">
+        <Title sub={`${poppedCount} of ${list.length} popped`}>Pop a balloon</Title>
+      </div>
       <div className="absolute inset-0">
-        <Balloons3D count={list.length} onPop={handlePop} onAllPopped={onDone} />
+        {has3D ? (
+          <SceneBoundary fallback={flat} onError={onFail}>
+            <Balloons3D count={list.length} onPop={handlePop} onAllPopped={onDone} />
+          </SceneBoundary>
+        ) : flat}
       </div>
       <AnimatePresence>
         {toast && (
           <motion.div
             key={toast}
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: BEZIER }}
-            className="absolute bottom-16 left-1/2 z-30 max-w-[80%] -translate-x-1/2 rounded-2xl px-5 py-3 text-center text-sm font-medium text-[#2a1420] shadow-xl"
-            style={{ background: 'rgba(255,255,255,0.95)' }}
+            transition={{ duration: 0.4, ease: EASE }}
+            className="absolute bottom-16 left-1/2 z-30 w-[82%] max-w-[22rem] -translate-x-1/2 bg-[#FBF7EE] px-5 py-4 text-[#2d2a33]"
+            style={{ fontFamily: hand, fontSize: 26, lineHeight: 1.15, boxShadow: '0 20px 40px -20px rgba(0,0,0,0.6)' }}
           >
             {toast}
           </motion.div>
@@ -313,10 +335,9 @@ function BalloonsStage({ messages, onDone }: { messages: string[]; onDone: () =>
   )
 }
 
-// ─── Stage 5: Sliding puzzle ──────────────────────────────────────────────────
 const SIZE = 3
 function makeSolvableBoard(): number[] {
-  // Start solved (8 = blank), then apply random legal moves — guarantees solvability.
+  // Start solved (8 = blank), then apply legal moves — always solvable.
   const board = Array.from({ length: SIZE * SIZE }, (_, i) => i)
   let blank = SIZE * SIZE - 1
   for (let n = 0; n < 80; n++) {
@@ -355,11 +376,10 @@ function PuzzleStage({ image, onDone }: { image: string; onDone: () => void }) {
 
   return (
     <Stage>
-      <h2 className="mb-1 font-serif text-2xl font-bold text-white">Unscramble the photo 🧩</h2>
-      <p className="mb-5 text-xs text-white/50">{solved ? 'Perfect! 💛' : 'Tap a tile next to the gap'}</p>
+      <Title sub={solved ? 'Perfect.' : 'Tap a tile next to the gap'}>Put the photo back together</Title>
       <div
-        className="relative grid aspect-square w-full max-w-[320px] gap-1 rounded-xl p-1"
-        style={{ gridTemplateColumns: `repeat(${SIZE}, 1fr)`, background: 'rgba(255,255,255,0.06)' }}
+        className="relative grid aspect-square w-full max-w-[320px] gap-1 p-1"
+        style={{ gridTemplateColumns: `repeat(${SIZE}, 1fr)`, background: 'rgba(255,255,255,0.08)' }}
       >
         {board.map((tile, idx) => {
           const isBlank = tile === SIZE * SIZE - 1
@@ -368,22 +388,18 @@ function PuzzleStage({ image, onDone }: { image: string; onDone: () => void }) {
           return (
             <motion.button
               key={idx}
+              type="button"
               layout
-              transition={{ duration: 0.25, ease: BEZIER }}
+              transition={{ duration: 0.25, ease: EASE }}
               onClick={() => move(idx)}
-              className="relative aspect-square overflow-hidden rounded-md"
-              style={
-                image
-                  ? {
-                      backgroundImage: `url(${image})`,
-                      backgroundSize: `${SIZE * 100}%  ${SIZE * 100}%`,
-                      backgroundPosition: `${(tc / (SIZE - 1)) * 100}% ${(tr / (SIZE - 1)) * 100}%`,
-                    }
-                  : { background: `hsl(${(tile * 40) % 360} 60% 65%)` }
-              }
-            >
-              {!image && <span className="absolute inset-0 flex items-center justify-center text-lg font-bold text-white/90">{tile + 1}</span>}
-            </motion.button>
+              aria-label={`Tile ${tile + 1}`}
+              className="relative aspect-square overflow-hidden"
+              style={{
+                backgroundImage: `url(${image})`,
+                backgroundSize: `${SIZE * 100}% ${SIZE * 100}%`,
+                backgroundPosition: `${(tc / (SIZE - 1)) * 100}% ${(tr / (SIZE - 1)) * 100}%`,
+              }}
+            />
           )
         })}
       </div>
@@ -392,7 +408,6 @@ function PuzzleStage({ image, onDone }: { image: string; onDone: () => void }) {
   )
 }
 
-// ─── Stage 6: Scratch card ────────────────────────────────────────────────────
 function ScratchStage({ message, onDone }: { message: string; onDone: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [revealed, setRevealed] = useState(false)
@@ -406,31 +421,26 @@ function ScratchStage({ message, onDone }: { message: string; onDone: () => void
     const rect = canvas.getBoundingClientRect()
     canvas.width = rect.width
     canvas.height = rect.height
-    // Gold foil overlay
     const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-    grad.addColorStop(0, '#d4a537'); grad.addColorStop(0.5, '#f3d980'); grad.addColorStop(1, '#c8912a')
+    grad.addColorStop(0, '#caa05a'); grad.addColorStop(0.5, '#ecd296'); grad.addColorStop(1, '#bd8f45')
     ctx.fillStyle = grad
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = 'rgba(90,60,10,0.55)'
-    ctx.font = 'bold 18px sans-serif'
+    ctx.fillStyle = 'rgba(70,45,10,0.55)'
+    ctx.font = '500 17px sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText('✨ Scratch here ✨', canvas.width / 2, canvas.height / 2)
+    ctx.fillText('Scratch here', canvas.width / 2, canvas.height / 2 + 6)
   }, [])
 
   const scratch = (e: React.PointerEvent) => {
     if (!drawing.current || revealed) return
     const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    const ctx = canvas?.getContext('2d')
+    if (!canvas || !ctx) return
     const rect = canvas.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
     ctx.globalCompositeOperation = 'destination-out'
     ctx.beginPath()
-    ctx.arc(x, y, 24, 0, Math.PI * 2)
+    ctx.arc(e.clientX - rect.left, e.clientY - rect.top, 24, 0, Math.PI * 2)
     ctx.fill()
-    // Sample transparency to detect "enough scratched"
     const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height)
     let clear = 0
     for (let i = 3; i < data.length; i += 40) if (data[i] === 0) clear++
@@ -442,10 +452,10 @@ function ScratchStage({ message, onDone }: { message: string; onDone: () => void
 
   return (
     <Stage>
-      <h2 className="mb-5 font-serif text-2xl font-bold text-white">A little secret 🤫</h2>
-      <div className="relative h-52 w-full max-w-xs overflow-hidden rounded-2xl bg-white shadow-2xl">
-        <div className="absolute inset-0 flex items-center justify-center px-6 text-center font-serif text-xl font-semibold text-[#b0324b]">
-          {message || 'You are so loved ❤️'}
+      <Title>A little secret</Title>
+      <div className="relative h-52 w-full max-w-xs overflow-hidden bg-[#FBF7EE]" style={{ boxShadow: '0 26px 50px -24px rgba(0,0,0,0.7)' }}>
+        <div className="absolute inset-0 flex items-center justify-center px-6 text-center" style={{ color: ROSE, fontFamily: hand, fontSize: 34, lineHeight: 1.1 }}>
+          {message || 'You are so loved'}
         </div>
         <canvas
           ref={canvasRef}
@@ -457,14 +467,13 @@ function ScratchStage({ message, onDone }: { message: string; onDone: () => void
           onPointerLeave={() => (drawing.current = false)}
         />
       </div>
-      <p className="mt-4 text-xs text-white/50">{revealed ? '' : 'Drag your finger to scratch it off'}</p>
+      <p className="mt-5 text-[14px] text-white/60" style={{ fontFamily: sans }}>{revealed ? '' : 'Drag your finger across the card'}</p>
       {revealed && <Confetti fire={revealed} />}
     </Stage>
   )
 }
 
-// ─── Stage 7: Handwritten letter ──────────────────────────────────────────────
-function LetterStage({ body, signature, sender }: { body: string; signature: string; sender: string }) {
+function LetterStage({ body, signature, sender, isPreview }: { body: string; signature: string; sender: string; isPreview?: boolean }) {
   const [shown, setShown] = useState('')
   useEffect(() => {
     let i = 0
@@ -472,61 +481,70 @@ function LetterStage({ body, signature, sender }: { body: string; signature: str
       i += 2
       setShown(body.slice(0, i))
       if (i >= body.length) clearInterval(id)
-    }, 45)
+    }, 40)
     return () => clearInterval(id)
   }, [body])
-
   const done = shown.length >= body.length
 
   return (
     <Stage>
-      <div className="w-full max-w-sm rounded-2xl px-6 py-8 shadow-2xl"
-        style={{ background: 'linear-gradient(180deg,#fffdf7,#fbf4e6)', maxHeight: '72vh', overflowY: 'auto' }}
+      <div
+        onClick={() => setShown(body)}
+        className="w-full max-w-[23rem] text-left"
+        style={{
+          background: '#FBF7EE',
+          backgroundImage: 'repeating-linear-gradient(180deg, transparent 0 33px, rgba(80,110,160,0.14) 33px 34px)',
+          padding: '26px 24px',
+          maxHeight: '70svh',
+          overflowY: 'auto',
+          transform: 'rotate(-0.6deg)',
+          boxShadow: '0 30px 60px -28px rgba(0,0,0,0.75)',
+        }}
       >
-        <div className="mb-4 text-center text-2xl">💌</div>
-        <p className="whitespace-pre-wrap font-serif text-[15px] leading-7 text-neutral-700" style={{ fontFamily: 'Georgia, serif' }}>
+        <p className="whitespace-pre-wrap text-[#2d2a33]" style={{ fontFamily: hand, fontSize: 24, lineHeight: '34px' }}>
           {shown}
-          {!done && <span className="animate-pulse">|</span>}
+          {!done && <span className="ml-0.5 inline-block h-5 w-px animate-pulse bg-[#2d2a33] align-middle" />}
         </p>
         <AnimatePresence>
           {done && (
-            <motion.p
-              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-              className="mt-6 text-right font-serif text-lg italic text-[#b0324b]"
-            >
-              {signature || `— ${sender}`}
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
+              className="mt-[34px] text-right" style={{ color: ROSE, fontFamily: hand, fontSize: 28, lineHeight: '34px' }}>
+              {signature || (sender ? `— ${sender}` : '')}
             </motion.p>
           )}
         </AnimatePresence>
       </div>
       {done && (
-        <motion.a
-          href="/"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-          className="mt-6 text-xs text-white/40 underline underline-offset-4"
-        >
-          Made with ShareInvite — create your own
-        </motion.a>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="mt-8">
+          <Credit isPreview={isPreview} color="rgba(255,255,255,0.45)" linkColor="rgba(255,255,255,0.8)" />
+        </motion.div>
       )}
     </Stage>
   )
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── The journey ──────────────────────────────────────────────────────────────
 export default function SurpriseJourney({ data, isPreview }: {
   data: Record<string, string>; eventId?: string; isPreview?: boolean
 }) {
+  const webgl = useWebGL()
+  const [sceneFailed, setSceneFailed] = useState(false)
+  const has3D = webgl === true && !sceneFailed
   const [stage, setStage] = useState(0)
   const [muted, setMuted] = useState(true)
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  const photos = useMemo(() => parseList(data.galleryImages), [data.galleryImages])
+  const photos = useMemo(() => parseList(data.galleryImages).filter((u) => /^(https?:)?\//.test(u)), [data.galleryImages])
   const balloonMessages = useMemo(() => parseList(data.balloonMessages), [data.balloonMessages])
-  const puzzleImage = photos[0] ?? ''
 
-  const advance = useCallback(() => setStage((s) => Math.min(s + 1, STAGES.length - 1)), [])
+  // Photo and puzzle stages need a photo; without one they are skipped rather
+  // than shown with a placeholder.
+  const stages = useMemo<StageKey[]>(
+    () => ['gift', 'pin', ...(photos.length ? (['photos'] as StageKey[]) : []), 'balloons', ...(photos.length ? (['puzzle'] as StageKey[]) : []), 'scratch', 'letter'],
+    [photos.length],
+  )
+  const advance = useCallback(() => setStage((s) => Math.min(s + 1, stages.length - 1)), [stages.length])
 
-  // Start music after the first gesture (opening the gift).
   const startMusic = useCallback(() => {
     if (!data.musicUrl || !audioRef.current) return
     audioRef.current.muted = false
@@ -542,32 +560,38 @@ export default function SurpriseJourney({ data, isPreview }: {
     setMuted(next)
   }
 
-  const current = STAGES[stage].key
+  const current = stages[Math.min(stage, stages.length - 1)]
+  const fail = () => setSceneFailed(true)
 
   return (
     <div
       className="relative w-full overflow-hidden"
       style={{
-        // Bounded preview: fill the phone-shell container (its stages are
-        // absolute inset-0, so the root needs a definite height). Full page: 100svh.
         minHeight: isPreview ? '100%' : '100svh',
         height: isPreview ? '100%' : undefined,
         background: 'radial-gradient(120% 90% at 50% 0%, #3a1030 0%, #24102a 45%, #140a1c 100%)',
+        containerType: 'inline-size',
       }}
     >
-      <ProgressRail current={stage} />
+      <div className="greet-grain" style={{ zIndex: 1 }} />
 
-      {/* Music */}
+      <div className="absolute left-1/2 top-5 z-30 flex -translate-x-1/2 items-center gap-1.5" aria-hidden>
+        {stages.map((s, i) => (
+          <span key={s} className="block h-[3px] rounded-full transition-all duration-500"
+            style={{ width: i === stage ? 22 : 8, background: i <= stage ? GOLD : 'rgba(255,255,255,0.22)' }} />
+        ))}
+      </div>
+
       {data.musicUrl && (
         <>
           <audio ref={audioRef} src={data.musicUrl} loop muted={muted} />
-          <button
-            onClick={toggleMute}
-            aria-label={muted ? 'Unmute music' : 'Mute music'}
-            className="absolute right-4 top-4 z-30 flex h-9 w-9 items-center justify-center rounded-full text-white/80"
-            style={{ background: 'rgba(255,255,255,0.1)' }}
-          >
-            {muted ? '🔇' : '🔊'}
+          <button type="button" onClick={toggleMute} aria-label={muted ? 'Play music' : 'Mute music'}
+            className="absolute right-4 top-3.5 z-30 flex h-9 w-9 items-center justify-center rounded-full text-white/85"
+            style={{ background: 'rgba(255,255,255,0.12)' }}>
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden>
+              <path strokeLinejoin="round" d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" />
+              {muted ? <path strokeLinecap="round" d="m16 10 4 4m0-4-4 4" /> : <path strokeLinecap="round" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10" />}
+            </svg>
           </button>
         </>
       )}
@@ -577,32 +601,30 @@ export default function SurpriseJourney({ data, isPreview }: {
           {current === 'gift' && (
             <GiftStage
               occasion={data.occasion || 'A surprise for you'}
-              recipient={data.recipientName || 'You'}
+              recipient={data.recipientName || 'you'}
               tagLine={data.coverMessage || ''}
+              has3D={has3D}
+              onFail={fail}
               onOpen={() => { startMusic(); setTimeout(advance, 1400) }}
             />
           )}
-          {current === 'pin' && (
-            <PinStage pin={data.pin || '0000'} hint={data.pinHint || ''} onUnlock={advance} />
-          )}
+          {current === 'pin' && <PinStage pin={data.pin || '0000'} hint={data.pinHint || ''} onUnlock={advance} />}
           {current === 'photos' && <PhotosStage photos={photos} onDone={advance} />}
-          {current === 'balloons' && <BalloonsStage messages={balloonMessages} onDone={advance} />}
-          {current === 'puzzle' && <PuzzleStage image={puzzleImage} onDone={advance} />}
+          {current === 'balloons' && <BalloonsStage messages={balloonMessages} has3D={has3D} onFail={fail} onDone={advance} />}
+          {current === 'puzzle' && <PuzzleStage image={photos[0]} onDone={advance} />}
           {current === 'scratch' && <ScratchStage message={data.scratchMessage || ''} onDone={advance} />}
           {current === 'letter' && (
-            <LetterStage body={data.letterBody || ''} signature={data.signature || ''} sender={data.senderName || ''} />
+            <LetterStage body={data.letterBody || ''} signature={data.signature || ''} sender={data.senderName || ''} isPreview={isPreview} />
           )}
         </div>
       </AnimatePresence>
 
-      {/* Skip control in editor preview so the creator can inspect every stage fast */}
+      {/* Editor-only skip so the creator can inspect every stage quickly. */}
       {isPreview && (
-        <button
-          onClick={advance}
-          className="absolute bottom-4 right-4 z-30 rounded-full px-3 py-1.5 text-[11px] font-semibold text-white/70"
-          style={{ background: 'rgba(255,255,255,0.1)' }}
-        >
-          Skip stage →
+        <button type="button" onClick={advance}
+          className="absolute bottom-4 right-4 z-30 rounded-full px-3 py-1.5 text-[11px] font-semibold text-white/75"
+          style={{ background: 'rgba(255,255,255,0.12)', fontFamily: sans }}>
+          Skip
         </button>
       )}
     </div>

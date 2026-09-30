@@ -5,6 +5,11 @@ import WordingCopyCard from '@/components/wording/WordingCopyCard'
 import MidPageCTA from '@/components/wording/MidPageCTA'
 import StickyCTA from '@/components/wording/StickyCTA'
 import SiteFooter from '@/components/landing/SiteFooter'
+import PageHero from '@/components/brand/PageHero'
+import TrustList from '@/components/brand/TrustList'
+import CtaBand from '@/components/brand/CtaBand'
+import { Section, SectionHeading } from '@/components/brand/Section'
+import FAQAccordion from '@/components/landing/FAQAccordion'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -64,41 +69,29 @@ const faqSchema = {
 
 export default function GrihaPraveshInvitationWordingPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-champagne text-foreground">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <SiteHeader createHref="/create?template=griha-pravesh" />
       <StickyCTA href="/create?template=griha-pravesh" text="Start My Griha Pravesh Invite →" />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            100+ messages · Muhurat-ready · Copy &amp; share free
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Griha Pravesh &amp; Housewarming<br />
-            <span className="gradient-accent italic">Invitation Messages for WhatsApp</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            100+ ready-to-copy Griha Pravesh &amp; housewarming invitation messages for WhatsApp — formal, short,
-            modern and bilingual samples for Gruhapravesham and Ghar Pravesh, plus quotes, lines and new-home captions.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create?template=griha-pravesh" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Start My Griha Pravesh Invite →
-            </Link>
-            <span className="text-sm text-muted">No credit card · WhatsApp-ready link</span>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        align="center"
+        crumbs={[{ name: 'Home', href: '/' }, { name: 'Griha Pravesh invitation wording' }]} eyebrow="100+ messages · Muhurat-ready · Copy &amp; share free"
+        title={<>Griha Pravesh &amp; Housewarming<br />
+            <em className="font-medium text-burnished">Invitation Messages for WhatsApp</em></>}
+        lede={<>100+ ready-to-copy Griha Pravesh &amp; housewarming invitation messages for WhatsApp — formal, short,
+            modern and bilingual samples for Gruhapravesham and Ghar Pravesh, plus quotes, lines and new-home captions.</>}
+        actions={<><Link href="/create?template=griha-pravesh" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
+              Start My Griha Pravesh Invite</Link></>}
+        footnote={<TrustList />}
+      />
 
       {/* Section 1: Formal Messages */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Formal Griha Pravesh Invitation Message</h2>
+          <h2 className="t-h2 mb-3">Formal Griha Pravesh Invitation Message</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             Formal invitations work best for printed cards and for sending to elders and extended family. They carry a respectful, warm tone and include all ceremony details.
           </p>
@@ -111,7 +104,7 @@ export default function GrihaPraveshInvitationWordingPage() {
             ctaText="Start My Griha Pravesh Invite →"
           />
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Traditional — Vastu Puja, Ganesh Puja, family blessings</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Traditional — Vastu Puja, Ganesh Puja, family blessings</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`With the blessings of our elders and the grace of the Almighty, we joyfully invite you to the Griha Pravesh ceremony of our new home.
 
 Vastu Puja & Ganesh Puja: [Muhurat Time]
@@ -126,7 +119,7 @@ We seek your blessings and heartfelt presence on this auspicious occasion.
 — [Host Family Names]
 Contact: [Phone Number]`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Apartment / flat move-in (urban setting)</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Apartment / flat move-in (urban setting)</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`We are delighted to invite you to the Griha Pravesh of our new home.
 
 [Flat/Apartment Name & Number]
@@ -142,7 +135,7 @@ Entry: [Building entry instructions if applicable]
 Please grace us with your blessings on this memorable day.
 — [Father's Name], [Mother's Name] & Family`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. South Indian — Gruhapravesham style</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. South Indian — Gruhapravesham style</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`With the blessings of Sri [Family Deity / God] and our elders,
 [Father's Name] and [Mother's Name]
 cordially invite you to the
@@ -160,7 +153,7 @@ Lunch — [Time] onwards
 Your presence and blessings would be the greatest gift.
 RSVP: [Phone Number]`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">4. North Indian — with Laxmi Puja reference</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. North Indian — with Laxmi Puja reference</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`We request the pleasure of your company at the
 Griha Pravesh & Lakshmi Puja
 of our new home.
@@ -181,14 +174,14 @@ Contact: [Phone Number]`}</WordingCopyCard>
       </section>
 
       {/* Section 2: Short WhatsApp Messages */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Short WhatsApp Griha Pravesh Message</h2>
+          <h2 className="t-h2 mb-3">Short WhatsApp Griha Pravesh Message</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             For WhatsApp, shorter messages work better — paste the digital invite link right after so guests can tap it for the full details, map, and schedule.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Simple casual</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Simple casual</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`We are moving into our new home and would love your blessings!
 
 Griha Pravesh: [Date] at [Muhurat Time]
@@ -197,7 +190,7 @@ Address: [New Address, City]
 Please do join us. Lunch follows the ceremony.
 Details & map: [Digital Invite Link]`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Muhurat time prominent</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Muhurat time prominent</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`Griha Pravesh — [Date]
 Shubh Muhurat: [Time] SHARP
 
@@ -207,7 +200,7 @@ Lunch: [Time] onwards
 
 Invite & map 👉 [Digital Invite Link]`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. From joint family</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. From joint family</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`With the blessings of [Elder's Name / Dada-Dadi / Nana-Nani],
 our family is stepping into our new home.
 
@@ -219,7 +212,7 @@ invite you to join us for this auspicious occasion.
 
 Map & full schedule: [Digital Invite Link]`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Hindi / English bilingual</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Hindi / English bilingual</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`नए घर में प्रवेश का मंगल अवसर!
 
 [Family Name] परिवार के नए घर का गृह प्रवेश
@@ -234,14 +227,14 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
       </section>
 
       {/* Section: New Home / Housewarming (English) */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">New Home &amp; Housewarming Invitation Messages (English)</h2>
+          <h2 className="t-h2 mb-3">New Home &amp; Housewarming Invitation Messages (English)</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             Clean English wording for a housewarming or new-home celebration — perfect when guests span friends, colleagues and family. Copy, add your details and share on WhatsApp.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Warm new-home invite</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Warm new-home invite</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             We&apos;ve found our new home — and we&apos;d love you in it! 🏡{'\n\n'}
             Join us for our housewarming on [Date] at [Time].{'\n'}
@@ -250,14 +243,14 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             — [Host Family Names]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Simple &amp; short</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Simple &amp; short</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             🏡 Housewarming time! Join us to celebrate our new home.{'\n'}
             📅 [Date] · 🕖 [Time] · 📍 [New Address]{'\n'}
             Your blessings mean everything to us!
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Muhurat-focused (English)</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Muhurat-focused (English)</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             With gratitude, we invite you to the Griha Pravesh of our new home.{'\n\n'}
             🕉️ Muhurat: [Muhurat Time] on [Date]{'\n'}
@@ -266,7 +259,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             Please arrive before the muhurat for the auspicious entry. Lunch to follow.
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Formal — both hosts named</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Formal — both hosts named</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             [Host 1 Name] &amp; [Host 2 Name]{'\n'}
             request the pleasure of your company at the{'\n'}
@@ -277,7 +270,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             RSVP: [Phone]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">5. Evening housewarming party</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">5. Evening housewarming party</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             We&apos;re warming up the new place — come join the fun! 🏡🎉{'\n\n'}
             Housewarming get-together{'\n'}
@@ -286,7 +279,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             Good food, good company, and a home full of love. RSVP: [Phone]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">6. With Google Maps note</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">6. With Google Maps note</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             You&apos;re invited to our housewarming! 🏡{'\n'}
             🕉️ Muhurat: [Muhurat Time] · [Date]{'\n'}
@@ -297,14 +290,14 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
       </section>
 
       {/* Section: Modern & Casual */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Modern &amp; Casual Housewarming Messages</h2>
+          <h2 className="t-h2 mb-3">Modern &amp; Casual Housewarming Messages</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             For friends and a relaxed crowd, keep it light and fun. These match a casual house party more than a formal pooja.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. Fun &amp; casual</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Fun &amp; casual</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             New keys, new address, same us — and a party to prove it! 🎉🏡{'\n\n'}
             Housewarming at our place:{'\n'}
@@ -312,14 +305,14 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             Bring your appetite. We&apos;ll bring the housewarming vibes!
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. Short group message</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Short group message</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             We moved! 🏡 Come see the new place on [Date] at [Time].{'\n'}
             [New Address] · details 👉 [Digital Invite Link]{'\n'}
             Can&apos;t wait to host you!
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. Housewarming brunch</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Housewarming brunch</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             Brunch + new home = the perfect combo! 🥞🏡{'\n\n'}
             Join us to warm up our new place over good food.{'\n'}
@@ -327,7 +320,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             Come hungry, leave happy!
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">4. Blessings + party combined</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Blessings + party combined</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             Pooja in the morning, party in the evening — you&apos;re invited to both! 🙏🎉{'\n\n'}
             🕉️ Griha Pravesh muhurat: [Muhurat Time]{'\n'}
@@ -339,14 +332,14 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
       </section>
 
       {/* Section: Bilingual Hindi */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Griha Pravesh Invitation Messages in Hindi</h2>
+          <h2 className="t-h2 mb-3">Griha Pravesh Invitation Messages in Hindi</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             Hindi and bilingual wording for family groups and elders — warm, respectful and ready to copy.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">1. पारंपरिक (Traditional Hindi)</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. पारंपरिक (Traditional Hindi)</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             ॥ श्री गणेशाय नमः ॥{'\n\n'}
             सहर्ष सूचित करते हैं कि हमारे नए गृह के गृह प्रवेश एवं पूजन का{'\n'}
@@ -356,7 +349,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             — [परिवार का नाम]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">2. छोटा संदेश (Short Hindi)</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. छोटा संदेश (Short Hindi)</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             🏡 हमारे नए घर के गृह प्रवेश पर आप सादर आमंत्रित हैं।{'\n'}
             मुहूर्त: [Muhurat Time] · दिनांक: [Date]{'\n'}
@@ -364,7 +357,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             कृपया पधारें और आशीर्वाद दें। 🙏
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">3. बिलिंगुअल (Hindi + English)</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. बिलिंगुअल (Hindi + English)</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             हमारे नए घर में आपका स्वागत है! 🏡{'\n'}
             गृह प्रवेश मुहूर्त: [Muhurat Time], [Date]{'\n\n'}
@@ -372,7 +365,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             Map &amp; details 👉 [Digital Invite Link]
           </WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">4. आधुनिक (Modern Hindi)</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. आधुनिक (Modern Hindi)</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">
             नया घर, नई शुरुआत — और आपके बिना अधूरी! 🏡{'\n\n'}
             गृह प्रवेश: [Date] · मुहूर्त [Muhurat Time]{'\n'}
@@ -383,16 +376,16 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
       </section>
 
       {/* Section: Quotes, Lines & Captions */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Griha Pravesh Quotes, Lines &amp; New-Home Captions</h2>
+          <h2 className="t-h2 mb-3">Griha Pravesh Quotes, Lines &amp; New-Home Captions</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             Short one-liners for your invitation opener, WhatsApp status, or Instagram — perfect for announcing a new home.
           </p>
 
-          <div className="rounded-2xl border border-border bg-background p-6 sm:p-8 shadow-sm space-y-7">
+          <div className="rounded-2xl border border-line bg-champagne p-6 sm:p-8 shadow-sm space-y-7">
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Housewarming quotes</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Housewarming quotes</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>&ldquo;A house is made of walls; a home is made of love and blessings.&rdquo;</li>
                 <li>&ldquo;New address, same open door — come celebrate with us.&rdquo;</li>
@@ -415,7 +408,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Short invitation lines</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Short invitation lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>Join us for our Griha Pravesh — [Date] at [Muhurat Time]! 🏡</li>
                 <li>We&apos;ve moved! Come bless our new home on [Date].</li>
@@ -440,7 +433,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">New-home captions for WhatsApp &amp; Instagram</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">New-home captions for WhatsApp &amp; Instagram</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>Home sweet (new) home 🏡✨ #GrihaPravesh</li>
                 <li>New keys, new memories 🔑 Housewarming on [Date]!</li>
@@ -465,7 +458,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Hindi lines</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Hindi lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>नया घर, नई खुशियाँ — आपके आशीर्वाद के साथ। 🏡</li>
                 <li>गृह प्रवेश की हार्दिक शुभकामनाएँ — पधारें! 🙏</li>
@@ -482,7 +475,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
               </ul>
             </div>
             <div>
-              <h3 className="font-heading text-base text-ink mb-3">Regional lines (Gruhapravesham &amp; Ghar Pravesh)</h3>
+              <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Regional lines (Gruhapravesham &amp; Ghar Pravesh)</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>Join us for our Gruhapravesham on [Date] at [Muhurat Time]. 🏡</li>
                 <li>Ghar Pravesh at our new home — your blessings awaited! 🙏</li>
@@ -495,7 +488,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
             <p className="text-xs text-muted leading-6 pt-1">
               Tip: open with any line, then paste your{' '}
               <Link href="/griha-pravesh-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital Griha Pravesh invite link</Link>{' '}
-              below it — guests get the muhurat time, pooja schedule, map and RSVP in one tap.
+              below it — guests get the muhurat time, pooja schedule, map and a place to leave wishes in one tap.
             </p>
           </div>
         </div>
@@ -507,7 +500,7 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
           <MidPageCTA
             headline="Stop re-typing the address. Send a link guests can tap for directions."
             body="The most common complaint after a Griha Pravesh: guests couldn't find the new address. A digital invite with Google Maps pin solves this — no WhatsApp replies asking 'bhai address bhejna'."
-            features={['One tap to Google Maps', 'Parking instructions included', 'RSVP so you know who is coming', 'Send reminder to all with one click']}
+            features={['One tap to Google Maps', 'Pooja schedule with timings', 'Blessings from guests on the page', 'Re-send the same link as a reminder']}
             ctaHref="/create?template=griha-pravesh"
             ctaText="Start My Digital Invite →"
           />
@@ -515,9 +508,9 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
       </div>
 
       {/* Section 3: What Must Be Included */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-6 sm:text-4xl">What Must Be in a Griha Pravesh Invitation</h2>
+          <h2 className="t-h2 mb-6">What Must Be in a Griha Pravesh Invitation</h2>
           <div className="space-y-5">
             {[
               {
@@ -545,8 +538,8 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
                 body: 'Especially for new addresses, guests will call with "how do I reach there" questions. Include a contact number — preferably someone who can take calls during the ceremony, like a sibling or close family friend.',
               },
             ].map((item) => (
-              <div key={item.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <h3 className="font-heading text-base text-ink mb-2">{item.title}</h3>
+              <div key={item.title} className="rounded-2xl border border-line bg-paper p-6 shadow-sm">
+                <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-2">{item.title}</h3>
                 <p className="text-sm text-muted leading-7">{item.body}</p>
               </div>
             ))}
@@ -555,14 +548,14 @@ Map & details: [Digital Invite Link]`}</WordingCopyCard>
       </section>
 
       {/* Section 4: Regional Traditions */}
-      <section className="px-5 py-16 border-b border-border bg-white">
+      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-3 sm:text-4xl">Griha Pravesh Invitation for Different Regional Traditions</h2>
+          <h2 className="t-h2 mb-3">Griha Pravesh Invitation for Different Regional Traditions</h2>
           <p className="text-sm text-muted leading-7 mb-8">
             The ceremony name changes by region, but the invitation needs are similar. Adjust the ceremony name and deity references to match your tradition.
           </p>
 
-          <h3 className="font-heading text-base text-ink mb-1">Griha Pravesh — North &amp; Central India</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">Griha Pravesh — North &amp; Central India</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`[Father's Name] & [Mother's Name]
 request your presence at the
 
@@ -578,7 +571,7 @@ Ganesh Puja | Grah Shanti | Lakshmi Puja | Lunch
 Your blessings make our new home complete.
 Contact: [Phone]`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">Gruhapravesham — South India (Tamil / Telugu families)</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">Gruhapravesham — South India (Tamil / Telugu families)</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`Sri [Family Deity] Thiruvadigale Saranam
 
 [Father's Name] & [Mother's Name]
@@ -597,7 +590,7 @@ Lunch — [Time]
 Kindly bless us with your presence.
 RSVP: [Phone]`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">Ghar Pravesh / Naye Ghar ki Khushi — informal Hindi</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">Ghar Pravesh / Naye Ghar ki Khushi — informal Hindi</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`🏠 नए घर में आपका स्वागत है!
 
 हम बड़ी खुशी से आपको अपने नए घर के गृह प्रवेश में आमंत्रित करते हैं।
@@ -611,7 +604,7 @@ RSVP: [Phone]`}</WordingCopyCard>
 
 संपर्क: [Phone Number]`}</WordingCopyCard>
 
-          <h3 className="font-heading text-base text-ink mb-1 mt-6">Vastu Puja + Housewarming combined</h3>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">Vastu Puja + Housewarming combined</h3>
           <WordingCopyCard ctaHref="/griha-pravesh-invitation">{`[Family Name] Family
 joyfully invites you to the
 
@@ -631,9 +624,9 @@ Your presence and blessings would make this occasion truly auspicious.`}</Wordin
       </section>
 
       {/* Section 5: Mistakes */}
-      <section className="px-5 py-16 border-b border-border">
+      <section className="border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink mb-6 sm:text-4xl">Griha Pravesh Invitation Mistakes That Cause Confusion</h2>
+          <h2 className="t-h2 mb-6">Griha Pravesh Invitation Mistakes That Cause Confusion</h2>
           <div className="space-y-4">
             {[
               {
@@ -662,10 +655,10 @@ Your presence and blessings would make this occasion truly auspicious.`}</Wordin
                 body: 'Invitations sent 3–4 days before the ceremony give outstation family no time to travel and even local guests too little time to plan. Send 10–14 days ahead for local guests and 3–4 weeks ahead if family needs to travel. A reminder 2 days before works well for everyone.',
               },
             ].map((item) => (
-              <div key={item.num} className="rounded-2xl border border-border bg-white p-6 shadow-sm flex gap-5">
-                <span className="font-heading text-4xl text-accent/40 shrink-0 leading-none">{item.num}</span>
+              <div key={item.num} className="rounded-2xl border border-line bg-paper p-6 shadow-sm flex gap-5">
+                <span className="font-editorial font-semibold text-4xl text-accent/40 shrink-0 leading-none">{item.num}</span>
                 <div>
-                  <h3 className="font-heading text-base text-ink mb-2">{item.title}</h3>
+                  <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-2">{item.title}</h3>
                   <p className="text-sm text-muted leading-7">{item.body}</p>
                 </div>
               </div>
@@ -675,23 +668,23 @@ Your presence and blessings would make this occasion truly auspicious.`}</Wordin
       </section>
 
       {/* Related Links */}
-      <section className="px-5 py-14 border-b border-border bg-white">
+      <section className="px-5 py-14 border-b border-line bg-paper">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-2xl text-ink mb-6">More Griha Pravesh Invitation Resources</h2>
+          <h2 className="t-h3 mb-3">More Griha Pravesh Invitation Resources</h2>
           <div className="grid gap-3 sm:grid-cols-2">
-            <Link href="/griha-pravesh-invitation" className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors">
+            <Link href="/griha-pravesh-invitation" className="rounded-xl border border-line bg-champagne p-4 text-sm font-medium text-foreground hover:border-[#A47945]/50 transition-colors">
               Create free Griha Pravesh invitation →
             </Link>
-            <Link href="/templates" className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors">
+            <Link href="/templates" className="rounded-xl border border-line bg-champagne p-4 text-sm font-medium text-foreground hover:border-[#A47945]/50 transition-colors">
               Browse digital invitation templates →
             </Link>
-            <Link href="/blog/how-to-make-a-digital-griha-pravesh-invitation" className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors">
+            <Link href="/blog/how-to-make-a-digital-griha-pravesh-invitation" className="rounded-xl border border-line bg-champagne p-4 text-sm font-medium text-foreground hover:border-[#A47945]/50 transition-colors">
               How to make a digital Griha Pravesh invitation →
             </Link>
-            <Link href="/blog/housewarming-pooja-schedule-invitation-guide" className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors">
+            <Link href="/blog/housewarming-pooja-schedule-invitation-guide" className="rounded-xl border border-line bg-champagne p-4 text-sm font-medium text-foreground hover:border-[#A47945]/50 transition-colors">
               Housewarming pooja schedule guide →
             </Link>
-            <Link href="/create" className="rounded-xl border border-border bg-background p-4 text-sm font-medium text-foreground hover:border-[#D9A441]/50 transition-colors">
+            <Link href="/create" className="rounded-xl border border-line bg-champagne p-4 text-sm font-medium text-foreground hover:border-[#A47945]/50 transition-colors">
               Create Griha Pravesh invitation free →
             </Link>
           </div>
@@ -699,30 +692,19 @@ Your presence and blessings would make this occasion truly auspicious.`}</Wordin
       </section>
 
       {/* FAQ */}
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Griha Pravesh Invitation Wording — FAQ</h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
+      <Section tone="paper" id="faq" aria-label="Questions">
+        <SectionHeading align="center" eyebrow="Questions" title={'Griha Pravesh Invitation Wording — FAQ'} />
+        <div className="mt-10">
+          <FAQAccordion faqs={faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))} />
         </div>
-      </section>
+      </Section>
 
       {/* CTA */}
-      <section className="px-5 pb-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Create Your Griha Pravesh Invitation</h2>
-          <p className="text-muted text-sm mb-7">Free to create · Muhurat time, map &amp; pooja schedule · WhatsApp-ready in 5 minutes</p>
-          <Link href="/create?template=griha-pravesh" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start My Griha Pravesh Invite →
-          </Link>
-        </div>
-      </section>
+      <CtaBand
+        title={'Create Your Griha Pravesh Invitation'}
+        sub={'Free to create · Muhurat time, map & pooja schedule · WhatsApp-ready in 5 minutes'}
+        primary={{ href: '/create?template=griha-pravesh', label: 'Start My Griha Pravesh Invite' }}
+      />
 
       <SiteFooter />
     </main>

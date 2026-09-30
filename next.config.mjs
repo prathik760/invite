@@ -1,3 +1,19 @@
+// Content-Security-Policy directives, shared by every page. `frame-src 'self'`
+// lets the live preview show /demo/<id>/embed in its phone screen.
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com https://cdn.razorpay.com https://www.googletagmanager.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self' https:",
+  "connect-src 'self' https://checkout.razorpay.com https://www.google-analytics.com https://api.razorpay.com https://*.r2.cloudflarestorage.com https://www.googletagmanager.com",
+  "frame-src 'self' https://api.razorpay.com https://www.googletagmanager.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+]
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compress: true,
@@ -93,22 +109,16 @@ const nextConfig = {
             value: 'max-age=31536000; includeSubDomains; preload',
           },
           { key: 'X-XSS-Protection', value: '1; mode=block' },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com https://cdn.razorpay.com https://www.googletagmanager.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: blob: https:",
-              "media-src 'self' https:",
-              "connect-src 'self' https://checkout.razorpay.com https://www.google-analytics.com https://api.razorpay.com https://*.r2.cloudflarestorage.com https://www.googletagmanager.com",
-              "frame-src https://api.razorpay.com https://www.googletagmanager.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-            ].join('; '),
-          },
+          { key: 'Content-Security-Policy', value: CSP.join('; ') },
+        ],
+      },
+      {
+        // The live preview's phone screen frames the demo embed, and only the
+        // site itself may frame it (later rules override the one above).
+        source: '/demo/:id/embed',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Content-Security-Policy', value: [...CSP, "frame-ancestors 'self'"].join('; ') },
         ],
       },
     ]

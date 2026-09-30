@@ -38,14 +38,13 @@ export default function CustomRequestSection() {
   return (
     <section
       id="custom-template"
-      className="relative overflow-hidden px-5 py-20 sm:py-28"
-      style={{ background: 'linear-gradient(165deg, #FAF3E8 0%, #FFF9F2 40%, #F5EDE2 100%)' }}
+      className="relative overflow-hidden border-t border-line bg-peach/50 px-5 py-16 sm:py-20"
     >
       {/* Decorative background rings */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full border border-[#D9A441]/12" />
-        <div className="absolute -right-20 -top-20 h-[350px] w-[350px] rounded-full border border-[#D9A441]/10" />
-        <div className="absolute -left-24 bottom-0 h-[320px] w-[320px] rounded-full border border-[#D9A441]/08" />
+        <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full border border-burnished/10" />
+        <div className="absolute -right-20 -top-20 h-[350px] w-[350px] rounded-full border border-burnished/10" />
+        <div className="absolute -left-24 bottom-0 h-[320px] w-[320px] rounded-full border border-burnished/10" />
         <div
           className="absolute right-0 top-0 h-72 w-72 opacity-30"
           style={{ background: 'radial-gradient(ellipse, rgba(217,164,65,0.22), transparent 65%)' }}
@@ -58,25 +57,16 @@ export default function CustomRequestSection() {
           {/* ── Left: Copy ── */}
           <div>
             {/* Highlight badge */}
-            <div className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-[#D9A441]/40 bg-white px-5 py-2.5 shadow-sm">
-              <span className="flex h-2 w-2 rounded-full" style={{ background: 'linear-gradient(135deg,#B87924,#D9A441)' }} />
-              <span className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: '#B87924' }}>
-                Custom Templates
-              </span>
-              <span className="rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.1em]"
-                style={{ background: 'rgba(47,118,109,0.12)', color: '#2F766D', border: '1px solid rgba(47,118,109,0.25)' }}>
-                New
-              </span>
-            </div>
+            <p className="eyebrow mb-3">Custom designs</p>
 
-            <h2 className="font-display font-normal text-3xl text-ink sm:text-4xl lg:text-5xl leading-[1.08]">
-              Need something<br />
-              <span className="gradient-accent italic">truly unique?</span>
+            <h2 className="font-editorial text-[2.6rem] font-semibold leading-[1.05] text-charcoal sm:text-[3.3rem]">
+              Celebrating something else?<br />
+              <em className="font-medium text-burnished">We&apos;ll design it.</em>
             </h2>
 
-            <p className="mt-5 max-w-md text-base leading-8 text-muted">
-              Tell us your vision — our design team will craft a bespoke invitation template
-              tailored specifically to your event, style, and preferences.
+            <p className="t-lede mt-5 max-w-md">
+              Baby shower, graduation, a corporate launch, a reunion — tell us your vision and our design team
+              will craft an invitation for your event, style and language.
             </p>
 
             {/* Feature list */}
@@ -88,53 +78,39 @@ export default function CustomRequestSection() {
                 { icon: '✦', title: 'Delivered as a live link', desc: 'Same WhatsApp-shareable invite website as all templates' },
               ].map(item => (
                 <li key={item.title} className="flex items-start gap-3.5">
-                  <span className="mt-1 shrink-0 text-[10px]" style={{ color: '#D9A441' }}>{item.icon}</span>
+                  <span className="mt-1 shrink-0 text-[10px] text-burnished">{item.icon}</span>
                   <div>
-                    <p className="text-sm font-semibold text-ink">{item.title}</p>
-                    <p className="mt-0.5 text-xs text-muted leading-5">{item.desc}</p>
+                    <p className="text-[0.95rem] font-semibold text-charcoal">{item.title}</p>
+                    <p className="mt-0.5 text-[0.85rem] leading-6 text-charcoal/70">{item.desc}</p>
                   </div>
                 </li>
               ))}
             </ul>
 
-            {/* Social proof */}
-            <div className="mt-10 flex items-center gap-3 rounded-2xl border border-[#D9A441]/22 bg-white/70 px-5 py-4">
-              <div className="flex -space-x-2 shrink-0">
-                {[
-                  { src: 'https://i.pravatar.cc/40?img=12', label: 'ShareInvite customer' },
-                  { src: 'https://i.pravatar.cc/40?img=25', label: 'ShareInvite customer' },
-                  { src: 'https://i.pravatar.cc/40?img=33', label: 'ShareInvite customer' },
-                ].map(({ src, label }, i) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img key={i} src={src} alt={label} width={32} height={32}
-                    className="h-8 w-8 rounded-full ring-2 ring-white object-cover" />
-                ))}
-              </div>
-              <p className="text-sm text-muted leading-5">
-                <strong className="text-ink">12+ custom templates</strong> delivered this month
-              </p>
-            </div>
+            {/* A "12+ custom templates delivered this month" line with stock
+                pravatar.cc faces labelled "ShareInvite customer" used to sit here.
+                Neither the count nor the people were real, so it was removed. */}
           </div>
 
           {/* ── Right: Form ── */}
           <div
-            className="rounded-3xl border border-[#E8DCCD] bg-white p-7 shadow-card-md sm:p-9"
-            style={{ boxShadow: '0 24px 64px rgba(60,36,20,0.10), 0 0 0 1px rgba(217,164,65,0.14)' }}
+            className="card p-7 sm:p-9"
+            data-reveal="right"
           >
             {/* Gold top bar */}
-            <div className="h-[3px] rounded-full mb-7" style={{ background: 'linear-gradient(90deg, #B87924, #D9A441, #B96B70)' }} />
+            <div className="mb-7 h-[3px] rounded-full bg-gradient-to-r from-emerald via-burnished to-gold-soft" />
 
             {status === 'sent' ? (
               <div className="text-center py-8">
-                <div className="text-5xl mb-4 select-none" style={{ color: '#B87924' }}>✦</div>
-                <h3 className="font-heading text-2xl text-ink mb-2">Request received!</h3>
+                <div className="mb-4 select-none text-5xl text-burnished-deep">✦</div>
+                <h3 className="t-h3 mb-2">Request received</h3>
                 <p className="text-sm text-muted leading-7 max-w-xs mx-auto">
                   Our design team will reach out within 24 hours to discuss your custom template.
                 </p>
                 <button
                   onClick={() => setStatus('idle')}
                   className="mt-6 text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
-                  style={{ background: 'rgba(217,164,65,0.12)', color: '#B87924', border: '1px solid rgba(184,121,36,0.25)' }}
+                  style={{ background: 'rgba(11,74,52,0.08)', color: '#0B4A34', border: '1px solid rgba(11,74,52,0.2)' }}
                 >
                   Send another request
                 </button>
@@ -142,14 +118,14 @@ export default function CustomRequestSection() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <h3 className="font-heading text-xl text-ink mb-1">Request a Custom Template</h3>
+                  <h3 className="t-h3 mb-1">Request a custom design</h3>
                   <p className="text-xs text-muted leading-5">Fill in your details and describe your vision — we&apos;ll take it from there.</p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-muted">
-                      Your Name <span style={{ color: '#B87924' }}>*</span>
+                    <label className="field-label">
+                      Your Name <span className="text-burnished-deep">*</span>
                     </label>
                     <input
                       type="text"
@@ -157,11 +133,11 @@ export default function CustomRequestSection() {
                       value={form.name}
                       onChange={set('name')}
                       placeholder="Priya Sharma"
-                      className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+                      className="field-input"
                     />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-muted">
+                    <label className="field-label">
                       Phone
                     </label>
                     <input
@@ -169,14 +145,14 @@ export default function CustomRequestSection() {
                       value={form.phone}
                       onChange={set('phone')}
                       placeholder="+91 98765 43210"
-                      className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+                      className="field-input"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-muted">
-                    Email Address <span style={{ color: '#B87924' }}>*</span>
+                  <label className="field-label">
+                    Email Address <span className="text-burnished-deep">*</span>
                   </label>
                   <input
                     type="email"
@@ -184,20 +160,20 @@ export default function CustomRequestSection() {
                     value={form.email}
                     onChange={set('email')}
                     placeholder="priya@example.com"
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+                    className="field-input"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="custom-request-event-type" className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-muted">
-                    Event Type <span style={{ color: '#B87924' }}>*</span>
+                  <label htmlFor="custom-request-event-type" className="field-label">
+                    Event Type <span className="text-burnished-deep">*</span>
                   </label>
                   <select
                     id="custom-request-event-type"
                     required
                     value={form.eventType}
                     onChange={set('eventType')}
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground shadow-sm transition-all focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+                    className="field-input"
                     style={{ color: form.eventType ? undefined : 'rgba(44,32,28,0.4)' }}
                   >
                     <option value="" disabled>Select your event type…</option>
@@ -206,8 +182,8 @@ export default function CustomRequestSection() {
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.15em] text-muted">
-                    Your Vision <span style={{ color: '#B87924' }}>*</span>
+                  <label className="field-label">
+                    Your Vision <span className="text-burnished-deep">*</span>
                   </label>
                   <textarea
                     required
@@ -215,7 +191,7 @@ export default function CustomRequestSection() {
                     onChange={set('description')}
                     rows={4}
                     placeholder="Describe your dream invitation — style, colours, theme, any special elements or references you love…"
-                    className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground shadow-sm transition-all placeholder:text-muted/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/10"
+                    className="field-input resize-none"
                   />
                 </div>
 
@@ -228,7 +204,7 @@ export default function CustomRequestSection() {
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="gold-button flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-sm font-semibold disabled:opacity-60"
+                  className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-4 text-[0.95rem] font-semibold disabled:opacity-60"
                 >
                   {status === 'sending' ? (
                     <>

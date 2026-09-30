@@ -1,8 +1,7 @@
-import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import OccasionPage from '@/components/landing/OccasionPage'
+import { templatePrice } from '@/lib/plans'
 import { RingIcon, CalendarIcon, ClockIcon, CameraIcon, MusicIcon, MessageIcon, ClipboardIcon, ShareIcon } from '@/components/ui/Icons'
-import SiteFooter from '@/components/landing/SiteFooter'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -74,7 +73,7 @@ const faqSchema = {
       name: 'How much does a digital engagement invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Engagement template is ₹399 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
+        text: 'The Engagement template is ₹399 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step.',
       },
     },
   ],
@@ -100,211 +99,42 @@ const CEREMONIES = [
   { name: 'Ring Ceremony', region: 'Pan-India', desc: 'Modern engagement celebration with ring exchange' },
 ]
 
-export default function EngagementInvitationPage() {
+export default function Page() {
+  const faqs = faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-
-      {/* Nav */}
-      <SiteHeader createHref="/create?template=indian-engagement" />
-
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(217,164,65,0.18),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Build free · WhatsApp ready · No app download
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Digital Engagement Invitation<br />
-            <span className="gradient-accent italic">Mangni · Roka · Sagai</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a beautiful digital engagement invitation website for your Mangni, Roka, or Sagai ceremony.
-            Share a WhatsApp link with the full schedule, Google Maps, photos, and a guest wishes section.
-            Ready in 5 minutes. Build and preview free — publish for ₹399 one-time.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create?template=indian-engagement" className="gold-button rounded-full px-10 py-4 text-base font-semibold">
-              Start My Engagement Invite →
-            </Link>
-            <span className="text-sm text-muted">No credit card · Live in 5 minutes</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Ceremony types */}
-      <section className="bg-white border-y border-border px-5 py-14">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-3 sm:text-4xl">
-            Digital Invitations for Mangni, Roka &amp; Sagai Ceremonies
-          </h2>
-          <p className="text-center text-sm text-muted mb-10 max-w-xl mx-auto">
-            Mangni, Roka, Sagai, Nishchayathartham — one digital engagement invitation works for every Indian tradition
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {CEREMONIES.map(c => (
-              <div key={c.name} className="rounded-2xl border border-border bg-background p-5 shadow-sm">
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <p className="font-heading text-lg text-ink">{c.name}</p>
-                  <span className="shrink-0 rounded-full bg-[#7A3E4A]/10 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-accent-strong">
-                    {c.region}
-                  </span>
-                </div>
-                <p className="text-sm text-muted leading-6">{c.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            What&apos;s Included in Your Digital Engagement Invitation
-          </h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURES.map(f => (
-              <div key={f.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
-                <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
-                <p className="text-sm text-muted leading-6">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="bg-white border-y border-border px-5 py-14">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            How to Create a Digital Engagement Invitation
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              { step: '01', title: 'Enter ceremony details', desc: 'Add both families\' names, date, venue, schedule, and a personal message.' },
-              { step: '02', title: 'Preview your invite', desc: 'See your invitation come to life instantly as you fill in each detail.' },
-              { step: '03', title: 'Share on WhatsApp', desc: 'Copy your unique link and forward it to all family WhatsApp groups.' },
-            ].map(s => (
-              <div key={s.step} className="rounded-2xl border border-border bg-background p-7 shadow-sm">
-                <p className="font-heading text-5xl text-accent/60">{s.step}</p>
-                <h3 className="mt-5 font-heading text-xl text-ink">{s.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-muted">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="border-t border-border px-5 py-16">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Loved by Indian Families
-          </h2>
-          <div className="grid gap-5 sm:grid-cols-3">
-            {[
-              { name: 'Nisha & Vikram', city: 'Delhi', text: 'We created our Roka invitation in 10 minutes. Forwarded it to 8 family WhatsApp groups and every guest had the venue and schedule instantly. No calls, no confusion.' },
-              { name: 'Deepa & Sanjay', city: 'Bengaluru', text: 'The Nishchayathartham template was perfect for our South Indian ceremony. Guests loved the countdown and the Google Maps link saved so much hassle for our out-of-city relatives.' },
-              { name: 'Preethi & Aryan', city: 'Mumbai', text: 'We could update our venue 3 days before the Sagai and the same WhatsApp link showed the new address to everyone. That alone was worth it.' },
-            ].map(t => (
-              <div key={t.name} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="h-4 w-4 fill-[#D9A441]" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  ))}
-                </div>
-                <p className="text-sm text-muted leading-7 mb-4">&ldquo;{t.text}&rdquo;</p>
-                <p className="font-semibold text-sm text-ink">{t.name}</p>
-                <p className="text-xs text-muted">{t.city}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing nudge */}
-      <section className="border-t border-border bg-[#FFFBF5] px-5 py-12">
-        <div className="mx-auto max-w-4xl">
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { price: '₹99', sub: 'One-time', templates: 'Ganesh Chaturthi Premium' },
-              { price: '₹199', sub: 'One-time', templates: 'Elegant Wedding, Raksha Bandhan Premium' },
-              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran, 3D Surprise Journey' },
-              { price: '₹399', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },
-              { price: '₹499', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
-            ].map(p => (
-              <div key={p.price} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
-                <p className="font-display text-2xl text-ink">{p.price}</p>
-                <p className="text-[10px] font-medium text-muted mt-0.5 mb-3">{p.sub}</p>
-                <p className="text-xs text-muted leading-5">{p.templates}</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 text-center text-xs text-muted">Every template includes the same premium features · One-time payment · No subscription</p>
-          <div className="mt-6 text-center">
-            <Link href="/templates" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-              Browse All Templates →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Engagement Invitation — Frequently Asked Questions
-          </h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-5 pb-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">
-            Create Your Digital Engagement Invitation
-          </h2>
-          <p className="text-muted text-sm mb-7">
-            Free to build &amp; preview · ₹399 one-time to publish · WhatsApp-ready in 5 minutes
-          </p>
-          <Link href="/create?template=indian-engagement" className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold">
-            Start My Engagement Invite →
-          </Link>
-        </div>
-      </section>
-
-      {/* City links */}
-      <section className="border-t border-border bg-white px-5 py-12">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-4">Engagement invitations by city</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(city => (
-              <Link
-                key={city}
-                href={`/engagement-invitation/${city}`}
-                className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground capitalize hover:border-[#D9A441]/50 transition-colors"
-              >
-                {city.charAt(0).toUpperCase() + city.slice(1)}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
+      <OccasionPage
+        occasion="engagement"
+        templateId="indian-engagement"
+        pageKey="engagement_landing"
+        crumb="Engagement invitations"
+        eyebrow="Digital engagement invitations"
+        title={<>Digital Engagement Invitation <em className="font-medium text-burnished">Mangni · Roka · Sagai</em></>}
+        lede={`Create a beautiful digital engagement invitation for your Mangni, Roka or Sagai. Share one WhatsApp link with the full schedule, Google Maps, photos and a guest wishes section. Build and preview free — publish for ₹${templatePrice('indian-engagement')} one-time.`}
+        ctaLabel="Start my engagement invite"
+        types={{
+          eyebrow: 'Every tradition',
+          title: 'Invitations for Mangni, Roka & Sagai ceremonies',
+          sub: 'Mangni, Roka, Sagai, Nishchayathartham — one digital engagement invitation works for every Indian tradition.',
+          items: CEREMONIES.map((t) => ({ name: t.name, tag: t.region, desc: t.desc })),
+        }}
+        features={{ title: "What's included in your digital engagement invitation", items: FEATURES }}
+        steps={[
+          { title: 'Enter ceremony details', copy: 'Add both families\' names, date, venue, schedule and a personal message.' },
+          { title: 'Preview your invite', copy: 'See your invitation come to life instantly as you fill in each detail.' },
+          { title: 'Pay once & share', copy: 'Publish for a one-time price and forward your link to every family group.' },
+        ]}
+        faqTitle="Digital engagement invitation questions"
+        faqs={faqs}
+        cities={{ base: '/engagement-invitation', title: 'Engagement invitations by city', list: ['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'] }}
+        related={[
+          { href: '/engagement-invitation-wording', label: 'Engagement invitation wording' },
+          { href: '/engagement-invitations', label: 'Engagement designs gallery' },
+          { href: '/wedding-invitation', label: 'Wedding invitations' },
+        ]}
+        closing={{ title: 'Create your digital engagement invitation' }}
+      />
+    </>
   )
 }

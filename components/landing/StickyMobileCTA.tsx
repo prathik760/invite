@@ -18,7 +18,7 @@ export default function StickyMobileCTA() {
   return (
     <BottomDock className="sm:hidden">
       <div
-        className="border-t border-[#D9A441]/30 px-4 pt-3"
+        className="border-t border-[#A47945]/30 px-4 pt-3"
         style={{
           background: 'rgba(255, 252, 247, 0.97)',
           backdropFilter: 'blur(16px)',
@@ -29,9 +29,9 @@ export default function StickyMobileCTA() {
       >
         <Link
           href="/create"
-          className="gold-button flex w-full items-center justify-center rounded-xl py-3.5 text-sm font-semibold"
+          className="btn-primary flex w-full items-center justify-center rounded-xl py-3.5 text-sm font-semibold"
         >
-          Start Building — Free →
+          Create your invitation — free to try
         </Link>
         <p className="mt-1.5 text-center text-[10px] text-muted">Free to build &amp; preview · No credit card needed</p>
       </div>

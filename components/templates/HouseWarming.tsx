@@ -1,400 +1,566 @@
 'use client'
 
-import { memo, useEffect, useMemo, useState } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { formatDate, formatTime } from '@/lib/utils'
-import { PortraitRow } from './PortraitRow'
+import { useMemo } from 'react'
+import WishesSection from './WishesSection'
+import { yeseva } from './kit/fonts/yeseva'
+import { mukta } from './kit/fonts/mukta'
+import { kalam } from './kit/fonts/kalam'
+import {
+  calendarHref,
+  dateParts,
+  galleryImages,
+  grain,
+  mapsHref,
+  pad2,
+  parseSchedule,
+  timeLabel,
+  useCountdown,
+  type InviteProps,
+} from './kit/core'
+import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import type { InviteTheme } from './kit/theme'
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
+/*
+ * Griha Pravesh — a screen-printed housewarming card.
+ * Terracotta roof, turmeric door, mango-leaf toran and a brass kalash, drawn
+ * in one ink line with the colour spots printed slightly off-register. Hindi
+ * and English side by side, as family cards are set; a kolam dot border for
+ * rules. On arrival the house draws itself and then the toran is hung.
+ */
 
 const C = {
-  bg: '#080500',
-  bgMid: '#100A00',
-  bgCard: '#1A1200',
-  bgSurface: '#201800',
-  text: '#FFF5E6',
-  textMuted: 'rgba(255,245,230,0.55)',
-  textFaint: 'rgba(255,245,230,0.28)',
-  saffron: '#FF8F00',
-  saffronMuted: 'rgba(255,143,0,0.6)',
-  saffronFaint: 'rgba(255,143,0,0.1)',
-  saffronBorder: 'rgba(255,143,0,0.25)',
-  terra: '#BF360C',
-  terraMuted: 'rgba(191,54,12,0.55)',
-  terraFaint: 'rgba(191,54,12,0.1)',
-  terraBorder: 'rgba(191,54,12,0.25)',
-  gold: '#FFD54F',
-  goldMuted: 'rgba(255,213,79,0.6)',
-  goldFaint: 'rgba(255,213,79,0.1)',
-  goldBorder: 'rgba(255,213,79,0.2)',
-  border: 'rgba(255,255,255,0.06)',
+  paper: '#F5ECD9',
+  card: '#FBF6EB',
+  ink: '#3A2417',
+  soft: 'rgba(58,36,23,0.74)',
+  faint: 'rgba(58,36,23,0.52)',
+  terra: '#A5462A',
+  terraDeep: '#823519',
+  roof: '#B9573A',
+  terraFill: 'rgba(165,70,42,0.14)',
+  turmeric: '#E2A42C',
+  marigold: '#DE8420',
+  leaf: '#56733A',
+  rule: '#DFCBAA',
 }
 
-// ── Diya flames rising ────────────────────────────────────────
-const DIYAS = Array.from({ length: 12 }, (_, i) => ({
-  id: i, x: 5 + Math.random() * 90, delay: Math.random() * 10, dur: 10 + Math.random() * 8,
-  drift: (Math.random() - 0.5) * 40,
-}))
+const display = yeseva.style.fontFamily
+const text = mukta.style.fontFamily
+const hand = kalam.style.fontFamily
 
-const FloatingDiyas = memo(function FloatingDiyas() {
-  const reduced = useReducedMotion()
-  if (reduced) return null
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {DIYAS.map((d) => (
-        <motion.div key={d.id} className="absolute select-none" style={{ left: `${d.x}%`, bottom: -20, fontSize: '14px' }}
-          animate={{ y: -700, x: [0, d.drift, d.drift * 0.4, -d.drift * 0.3, 0], opacity: [0, 0.85, 0.6, 0.2, 0] }}
-          transition={{ duration: d.dur, delay: d.delay, repeat: Infinity, ease: 'easeOut' }}>
-          🪔
-        </motion.div>
-      ))}
-    </div>
-  )
-})
-
-// ── Rangoli dots pattern ──────────────────────────────────────
-const RangoliPattern = memo(function RangoliPattern({ isPreview }: { isPreview: boolean }) {
-  const count = isPreview ? 8 : 16
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {Array.from({ length: count }, (_, i) => {
-        const angle = (i / count) * 360
-        const r = isPreview ? 130 : 280
-        const x = 50 + r * Math.cos((angle * Math.PI) / 180) / (isPreview ? 1.6 : 4)
-        const y = 50 + r * Math.sin((angle * Math.PI) / 180) / (isPreview ? 2.4 : 6)
-        return (
-          <motion.div key={i} className="absolute w-1.5 h-1.5 rounded-full"
-            style={{ left: `${x}%`, top: `${y}%`, background: i % 3 === 0 ? C.saffron : i % 3 === 1 ? C.terra : C.gold, opacity: 0.3 }}
-            animate={{ opacity: [0.15, 0.45, 0.15], scale: [1, 1.3, 1] }}
-            transition={{ duration: 2.5 + (i % 4) * 0.5, delay: (i * 0.3) % 3, repeat: Infinity, ease: 'easeInOut' }} />
-        )
-      })}
-    </div>
-  )
-})
-
-const FilmGrain = memo(function FilmGrain() {
-  return (
-    <div className="pointer-events-none absolute inset-0 select-none" aria-hidden style={{
-      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.025'/%3E%3C/svg%3E")`,
-      backgroundRepeat: 'repeat', backgroundSize: '200px', mixBlendMode: 'overlay', opacity: 0.6, zIndex: 1,
-    }} />
-  )
-})
-
-const DiyaDivider = memo(function DiyaDivider({ className = '' }: { className?: string }) {
-  return (
-    <div className={`flex items-center justify-center gap-2 sm:gap-3 ${className}`}>
-      <div className="h-px w-14" style={{ background: `linear-gradient(90deg,transparent,${C.saffronMuted})` }} />
-      <span className="select-none text-[11px]" style={{ color: C.terra }}>✿</span>
-      <div className="h-px w-7" style={{ background: `linear-gradient(90deg,${C.saffronMuted},${C.goldMuted})` }} />
-      <span className="select-none text-[9px]" style={{ color: C.gold }}>🪔</span>
-      <div className="h-px w-7" style={{ background: `linear-gradient(270deg,${C.saffronMuted},${C.goldMuted})` }} />
-      <span className="select-none text-[11px]" style={{ color: C.terra }}>✿</span>
-      <div className="h-px w-14" style={{ background: `linear-gradient(270deg,transparent,${C.saffronMuted})` }} />
-    </div>
-  )
-})
-
-function useCountdown(dateStr: string, timeStr: string) {
-  const [diff, setDiff] = useState(0)
-  useEffect(() => {
-    if (!dateStr) return
-    const target = new Date(`${dateStr}T${timeStr || '00:00'}:00`)
-    const tick = () => setDiff(Math.max(0, target.getTime() - Date.now()))
-    tick(); const id = setInterval(tick, 1000); return () => clearInterval(id)
-  }, [dateStr, timeStr])
-  return { days: Math.floor(diff / 86400000), hours: Math.floor((diff % 86400000) / 3600000), minutes: Math.floor((diff % 3600000) / 60000), seconds: Math.floor((diff % 60000) / 1000) }
+const WISHES_THEME: InviteTheme = {
+  // Transparent so the page's paper grain runs on under the wishes.
+  bg: 'transparent',
+  surface: C.card,
+  ink: C.ink,
+  muted: C.soft,
+  line: C.rule,
+  accent: C.terra,
+  onAccent: '#FFF8EC',
+  heading: display,
+  body: text,
+  headingStyle: { fontSize: 30, color: C.ink },
 }
 
-function parseList(v?: string): string[] {
-  if (!v) return []
-  return v.split(/\n|,/).map(s => s.trim()).filter(Boolean)
-}
-
-function fadeUp(delay = 0) {
-  return { initial: { opacity: 0, y: 28 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '-40px' }, transition: { duration: 0.9, delay, ease: BEZIER } } as const
-}
-
-function HouseWarmingWishes({ eventId }: { eventId: string }) {
-  const [wishes, setWishes] = useState<Array<{ id: string; name: string; message: string }>>([])
-  const [name, setName] = useState(''); const [message, setMessage] = useState('')
-  const [submitted, setSubmitted] = useState(false); const [loading, setLoading] = useState(false); const [error, setError] = useState('')
-  const MAX = 320
-
-  useEffect(() => {
-    if (eventId === '__preview__') return
-    fetch(`/api/wishes?eventId=${eventId}`).then(r => r.json()).then(d => setWishes(Array.isArray(d) ? d : [])).catch(() => {})
-  }, [eventId])
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); if (!name.trim() || !message.trim()) return
-    if (eventId === '__preview__') { setSubmitted(true); return }
-    setLoading(true); setError('')
-    try {
-      const res = await fetch('/api/wishes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ eventId, name: name.trim(), message: message.trim() }) })
-      if (!res.ok) throw new Error()
-      // Wishes publish on arrival — add it to the wall immediately.
-      const created = await res.json()
-      setWishes(prev => [created, ...prev.filter(w => w.id !== created.id)])
-      setSubmitted(true); setName(''); setMessage('')
-    } catch { setError('Could not send your blessing. Please try again.') } finally { setLoading(false) }
+// ── Seeded irregularity, so every leaf and loop differs a little ────────────
+function rng(seed: number) {
+  let s = seed >>> 0
+  return () => {
+    s = (s * 1664525 + 1013904223) >>> 0
+    return s / 4294967296
   }
+}
+const f1 = (n: number) => n.toFixed(1)
 
-  const is = { color: C.text, borderBottom: `1px solid rgba(255,255,255,0.1)`, background: 'transparent' }
-  const fo = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => { e.currentTarget.style.borderBottomColor = C.saffronMuted }
-  const bl = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => { e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,0.1)' }
+/** Lens-shaped leaf pointing along +x from the origin. */
+function leafPath(len: number, width: number, bend = 0) {
+  const w = width / 2
+  return `M0 0 C${f1(len * 0.3)} ${f1(-w * 1.2 + bend)} ${f1(len * 0.72)} ${f1(-w + bend)} ${f1(len)} ${f1(bend * 0.6)} C${f1(len * 0.7)} ${f1(w + bend * 0.4)} ${f1(len * 0.28)} ${f1(w * 1.1)} 0 0Z`
+}
 
+interface Leaf { x: number; y: number; a: number; len: number; w: number; bend: number }
+
+// Toran strung over the door: a sagging cord, mango leaves hanging from it,
+// a marigold between each pair.
+const TORAN = (() => {
+  const r = rng(19)
+  const p0 = [101, 116], p1 = [140, 125], p2 = [179, 116]
+  const at = (t: number) => {
+    const u = 1 - t
+    return [u * u * p0[0] + 2 * u * t * p1[0] + t * t * p2[0], u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1]]
+  }
+  const n = 9
+  const leaves: Leaf[] = []
+  const flowers: { x: number; y: number; r: number }[] = []
+  for (let i = 0; i < n; i++) {
+    const [x, y] = at((i + 0.5) / n)
+    leaves.push({ x, y, a: 90 + (r() - 0.5) * 16, len: 12.5 + r() * 3, w: 6 + r() * 1.2, bend: (r() - 0.5) * 2 })
+    if (i < n - 1) {
+      const [fx, fy] = at((i + 1) / n)
+      flowers.push({ x: fx, y: fy, r: 2.6 + r() * 0.6 })
+    }
+  }
+  return { cord: `M${p0[0]} ${p0[1]} Q${p1[0]} ${p1[1]} ${p2[0]} ${p2[1]}`, leaves, flowers }
+})()
+
+// Mango leaves fanned in the kalash mouth.
+const KALASH_LEAVES: Leaf[] = (() => {
+  const r = rng(7)
+  return [-162, -128, -52, -18].map((a) => ({ x: 197, y: 181, a: a + (r() - 0.5) * 8, len: 12 + r() * 2.5, w: 5.6, bend: (r() - 0.5) * 2 }))
+})()
+
+// Mangalore-tile scallops across the roof.
+const TILES = (() => {
+  let d = ''
+  for (const y of [62, 76, 90, 103]) {
+    const half = (y - 40) * (106 / 70)
+    for (let x = 140 - half + 6; x < 140 + half - 12; x += 9) d += `M${f1(x)} ${y} q4.5 4 9 0`
+  }
+  return d
+})()
+
+// A slightly wobbly sun disk, printed as a flat turmeric spot.
+const SUN = (() => {
+  const r = rng(3)
+  const pts = Array.from({ length: 16 }, (_, i) => {
+    const a = (i / 16) * Math.PI * 2
+    const rad = 58 + (r() - 0.5) * 1.2
+    return [140 + rad * Math.cos(a), 70 + rad * Math.sin(a)]
+  })
+  // Closed Catmull-Rom through the points.
+  let d = `M${f1(pts[0][0])} ${f1(pts[0][1])}`
+  for (let i = 0; i < pts.length; i++) {
+    const p0 = pts[(i - 1 + pts.length) % pts.length], p1 = pts[i], p2 = pts[(i + 1) % pts.length], p3 = pts[(i + 2) % pts.length]
+    d += ` C${f1(p1[0] + (p2[0] - p0[0]) / 6)} ${f1(p1[1] + (p2[1] - p0[1]) / 6)} ${f1(p2[0] - (p3[0] - p1[0]) / 6)} ${f1(p2[1] - (p3[1] - p1[1]) / 6)} ${f1(p2[0])} ${f1(p2[1])}`
+  }
+  return `${d}Z`
+})()
+
+/** The signature drawing: a home with a toran over the door and a kalash at the step. */
+function Home({ animate, className }: { animate: boolean; className?: string }) {
+  const line = (delay: number) => (animate ? { className: 'hw-line', style: { animationDelay: `${delay}ms` } } : {})
+  const fill = (delay: number) => (animate ? { className: 'hw-fill', style: { animationDelay: `${delay}ms` } } : {})
+  const stroke = { fill: 'none', stroke: C.ink, strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
   return (
-    <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-18 md:py-24" style={{ background: C.bgMid }}>
-      <div className="max-w-xl mx-auto">
-        <motion.div {...fadeUp()} className="text-center mb-14">
-          <p className="text-[11px] uppercase tracking-[0.38em] mb-4" style={{ color: C.goldMuted }}>Griha Ashirwad</p>
-          <h2 className="font-heading text-3xl sm:text-4xl mb-6" style={{ color: C.text }}>Bless Our Home</h2>
-          <DiyaDivider />
-        </motion.div>
-        <motion.div {...fadeUp(0.1)} className="mb-8 sm:mb-10 rounded-lg sm:rounded-2xl p-5 sm:p-7 sm:p-6 sm:p-9" style={{ background: C.bgCard, border: `1px solid ${C.saffronBorder}` }}>
-          <AnimatePresence mode="wait">
-            {submitted ? (
-              <motion.div key="thanks" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="text-center py-8">
-                <motion.div initial={{ scale: 0 }} animate={{ scale: [0, 1.3, 1] }} transition={{ duration: 0.5, ease: BEZIER }} className="text-3xl sm:text-4xl md:text-3xl sm:text-4xl md:text-5xl select-none mb-6">🪔</motion.div>
-                <p className="font-heading text-2xl mb-3" style={{ color: C.text }}>Dhanyawad!</p>
-                <p className="text-sm mb-7" style={{ color: C.textMuted, lineHeight: 1.8 }}>Your blessings light up our new home.<br />We are grateful for your love.</p>
-                <button onClick={() => setSubmitted(false)} className="text-xs tracking-[0.12em]" style={{ color: C.goldMuted }}>Send another blessing →</button>
-              </motion.div>
-            ) : (
-              <motion.form key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onSubmit={handleSubmit} className="space-y-7">
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.22em] mb-2.5" style={{ color: C.textMuted }}>Your Name</label>
-                  <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Your name" required className="w-full border-0 border-b py-3 text-sm focus:outline-none" style={is} onFocus={fo} onBlur={bl} />
-                </div>
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.22em] mb-2.5" style={{ color: C.textMuted }}>Your Blessing</label>
-                  <textarea value={message} onChange={e => setMessage(e.target.value.slice(0, MAX))} placeholder="Bless this home with your words…" required rows={4} className="w-full border-0 border-b py-3 text-sm focus:outline-none resize-none" style={is} onFocus={fo} onBlur={bl} />
-                  <div className="flex justify-end mt-1.5"><span className="text-[10px] tabular-nums" style={{ color: MAX - message.length <= 40 ? C.saffron : C.textFaint }}>{MAX - message.length} left</span></div>
-                </div>
-                {error && <p className="text-xs" style={{ color: '#E87070' }}>{error}</p>}
-                <motion.button type="submit" disabled={loading} whileHover={{ scale: loading ? 1 : 1.015 }} whileTap={{ scale: loading ? 1 : 0.985 }}
-                  className="w-full py-3.5 rounded-xl text-sm tracking-[0.12em] font-medium disabled:opacity-50"
-                  style={{ background: C.saffronFaint, border: `1px solid ${C.saffronBorder}`, color: C.saffron }}>
-                  {loading ? 'Sending…' : 'BLESS THIS HOME 🪔'}
-                </motion.button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
-        {wishes.length > 0 && (
-          <div className="space-y-4">
-            {wishes.map((wish, i) => (
-              <motion.div key={wish.id} {...fadeUp(i * 0.07)} className="rounded-lg sm:rounded-2xl px-7 py-7 relative overflow-hidden" style={{ background: C.bgCard, border: `1px solid ${C.saffronBorder}` }}>
-                <div className="absolute top-0 inset-x-0 h-px" style={{ background: `linear-gradient(90deg,transparent 15%,${C.saffronMuted} 50%,transparent 85%)` }} />
-                <div className="font-heading select-none mb-2 leading-none" style={{ fontSize: '3.5rem', color: 'rgba(255,143,0,0.1)' }} aria-hidden>&ldquo;</div>
-                <p className="text-sm italic leading-relaxed mb-5" style={{ color: C.textMuted }}>{wish.message}</p>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] shrink-0" style={{ background: C.saffronFaint, border: `1px solid ${C.saffronBorder}`, color: C.saffron }}>{wish.name.charAt(0).toUpperCase()}</div>
-                  <p className="text-xs tracking-wider" style={{ color: C.goldMuted }}>{wish.name}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+    <svg viewBox="0 0 280 222" className={className} aria-hidden style={{ overflow: 'visible' }}>
+      {/* colour spots, printed a touch off-register */}
+      <path d={SUN} fill={C.turmeric} opacity={0.9} {...fill(200)} />
+      <path d="M58 110V192H222V110Z" fill={C.card} />
+      <g transform="translate(1.8 1.4)">
+        <path d="M34 110L140 40L246 110Z" fill={C.roof} {...fill(500)} />
+        <path d="M120 192V149A20 20 0 0 1 160 149V192Z" fill={C.turmeric} {...fill(700)} />
+        <path d="M70 170V144A13 13 0 0 1 96 144V170ZM184 170V144A13 13 0 0 1 210 144V170Z" fill={C.terraFill} {...fill(800)} />
+        <path d="M50 192H230V198H50Z" fill={C.rule} {...fill(800)} />
+      </g>
+      <path d={TILES} fill="none" stroke={C.paper} strokeWidth={0.9} strokeLinecap="round" opacity={0.75} {...fill(900)} />
+      <circle cx="140" cy="77" r="7.5" fill={C.card} {...fill(900)} />
+
+      {/* the ink line */}
+      <g {...stroke}>
+        <path pathLength={1} d="M30 110L140 38L250 110ZM52 110L140 52L228 110" {...line(0)} />
+        <path pathLength={1} d="M140 69.5A7.5 7.5 0 1 1 139.9 69.5M140 69.5V84.5M132.5 77H147.5" {...line(500)} />
+        <path pathLength={1} d="M58 110V192M222 110V192M48 192H232V198H48ZM110 198H170V203H110ZM104 203H176V208H104Z" {...line(250)} />
+        <path pathLength={1} d="M114 192V148A26 26 0 0 1 166 148V192M120 192V149A20 20 0 0 1 160 149V192M140 129V192" {...line(650)} />
+        <path pathLength={1} d="M126 160h9v24h-9zM145 160h9v24h-9z" strokeWidth={1.1} {...line(900)} />
+        <path pathLength={1} d="M70 170V144A13 13 0 0 1 96 144V170ZM79 132.6V170M87 132.6V170M70 154H96M65 173H101" strokeWidth={1.3} {...line(750)} />
+        <path pathLength={1} d="M184 170V144A13 13 0 0 1 210 144V170ZM193 132.6V170M201 132.6V170M184 154H210M179 173H215" strokeWidth={1.3} {...line(800)} />
+        <path pathLength={1} d="M10 208.5C70 207.4 200 209.4 270 208" {...line(100)} />
+      </g>
+      <circle cx="136.6" cy="157" r="1.3" fill={C.ink} {...fill(1200)} />
+      <circle cx="143.4" cy="157" r="1.3" fill={C.ink} {...fill(1200)} />
+
+      {/* the toran, hung last */}
+      <path d={TORAN.cord} fill="none" stroke={C.ink} strokeWidth={1.1} {...fill(950)} />
+      {TORAN.leaves.map((l, i) => (
+        <g key={i} transform={`translate(${f1(l.x)} ${f1(l.y)}) rotate(${f1(l.a)})`}>
+          <g className={animate ? 'hw-leaf' : undefined} style={animate ? { animationDelay: `${1050 + i * 60}ms` } : undefined}>
+            <path d={leafPath(l.len, l.w, l.bend)} fill={C.leaf} stroke={C.ink} strokeWidth={0.8} strokeLinejoin="round" />
+            <path d={`M1 0L${f1(l.len * 0.8)} ${f1(l.bend * 0.4)}`} stroke={C.card} strokeWidth={0.6} opacity={0.8} />
+          </g>
+        </g>
+      ))}
+      {TORAN.flowers.map((m, i) => (
+        <circle key={i} cx={f1(m.x)} cy={f1(m.y)} r={m.r} fill={C.marigold} stroke={C.ink} strokeWidth={0.7} {...fill(1100 + i * 60)} />
+      ))}
+
+      {/* kalash with coconut and mango leaves */}
+      <g {...fill(1500)}>
+        {KALASH_LEAVES.map((l, i) => (
+          <g key={i} transform={`translate(${f1(l.x)} ${f1(l.y)}) rotate(${f1(l.a)})`}>
+            <path d={leafPath(l.len, l.w, l.bend)} fill={C.leaf} stroke={C.ink} strokeWidth={0.8} strokeLinejoin="round" />
+          </g>
+        ))}
+        <ellipse cx="197" cy="175" rx="6.2" ry="7.4" fill={C.terraDeep} stroke={C.ink} strokeWidth={0.9} />
+        <path d="M188 207.5C179 201 180 191 189 186.5V183H205V186.5C214 191 215 201 206 207.5Z" fill={C.turmeric} stroke={C.ink} strokeWidth={1.2} strokeLinejoin="round" />
+        <path d="M186 183H208M183.6 196.5C192 199 202 199 210.4 196.5" fill="none" stroke={C.ink} strokeWidth={1} strokeLinecap="round" />
+      </g>
+
+      {/* a diya on the other side of the step */}
+      <g {...fill(1600)}>
+        <path d="M81 199.6C78.4 196 79.6 192.6 81.6 189.6C83.4 192.6 84.8 196 81 199.6Z" fill={C.marigold} stroke={C.ink} strokeWidth={0.8} />
+        <path d="M70.5 201.5C74 208.6 89 208.6 92.5 201.5Z" fill={C.terra} stroke={C.ink} strokeWidth={1.1} strokeLinejoin="round" />
+      </g>
+
+      {/* kolam dots on the threshold */}
+      <g fill={C.terra} {...fill(1700)}>
+        {[122, 131, 140, 149, 158].map((x, i) => (
+          <circle key={x} cx={x} cy={215 + (i % 2) * 2.5} r={1.35} />
+        ))}
+      </g>
+    </svg>
   )
 }
 
-interface Props { data: Record<string, string>; eventId?: string; isPreview?: boolean }
+/** A pulli-kolam border: two waves crossing, a dot sitting in every eye. */
+function Kolam({ loops = 7, color = C.terra, seed = 5, className }: { loops?: number; color?: string; seed?: number; className?: string }) {
+  const r = rng(seed)
+  const step = 28, mid = 14, x0 = 8
+  const W = x0 * 2 + loops * step
+  const wave = (dir: 1 | -1) => {
+    let d = `M${x0} ${mid}`
+    for (let k = 0; k < loops; k++) {
+      const a = (k % 2 === 0 ? -1 : 1) * dir * (10 + (r() - 0.5) * 2)
+      const xa = x0 + k * step
+      d += ` C${xa + 7} ${f1(mid + a)} ${xa + step - 7} ${f1(mid + a)} ${xa + step} ${mid}`
+    }
+    return d
+  }
+  return (
+    <svg viewBox={`0 0 ${W} 28`} className={className} aria-hidden style={{ overflow: 'visible' }}>
+      <path d={`${wave(1)} ${wave(-1)}`} fill="none" stroke={color} strokeWidth={1.1} strokeLinecap="round" />
+      {Array.from({ length: loops }, (_, k) => (
+        <circle key={`e${k}`} cx={x0 + k * step + step / 2} cy={mid} r={1.7} fill={color} />
+      ))}
+      {Array.from({ length: loops + 1 }, (_, k) => (
+        <g key={`c${k}`} fill={color}>
+          <circle cx={x0 + k * step} cy={mid - 9.5} r={1.15} />
+          <circle cx={x0 + k * step} cy={mid + 9.5} r={1.15} />
+        </g>
+      ))}
+      <circle cx={x0 - 5} cy={mid} r={1.3} fill={color} />
+      <circle cx={W - x0 + 5} cy={mid} r={1.3} fill={color} />
+    </svg>
+  )
+}
 
-export default function HouseWarming({ data, eventId, isPreview = false }: Props) {
-  const hostNames = data.hostNames || 'The Sharma Family'
-  const { date, time, venue, venueAddress, mapsUrl, pooja, schedule, galleryImages, message } = data
+function Heading({ hi, en }: { hi?: string; en: string }) {
+  return (
+    <div className="text-center">
+      {hi && (
+        <p lang="hi" style={{ fontFamily: text, fontSize: 18, fontWeight: 500, color: C.terra }}>
+          {hi}
+        </p>
+      )}
+      <h2 className="mt-0.5 leading-[1.1]" style={{ fontFamily: display, fontSize: 'clamp(28px, 8.6cqi, 36px)', color: C.ink }}>
+        {en}
+      </h2>
+    </div>
+  )
+}
 
-  const formattedDate = useMemo(() => formatDate(date), [date])
-  const formattedTime = useMemo(() => formatTime(time), [time])
-  const gallery = useMemo(() => parseList(galleryImages), [galleryImages])
-  const scheduleItems = useMemo(() => parseList(schedule), [schedule])
-  const { days, hours, minutes, seconds } = useCountdown(date, time)
+export default function HouseWarming({ data, eventId, isPreview = false }: InviteProps) {
+  const host = data.hostNames?.trim() || 'The Sharma Family'
+  const date = dateParts(data.date)
+  const time = timeLabel(data.time)
+  const countdown = useCountdown(data.date, data.time, !isPreview)
+  const schedule = useMemo(() => parseSchedule(data.schedule), [data.schedule])
+  const photos = useMemo(() => galleryImages(data.galleryImages, 5), [data.galleryImages])
+  const hostPhoto = data.hostPhoto && /^(https?:)?\//.test(data.hostPhoto) ? data.hostPhoto : ''
+  const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
+  const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
+  const calendar = calendarHref(`Griha Pravesh — ${host}`, data.date, data.time, place || undefined)
+  const animate = !isPreview
 
-  const details = [
-    { label: 'Shubh Tithi', value: formattedDate },
-    { label: 'Muhurat', value: formattedTime },
-    ...(venue ? [{ label: 'New Home', value: venue, sub: venueAddress }] : []),
-    ...(pooja ? [{ label: 'Pooja Details', value: pooja }] : []),
-  ].filter(d => d.value)
+  const button =
+    'inline-flex min-h-[46px] items-center justify-center gap-2 rounded-[3px] px-5 text-[15px] font-semibold transition-colors'
 
   return (
-    <div className="relative min-h-screen font-body" style={{ background: C.bg, color: C.text }}>
+    <div
+      className="hw relative overflow-x-hidden"
+      style={{ background: C.paper, color: C.ink, fontFamily: text, containerType: 'inline-size', ...grain(0.055) }}
+    >
+      <style>{`
+        .hw .hw-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: hw-draw 1.3s cubic-bezier(.45,.1,.3,1) forwards; }
+        .hw .hw-fill { opacity: 0; animation: hw-fade 600ms ease forwards; }
+        .hw .hw-leaf { opacity: 0; transform: translateX(-4px); animation: hw-hang 520ms cubic-bezier(.2,.7,.2,1) forwards; }
+        .hw .hw-in { opacity: 0; transform: translateY(8px); animation: hw-rise 900ms cubic-bezier(.2,.7,.2,1) forwards; }
+        .hw .hw-btn:hover { background: ${C.terraDeep}; }
+        .hw .hw-btn-line:hover { background: ${C.terraFill}; }
+        @keyframes hw-draw { to { stroke-dashoffset: 0; } }
+        @keyframes hw-fade { to { opacity: 1; } }
+        @keyframes hw-hang { to { opacity: 1; transform: none; } }
+        @keyframes hw-rise { to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) {
+          .hw .hw-line, .hw .hw-fill, .hw .hw-leaf, .hw .hw-in { animation: none; opacity: 1; transform: none; stroke-dashoffset: 0; }
+        }
+      `}</style>
 
-      {/* ── HERO ── */}
-      <section className={`relative flex ${isPreview ? 'min-h-[360px] py-12' : 'min-h-screen'} flex-col items-center justify-center overflow-hidden px-4 sm:px-6 md:px-8 text-center`}>
-        <FilmGrain />
-        <RangoliPattern isPreview={isPreview} />
-        {!isPreview && <FloatingDiyas />}
+      {/* ── The card ──────────────────────────────────────────────── */}
+      <header
+        className="relative mx-auto flex max-w-[32rem] flex-col items-center px-6 pb-12 pt-9 text-center"
+        style={{ minHeight: isPreview ? 560 : '100svh' }}
+      >
+        <p lang="hi" className="hw-in" style={{ fontSize: 15, color: C.terra, letterSpacing: '0.04em' }}>
+          ॥ श्री गणेशाय नमः ॥
+        </p>
 
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,143,0,0.1) 0%, transparent 65%)' }} aria-hidden />
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 50% 35% at 50% 60%, rgba(191,54,12,0.07) 0%, transparent 70%)' }} aria-hidden />
+        <Home animate={animate} className="mt-5 w-[min(84%,300px)]" />
 
-        {[isPreview ? '260px' : '580px', isPreview ? '180px' : '400px', isPreview ? '110px' : '250px'].map((s, i) => (
-          <div key={i} className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{ width: s, height: s, border: `1px solid rgba(255,143,0,${0.13 - i * 0.035})` }} aria-hidden />
-        ))}
+        <p lang="hi" className="hw-in mt-6 leading-none" style={{ fontSize: 'clamp(22px, 6.6cqi, 28px)', fontWeight: 600, color: C.terra, animationDelay: '750ms' }}>
+          शुभ गृह प्रवेश
+        </p>
+        <h1
+          className="hw-in mt-2 leading-[0.98]"
+          style={{ fontFamily: display, fontSize: 'clamp(40px, 12.4cqi, 60px)', color: C.ink, animationDelay: '850ms' }}
+        >
+          Shubh Griha Pravesh
+        </h1>
 
-        <div className="relative z-[2] flex flex-col items-center">
-          <motion.p initial={{ opacity: 0, letterSpacing: '1.5em' }} animate={{ opacity: 1, letterSpacing: '0.5em' }} transition={{ duration: 1.4, delay: 0.1, ease: BEZIER }}
-            className="mb-5 text-[10px] uppercase select-none" style={{ color: C.goldMuted }}>
-            ॐ गं गणपतये नमः
-          </motion.p>
+        <div className="hw-in mt-7" style={{ animationDelay: '1000ms' }}>
+          <p className="leading-[1.15]" style={{ fontFamily: display, fontSize: 'clamp(22px, 6.6cqi, 28px)', color: C.terraDeep }}>
+            {host}
+          </p>
+          <p className="mx-auto mt-2 max-w-[19rem] text-balance leading-[1.5]" style={{ fontSize: 17, color: C.soft }}>
+            invite you to bless their new home on the day they first step in
+          </p>
+        </div>
 
-          <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.7, delay: 0.3, ease: BEZIER }} className="mb-7 w-full">
-            <DiyaDivider />
-          </motion.div>
+        <div className="hw-in mt-7" style={{ animationDelay: '1100ms' }}>
+          <Kolam loops={6} className="block w-[168px]" />
+        </div>
 
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.4 }}
-            className="text-[11px] uppercase tracking-[0.35em] mb-5 select-none" style={{ color: C.saffronMuted }}>
-            Griha Pravesh Samaroh
-          </motion.p>
-
-          <PortraitRow data={data} dark={true} />
-
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.55, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2rem' : 'clamp(1.9rem,6vw,6rem)', lineHeight: 1.1, color: C.text, textShadow: '0 0 70px rgba(255,143,0,0.2)', letterSpacing: '0.02em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-            {hostNames}
-          </motion.h1>
-
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.85 }}
-            className="mt-4 text-sm italic leading-relaxed max-w-sm" style={{ color: C.textMuted }}>
-            invite you to grace our new home with your divine presence &amp; blessings
-          </motion.p>
-
-          <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.9, delay: 1.1, ease: BEZIER }} className="my-8 w-full">
-            <DiyaDivider />
-          </motion.div>
-
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.25 }}
-            className="text-sm uppercase tracking-[0.42em]" style={{ color: C.textMuted }}>
-            {formattedDate || 'The Auspicious Day'}
-          </motion.p>
-          {venue && (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.4 }}
-              className="mt-2 text-xs uppercase tracking-[0.3em]" style={{ color: C.textFaint }}>{venue}</motion.p>
+        <div className="hw-in mt-5" style={{ animationDelay: '1150ms' }}>
+          {date ? (
+            <>
+              <p className="uppercase" style={{ fontSize: 14, fontWeight: 600, letterSpacing: '0.2em', color: C.terra }}>
+                {date.weekday}
+              </p>
+              <p className="mt-1 leading-none" style={{ fontFamily: display, fontSize: 'clamp(26px, 8cqi, 34px)' }}>
+                {date.day} {date.month} {date.year}
+              </p>
+            </>
+          ) : (
+            <p style={{ fontFamily: display, fontSize: 24 }}>Date to be announced</p>
+          )}
+          {time && (
+            <p className="mt-2.5" style={{ fontSize: 17, color: C.soft }}>
+              Shubh muhurat <span style={{ fontWeight: 600, color: C.ink }}>{time}</span>
+            </p>
           )}
         </div>
 
-        <motion.div animate={{ opacity: [0, 0.5, 0], y: [0, 10, 0] }} transition={{ duration: 2.2, delay: 2.5, repeat: Infinity }} className="absolute bottom-24 z-[2]" aria-hidden>
-          <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke={C.goldMuted} strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M7 2v18m0 0l-4-5m4 5l4-5" /></svg>
-        </motion.div>
-      </section>
+        {/* The nameplate by the door */}
+        <div className="hw-in mt-8 w-full" style={{ animationDelay: '1250ms' }}>
+          <div
+            className="relative mx-auto inline-block max-w-full px-7 py-3.5"
+            style={{ background: C.terra, color: '#FBF1E0', boxShadow: '0 2px 0 rgba(58,36,23,0.18), 0 12px 22px -14px rgba(58,36,23,0.55)' }}
+          >
+            <span aria-hidden className="pointer-events-none absolute inset-[4px] border" style={{ borderColor: 'rgba(251,241,224,0.45)' }} />
+            {[
+              'left-[9px] top-[9px]',
+              'right-[9px] top-[9px]',
+              'left-[9px] bottom-[9px]',
+              'right-[9px] bottom-[9px]',
+            ].map((pos) => (
+              <span key={pos} aria-hidden className={`absolute h-[3px] w-[3px] rounded-full ${pos}`} style={{ background: 'rgba(251,241,224,0.7)' }} />
+            ))}
+            <p className="relative leading-[1.2]" style={{ fontFamily: display, fontSize: 'clamp(19px, 5.6cqi, 23px)' }}>
+              {data.venue || 'Our new home'}
+            </p>
+          </div>
+          {data.venueAddress && (
+            <p className="mx-auto mt-3 max-w-[20rem] leading-[1.45]" style={{ fontSize: 16, color: C.soft }}>
+              {data.venueAddress}
+            </p>
+          )}
+        </div>
+      </header>
 
-      {/* ── COUNTDOWN ── */}
-      {date && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-6' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bgMid }}>
-          <div className="max-w-lg mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-8 sm:mb-10" style={{ color: C.goldMuted }}>Shubh Muhurat In</motion.p>
-            <div className={`grid gap-2 ${isPreview ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-4 sm:gap-3'}`}>
-              {[{ v: days, l: 'Days' }, { v: hours, l: 'Hours' }, { v: minutes, l: 'Mins' }, { v: seconds, l: 'Secs' }].map(({ v, l }, i) => (
-                <motion.div key={l} {...fadeUp(i * 0.07)} className="rounded-lg sm:rounded-2xl flex flex-col items-center justify-center py-4 sm:py-6 relative overflow-hidden" style={{ background: C.bgCard, border: `1px solid ${C.saffronBorder}` }}>
-                  <div className="absolute inset-x-0 bottom-0 h-px" style={{ background: `linear-gradient(90deg,transparent 10%,${C.saffronBorder} 50%,transparent 90%)` }} />
-                  <span className="font-heading tabular-nums" style={{ fontSize: isPreview ? '1.3rem' : 'clamp(1.6rem,5vw,2.6rem)', color: C.text, lineHeight: 1 }}>{String(v).padStart(2, '0')}</span>
-                  <span className="mt-1.5 text-[9px] uppercase tracking-[0.2em]" style={{ color: C.textFaint }}>{l}</span>
-                </motion.div>
-              ))}
-            </div>
+      <div className="mx-auto max-w-[32rem] px-6">
+        {/* ── A word from the family ─────────────────────────────── */}
+        {(data.message || hostPhoto) && (
+          <Reveal disabled={isPreview} as="section" className="pb-14 pt-4 text-center">
+            {hostPhoto && (
+              <div className="mx-auto w-[min(62%,220px)] p-[5px]" style={{ border: `1px solid ${C.terra}`, borderRadius: '9999px 9999px 0 0' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={hostPhoto}
+                  alt={host}
+                  loading="lazy"
+                  className="aspect-[4/5] w-full object-cover"
+                  style={{ borderRadius: '9999px 9999px 0 0' }}
+                />
+              </div>
+            )}
+            {data.message && (
+              <p className="mx-auto mt-7 max-w-[25rem] text-balance leading-[1.6]" style={{ fontSize: 19 }}>
+                {data.message}
+              </p>
+            )}
+            <p className="mt-4" style={{ fontFamily: hand, fontSize: 24, color: C.terra }}>
+              — {host}
+            </p>
+          </Reveal>
+        )}
+      </div>
+
+      {/* ── Countdown, on a terracotta band ────────────────────────── */}
+      {countdown && (
+        <Reveal disabled={isPreview} as="section" className="px-6 py-10 text-center" style={{ background: C.terra, color: '#FBF1E0' }}>
+          <Kolam loops={8} color="rgba(251,241,224,0.55)" seed={11} className="mx-auto w-[220px]" />
+          <p className="mt-5 leading-none" style={{ fontFamily: display, fontSize: 64, color: '#F4C45A' }}>
+            {countdown.days}
+          </p>
+          <p className="mt-2" style={{ fontSize: 18 }}>
+            {countdown.days === 1 ? 'day' : 'days'} until we step in
+          </p>
+          <p className="mt-1.5 tabular-nums" style={{ fontSize: 14, opacity: 0.72, letterSpacing: '0.04em' }}>
+            {countdown.hours} h · {pad2(countdown.minutes)} m · {pad2(countdown.seconds)} s
+          </p>
+        </Reveal>
+      )}
+
+      <div className="mx-auto max-w-[32rem] px-6">
+        {/* ── Programme ──────────────────────────────────────────── */}
+        {(schedule.length > 0 || data.pooja) && (
+          <Reveal disabled={isPreview} as="section" className="py-14">
+            <Heading hi="कार्यक्रम" en="The programme" />
+            {data.pooja && (
+              <p className="mx-auto mt-4 max-w-[22rem] text-balance text-center leading-[1.5]" style={{ fontSize: 17, color: C.soft }}>
+                {data.pooja}
+              </p>
+            )}
+            {schedule.length > 0 && (
+              <ol className="mt-8">
+                {schedule.map((item, i) => (
+                  <li key={`${item.title}-${i}`} className="border-b py-3.5 last:border-b-0" style={{ borderColor: C.rule }}>
+                    <div className="flex items-end gap-2.5">
+                      <span className="min-w-0 leading-[1.3]" style={{ fontSize: 18 }}>
+                        {item.title}
+                      </span>
+                      {item.time && (
+                        <>
+                          <span
+                            aria-hidden
+                            className="mb-[6px] min-w-[1.25rem] flex-1 border-b-2 border-dotted"
+                            style={{ borderColor: 'rgba(165,70,42,0.38)' }}
+                          />
+                          <span className="whitespace-nowrap tabular-nums" style={{ fontSize: 16, fontWeight: 600, color: C.terra }}>
+                            {item.time}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    {item.note && (
+                      <p className="mt-1 leading-[1.45]" style={{ fontSize: 15, color: C.soft }}>
+                        {item.note}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            )}
+          </Reveal>
+        )}
+      </div>
+
+      {/* ── The house, in photographs ─────────────────────────────── */}
+      {photos.length > 0 && (
+        <section className="mx-auto max-w-[34rem] px-5 pb-14 pt-2">
+          <Reveal disabled={isPreview}>
+            <Kolam loops={5} className="mx-auto mb-10 w-[140px]" seed={23} />
+            <Heading hi="हमारा नया घर" en="Our new home" />
+          </Reveal>
+          <div className="mt-9 grid grid-cols-2 gap-3">
+            {photos.map((src, i) => {
+              const wide = photos.length % 2 === 0 && i === photos.length - 1
+              // Tall frames get a round window arch; the wide closing one a shallow segmental arch.
+              const arch = wide ? '50% 50% 0 0 / 26% 26% 0 0' : '9999px 9999px 0 0'
+              return (
+                <Reveal key={`${src}-${i}`} disabled={isPreview} delay={(i % 2) * 80} className={i === 0 || wide ? 'col-span-2' : ''}>
+                  <div className="p-[4px]" style={{ border: `1px solid ${C.terra}`, borderRadius: arch }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={src}
+                      alt=""
+                      loading="lazy"
+                      className={`w-full object-cover ${i === 0 ? 'aspect-[4/5]' : wide ? 'aspect-[3/2]' : 'aspect-[3/4]'}`}
+                      style={{ borderRadius: arch }}
+                    />
+                  </div>
+                </Reveal>
+              )
+            })}
           </div>
         </section>
       )}
 
-      {/* ── DETAILS ── */}
-      {details.length > 0 && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-6' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bg }}>
-          <div className="max-w-2xl mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Samaroh Vivaran</motion.p>
-            <motion.h2 {...fadeUp(0.08)} className={`font-heading text-center ${isPreview ? 'text-lg mb-5' : 'text-2xl sm:text-3xl md:text-4xl mb-8 sm:mb-12'}`} style={{ color: C.text }}>Ceremony Details</motion.h2>
-            <div className={`grid gap-2 ${isPreview ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 sm:gap-4'}`}>
-              {details.map((detail, i) => (
-                <motion.div key={detail.label} {...fadeUp(i * 0.07)} className={`relative overflow-hidden ${isPreview ? 'rounded-lg p-3' : 'rounded-lg sm:rounded-2xl p-4 sm:p-6'}`} style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}>
-                  <div className="absolute top-0 inset-x-0 h-px" style={{ background: `linear-gradient(90deg,transparent 15%,${C.saffronMuted} 50%,transparent 85%)` }} />
-                  <p className="text-[10px] uppercase tracking-[0.28em] mb-2" style={{ color: C.goldMuted }}>{detail.label}</p>
-                  <p className="text-base font-medium leading-snug" style={{ color: C.text }}>{detail.value}</p>
-                  {'sub' in detail && detail.sub && <p className="mt-1 text-sm" style={{ color: C.textMuted }}>{detail.sub as string}</p>}
-                </motion.div>
-              ))}
-            </div>
-            {mapsUrl && (
-              <motion.div {...fadeUp(0.32)} className="mt-8 text-center">
-                <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 rounded-full px-4 sm:px-6 md:px-8 py-3 text-sm tracking-[0.12em]" style={{ background: C.saffronFaint, border: `1px solid ${C.saffronBorder}`, color: C.saffron }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
-                  GET DIRECTIONS
-                </a>
-              </motion.div>
+      {/* ── How to reach us ───────────────────────────────────────── */}
+      <Reveal disabled={isPreview} as="section" className="px-6 pb-14 pt-12 text-center">
+        <div className="mx-auto max-w-[30rem]">
+          <Kolam loops={5} className="mx-auto mb-9 block w-[140px]" seed={41} />
+          <Heading hi="पता" en="How to reach us" />
+          <p className="mt-6 leading-[1.2]" style={{ fontFamily: display, fontSize: 'clamp(22px, 6.8cqi, 28px)', color: C.terraDeep }}>
+            {data.venue || 'Our new home'}
+          </p>
+          {data.venueAddress && (
+            <p className="mx-auto mt-2 max-w-[20rem] leading-[1.5]" style={{ fontSize: 16, color: C.soft }}>
+              {data.venueAddress}
+            </p>
+          )}
+          <p className="mt-4" style={{ fontSize: 16 }}>
+            {date ? `${date.weekday}, ${date.day} ${date.month}` : 'Date to be announced'}
+            {time && <span style={{ color: C.soft }}> · {time}</span>}
+          </p>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+            <DirectionsLink
+              href={directions}
+              isPreview={isPreview}
+              className={`hw-btn ${button}`}
+              style={{ background: C.terra, color: '#FFF8EC' }}
+            >
+              Get directions
+            </DirectionsLink>
+            {calendar && (
+              <a
+                href={isPreview ? undefined : calendar}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-disabled={isPreview || undefined}
+                className={`hw-btn-line ${button} border`}
+                style={{ borderColor: C.terra, color: C.terra }}
+              >
+                Add to calendar
+              </a>
             )}
           </div>
-        </section>
+        </div>
+      </Reveal>
+
+      {eventId && (
+        <div className="border-t" style={{ borderColor: C.rule }}>
+          <WishesSection
+            eventId={eventId}
+            theme={WISHES_THEME}
+            title="Bless our new home"
+            intro="Leave a few words for the family. Every guest who opens this invitation will see them."
+            noun="blessing"
+          />
+        </div>
       )}
 
-      {/* ── SCHEDULE ── */}
-      {scheduleItems.length > 0 && (
-        <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20" style={{ background: C.bgMid }}>
-          <div className="max-w-md mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Karyakram</motion.p>
-            <motion.h2 {...fadeUp(0.07)} className="font-heading text-center text-2xl sm:text-3xl mb-8 sm:mb-12" style={{ color: C.text }}>Pooja Programme</motion.h2>
-            <div className="relative pl-5 sm:pl-7">
-              <div className="absolute left-0 top-2 bottom-2 w-px" style={{ background: `linear-gradient(180deg,transparent,${C.saffronBorder} 20%,${C.saffronBorder} 80%,transparent)` }} />
-              <div className="space-y-7">
-                {scheduleItems.map((item, i) => {
-                  const parts = item.split(/[-–—]/).map(s => s.trim())
-                  const timePart = parts.length > 1 ? parts[0] : null
-                  const desc = parts.length > 1 ? parts.slice(1).join(' ') : item
-                  return (
-                    <motion.div key={i} {...fadeUp(i * 0.07)} className="relative">
-                      <div className="absolute -left-[1.75rem] top-1.5 w-3 h-3 rounded-full" style={{ background: C.bg, border: `1.5px solid ${C.saffron}` }} />
-                      {timePart && <p className="text-[10px] uppercase tracking-[0.22em] mb-0.5" style={{ color: C.goldMuted }}>{timePart}</p>}
-                      <p className="text-sm leading-relaxed" style={{ color: C.text }}>{desc}</p>
-                    </motion.div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── GALLERY ── */}
-      {gallery.length > 0 && (
-        <section className="py-12 sm:py-16 md:py-20 overflow-hidden" style={{ background: C.bg }}>
-          <motion.p {...fadeUp()} className="px-4 sm:px-6 md:px-8 text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Hamara Ghar</motion.p>
-          <motion.h2 {...fadeUp(0.07)} className="px-4 sm:px-6 md:px-8 font-heading text-center text-2xl sm:text-3xl mb-8 sm:mb-10" style={{ color: C.text }}>Our New Home</motion.h2>
-          <div className="flex gap-2 sm:gap-3 px-4 sm:px-6 md:px-8 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none' }}>
-            {gallery.map((src, i) => (
-              <motion.div key={`${src}-${i}`} initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-20px' }} transition={{ duration: 0.7, delay: i * 0.06, ease: BEZIER }}
-                className="shrink-0 overflow-hidden rounded-xl" style={{ width: i % 3 === 0 ? 240 : 190, height: i % 3 === 0 ? 320 : 252, border: `1px solid ${C.saffronBorder}` }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Home ${i + 1}`} className="h-full w-full object-cover" loading="lazy" />
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ── MESSAGE ── */}
-      {message && (
-        <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-18 md:py-24" style={{ background: C.bgMid }}>
-          <div className="max-w-xl mx-auto text-center">
-            <motion.div {...fadeUp()}>
-              <div className="font-heading select-none mb-1 leading-none" style={{ fontSize: '6rem', color: 'rgba(255,143,0,0.09)' }} aria-hidden>&ldquo;</div>
-              <p className="font-heading text-xl sm:text-2xl italic leading-relaxed" style={{ color: C.textMuted }}>{message}</p>
-              <p className="mt-7 text-sm uppercase tracking-[0.32em]" style={{ color: C.goldMuted }}>— {hostNames}</p>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {eventId && <HouseWarmingWishes eventId={eventId} />}
-
-      <footer className="px-4 sm:px-6 md:px-8 py-12 text-center" style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
-        <DiyaDivider className="mb-7" />
-        <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>{hostNames}</p>
-        {formattedDate && <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(255,245,230,0.18)' }}>{formattedDate}</p>}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(255,245,230,0.12)' }}>Made with ShareInvite</p>
+      {/* ── Sign-off, as family cards close ──────────────────────── */}
+      <footer className="px-6 pb-10 pt-12 text-center">
+        <Kolam loops={4} className="mx-auto w-[112px]" seed={31} />
+        <p lang="hi" className="mt-6" style={{ fontSize: 17, color: C.terra }}>
+          स्वागतोत्सुक
+        </p>
+        <p className="mt-1 leading-[1.2]" style={{ fontFamily: display, fontSize: 24 }}>
+          {host}
+        </p>
+        <div className="mt-9">
+          <Credit isPreview={isPreview} color={C.faint} linkColor={C.terra} />
+        </div>
       </footer>
     </div>
   )

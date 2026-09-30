@@ -12,7 +12,7 @@
  * PLANS is ordered by ascending price and must stay that way — `getRequiredPlan`
  * and `mergePlans` both take the first match as the cheapest one.
  */
-export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'standard' | 'premium' | 'gold'
+export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'standard' | 'premium' | 'gold' | 'signature' | 'couture'
 
 export interface Plan {
   id: PlanId
@@ -26,16 +26,24 @@ export interface Plan {
 }
 
 // Templates assigned to each tier
-const BASIC_TEMPLATES = ['elegant-wedding']
+const BASIC_TEMPLATES = ['elegant-wedding', 'pooja-invite']
 const RAKHI_TEMPLATES = ['rakshabandhan']
 const GANESH_TEMPLATES = ['ganesh-chaturthi']
-const STANDARD_TEMPLATES = [...BASIC_TEMPLATES, ...RAKHI_TEMPLATES, ...GANESH_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',]
+const STANDARD_TEMPLATES = [
+  ...BASIC_TEMPLATES, ...RAKHI_TEMPLATES, ...GANESH_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',
+  'first-birthday', 'haldi-mehendi', 'diwali-party', 'eid-milan', 'retirement',
+]
 const GREETING_TEMPLATES = [
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
 ]
-const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh', ...GREETING_TEMPLATES]
+const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh', ...GREETING_TEMPLATES, 'baby-shower', 'sangeet-night']
 const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'royal-deco', 'luxury-wedding']
+// Signature collection: full wedding suites (every function, families, story,
+// travel & stay, FAQs, contacts, RSVP). Each tier also includes everything
+// below it, like the tiers above.
+const SIGNATURE_TEMPLATES = [...GOLD_TEMPLATES, 'signature-kalyanam', 'signature-nikah', 'signature-garden']
+const COUTURE_TEMPLATES = [...SIGNATURE_TEMPLATES, 'signature-rajwada']
 
 export const PLANS: Plan[] = [
   {
@@ -92,6 +100,24 @@ export const PLANS: Plan[] = [
     description: 'Every template unlocked — including KGF Royal Empire, Anniversary and more.',
     templateIds: GOLD_TEMPLATES,
     features: [`All ${GOLD_TEMPLATES.length} templates`, 'KGF Royal Empire + Royal Deco', 'Custom slug support', 'Priority support'],
+  },
+  {
+    id: 'signature',
+    name: 'Signature',
+    price: 1499,
+    badge: 'Signature collection',
+    description: 'A complete wedding suite — Kalyanam, Nikah or Garden Vows — with every function, both families, your story, travel & stay, FAQs and RSVP.',
+    templateIds: SIGNATURE_TEMPLATES,
+    features: ['Every function on its own card', 'Travel, stay, FAQs & contacts for guests', 'WhatsApp RSVP, livestream & hashtag', 'Everything in the designs below'],
+  },
+  {
+    id: 'couture',
+    name: 'Signature Couture',
+    price: 1999,
+    badge: 'Signature collection',
+    description: 'Rajwada — the royal palace wedding suite, with the gates-opening welcome and the full week of functions.',
+    templateIds: COUTURE_TEMPLATES,
+    features: ['Rajwada palace suite', 'Every function on its own card', 'Travel, stay, FAQs & contacts for guests', 'Everything in the designs below'],
   },
 ]
 
@@ -185,5 +211,5 @@ export function mergePlans(current: PlanId, purchased: PlanId): PlanId {
 }
 
 export function planLevel(plan: PlanId): number {
-  return { free: 0, ganesh: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3 }[plan] ?? 0
+  return { free: 0, ganesh: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3, signature: 4, couture: 5 }[plan] ?? 0
 }

@@ -1,5 +1,7 @@
 import BottomDock from '@/components/ui/BottomDock'
 import TrackedLink from '@/components/ui/TrackedLink'
+import { LogoMark } from '@/components/brand/Logo'
+import { LOWEST_PAID_PRICE } from '@/lib/plans'
 
 /**
  * Site-wide sticky bar shown on SEO landing, template and blog pages.
@@ -7,19 +9,37 @@ import TrackedLink from '@/components/ui/TrackedLink'
  * This is the most-rendered CTA on the site, so it is tracked separately from
  * in-page CTAs — otherwise a create_start cannot be attributed to the bar
  * versus the hero button on the same page.
+ *
+ * Template pages pass their own title/href so the bar sells that one design
+ * ("Luxury Wedding · ₹499 — Use this design") instead of a generic line.
  */
-export default function StickyCTA({ pageType = 'seo_page' }: { pageType?: string }) {
+export default function StickyCTA({
+  pageType = 'seo_page',
+  title = 'Create your invitation',
+  sub = `Free to build & preview · Pay once, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}`,
+  href = '/create?src=sticky_bar',
+  label = 'Start free',
+}: {
+  pageType?: string
+  title?: string
+  sub?: string
+  href?: string
+  label?: string
+}) {
   return (
     <BottomDock
-      className="border-t border-border bg-white/95 px-4 pt-3 shadow-[0_-10px_30px_rgba(34,27,23,0.10)] backdrop-blur-xl"
+      className="border-t border-line bg-paper/95 px-4 pt-3 shadow-[0_-12px_30px_-12px_rgba(3,25,15,0.18)] backdrop-blur-xl"
       style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}
     >
       {/* pr-20 on desktop keeps the primary button clear of the floating
           support bubble, which sits in the same bottom-right corner. */}
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 sm:pr-20">
-        <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-ink">Create a WhatsApp-ready invitation</p>
-          <p className="text-xs text-muted">Free to build &amp; preview · Paid templates from ₹99 one-time.</p>
+        <div className="flex min-w-0 items-center gap-3">
+          <LogoMark className="hidden h-9 w-9 shrink-0 sm:block" />
+          <div className="min-w-0">
+            <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{title}</p>
+            <p className="truncate text-[0.78rem] text-muted">{sub}</p>
+          </div>
         </div>
         <div className="flex shrink-0 gap-2">
           {/* Relabelled: this links to the product overview page, not a live
@@ -28,17 +48,17 @@ export default function StickyCTA({ pageType = 'seo_page' }: { pageType?: string
             href="/digital-invitation"
             location="sticky_bar_secondary"
             meta={{ page_type: pageType }}
-            className="hidden rounded-xl border border-border px-4 py-2 text-xs font-semibold text-muted transition-colors hover:text-foreground sm:inline-flex"
+            className="btn-outline hidden rounded-full px-4 py-2 text-[0.8rem] font-semibold sm:inline-flex"
           >
             How it works
           </TrackedLink>
           <TrackedLink
-            href="/create?src=sticky_bar"
+            href={href}
             location="sticky_bar_primary"
             meta={{ page_type: pageType }}
-            className="gold-button rounded-xl px-4 py-2 text-xs font-semibold sm:px-5"
+            className="btn-primary rounded-full px-5 py-2.5 text-[0.85rem] font-semibold"
           >
-            Start Free →
+            {label}
           </TrackedLink>
         </div>
       </div>

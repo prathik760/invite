@@ -1,4 +1,5 @@
-import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE, PLANS } from '@/lib/plans'
+import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'
+import { TEMPLATES } from '@/modules/templates/data'
 
 // WebsiteSchema used to live here as a second, conflicting WebSite entity — the
 // root layout already emits one with a proper @id and publisher link. It was
@@ -16,7 +17,7 @@ export function SoftwareAppSchema() {
           name: 'ShareInvite',
           applicationCategory: 'UtilitiesApplication',
           operatingSystem: 'Web',
-          description: 'Digital invitation maker for Indian weddings, birthdays, engagements and all celebrations. Free to build and preview; one-time payment to publish.',
+          description: 'Digital invitation maker for weddings, birthdays, engagements, festivals and every celebration. Free to build and preview; one-time payment per design to publish.',
           url: 'https://shareinvite.in',
           // Advertised as a real price range, not ₹0 — Google treats an Offer
           // price of 0 as "this product is free", which is no longer true and
@@ -26,8 +27,8 @@ export function SoftwareAppSchema() {
             priceCurrency: 'INR',
             lowPrice: String(LOWEST_PAID_PRICE),
             highPrice: String(HIGHEST_PAID_PRICE),
-            offerCount: PLANS.length,
-            description: 'One-time payment per template. Free to build and preview.',
+            offerCount: TEMPLATES.length,
+            description: 'One price per design, paid once when you publish. Free to build and preview.',
           },
           author: {
             '@type': 'Person',

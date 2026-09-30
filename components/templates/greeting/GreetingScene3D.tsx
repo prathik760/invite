@@ -4,6 +4,7 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'rea
 import { Canvas, useFrame, type ThreeEvent } from '@react-three/fiber'
 import { Sparkles } from '@react-three/drei'
 import * as THREE from 'three'
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
 export type Motif = 'hearts' | 'rings' | 'stars' | 'petals' | 'confetti' | 'diyas'
 
@@ -39,14 +40,42 @@ function makeGeometry(motif: Motif): THREE.BufferGeometry {
       return g
     }
     case 'petals': {
-      const g = new THREE.SphereGeometry(0.4, 18, 14)
-      g.scale(1, 0.32, 0.68)
+      // A teardrop petal, thin and slightly cupped — not a pebble.
+      const s = new THREE.Shape()
+      s.moveTo(0, -0.5)
+      s.bezierCurveTo(0.36, -0.22, 0.32, 0.28, 0, 0.5)
+      s.bezierCurveTo(-0.32, 0.28, -0.36, -0.22, 0, -0.5)
+      const g = new THREE.ExtrudeGeometry(s, { depth: 0.015, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02, bevelSegments: 2, curveSegments: 18 })
+      const pos = g.attributes.position
+      for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i)
+        pos.setZ(i, pos.getZ(i) + x * x * 0.55)
+      }
+      g.computeVertexNormals()
+      g.center()
       return g
     }
     case 'confetti':
       return new THREE.BoxGeometry(0.2, 0.02, 0.3)
-    case 'diyas':
-      return new THREE.SphereGeometry(0.22, 18, 18)
+    case 'diyas': {
+      // A shallow clay lamp turned on a lathe: foot, bowl, rolled lip.
+      const profile = [
+        new THREE.Vector2(0, 0), new THREE.Vector2(0.12, 0), new THREE.Vector2(0.14, 0.03),
+        new THREE.Vector2(0.24, 0.07), new THREE.Vector2(0.33, 0.15), new THREE.Vector2(0.36, 0.2),
+        new THREE.Vector2(0.34, 0.22), new THREE.Vector2(0.28, 0.17), new THREE.Vector2(0, 0.13),
+      ]
+      const bowl = new THREE.LatheGeometry(profile, 28)
+      // The flame: a small teardrop standing on the wick.
+      const flame = new THREE.LatheGeometry([
+        new THREE.Vector2(0, 0), new THREE.Vector2(0.05, 0.04), new THREE.Vector2(0.06, 0.1),
+        new THREE.Vector2(0.035, 0.19), new THREE.Vector2(0, 0.26),
+      ], 16)
+      flame.translate(0, 0.17, 0)
+      const g = mergeGeometries([bowl, flame]) ?? bowl
+      g.rotateX(0.35)
+      g.center()
+      return g
+    }
   }
 }
 

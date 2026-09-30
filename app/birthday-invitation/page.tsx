@@ -1,13 +1,8 @@
-import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import OccasionPage from '@/components/landing/OccasionPage'
 import { CakeIcon, ClockIcon, MapPinIcon, CameraIcon, MusicIcon, SparklesIcon } from '@/components/ui/Icons'
-import SiteFooter from '@/components/landing/SiteFooter'
-import TrackedLink from '@/components/ui/TrackedLink'
 import { templatePrice } from '@/lib/plans'
 
-const BIRTHDAY_TEMPLATE = 'indian-birthday'
-const BIRTHDAY_PRICE = templatePrice(BIRTHDAY_TEMPLATE)
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -45,7 +40,7 @@ const faqSchema = {
       name: 'How much does a digital birthday invitation cost in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Janamdin birthday template is ₹299 as a one-time payment — there is no subscription and no per-guest charge. You can build the entire invitation and preview exactly how it will look before paying; payment is only requested at the final publish step. The lowest-priced ShareInvite templates start at ₹199 if you want a simpler design.',
+        text: 'The Janamdin birthday template is ₹299 as a one-time payment — there is no subscription and no per-guest charge. You can build the entire invitation and preview exactly how it will look before paying; payment is only requested at the final publish step.',
       },
     },
     {
@@ -61,7 +56,7 @@ const faqSchema = {
       name: 'What makes ShareInvite birthday invitations different from WhatsApp image invites?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Unlike a static image, ShareInvite creates a live invitation page with a countdown timer, Google Maps directions, photo gallery, background music, and a guest wishes section — all from a single WhatsApp link. Details can be corrected after sharing without resending a new card, and guests never need to install an app.',
+        text: 'Unlike a static image, ShareInvite creates a live invitation page with a countdown timer, Google Maps directions, photo gallery, background music, and a guest wishes section — all from a single WhatsApp link. You send it once, and guests never need to install an app.',
       },
     },
     {
@@ -75,168 +70,45 @@ const faqSchema = {
   ],
 }
 
-export default function BirthdayInvitationPage() {
+const FEATURES = [
+  { icon: <CakeIcon />, title: 'Celebrant name & age', desc: "The birthday person's name and milestone age, beautifully set." },
+  { icon: <ClockIcon />, title: 'Live countdown', desc: 'A ticking timer to the party that keeps guests excited.' },
+  { icon: <MapPinIcon />, title: 'Venue & Google Maps', desc: 'Venue name, address and a one-tap directions button.' },
+  { icon: <CameraIcon />, title: 'Photo gallery', desc: "The birthday person's photos for a warm, personal invite." },
+  { icon: <MusicIcon />, title: 'Favourite song', desc: 'Their favourite track plays when guests open the invite.' },
+  { icon: <SparklesIcon />, title: 'Party schedule', desc: 'Cocktails, cake cutting, games — a clear timeline for guests.' },
+]
+
+export default function Page() {
+  const faqs = faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-
-      <SiteHeader createHref="/create?template=indian-birthday" />
-
-      <section className="relative overflow-hidden bg-[#FCF7F1] px-5 pt-16 pb-14 sm:pt-24 sm:pb-20 text-center">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,140,0,0.14),transparent_55%)]" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D9A441]/30 bg-white/80 px-4 py-1.5 text-xs font-semibold text-accent-strong shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2F766D]" />
-            Build free · WhatsApp ready · No app required
-          </div>
-          <h1 className="font-display font-normal text-4xl text-ink leading-tight sm:text-6xl mt-4">
-            Digital Birthday Invitation<br />
-            <span className="gradient-accent italic">Website for India</span>
-          </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-base leading-8 text-muted sm:text-lg">
-            Create a festive digital birthday invitation in 5 minutes. Indian birthday templates with live countdown, photo gallery, favourite song &amp; one-tap WhatsApp sharing. Add your details and preview the whole invitation free — publish it for ₹{BIRTHDAY_PRICE} one-time.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <TrackedLink
-              href="/create?template=indian-birthday&src=birthday_landing"
-              location="birthday_landing_hero"
-              meta={{ template_id: BIRTHDAY_TEMPLATE, price: BIRTHDAY_PRICE, event_type: 'birthday', page_type: 'event_landing' }}
-              className="gold-button rounded-full px-10 py-4 text-base font-semibold"
-            >
-              Start My Birthday Invite →
-            </TrackedLink>
-            <span className="text-sm text-muted">Free to build &amp; preview · ₹{BIRTHDAY_PRICE} one-time to publish</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-16 border-y border-border bg-white">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10 sm:text-4xl">
-            What&apos;s Included in Your Digital Birthday Invitation
-          </h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { icon: <CakeIcon />, title: 'Celebrant Name & Age', desc: "Display the birthday person's name and milestone age beautifully." },
-              { icon: <ClockIcon />, title: 'Live Countdown', desc: 'A ticking timer to the party — guests check it to stay excited.' },
-              { icon: <MapPinIcon />, title: 'Venue + Google Maps', desc: 'Venue name, address, and a one-tap directions button.' },
-              { icon: <CameraIcon />, title: 'Photo Gallery', desc: "Upload the birthday person's photos for a personal, warm invite." },
-              { icon: <MusicIcon />, title: 'Favourite Song', desc: 'Play their favourite party track when guests open the invite.' },
-              { icon: <SparklesIcon />, title: 'Party Schedule', desc: 'Cocktails, cake cutting, games — a clear timeline for guests.' },
-            ].map(f => (
-              <div key={f.title} className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#7A3E4A]/10 text-[#7A3E4A]">{f.icon}</div>
-                <h3 className="font-heading text-lg text-ink mb-2">{f.title}</h3>
-                <p className="text-sm text-muted leading-6">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="border-t border-border px-5 py-16">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">
-            Loved by Indian Families
-          </h2>
-          <div className="grid gap-5 sm:grid-cols-3">
-            {[
-              { name: 'Meera', city: 'Hyderabad', text: "My daughter's 1st birthday invitation had her photos in a gallery, a countdown timer, and the venue map all in one link. Guests kept complimenting how beautiful it looked on WhatsApp." },
-              { name: 'Rajesh', city: 'Pune', text: "I created my father's 60th birthday invite in 15 minutes and shared it to 5 family groups. The schedule with arrival, cake cutting, and dinner timings meant nobody called asking what time to come." },
-              { name: 'Sunita', city: 'Chennai', text: "The background music feature was magical. I set my son's favourite song and every guest who opened the invite said it felt like a real celebration before they even arrived." },
-            ].map(t => (
-              <div key={t.name} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="h-4 w-4 fill-[#D9A441]" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  ))}
-                </div>
-                <p className="text-sm text-muted leading-7 mb-4">&ldquo;{t.text}&rdquo;</p>
-                <p className="font-semibold text-sm text-ink">{t.name}</p>
-                <p className="text-xs text-muted">{t.city}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing nudge */}
-      <section className="border-t border-border bg-[#FFFBF5] px-5 py-12">
-        <div className="mx-auto max-w-4xl">
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6">Simple, transparent pricing</p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { price: '₹99', sub: 'One-time', templates: 'Ganesh Chaturthi Premium' },
-              { price: '₹199', sub: 'One-time', templates: 'Elegant Wedding, Raksha Bandhan Premium' },
-              { price: '₹299', sub: 'One-time', templates: 'Cinematic Night, Janamdin, Namakaran, 3D Surprise Journey' },
-              { price: '₹399', sub: 'One-time', templates: 'Shaadi, Mangni, Griha Pravesh, 3D Greetings' },
-              { price: '₹499', sub: 'One-time', templates: 'Saalgirah, KGF Royal Empire, Royal Deco, Luxury Wedding' },
-            ].map(p => (
-              <div key={p.price} className="rounded-2xl border border-border bg-white p-5 shadow-sm">
-                <p className="font-display text-2xl text-ink">{p.price}</p>
-                <p className="text-[10px] font-medium text-muted mt-0.5 mb-3">{p.sub}</p>
-                <p className="text-xs text-muted leading-5">{p.templates}</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 text-center text-xs text-muted">Every template includes the same premium features · One-time payment · No subscription</p>
-          <div className="mt-6 text-center">
-            <Link href="/create?template=indian-birthday" className="gold-button inline-flex rounded-full px-8 py-3.5 text-sm font-semibold">
-              Start Building — Choose Your Template →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-16">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-display font-normal text-3xl text-ink text-center mb-10">Digital Birthday Invitation — FAQ</h2>
-          <div className="space-y-4">
-            {faqSchema.mainEntity.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border bg-white p-6">
-                <h3 className="font-heading text-base text-ink mb-2">{faq.name}</h3>
-                <p className="text-sm text-muted leading-7">{faq.acceptedAnswer.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* City links */}
-      <section className="border-t border-border bg-white px-5 py-12">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-4">Birthday invitations by city</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'].map(city => (
-              <Link
-                key={city}
-                href={`/birthday-invitation/${city}`}
-                className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground capitalize hover:border-[#D9A441]/50 transition-colors"
-              >
-                {city.charAt(0).toUpperCase() + city.slice(1)}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 pb-16 text-center">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-[#E8DCCD] bg-[#FFF9F2] p-10 shadow-sm">
-          <h2 className="font-display font-normal text-3xl text-ink mb-4">Create a Memorable Digital Birthday Invitation</h2>
-          <p className="text-muted text-sm mb-7">Free to build &amp; preview · ₹{BIRTHDAY_PRICE} one-time to publish · WhatsApp-ready in 5 minutes</p>
-          <TrackedLink
-            href="/create?template=indian-birthday&src=birthday_landing_footer"
-            location="birthday_landing_footer"
-            meta={{ template_id: BIRTHDAY_TEMPLATE, price: BIRTHDAY_PRICE, event_type: 'birthday', page_type: 'event_landing' }}
-            className="gold-button inline-flex rounded-full px-10 py-4 text-base font-semibold"
-          >
-            Start My Birthday Invite →
-          </TrackedLink>
-        </div>
-      </section>
-
-      <SiteFooter />
-    </main>
+      <OccasionPage
+        occasion="birthday"
+        templateId="indian-birthday"
+        pageKey="birthday_landing"
+        crumb="Birthday invitations"
+        eyebrow="Digital birthday invitations"
+        title={<>Digital Birthday Invitation <em className="font-medium text-burnished">for every age</em></>}
+        lede={`Create a beautiful birthday invitation with photos, a countdown, the venue on Google Maps and the party schedule — then share one WhatsApp link your guests open instantly. Build and preview free — publish for ₹${templatePrice('indian-birthday')} one-time.`}
+        ctaLabel="Start my birthday invite"
+        features={{ title: "What's included in your digital birthday invitation", items: FEATURES }}
+        steps={[
+          { title: 'Choose a birthday design', copy: 'A festive party invite or an interactive 3D surprise — preview each one live.' },
+          { title: 'Add the celebrant\'s details', copy: 'Name, milestone age, date, venue, schedule and photos. The preview updates as you type.' },
+          { title: 'Pay once & share', copy: 'Publish for a one-time price and send the link to every family and friends group.' },
+        ]}
+        faqTitle="Digital birthday invitation questions"
+        faqs={faqs}
+        cities={{ base: '/birthday-invitation', title: 'Birthday invitations by city', list: ['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'] }}
+        related={[
+          { href: '/birthday-invitation-wording', label: 'Birthday invitation wording' },
+          { href: '/birthday-invitations', label: 'Birthday designs gallery' },
+          { href: '/blog/category/birthday', label: 'Birthday ideas' },
+        ]}
+        closing={{ title: 'Create a memorable birthday invitation' }}
+      />
+    </>
   )
 }

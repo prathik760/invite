@@ -16,7 +16,7 @@ function Stars() {
   return (
     <div className="flex gap-0.5" role="img" aria-label="Rated 5 out of 5">
       {[...Array(5)].map((_, i) => (
-        <svg key={i} className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="#B87924" aria-hidden>
+        <svg key={i} className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="#0B4A34" aria-hidden>
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
       ))}
@@ -26,7 +26,7 @@ function Stars() {
 
 function VerifiedBadge() {
   return (
-    <svg className="h-3.5 w-3.5 shrink-0 text-[#2F766D]" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified">
+    <svg className="h-3.5 w-3.5 shrink-0 text-[#0B4A34]" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified">
       <path
         fillRule="evenodd"
         d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.491 4.491 0 01-3.497-1.307 4.491 4.491 0 01-1.307-3.497A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.498 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
@@ -42,7 +42,7 @@ function ArrowButton({ dir, onClick }: { dir: 'left' | 'right'; onClick: () => v
       type="button"
       onClick={onClick}
       aria-label={dir === 'left' ? 'Previous testimonials' : 'Next testimonials'}
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-white text-ink shadow-sm transition-all hover:border-[#D9A441] hover:text-accent-strong active:scale-95"
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-paper text-charcoal shadow-sm transition-all hover:border-[#A47945] hover:text-accent-strong active:scale-95"
     >
       <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4}>
         {dir === 'left'
@@ -116,11 +116,11 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
         {testimonials.map((t) => (
           <article
             key={t.name}
-            className="relative flex w-[86%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-border bg-white p-7 shadow-card sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
+            className="relative flex w-[86%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-paper p-7 shadow-soft sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
           >
             {/* Decorative quote mark */}
             <div
-              className="pointer-events-none absolute right-5 top-4 select-none font-display text-[7rem] leading-none text-[#D9A441]/10"
+              className="pointer-events-none absolute right-5 top-4 select-none font-editorial font-semibold text-[7rem] leading-none text-[#A47945]/10"
               aria-hidden
             >
               &ldquo;
@@ -139,7 +139,7 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
               &ldquo;{t.quote}&rdquo;
             </p>
 
-            <div className="mt-6 border-t border-border pt-5">
+            <div className="mt-6 border-t border-line pt-5">
               <div className="flex items-center gap-3.5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -149,11 +149,11 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
                   height={44}
                   loading="lazy"
                   decoding="async"
-                  className="h-11 w-11 rounded-full object-cover ring-2 ring-[#D9A441]/30 ring-offset-1"
+                  className="h-11 w-11 rounded-full object-cover ring-2 ring-[#A47945]/30 ring-offset-1"
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
-                    <p className="truncate text-sm font-semibold text-ink">{t.name}</p>
+                    <p className="truncate text-sm font-semibold text-charcoal">{t.name}</p>
                     <VerifiedBadge />
                   </div>
                   <p className="text-xs text-muted">{t.event}</p>
@@ -183,7 +183,7 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
                 className="block h-2 rounded-full transition-all"
                 style={{
                   width: i === active ? 22 : 8,
-                  background: i === active ? '#B87924' : 'rgba(184,121,36,0.28)',
+                  background: i === active ? '#0B4A34' : 'rgba(11,74,52,0.28)',
                 }}
               />
             </button>

@@ -1,523 +1,638 @@
 'use client'
 
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { PortraitRow } from './PortraitRow'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { formatDate, formatTime } from '@/lib/utils'
+import { useMemo } from 'react'
+import WishesSection from './WishesSection'
+import { tiro } from './kit/fonts/tiro'
+import { mukta } from './kit/fonts/mukta'
+import {
+  calendarHref,
+  dateParts,
+  galleryImages,
+  grain,
+  mapsHref,
+  pad2,
+  parseSchedule,
+  timeLabel,
+  useCountdown,
+  type InviteProps,
+} from './kit/core'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
+import type { InviteTheme } from './kit/theme'
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
+/*
+ * Shaadi — a printed Indian wedding card (kankotri), set with restraint.
+ * Cream stock, maroon ink, sindoor and marigold. A marigold-and-mango-leaf
+ * toran hangs across the top and settles as if just tied up; below it a
+ * mehrab-arched card opens with the Ganesh invocation and family wording.
+ */
 
 const C = {
-  bg: '#07000A',
-  bgMid: '#0F0210',
-  bgCard: '#180518',
-  bgSurface: '#1D071D',
-  text: '#FAF0E6',
-  textMuted: 'rgba(250,240,230,0.55)',
-  textFaint: 'rgba(250,240,230,0.28)',
-  gold: '#D4A017',
-  goldMuted: 'rgba(212,160,23,0.65)',
-  goldFaint: 'rgba(212,160,23,0.12)',
-  goldBorder: 'rgba(212,160,23,0.22)',
-  crimson: '#C41E3A',
-  crimsonMuted: 'rgba(196,30,58,0.55)',
-  crimsonFaint: 'rgba(196,30,58,0.12)',
-  crimsonBorder: 'rgba(196,30,58,0.25)',
-  border: 'rgba(255,255,255,0.06)',
+  paper: '#F2E4CC',
+  card: '#FBF4E6',
+  maroon: '#5A1320',
+  soft: 'rgba(90,19,32,0.74)',
+  faint: 'rgba(90,19,32,0.52)',
+  rule: 'rgba(90,19,32,0.2)',
+  sindoor: '#A52A1E',
+  marigold: '#DA8A22',
+  mgLight: '#E8AA3C',
+  mgDeep: '#B5621A',
+  mgPale: '#F2C766',
+  mgCore: '#8E3F12',
+  leaf: '#4E6B2C',
+  leafVein: '#7C9449',
+  band: '#5A1320',
+  bandInk: '#F6E8D0',
 }
 
-// ── Petal particles ───────────────────────────────────────────
-const PETALS = Array.from({ length: 18 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  delay: Math.random() * 12,
-  dur: 10 + Math.random() * 10,
-  drift: (Math.random() - 0.5) * 80,
-  rotate: Math.random() * 360,
-  size: 8 + Math.random() * 8,
-  color: i % 3 === 0 ? C.crimson : i % 3 === 1 ? C.gold : '#FF6B8A',
-}))
+const display = tiro.style.fontFamily
+const text = mukta.style.fontFamily
 
-const FloatingPetals = memo(function FloatingPetals() {
-  const reduced = useReducedMotion()
-  if (reduced) return null
+const WISHES_THEME: InviteTheme = {
+  bg: C.paper,
+  surface: C.card,
+  ink: C.maroon,
+  muted: C.soft,
+  line: 'rgba(90,19,32,0.18)',
+  accent: C.sindoor,
+  onAccent: '#FFF6EA',
+  heading: display,
+  body: text,
+  headingStyle: { fontSize: 32, fontWeight: 400 },
+}
+
+/* ── Seeded irregularity, so no two flowers or leaves are stamped alike ── */
+function rng(seed: number) {
+  let s = seed >>> 0
+  return () => {
+    s = (s * 1664525 + 1013904223) >>> 0
+    return s / 4294967296
+  }
+}
+
+/** A scalloped disc — the ruffled outline of a marigold head. */
+function scallop(r: number, n: number) {
+  const pts: [number, number][] = []
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2
+    pts.push([r * Math.cos(a), r * Math.sin(a)])
+  }
+  const br = (2 * r * Math.sin(Math.PI / n) * 0.62).toFixed(2)
+  let d = `M${pts[0][0].toFixed(2)} ${pts[0][1].toFixed(2)}`
+  for (let i = 1; i <= n; i++) {
+    const p = pts[i % n]
+    d += ` A${br} ${br} 0 0 1 ${p[0].toFixed(2)} ${p[1].toFixed(2)}`
+  }
+  return `${d}Z`
+}
+
+const MG_RIM = scallop(7, 13)
+const MG_MID = scallop(5.9, 11)
+const MG_IN = scallop(3.6, 8)
+
+/** A mango leaf hanging from its stalk at the origin, tip pointing down. */
+function leafDown(len: number, w: number, bend: number) {
+  const h = w / 2
+  return `M0 0 C${h * 1.3} ${len * 0.22} ${h + bend} ${len * 0.7} ${bend} ${len} C${-h + bend} ${len * 0.7} ${-h * 1.3} ${len * 0.22} 0 0Z`
+}
+
+interface Flower { x: number; y: number; s: number; rot: number; v: 'a' | 'b' }
+interface Leaf { x: number; y: number; len: number; w: number; rot: number; bend: number }
+
+/* The toran is drawn 1:1 in px, centred, and cropped by the screen. */
+const BAY = 92
+const TORAN = (() => {
+  const r = rng(23)
+  const swags: Flower[] = []
+  const leaves: Leaf[] = []
+  const strands: { x: number; flowers: Flower[]; end: Leaf }[] = []
+  for (let k = -8; k < 8; k++) {
+    const x0 = k * BAY
+    const x1 = x0 + BAY
+    const mid = x0 + BAY / 2
+    const sag = 19 + r() * 4
+    for (const f of [0.2, 0.5, 0.8]) {
+      leaves.push({
+        x: x0 + BAY * f + (r() - 0.5) * 5,
+        y: 7,
+        len: (f === 0.5 ? 42 : 36) + r() * 7,
+        w: 12 + r() * 3,
+        rot: (r() - 0.5) * 16,
+        bend: (r() - 0.5) * 3,
+      })
+    }
+    const n = 11
+    for (let i = 1; i < n; i++) {
+      const t = i / n
+      const x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * mid + t * t * x1
+      const y = (1 - t) * (1 - t) * 8 + 2 * (1 - t) * t * (8 + 2 * sag) + t * t * 8
+      swags.push({ x: x + (r() - 0.5) * 1.4, y: y + (r() - 0.5) * 1.4, s: 0.84 + r() * 0.2, rot: r() * 360, v: r() < 0.55 ? 'a' : 'b' })
+    }
+  }
+  for (let k = -8; k <= 8; k++) {
+    const count = k === 0 ? 5 : Math.abs(k) % 2 === 1 ? 3 : 4
+    const flowers: Flower[] = []
+    for (let i = 0; i < count; i++) {
+      flowers.push({ x: k * BAY + (r() - 0.5) * 1.2, y: 14 + i * 10.4, s: 0.86 + r() * 0.14, rot: r() * 360, v: i % 2 === 0 ? 'a' : 'b' })
+    }
+    strands.push({
+      x: k * BAY,
+      flowers,
+      end: { x: k * BAY, y: 14 + (count - 1) * 10.4 + 5, len: 20 + r() * 5, w: 8 + r() * 2, rot: (r() - 0.5) * 10, bend: (r() - 0.5) * 2 },
+    })
+  }
+  return { swags, leaves, strands }
+})()
+
+function MarigoldDefs() {
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {PETALS.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute select-none"
-          style={{ left: `${p.x}%`, bottom: -20, fontSize: p.size, color: p.color }}
-          animate={{ y: -900, x: [0, p.drift, p.drift * 0.5, -p.drift * 0.3, 0], rotate: [p.rotate, p.rotate + 180, p.rotate + 360], opacity: [0, 0.7, 0.5, 0.2, 0] }}
-          transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'easeOut' }}
-        >
-          ✿
-        </motion.div>
-      ))}
-    </div>
+    <svg width="0" height="0" className="absolute" aria-hidden focusable="false">
+      <defs>
+        <g id="iw-mg-a">
+          <path d={MG_RIM} fill={C.mgDeep} />
+          <path d={MG_MID} fill={C.marigold} transform="rotate(17)" />
+          <path d={MG_IN} fill={C.mgLight} transform="rotate(8)" />
+          <circle r={1.2} fill={C.mgCore} />
+        </g>
+        <g id="iw-mg-b">
+          <path d={MG_RIM} fill={C.marigold} />
+          <path d={MG_MID} fill={C.mgLight} transform="rotate(12)" />
+          <path d={MG_IN} fill={C.mgPale} transform="rotate(30)" />
+          <circle r={1.1} fill={C.mgDeep} />
+        </g>
+        {/* The mehrab (pointed arch) as a clip for photographs. */}
+        <clipPath id="iw-mehrab" clipPathUnits="objectBoundingBox">
+          <path d="M0 1 L0 0.34 C0 0.2 0.22 0.13 0.36 0.09 C0.44 0.066 0.48 0.045 0.5 0 C0.52 0.045 0.56 0.066 0.64 0.09 C0.78 0.13 1 0.2 1 0.34 L1 1 Z" />
+        </clipPath>
+      </defs>
+    </svg>
   )
-})
+}
 
-// ── Mandala rings ─────────────────────────────────────────────
-const MandalaRings = memo(function MandalaRings({ isPreview }: { isPreview: boolean }) {
-  const sizes = isPreview ? ['280px', '200px', '128px', '70px'] : ['640px', '480px', '340px', '210px', '110px']
+function Bloom({ f }: { f: Flower }) {
+  return <use href={`#iw-mg-${f.v}`} transform={`translate(${f.x.toFixed(1)} ${f.y.toFixed(1)}) rotate(${f.rot.toFixed(0)}) scale(${f.s.toFixed(2)})`} />
+}
+
+function MangoLeaf({ l, className, delay }: { l: Leaf; className?: string; delay?: number }) {
   return (
-    <>
-      {sizes.map((s, i) => (
-        <div
-          key={i}
-          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{ width: s, height: s, border: `1px solid rgba(212,160,23,${0.14 - i * 0.025})` }}
-          aria-hidden
-        />
-      ))}
-      {/* Corner ornaments */}
-      {!isPreview && [0, 1, 2, 3].map((i) => (
-        <div
-          key={`orn-${i}`}
-          className="pointer-events-none absolute text-[10px] select-none"
-          style={{
-            color: C.goldMuted,
-            top: i < 2 ? '2rem' : undefined,
-            bottom: i >= 2 ? '2rem' : undefined,
-            left: i % 2 === 0 ? '2rem' : undefined,
-            right: i % 2 === 1 ? '2rem' : undefined,
-            letterSpacing: '0.3em',
-          }}
-          aria-hidden
-        >
-          ✦ ✦ ✦
-        </div>
-      ))}
-    </>
+    <g transform={`translate(${l.x.toFixed(1)} ${l.y.toFixed(1)})`}>
+      <g className={className} style={delay !== undefined ? { animationDelay: `${delay}ms` } : undefined}>
+        <g transform={`rotate(${l.rot.toFixed(1)})`}>
+          <path d={leafDown(l.len, l.w, l.bend)} fill={C.leaf} />
+          <path d={`M0 1.5 Q${(l.bend * 0.4).toFixed(1)} ${(l.len * 0.5).toFixed(1)} ${l.bend.toFixed(1)} ${(l.len * 0.93).toFixed(1)}`} stroke={C.leafVein} strokeWidth={0.7} fill="none" />
+        </g>
+      </g>
+    </g>
   )
-})
+}
 
-// ── Film grain ────────────────────────────────────────────────
-const FilmGrain = memo(function FilmGrain() {
+/** Bandhanwar across the top: mango leaves behind, marigold swags and strings in front. */
+function Toran({ animate }: { animate: boolean }) {
   return (
-    <div
-      className="pointer-events-none absolute inset-0 select-none"
+    <svg
+      viewBox="-760 0 1520 104"
+      preserveAspectRatio="xMidYMin slice"
+      className={`block h-[104px] w-full ${animate ? 'iw-toran' : ''}`}
       aria-hidden
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E")`,
-        backgroundRepeat: 'repeat',
-        backgroundSize: '200px',
-        mixBlendMode: 'overlay',
-        opacity: 0.6,
-        zIndex: 1,
-      }}
+    >
+      {TORAN.leaves.map((l, i) => (
+        <MangoLeaf key={`l${i}`} l={l} className={animate ? 'iw-sway' : undefined} delay={animate ? 500 + (i % 7) * 70 : undefined} />
+      ))}
+      {/* mauli — red cord with a marigold-yellow twist */}
+      <line x1={-760} y1={7} x2={760} y2={7} stroke={C.sindoor} strokeWidth={2.6} />
+      <line x1={-760} y1={7} x2={760} y2={7} stroke={C.mgLight} strokeWidth={1.1} strokeDasharray="2.5 3.5" />
+      {TORAN.swags.map((f, i) => <Bloom key={`s${i}`} f={f} />)}
+      {TORAN.strands.map((s, i) => (
+        <g key={`t${i}`} transform={`translate(${s.x} 7)`}>
+          <g className={animate ? 'iw-swing' : undefined} style={animate ? { animationDelay: `${420 + Math.abs(i - 8) * 60}ms` } : undefined}>
+            <g transform={`translate(${-s.x} -7)`}>
+              <line x1={s.x} y1={7} x2={s.x} y2={s.end.y} stroke={C.mgDeep} strokeWidth={0.8} />
+              {s.flowers.map((f, j) => <Bloom key={j} f={f} />)}
+              <MangoLeaf l={s.end} />
+            </g>
+          </g>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+/** Kalash with coconut and five mango leaves — sits under the arch's apex. */
+function Kalash({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
+  const leaf = (a: number, len: number) => (
+    <path
+      key={a}
+      d={`M0 0 C${len * 0.3} -3.6 ${len * 0.7} -3.4 ${len} 0 C${len * 0.7} 3.4 ${len * 0.3} 3.6 0 0Z`}
+      transform={`rotate(${a})`}
+      fill={C.leaf}
     />
   )
-})
-
-// ── Divider ───────────────────────────────────────────────────
-const SpiceDivider = memo(function SpiceDivider({ className = '' }: { className?: string }) {
   return (
-    <div className={`flex items-center justify-center gap-2 sm:gap-3 ${className}`}>
-      <div className="h-px w-16" style={{ background: `linear-gradient(90deg,transparent,${C.crimsonMuted})` }} />
-      <span className="select-none text-[10px] tracking-[0.5em]" style={{ color: C.gold }}>✦</span>
-      <div className="h-px w-8" style={{ background: `linear-gradient(90deg,${C.crimsonMuted},${C.goldMuted})` }} />
-      <span className="select-none text-[8px]" style={{ color: C.crimson }}>❋</span>
-      <div className="h-px w-8" style={{ background: `linear-gradient(270deg,${C.crimsonMuted},${C.goldMuted})` }} />
-      <span className="select-none text-[10px] tracking-[0.5em]" style={{ color: C.gold }}>✦</span>
-      <div className="h-px w-16" style={{ background: `linear-gradient(270deg,transparent,${C.crimsonMuted})` }} />
+    <g transform={`translate(${x} ${y}) scale(${s})`}>
+      <g transform="translate(0 13)">{[-168, -140, -40, -12].map((a, i) => leaf(a, i % 3 === 0 ? 15 : 13))}</g>
+      <ellipse cx={0} cy={4} rx={7.2} ry={8.6} fill={C.mgDeep} />
+      <path d="M-3 -3.6 C-1.5 -6.5 1.5 -6.5 3 -3.6" stroke={C.leaf} strokeWidth={1.2} fill="none" strokeLinecap="round" />
+      <path d="M-2.5 5 Q0 8 2.5 5" stroke={C.mgCore} strokeWidth={0.6} fill="none" opacity={0.6} />
+      <rect x={-10} y={12} width={20} height={3.4} rx={1.4} fill={C.maroon} />
+      <path d="M-7 15.4 C-9 19 -16 21 -16 30 C-16 39 -8 43 -5 44 L-7 47 L7 47 L5 44 C8 43 16 39 16 30 C16 21 9 19 7 15.4Z" fill={C.sindoor} />
+      <path d="M-15.3 27 H15.3" stroke={C.mgLight} strokeWidth={1.2} />
+      <path d="M-15.8 31.5 H15.8" stroke={C.mgLight} strokeWidth={0.6} />
+      {[-9, -3, 3, 9].map((cx) => <circle key={cx} cx={cx} cy={37} r={0.9} fill={C.mgLight} />)}
+    </g>
+  )
+}
+
+/** The arched card: fill, a maroon line and a sindoor inner line. */
+function MehrabFrame() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 flex flex-col">
+      <svg viewBox="0 0 320 150" className="block w-full shrink-0" style={{ overflow: 'visible' }}>
+        <path
+          d="M1 150 L1 128 C1 76 64 56 112 44 C138 37 154 33 160 22 C166 33 182 37 208 44 C256 56 319 76 319 128 L319 150Z"
+          fill={C.card}
+        />
+        <path
+          d="M1 150 L1 128 C1 76 64 56 112 44 C138 37 154 33 160 22 C166 33 182 37 208 44 C256 56 319 76 319 128 L319 150"
+          fill="none"
+          stroke={C.maroon}
+          strokeWidth={1.3}
+          vectorEffect="non-scaling-stroke"
+        />
+        <path
+          d="M9.5 150 L9.5 130 C9.5 82 70 64 115 52.5 C139 46.5 153 42.5 160 33 C167 42.5 181 46.5 205 52.5 C250 64 310.5 82 310.5 130 L310.5 150"
+          fill="none"
+          stroke={C.sindoor}
+          strokeWidth={0.8}
+          vectorEffect="non-scaling-stroke"
+        />
+        {/* finial: a lotus bud on the apex */}
+        <path d="M160 3 C164.5 9 164.5 15 160 20 C155.5 15 155.5 9 160 3Z" fill={C.sindoor} />
+        <circle cx={160} cy={21.5} r={1.8} fill={C.maroon} />
+        <Kalash x={160} y={62} s={0.78} />
+      </svg>
+      <div className="relative -mt-px flex-1">
+        <span className="absolute inset-y-0" style={{ left: '0.3125%', right: '0.3125%', background: C.card }} />
+        {/* Sides drawn by the same rasteriser as the arch, so the lines meet cleanly. */}
+        <svg viewBox="0 0 320 10" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
+          <path d="M1 0 V10 M319 0 V10" stroke={C.maroon} strokeWidth={1.3} vectorEffect="non-scaling-stroke" />
+        </svg>
+        <svg viewBox="0 0 320 10" preserveAspectRatio="none" className="absolute inset-x-0 top-0 w-full" style={{ height: 'calc(100% - 10px)' }}>
+          <path d="M9.5 0 V10 M310.5 0 V10" stroke={C.sindoor} strokeWidth={0.8} vectorEffect="non-scaling-stroke" />
+        </svg>
+        <span className="absolute bottom-0 h-[1.3px]" style={{ left: '0.3125%', right: '0.3125%', background: C.maroon }} />
+        <span className="absolute h-[0.8px]" style={{ left: '2.96875%', right: '2.96875%', bottom: 10, background: C.sindoor }} />
+      </div>
     </div>
   )
-})
-
-// ── Countdown ─────────────────────────────────────────────────
-function useCountdown(dateStr: string, timeStr: string) {
-  const [diff, setDiff] = useState(0)
-  useEffect(() => {
-    if (!dateStr) return
-    const target = new Date(`${dateStr}T${timeStr || '00:00'}:00`)
-    const tick = () => setDiff(Math.max(0, target.getTime() - Date.now()))
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [dateStr, timeStr])
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff % 86400000) / 3600000),
-    minutes: Math.floor((diff % 3600000) / 60000),
-    seconds: Math.floor((diff % 60000) / 1000),
-  }
 }
 
-// ── Music ─────────────────────────────────────────────────────
-const MusicButton = memo(function MusicButton({ src }: { src: string }) {
-  const [playing, setPlaying] = useState(false)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
-  useEffect(() => {
-    if (!src) return
-    audioRef.current = new Audio(src)
-    audioRef.current.loop = true
-    return () => { audioRef.current?.pause(); audioRef.current = null }
-  }, [src])
-  const toggle = useCallback(() => {
-    const a = audioRef.current
-    if (!a) return
-    if (playing) { a.pause(); setPlaying(false) }
-    else a.play().then(() => setPlaying(true)).catch(() => {})
-  }, [playing])
+/** A garland laid along an edge — the toran's marigolds, in a row. */
+function MarigoldEdge({ className }: { className?: string }) {
   return (
-    <motion.button onClick={toggle} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-      className="flex items-center gap-2 sm:gap-3 rounded-full px-4 sm:px-6 md:px-8 py-2.5"
-      style={{ background: C.bgSurface, border: `1px solid ${C.goldBorder}`, color: C.text }}>
-      <span style={{ color: C.gold }}>
-        {playing ? (
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
-        ) : (
-          <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M8 5v14l11-7z" /></svg>
-        )}
-      </span>
-      <div className="flex items-end gap-[3px] h-4">
-        {[4, 7, 10, 7, 4].map((h, i) => (
-          <motion.div key={i} className="w-[3px] rounded-full"
-            style={{ background: playing ? C.gold : C.textFaint }}
-            animate={playing ? { height: [`${h * 0.6}px`, `${h}px`, `${h * 0.6}px`] } : { height: '3px' }}
-            transition={{ duration: 0.55 + i * 0.1, delay: i * 0.08, repeat: playing ? Infinity : 0, ease: 'easeInOut' }} />
-        ))}
-      </div>
-      <span className="text-[11px] tracking-[0.18em]" style={{ color: C.textMuted }}>{playing ? 'NOW PLAYING' : 'PLAY'}</span>
-    </motion.button>
-  )
-})
-
-// ── Helpers ───────────────────────────────────────────────────
-function parseList(v?: string): string[] {
-  if (!v) return []
-  return v.split(/\n|,/).map(s => s.trim()).filter(Boolean)
-}
-
-function fadeUp(delay = 0) {
-  return {
-    initial: { opacity: 0, y: 28 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: '-40px' },
-    transition: { duration: 0.9, delay, ease: BEZIER },
-  } as const
-}
-
-// ── Wishes ────────────────────────────────────────────────────
-function WeddingWishes({ eventId }: { eventId: string }) {
-  const [wishes, setWishes] = useState<Array<{ id: string; name: string; message: string }>>([])
-  const [name, setName] = useState('')
-  const [message, setMessage] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const MAX = 320
-
-  useEffect(() => {
-    if (eventId === '__preview__') return
-    fetch(`/api/wishes?eventId=${eventId}`)
-      .then(r => r.json())
-      .then(d => setWishes(Array.isArray(d) ? d : []))
-      .catch(() => {})
-  }, [eventId])
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name.trim() || !message.trim()) return
-    if (eventId === '__preview__') { setSubmitted(true); return }
-    setLoading(true); setError('')
-    try {
-      const res = await fetch('/api/wishes', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventId, name: name.trim(), message: message.trim() }),
-      })
-      if (!res.ok) throw new Error()
-      // Wishes publish on arrival — add it to the wall immediately.
-      const created = await res.json()
-      setWishes(prev => [created, ...prev.filter(w => w.id !== created.id)])
-      setSubmitted(true); setName(''); setMessage('')
-    } catch { setError('Could not send your wish. Please try again.') }
-    finally { setLoading(false) }
-  }
-
-  const inputStyle = { color: C.text, borderBottom: `1px solid rgba(255,255,255,0.1)`, background: 'transparent' }
-  const focusStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => { e.currentTarget.style.borderBottomColor = C.goldMuted }
-  const blurStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => { e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,0.1)' }
-
-  return (
-    <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-18 md:py-24" style={{ background: C.bgMid }}>
-      <div className="max-w-xl mx-auto">
-        <motion.div {...fadeUp()} className="text-center mb-14">
-          <p className="text-[11px] uppercase tracking-[0.38em] mb-4" style={{ color: C.goldMuted }}>Ashirwad</p>
-          <h2 className="font-heading text-3xl sm:text-4xl mb-6" style={{ color: C.text }}>Bless the Couple</h2>
-          <SpiceDivider />
-        </motion.div>
-
-        <motion.div {...fadeUp(0.1)} className="mb-8 sm:mb-10 rounded-lg sm:rounded-2xl p-5 sm:p-7 sm:p-6 sm:p-9" style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}>
-          <AnimatePresence mode="wait">
-            {submitted ? (
-              <motion.div key="thanks" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="text-center py-8">
-                <motion.div initial={{ scale: 0 }} animate={{ scale: [0, 1.3, 1] }} transition={{ duration: 0.5, ease: BEZIER }} className="text-3xl sm:text-4xl md:text-5xl select-none mb-6" style={{ color: C.gold }}>✦</motion.div>
-                <p className="font-heading text-2xl mb-3" style={{ color: C.text }}>Dhanyawad!</p>
-                <p className="text-sm mb-7" style={{ color: C.textMuted, lineHeight: 1.8 }}>Your blessings have been received with love.<br />They will appear here for all to see.</p>
-                <button onClick={() => setSubmitted(false)} className="text-xs tracking-[0.12em] transition-opacity hover:opacity-100" style={{ color: C.goldMuted }}>Send another blessing →</button>
-              </motion.div>
-            ) : (
-              <motion.form key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onSubmit={handleSubmit} className="space-y-7">
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.22em] mb-2.5" style={{ color: C.textMuted }}>Your Name</label>
-                  <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Sharma Ji" required className="w-full border-0 border-b py-3 text-sm focus:outline-none" style={inputStyle} onFocus={focusStyle} onBlur={blurStyle} />
-                </div>
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.22em] mb-2.5" style={{ color: C.textMuted }}>Your Blessing</label>
-                  <textarea value={message} onChange={e => setMessage(e.target.value.slice(0, MAX))} placeholder="Write something from the heart…" required rows={4} className="w-full border-0 border-b py-3 text-sm focus:outline-none resize-none" style={inputStyle} onFocus={focusStyle} onBlur={blurStyle} />
-                  <div className="flex justify-end mt-1.5">
-                    <span className="text-[10px] tabular-nums" style={{ color: MAX - message.length <= 40 ? C.gold : C.textFaint }}>{MAX - message.length} left</span>
-                  </div>
-                </div>
-                {error && <p className="text-xs" style={{ color: '#E87070' }}>{error}</p>}
-                <motion.button type="submit" disabled={loading} whileHover={{ scale: loading ? 1 : 1.015 }} whileTap={{ scale: loading ? 1 : 0.985 }}
-                  className="w-full py-3.5 rounded-xl text-sm tracking-[0.12em] font-medium disabled:opacity-50"
-                  style={{ background: C.goldFaint, border: `1px solid ${C.goldBorder}`, color: C.gold }}>
-                  {loading ? 'Sending…' : 'SEND BLESSINGS ✦'}
-                </motion.button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {wishes.length > 0 && (
-          <div className="space-y-4">
-            {wishes.map((wish, i) => (
-              <motion.div key={wish.id} {...fadeUp(i * 0.07)} className="rounded-lg sm:rounded-2xl px-7 py-7 relative overflow-hidden" style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}>
-                <div className="absolute top-0 inset-x-0 h-px" style={{ background: `linear-gradient(90deg,transparent 15%,${C.goldMuted} 50%,transparent 85%)` }} />
-                <div className="font-heading select-none mb-2 leading-none" style={{ fontSize: '3.5rem', color: 'rgba(212,160,23,0.1)' }} aria-hidden>&ldquo;</div>
-                <p className="text-sm italic leading-relaxed mb-5" style={{ color: C.textMuted }}>{wish.message}</p>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] shrink-0" style={{ background: C.goldFaint, border: `1px solid ${C.goldBorder}`, color: C.gold }}>
-                    {wish.name.charAt(0).toUpperCase()}
-                  </div>
-                  <p className="text-xs tracking-wider" style={{ color: C.goldMuted }}>{wish.name}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+    <svg className={`block h-[16px] w-full ${className ?? ''}`} aria-hidden>
+      <defs>
+        <pattern id="iw-edge" width="26" height="16" patternUnits="userSpaceOnUse">
+          <use href="#iw-mg-a" transform="translate(6.5 8) rotate(20) scale(0.95)" />
+          <use href="#iw-mg-b" transform="translate(19.5 8) rotate(-35) scale(0.95)" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="16" fill="url(#iw-edge)" />
+    </svg>
   )
 }
 
-// ── Main ──────────────────────────────────────────────────────
-interface Props { data: Record<string, string>; eventId?: string; isPreview?: boolean }
+function Paisley({ className, flip }: { className?: string; flip?: boolean }) {
+  return (
+    <svg viewBox="0 0 48 64" className={className} style={{ transform: flip ? 'scaleX(-1)' : undefined }} aria-hidden>
+      <path d="M22 62 C8 62 2 50 4 40 C6 28 18 22 26 16 C32 11 34 5 30 1 C40 4 46 14 45 26 C44 46 36 62 22 62Z" fill="none" stroke={C.sindoor} strokeWidth={1} />
+      <path d="M22 55.5 C13.5 55.5 9.5 48 11 40.5 C12.5 33 21 29 27.5 24.5 C33 21 38.5 25 38.5 32 C38.5 45 32 55.5 22 55.5Z" fill="rgba(218,138,34,0.16)" stroke={C.marigold} strokeWidth={0.8} />
+      <circle cx={24} cy={41} r={4.2} fill="none" stroke={C.maroon} strokeWidth={0.8} />
+      <circle cx={24} cy={41} r={1.4} fill={C.maroon} />
+      {[0, 1, 2, 3, 4].map((i) => {
+        const a = (-110 + i * 40) * (Math.PI / 180)
+        return <circle key={i} cx={24 + Math.cos(a) * 8.5} cy={41 + Math.sin(a) * 8.5} r={0.9} fill={C.sindoor} />
+      })}
+      <path d="M30.5 1 C28 6 30 9 33 9" fill="none" stroke={C.sindoor} strokeWidth={0.8} />
+    </svg>
+  )
+}
 
-export default function IndianWedding({ data, eventId, isPreview = false }: Props) {
-  const brideName = data.brideName || 'Priya'
-  const groomName = data.groomName || 'Arjun'
-  const { date, time, venue, venueAddress, mapsUrl, dressCode, schedule, galleryImages, musicUrl, message } = data
+function Lotus({ className, color = C.sindoor }: { className?: string; color?: string }) {
+  return (
+    <svg viewBox="0 0 60 30" className={className} aria-hidden>
+      <g fill="rgba(218,138,34,0.14)" stroke={color} strokeWidth={0.9} strokeLinejoin="round">
+        <path d="M30 26.5 C20 26.5 8 22.5 2 16.5 C12 14.5 22 18.5 30 26.5Z" />
+        <path d="M30 26.5 C40 26.5 52 22.5 58 16.5 C48 14.5 38 18.5 30 26.5Z" />
+        <path d="M30 26.5 C22 22.5 14.5 16 12.5 7.5 C20.5 9 27 15 30 26.5Z" />
+        <path d="M30 26.5 C38 22.5 45.5 16 47.5 7.5 C39.5 9 33 15 30 26.5Z" />
+        <path d="M30 1.5 C36.5 8.5 37.5 18 30 26.5 C22.5 18 23.5 8.5 30 1.5Z" />
+      </g>
+      <path d="M17 28.5 H43" stroke={color} strokeWidth={0.9} />
+    </svg>
+  )
+}
 
-  const formattedDate = useMemo(() => formatDate(date), [date])
-  const formattedTime = useMemo(() => formatTime(time), [time])
-  const gallery = useMemo(() => parseList(galleryImages), [galleryImages])
-  const scheduleItems = useMemo(() => parseList(schedule), [schedule])
-  const { days, hours, minutes, seconds } = useCountdown(date, time)
+function Divider({ width = 240 }: { width?: number }) {
+  return (
+    <div className="mx-auto flex items-center justify-center gap-3" style={{ maxWidth: width }} aria-hidden>
+      <span className="h-px flex-1" style={{ background: C.rule }} />
+      <Lotus className="h-[18px] w-[36px]" />
+      <span className="h-px flex-1" style={{ background: C.rule }} />
+    </div>
+  )
+}
 
-  const details = [
-    { label: 'Vivah Tithi', value: formattedDate },
-    { label: 'Muhurat', value: formattedTime },
-    ...(venue ? [{ label: 'Vivah Sthal', value: venue, sub: venueAddress }] : []),
-    ...(dressCode ? [{ label: 'Dress Code', value: dressCode }] : []),
-  ].filter(d => d.value)
+function Heading({ hi, en }: { hi: string; en: string }) {
+  return (
+    <div className="text-center">
+      <h2 lang="hi" className="leading-[1.2]" style={{ fontFamily: display, fontSize: 34, color: C.sindoor }}>{hi}</h2>
+      <p className="mt-1 italic" style={{ fontFamily: display, fontSize: 18, color: C.soft }}>{en}</p>
+    </div>
+  )
+}
+
+function MehrabPhoto({ src, alt, className, lazy }: { src: string; alt: string; className?: string; lazy?: boolean }) {
+  return (
+    <div className={className} style={{ clipPath: 'url(#iw-mehrab)', background: C.maroon, padding: 2 }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} loading={lazy ? 'lazy' : undefined} className="h-full w-full object-cover" style={{ clipPath: 'url(#iw-mehrab)' }} />
+    </div>
+  )
+}
+
+export default function IndianWedding({ data, eventId, isPreview = false }: InviteProps) {
+  const bride = data.brideName?.trim() || 'Priya'
+  const groom = data.groomName?.trim() || 'Arjun'
+  const date = dateParts(data.date)
+  const time = timeLabel(data.time)
+  const countdown = useCountdown(data.date, data.time, !isPreview)
+  const schedule = useMemo(() => parseSchedule(data.schedule), [data.schedule])
+  const photos = useMemo(() => galleryImages(data.galleryImages, 7), [data.galleryImages])
+  const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
+  const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
+  const calendar = calendarHref(`Wedding of ${bride} & ${groom}`, data.date, data.time, place || undefined, 5)
+  const portraits = [
+    { src: data.bridePhoto, alt: bride },
+    { src: data.groomPhoto, alt: groom },
+  ].filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; alt: string }[]
+  const venue = data.venue?.trim() || 'The venue'
 
   return (
-    <div className="relative min-h-screen font-body" style={{ background: C.bg, color: C.text }}>
+    <div
+      className="iw relative overflow-x-hidden"
+      style={{ background: C.paper, color: C.maroon, fontFamily: text, containerType: 'inline-size', ...grain(0.07) }}
+    >
+      <style>{`
+        .iw .iw-toran { animation: iw-drop 1100ms cubic-bezier(.2,.8,.25,1.05) both; }
+        .iw .iw-swing { transform-box: fill-box; transform-origin: 50% 0; animation: iw-swing 2200ms ease-out both; }
+        .iw .iw-sway { transform-box: fill-box; transform-origin: 50% 0; animation: iw-sway 2000ms ease-out both; }
+        .iw .iw-in { opacity: 0; transform: translateY(8px); animation: iw-in 900ms cubic-bezier(.2,.7,.2,1) forwards; }
+        @keyframes iw-drop { from { transform: translateY(-46px); opacity: 0; } 35% { opacity: 1; } to { transform: none; opacity: 1; } }
+        @keyframes iw-swing { 0% { transform: rotate(7deg); } 30% { transform: rotate(-4.5deg); } 55% { transform: rotate(2.4deg); } 78% { transform: rotate(-1deg); } 100% { transform: rotate(0); } }
+        @keyframes iw-sway { 0% { transform: rotate(-5deg); } 40% { transform: rotate(3deg); } 70% { transform: rotate(-1.2deg); } 100% { transform: rotate(0); } }
+        @keyframes iw-in { to { opacity: 1; transform: none; } }
+        .iw .iw-btn { transition: background-color .2s ease, color .2s ease; }
+        .iw .iw-btn-solid:hover { background: ${C.maroon}; }
+        .iw .iw-btn-line:hover { background: rgba(90,19,32,0.06); }
+        @media (prefers-reduced-motion: reduce) {
+          .iw .iw-toran, .iw .iw-swing, .iw .iw-sway, .iw .iw-in { animation: none; opacity: 1; transform: none; }
+        }
+      `}</style>
 
-      {/* ── HERO ────────────────────────────────────────────── */}
-      <section className={`relative flex ${isPreview ? 'min-h-[380px] py-12' : 'min-h-screen'} flex-col items-center justify-center overflow-hidden px-4 sm:px-6 md:px-8 text-center`}>
-        <FilmGrain />
-        <MandalaRings isPreview={isPreview} />
-        {!isPreview && <FloatingPetals />}
+      <MarigoldDefs />
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.maroon} background="rgba(251,244,230,0.9)" border={C.rule} />
 
-        {/* Ambient blooms */}
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 40%, rgba(196,30,58,0.1) 0%, transparent 65%)' }} aria-hidden />
-        <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 55%, rgba(212,160,23,0.06) 0%, transparent 70%)' }} aria-hidden />
-
-        <div className="relative z-[2] flex flex-col items-center">
-          <motion.p
-            initial={{ opacity: 0, letterSpacing: '1.5em' }} animate={{ opacity: 1, letterSpacing: '0.55em' }}
-            transition={{ duration: 1.6, delay: 0.1, ease: BEZIER }}
-            className="mb-6 text-[10px] uppercase select-none" style={{ color: C.goldMuted }}>
-            ॐ श्री गणेशाय नमः
-          </motion.p>
-
-          <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.8, delay: 0.3, ease: BEZIER }} className="mb-7 w-full">
-            <SpiceDivider />
-          </motion.div>
-
-          {musicUrl && !isPreview && (
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.5, ease: BEZIER }} className="mb-8 sm:mb-10">
-              <MusicButton src={musicUrl} />
-            </motion.div>
-          )}
-
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.4, ease: BEZIER }}
-            className="text-[11px] uppercase tracking-[0.38em] mb-6 select-none" style={{ color: C.crimsonMuted }}>
-            Shubh Vivah
-          </motion.p>
-
-          <PortraitRow data={data} dark={true} />
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.5, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(196,30,58,0.3)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-            {brideName}
-          </motion.h1>
-
-          <motion.p initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.75, ease: BEZIER }}
-            className="select-none my-2 font-heading" style={{ fontSize: isPreview ? '1.5rem' : 'clamp(2rem,6vw,4.5rem)', color: C.crimson }}>
-            &amp;
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.95, ease: BEZIER }}
-            className="font-heading" style={{ fontSize: isPreview ? '2.2rem' : 'clamp(2rem,7vw,7rem)', lineHeight: 1.05, color: C.text, textShadow: '0 0 60px rgba(196,30,58,0.3)', letterSpacing: '0.025em', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
-            {groomName}
-          </motion.h1>
-
-          <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.9, delay: 1.2, ease: BEZIER }} className="my-8 w-full">
-            <SpiceDivider />
-          </motion.div>
-
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.35 }}
-            className="text-sm uppercase tracking-[0.42em]" style={{ color: C.textMuted }}>
-            {formattedDate || 'The Auspicious Day'}
-          </motion.p>
-          {venue && (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.5 }}
-              className="mt-2 text-xs uppercase tracking-[0.3em]" style={{ color: C.textFaint }}>
-              {venue}
-            </motion.p>
-          )}
+      {/* ── The card ─────────────────────────────────────────────── */}
+      <section className="relative flex flex-col" style={{ minHeight: isPreview ? 560 : '100svh' }}>
+        <div className="absolute inset-x-0 top-0 z-10">
+          <Toran animate={!isPreview} />
         </div>
 
-        <motion.div animate={{ opacity: [0, 0.5, 0], y: [0, 10, 0] }} transition={{ duration: 2.2, delay: 2.5, repeat: Infinity }} className="absolute bottom-24 z-[2]" aria-hidden>
-          <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke={C.goldMuted} strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M7 2v18m0 0l-4-5m4 5l4-5" />
-          </svg>
-        </motion.div>
+        <div className="relative mx-auto w-full max-w-[30rem] flex-1 px-4 pb-8 pt-[88px]">
+          <div className="relative text-center">
+            <MehrabFrame />
+
+            <div className="relative px-7 pb-[92px]" style={{ paddingTop: '37%' }}>
+              <p lang="hi" className="iw-in leading-[1.3]" style={{ fontFamily: display, fontSize: 'clamp(19px, 5.6cqi, 24px)', color: C.sindoor, animationDelay: '500ms' }}>
+                ॥ श्री गणेशाय नमः ॥
+              </p>
+              <p
+                lang="hi"
+                className="iw-in mx-auto mt-3 max-w-[18rem] leading-[1.65]"
+                style={{ fontFamily: display, fontSize: 14, color: C.faint, animationDelay: '650ms' }}
+              >
+                वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br />
+                निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥
+              </p>
+
+              <div className="iw-in mt-6" style={{ animationDelay: '800ms' }}>
+                <Divider width={200} />
+              </div>
+
+              <p
+                className="iw-in mx-auto mt-6 max-w-[17rem] italic leading-[1.5]"
+                style={{ fontFamily: display, fontSize: 18, color: C.soft, animationDelay: '950ms' }}
+              >
+                With the blessings of our elders, our families cordially invite you to the wedding of
+              </p>
+
+              {portraits.length > 0 && (
+                <div className="iw-in mt-7 flex justify-center gap-3" style={{ animationDelay: '1050ms' }}>
+                  {portraits.map((p) => (
+                    <MehrabPhoto key={p.alt} src={p.src} alt={p.alt} className="h-[128px] w-[96px]" />
+                  ))}
+                </div>
+              )}
+
+              <h1 className="mt-6" style={{ fontFamily: display, fontWeight: 400 }}>
+                <span className="iw-in block leading-[1.05]" style={{ fontSize: 'clamp(42px, 13.5cqi, 66px)', color: C.maroon, animationDelay: '1150ms' }}>
+                  {bride}
+                </span>
+                <span className="iw-in my-1.5 block italic" style={{ fontSize: 'clamp(18px, 5cqi, 22px)', color: C.sindoor, animationDelay: '1250ms' }}>
+                  with
+                </span>
+                <span className="iw-in block leading-[1.05]" style={{ fontSize: 'clamp(42px, 13.5cqi, 66px)', color: C.maroon, animationDelay: '1350ms' }}>
+                  {groom}
+                </span>
+              </h1>
+
+              <div className="iw-in mx-auto mt-8 max-w-[20rem] border-y py-4" style={{ borderColor: C.rule, animationDelay: '1500ms' }}>
+                {date ? (
+                  <>
+                    <p className="text-[15px] font-medium uppercase" style={{ letterSpacing: '0.2em', color: C.soft }}>{date.weekday}</p>
+                    <p className="mt-1 whitespace-nowrap leading-[1.15]" style={{ fontFamily: display, fontSize: 'clamp(23px, 7.4cqi, 31px)', color: C.maroon }}>
+                      {date.day} {date.month} {date.year}
+                    </p>
+                  </>
+                ) : (
+                  <p style={{ fontFamily: display, fontSize: 24, color: C.maroon }}>Date to be announced</p>
+                )}
+                {time && (
+                  <p className="mt-2 text-[16px]" style={{ color: C.sindoor }}>
+                    <span className="italic" style={{ fontFamily: display }}>Shubh muhurat</span>
+                    <span className="mx-2" style={{ color: C.faint }}>·</span>
+                    <span className="font-semibold">{time}</span>
+                  </p>
+                )}
+              </div>
+
+              <div className="iw-in mt-7" style={{ animationDelay: '1650ms' }}>
+                <p className="italic" style={{ fontFamily: display, fontSize: 17, color: C.faint }}>at</p>
+                <p className="mt-1 leading-[1.2]" style={{ fontFamily: display, fontSize: 25, color: C.maroon }}>{venue}</p>
+                {data.venueAddress && (
+                  <p className="mx-auto mt-1.5 max-w-[17rem] text-[15px] leading-[1.5]" style={{ color: C.soft }}>{data.venueAddress}</p>
+                )}
+              </div>
+
+              {data.dressCode && (
+                <p className="iw-in mt-6 text-[15px]" style={{ color: C.soft, animationDelay: '1750ms' }}>
+                  <span className="italic" style={{ fontFamily: display, color: C.sindoor }}>Attire</span>
+                  <span className="mx-2" style={{ color: C.faint }}>·</span>
+                  {data.dressCode}
+                </p>
+              )}
+            </div>
+
+            <Paisley className="pointer-events-none absolute bottom-[20px] left-[20px] w-[38px]" />
+            <Paisley flip className="pointer-events-none absolute bottom-[20px] right-[20px] w-[38px]" />
+          </div>
+        </div>
       </section>
 
-      {/* ── COUNTDOWN ─────────────────────────────────────────── */}
-      {date && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-6' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bgMid }}>
-          <div className="max-w-lg mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-8 sm:mb-10" style={{ color: C.goldMuted }}>
-              Shubh Muhurat Countdown
-            </motion.p>
-            <div className={`grid gap-2 ${isPreview ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-4 sm:gap-3'}`}>
-              {[{ v: days, l: 'Days' }, { v: hours, l: 'Hours' }, { v: minutes, l: 'Mins' }, { v: seconds, l: 'Secs' }].map(({ v, l }, i) => (
-                <motion.div key={l} {...fadeUp(i * 0.07)} className="rounded-lg sm:rounded-2xl flex flex-col items-center justify-center py-4 sm:py-6 relative overflow-hidden" style={{ background: C.bgCard, border: `1px solid ${C.crimsonBorder}` }}>
-                  <div className="absolute inset-x-0 bottom-0 h-px" style={{ background: `linear-gradient(90deg,transparent 10%,${C.crimsonBorder} 50%,transparent 90%)` }} />
-                  <span className="font-heading tabular-nums" style={{ fontSize: isPreview ? '1.3rem' : 'clamp(1.6rem,5vw,2.6rem)', color: C.text, lineHeight: 1 }}>{String(v).padStart(2, '0')}</span>
-                  <span className="mt-1.5 text-[9px] uppercase tracking-[0.2em]" style={{ color: C.textFaint }}>{l}</span>
-                </motion.div>
+      {/* ── Countdown, as a line of type on the maroon band ───────── */}
+      {countdown && (
+        <section className="relative px-6 pb-11 pt-12 text-center" style={{ background: C.band, color: C.bandInk }}>
+          <MarigoldEdge className="absolute inset-x-0 -top-[8px]" />
+          <p className="italic" style={{ fontFamily: display, fontSize: 19, color: 'rgba(246,232,208,0.82)' }}>The wedding is</p>
+          <p className="mt-2 leading-none tabular-nums" style={{ fontFamily: display, fontSize: 'clamp(66px, 21cqi, 96px)', color: C.mgLight }}>
+            {countdown.days}
+          </p>
+          <p className="mt-1 italic" style={{ fontFamily: display, fontSize: 21 }}>{countdown.days === 1 ? 'day away' : 'days away'}</p>
+          <p className="mt-4 text-[15px] tabular-nums" style={{ color: 'rgba(246,232,208,0.7)', letterSpacing: '0.04em' }}>
+            {countdown.hours} hr · {pad2(countdown.minutes)} min · {pad2(countdown.seconds)} sec
+          </p>
+          <MarigoldEdge className="absolute inset-x-0 -bottom-[8px]" />
+        </section>
+      )}
+
+      <div className="mx-auto max-w-[30rem] px-6">
+        {/* ── A note from the family ─────────────────────────────── */}
+        {data.message && (
+          <Reveal disabled={isPreview} as="section" className="pt-16 text-center">
+            <Lotus className="mx-auto h-[26px] w-[52px]" />
+            <p className="mx-auto mt-5 max-w-[24rem] leading-[1.55]" style={{ fontFamily: display, fontSize: 21, color: C.maroon }}>
+              {data.message}
+            </p>
+            <p className="mt-4 text-[15px]" style={{ color: C.soft }}>— {bride} &amp; {groom}</p>
+          </Reveal>
+        )}
+
+        {/* ── Order of ceremonies ───────────────────────────────── */}
+        {schedule.length > 0 && (
+          <Reveal disabled={isPreview} as="section" className="pt-16">
+            <Heading hi="कार्यक्रम" en="The ceremonies" />
+            <ol className="relative mx-auto mt-8 max-w-[24rem]">
+              <span aria-hidden className="absolute bottom-5 top-5 w-px" style={{ left: 99.5, background: C.mgDeep, opacity: 0.55 }} />
+              {schedule.map((item, i) => (
+                <li key={`${item.title}-${i}`} className="relative grid grid-cols-[80px_24px_1fr] items-center gap-x-2 py-3.5">
+                  <span className="text-right text-[15px] font-semibold tabular-nums" style={{ color: C.sindoor }}>
+                    {item.time || ''}
+                  </span>
+                  <svg viewBox="-8 -8 16 16" className="relative mx-auto h-[22px] w-[22px]" aria-hidden>
+                    <use href={i % 2 ? '#iw-mg-b' : '#iw-mg-a'} transform={`rotate(${i * 37}) scale(1.15)`} />
+                  </svg>
+                  <span className="leading-[1.25]" style={{ fontFamily: display, fontSize: 21, color: C.maroon }}>
+                    {item.title}
+                    {item.note && <span className="mt-0.5 block text-[15px]" style={{ fontFamily: text, color: C.soft }}>{item.note}</span>}
+                  </span>
+                </li>
               ))}
-            </div>
+            </ol>
+          </Reveal>
+        )}
+      </div>
+
+      {/* ── Photographs in mehrab frames ───────────────────────────── */}
+      {photos.length > 0 && (
+        <section className="mx-auto max-w-[34rem] px-5 pt-16">
+          <Reveal disabled={isPreview}>
+            <Heading hi="झलकियाँ" en="A few glimpses" />
+          </Reveal>
+          <div className="mt-8 grid grid-cols-2 gap-3">
+            {photos.map((src, i) => {
+              const wide = i === 0 || (photos.length % 2 === 0 && i === photos.length - 1)
+              return (
+                <Reveal key={`${src}-${i}`} disabled={isPreview} delay={(i % 2) * 90} className={wide ? 'col-span-2' : ''}>
+                  <MehrabPhoto src={src} alt="" lazy className={wide ? 'aspect-[4/5] w-full' : 'aspect-[3/4] w-full'} />
+                </Reveal>
+              )
+            })}
           </div>
         </section>
       )}
 
-      {/* ── DETAILS ──────────────────────────────────────────── */}
-      {details.length > 0 && (
-        <section className={`px-4 sm:px-6 md:px-8 ${isPreview ? 'py-6' : 'py-12 sm:py-16 md:py-20'}`} style={{ background: C.bg }}>
-          <div className="max-w-2xl mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Vivah Vivaran</motion.p>
-            <motion.h2 {...fadeUp(0.08)} className={`font-heading text-center ${isPreview ? 'text-lg mb-5' : 'text-2xl sm:text-3xl md:text-4xl mb-8 sm:mb-12'}`} style={{ color: C.text }}>Event Details</motion.h2>
-            <div className={`grid gap-2 ${isPreview ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 sm:gap-4'}`}>
-              {details.map((detail, i) => (
-                <motion.div key={detail.label} {...fadeUp(i * 0.07)} className={`relative overflow-hidden ${isPreview ? 'rounded-lg p-3' : 'rounded-lg sm:rounded-2xl p-4 sm:p-6'}`} style={{ background: C.bgCard, border: `1px solid ${C.goldBorder}` }}>
-                  <div className="absolute top-0 inset-x-0 h-px" style={{ background: `linear-gradient(90deg,transparent 15%,${C.crimsonMuted} 50%,transparent 85%)` }} />
-                  <p className="text-[10px] uppercase tracking-[0.28em] mb-2" style={{ color: C.goldMuted }}>{detail.label}</p>
-                  <p className="text-base font-medium leading-snug" style={{ color: C.text }}>{detail.value}</p>
-                  {'sub' in detail && detail.sub && <p className="mt-1 text-sm" style={{ color: C.textMuted }}>{detail.sub as string}</p>}
-                </motion.div>
-              ))}
-            </div>
-            {mapsUrl && (
-              <motion.div {...fadeUp(0.32)} className="mt-8 text-center">
-                <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 rounded-full px-4 sm:px-6 md:px-8 py-3 text-sm tracking-[0.12em]" style={{ background: C.crimsonFaint, border: `1px solid ${C.crimsonBorder}`, color: C.crimson }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
-                  VIEW ON MAP
-                </a>
-              </motion.div>
-            )}
-          </div>
-        </section>
+      {/* ── Venue ─────────────────────────────────────────────────── */}
+      <Reveal disabled={isPreview} as="section" className="mx-auto max-w-[30rem] px-6 pt-16 text-center">
+        <Heading hi="विवाह स्थल" en="The venue" />
+        <p className="mt-6 leading-[1.15]" style={{ fontFamily: display, fontSize: 'clamp(30px, 9cqi, 40px)', color: C.maroon }}>{venue}</p>
+        {data.venueAddress && (
+          <p className="mx-auto mt-2 max-w-[20rem] text-[16px] leading-[1.55]" style={{ color: C.soft }}>{data.venueAddress}</p>
+        )}
+        <p className="mt-3 text-[16px]" style={{ color: C.maroon }}>
+          {date ? date.long : 'Date to be announced'}
+          {time && <span style={{ color: C.sindoor }}> · {time}</span>}
+        </p>
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+          <DirectionsLink
+            href={directions}
+            isPreview={isPreview}
+            className="iw-btn iw-btn-solid inline-flex items-center gap-2 rounded-full px-6 py-3 text-[15px] font-medium"
+            style={{ background: C.sindoor, color: '#FFF6EA' }}
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.7} aria-hidden>
+              <path strokeLinejoin="round" d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" />
+              <circle cx="12" cy="9.5" r="2.5" />
+            </svg>
+            Directions
+          </DirectionsLink>
+          <DirectionsLink
+            href={calendar}
+            isPreview={isPreview}
+            className="iw-btn iw-btn-line inline-flex items-center gap-2 rounded-full border px-6 py-3 text-[15px] font-medium"
+            style={{ borderColor: C.maroon, color: C.maroon }}
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.7} aria-hidden>
+              <rect x="3.5" y="5" width="17" height="15" rx="2" />
+              <path d="M3.5 10h17M8 3v4M16 3v4" strokeLinecap="round" />
+            </svg>
+            Add to calendar
+          </DirectionsLink>
+        </div>
+      </Reveal>
+
+      {eventId && (
+        <div className="mt-16">
+          <WishesSection
+            eventId={eventId}
+            theme={WISHES_THEME}
+            title="Blessings for the couple"
+            intro={`Leave a few words for ${bride} and ${groom}. Your blessing appears here for every guest.`}
+            noun="blessing"
+          />
+        </div>
       )}
 
-      {/* ── SCHEDULE ─────────────────────────────────────────── */}
-      {scheduleItems.length > 0 && (
-        <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20" style={{ background: C.bgMid }}>
-          <div className="max-w-md mx-auto">
-            <motion.p {...fadeUp()} className="text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Rasam</motion.p>
-            <motion.h2 {...fadeUp(0.07)} className="font-heading text-center text-2xl sm:text-3xl mb-8 sm:mb-12" style={{ color: C.text }}>Ceremony Programme</motion.h2>
-            <div className="relative pl-5 sm:pl-7">
-              <div className="absolute left-0 top-2 bottom-2 w-px" style={{ background: `linear-gradient(180deg,transparent,${C.crimsonBorder} 20%,${C.crimsonBorder} 80%,transparent)` }} />
-              <div className="space-y-7">
-                {scheduleItems.map((item, i) => {
-                  const parts = item.split(/[-–—]/).map(s => s.trim())
-                  const timePart = parts.length > 1 ? parts[0] : null
-                  const desc = parts.length > 1 ? parts.slice(1).join(' ') : item
-                  return (
-                    <motion.div key={i} {...fadeUp(i * 0.07)} className="relative">
-                      <div className="absolute -left-[1.75rem] top-1.5 w-3 h-3 rounded-full" style={{ background: C.bg, border: `1.5px solid ${C.crimson}` }} />
-                      {timePart && <p className="text-[10px] uppercase tracking-[0.22em] mb-0.5" style={{ color: C.goldMuted }}>{timePart}</p>}
-                      <p className="text-sm leading-relaxed" style={{ color: C.text }}>{desc}</p>
-                    </motion.div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── GALLERY ──────────────────────────────────────────── */}
-      {gallery.length > 0 && (
-        <section className="py-12 sm:py-16 md:py-20 overflow-hidden" style={{ background: C.bg }}>
-          <motion.p {...fadeUp()} className="px-4 sm:px-6 md:px-8 text-center text-[11px] uppercase tracking-[0.38em] mb-3" style={{ color: C.goldMuted }}>Yadein</motion.p>
-          <motion.h2 {...fadeUp(0.07)} className="px-4 sm:px-6 md:px-8 font-heading text-center text-2xl sm:text-3xl mb-8 sm:mb-10" style={{ color: C.text }}>Our Story</motion.h2>
-          <div className="flex gap-2 sm:gap-3 px-4 sm:px-6 md:px-8 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none' }}>
-            {gallery.map((src, i) => (
-              <motion.div key={`${src}-${i}`} initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-20px' }} transition={{ duration: 0.7, delay: i * 0.06, ease: BEZIER }}
-                className="shrink-0 overflow-hidden rounded-xl" style={{ width: i % 3 === 0 ? 240 : 190, height: i % 3 === 0 ? 320 : 252, border: `1px solid ${C.crimsonBorder}` }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Memory ${i + 1}`} className="h-full w-full object-cover" loading="lazy" />
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ── MESSAGE ──────────────────────────────────────────── */}
-      {message && (
-        <section className="px-4 sm:px-6 md:px-8 py-12 sm:py-18 md:py-24" style={{ background: C.bgMid }}>
-          <div className="max-w-xl mx-auto text-center">
-            <motion.div {...fadeUp()}>
-              <div className="font-heading select-none mb-1 leading-none" style={{ fontSize: '6rem', color: 'rgba(212,160,23,0.09)' }} aria-hidden>&ldquo;</div>
-              <p className="font-heading text-xl sm:text-2xl italic leading-relaxed" style={{ color: C.textMuted }}>{message}</p>
-              <p className="mt-7 text-sm uppercase tracking-[0.32em]" style={{ color: C.goldMuted }}>— {brideName} &amp; {groomName}</p>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* ── WISHES ───────────────────────────────────────────── */}
-      {eventId && <WeddingWishes eventId={eventId} />}
-
-      {/* ── FOOTER ───────────────────────────────────────────── */}
-      <footer className="px-4 sm:px-6 md:px-8 py-12 text-center" style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
-        <SpiceDivider className="mb-7" />
-        <p className="text-xs uppercase tracking-[0.38em]" style={{ color: C.textFaint }}>{brideName} &amp; {groomName}</p>
-        {formattedDate && <p className="mt-1.5 text-[10px] tracking-[0.2em]" style={{ color: 'rgba(250,240,230,0.18)' }}>{formattedDate}</p>}
-        <p className="mt-5 text-[10px] tracking-[0.22em]" style={{ color: 'rgba(250,240,230,0.12)' }}>Made with ShareInvite</p>
+      {/* ── Foot of the card ─────────────────────────────────────── */}
+      <footer className="px-6 pb-10 pt-14 text-center" style={{ background: C.paper }}>
+        <Lotus className="mx-auto h-[24px] w-[48px]" />
+        <p lang="hi" className="mt-3" style={{ fontFamily: display, fontSize: 20, color: C.sindoor }}>शुभ विवाह</p>
+        <p className="mt-1" style={{ fontFamily: display, fontSize: 26, color: C.maroon }}>
+          {bride} <span className="italic" style={{ fontSize: 20, color: C.sindoor }}>&amp;</span> {groom}
+        </p>
+        {date && <p className="mt-1.5 text-[14px]" style={{ color: C.faint }}>{date.day} {date.month} {date.year}</p>}
+        <div className="mt-8">
+          <Credit isPreview={isPreview} color={C.faint} linkColor={C.soft} />
+        </div>
       </footer>
     </div>
   )
