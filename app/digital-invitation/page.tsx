@@ -14,18 +14,19 @@ import { Section, SectionHeading } from '@/components/brand/Section'
 import { ArrowRightIcon } from '@/components/ui/Icons'
 import { OCCASIONS } from '@/lib/catalog'
 import { buildCatalogItems, occasionChips } from '@/lib/catalogItems'
+import { LOWEST_PAID_PRICE } from '@/lib/plans'
+import { priceRangeSentence } from '@/lib/priceCopy'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Online Invitation Maker India | ShareInvite' },
+  title: { absolute: `Digital Invitation Maker India — from ₹${LOWEST_PAID_PRICE} | ShareInvite` },
   description:
-    'Free digital invitation maker for India. Create wedding, birthday, Griha Pravesh, Namakaran & engagement invitations. WhatsApp-ready link in 5 minutes.',
+    `Make a digital invitation for a wedding, birthday, Griha Pravesh, Namakaran & more — one WhatsApp link. Preview before you pay; from ₹${LOWEST_PAID_PRICE} one-time.`,
   keywords: [
     'digital invitation website India',
-    'online invitation maker India free',
     'digital invitation card India',
-    'e-invite India free',
+    'e-invite India',
     'digital invitation WhatsApp India',
     'online invitation maker India',
     'digital invite card maker',
@@ -36,8 +37,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/digital-invitation` },
   openGraph: {
-    title: 'Free Digital Invitation Website Maker India | ShareInvite',
-    description: 'Create digital invitation websites for any Indian event. WhatsApp-ready. Build and preview free — paid templates from ₹99 one-time.',
+    title: `Digital Invitation Maker India — from ₹${LOWEST_PAID_PRICE} | ShareInvite`,
+    description: `Make a digital invitation for a wedding, birthday, Griha Pravesh, Namakaran & more — one WhatsApp link. Preview before you pay; from ₹${LOWEST_PAID_PRICE} one-time.`,
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Invitation Website India' }],
@@ -77,7 +78,7 @@ const faqSchema = {
       name: 'How much does a digital invitation cost in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Building and previewing any template is completely free. Publishing is a one-time payment for the design you choose — each design has its own price, from ₹99 for Ganesh Chaturthi up to ₹1,999 for the Rajwada Signature wedding suite. No monthly fees, no hidden charges.',
+        text: `There is no payment until you publish — you can build and preview any design first. Publishing is a one-time payment for the design you choose, and each design has its own price: ${priceRangeSentence()} No monthly fees, no hidden charges.`,
       },
     },
   ],

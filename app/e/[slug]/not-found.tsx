@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { LogoMark } from '@/components/brand/Logo'
+import { LOWEST_PAID_PRICE } from '@/lib/plans'
 
 export const metadata: Metadata = {
   title: 'Invitation not available | ShareInvite',
@@ -42,7 +43,7 @@ export default function InvitationNotFound() {
             Create an invitation
           </Link>
           <p className="mt-3 text-[0.78rem] text-muted">
-            Free to build &amp; preview · One price per design, from ₹99
+            Preview before you pay · One price per design, from ₹{LOWEST_PAID_PRICE}
           </p>
         </div>
 

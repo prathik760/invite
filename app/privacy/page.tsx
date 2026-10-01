@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
+import { DELETE_AFTER_DAYS, ORPHAN_UPLOAD_DAYS, UNDATED_DELETE_AFTER_DAYS } from '@/lib/retention'
 import LegalPage, { Para, Bullets, type LegalSection } from '@/components/legal/LegalPage'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
-const LAST_UPDATED = '17 July 2026'
+const LAST_UPDATED = '1 October 2026'
 
 export const metadata: Metadata = {
   title: { absolute: 'Privacy Policy | ShareInvite' },
@@ -141,10 +142,12 @@ const sections: LegalSection[] = [
     title: 'Data Retention',
     body: (
       <Para>
-        We keep your personal data for as long as your account or invitation is active, and for as long as needed to provide
-        the Service, comply with our legal obligations (such as tax and accounting requirements for payments), resolve
-        disputes, and enforce our agreements. When data is no longer required, we delete or anonymise it. You may request
-        deletion of your account or invitations at any time.
+        Invitations are deleted automatically, together with their guest wishes and every photo and song uploaded for them,
+        {' '}{DELETE_AFTER_DAYS} days after the celebration&apos;s last day (invitations without a date, such as greetings,
+        {' '}{UNDATED_DELETE_AFTER_DAYS} days after they were created). Photos and music uploaded but never used in a
+        published invitation are deleted after {ORPHAN_UPLOAD_DAYS} days. Your account details and payment records are
+        kept for as long as your account exists and as long as the law requires for tax and accounting. You may ask us to
+        delete your account or an invitation sooner at any time.
       </Para>
     ),
   },

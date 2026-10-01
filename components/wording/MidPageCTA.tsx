@@ -36,7 +36,7 @@ export default function MidPageCTA({ headline, body, features, ctaHref, ctaText 
         <Link href={ctaHref} className="btn-gold inline-flex items-center justify-center rounded-full px-7 py-3.5 text-[0.95rem] font-semibold">
           {ctaText.replace(/\s*→$/, '')}
         </Link>
-        <p className="text-[0.8rem] text-paper/60">Free to build · Pay once, from ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}</p>
+        <p className="text-[0.8rem] text-paper/60">Preview before you pay · Pay once, from ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}</p>
       </div>
     </aside>
   )

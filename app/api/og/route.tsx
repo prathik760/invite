@@ -31,7 +31,7 @@ export async function GET(request: Request) {
         </div>
         <div style={{ fontSize: 68, lineHeight: 1.08, maxWidth: 980, display: 'flex' }}>{title}</div>
         <div style={{ display: 'flex', gap: 24, fontSize: 24, color: '#E8C866', fontFamily: 'Jost' }}>
-          <span>Free to build &amp; preview</span>
+          <span>Preview before you pay</span>
           <span>·</span>
           <span>One design, one price</span>
           <span>·</span>

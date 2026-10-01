@@ -80,7 +80,7 @@ export default function SignatureShowcase({ id = 'signature' }: { id?: string })
         </ul>
         <div className="mt-8 flex flex-col gap-5 border-t border-gold-soft/15 pt-7 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <p className="max-w-2xl text-[0.9rem] leading-7 text-paper/60">
-            Plus everything in every design: countdown, photo gallery, music, the guest wishes wall and one private link. Build and preview the whole suite free — pay once when you publish.
+            Plus everything in every design: countdown, photo gallery, music, the guest wishes wall and one private link. Build and preview the whole suite before you pay — pay once when you publish.
           </p>
           <Link href="/templates/category/signature" className="btn-gold inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
             Explore the Signature collection <ArrowRightIcon className="h-4 w-4" />

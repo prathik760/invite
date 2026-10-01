@@ -39,9 +39,10 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
       { label: 'Wedding invitation wording', href: '/wedding-invitation-wording' },
       { label: 'Engagement invitation wording', href: '/engagement-invitation-wording' },
       { label: 'Birthday invitation wording', href: '/birthday-invitation-wording' },
-      { label: 'Baby shower invitation wording', href: '/baby-shower-invitation-wording' },
+      { label: 'Baby shower invitation wording', href: '/blog/baby-shower-invitation-wording-ideas-for-india' },
       { label: 'Housewarming invitation wording', href: '/griha-pravesh-invitation-wording' },
-      { label: 'Naming ceremony wording', href: '/namakaran-invitation-wording' },
+      { label: 'Naming ceremony wording', href: '/blog/naming-ceremony-invitation-message-samples' },
+      { label: 'Diwali party invitation wording', href: '/diwali-invitation-wording' },
       { label: 'All blog posts', href: '/blog' },
     ],
   },
@@ -102,7 +103,7 @@ export default function SiteFooter() {
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               <Link href="/create" className="btn-gold inline-flex items-center rounded-full px-5 py-2.5 text-[0.9rem] font-semibold">
-                Start free
+                Start creating
               </Link>
               <a
                 href={SUPPORT_WHATSAPP_URL}

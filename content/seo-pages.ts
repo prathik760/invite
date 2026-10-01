@@ -15,7 +15,7 @@ export type SeoPage = {
 }
 
 const commonRelated = [
-  { label: 'Wedding invitations', href: '/wedding-invitations' },
+  { label: 'Wedding invitations', href: '/wedding-invitation' },
   { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
   { label: 'Online RSVP', href: '/online-rsvp' },
   { label: 'Digital invitation templates', href: '/templates' },
@@ -390,7 +390,7 @@ export const locationPages: LocationPage[] = cities.map((city) => {
     slug: `digital-invitations-${city}`,
     city: cityName,
     title: `Digital Invitations in ${cityName} | Wedding & Event Maker`,
-    description: `Create digital invitations in ${cityName} for weddings, birthdays, Griha Pravesh & engagements. WhatsApp-ready with guest wishes. Free to build and preview.`,
+    description: `Create digital invitations in ${cityName} for weddings, birthdays, Griha Pravesh & engagements. WhatsApp-ready with guest wishes. Preview before you pay.`,
     faqs: [
       {
         question: `Can I create a digital wedding invitation in ${cityName}?`,

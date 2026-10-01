@@ -27,7 +27,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 export const metadata: Metadata = {
   title: { absolute: 'Pricing — One Design, One Price | ShareInvite' },
   description:
-    `Simple one-time pricing for digital invitation designs. Build and preview any design free, then pay once for the one you publish. ${priceRangeSentence()} No subscription, no hidden charges.`,
+    `Pay once per design. ${priceRangeSentence()} Preview before you pay. No subscription.`,
   keywords: [
     'digital invitation price india',
     'wedding invitation cost online india',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ShareInvite Pricing — One Design, One Price, Everything Included',
     description:
-      `Free to build and preview. Pay once for the design you publish. ${priceRangeSentence()} No plans, bundles or subscription.`,
+      `Build and preview before you pay, then pay once for the design you publish. ${priceRangeSentence()} No plans, bundles or subscription.`,
     type: 'website',
     locale: 'en_IN',
     url: `${APP_URL}/pricing`,
@@ -116,8 +116,8 @@ const PRICING_FAQS = [
     answer: 'A one-time payment. You pay once for your design — there are no monthly subscriptions, renewals or recurring charges.',
   },
   {
-    question: 'Is anything free?',
-    answer: 'Building and previewing is completely free: pick any design, fill in every detail, add photos, and see the finished invitation on your own phone without paying or entering card details. Payment is only requested at the final publish step, when you get your shareable link.',
+    question: 'Can I see my invitation before I pay?',
+    answer: 'Yes. Pick any design, fill in every detail, add photos, and see the finished invitation on your own phone without paying or entering card details. Payment is only requested at the final publish step, when you get your shareable link.',
   },
   {
     question: 'Can I get a refund?',
@@ -173,11 +173,11 @@ export default function PricingPage() {
         crumbs={[{ name: 'Home', href: '/' }, { name: 'Pricing' }]}
         eyebrow="Pricing"
         title={<>One design. One price.<br /><em className="font-medium text-burnished">Everything included.</em></>}
-        lede={`Build and preview any design for free. When it's ready, pay once for that design — from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')} — and it's yours. No plans, no bundles, no subscription.`}
+        lede={`Build and preview any design before you pay. When it's ready, pay once for that design — from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')} — and it's yours. No plans, no bundles, no subscription.`}
         actions={
           <>
             <Link href="/create" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
-              Start building — free
+              Start building
               <ArrowRightIcon />
             </Link>
             <Link href="/templates" className="btn-outline inline-flex items-center justify-center rounded-full px-8 py-4 text-[1rem] font-semibold">
@@ -186,7 +186,7 @@ export default function PricingPage() {
           </>
         }
         footnote={<TrustList />}
-        aside={<OfferCard cta="Start building — free" location="pricing_hero_offer" />}
+        aside={<OfferCard cta="Start building" location="pricing_hero_offer" />}
       />
 
       {/* ─── HOW PAYING WORKS ─── */}
@@ -194,7 +194,7 @@ export default function PricingPage() {
         <SectionHeading align="center" eyebrow="How it works" title="Pay only when you love it" />
         <ol className="mt-12 grid gap-4 md:grid-cols-3" data-reveal-group>
           {[
-            { Icon: EyeIcon, title: 'Build & preview free', copy: 'Choose any design, add your real details and photos, and see the finished invitation. No card needed.' },
+            { Icon: EyeIcon, title: 'Build & preview first', copy: 'Choose any design, add your real details and photos, and see the finished invitation. No card needed.' },
             { Icon: ShieldIcon, title: 'Pay once for your design', copy: 'The price is on the design. One secure payment by UPI, card or net banking — no renewal, ever.' },
             { Icon: LinkIcon, title: 'Your invitation, handed over', copy: 'Get your link and share it on WhatsApp, Instagram, email or text with as many guests as you like.' },
           ].map(({ Icon, title, copy }, i) => (
@@ -317,8 +317,8 @@ export default function PricingPage() {
       <CtaBand
         eyebrow="See before you buy"
         title={OFFER.headline}
-        sub={`Free to build and preview. Pay once, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}, when you publish.`}
-        primary={{ href: '/create', label: 'Build your invitation free' }}
+        sub={`Build and preview before you pay. Pay once, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}, when you publish.`}
+        primary={{ href: '/create', label: 'Build your invitation' }}
         secondary={{ href: '/demo/elegant-wedding', label: 'View a live example' }}
         location="pricing_closing"
       />

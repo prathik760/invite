@@ -60,7 +60,7 @@ export const PLANS: Plan[] = [
     name: 'Basic',
     price: 199,
     badge: 'Entry wedding price',
-    description: 'Build and preview free — publish the Elegant Wedding invitation for a one-time ₹199.',
+    description: 'Build and preview before you pay — publish the Elegant Wedding invitation for a one-time ₹199.',
     templateIds: BASIC_TEMPLATES,
     features: ['Elegant Wedding template', 'Date, venue & Google Maps', 'Guest wishes collection', 'WhatsApp share link', 'No ShareInvite branding'],
   },

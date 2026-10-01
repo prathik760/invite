@@ -108,7 +108,7 @@ function LandingPage({ page }: { page: SeoPage }) {
         crumbs={[{ name: 'Home', href: '/' }, { name: page.h1 }]}
         eyebrow={page.primaryKeyword}
         title={page.h1}
-        lede={`${page.description} Choose a design, add your details, preview it free and share one link.`}
+        lede={`${page.description} Choose a design, add your details, preview it before you pay and share one link.`}
         actions={
           <>
             <TrackedLink

@@ -55,7 +55,7 @@ export default async function Image() {
         </div>
 
         <div style={{ display: 'flex', gap: 28, fontSize: 24, color: '#E8C866', fontFamily: 'Jost' }}>
-          <span>Free to build &amp; preview</span>
+          <span>Preview before you pay</span>
           <span>·</span>
           <span>Share on WhatsApp</span>
           <span>·</span>

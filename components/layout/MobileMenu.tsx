@@ -10,6 +10,7 @@ import { LOCALES, localeHref, localePath, stripLocale } from '@/lib/i18n'
 import { t } from '@/content/translations'
 import { ArrowRightIcon, CloseIcon, MenuIcon } from '@/components/ui/Icons'
 import Logo from '@/components/brand/Logo'
+import { useBackToClose } from '@/lib/useBackToClose'
 
 /**
  * Full-screen menu below `lg`. The same destinations are in the desktop nav's
@@ -52,7 +53,14 @@ export default function MobileMenu({
     }
   }, [open])
 
+  // Back closes the menu instead of leaving the page. Links inside navigate
+  // with `replace`, swapping the menu's history entry for the new page.
+  const releaseBack = useBackToClose(open, () => setOpen(false))
   const close = () => setOpen(false)
+  const leave = () => {
+    releaseBack()
+    setOpen(false)
+  }
 
   return (
     <>
@@ -75,7 +83,7 @@ export default function MobileMenu({
           style={{ zIndex: 'var(--z-overlay)' as unknown as number }}
         >
           <div className="flex h-[4.6rem] shrink-0 items-center justify-between border-b border-line px-4">
-            <Link href={localePath('/', locale)} onClick={close} className="flex items-center gap-2">
+            <Link href={localePath('/', locale)} onClick={leave} replace className="flex items-center gap-2">
               <Logo />
             </Link>
             <button
@@ -99,7 +107,8 @@ export default function MobileMenu({
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={close}
+                    onClick={leave}
+                    replace
                     className="flex items-center justify-between py-4 font-editorial text-[1.6rem] font-semibold text-charcoal"
                   >
                     {item.label}
@@ -115,7 +124,8 @@ export default function MobileMenu({
                 <li key={o.key}>
                   <Link
                     href={o.href}
-                    onClick={close}
+                    onClick={leave}
+                    replace
                     className="flex items-center gap-2.5 rounded-xl border border-line bg-paper p-2"
                   >
                     <Image src={o.image} alt="" width={40} height={36} className="h-9 w-10 shrink-0 rounded-lg object-cover" />
@@ -132,7 +142,8 @@ export default function MobileMenu({
                   <Link
                     href={localeHref(path, l.code)}
                     hrefLang={l.htmlLang}
-                    onClick={close}
+                    onClick={leave}
+                    replace
                     dir={l.dir}
                     className={`inline-flex rounded-full border px-3.5 py-1.5 text-[0.85rem] ${
                       l.code === locale ? 'border-emerald bg-emerald text-paper' : 'border-line bg-paper text-charcoal'
@@ -151,13 +162,14 @@ export default function MobileMenu({
           >
             <Link
               href={createHref}
-              onClick={close}
+              onClick={leave}
+              replace
               className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[1rem] font-semibold"
             >
               {createLabel}
               <ArrowRightIcon />
             </Link>
-            <p className="mt-2 text-center text-[0.78rem] text-muted">Free to build and preview · Pay once to publish</p>
+            <p className="mt-2 text-center text-[0.78rem] text-muted">Preview before you pay · Pay once to publish</p>
           </div>
         </div>,
         document.body,

@@ -96,9 +96,11 @@ function formatDate(dateStr: string): string {
 interface ExpiredInvitationProps {
   templateId: string
   data: Record<string, string>
+  /** ISO date the invitation, its wishes and photos are deleted (lib/retention.ts). */
+  deletesOn?: string
 }
 
-export default function ExpiredInvitation({ templateId, data }: ExpiredInvitationProps) {
+export default function ExpiredInvitation({ templateId, data, deletesOn }: ExpiredInvitationProps) {
   const eventLabel = getEventLabel(data, templateId)
   const category = TEMPLATE_CATEGORY[templateId] ?? 'wedding'
   const categoryLabel = CATEGORY_LABEL[category] ?? 'celebrations'
@@ -128,7 +130,10 @@ export default function ExpiredInvitation({ templateId, data }: ExpiredInvitatio
             <strong className="font-semibold text-charcoal">{eventLabel}</strong>
             {dateFormatted && <> · {dateFormatted}</>}
             <br />
-            Invitation links close a few days after the event.
+            Invitation links close a few days after the event
+            {deletesOn
+              ? <>, and the invitation, its photos and wishes are deleted on {new Date(deletesOn).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}.</>
+              : '.'}
           </p>
         </div>
       </section>
@@ -162,14 +167,14 @@ export default function ExpiredInvitation({ templateId, data }: ExpiredInvitatio
 
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/create" className="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
-              Start building — free
+              Start your invitation
             </Link>
             <Link href="/templates" className="btn-outline inline-flex w-full items-center justify-center rounded-full px-7 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
               Browse designs
             </Link>
           </div>
           <p className="mt-5 text-center text-[0.8rem] text-muted">
-            Free to build &amp; preview · One price per design, paid once · Share via WhatsApp
+            Preview before you pay · One price per design, paid once · Share via WhatsApp
           </p>
         </div>
       </section>

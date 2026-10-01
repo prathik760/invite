@@ -2,6 +2,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import type { ComponentType } from 'react'
+import ShareDesignButton from '@/components/catalog/ShareDesignButton'
 import PreviewButton from '@/components/catalog/PreviewButton'
 import TemplateCard from '@/components/catalog/TemplateCard'
 import FAQAccordion from '@/components/landing/FAQAccordion'
@@ -48,7 +49,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const description =
     template.id === 'royal-deco'
       ? `Royal wedding invitation template — ${priceLabel}, one-time. Add your names, date, venue, Google Maps and photos, then share the link on WhatsApp. No app needed for guests.`
-      : `${template.description} ${priceLabel}, one-time — add your details, preview free, and share the invitation link on WhatsApp. No app needed for guests.`
+      : `${template.description} ${priceLabel}, one-time — add your details, preview it before you pay, and share the invitation link on WhatsApp. No app needed for guests.`
   const ogImage = templateImageUrl(template.id)
 
   return {
@@ -288,7 +289,7 @@ export default function TemplateSeoPage({ params }: Props) {
   const faqs = [
     {
       question: `How much does the ${template.name} template cost?`,
-      answer: `The ${name} design is ₹${price.toLocaleString('en-IN')}, paid once when you publish. There is no subscription. You can build and preview the whole invitation for free before you pay.`,
+      answer: `The ${name} design is ₹${price.toLocaleString('en-IN')}, paid once when you publish. There is no subscription. You can build and preview the whole invitation before you pay.`,
     },
     {
       question: `How do I create an invitation with the ${template.name} template?`,
@@ -353,9 +354,18 @@ export default function TemplateSeoPage({ params }: Props) {
                   </div>
                 </div>
               </div>
-              <p className="mt-4 text-center text-[0.85rem] text-muted">
-                Or <Link href={`/demo/${template.id}`} className="link">open the full demo</Link> in a new view.
-              </p>
+              {/* The demo link is what to send a customer on WhatsApp. */}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[0.88rem]">
+                <Link href={`/demo/${template.id}`} className="link">Open the full demo</Link>
+                <span aria-hidden className="text-muted">·</span>
+                <ShareDesignButton
+                  templateId={template.id}
+                  name={displayName(template.name)}
+                  source="template_page"
+                  label="Share this design"
+                  className="inline-flex items-center gap-1.5 font-semibold text-emerald-soft hover:underline"
+                />
+              </div>
             </div>
 
             <div>
@@ -484,7 +494,7 @@ export default function TemplateSeoPage({ params }: Props) {
       <CtaBand
         eyebrow={`${name} · ₹${price.toLocaleString('en-IN')} one-time`}
         title="Make this design yours"
-        sub="Free to build and preview. Pay once when you publish — every feature in the design is included."
+        sub="Preview before you pay. Pay once when you publish — every feature in the design is included."
         primary={{ href: createHref, label: 'Use this design' }}
         secondary={{ href: `/demo/${template.id}`, label: 'Open the full demo' }}
         location="template_page_closing"

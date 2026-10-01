@@ -12,7 +12,7 @@ import { ArrowRightIcon } from '@/components/ui/Icons'
 export default function CtaBand({
   eyebrow = 'Your story starts here',
   title = 'Ready to create your invitation?',
-  sub = 'Choose a design, make it yours and share the celebration — free until you publish.',
+  sub = 'Choose a design, make it yours and share the celebration — no payment until you publish.',
   primary = { href: '/create', label: 'Create your invitation' },
   secondary = { href: '/templates', label: 'Browse designs' },
   location = 'cta_band',

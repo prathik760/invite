@@ -6,9 +6,9 @@ import { RingIcon, CalendarIcon, ClockIcon, CameraIcon, MusicIcon, MessageIcon, 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Digital Engagement Invitation India — Build Free, Publish ₹399 | ShareInvite' },
+  title: { absolute: `Digital Engagement Invitation Online — ₹${templatePrice('indian-engagement')} | ShareInvite` },
   description:
-    'Digital engagement invitation for Mangni, Roka & Sagai in India. WhatsApp link with countdown, Google Maps & photo gallery. Build and preview free; publish for ₹399 one-time. Ready in 5 minutes.',
+    `Digital engagement invitation for Mangni, Roka & Sagai — one WhatsApp link with countdown, Google Maps & photos. Preview before you pay; ₹${templatePrice('indian-engagement')} once.`,
   keywords: [
     'digital engagement invitation India',
     'mangni invitation digital',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/engagement-invitation` },
   openGraph: {
     title: 'Digital Engagement Invitation | Mangni & Roka E-Invite India | ShareInvite',
-    description: 'Create a stunning digital engagement invitation for your Mangni or Roka ceremony. WhatsApp-ready. Build and preview free — publish for ₹399 one-time.',
+    description: `Digital engagement invitation for Mangni, Roka & Sagai — one WhatsApp link with countdown, Google Maps & photos. Preview before you pay; ₹${templatePrice('indian-engagement')} once.`,
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Engagement Invitation India' }],
@@ -76,6 +76,14 @@ const faqSchema = {
         text: 'The Engagement template is ₹399 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step.',
       },
     },
+    {
+      '@type': 'Question',
+      name: 'How early should I send engagement invitations?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Send them 10–14 days before the ceremony for local guests. If family is travelling from another city, send three weeks ahead so they can plan travel, and reshare the same link as a reminder two days before.',
+      },
+    },
   ],
 }
 
@@ -111,7 +119,7 @@ export default function Page() {
         crumb="Engagement invitations"
         eyebrow="Digital engagement invitations"
         title={<>Digital Engagement Invitation <em className="font-medium text-burnished">Mangni · Roka · Sagai</em></>}
-        lede={`Create a beautiful digital engagement invitation for your Mangni, Roka or Sagai. Share one WhatsApp link with the full schedule, Google Maps, photos and a guest wishes section. Build and preview free — publish for ₹${templatePrice('indian-engagement')} one-time.`}
+        lede={`Create a beautiful digital engagement invitation for your Mangni, Roka or Sagai. Share one WhatsApp link with the full schedule, Google Maps, photos and a guest wishes section. Build and preview before you pay — publish for ₹${templatePrice('indian-engagement')} one-time.`}
         ctaLabel="Start my engagement invite"
         types={{
           eyebrow: 'Every tradition',
@@ -130,7 +138,7 @@ export default function Page() {
         cities={{ base: '/engagement-invitation', title: 'Engagement invitations by city', list: ['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'] }}
         related={[
           { href: '/engagement-invitation-wording', label: 'Engagement invitation wording' },
-          { href: '/engagement-invitations', label: 'Engagement designs gallery' },
+          { href: '/templates', label: 'All invitation designs' },
           { href: '/wedding-invitation', label: 'Wedding invitations' },
         ]}
         closing={{ title: 'Create your digital engagement invitation' }}

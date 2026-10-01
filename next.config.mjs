@@ -65,6 +65,34 @@ const nextConfig = {
         destination: '/griha-pravesh-invitation-wording',
         permanent: true,
       },
+      // Same consolidation, the other way round: Google ranks the blog posts
+      // (Search Console: 2,906 vs 9 impressions for naming ceremony, 492 vs 187
+      // for baby shower), so the wording pages' messages were moved into them.
+      {
+        source: '/namakaran-invitation-wording',
+        destination: '/blog/naming-ceremony-invitation-message-samples',
+        permanent: true,
+      },
+      {
+        source: '/baby-shower-invitation-wording',
+        destination: '/blog/baby-shower-invitation-wording-ideas-for-india',
+        permanent: true,
+      },
+      // The plural "gallery" pages listed a hand-picked subset of the designs the
+      // singular occasion pages already show, for the same searches. One page
+      // per occasion; their useful FAQs were moved to the singular pages.
+      ...['wedding', 'birthday', 'engagement', 'anniversary', 'griha-pravesh'].map((occasion) => ({
+        source: `/${occasion}-invitations`,
+        destination: `/${occasion}-invitation`,
+        permanent: true,
+      })),
+      // Retitled: the post explains what "free" invitation makers charge, but the
+      // old title and URL read as a promise that ShareInvite is free.
+      {
+        source: '/blog/free-online-invitation-maker-for-weddings',
+        destination: '/blog/online-wedding-invitation-maker-what-it-really-costs',
+        permanent: true,
+      },
     ]
   },
   async headers() {

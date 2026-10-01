@@ -17,7 +17,7 @@ import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, 
 // The count was hard-coded as "11" while the catalogue held 24 designs.
 const COUNT = TEMPLATES.length
 const TITLE = 'Digital Invitation Templates for Every Occasion | ShareInvite'
-const DESCRIPTION = `${COUNT} digital invitation templates for weddings, birthdays, engagements, anniversaries, festivals, housewarmings and naming ceremonies — plus animated 3D greetings. Preview free, share on WhatsApp.`
+const DESCRIPTION = `${COUNT} digital invitation templates for weddings, birthdays, engagements, anniversaries, festivals, housewarmings and naming ceremonies — plus animated 3D greetings. Preview before you pay, share on WhatsApp.`
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -61,8 +61,8 @@ export default function TemplatesIndexPage() {
         crumbs={[{ name: 'Home', href: '/' }, { name: 'Templates' }]}
         eyebrow="The collection"
         title={<>Digital invitation <em className="font-medium text-burnished">templates</em></>}
-        lede="Animated invitations and 3D greetings for weddings, birthdays, festivals and every celebration. Open any design in a live preview, try it with your own details for free, and pay once for the one you publish."
-        footnote={<TrustList items={['Free to build and preview', `One price per design, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}`, 'Switch designs any time — details carry over', 'One link guests open on any phone']} />}
+        lede="Animated invitations and 3D greetings for weddings, birthdays, festivals and every celebration. Open any design in a live preview, try it with your own details before you pay, and pay once for the one you publish."
+        footnote={<TrustList items={['Preview before you pay', `One price per design, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}`, 'Switch designs any time — details carry over', 'One link guests open on any phone']} />}
       />
 
       <Section aria-label="All designs">

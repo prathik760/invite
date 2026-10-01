@@ -6,9 +6,9 @@ import { CameraIcon, ClockIcon, MapPinIcon, MusicIcon, MessageIcon, ClipboardIco
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Digital Anniversary Invitation India — Build Free, Publish ₹499 | ShareInvite' },
+  title: { absolute: `Digital Anniversary Invitation Online — ₹${templatePrice('anniversary')} | ShareInvite` },
   description:
-    'Digital anniversary invitation for India. Silver, golden & milestone e-invites. WhatsApp-ready with photos & countdown. Build and preview free; publish for ₹499 one-time. Ready in 5 minutes.',
+    `Anniversary invitation for silver, golden & milestone years — photos, countdown & guest wishes on one WhatsApp link. Preview before you pay; ₹${templatePrice('anniversary')} once.`,
   keywords: [
     'anniversary invitation',
     'digital anniversary invitation India',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/anniversary-invitation` },
   openGraph: {
-    title: 'Digital Anniversary Invitation India — Build Free, Publish ₹499 | ShareInvite',
+    title: `Digital Anniversary Invitation Online — ₹${templatePrice('anniversary')} | ShareInvite`,
     description: 'Digital anniversary invitation for India. Silver, golden & milestone anniversary e-invites. WhatsApp-ready with photos & countdown.',
     type: 'website',
     locale: 'en_IN',
@@ -73,6 +73,22 @@ const faqSchema = {
         text: 'The Anniversary template is ₹499 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step.',
       },
     },
+    {
+      '@type': 'Question',
+      name: 'How far in advance should I send a milestone anniversary invitation?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'For a 25th or 50th anniversary, send the invitation two to three weeks ahead — four if family is travelling from other cities. For a small dinner, a week is usually enough. A reminder is just the same link shared again.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can children make the anniversary invitation for their parents?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes, and it is one of the most common reasons people use it. Name your parents as the couple, host the celebration in your own names, and add a few lines from the children to the personal message.',
+      },
+    },
   ],
 }
 
@@ -110,7 +126,7 @@ export default function Page() {
         crumb="Anniversary invitations"
         eyebrow="Digital anniversary invitations"
         title={<>Digital Anniversary Invitation <em className="font-medium text-burnished">Silver · Golden · Milestone</em></>}
-        lede={`Mark 25, 50 or any milestone year with a beautiful invitation — couple photos, your story, a countdown and guest wishes, all on one WhatsApp link. Build and preview free — publish for ₹${templatePrice('anniversary')} one-time.`}
+        lede={`Mark 25, 50 or any milestone year with a beautiful invitation — couple photos, your story, a countdown and guest wishes, all on one WhatsApp link. Build and preview before you pay — publish for ₹${templatePrice('anniversary')} one-time.`}
         ctaLabel="Start my anniversary invite"
         types={{
           eyebrow: 'Milestones',

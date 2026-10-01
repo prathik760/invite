@@ -28,6 +28,12 @@ export const seoEvents = {
   // ─── Discovery ───────────────────────────────────────────────────────────
   templateView: 'template_view',
   ctaClick: 'cta_click',
+  /**
+   * A wording sample copied on a wording guide or blog post. The wording pages
+   * are the site's biggest traffic source; this is the moment a reader takes
+   * something away, so it is the denominator for the copy-panel click-through.
+   */
+  wordingCopy: 'wording_copy',
 
   // ─── Create flow ─────────────────────────────────────────────────────────
   createStart: 'create_start',

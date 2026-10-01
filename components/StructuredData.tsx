@@ -17,7 +17,7 @@ export function SoftwareAppSchema() {
           name: 'ShareInvite',
           applicationCategory: 'UtilitiesApplication',
           operatingSystem: 'Web',
-          description: 'Digital invitation maker for weddings, birthdays, engagements, festivals and every celebration. Free to build and preview; one-time payment per design to publish.',
+          description: 'Digital invitation maker for weddings, birthdays, engagements, festivals and every celebration. Build and preview before you pay; one-time payment per design to publish.',
           url: 'https://shareinvite.in',
           // Advertised as a real price range, not ₹0 — Google treats an Offer
           // price of 0 as "this product is free", which is no longer true and
@@ -28,7 +28,7 @@ export function SoftwareAppSchema() {
             lowPrice: String(LOWEST_PAID_PRICE),
             highPrice: String(HIGHEST_PAID_PRICE),
             offerCount: TEMPLATES.length,
-            description: 'One price per design, paid once when you publish. Free to build and preview.',
+            description: 'One price per design, paid once when you publish. Preview before you pay.',
           },
           author: {
             '@type': 'Person',

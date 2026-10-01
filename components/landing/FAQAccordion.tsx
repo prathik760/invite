@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'
 
 export interface Faq {
   question: string
@@ -22,11 +23,11 @@ const defaultFaqs: Faq[] = [
   },
   {
     question: 'Which template should I choose, and what does it cost?',
-    answer: 'Build and preview any design for free, then pay once for the one you publish. Each design shows its own price — most are ₹99 to ₹499, and the Signature wedding suites are ₹1,499 to ₹1,999.',
+    answer: `Build and preview any design before you pay, then pay once for the one you publish. Each design shows its own price, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')}.`,
   },
   {
     question: 'How much does a digital invitation cost in India?',
-    answer: 'Building and previewing is completely free — no credit card, no expiry. Publishing is a one-time payment for the design you choose, shown on the design. There are no monthly fees or hidden charges.',
+    answer: 'There is no payment until you publish — you can build and preview the whole invitation first, with no card needed. Publishing is a one-time payment for the design you choose, and the price is shown on the design. There are no monthly fees or hidden charges.',
   },
   {
     question: 'Can I add bride and groom photos to the invitation?',

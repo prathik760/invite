@@ -65,7 +65,7 @@ export default function OfferCard({
           {cta}
           <ArrowRightIcon />
         </TrackedLink>
-        <p className="mt-3 text-center text-[0.8rem] text-paper/55">Free to build and preview · Secure checkout by Razorpay</p>
+        <p className="mt-3 text-center text-[0.8rem] text-paper/55">Preview before you pay · Secure checkout by Razorpay</p>
       </div>
     </div>
   )

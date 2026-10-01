@@ -6,9 +6,9 @@ import { ClockIcon, MapPinIcon, ClipboardIcon, CameraIcon, MessageIcon, ParkingI
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Digital Griha Pravesh Invitation India — Build Free, Publish ₹399 | ShareInvite' },
+  title: { absolute: `Digital Griha Pravesh Invitation — ₹${templatePrice('griha-pravesh')} | ShareInvite` },
   description:
-    'Digital Griha Pravesh invitation for India. Share muhurat time, pooja schedule & Google Maps on WhatsApp. No app needed. Build and preview free; publish for ₹399 one-time. Ready in 5 minutes.',
+    `Digital Griha Pravesh invitation with muhurat time, pooja schedule & Google Maps on one WhatsApp link. Preview before you pay; ₹${templatePrice('griha-pravesh')} once to publish.`,
   keywords: [
     'digital Griha Pravesh invitation',
     'Griha Pravesh invitation WhatsApp',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/griha-pravesh-invitation` },
   openGraph: {
     title: 'Digital Griha Pravesh Invitation | Housewarming E-Invite India | ShareInvite',
-    description: 'Create a stunning digital Griha Pravesh invitation with muhurat time, pooja schedule, and Google Maps. WhatsApp-ready. Build and preview free — publish for ₹399 one-time.',
+    description: `Digital Griha Pravesh invitation with muhurat time, pooja schedule & Google Maps on one WhatsApp link. Preview before you pay; ₹${templatePrice('griha-pravesh')} once to publish.`,
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Griha Pravesh Invitation India' }],
@@ -110,7 +110,7 @@ export default function Page() {
         crumb="Griha Pravesh invitations"
         eyebrow="Digital housewarming invitations"
         title={<>Digital Griha Pravesh Invitation <em className="font-medium text-burnished">Housewarming · Ghar Pravesh</em></>}
-        lede={`Share the muhurat, the full pooja schedule, your new address with Google Maps and family blessings — all from one beautiful WhatsApp link. Build and preview free — publish for ₹${templatePrice('griha-pravesh')} one-time.`}
+        lede={`Share the muhurat, the full pooja schedule, your new address with Google Maps and family blessings — all from one beautiful WhatsApp link. Build and preview before you pay — publish for ₹${templatePrice('griha-pravesh')} one-time.`}
         ctaLabel="Start my Griha Pravesh invite"
         types={{
           eyebrow: 'Every tradition',
@@ -129,7 +129,7 @@ export default function Page() {
         cities={{ base: '/griha-pravesh-invitation', title: 'Griha Pravesh invitations by city', list: ['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'] }}
         related={[
           { href: '/griha-pravesh-invitation-wording', label: 'Griha Pravesh wording' },
-          { href: '/griha-pravesh-invitations', label: 'Housewarming designs gallery' },
+          { href: '/templates', label: 'All invitation designs' },
           { href: '/blog/category/housewarming', label: 'Housewarming ideas' },
         ]}
         closing={{ title: 'Create your Griha Pravesh invitation' }}

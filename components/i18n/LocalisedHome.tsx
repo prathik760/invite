@@ -14,9 +14,9 @@ import CtaBand from '@/components/brand/CtaBand'
 import { LogoMark } from '@/components/brand/Logo'
 import { ArrowRightIcon, CheckIcon } from '@/components/ui/Icons'
 
-// `value.editAnytime` was listed here, but a published invitation cannot be
-// edited today — replaced with a promise the product keeps.
-const VALUES = ['value.noApp', 'value.oneLink', 'price.freeToBuild', 'price.noSubscription']
+// No "edit after you share" or "RSVP" here: a published invitation cannot be
+// edited, and RSVP is on one design only — only promises the product keeps.
+const VALUES = ['value.noApp', 'value.oneLink', 'price.previewFirst', 'price.noSubscription']
 
 export default function LocalisedHome({ locale: L }: { locale: string }) {
   const locale = getLocale(L)
@@ -59,7 +59,7 @@ export default function LocalisedHome({ locale: L }: { locale: string }) {
             </a>
           </div>
           <p className="mt-5 text-[0.9rem] text-muted">
-            {t('price.freeToBuild', L)} · {t('price.oneTime', L)} · {t('price.noSubscription', L)}
+            {t('price.previewFirst', L)} · {t('price.oneTime', L)} · {t('price.noSubscription', L)}
           </p>
         </div>
       </section>
@@ -111,7 +111,7 @@ export default function LocalisedHome({ locale: L }: { locale: string }) {
       <CtaBand
         eyebrow={t('price.noSubscription', L)}
         title={t('cta.createInvitation', L)}
-        sub={`${t('price.freeToBuild', L)} · ${t('price.oneTime', L)} — ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}+`}
+        sub={`${t('price.previewFirst', L)} · ${t('price.oneTime', L)} — ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}+`}
         primary={{ href: '/create?src=global_home_footer', label: t('cta.start', L) }}
         secondary={null}
         location="global_home_footer"

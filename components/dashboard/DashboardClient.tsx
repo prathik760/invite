@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { getAppUrl, formatRelativeDate } from '@/lib/utils'
 import { templateImage } from '@/lib/templateMedia'
 import Logo from '@/components/brand/Logo'
+import { deletionDate, isEnded as isExpired, DELETE_AFTER_DAYS } from '@/lib/retention'
 import { ArrowRightIcon, CheckIcon, EyeIcon, HeartIcon } from '@/components/ui/Icons'
 
 const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number]
@@ -35,14 +36,6 @@ const TEMPLATE_LABEL: Record<string, string> = {
 function templateLabel(id: string) {
   if (id.startsWith('greeting-')) return `3D greeting · ${id.slice(9).replace(/^\w/, (c) => c.toUpperCase())}`
   return TEMPLATE_LABEL[id] ?? 'Invitation'
-}
-
-// Mirrors isExpired() in app/e/[slug]/page.tsx: live until 3 days after the date.
-function isExpired(data: Record<string, string>): boolean {
-  if (!data.date) return false
-  const [year, month, day] = data.date.split('-').map(Number)
-  if (!year || !month || !day) return false
-  return Date.now() > new Date(year, month - 1, day).getTime() + 3 * 24 * 60 * 60 * 1000
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -357,7 +350,7 @@ export default function DashboardClient({ user }: Props) {
               </div>
               <p className="t-h2 relative mt-8">Something wonderful starts here</p>
               <p className="relative mx-auto mt-3 max-w-md text-[0.98rem] text-charcoal/70">
-                Choose a design, make it yours and share it with one link. It&apos;s free to build and preview.
+                Choose a design, make it yours and share it with one link. You only pay when you publish.
               </p>
               <Link href="/create" className="btn-primary relative mt-8 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-[0.95rem] font-semibold">
                 Create your first invitation <ArrowRightIcon />
@@ -406,6 +399,11 @@ export default function DashboardClient({ user }: Props) {
                         <p className="mt-0.5 text-[0.82rem] text-muted">
                           {eventDate ? `${eventDate} · ` : ''}Created {formatRelativeDate(event.createdAt)}
                         </p>
+                        {expired && (
+                          <p className="mt-1 text-[0.8rem] text-burnished-deep">
+                            Deleted with its photos and wishes on {deletionDate(d, event.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} — {DELETE_AFTER_DAYS} days after the celebration. Save any wishes you want to keep before then.
+                          </p>
+                        )}
                         <div className="mt-3 flex min-w-0 items-center gap-2">
                           <p className="min-w-0 truncate rounded-full bg-champagne px-3 py-1 text-[0.8rem] text-charcoal/70">{eventUrl}</p>
                           <CopyButton text={eventUrl} />

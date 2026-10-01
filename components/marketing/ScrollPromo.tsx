@@ -235,7 +235,7 @@ export default function ScrollPromo() {
             </Link>
 
             <p className="mt-2.5 text-center text-[11px] text-muted">
-              Build it and preview the whole thing free · Pay only to publish
+              Build it and preview the whole thing · Pay only to publish
             </p>
 
             <button

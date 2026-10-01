@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!info) return {}
 
   const ogTitle = `Digital Birthday Invitation in ${info.display} | ShareInvite`
-  const description = `Create a digital birthday invitation for your ${info.display} party — WhatsApp link with countdown, Google Maps & photo gallery. Free to start.`
+  const description = `Create a digital birthday invitation for your ${info.display} party — WhatsApp link with countdown, Google Maps & photo gallery. Preview before you pay.`
 
   return {
     title: { absolute: ogTitle },
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
       `birthday party invite WhatsApp ${info.display}`,
       `digital birthday card ${info.display}`,
       `birthday invitation ${info.state}`,
-      `online birthday card ${info.display} free`,
+      `online birthday card ${info.display}`,
     ],
     alternates: { canonical: `${APP_URL}/birthday-invitation/${city}` },
     openGraph: {

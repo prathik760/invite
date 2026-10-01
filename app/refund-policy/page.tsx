@@ -7,7 +7,7 @@ const LAST_UPDATED = '17 July 2026'
 export const metadata: Metadata = {
   title: { absolute: 'Refund & Cancellation Policy | ShareInvite' },
   description:
-    'ShareInvite\'s refund and cancellation policy for one-time digital invitation purchases — when refunds apply, how to request one, and how cancellations work. Preview every template free before you pay.',
+    'ShareInvite\'s refund and cancellation policy for one-time digital invitation purchases — when refunds apply, how to request one, and how cancellations work. Preview every template before you pay.',
   keywords: ['ShareInvite refund policy', 'ShareInvite cancellation policy', 'digital invitation refund', 'Razorpay refund policy'],
   alternates: { canonical: `${APP_URL}/refund-policy` },
   openGraph: {
@@ -32,7 +32,7 @@ const sections: LegalSection[] = [
         </Para>
         <Para>
           We want you to buy with confidence. That is why <strong className="text-foreground">every template can be
-          previewed for free</strong> through its live demo before you pay — so you know exactly what you are getting.
+          previewed</strong> through its live demo before you pay — so you know exactly what you are getting.
         </Para>
       </>
     ),
@@ -51,7 +51,7 @@ const sections: LegalSection[] = [
   },
   {
     id: 'free-plan',
-    title: 'Building & Previewing Is Free',
+    title: 'Preview Before You Pay',
     body: (
       <Para>
         Building and previewing an invitation carries no charge, so there is nothing to pay, cancel, or refund at that
@@ -119,7 +119,7 @@ const sections: LegalSection[] = [
         <Bullets
           items={[
             'you changed your mind after the paid template or feature was delivered to your account;',
-            'you had already previewed the template through its free live demo before purchasing;',
+            'you had already previewed the template through its live demo before purchasing;',
             'you completed and used or published the invitation and later decided you no longer need it;',
             'the issue is caused by factors outside our control, such as your device, browser, or internet connection;',
             'access was removed because of a violation of our Terms of Service;',
@@ -196,7 +196,7 @@ export default function RefundPolicyPage() {
     <LegalPage
       eyebrow="Legal"
       title="Refund & Cancellation Policy"
-      subtitle="ShareInvite plans are one-time digital purchases. This policy explains how cancellations work, when refunds apply, and how to request one — plus why you can always preview a template free before you pay."
+      subtitle="ShareInvite plans are one-time digital purchases. This policy explains how cancellations work, when refunds apply, and how to request one — plus why you can always preview a template before you pay."
       lastUpdated={LAST_UPDATED}
       sections={sections}
     />

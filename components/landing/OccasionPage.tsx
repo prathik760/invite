@@ -194,7 +194,7 @@ export default function OccasionPage(p: OccasionPageProps) {
 
       <CtaBand
         title={p.closing.title}
-        sub={p.closing.sub ?? `Free to build & preview · ₹${price.toLocaleString('en-IN')} one-time to publish · Ready to share in minutes`}
+        sub={p.closing.sub ?? `Preview before you pay · ₹${price.toLocaleString('en-IN')} one-time to publish · Ready to share in minutes`}
         primary={{ href: `/create?template=${p.templateId}&src=${p.pageKey}_footer`, label: p.ctaLabel }}
         secondary={{ href: '/templates', label: 'Browse every design' }}
         location={`${p.pageKey}_footer`}

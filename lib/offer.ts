@@ -34,7 +34,7 @@ export const OFFER_INCLUDES = [
 ] as const
 
 export const OFFER_PROMISES = [
-  'Free to build & preview',
+  'Preview before you pay',
   'Pay once, only when you publish',
   'No subscription',
   '7-day refund policy',

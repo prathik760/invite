@@ -26,6 +26,7 @@ import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from '@/components/cre
 import Logo, { LogoMark } from '@/components/brand/Logo'
 import { CheckIcon, ShieldIcon } from '@/components/ui/Icons'
 import { OFFER_INCLUDES } from '@/lib/offer'
+import { useBackToClose } from '@/lib/useBackToClose'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -91,7 +92,7 @@ function LoginPromptModal({ onClose, onContinueAsGuest }: { onClose: () => void;
         </Link>
         <Link href="/auth/signup?callbackUrl=/create"
           className="btn-outline flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[0.95rem] font-semibold">
-          Create a free account
+          Create an account
         </Link>
       </div>
       <div className="mt-5 border-t border-line pt-4 text-center">
@@ -169,7 +170,7 @@ function UpgradeModal({
             </Link>
             <p className="text-center text-[0.82rem] text-muted">
               New here?{' '}
-              <Link href="/auth/signup?callbackUrl=/create" className="link">Create a free account</Link>
+              <Link href="/auth/signup?callbackUrl=/create" className="link">Create an account</Link>
             </p>
           </div>
         ) : (
@@ -279,7 +280,11 @@ export default function CreatePage() {
     const tpl = tplParam ? TEMPLATES.find(t => t.id === tplParam) : undefined
     if (tpl) {
       setSelectedId(tpl.id)
-      setData(tpl.config.defaultData)
+      // `message` arrives from the wording pages ("send these words as an
+      // invitation"): the copied words become the design's personal message.
+      const message = (params.get('message') ?? '').trim().slice(0, 600)
+      const hasMessageField = tpl.config.fields.some((f) => f.key === 'message')
+      setData(message && hasMessageField ? { ...tpl.config.defaultData, message } : tpl.config.defaultData)
       setCurrentStep(2)
     }
     // Fires once per arrival at the builder. Previously nothing was recorded
@@ -377,10 +382,60 @@ export default function CreatePage() {
     })
   }
 
+  // ── Phone Back moves through the steps ─────────────────────────────────
+  // Each forward step pushes a history entry for the same URL (a copy of the
+  // router's state), so Back returns to the previous step instead of leaving
+  // the builder. `stepStack` mirrors the entries this visit pushed; `baseStep`
+  // is the step shown on the entry beneath them.
+  const stepStack = useRef<number[]>([])
+  const baseStep = useRef(1)
+  const pendingStep = useRef<number | null>(null)
+  const currentStepRef = useRef(currentStep)
+  currentStepRef.current = currentStep
+  useEffect(() => {
+    const onPop = () => {
+      const state = window.history.state
+      if (state?.__siOverlay) return
+      let target: number
+      if (pendingStep.current !== null) {
+        target = pendingStep.current
+        pendingStep.current = null
+        baseStep.current = target
+      } else if (typeof state?.__siStep === 'number') {
+        target = state.__siStep
+      } else {
+        target = stepStack.current.length ? baseStep.current : currentStepRef.current
+      }
+      while (stepStack.current.length && stepStack.current[stepStack.current.length - 1] > target) stepStack.current.pop()
+      if (target === currentStepRef.current) return
+      setCurrentStep(target)
+      window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'auto' }))
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
+  // The full-screen phone preview closes on Back, too.
+  useBackToClose(previewOpen, () => setPreviewOpen(false))
+
   const goToStep = (step: number) => {
     // Only a forward move completes the step you were on. Going Back must not
     // record a completion, or the funnel inflates every time someone edits.
+    if (step < currentStep) {
+      // Unwind the entries for the steps being left, so Back and the on-page
+      // Back button stay in step; the popstate handler shows the step.
+      const above = stepStack.current.filter((s) => s > step).length
+      if (above > 0) {
+        if (step < baseStep.current || stepStack.current.length === above) pendingStep.current = step
+        window.history.go(-above)
+        return
+      }
+    }
     if (step > currentStep) {
+      if (stepStack.current.length === 0) baseStep.current = currentStep
+      stepStack.current.push(step)
+      window.history.pushState({ ...window.history.state, __siStep: step }, '')
+
       trackEvent(seoEvents.createStepComplete, {
         step: currentStep,
         step_name: CREATE_STEPS[currentStep],
@@ -544,7 +599,9 @@ export default function CreatePage() {
             if (verRes.ok && verBody.success) {
               // Fires only after the server verified the Razorpay signature and
               // amount — never on opening or dismissing the checkout sheet.
-              trackEvent(seoEvents.purchase, { ...ctx, transaction_id: response.razorpay_payment_id, value: plan?.price })
+              // `currency` is required: GA4 drops `value` from revenue reports
+              // without it, and a Meta Pixel Purchase needs it to optimise ads.
+              trackEvent(seoEvents.purchase, { ...ctx, transaction_id: response.razorpay_payment_id, value: plan?.price, currency: order.currency ?? 'INR' })
               // Reflect the new entitlement immediately so the publish path does
               // not bounce the user back to the paywall they just paid at.
               setUserPlan(verBody.plan ?? planId)
@@ -1118,9 +1175,9 @@ export default function CreatePage() {
                       </span>
                       <div className="flex-1">
                         <p className="text-[0.88rem] font-semibold text-charcoal">Keep track of guest wishes</p>
-                        <p className="mt-0.5 text-[0.8rem] leading-5 text-charcoal/70">Create a free account to manage your invitations in one place.</p>
+                        <p className="mt-0.5 text-[0.8rem] leading-5 text-charcoal/70">Create an account to manage your invitations in one place.</p>
                         <Link href="/auth/signup" className="link mt-1.5 inline-flex text-[0.82rem]">
-                          Create a free account
+                          Create an account
                         </Link>
                       </div>
                     </div>

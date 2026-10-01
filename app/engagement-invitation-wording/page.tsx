@@ -4,6 +4,8 @@ import Link from 'next/link'
 import WordingCopyCard from '@/components/wording/WordingCopyCard'
 import MidPageCTA from '@/components/wording/MidPageCTA'
 import WordingSample from '@/components/wording/WordingSample'
+import WordingToc from '@/components/wording/WordingToc'
+import { WordingSection, type WordingSectionData } from '@/components/wording/WordingSection'
 import StickyCTA from '@/components/wording/StickyCTA'
 import SiteFooter from '@/components/landing/SiteFooter'
 import PageHero from '@/components/brand/PageHero'
@@ -14,10 +16,14 @@ import FAQAccordion from '@/components/landing/FAQAccordion'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
+const TEMPLATE_ID = 'indian-engagement'
+const TITLE = 'Engagement Invitation Message: 100+ Simple WhatsApp Ideas'
+const DESCRIPTION =
+  'Copy a simple engagement invitation message for WhatsApp — ring ceremony, Roka, Sagai, for daughter or son, “we cordially invite” wording & captions.'
+
 export const metadata: Metadata = {
-  title: { absolute: '100+ Engagement & Roka Invitation Messages for WhatsApp' },
-  description:
-    '100+ engagement, Roka, Sagai, Mangni & ring ceremony invitation messages for WhatsApp — copy & paste free, in English & Hindi. Ready-to-send wording samples.',
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
   keywords: [
     'engagement invitation message',
     'roka invitation wording',
@@ -30,8 +36,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/engagement-invitation-wording` },
   openGraph: {
-    title: '100+ Engagement & Roka Invitation Messages for WhatsApp',
-    description: 'Copy & paste engagement, Roka, Sagai, Mangni & ring ceremony invitation messages for WhatsApp — in English & Hindi. Free ready-to-send wording samples.',
+    title: TITLE,
+    description: DESCRIPTION,
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Engagement Invitation Wording India' }],
@@ -42,6 +48,14 @@ const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is a simple engagement invitation message?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Three lines are enough: who is getting engaged, when and where, and a warm request — for example: "We\'re engaged! 💍 Join us to celebrate [Name] & [Name]\'s engagement on [Date] at [Time], [Venue]. Your presence and blessings mean the world to us." Add the parents\' names if the invitation comes from the family, and paste a digital invite link below it for the map and schedule.',
+      },
+    },
     {
       '@type': 'Question',
       name: 'What is the difference between Roka and engagement invitation wording?',
@@ -77,12 +91,113 @@ const faqSchema = {
   ],
 }
 
+const WHATSAPP_SECTION: WordingSectionData = {
+  id: 'whatsapp',
+  toc: 'For WhatsApp',
+  title: 'Engagement Invitation Message for WhatsApp (Indian Families)',
+  intro: 'Most engagement invitations in India travel on WhatsApp — to the family group first, then to friends. These are written to be read on a phone: names, date and venue first, then the warmth.',
+  messages: [
+    { title: '1. For the family WhatsApp group', text: `Namaste, everyone! 🙏
+
+With the blessings of our elders, we are happy to share that [Name]'s engagement with [Partner's Name] has been fixed.
+
+💍 Engagement ceremony: [Date] at [Time]
+📍 [Venue, City]
+
+Please come with your family and bless the couple.
+— [Father's Name] & [Mother's Name]` },
+    { title: "2. From the groom's family", text: `With great joy, the [Family Name] family invites you to the engagement of our son
+
+[Groom's Name] with [Bride's Name]
+(daughter of [Bride's Parents' Names])
+
+📅 [Day, Date] · 🕖 [Time]
+📍 [Venue, Address]
+
+Your blessings will make the day complete. 🙏` },
+    { title: "3. From the bride's family", text: `Our daughter [Bride's Name] is getting engaged! 💍
+
+We warmly invite you to the ring ceremony of [Bride's Name] and [Groom's Name] on [Date] at [Time], at [Venue].
+
+Lunch will be served. Do come and bless them.
+— [Bride's Parents' Names]` },
+    { title: '4. For friends and colleagues', text: `Hi all! 😊 [Name] and [Partner's Name] are getting engaged on [Date].
+We'd love to see you at [Venue] from [Time].
+Dinner and dancing after the rings — please come!
+Details & map 👉 [Digital Invite Link]` },
+    { title: '5. For relatives abroad', text: `We know you can't fly down for [Name]'s engagement on [Date], but we didn't want you to miss it.
+
+The invitation, venue and schedule are all on this link — open it whenever it's morning where you are, and leave your blessings for the couple on the page. 🙏
+[Digital Invite Link]` },
+    { title: '6. In Hindi — for the family group', text: `सादर निमंत्रण 🙏
+
+ईश्वर की कृपा से हमारे [पुत्र / पुत्री] [Name] की सगाई [Partner's Name] के साथ तय हुई है।
+
+सगाई समारोह: [Date] को [Time] बजे
+स्थान: [Venue, City]
+
+आप सपरिवार पधारकर नवयुगल को अपना आशीर्वाद दें।
+— [Parents' Names]` },
+    { title: '7. Reminder, the day before', text: `Just a reminder 😊 [Name] & [Partner's Name]'s engagement is tomorrow, [Date], at [Time].
+📍 [Venue] — map in the link: [Digital Invite Link]
+See you there!` },
+  ],
+}
+
+const RING_CEREMONY_SECTION: WordingSectionData = {
+  id: 'ring-ceremony-whatsapp',
+  toc: 'Ring ceremony (short)',
+  title: 'Short Ring Ceremony Invitation Messages',
+  intro: 'When the ring exchange is the main event of the day, lead with it. Short enough for WhatsApp, clear enough that nobody arrives after the rings.',
+  messages: [
+    { title: '1. Simple ring ceremony invite', text: `You're invited to the ring ceremony of [Name] & [Partner's Name] 💍
+📅 [Date] · 🕖 [Time]
+📍 [Venue, City]
+Please join us and bless the couple!` },
+    { title: '2. With the ring exchange time', text: `Ring ceremony of [Name] & [Partner's Name] 💍
+
+Guests arrive: [Time]
+Ring exchange: [Time] — please be seated by then!
+Dinner: [Time] onwards
+
+📍 [Venue, Address]` },
+    { title: '3. Formal, from the parents', text: `[Father's Name] & [Mother's Name]
+request the pleasure of your company
+at the Ring Ceremony of their [son / daughter]
+
+[Name]
+with
+[Partner's Name]
+
+[Day], [Date] at [Time]
+[Venue Name], [City]` },
+    { title: '4. Hosted by the couple', text: `We're exchanging rings! 💍
+[Name] & [Partner's Name] would love you there on [Date], [Time] at [Venue].
+Come for the rings, stay for the food and the dancing. 🎶
+RSVP: [Phone]` },
+  ],
+}
+
+const TOC = [
+  { id: 'simple', label: 'Simple & short' },
+  { id: 'whatsapp', label: 'For WhatsApp' },
+  { id: 'ring-ceremony', label: 'Ring ceremony' },
+  { id: 'ring-ceremony-whatsapp', label: 'Ring ceremony (short)' },
+  { id: 'roka', label: 'Roka' },
+  { id: 'sagai', label: 'Sagai' },
+  { id: 'daughter', label: 'For daughter' },
+  { id: 'son', label: 'For son' },
+  { id: 'we-cordially-invite', label: '“We cordially invite”' },
+  { id: 'modern', label: 'Modern & unique' },
+  { id: 'quotes-captions', label: 'Quotes & captions' },
+]
+
 export default function EngagementInvitationWordingPage() {
   return (
     <main className="min-h-screen bg-champagne text-foreground">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <SiteHeader createHref="/create?template=indian-engagement" />
+      <SiteHeader createHref={`/create?template=${TEMPLATE_ID}`} />
 
       {/* Hero */}
       <PageHero
@@ -90,81 +205,76 @@ export default function EngagementInvitationWordingPage() {
         crumbs={[{ name: 'Home', href: '/' }, { name: 'Engagement invitation wording' }]} eyebrow="100+ copy-ready samples · Roka · Sagai · Mangni"
         title={<>Engagement Invitation Messages &amp;<br />
             <em className="font-medium text-burnished">Wording — Roka, Ring Ceremony</em></>}
-        lede={<>100+ ready-to-copy engagement invitation messages for WhatsApp — Roka, Mangni, Sagai,
-            Ring Ceremony and Nishchayam, plus simple &amp; short samples for son and daughter, and quotes &amp; captions in English.</>}
+        lede={<>100+ ready-to-copy engagement invitation messages for WhatsApp — simple &amp; short samples, Indian family
+            messages, Ring Ceremony, Roka, Sagai and Nishchayam wording, messages for son and daughter, plus quotes &amp; captions.</>}
         actions={<><Link href="/create?template=indian-engagement" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
               Start My Engagement Invite</Link></>}
         footnote={<TrustList />}
       />
 
-      {/* Section 1: Ring Ceremony / Mangni Formal */}
-      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="t-h2 mb-3">Ring Ceremony / Mangni Invitation Message (Formal)</h2>
-          <p className="text-sm text-muted leading-7 mb-10">
-            These formal samples are suitable for the main invitation — shared with all family, extended family, and guests at the ceremony.
+      <WordingToc items={TOC} />
+
+      {/* Section: Simple & Short Engagement Messages */}
+      <section id="simple" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20 bg-paper">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="t-h2 mb-3">Simple &amp; Short Engagement Invitation Messages for WhatsApp</h2>
+          <p className="text-sm text-muted leading-7 mb-8">
+            Short, ready-to-send engagement messages for WhatsApp groups — clear date, time and venue, warm tone. Copy, add your details and share.
           </p>
-          <div className="space-y-6">
 
-            <WordingSample title={<>1. North Indian Mangni — Both Families Hosting</>} tag="North India">
-                  <p>॥ श्री गणेशाय नमः ॥</p>
-                  <p>With immense joy and God&apos;s blessings,</p>
-                  <p>[Bride&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                  <p>along with</p>
-                  <p>[Groom&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                  <p>cordially invite you to the</p>
-                  <p className="font-semibold text-charcoal">Mangni / Ring Ceremony</p>
-                  <p>of their children</p>
-                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
-                  <p>[Day], [Date] · [Time]</p>
-                  <p>[Venue Name], [Address]</p>
-                  <p>Lunch / Dinner will be served. Kindly grace us with your presence.</p>
-              
-            </WordingSample>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Simplest one-liner</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            We&apos;re engaged! 💍 Join us to celebrate [Name] &amp; [Name]&apos;s engagement.{'\n'}
+            📅 [Date] · 🕖 [Time] · 📍 [Venue, City]{'\n'}
+            Your presence and blessings mean the world to us.
+          </WordingCopyCard>
 
-            <WordingSample title={<>2. South Indian Nishchayam (Tamil/Telugu Families)</>} tag="South India">
-                  <p>With the blessings of Sri [Family Deity],</p>
-                  <p>[Bride&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                  <p>joyfully announce the</p>
-                  <p className="font-semibold text-charcoal">Nishchayathartham (Engagement Ceremony)</p>
-                  <p>of their daughter</p>
-                  <p className="font-semibold text-charcoal">[Bride&apos;s Name]</p>
-                  <p>with</p>
-                  <p className="font-semibold text-charcoal">[Groom&apos;s Name]</p>
-                  <p>Son of [Groom&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
-                  <p>Date: [Date] · Time: [Time]</p>
-                  <p>[Kalyana Mandapam / Venue], [Address]</p>
-                  <p>Kindly bless the couple with your presence.</p>
-              
-            </WordingSample>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Simple &amp; warm</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            With joy in our hearts, we invite you to the engagement of{'\n'}
+            [Bride&apos;s Name] &amp; [Groom&apos;s Name]. 💍{'\n\n'}
+            Date: [Date] · Time: [Time]{'\n'}
+            Venue: [Venue &amp; Address]{'\n\n'}
+            Come bless the couple as they begin their journey together.
+          </WordingCopyCard>
 
-            <WordingSample title={<>3. Modern Couple-Hosted Ring Ceremony</>} tag="Modern">
-                  <p>We&apos;re officially saying yes to forever.</p>
-                  <p className="font-semibold text-charcoal">[Name] &amp; [Name]</p>
-                  <p>invite you to our Ring Ceremony</p>
-                  <p>[Date] · [Time]</p>
-                  <p>[Venue], [Address]</p>
-                  <p>Followed by dinner. We would love to celebrate with you.</p>
-                  <p>RSVP: [WhatsApp Number]</p>
-              
-            </WordingSample>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Short WhatsApp group message</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            [Name] &amp; [Name] are getting engaged! 🎉{'\n'}
+            [Date] · [Time] · [Venue]{'\n'}
+            Full details 👉 [Digital Invite Link]
+          </WordingCopyCard>
 
-            <WordingSample title={<>4. Religious Blessing Opening (Formal)</>} tag="Traditional">
-                  <p>By the grace of God and with the blessings of our elders,</p>
-                  <p>we joyfully announce the engagement ceremony of</p>
-                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
-                  <p>[Day], [Date] at [Time]</p>
-                  <p>[Venue Name], [City]</p>
-                  <p>Your blessings will make this occasion truly special.</p>
-              
-            </WordingSample>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Casual &amp; modern</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            He asked, she said yes! 💍 (or she asked — either way, it&apos;s happening!){'\n\n'}
+            Join us for [Name] &amp; [Name]&apos;s ring ceremony{'\n'}
+            [Date] at [Time], [Venue].{'\n\n'}
+            Come celebrate love, laughter and lots of food!
+          </WordingCopyCard>
 
-          </div>
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">5. With RSVP</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            You&apos;re invited to the engagement of [Name] &amp; [Name]! 💍{'\n\n'}
+            📅 [Date] · 🕖 [Time]{'\n'}
+            📍 [Venue, Address]{'\n\n'}
+            Kindly confirm your presence: [Phone / WhatsApp]
+          </WordingCopyCard>
+
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">6. Bilingual simple (Hindi + English)</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            [Name] एवं [Name] की सगाई की रस्म पर आप सादर आमंत्रित हैं! 💍{'\n'}
+            दिनांक: [Date] · समय: [Time] · स्थान: [Venue]{'\n\n'}
+            Join us to celebrate [Name] &amp; [Name]&apos;s engagement!
+          </WordingCopyCard>
         </div>
       </section>
 
+      {/* Section: Engagement messages for WhatsApp (Indian families) */}
+      <WordingSection section={WHATSAPP_SECTION} templateId={TEMPLATE_ID} ctaHref="/engagement-invitation" paper={false} />
+
       {/* Mid-page CTA 1 */}
-      <section className="px-5 py-2 border-b border-line bg-paper">
+      <section className="px-5 py-2 border-b border-line">
         <div className="mx-auto max-w-4xl">
           <MidPageCTA
             headline="Make your engagement announcement as beautiful as the moment"
@@ -181,8 +291,77 @@ export default function EngagementInvitationWordingPage() {
         </div>
       </section>
 
+      {/* Section 1: Ring Ceremony / Mangni Formal */}
+      <section id="ring-ceremony" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20 bg-paper">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="t-h2 mb-3">Ring Ceremony / Mangni Invitation Message (Formal)</h2>
+          <p className="text-sm text-muted leading-7 mb-10">
+            These formal samples are suitable for the main invitation — shared with all family, extended family, and guests at the ceremony.
+          </p>
+          <div className="space-y-6">
+
+            <WordingSample templateId={TEMPLATE_ID} title={<>1. North Indian Mangni — Both Families Hosting</>} tag="North India">
+                  <p>॥ श्री गणेशाय नमः ॥</p>
+                  <p>With immense joy and God&apos;s blessings,</p>
+                  <p>[Bride&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>along with</p>
+                  <p>[Groom&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>cordially invite you to the</p>
+                  <p className="font-semibold text-charcoal">Mangni / Ring Ceremony</p>
+                  <p>of their children</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
+                  <p>[Day], [Date] · [Time]</p>
+                  <p>[Venue Name], [Address]</p>
+                  <p>Lunch / Dinner will be served. Kindly grace us with your presence.</p>
+              
+            </WordingSample>
+
+            <WordingSample templateId={TEMPLATE_ID} title={<>2. South Indian Nishchayam (Tamil/Telugu Families)</>} tag="South India">
+                  <p>With the blessings of Sri [Family Deity],</p>
+                  <p>[Bride&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>joyfully announce the</p>
+                  <p className="font-semibold text-charcoal">Nishchayathartham (Engagement Ceremony)</p>
+                  <p>of their daughter</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name]</p>
+                  <p>with</p>
+                  <p className="font-semibold text-charcoal">[Groom&apos;s Name]</p>
+                  <p>Son of [Groom&apos;s Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
+                  <p>Date: [Date] · Time: [Time]</p>
+                  <p>[Kalyana Mandapam / Venue], [Address]</p>
+                  <p>Kindly bless the couple with your presence.</p>
+              
+            </WordingSample>
+
+            <WordingSample templateId={TEMPLATE_ID} title={<>3. Modern Couple-Hosted Ring Ceremony</>} tag="Modern">
+                  <p>We&apos;re officially saying yes to forever.</p>
+                  <p className="font-semibold text-charcoal">[Name] &amp; [Name]</p>
+                  <p>invite you to our Ring Ceremony</p>
+                  <p>[Date] · [Time]</p>
+                  <p>[Venue], [Address]</p>
+                  <p>Followed by dinner. We would love to celebrate with you.</p>
+                  <p>RSVP: [WhatsApp Number]</p>
+              
+            </WordingSample>
+
+            <WordingSample templateId={TEMPLATE_ID} title={<>4. Religious Blessing Opening (Formal)</>} tag="Traditional">
+                  <p>By the grace of God and with the blessings of our elders,</p>
+                  <p>we joyfully announce the engagement ceremony of</p>
+                  <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
+                  <p>[Day], [Date] at [Time]</p>
+                  <p>[Venue Name], [City]</p>
+                  <p>Your blessings will make this occasion truly special.</p>
+              
+            </WordingSample>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Section: Short ring ceremony messages */}
+      <WordingSection section={RING_CEREMONY_SECTION} templateId={TEMPLATE_ID} ctaHref="/engagement-invitation" paper={false} />
+
       {/* Section 2: Roka */}
-      <section className="border-b border-line px-5 py-16 sm:py-20">
+      <section id="roka" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20 bg-paper">
         <div className="mx-auto max-w-4xl">
           <h2 className="t-h2 mb-3">Roka Ceremony Invitation Wording</h2>
           <div className="rounded-2xl border border-[#A47945]/20 bg-[#FFFAF4] p-5 mb-8">
@@ -192,14 +371,14 @@ export default function EngagementInvitationWordingPage() {
           </div>
           <div className="space-y-6">
 
-            <WordingSample title={<>1. Short Roka WhatsApp Message (Close Family Only)</>} tag="Family only">
+            <WordingSample templateId={TEMPLATE_ID} title={<>1. Short Roka WhatsApp Message (Close Family Only)</>} tag="Family only">
                   <p>With God&apos;s blessings, we are happy to share that [Name]&apos;s Roka is on [Date] at [Time].</p>
                   <p>Venue: [Home / Hall Name, Address]</p>
                   <p>We request your presence and blessings on this auspicious occasion.</p>
               
             </WordingSample>
 
-            <WordingSample title={<>2. Formal Roka with Family Names</>} tag="Formal">
+            <WordingSample templateId={TEMPLATE_ID} title={<>2. Formal Roka with Family Names</>} tag="Formal">
                   <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
                   <p>request your presence at the Roka ceremony of their son / daughter</p>
                   <p className="font-semibold text-charcoal">[Name]</p>
@@ -209,14 +388,14 @@ export default function EngagementInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>3. Simple English Roka</>} tag="Casual">
+            <WordingSample templateId={TEMPLATE_ID} title={<>3. Simple English Roka</>} tag="Casual">
                   <p>It&apos;s official! We&apos;re celebrating [Name]&apos;s Roka with a small family gathering.</p>
                   <p>[Date] · [Time] · [Venue]</p>
                   <p>Please join us for this special moment. See you there!</p>
               
             </WordingSample>
 
-            <WordingSample title={<>4. Hindi/English Bilingual Roka</>} tag="Bilingual">
+            <WordingSample templateId={TEMPLATE_ID} title={<>4. Hindi/English Bilingual Roka</>} tag="Bilingual">
                   <p>ईश्वर की कृपा से हमारे पुत्र/पुत्री [Name] की रोका की रस्म</p>
                   <p>[दिन], [तारीख] को [समय] बजे</p>
                   <p>[स्थान का नाम एवं पता] पर होगी।</p>
@@ -229,7 +408,7 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section 3: Sagai */}
-      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
+      <section id="sagai" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="t-h2 mb-3">Sagai Invitation Message</h2>
           <p className="text-sm text-muted leading-7 mb-10">
@@ -237,7 +416,7 @@ export default function EngagementInvitationWordingPage() {
           </p>
           <div className="space-y-6">
 
-            <WordingSample title={<>1. Traditional Joint-Family Sagai</>} tag="Rajasthan / Gujarat">
+            <WordingSample templateId={TEMPLATE_ID} title={<>1. Traditional Joint-Family Sagai</>} tag="Rajasthan / Gujarat">
                   <p>॥ श्री गणेशाय नमः ॥</p>
                   <p>[Father&apos;s Name] परिवार एवं [Other Family&apos;s Name] परिवार</p>
                   <p>सहर्ष सूचित करते हैं कि</p>
@@ -250,7 +429,7 @@ export default function EngagementInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>2. Simple WhatsApp Sagai Message</>} tag="WhatsApp">
+            <WordingSample templateId={TEMPLATE_ID} title={<>2. Simple WhatsApp Sagai Message</>} tag="WhatsApp">
                   <p>With great joy, we announce the Sagai of [Bride&apos;s Name] and [Groom&apos;s Name].</p>
                   <p>[Date] · [Time] · [Venue, City]</p>
                   <p>We humbly request your presence and blessings.</p>
@@ -258,7 +437,7 @@ export default function EngagementInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>3. Formal Sagai with Ceremony Schedule</>} tag="Full schedule">
+            <WordingSample templateId={TEMPLATE_ID} title={<>3. Formal Sagai with Ceremony Schedule</>} tag="Full schedule">
                   <p>[Father&apos;s Name] &amp; [Mother&apos;s Name] cordially invite you to the</p>
                   <p className="font-semibold text-charcoal">Sagai Ceremony of [Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
                   <p>[Day], [Date] at [Venue Name], [City]</p>
@@ -274,64 +453,8 @@ export default function EngagementInvitationWordingPage() {
         </div>
       </section>
 
-      {/* Section: Simple & Short Engagement Messages */}
-      <section className="border-b border-line px-5 py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="t-h2 mb-3">Simple &amp; Short Engagement Invitation Messages for WhatsApp</h2>
-          <p className="text-sm text-muted leading-7 mb-8">
-            Short, ready-to-send engagement messages for WhatsApp groups — clear date, time and venue, warm tone. Copy, add your details and share.
-          </p>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Simplest one-liner</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            We&apos;re engaged! 💍 Join us to celebrate [Name] &amp; [Name]&apos;s engagement.{'\n'}
-            📅 [Date] · 🕖 [Time] · 📍 [Venue, City]{'\n'}
-            Your presence and blessings mean the world to us.
-          </WordingCopyCard>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Simple &amp; warm</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            With joy in our hearts, we invite you to the engagement of{'\n'}
-            [Bride&apos;s Name] &amp; [Groom&apos;s Name]. 💍{'\n\n'}
-            Date: [Date] · Time: [Time]{'\n'}
-            Venue: [Venue &amp; Address]{'\n\n'}
-            Come bless the couple as they begin their journey together.
-          </WordingCopyCard>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Short WhatsApp group message</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            [Name] &amp; [Name] are getting engaged! 🎉{'\n'}
-            [Date] · [Time] · [Venue]{'\n'}
-            Full details 👉 [Digital Invite Link]
-          </WordingCopyCard>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Casual &amp; modern</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            He asked, she said yes! 💍 (or she asked — either way, it&apos;s happening!){'\n\n'}
-            Join us for [Name] &amp; [Name]&apos;s ring ceremony{'\n'}
-            [Date] at [Time], [Venue].{'\n\n'}
-            Come celebrate love, laughter and lots of food!
-          </WordingCopyCard>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">5. With RSVP</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            You&apos;re invited to the engagement of [Name] &amp; [Name]! 💍{'\n\n'}
-            📅 [Date] · 🕖 [Time]{'\n'}
-            📍 [Venue, Address]{'\n\n'}
-            Kindly confirm your presence: [Phone / WhatsApp]
-          </WordingCopyCard>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">6. Bilingual simple (Hindi + English)</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            [Name] एवं [Name] की सगाई की रस्म पर आप सादर आमंत्रित हैं! 💍{'\n'}
-            दिनांक: [Date] · समय: [Time] · स्थान: [Venue]{'\n\n'}
-            Join us to celebrate [Name] &amp; [Name]&apos;s engagement!
-          </WordingCopyCard>
-        </div>
-      </section>
-
       {/* Section: Daughter Engagement */}
-      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
+      <section id="daughter" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20 bg-paper">
         <div className="mx-auto max-w-3xl">
           <h2 className="t-h2 mb-3">Engagement Invitation Message for Daughter</h2>
           <p className="text-sm text-muted leading-7 mb-8">
@@ -339,7 +462,7 @@ export default function EngagementInvitationWordingPage() {
           </p>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Proud parents — warm</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             With hearts full of joy, we invite you to the engagement of our beloved daughter{'\n\n'}
             [Daughter&apos;s Name] with [Groom&apos;s Name]{'\n\n'}
             Date: [Date] · Time: [Time]{'\n'}
@@ -349,14 +472,14 @@ export default function EngagementInvitationWordingPage() {
           </WordingCopyCard>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Simple in English</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             Our daughter [Name] is getting engaged to [Name]! 💍{'\n'}
             Join us on [Date] at [Time], [Venue].{'\n'}
             Come shower the couple with your love and blessings.
           </WordingCopyCard>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Traditional with family names</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             [Father&apos;s Name] &amp; [Mother&apos;s Name]{'\n'}
             joyfully invite you to the engagement ceremony of their daughter{'\n\n'}
             [Daughter&apos;s Full Name]{'\n'}
@@ -368,7 +491,7 @@ export default function EngagementInvitationWordingPage() {
       </section>
 
       {/* Section: Son Engagement */}
-      <section className="border-b border-line px-5 py-16 sm:py-20">
+      <section id="son" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
           <h2 className="t-h2 mb-3">Engagement Invitation Message for Son</h2>
           <p className="text-sm text-muted leading-7 mb-8">
@@ -376,7 +499,7 @@ export default function EngagementInvitationWordingPage() {
           </p>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Proud parents — warm</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             With great happiness, we invite you to the engagement of our beloved son{'\n\n'}
             [Son&apos;s Name] with [Bride&apos;s Name]{'\n\n'}
             Date: [Date] · Time: [Time]{'\n'}
@@ -386,14 +509,14 @@ export default function EngagementInvitationWordingPage() {
           </WordingCopyCard>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Simple in English</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             Our son [Name] is getting engaged to [Name]! 💍{'\n'}
             Join us on [Date] at [Time], [Venue].{'\n'}
             Your presence will make the day complete.
           </WordingCopyCard>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Traditional with family names</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             [Father&apos;s Name] &amp; [Mother&apos;s Name]{'\n'}
             cordially invite you to the engagement ceremony of their son{'\n\n'}
             [Son&apos;s Full Name]{'\n'}
@@ -404,51 +527,8 @@ export default function EngagementInvitationWordingPage() {
         </div>
       </section>
 
-      {/* Section: Modern & Unique */}
-      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="t-h2 mb-3">Modern &amp; Unique Engagement Invitation Wording</h2>
-          <p className="text-sm text-muted leading-7 mb-8">
-            For couples who want something a little different — playful, heartfelt and unmistakably yours.
-          </p>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Playful &amp; unique</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            Plot twist: we&apos;re getting engaged! 💍{'\n\n'}
-            After [X] years of [inside joke], [Name] &amp; [Name] are making it official.{'\n\n'}
-            📅 [Date] · 🕖 [Time] · 📍 [Venue]{'\n\n'}
-            Come for the rings, stay for the food. RSVP: [Number]
-          </WordingCopyCard>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Heartfelt &amp; modern</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            Two families, one beautiful beginning.{'\n\n'}
-            [Name] &amp; [Name] are getting engaged, and we&apos;d love you there{'\n'}
-            as we say &ldquo;yes&rdquo; to forever.{'\n\n'}
-            [Date] · [Time] · [Venue, City]
-          </WordingCopyCard>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Save-the-date style</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            She said yes! 💍 (Finally, some good news to share.){'\n\n'}
-            Save the date for [Name] &amp; [Name]&apos;s ring ceremony{'\n'}
-            [Date] · [Venue, City]{'\n\n'}
-            Formal invite &amp; details to follow 👉 [Digital Invite Link]
-          </WordingCopyCard>
-
-          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Elegant &amp; minimal</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
-            [Name] &amp; [Name]{'\n'}
-            are engaged.{'\n\n'}
-            Please join us to celebrate.{'\n'}
-            [Date] · [Time]{'\n'}
-            [Venue, City]
-          </WordingCopyCard>
-        </div>
-      </section>
-
       {/* Section: Formal "We Cordially Invite You" */}
-      <section className="border-b border-line px-5 py-16 sm:py-20">
+      <section id="we-cordially-invite" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20 bg-paper">
         <div className="mx-auto max-w-3xl">
           <h2 className="t-h2 mb-3">&ldquo;We Cordially Invite You&rdquo; — Formal Engagement Wording</h2>
           <p className="text-sm text-muted leading-7 mb-8">
@@ -456,7 +536,7 @@ export default function EngagementInvitationWordingPage() {
           </p>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Classic formal</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             We cordially invite you to the engagement ceremony of{'\n\n'}
             [Bride&apos;s Name] &amp; [Groom&apos;s Name]{'\n\n'}
             [Day], the [Date] · at [Time]{'\n'}
@@ -465,7 +545,7 @@ export default function EngagementInvitationWordingPage() {
           </WordingCopyCard>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Formal — hosted by both families</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             [Bride&apos;s Family Name] &amp; [Groom&apos;s Family Name]{'\n'}
             request the honour of your presence{'\n'}
             at the engagement ceremony of{'\n\n'}
@@ -476,7 +556,7 @@ export default function EngagementInvitationWordingPage() {
           </WordingCopyCard>
 
           <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Formal with religious blessing</h3>
-          <WordingCopyCard ctaHref="/engagement-invitation">
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
             By the grace of God and the blessings of our elders,{'\n'}
             we cordially invite you to the engagement ceremony of{'\n\n'}
             [Bride&apos;s Name] &amp; [Groom&apos;s Name]{'\n\n'}
@@ -487,8 +567,51 @@ export default function EngagementInvitationWordingPage() {
         </div>
       </section>
 
+      {/* Section: Modern & Unique */}
+      <section id="modern" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="t-h2 mb-3">Modern &amp; Unique Engagement Invitation Wording</h2>
+          <p className="text-sm text-muted leading-7 mb-8">
+            For couples who want something a little different — playful, heartfelt and unmistakably yours.
+          </p>
+
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1">1. Playful &amp; unique</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            Plot twist: we&apos;re getting engaged! 💍{'\n\n'}
+            After [X] years of [inside joke], [Name] &amp; [Name] are making it official.{'\n\n'}
+            📅 [Date] · 🕖 [Time] · 📍 [Venue]{'\n\n'}
+            Come for the rings, stay for the food. RSVP: [Number]
+          </WordingCopyCard>
+
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">2. Heartfelt &amp; modern</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            Two families, one beautiful beginning.{'\n\n'}
+            [Name] &amp; [Name] are getting engaged, and we&apos;d love you there{'\n'}
+            as we say &ldquo;yes&rdquo; to forever.{'\n\n'}
+            [Date] · [Time] · [Venue, City]
+          </WordingCopyCard>
+
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">3. Save-the-date style</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            She said yes! 💍 (Finally, some good news to share.){'\n\n'}
+            Save the date for [Name] &amp; [Name]&apos;s ring ceremony{'\n'}
+            [Date] · [Venue, City]{'\n\n'}
+            Formal invite &amp; details to follow 👉 [Digital Invite Link]
+          </WordingCopyCard>
+
+          <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-1 mt-6">4. Elegant &amp; minimal</h3>
+          <WordingCopyCard templateId={TEMPLATE_ID} ctaHref="/engagement-invitation">
+            [Name] &amp; [Name]{'\n'}
+            are engaged.{'\n\n'}
+            Please join us to celebrate.{'\n'}
+            [Date] · [Time]{'\n'}
+            [Venue, City]
+          </WordingCopyCard>
+        </div>
+      </section>
+
       {/* Section: Quotes, Lines & Captions */}
-      <section className="border-b border-line bg-paper px-5 py-16 sm:py-20">
+      <section id="quotes-captions" className="scroll-mt-10 border-b border-line px-5 py-16 sm:py-20 bg-paper">
         <div className="mx-auto max-w-3xl">
           <h2 className="t-h2 mb-3">Engagement Quotes, Lines &amp; Instagram Captions</h2>
           <p className="text-sm text-muted leading-7 mb-8">
@@ -614,7 +737,7 @@ export default function EngagementInvitationWordingPage() {
               'One link works for all groups',
               'Venue map & schedule in one place',
               'No app install for guests',
-              'Free to build & preview',
+              'Preview before you pay',
             ]}
             ctaHref="/engagement-invitation"
             ctaText="Get Your Engagement Invite Link →"
@@ -730,11 +853,11 @@ export default function EngagementInvitationWordingPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6 text-center">Related guides &amp; tools</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: '/engagement-invitation', label: 'Create free digital engagement invitation' },
-              { href: '/templates', label: 'Browse engagement invitation templates' },
+              { href: '/engagement-invitation', label: 'Create a digital engagement invitation' },
+              { href: '/templates', label: 'Browse invitation designs' },
               { href: '/blog/roka-ceremony-invitation-ideas-and-wording', label: 'Roka invitation ideas and wording' },
               { href: '/blog/engagement-invitation-wording-for-ring-ceremony', label: 'Ring ceremony invitation wording' },
-              { href: '/create', label: 'Create your engagement invitation free' },
+              { href: '/create?template=indian-engagement', label: 'Start with the Mangni engagement design' },
             ].map((l) => (
               <Link
                 key={l.href}

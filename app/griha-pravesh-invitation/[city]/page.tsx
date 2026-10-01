@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!info) return {}
 
   const ogTitle = `Digital Griha Pravesh Invitation in ${info.display} | ShareInvite`
-  const description = `Digital Griha Pravesh invitation for ${info.display} — muhurat time, pooja schedule, Google Maps & WhatsApp-ready link. Free to start.`
+  const description = `Digital Griha Pravesh invitation for ${info.display} — muhurat time, pooja schedule, Google Maps & WhatsApp-ready link. Preview before you pay.`
 
   return {
     title: { absolute: ogTitle },
@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
       `${info.display} griha pravesh invitation WhatsApp`,
       `digital ghar pravesh card ${info.display}`,
       `housewarming invitation ${info.state}`,
-      `online griha pravesh card ${info.display} free`,
-      `free digital housewarming invitation ${info.display}`,
+      `online griha pravesh card ${info.display}`,
+      `digital housewarming invitation ${info.display}`,
       `online invitation maker ${info.display}`,
     ],
     alternates: { canonical: `${APP_URL}/griha-pravesh-invitation/${city}` },

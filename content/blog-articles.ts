@@ -1,3 +1,6 @@
+import { templatePrice } from '@/lib/plans'
+import { priceRangeSentence } from '@/lib/priceCopy'
+
 type ContentSection = { heading: string; body: string }
 type FaqItem = { q: string; a: string }
 
@@ -354,7 +357,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free digital wedding invitation', href: '/wedding-invitation' },
+      { label: 'Digital wedding invitation', href: '/wedding-invitation' },
       { label: 'Wedding invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
       { label: 'Indian wedding invitation wording', href: '/blog/indian-wedding-invitation-wording-for-whatsapp' },
@@ -362,7 +365,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
   },
 
   'naming-ceremony-invitation-message-samples': {
-    intro: `A naming ceremony invitation is one of the warmest invitations you will ever send. You are announcing not just an event, but the arrival of a name — the beginning of a child's identity. Whether you are hosting a Namakaran, a Naamkaran, or a Cradle ceremony, the message should feel joyful and personal. Here are eight ready-to-use samples plus everything you need to know about timing, format, and what to include.`,
+    intro: `A naming ceremony invitation is one of the warmest invitations you will ever send. You are announcing not just an event, but the arrival of a name — the beginning of a child's identity. Whether you are hosting a Namakaran, a Barsa, a Barasala or a cradle ceremony, the message should feel joyful and personal. Below are more than forty messages you can copy — short WhatsApp texts, formal wording for a baby boy or girl, Hindi, Marathi and bilingual versions, regional cradle-ceremony wording and one-line captions — plus what to include, when to send it, and how the traditions differ.`,
     sections: [
       {
         heading: 'Ready-to-use naming ceremony invitation messages',
@@ -378,8 +381,8 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
 **Sample 4 — Bilingual (Hindi + English):**
 "आप सादर आमंत्रित हैं! We are delighted to invite you to the Namakaran ceremony of our little blessing. [Date] | [Time] | [Venue]. Name reveal at 11:00 AM, followed by lunch. 🙏 — [Parents' Names]"
 
-**Sample 5 — South Indian Cradle ceremony (Thodalutsavam / Thottil Ceremony):**
-"With joyful hearts, [Parents' Names] invite you to the Cradle Ceremony (Thottil) of our little one on [Date] at [Time] at [Venue]. The naming will be followed by blessings and lunch. Your presence will make this day truly special."
+**Sample 5 — South Indian cradle ceremony:**
+"With joyful hearts, [Parents' Names] invite you to the Cradle Ceremony of our little one on [Date] at [Time] at [Venue]. The naming will be followed by blessings and lunch. Your presence will make this day truly special."
 
 **Sample 6 — Casual, for friend groups:**
 "Our little one is getting a name! 🎉 Join us for [Baby's Name]'s Namakaran on [Date] at [Time] at [Venue]. Pooja at [Time], name reveal at [Time], and lunch to follow. Tap the link below for details and directions!"
@@ -391,8 +394,196 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
 "By God's grace, [Parents' Names] joyfully invite you to the Namakaran Sanskar of their child on [Date] at [Muhurat Time] at [Venue]. The ceremony will begin with Ganesh Pooja, followed by the naming ritual and family blessings. We seek your presence and prayers."`,
       },
       {
+        heading: 'Short naming ceremony messages for WhatsApp groups',
+        body: `Family groups move fast, so the first line has to carry the occasion, the date and the place. Paste your invitation link on the line below and let it hold the rest.
+
+**Sample 9 — Two lines for the family group:**
+"Our little one's naming ceremony is on [Date] at [Time], [Venue]. 🙏
+Please come and bless the baby — details and map in the link: [Digital Invite Link]"
+
+**Sample 10 — For the building or society group:**
+"Dear neighbours, we have been blessed with a baby [boy / girl] and are holding the Namakaran on [Date] at [Time] at our home, [Flat No., Building]. We would love for you to drop by for the pooja and prasad. — [Parents' Names]"
+
+**Sample 11 — From the grandparents:**
+"With great joy, [Grandparents' Names] invite you to the naming ceremony of their grandchild on [Date] at [Time], [Venue].
+Pooja, name announcement and lunch. Please come and bless the little one. 🙏"
+
+**Sample 12 — For relatives abroad:**
+"We wish you could be here for [Baby's Name]'s naming ceremony on [Date]. The photos, the schedule and a space for your blessings are all on this link — leave a message for the baby and we will read it out at the ceremony. [Digital Invite Link]"
+
+**Sample 13 — Reminder, the day before:**
+"Reminder 😊 [Baby's Name]'s Namakaran is tomorrow, [Date], at [Time].
+The pooja begins on time at [Venue] — map here: [Digital Invite Link]"`,
+      },
+      {
+        heading: 'Namakaran invitation message for baby boy',
+        body: `These work for a printed card, a WhatsApp group or a digital invitation. Decide first whether the name goes in the invitation or is revealed at the ceremony.
+
+**Sample 14 — Traditional, Sanskrit-influenced formal:**
+"With the blessings of our Kula Devata and the grace of our elders,
+we joyfully invite you to the Namakaran Sanskar of our beloved son
+[Baby's Name]
+Date: [Date] | Shubh Muhurat: [Time]
+Venue: [Venue Name & Address, City]
+Puja: [Time] | Name Announcement: [Time] | Lunch: [Time] onwards
+Please bless our little one on this sacred first milestone.
+— [Father's Name] & [Mother's Name]"
+
+**Sample 15 — Simple WhatsApp message:**
+"Our little prince has arrived and it's time to give him his name!
+Baby Boy Naming Ceremony
+Date: [Date] at [Time]
+Venue: [Venue & Address]
+Do come with your blessings. Lunch follows the ceremony.
+Details: [Digital Invite Link]"
+
+**Sample 16 — With the name reveal:**
+"We are naming our little prince — and we want you there for the moment!
+[Father's Name] & [Mother's Name] joyfully invite you to the Namakaran ceremony of our baby boy.
+The name will be revealed at the ceremony — come be part of it!
+Date: [Date] | Time: [Time]
+Venue: [Address, City]
+RSVP: [Phone Number]"
+
+**Sample 17 — Bilingual Hindi / English:**
+"हमारे घर एक नन्हे राजकुमार का आगमन हुआ है!
+[Baby's Name] का नामकरण संस्कार
+तारीख: [Date] | मुहूर्त: [Time]
+स्थान: [Address, City]
+आपके आशीर्वाद के बिना यह संस्कार अधूरा है।
+Our baby boy's naming ceremony — please join us!
+— [Father's Name] & [Mother's Name]"
+
+**Sample 18 — South Indian Namakarana and cradle ceremony:**
+"With the blessings of Sri [Family Deity],
+[Father's Name] & [Mother's Name] invite you to the Namakarana & Cradle Ceremony of their beloved son
+[Baby's Name]
+Muhurtam: [Time] on [Date]
+Venue: [Venue, Address, City]
+Ganapathi Puja — [Time] | Cradle Ceremony & Name Announcement — [Time] | Lunch — [Time] onwards
+Your presence and blessings are our greatest joy.
+RSVP: [Phone Number]"`,
+      },
+      {
+        heading: 'Namakaran invitation message for baby girl',
+        body: `A baby girl's naming ceremony is a joyful family milestone. These range from formal to casual WhatsApp-ready texts.
+
+**Sample 19 — Formal English:**
+"With hearts full of joy and gratitude,
+[Father's Name] and [Mother's Name] joyfully invite you to celebrate the Namakaran Ceremony of their beloved daughter
+[Baby's Name]
+Date: [Day], [Date] | Auspicious Muhurat: [Time]
+Venue: [Venue Name, Address, City]
+Puja — [Time] | Name Announcement — [Time] | Lunch — [Time]
+Kindly grace us with your blessings and presence.
+RSVP: [Phone Number]"
+
+**Sample 20 — Modern and simple:**
+"Our little girl is getting her name, and we want you there!
+[Baby's Name]'s Naming Ceremony
+Date: [Date] at [Time]
+Venue: [Venue & Address]
+Come shower her with your love and blessings. Lunch after the ceremony.
+Full invite: [Digital Invite Link]"
+
+**Sample 21 — With a blessing from the family deity:**
+"With the blessings of Goddess [Lakshmi / Saraswati / Family Deity], a little goddess has arrived in our home.
+[Father's Name] & [Mother's Name] invite you to the Namakarana Ceremony of their daughter
+[Baby's Name]
+Muhurtam: [Date] at [Time]
+Venue: [Venue, Address, City]
+Cradle ceremony, puja and lunch follow. Your blessings are our family's greatest treasure."
+
+**Sample 22 — Short WhatsApp group post:**
+"[Baby's Name]'s naming ceremony is on [Date]!
+Time: [Time] | Venue: [Venue, City]
+All blessings welcome 💛
+Details & map 👉 [Digital Invite Link]"
+
+**Sample 23 — Bilingual Hindi / English:**
+"हमारी प्यारी बेटी का नामकरण!
+[Baby's Name] — इस नाम के साथ वो हमारे घर की रोशनी बनेगी।
+दिनांक: [Date] | मुहूर्त: [Time]
+स्थान: [Address, City]
+पूजा, नाम घोषणा और भोजन — सभी के लिए स्वागत है।
+Our baby girl's naming ceremony — do join us with your blessings!
+— [Father's Name] & [Mother's Name]"`,
+      },
+      {
+        heading: 'Cradle ceremony and regional naming ceremony wording',
+        body: `The ceremony carries different names and customs across India. Use the name your own family uses — it is the first thing elders read.
+
+**Sample 24 — Namakaran Sanskar, North India:**
+"[Father's Name] & [Mother's Name] invite you to the Namakaran Sanskar of
+Baby [Baby's Name]
+to be celebrated on [Date] at [Time] at [Venue, Address, City].
+Puja, prasad and blessings — your presence completes this sacred ceremony."
+
+**Sample 25 — Namakarana, Karnataka and Tamil Nadu:**
+"[Father's Name] & [Mother's Name] cordially invite you to the Namakarana of their child
+[Baby's Name]
+Muhurtam: [Date] | [Time]
+Venue: [Address, City]
+Homam — [Time] | Name Announcement — [Time] | Lunch — [Time]
+RSVP: [Phone Number]"
+
+**Sample 26 — Cradle ceremony, in English:**
+"[Father's Name] and [Mother's Name] joyfully invite you to the Cradle Ceremony & Baby Naming of their little one
+[Baby's Name]
+Date: [Date] at [Time]
+Venue: [Venue, Address, City]
+The naming ceremony will be followed by lunch. Your blessings are the greatest gift for our child."
+
+**Sample 27 — Barasala, Telugu families:**
+"With the blessings of Sri [Family Deity], [Parents' Names] invite you to the Barasala of our little one on [Date] at [Time], [Venue].
+The baby will be placed in the cradle and named with the family's blessings, followed by lunch. Your presence would mean a lot to us."
+
+**Sample 28 — Namakarana and cradle ceremony, Kannada families:**
+"[Parents' Names] cordially invite you to the Namakarana and cradle ceremony (Thottilu Shastra) of our baby on [Date] at [Time], [Venue].
+Pooja, naming and lunch. Please bless the little one with your presence."
+
+**Sample 29 — Barsa, in Marathi:**
+"सप्रेम नमस्कार 🙏
+आमच्या लाडक्या बाळाचे बारसे (नामकरण) [Date] रोजी [Time] वाजता [Venue] येथे आयोजित केले आहे.
+बाळाला आशीर्वाद देण्यासाठी आपण सहकुटुंब अवश्य यावे.
+— [Parents' Names]"
+
+**Sample 30 — Namkaran with Annaprashan, Bengali tradition:**
+"[Father's Name] & [Mother's Name] invite you to celebrate two milestones in one joyful day — Namkaran, the naming ceremony, and Annaprashan, the first rice ceremony — of their beloved child [Baby's Name].
+Date: [Date] at [Time]
+Venue: [Venue, Address, City]
+Puja — [Time] | Naming — [Time] | Annaprashan — [Time] | Lunch — [Time]
+Please join us for these precious first blessings."`,
+      },
+      {
+        heading: 'Naming ceremony quotes, lines and captions',
+        body: `Short lines to open the invitation, caption a photo of the baby, or post on WhatsApp status with your invitation link.
+
+- A new name, a new blessing — join our little one's Namakaran.
+- Our bundle of joy has a name — come bless [Baby's Name]! 👶
+- Join us for the naming ceremony of our little one on [Date]. 🙏
+- With God's grace, we name our baby — be part of the joy!
+- Blessings requested for [Baby's Name]'s Namakaran. [Date]
+- A little miracle, a beautiful name — celebrate with us!
+- Cradle ceremony & naming — your blessings await. 🍼
+- Naming ceremony on [Date] · [Venue] — do grace the occasion.
+- Ten tiny fingers, one beautiful name — come and hear it first.
+- The name is chosen; now we need your blessings. 🙏
+- From "baby" to [Baby's Name] — join us on [Date]!
+- Our little one's first ceremony, and you're on the guest list. 💛`,
+      },
+      {
         heading: 'What details go in the message vs what goes on the invitation page',
-        body: `The WhatsApp message should include: the event type (Namakaran / naming ceremony), the baby's gender if you're comfortable sharing, the date and venue, and the invitation link. That is enough. The invitation page itself should carry: the full pooja schedule with timings, the complete address with a Maps link, parking information if needed, dress code (if any), and a photo of the baby. Trying to put all of this in the WhatsApp message creates a message no one reads fully. The invitation page is where guests go to get details — the message just needs to get them to click.`,
+        body: `The WhatsApp message should include: the event type (Namakaran / naming ceremony), the baby's gender if you're comfortable sharing, the date and venue, and the invitation link. That is enough. The invitation page itself should carry: the full pooja schedule with timings, the complete address with a Maps link, the dress code (if any), and a photo of the baby. Trying to put all of this in the WhatsApp message creates a message no one reads fully. The invitation page is where guests go to get details — the message just needs to get them to click.`,
+      },
+      {
+        heading: 'What to include in a Namakaran invitation',
+        body: `- **The baby's name — or a note that it will be revealed.** Decide before you write. Revealing it adds warmth; keeping it builds anticipation. If it is a surprise, write "we are naming our little one" and leave the name out.
+- **Both parents' names.** Traditional invitations also name the grandparents, which elders notice and appreciate.
+- **The muhurat, not just a start time.** Guests need to know when the puja begins, and when the name will be announced, so nobody misses the moment.
+- **The venue with a landmark and a map.** Many naming ceremonies are at home, in a lane guests have never visited.
+- **A short programme.** Puja, name announcement, photos, lunch — even two lines help guests plan the day.
+- **A photo of the baby.** On a digital invitation this is the part everyone opens first.`,
       },
       {
         heading: 'Timing: how many days before should you send the invitation?',
@@ -400,7 +591,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
       {
         heading: 'Regional variations: Namakaran, Naamkaran, and Cradle ceremony',
-        body: `The naming ceremony goes by different names across India. In North India (Hindi belt), it is Namakaran Sanskar, typically held on the 10th, 11th, or 12th day after birth, or on an auspicious date determined by the family priest. In South India, the Tamil equivalent is Naamkaranam or Thirunaama, often combined with the Valaikappu or held separately. The Telugu/Kannada equivalent is Namakaranam. In Bengal, it is Annaprashan for food introduction, but the naming ceremony is called Naamkaran. The Thodalutsavam or Cradle ceremony in Tamil families combines the naming and the first time the baby is placed in a cradle. Each variation has slightly different elements — include the local term in your invitation so the ceremony feels authentic to your tradition.`,
+        body: `The naming ceremony goes by different names across India. In North India it is the Namakaran Sanskar, traditionally held on the 11th or 12th day after birth, or on a date the family priest chooses. In Maharashtra it is the Barsa, usually on the 12th day, when the baby is placed in a decorated cradle and the women of the family sing paalna songs. Telugu families celebrate Barasala, often around the 21st day, with the cradle and the naming together. Kannada and Tamil families call it Namakarana or Naamakaranam and often combine it with a cradle ceremony — which is why so many South Indian families write "Cradle Ceremony" on an English invitation. Bengali families sometimes hold the naming alongside Annaprashan, the first rice ceremony, months later. Each tradition has its own elements; put the local term on the invitation so the ceremony feels like your family's.`,
       },
     ],
     checklist: [
@@ -413,6 +604,22 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       'Send a reminder message the day before with the same link.',
     ],
     faq: [
+      {
+        q: 'When should a Namakaran ceremony be held?',
+        a: 'Traditionally, Namakaran is held on the 11th or 12th day after birth in North India — a day considered auspicious after the initial post-birth period. Many families also choose the 28th day or a later auspicious date selected by a pandit. South Indian families often hold the Namakarana on the 11th, 12th or a chosen auspicious day. Increasingly, families pick a date that suits outstation relatives, sometimes a month or two after birth.',
+      },
+      {
+        q: 'Should I reveal the baby\'s name in the invitation?',
+        a: 'That is entirely a family preference. Many families reveal the name in the invitation itself — it helps guests address the baby and adds warmth to the message. Others keep it as a ceremonial reveal during the event. If you want it to be a surprise, write "We are naming our little one" without the name, and let guests hear it at the ceremony.',
+      },
+      {
+        q: 'How do I write a Namakaran invitation in English?',
+        a: 'Start with the parents\' names and a warm opening ("With hearts full of joy..."), mention the baby\'s gender and name (or "our little one" if keeping it a surprise), state the ceremony date and time, give the venue address, and include the schedule if there is a pooja and lunch. Close with a request for blessings. Eight to ten lines works well for a printed card or a WhatsApp message.',
+      },
+      {
+        q: 'What is the difference between Namakaran and a cradle ceremony?',
+        a: 'Namakaran (also spelled Naamkaran) is the Hindu naming ceremony — the ritual in which the baby is given its name, often by a pandit with Sanskrit mantras. "Cradle ceremony" is the English term many South Indian and Maharashtrian families use, because their naming ceremony includes placing the baby in a decorated cradle for the first time. The two terms often describe the same event in different regional traditions.',
+      },
       {
         q: 'Can I send an invitation link instead of just a text message?',
         a: 'Yes, and it works much better. A digital invitation link gives you a dedicated page where you can include the full pooja schedule, venue map, baby photos, and a blessings section where family and friends can leave wishes. The link generates a preview card in WhatsApp showing the baby\'s photo and ceremony details — guests can tap to open the full invitation. You still write a short WhatsApp message, but the link does the heavy lifting of sharing all the event details clearly.',
@@ -427,9 +634,10 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free Namakaran invitation', href: '/namakaran-invitation' },
-      { label: 'Digital invitation templates', href: '/templates' },
-      { label: 'Create your invitation', href: '/create' },
+      { label: 'Digital Namakaran invitation', href: '/namakaran-invitation' },
+      { label: 'Namakaran ideas for baby boys', href: '/blog/namakaran-invitation-ideas-for-baby-boys' },
+      { label: 'Namakaran ideas for baby girls', href: '/blog/namakaran-invitation-ideas-for-baby-girls' },
+      { label: 'Baby shower invitation wording', href: '/blog/baby-shower-invitation-wording-ideas-for-india' },
     ],
   },
 
@@ -493,17 +701,17 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free digital engagement invitation', href: '/engagement-invitation' },
+      { label: 'Digital engagement invitation', href: '/engagement-invitation' },
       { label: 'Invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
   },
 
   'baby-shower-invitation-wording-ideas-for-india': {
-    intro: `Baby shower invitations in India carry more variety than most hosts realise. You might be hosting a Godh Bharai in Rajasthan, a Seemantham in Andhra, a Valaikappu in Tamil Nadu, or a thoroughly modern gender-reveal baby shower with cake and confetti. Each has a different tone, guest list, and set of expectations. Here are seven invitation samples plus guidance on what to include, what to skip, and how early to send.`,
+    intro: `Baby shower invitations in India carry more variety than most hosts realise. You might be hosting a Godh Bharai in Rajasthan, a Seemantham in Andhra, a Valaikappu in Tamil Nadu, or a thoroughly modern baby shower with cake and games. Each has a different tone, guest list and set of expectations. Below are more than thirty messages you can copy — Godh Bharai, Seemantham, Valaikappu and modern wording in English, Hindi and Tamil, plus captions — with guidance on what to include, what to skip, and how early to send.`,
     sections: [
       {
-        heading: 'Seven ready-to-use baby shower invitation samples',
+        heading: 'Ready-to-use baby shower invitation samples',
         body: `**Sample 1 — Godh Bharai, traditional:**
 "With great joy and the blessings of our family, we invite you to the Godh Bharai ceremony of [Mother-to-be's Name] on [Date] at [Time] at [Venue/Home Address]. Join us for rituals, blessings, and a celebratory meal. — [Host's Name / Family Name]"
 
@@ -513,25 +721,180 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
 **Sample 3 — Modern baby shower, English:**
 "A little one is on the way and we're celebrating! 🎀 Join us for a baby shower in honour of [Mother-to-be's Name] on [Date] at [Time] at [Venue]. Refreshments and activities to follow. RSVP by [Date] — [Host's Name]"
 
-**Sample 4 — Gender reveal:**
-"He or She — who will it be? 💛 Join us for a gender reveal celebration for [Mother-to-be's Name] on [Date] at [Time] at [Venue]. The big reveal is at [Time]. Light refreshments to follow. Can't wait to share the news together!"
-
-**Sample 5 — First-time parents, warm tone:**
+**Sample 4 — First-time parents, warm tone:**
 "We're going to be parents! 🥹 [Father's Name] and [Mother's Name] invite you to celebrate their little one on [Date] at [Venue], [Time]. Come shower us with love and blessings as we prepare to welcome our baby."
 
-**Sample 6 — Valaikappu (South Indian bangle ceremony):**
+**Sample 5 — Valaikappu (South Indian bangle ceremony):**
 "With joyful hearts, [Family Name] invites you to the Valaikappu ceremony of [Mother-to-be's Name] on [Date] at [Time] at [Venue]. The ceremony will begin with a pooja followed by the bangle tradition, blessings, and lunch."
 
-**Sample 7 — Short WhatsApp group message:**
+**Sample 6 — Short WhatsApp group message:**
 "Sharing the invitation for [Name]'s Godh Bharai on [Date] at [Venue]. Tap the link for details, schedule, and directions. See you there! 🙏"`,
       },
       {
+        heading: 'Godh Bharai invitation messages',
+        body: `Godh Bharai celebrates the mother-to-be — blessing her and filling her lap (godh) with shagun and gifts. The tone is warm, loving and family-first.
+
+**Sample 7 — Traditional North Indian, formal:**
+"With the blessings of our family and the grace of the Almighty, we joyfully invite you to the Godh Bharai Ceremony of our beloved daughter / daughter-in-law
+[Mother-to-be's Name]
+Date: [Date] | Time: [Time] onwards
+Venue: [Venue Name, Address, City]
+A ladies-only ceremony with puja, shagun and lunch.
+Your blessings for the soon-to-arrive little one are our greatest joy.
+— [Host Family Names] | RSVP: [Phone Number]"
+
+**Sample 8 — Simple WhatsApp group message:**
+"[Mother-to-be's Name]'s Godh Bharai is here!
+Date: [Date] at [Time]
+Venue: [Venue, City]
+Come bless her and the little one on the way 💛 Ladies, please do join us!
+Details & map 👉 [Digital Invite Link]"
+
+**Sample 9 — Both sets of grandparents hosting:**
+"[Maternal Grandparents' Names] along with [Paternal Grandparents' Names]
+joyfully invite you to celebrate the Godh Bharai of
+[Mother-to-be's Name] (wife of [Father-to-be's Name])
+Date: [Date] | Time: [Time]
+Venue: [Address, City]
+Puja | Godh Bharai ritual | Lunch
+Your presence and blessings would make this day truly special.
+RSVP: [Phone Number]"
+
+**Sample 10 — With a dress code note:**
+"The wait is almost over — and we are celebrating!
+Godh Bharai for [Mother-to-be's Name]
+Date: [Date] at [Time]
+Venue: [Venue, Address]
+Dress code: yellow & green traditional attire preferred 💛 (or any festive colour you love)
+Ladies only | Puja, shagun & lunch
+RSVP to [Name] at [Phone Number]"
+
+**Sample 11 — Bilingual Hindi / English:**
+"गोद भराई का मंगल अवसर!
+[Mother-to-be's Name] की गोद भराई पर आप सभी को सादर आमंत्रित किया जाता है।
+दिनांक: [Date] | समय: [Time]
+स्थान: [Venue, City]
+पूजा, गोद भराई रस्म और भोजन — सभी महिलाओं का स्वागत है।
+Godh Bharai celebration — ladies, please join us with your blessings!
+Invite & map: [Digital Invite Link]"`,
+      },
+      {
+        heading: 'Seemantham invitation messages',
+        body: `Seemantham is the Telugu and Kannada ceremony — similar to Godh Bharai in intent, with its own puja and muhurtam. Invitations carry a respectful, ceremonial tone.
+
+**Sample 12 — Seemantham, formal:**
+"With the blessings of Sri [Family Deity], [Host Family Name(s)] cordially invite you to the Seemantham Ceremony of their daughter / daughter-in-law
+[Mother-to-be's Name] (wife of [Father-to-be's Name])
+Date: [Date] | Muhurtam: [Time]
+Venue: [Venue Name, Address, City]
+Puja | Seemantham ritual | Lunch follows
+We seek your blessings for the mother and child.
+RSVP: [Phone Number]"
+
+**Sample 13 — Both families hosting:**
+"[Father-in-law's Name] & [Mother-in-law's Name] along with [Father's Name] & [Mother's Name]
+invite you to the Seemantham of [Mother-to-be's Name]
+Muhurtam: [Time] on [Date]
+Venue: [Venue, Address, City]
+Satyanarayan Puja — [Time] | Seemantham — [Time] | Lunch — [Time]
+Your presence and blessings are our joy."
+
+**Sample 14 — Simple English, for guests new to the tradition:**
+"[Mother-to-be's Name]'s Baby Blessing Ceremony (Seemantham)
+Date: [Date] at [Time]
+Venue: [Venue, Address, City]
+Seemantham is a South Indian ceremony to bless the mother-to-be and the baby. All are welcome for the puja and lunch; ladies traditionally take part in the main ceremony.
+RSVP: [Phone Number] | Details & map: [Digital Invite Link]"
+
+**Sample 15 — Short WhatsApp message:**
+"[Mother-to-be's Name]'s Seemantham is on [Date]!
+Time: [Time] | Venue: [Venue, City]
+Puja + lunch — ladies, please join us 🙏
+Full invite & map 👉 [Digital Invite Link]"`,
+      },
+      {
+        heading: 'Valaikappu invitation messages',
+        body: `Valaikappu is the Tamil bangle ceremony, usually in the seventh or ninth month, when the women of the family slip glass bangles onto the mother-to-be's wrists and bless the baby.
+
+**Sample 16 — Tamil and English:**
+"எங்கள் இல்ல வளைகாப்பு விழாவிற்கு தங்களை அன்புடன் அழைக்கிறோம். 🙏
+We warmly invite you to the Valaikappu of [Mother-to-be's Name] on [Date] at [Time], [Venue].
+Bangles, blessings and lunch — please do come.
+— [Family Name]"
+
+**Sample 17 — Formal English:**
+"With the blessings of our elders, [Family Name] invite you to the Valaikappu of [Mother-to-be's Name] on [Date] at [Time] at [Venue].
+The ladies of the family will adorn her with bangles and blessings for the baby, followed by lunch.
+Your presence would make the day complete."
+
+**Sample 18 — Short WhatsApp message:**
+"[Name]'s Valaikappu is on [Date], [Time] at [Venue]. 🙏
+Bangles, blessings and lunch — ladies, please do come!
+Details 👉 [Digital Invite Link]"`,
+      },
+      {
+        heading: 'Modern baby shower invitation wording',
+        body: `City baby showers are often lighter and closer to a party than a ritual. These match that energy.
+
+**Sample 19 — Themed baby shower:**
+"A little one is on the way — and we're celebrating!
+Baby Shower for [Mother-to-be's Name]
+Date: [Date] | Time: [Time] onwards
+Venue: [Venue, Address, City]
+Theme: [Little Star / Jungle / Moon & Stars]
+Games, cake, gifts and lots of love!
+RSVP by [Date] to [Name] at [Phone Number]"
+
+**Sample 20 — Co-ed baby shower:**
+"[Mother-to-be's Name] & [Father-to-be's Name] are expecting — and you're invited to celebrate!
+Co-ed Baby Shower
+Date: [Date] at [Time]
+Venue: [Venue, Address]
+Everyone welcome — games, food and good wishes for the baby!
+RSVP to [Phone Number] by [Date]"
+
+**Sample 21 — Intimate home gathering:**
+"We're keeping it small and sweet — just our closest people.
+A baby shower for [Mother-to-be's Name] at [Host's Name]'s home
+Date: [Date] | Time: [Time]
+Address: [Full Address, City]
+Limited seats — please RSVP to [Phone Number] by [Date].
+Gifts optional — your presence is the present!"`,
+      },
+      {
         heading: 'Godh Bharai vs Seemantham vs modern baby shower — how invitation tone differs',
-        body: `Godh Bharai (common in Hindi-speaking states) is rooted in ritual and family blessings — the invitation tone is warm, devotional, and community-centred. It is usually women-only or predominantly women, and the ceremony involves filling the mother-to-be's lap (godi) with fruits, sweets, and gifts. Seemantham (Telugu/Kannada) and Valaikappu (Tamil) are similarly ritual-focused, held in the 7th or 9th month, and are more formally structured with specific ceremony timings. A modern baby shower is more casual, often gender-neutral, activity-based (games, cake, gift opening), and draws on Western baby shower conventions. The invitation tone for Godh Bharai should feel auspicious; for Seemantham, it should acknowledge the ceremony structure; for a modern baby shower, it can be playful and upbeat. Avoid applying the same wording template to all three.`,
+        body: `Godh Bharai (common in Hindi-speaking states) is rooted in ritual and family blessings — the invitation tone is warm, devotional, and community-centred. It is usually women-only or predominantly women, and the ceremony involves filling the mother-to-be's lap (godi) with fruits, sweets, and gifts. Seemantham (Telugu/Kannada) and Valaikappu (Tamil) are similarly ritual-focused, held in the 7th or 9th month, and are more formally structured with specific ceremony timings. A modern baby shower is more casual, activity-based (games, cake, gift opening), and draws on Western baby shower conventions. The invitation tone for Godh Bharai should feel auspicious; for Seemantham, it should acknowledge the ceremony structure; for a modern baby shower, it can be playful and upbeat. Avoid applying the same wording template to all three.
+
+The rule underneath all of it: let the event decide the tone. A Godh Bharai with a pandit and rituals needs a respectful invitation; a party with friends from work can be casual. Guests read the tone and it shapes how they dress, whether they bring shagun, and whether they arrive for a puja or a party.`,
       },
       {
         heading: 'What to include in the invitation (and what to mention about gifts)',
-        body: `Include: the mother-to-be's name, the event type, date, time, venue, ceremony schedule, and a note about dress code if there is one (for Godh Bharai, women often wear traditional attire). If you have a gift registry, include it on the invitation page rather than in the WhatsApp message — mentioning it in the message can feel presumptuous. Similarly, parking information belongs on the invitation page, not the message. One element many hosts forget: if the event is at a home address, include a Maps pin or landmark — "third house from [Landmark]" is not sufficient for guests navigating in an unfamiliar area. For events in venues, note whether parking is available or whether guests should use a nearby lot.`,
+        body: `Include: the mother-to-be's name, the event type, date, time, venue, ceremony schedule, and a note about dress code if there is one (for Godh Bharai, women often wear traditional attire). If you have a gift registry, include it on the invitation page rather than in the WhatsApp message — mentioning it in the message can feel presumptuous. One element many hosts forget: if the event is at a home address, include a Maps pin or landmark — "third house from [Landmark]" is not sufficient for guests navigating in an unfamiliar area.
+
+- **Who is hosting.** For Godh Bharai and Seemantham the grandparents often appear as hosts; for a co-ed shower, name both parents-to-be.
+- **Whether it is women-only.** "Ladies are warmly invited" says it politely. If everyone is welcome, you need not mention it.
+- **Dress code.** Yellow and green is traditional for Godh Bharai; silk sarees are common at a Seemantham. Keep it optional unless it matters to you.
+- **An RSVP note.** Home venues have limited space, so give a date and a number: "Please confirm by [Date] to [Phone]."`,
+      },
+      {
+        heading: 'Baby shower quotes, lines and captions',
+        body: `Short lines to open the invitation, or to post as a WhatsApp status with your invitation link.
+
+- A little one is on the way — come shower us with love!
+- Blessings, not gifts — your presence is the present.
+- Join us to bless the mom-to-be on [Date]! 🤰
+- A tiny miracle is coming — celebrate with us! [Date]
+- Godh Bharai blessings for [Name] — do join us. 🙏
+- Come shower [Name] with love before the baby arrives!
+- Little feet are on the way — bless them with us. 👣
+- Sweet blessings for a sweet beginning — [Date] · [Venue].
+- Baby loading… 🤰 Join the shower on [Date]!
+- Oh baby! 🎀 Come celebrate the mom-to-be. [Date]
+- Twinkle twinkle little star — a baby's on the way! ⭐
+- Showering blessings on [Name] 💛 You're invited!
+- From bump to baby — bless the journey! [Date]
+- Little one, big love — join our Godh Bharai! 🙏
+- Bangles, blessings and a baby on the way — Valaikappu on [Date]. 🙏`,
       },
     ],
     checklist: [
@@ -545,6 +908,10 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
     ],
     faq: [
       {
+        q: 'What is the difference between Godh Bharai and a baby shower invitation?',
+        a: 'Godh Bharai is a traditional North Indian ceremony focused on blessings, shagun and rituals, usually hosted by the family. A modern baby shower is more informal and party-like, often hosted by friends, with games and a theme. The invitation tone follows: Godh Bharai invitations are warm and ceremonial, baby shower invitations playful and light. Seemantham (Telugu and Kannada) and Valaikappu (Tamil) are the South Indian equivalents, each with its own rituals.',
+      },
+      {
         q: 'How early should I send a baby shower invitation?',
         a: 'Send the invitation 10–14 days before the event for local guests. If close family members are travelling from another city — parents, in-laws, siblings — send it 3 weeks in advance so they can book travel. Baby showers in India are often decided and planned quickly due to the pregnancy timeline, so digital invitations are invaluable here because they can be created and sent within hours of confirming the date and venue.',
       },
@@ -553,14 +920,19 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
         a: 'State it clearly in the invitation: "This is a women-only celebration" or "Ladies\' celebration" — do not leave it ambiguous. Families navigate this differently, and male relatives or husbands\' friends may otherwise assume they are invited. For Godh Bharai specifically, it is traditionally women-only, though many modern families include husbands and brothers. Decide in advance and communicate it in the invitation so no one is surprised or awkwardly turned away.',
       },
       {
+        q: 'Can men attend a Seemantham?',
+        a: 'Seemantham is traditionally a women-led ceremony, but practice varies — many families include the father-to-be and close male relatives for the puja. If yours is women-only, say so clearly: "We request the presence of all the ladies of the family." If it is mixed, no mention is needed. When in doubt, call close male relatives personally.',
+      },
+      {
         q: 'Should I include a gift registry link in the invitation?',
         a: 'Including a registry on the invitation page (not the WhatsApp message) is increasingly accepted and appreciated in urban Indian families — it removes the guesswork for guests and ensures the parents actually receive useful items. Frame it gently: "If you\'d like to bring a gift, we\'ve put together a small list of things we need." Keep it optional and avoid making the registry the focus of the invitation. Older family members may prefer the traditional approach of bringing sweets or hand-selecting a gift — both are equally welcome.',
       },
     ],
     links: [
-      { label: 'Free Namakaran invitation', href: '/namakaran-invitation' },
-      { label: 'Digital invitation templates', href: '/templates' },
-      { label: 'Create your invitation', href: '/create' },
+      { label: 'Godh Bharai & baby shower design', href: '/create?template=baby-shower' },
+      { label: 'Godh Bharai invitation ideas', href: '/blog/godh-bharai-invitation-ideas-for-whatsapp' },
+      { label: 'Seemantham invitation messages', href: '/blog/seemantham-invitation-message-examples' },
+      { label: 'Naming ceremony invitation messages', href: '/blog/naming-ceremony-invitation-message-samples' },
     ],
   },
 
@@ -616,7 +988,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free Namakaran invitation', href: '/namakaran-invitation' },
+      { label: 'Digital Namakaran invitation', href: '/namakaran-invitation' },
       { label: 'Digital invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
@@ -680,7 +1052,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free digital birthday invitation', href: '/birthday-invitation' },
+      { label: 'Digital birthday invitation', href: '/birthday-invitation' },
       { label: 'Birthday invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
@@ -731,7 +1103,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free Griha Pravesh invitation', href: '/griha-pravesh-invitation' },
+      { label: 'Digital Griha Pravesh invitation', href: '/griha-pravesh-invitation' },
       { label: 'Digital invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
@@ -790,7 +1162,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free digital birthday invitation', href: '/birthday-invitation' },
+      { label: 'Digital birthday invitation', href: '/birthday-invitation' },
       { label: 'Birthday invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
@@ -851,7 +1223,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free digital engagement invitation', href: '/engagement-invitation' },
+      { label: 'Digital engagement invitation', href: '/engagement-invitation' },
       { label: 'Invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
@@ -913,65 +1285,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free Namakaran invitation', href: '/namakaran-invitation' },
-      { label: 'Digital invitation templates', href: '/templates' },
-      { label: 'Create your invitation', href: '/create' },
-    ],
-  },
-
-  'housewarming-invitation-wording-for-griha-pravesh': {
-    intro: `A housewarming invitation for a Griha Pravesh ceremony needs to work on two levels: it must communicate the muhurat time with precision (guests who miss it miss the most important part), and it must help guests find an address that may be unfamiliar, in a new construction area or an apartment complex with multiple buildings. Here are six samples covering the main formats Indian families use, plus guidance on what to always include and what to leave out.`,
-    sections: [
-      {
-        heading: 'Six housewarming invitation message samples',
-        body: `**Sample 1 — Religious/traditional:**
-"With the blessings of [Deity/God] and our elders, [Family Name] joyfully invites you to the Griha Pravesh ceremony of our new home. [Date] | Muhurat: [Time] | [Full Address], [City]. Pooja at [Time], lunch to follow. Please grace us with your presence and blessings. 🙏"
-
-**Sample 2 — Modern, warm:**
-"We're home! 🏡 [Family Name] invites you to celebrate our Griha Pravesh on [Date] at [Venue/Address], [City]. Muhurat at [Time], pooja from [Time], lunch at [Time]. Tap the link for full details and directions."
-
-**Sample 3 — Short WhatsApp group message:**
-"Sharing our Griha Pravesh invitation! [Date] | Muhurat: [Time] | [Address], [City]. Tap the link for the full schedule and Google Maps directions. 🙏 — [Family Name]"
-
-**Sample 4 — Formal, printed-card style:**
-"[Family Name] along with [Extended Family Reference] cordially invite you to the auspicious Griha Pravesh ceremony on [Date] at [Muhurat Time] at [Venue Name / Address]. The ceremony includes Vastu Pooja, Griha Pravesh, and Lakshmi Pooja, followed by a traditional lunch. Your presence and blessings will sanctify our new home."
-
-**Sample 5 — Bilingual (Hindi + English):**
-"गृह प्रवेश के शुभ अवसर पर आप सादर आमंत्रित हैं। [Date] | मुहूर्त: [Time] | [Address]. Pooja followed by lunch. We look forward to your presence and blessings. 🙏 — [Family Name]"
-
-**Sample 6 — Apartment-specific:**
-"[Family Name] invites you to our Griha Pravesh at [Apartment Complex Name], Tower [X], Floor [X], [City] on [Date]. Muhurat: [Time]. Enter from Gate [X] on [Road Name]. Pooja at [Time], lunch to follow. Tap the link for the Google Maps pin and full details."`,
-      },
-      {
-        heading: 'What to always include in a Griha Pravesh invitation',
-        body: `Three things must appear in every Griha Pravesh invitation, no matter how brief: the muhurat time (mark it prominently as "Muhurat: [Time]" not buried in a schedule), the complete address including apartment number and tower/building if applicable, and a Google Maps link. Beyond these, include the ceremony schedule — guests need to know whether the pooja runs for 30 minutes or 3 hours to plan their day. Dress code is worth including if you are expecting traditional attire. A personal message from the family — even one sentence about the joy of moving into the new home — elevates the invitation from a logistical notice to a genuine celebration.`,
-      },
-      {
-        heading: 'What to leave out of the digital invitation',
-        body: `A common mistake in Griha Pravesh invitations is including the gift wish list in the invitation itself — this is considered inappropriate in most Indian families and signals that the host values gifts over guests. Leave this out entirely. Similarly, avoid including detailed cost information about the new home (how many bedrooms, which builder, price range) which occasionally appears as an attempt to contextualise the celebration. The invitation should not include internal family notes about who is contributing to the costs or the pooja arrangements — keep those conversations separate. On the digital page, avoid uploading interior photos of a home that is still under setup; a clean exterior or front door photo is more appropriate.`,
-      },
-    ],
-    checklist: [
-      'Place the muhurat time prominently, labelled as "Muhurat" not just listed in the schedule.',
-      'Include the complete address: street, apartment/tower, floor, city, landmark.',
-      'Add a Google Maps link pinned to the main entry gate for apartments.',
-      'Include parking instructions specific to the building.',
-      'List the ceremony schedule clearly: Ganesh Pooja, Vastu Pooja, Lakshmi Pooja, Griha Pravesh entry, havan, lunch.',
-      'Add a warm family message — even one sentence.',
-      'Send 10–14 days before; resend the link as a reminder 2 days before.',
-    ],
-    faq: [
-      {
-        q: 'Should I mention the muhurat time in the main WhatsApp message?',
-        a: 'Yes, always. The muhurat time is the single most critical piece of information for a Griha Pravesh guest. Include it in the WhatsApp message itself, not only on the invitation page. Write it clearly: "Muhurat: 10:15 AM" in the first few lines of the message. Guests who only skim the WhatsApp message (rather than opening the invitation link) need to see this immediately. Many guests in large WhatsApp groups read the first line and decide whether to arrive on time based on that alone.',
-      },
-      {
-        q: 'How formal should a housewarming invitation be?',
-        a: 'Match the formality to your guest list and family culture. A Griha Pravesh is an auspicious religious ceremony, so the base tone should be respectful and warm — more formal than a birthday party, less elaborate than a wedding. For family groups, a warm and personal tone works well. For office contacts or neighbours you know less well, a slightly more formal tone is appropriate. The key is that the invitation communicates this is a meaningful ceremony, not just a housewarming party with drinks — that distinction matters for guests making travel and arrival time decisions.',
-      },
-    ],
-    links: [
-      { label: 'Free Griha Pravesh invitation', href: '/griha-pravesh-invitation' },
+      { label: 'Digital Namakaran invitation', href: '/namakaran-invitation' },
       { label: 'Digital invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
@@ -1026,7 +1340,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free Namakaran invitation', href: '/namakaran-invitation' },
+      { label: 'Digital Namakaran invitation', href: '/namakaran-invitation' },
       { label: 'Digital invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
@@ -1085,7 +1399,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free Namakaran invitation', href: '/namakaran-invitation' },
+      { label: 'Digital Namakaran invitation', href: '/namakaran-invitation' },
       { label: 'Digital invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
     ],
@@ -1131,7 +1445,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
     ],
     links: [
-      { label: 'Free digital wedding invitation', href: '/wedding-invitation' },
+      { label: 'Digital wedding invitation', href: '/wedding-invitation' },
       { label: 'Wedding invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
       { label: 'Indian wedding invitation wording', href: '/blog/indian-wedding-invitation-wording-for-whatsapp' },
@@ -1405,7 +1719,7 @@ There is something else worth saying, which is less comfortable to state plainly
       'Send the invitation as a WhatsApp link, not an image file — a link stays navigable; an image gets buried in media.',
       'Include a Google Maps pin to the exact gate or entrance, not just the venue name — this is the feature guests use most on the wedding day itself.',
       'Enable the guest wishes section so the invitation becomes interactive and the host sees who has engaged with it.',
-      'Check every detail in the free preview before publishing — a published invitation cannot be edited, so a change means sharing a corrected link.',
+      'Check every detail in the preview before publishing — a published invitation cannot be edited, so a change means sharing a corrected link.',
       'List every sub-event with timings on the invitation page: Mehendi, Sangeet, Baraat, Pheras, Reception — one page does all of it.',
       'Upload a couple photo or family photo to the invitation — the visual is what makes guests feel they received something personal rather than a logistics notice.',
       'Send a reminder two to three days before the event via the same link — most guests look up venue details on the day or the day before.',
@@ -1480,7 +1794,7 @@ The third thing is the guest wishes section. A printed card generates no respons
 
 But there is a hidden cost that rarely gets calculated: the time and coordination involved in printing, distributing, and tracking down who has and has not received a card. In joint households where the responsibility is split between family members, this coordination is real labour. The cousin who is supposed to deliver forty cards to relatives in another neighbourhood. The aunt who was going to bring cards to her colony but forgot. The ten cards that need to be posted to out-of-city family, requiring someone to go to the post office. This time has a cost even if it is not a line item.
 
-A digital wedding invitation on ShareInvite starts at ₹199; most designs are ₹499 or less, and the Signature wedding suites are ₹1,499 to ₹1,999 — you can build and preview any of them for free before paying. At that price point, the comparison to printed cards is not competitive; it is absurd. The premium invitation costs less than the printing cost for ten printed cards, can be shared with any number of guests, and updates automatically if anything changes.
+A digital wedding invitation on ShareInvite starts at ₹${templatePrice('elegant-wedding')}. ${priceRangeSentence()} You can build and preview any of them before paying. At that price point, the comparison to printed cards is not competitive; it is absurd. The premium invitation costs less than the printing cost for ten printed cards, can be shared with any number of guests, and updates automatically if anything changes.
 
 What most families end up doing is a hybrid: twenty-five to thirty printed cards for the inner circle, costing ₹2,000 to ₹5,000 with quality printing, and a ShareInvite link for everyone else. This combination costs a fraction of a full printed run and does the communication job better for ninety percent of the guest list.`,
       },
@@ -1512,7 +1826,7 @@ The families who are still printing five hundred cards and also sending a WhatsA
       },
       {
         q: 'What does a digital wedding invitation actually cost in India?',
-        a: 'On ShareInvite, a digital wedding invitation starts at ₹199 as a one-time cost, most designs are ₹499 or less, and the Signature wedding suites — every function, travel and stay, FAQs and RSVP — are ₹1,499 to ₹1,999. You can build and preview any of them for free before paying. This covers unlimited guests and every feature in the design you choose — Maps, gallery, countdown and guest wishes — through the event and for three days after. Compare this to printed cards: a mid-range print run of three hundred cards typically costs ₹15,000 to ₹40,000 with design and delivery.',
+        a: `On ShareInvite, a digital wedding invitation starts at ₹${templatePrice('elegant-wedding')} as a one-time cost. ${priceRangeSentence()} The Signature suites add every function, travel and stay, FAQs and RSVP. You can build and preview any of them before paying. This covers unlimited guests and every feature in the design you choose — Maps, gallery, countdown and guest wishes — through the event and for three days after. Compare this to printed cards: a mid-range print run of three hundred cards typically costs ₹15,000 to ₹40,000 with design and delivery.`,
       },
       {
         q: 'Can I do both — send printed cards and a digital invitation?',
@@ -1524,7 +1838,7 @@ The families who are still printing five hundred cards and also sending a WhatsA
       },
     ],
     links: [
-      { label: 'Free digital wedding invitation', href: '/wedding-invitation' },
+      { label: 'Digital wedding invitation', href: '/wedding-invitation' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
       { label: 'Wedding invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
@@ -1708,7 +2022,7 @@ The families who feel most at peace with their invitation spending, in my experi
       },
     ],
     links: [
-      { label: 'Free digital wedding invitation', href: '/wedding-invitation' },
+      { label: 'Digital wedding invitation', href: '/wedding-invitation' },
       { label: 'Wedding invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
       { label: 'Digital vs printed invitations', href: '/blog/digital-wedding-invitation-vs-printed-cards' },
@@ -1758,7 +2072,7 @@ The families who feel most at peace with their invitation spending, in my experi
       },
       {
         q: 'Are premium templates worth it?',
-        a: 'ShareInvite\'s most popular templates — including Cinematic Night and Royal Deco — are available as part of the paid plan. For a wedding where visual presentation matters to the couple and guests, a premium template is worth the upgrade: the design quality is noticeably higher than free alternatives, and the WhatsApp preview card looks professional rather than generic. The cost is minimal compared to the printing budget for physical cards, and the invitation is shared with hundreds of guests. Think of it as the design investment for your primary digital communication piece.',
+        a: `Every ShareInvite design is paid once when you publish, and the elaborate ones — such as Cinematic Night at ₹${templatePrice('cinematic-night')} and Royal Deco at ₹${templatePrice('royal-deco')} — cost a little more. For a wedding where visual presentation matters to the couple and guests, the richer design is worth it: the design quality is noticeably higher than a plain template, and the WhatsApp preview card looks professional rather than generic. The cost is minimal compared to the printing budget for physical cards, and the invitation is shared with hundreds of guests. Think of it as the design investment for your primary digital communication piece.`,
       },
       {
         q: 'What customisation is possible across all templates?',
@@ -1766,7 +2080,7 @@ The families who feel most at peace with their invitation spending, in my experi
       },
     ],
     links: [
-      { label: 'Free digital wedding invitation', href: '/wedding-invitation' },
+      { label: 'Digital wedding invitation', href: '/wedding-invitation' },
       { label: 'Wedding invitation templates', href: '/templates' },
       { label: 'Create your invitation', href: '/create' },
       { label: 'Indian wedding invitation wording', href: '/blog/indian-wedding-invitation-wording-for-whatsapp' },
@@ -1786,7 +2100,7 @@ Unlike an ordinary e-card, the Surprise Journey is *earned* — the small moment
         heading: 'How to create your 3D digital gift in 5 minutes',
         body: `Creating a Surprise Journey on ShareInvite takes about five minutes and no design skill. Here is the flow: (1) Pick the 3D Surprise Journey template and enter the occasion and their name. (2) Set the secret PIN and a hint — a shared inside date works best. (3) Upload your photo memories; the same gallery powers both the photo carousel and the sliding puzzle. (4) Write your balloon messages (one short line per balloon), your scratch-card reveal, and your handwritten letter. (5) Preview it live, then publish to get a shareable link.
 
-Every field is optional beyond the basics, so you can make it as short or as elaborate as you like. Once published you get a clean link — paste it into WhatsApp, iMessage, Instagram DM or email. Building and previewing is free, so take your time getting every word right — a published invitation cannot be edited afterwards.`,
+Every field is optional beyond the basics, so you can make it as short or as elaborate as you like. Once published you get a clean link — paste it into WhatsApp, iMessage, Instagram DM or email. You can build and preview as long as you like before you pay, so take your time getting every word right — a published invitation cannot be edited afterwards.`,
       },
       {
         heading: 'Best occasions for an interactive digital gift',
@@ -1874,7 +2188,7 @@ That link is all you need. Paste it into WhatsApp and it opens instantly for the
       'Send the WhatsApp link at midnight or first thing in the morning.',
     ],
     faq: [
-      { q: 'How do I make a Valentine\'s Day card online for free to start?', a: 'On ShareInvite you choose the Valentine\'s Day template, add your photos, your reasons and a message, and preview the whole animated card live before you pay anything. You only pay a small one-time fee to publish and share your link — there is no subscription. The whole process takes about five minutes and needs no design skill.' },
+      { q: 'How do I make a Valentine\'s Day card online?', a: 'On ShareInvite you choose the Valentine\'s Day template, add your photos, your reasons and a message, and preview the whole animated card live before you pay anything. You only pay a small one-time fee to publish and share your link — there is no subscription. The whole process takes about five minutes and needs no design skill.' },
       { q: 'Can I send the Valentine card on WhatsApp?', a: 'Yes — that is the main way people share it. When you publish, you get a link that you paste into WhatsApp (or Instagram, iMessage or email). It opens instantly in your partner\'s phone browser with the animation, photos and music, with no app to download on either side.' },
       { q: 'Is a digital valentine good for a long-distance relationship?', a: 'It is ideal. The card arrives the moment you send it, plays your song and shows your photos together, and many couples open it on a video call so they can watch each other\'s reaction. There is no shipping delay, no customs and no extra cost to send it to another country.' },
       { q: 'What should I write in a Valentine\'s card?', a: 'Be specific rather than poetic. Mention true, small things — the way they laugh, a shared memory, a habit you love. For the reasons section use short honest lines; for the main message write the way you actually talk. Specific and honest always beats generic romantic phrasing.' },
@@ -2155,7 +2469,7 @@ That link is all you need. Paste it into WhatsApp and it opens instantly for the
   },
 
   'congratulations-card-online-send-an-animated-congrats-card': {
-    intro: `Big wins deserve a moment, not just a thumbs-up react. A congratulations card online turns "congrats 🎉" into something they will actually remember — a celebratory 3D confetti animation, your photos, and a personal message, sent on WhatsApp in minutes. With ShareInvite you can create a congrats card for a new job, a promotion, exam results, a graduation, a new baby, a new home, or any milestone worth celebrating. It is quick to make, free to start, opens on any phone with no app, and feels far more thoughtful than a group-chat emoji. Here is how to send congratulations that match the size of the achievement.`,
+    intro: `Big wins deserve a moment, not just a thumbs-up react. A congratulations card online turns "congrats 🎉" into something they will actually remember — a celebratory 3D confetti animation, your photos, and a personal message, sent on WhatsApp in minutes. With ShareInvite you can create a congrats card for a new job, a promotion, exam results, a graduation, a new baby, a new home, or any milestone worth celebrating. It is quick to make, you can preview it before you pay, it opens on any phone with no app, and feels far more thoughtful than a group-chat emoji. Here is how to send congratulations that match the size of the achievement.`,
     sections: [
       {
         heading: 'Why send a congratulations card online',
@@ -2254,6 +2568,7 @@ That link is all you need. Paste it into WhatsApp and it opens instantly for the
     ],
     links: [
       { label: 'Create your festival wishes card', href: '/create?template=greeting-festival' },
+      { label: 'Diwali party invitation messages', href: '/diwali-invitation-wording' },
       { label: 'Ganesh Chaturthi invitation card online — ₹99', href: '/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template' },
       { label: 'See pricing', href: '/pricing' },
       { label: 'Family wishes card online', href: '/blog/family-wishes-card-online-a-heartfelt-digital-card-for-family' },
@@ -2464,7 +2779,7 @@ Send it between ten days and two weeks ahead for a weekend party, and send a sho
     links: [
       { label: 'Digital birthday invitations', href: '/birthday-invitation' },
       { label: 'Birthday invitation wording and messages', href: '/birthday-invitation-wording' },
-      { label: 'Birthday invitation templates', href: '/birthday-invitations' },
+      { label: 'Birthday invitation designs', href: '/templates/category/birthday' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
     ],
   },
@@ -2642,7 +2957,7 @@ Apologising for the format. "Sorry for the digital invite, we could not print ca
     links: [
       { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
     ],
   },
@@ -2728,7 +3043,7 @@ Photography. Increasingly, hosts ask guests not to post photographs before the w
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
       { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
     ],
   },
@@ -2816,7 +3131,7 @@ Gifts. Many sixtieth celebrations explicitly ask for none. "Your blessings are t
     links: [
       { label: 'Digital birthday invitations', href: '/birthday-invitation' },
       { label: 'Birthday invitation wording and messages', href: '/birthday-invitation-wording' },
-      { label: 'Birthday invitation templates', href: '/birthday-invitations' },
+      { label: 'Birthday invitation designs', href: '/templates/category/birthday' },
       { label: 'Browse all templates', href: '/templates' },
     ],
   },
@@ -2914,7 +3229,6 @@ Children and elders. Say whether there is seating, since many Griha Pravesh cere
     links: [
       { label: 'Griha Pravesh invitations', href: '/griha-pravesh-invitation' },
       { label: 'Griha Pravesh invitation wording', href: '/griha-pravesh-invitation-wording' },
-      { label: 'Housewarming invitation templates', href: '/griha-pravesh-invitations' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
     ],
   },
@@ -3004,7 +3318,6 @@ Finally, confirm both families are sending on the same day, and agree a reminder
     links: [
       { label: 'Digital engagement invitations', href: '/engagement-invitation' },
       { label: 'Engagement invitation wording', href: '/engagement-invitation-wording' },
-      { label: 'Engagement invitation templates', href: '/engagement-invitations' },
       { label: 'Online RSVP platform', href: '/online-rsvp' },
     ],
   },
@@ -3101,7 +3414,7 @@ If the schedule is genuinely uncertain, hold the invitation until it is confirme
     links: [
       { label: 'Digital birthday invitations', href: '/birthday-invitation' },
       { label: 'Birthday invitation wording and messages', href: '/birthday-invitation-wording' },
-      { label: 'Birthday invitation templates', href: '/birthday-invitations' },
+      { label: 'Birthday invitation designs', href: '/templates/category/birthday' },
       { label: 'Browse all templates', href: '/templates' },
     ],
   },
@@ -3186,7 +3499,7 @@ A phone number. One family member's number, clearly labelled as the contact for 
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Online RSVP platform', href: '/online-rsvp' },
     ],
   },
@@ -3624,7 +3937,7 @@ After the wedding, leave the invitation live. Guests revisit it for photographs 
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
       { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
     ],
   },
@@ -3712,7 +4025,7 @@ Test on mobile data rather than wifi. A file that loads instantly at home can ta
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
       { label: 'Browse invitation templates', href: '/templates' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
     ],
   },
   'silver-anniversary-invitation-ideas': {
@@ -3808,7 +4121,6 @@ Keep the formal register for the parents' generation and elders. A separate cove
     ],
     links: [
       { label: 'Anniversary invitations', href: '/anniversary-invitation' },
-      { label: 'Anniversary invitation templates', href: '/anniversary-invitations' },
       { label: 'Browse all templates', href: '/templates' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
     ],
@@ -3901,7 +4213,6 @@ Finally, leave the invitation page live afterwards. For an event like this, fami
     ],
     links: [
       { label: 'Anniversary invitations', href: '/anniversary-invitation' },
-      { label: 'Anniversary invitation templates', href: '/anniversary-invitations' },
       { label: 'Browse all templates', href: '/templates' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
     ],
@@ -4199,7 +4510,7 @@ Avoid setting long lines in all capitals. Capitals slow reading substantially, a
     ],
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Browse all templates', href: '/templates' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
     ],
@@ -4293,7 +4604,7 @@ If a palette passes all three, it will hold up on every device your guest list o
     ],
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Browse all templates', href: '/templates' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
     ],
@@ -4384,7 +4695,7 @@ Excessive centring. Every line centred on a long page makes the text hard to sca
     ],
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
       { label: 'Browse all templates', href: '/templates' },
     ],
@@ -4475,7 +4786,7 @@ Symmetry carries a lot of the regal feeling on its own. A perfectly symmetrical 
     ],
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Browse all templates', href: '/templates' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
     ],
@@ -4576,7 +4887,7 @@ Language. If the invitation carries Tamil, Telugu, Kannada or Malayalam text alo
     ],
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Wedding invitation wording guide', href: '/wedding-invitation-wording' },
       { label: 'Browse all templates', href: '/templates' },
     ],
@@ -4672,16 +4983,17 @@ If elders in the family would find a digital-only invitation impersonal, do not 
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Browse all templates', href: '/templates' },
     ],
   },
-  'free-online-invitation-maker-for-weddings': {
+  // Was 'free-online-invitation-maker-for-weddings' (301 in next.config.mjs).
+  'online-wedding-invitation-maker-what-it-really-costs': {
     intro: `"Free online invitation maker" is one of the most searched phrases in this category, and almost every result bends the word free in some direction. Some tools are free until you remove a watermark. Some are free until you want more than twenty guests. Some are free to design and charge to download.
 
 It is worth knowing what each service actually means by it before you invest an evening building something.
 
-This guide explains the common models, what is genuinely free across the popular options in India, and — since we build one of these tools — exactly where ShareInvite charges and where it does not.`,
+This guide explains the common pricing models, what to check before you build anything, and — since we build one of these tools — exactly what ShareInvite charges.`,
     sections: [
       {
         heading: 'The four models behind the word free',
@@ -4699,7 +5011,7 @@ None of these is dishonest in itself. The problem is finding out which one you a
       },
       {
         heading: 'What to check before you start building',
-        body: `Five questions that determine whether a tool is actually free for your situation.
+        body: `Five questions that tell you what a tool will really cost for your wedding.
 
 Can you publish and share without paying, or only preview? This is the main one. Preview-only is common.
 
@@ -4717,11 +5029,11 @@ Ask these before you build, not after. The answers are usually on the pricing pa
         heading: 'Where ShareInvite charges, plainly',
         body: `We should be direct about our own model, since this article would be worthless otherwise.
 
-Building and previewing is genuinely free, with no account required to start. You can pick any template, enter every detail — names, date, venue, Google Maps link, schedule, photo gallery, music, personal message — and see the finished invitation exactly as guests would, without paying anything.
+You can build and preview without paying, and without an account to start. Pick any template, enter every detail — names, date, venue, Google Maps link, schedule, photo gallery, music, personal message — and see the finished invitation exactly as guests would before any payment is asked for.
 
-Publishing is paid. Getting the shareable link that you send to guests is a one-time payment, from ₹99 for most occasions to ₹1,999 for the most elaborate Signature wedding suite, depending on the design. There is no subscription and no per-guest charge.
+Publishing is paid. Getting the shareable link that you send to guests is a one-time payment for the design you choose. Wedding designs start at ₹${templatePrice('elegant-wedding')}; across every occasion, ${priceRangeSentence().replace(/^M/, 'm')} There is no subscription and no per-guest charge.
 
-That is the whole model. We do not have a permanently free publishing tier, and describing one would be inaccurate.
+That is the whole model. There is no free publishing tier, and describing one would be inaccurate.
 
 What the one-time payment includes: the live invitation page for that design, unlimited guests, guest wishes on the page, and hosting through the event and for three days after. A published invitation cannot be edited; if a detail changes, you publish a corrected version with the same design, which stays unlocked on your account at no second charge.
 
@@ -4754,8 +5066,8 @@ If none of these apply — a small registry office wedding, sixty guests, fixed 
         a: 'Several tools are free to publish if you accept platform branding on the invitation, or stay within a guest limit. The more common model is free to design and paid to publish, which is where people most often feel misled because the cost appears at the end. Before building, check specifically whether you can share without paying, what branding guests see, and whether there is a guest cap.',
       },
       {
-        q: 'Is ShareInvite free?',
-        a: 'Building and previewing is free, with no account needed to start — you can pick a template, enter every detail and see the finished invitation exactly as guests would, without paying. Publishing the shareable link is a one-time payment starting at ₹99, depending on the template. There is no subscription, no per-guest charge, and no permanently free publishing tier.',
+        q: 'Does ShareInvite charge to publish?',
+        a: `Yes. You can build and preview without paying — pick a template, enter every detail and see the finished invitation exactly as guests would. Publishing the shareable link is a one-time payment for the design: wedding designs start at ₹${templatePrice('elegant-wedding')}, and ${priceRangeSentence().replace(/^M/, 'm')} There is no subscription, no per-guest charge and no free publishing tier.`,
       },
       {
         q: 'What should I check before building on a free invitation tool?',
@@ -4769,7 +5081,7 @@ If none of these apply — a small registry office wedding, sixty guests, fixed 
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
       { label: 'Pricing', href: '/pricing' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Browse all templates', href: '/templates' },
     ],
   },
@@ -4868,7 +5180,7 @@ If a platform gets these three right, the feature list barely matters. If it get
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
       { label: 'Online RSVP platform', href: '/online-rsvp' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
     ],
   },
@@ -4962,7 +5274,7 @@ Keep the invitation page live throughout, since it is where guests will check th
     ],
     links: [
       { label: 'Digital wedding invitations', href: '/wedding-invitation' },
-      { label: 'Wedding invitation templates', href: '/wedding-invitations' },
+      { label: 'Wedding invitation designs', href: '/templates/category/wedding' },
       { label: 'Online RSVP platform', href: '/online-rsvp' },
       { label: 'Browse all templates', href: '/templates' },
     ],

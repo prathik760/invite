@@ -5,6 +5,7 @@ import Logo from '@/components/brand/Logo'
 import PageHero from '@/components/brand/PageHero'
 import TrustList from '@/components/brand/TrustList'
 import CtaBand from '@/components/brand/CtaBand'
+import { LOWEST_PAID_PRICE } from '@/lib/plans'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -35,7 +36,7 @@ const facts = [
   { label: 'Focus market', value: 'Indian weddings & events' },
   { label: 'Invitation types', value: 'Wedding, Engagement, Birthday, Griha Pravesh, Namakaran & more' },
   { label: 'Sharing channel', value: 'WhatsApp-native link sharing' },
-  { label: 'Pricing', value: 'Free to start' },
+  { label: 'Pricing', value: `From ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} per design, one-time` },
 ]
 
 const coverageTopics = [

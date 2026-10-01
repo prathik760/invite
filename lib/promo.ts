@@ -16,7 +16,7 @@ import { LOWEST_PAID_PRICE, templatePrice } from '@/lib/plans'
  * charged before it, and set `endsAt` to when it really ends. The popup then
  * shows the saving and a countdown automatically. Until then it leads with
  * claims that are true and still strong: lowest-priced premium template,
- * one-time payment, free to build and preview.
+ * one-time payment, preview before you pay.
  */
 export interface Promo {
   /** Master switch. */

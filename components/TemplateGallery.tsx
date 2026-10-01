@@ -126,7 +126,7 @@ export default function TemplateGallery({
         </div>
         <CtaBand
           title="Ready to create your invitation?"
-          sub="Choose a design, fill in your details, and share one link — free to build and preview."
+          sub="Choose a design, fill in your details, preview it, and share one link — you pay only when you publish."
           primary={{ href: '/create', label: 'Create your invitation' }}
           secondary={{ href: singularPageHref, label: singularPageLabel }}
           location="template_gallery_closing"

@@ -74,12 +74,12 @@ function SignupForm() {
       className="w-full max-w-[34rem]"
     >
       <div className="card p-6 sm:p-10">
-        <p className="eyebrow">{fromBuilder ? 'One step to publish' : 'Free to start'}</p>
+        <p className="eyebrow">{fromBuilder ? 'One step to publish' : 'Welcome to ShareInvite'}</p>
         <h1 className="t-h2 mt-2">Create your account</h1>
         <p className="mt-2 text-[0.95rem] leading-7 text-charcoal/70">
           {fromBuilder
             ? 'Your design and details are saved. Create an account to publish and share it.'
-            : 'Build and preview any design free. You only pay when you publish.'}
+            : 'Build and preview any design before you pay. You only pay when you publish.'}
         </p>
 
         {error && <AuthAlert>{error}</AuthAlert>}
@@ -169,7 +169,7 @@ function SignupForm() {
             className="btn-primary mt-2 flex w-full items-center justify-center gap-2 rounded-full px-5 py-4 text-[0.98rem] font-semibold disabled:opacity-60"
           >
             {loading && <Spinner />}
-            {loading ? 'Creating your account…' : 'Create free account'}
+            {loading ? 'Creating your account…' : 'Create account'}
           </button>
         </form>
 

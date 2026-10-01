@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!info) return {}
 
   const ogTitle = `Digital Engagement Invitation in ${info.display} | ShareInvite`
-  const description = `Create a digital engagement invitation for your ${info.display} ${info.localCeremonyName} — WhatsApp link, Google Maps & ceremony schedule. Free to start.`
+  const description = `Create a digital engagement invitation for your ${info.display} ${info.localCeremonyName} — WhatsApp link, Google Maps & ceremony schedule. Preview before you pay.`
 
   return {
     title: { absolute: ogTitle },
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
       `ring ceremony invitation ${info.display}`,
       `engagement ceremony invite ${info.state}`,
       `roka invitation ${info.display}`,
-      `digital engagement card ${info.display} free`,
+      `digital engagement card ${info.display}`,
     ],
     alternates: { canonical: `${APP_URL}/engagement-invitation/${city}` },
     openGraph: {

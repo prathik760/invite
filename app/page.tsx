@@ -42,11 +42,10 @@ const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').re
 export const metadata: Metadata = {
   title: { absolute: 'Digital Invitation Maker for Weddings & Events | ShareInvite' },
   description:
-    'Create digital invitations & animated 3D greetings for weddings, birthdays & every occasion. Share one link on WhatsApp, Instagram or email — free to build and preview.',
+    `Create digital invitations & animated 3D greetings for weddings, birthdays & every occasion. Share one link on WhatsApp — preview before you pay, from ₹${LOWEST_PAID_PRICE}.`,
   keywords: [
     'digital invitation maker',
     'online invitation maker',
-    'free digital invitation maker',
     'digital invitation card',
     'wedding invitation maker',
     'birthday invitation maker',
@@ -69,7 +68,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: 'ShareInvite — Digital Invitation Maker for Weddings, Birthdays & Every Occasion',
-    description: `Create digital invitations and animated 3D greetings for every occasion and share them with one link. Free to build and preview; publish from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} one-time.`,
+    description: `Create digital invitations and animated 3D greetings for every occasion and share them with one link. Build and preview before you pay; publish from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} one-time.`,
     type: 'website',
     locale: 'en_IN',
     url: APP_URL,
@@ -111,8 +110,8 @@ const HOME_FAQS: Faq[] = [
     answer: 'Weddings, engagements, birthdays, anniversaries, naming ceremonies and housewarmings, festivals such as Diwali, Ganesh Chaturthi and Raksha Bandhan, and animated 3D greetings for love, proposals, friendship, family and congratulations. If your event is not listed, you can request a custom design.',
   },
   {
-    question: 'Is it free to create a digital invitation?',
-    answer: `Building and previewing is completely free — pick a design, add every detail and see the finished invitation without a card. Publishing is a one-time payment for the design you choose. ${priceRangeSentence()} There are no monthly fees.`,
+    question: 'Do I have to pay before I can see my invitation?',
+    answer: `No. There is no payment until you publish — pick a design, add every detail and see the finished invitation without entering a card. Publishing is a one-time payment for the design you choose. ${priceRangeSentence()} There are no monthly fees.`,
   },
   {
     question: 'What exactly am I paying for?',
@@ -276,7 +275,7 @@ export default function LandingPage() {
                 See the designs
               </Link>
             </div>
-            <TrustList className="enter-3 mt-6" items={['Free to build & preview', 'Pay once, from ₹' + LOWEST_PAID_PRICE, 'No app for guests']} />
+            <TrustList className="enter-3 mt-6" items={['Preview before you pay', 'Pay once, from ₹' + LOWEST_PAID_PRICE, 'No app for guests']} />
 
             <nav aria-label="Popular occasions" className="enter-3 mt-8 border-t border-line pt-5">
               <p className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-muted">Popular right now</p>
@@ -346,7 +345,7 @@ export default function LandingPage() {
         <SectionHeading
           eyebrow="The collection"
           title="Choose a design you love"
-          sub="Open any design in a live preview, exactly as guests will see it. Try it with your own details for free."
+          sub="Open any design in a live preview, exactly as guests will see it, and try it with your own details before you pay."
           action={{ href: '/templates', label: 'See every design' }}
         />
         <div className="mt-9">
@@ -369,7 +368,7 @@ export default function LandingPage() {
             </p>
             <ol className="mt-9 space-y-5" data-reveal-group>
               {[
-                { t: 'Try every design free', c: 'Add your real names, date and photos before you spend anything.' },
+                { t: 'Preview it with your details', c: 'Add your real names, date and photos and see the finished invitation before you pay.' },
                 { t: 'Pay once for the one you choose', c: 'A single secure payment by UPI, card or net banking.' },
                 { t: 'Your invitation, handed over', c: 'Your link, every feature in the design, and as many guests as you like.' },
               ].map((step, i) => (
@@ -537,7 +536,7 @@ export default function LandingPage() {
           <h2 className="font-editorial text-[1.9rem] font-semibold">The digital invitation maker for every celebration</h2>
           <div className="prose-brand mt-5 text-[0.95rem]">
             <p>
-              <strong>ShareInvite</strong> is a free-to-build online invitation maker for creating beautiful digital
+              <strong>ShareInvite</strong> is an online invitation maker for creating beautiful digital
               invitations and animated 3D greeting cards in minutes — no design skills and no app needed for your guests.
               Choose a template, add your names, date, venue and photos, and share a single link on WhatsApp that opens
               instantly in any phone browser, anywhere in the world.
@@ -559,9 +558,12 @@ export default function LandingPage() {
               Welcoming Bappa home? Make a
               {' '}<Link href="/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template">Ganesh Chaturthi invitation card online</Link>
               {' '}for just ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}.
+              Hosting a Diwali party? Start with our
+              {' '}<Link href="/diwali-invitation-wording">Diwali invitation messages</Link>, or find the right words for a
+              {' '}<Link href="/birthday-invitation-wording">birthday invitation message</Link>.
             </p>
             <p>
-              Start building free — no credit card required. See every design on the
+              Build and preview before you pay — one-time payment, from ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}, only when you publish. See every design on the
               {' '}<Link href="/templates">templates page</Link>, see how pricing works on
               {' '}<Link href="/pricing">pricing</Link>, or read guides on the <Link href="/blog">ShareInvite blog</Link>.
             </p>

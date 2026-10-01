@@ -31,7 +31,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const url = absoluteUrl(`/templates/category/${params.category}`)
   const cat = templateCategoryLabel(category)
   const title = `${cat} Invitation Templates | ShareInvite`
-  const description = `Browse ${cat} digital invitation designs — each one shared as a single WhatsApp-ready link, free to build and preview, with one price per design.`
+  const description = `Browse ${cat} digital invitation designs — each one shared as a single WhatsApp-ready link you can preview before you pay, with one price per design.`
 
   return {
     title: { absolute: title },

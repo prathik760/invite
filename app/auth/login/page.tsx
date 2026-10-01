@@ -118,7 +118,7 @@ function LoginForm() {
       <p className="mt-6 text-center text-[0.92rem] text-charcoal/70">
         New to ShareInvite?{' '}
         <Link href={withCallback('/auth/signup', callbackUrl)} className="link">
-          Create a free account
+          Create an account
         </Link>
       </p>
     </motion.div>

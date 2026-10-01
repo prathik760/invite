@@ -32,7 +32,7 @@ export default function NotFound() {
           <div className="enter-2 mt-10 grid gap-3 text-left sm:grid-cols-2">
             {[
               { href: '/templates', title: 'Invitation designs', desc: 'Browse every design with its price' },
-              { href: '/create', title: 'Create an invitation', desc: 'Build and preview free' },
+              { href: '/create', title: 'Create an invitation', desc: 'Preview before you pay' },
               { href: '/wedding-invitation', title: 'Wedding invitations', desc: 'Classic, cinematic and traditional designs' },
               { href: '/birthday-invitation', title: 'Birthday invitations', desc: 'Countdown, gallery and party details' },
               { href: '/blog', title: 'Guides & wording', desc: 'Invitation messages you can copy' },

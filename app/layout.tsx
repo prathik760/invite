@@ -62,10 +62,9 @@ export const metadata: Metadata = {
     template: '%s | ShareInvite',
   },
   description:
-    'Beautiful digital invitations for weddings, birthdays, engagements and every celebration. Build and preview free, pay once for your design, and share one link on WhatsApp.',
+    'Beautiful digital invitations for weddings, birthdays, engagements and every celebration. Build and preview before you pay, pay once for your design, and share one link on WhatsApp.',
   keywords: [
     'digital invitation maker',
-    'free digital invitation maker India',
     'online invitation card maker',
     'wedding invitation maker',
     'online wedding card',
@@ -86,14 +85,12 @@ export const metadata: Metadata = {
     'namakaran invitation',
     'naming ceremony invitation',
     'anniversary invitation online',
-    'free invitation website India',
-    'digital wedding card free',
     'invitation link share WhatsApp',
   ],
   openGraph: {
     title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
     description:
-      'Beautiful digital invitations for weddings, birthdays, engagements and every celebration. Build and preview free, pay once for your design, and share one link on WhatsApp.',
+      'Beautiful digital invitations for weddings, birthdays, engagements and every celebration. Build and preview before you pay, pay once for your design, and share one link on WhatsApp.',
     type: 'website',
     siteName: 'ShareInvite',
     url: APP_URL,
@@ -113,7 +110,7 @@ export const metadata: Metadata = {
     creator: '@shareinvite',
     title: 'ShareInvite - Digital Wedding Invitation Maker & Online RSVP Platform',
     description:
-      'Beautiful digital invitations for every celebration. Build and preview free, pay once for your design, share one link on WhatsApp.',
+      'Beautiful digital invitations for every celebration. Build and preview before you pay, pay once for your design, share one link on WhatsApp.',
     images: [OG_IMAGE],
   },
   alternates: {

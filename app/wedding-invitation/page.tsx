@@ -6,26 +6,26 @@ import { LOWEST_PAID_PRICE, templatePrice } from '@/lib/plans'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Free Digital Wedding Invitation India | ShareInvite' },
+  title: { absolute: `Digital Wedding Invitation Online — from ₹${templatePrice('elegant-wedding')} | ShareInvite` },
   description:
-    'Free digital wedding invitation for India — share on WhatsApp with countdown, Google Maps, photo gallery & RSVP. Ready in 5 minutes.',
+    `Create a digital wedding invitation and share one WhatsApp link — countdown, Google Maps, photos & music. Preview before you pay, from ₹${templatePrice('elegant-wedding')} once.`,
   keywords: [
-    'digital wedding invitation India free',
+    'digital wedding invitation India',
     'online wedding invitation website India',
     'Indian wedding e-invite',
-    'free wedding invitation website India',
+    'wedding invitation website India',
     'wedding invitation WhatsApp link',
     'digital wedding card India',
     'shaadi invitation website',
-    'wedding website builder India free',
+    'wedding website builder India',
     'wedding invitation Bangalore',
     'wedding invitation Mumbai',
     'wedding invitation Delhi',
   ],
   alternates: { canonical: `${APP_URL}/wedding-invitation` },
   openGraph: {
-    title: 'Free Digital Wedding Invitation Website India | ShareInvite',
-    description: 'Create a stunning digital wedding invitation website for your Indian wedding. WhatsApp-ready. Free to start.',
+    title: `Digital Wedding Invitation Online — from ₹${templatePrice('elegant-wedding')} | ShareInvite`,
+    description: `Create a digital wedding invitation and share one WhatsApp link — countdown, Google Maps, photos & music. Preview before you pay, from ₹${templatePrice('elegant-wedding')} once.`,
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Wedding Invitation Website India' }],
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
 // overstated it — features vary by design — and was reworded.
 const FAQS = [
   {
-    question: 'How do I create a free digital wedding invitation website in India?',
-    answer: `Choose a wedding design, enter names, date, venue and a personal message, and preview it as you type. Building and previewing is free; publishing a wedding design is a one-time payment from ₹${templatePrice('elegant-wedding')} (designs for other occasions start at ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}). You get your unique link the moment you publish — ready to share on WhatsApp.`,
+    question: 'How do I create a digital wedding invitation in India?',
+    answer: `Choose a wedding design, enter names, date, venue and a personal message, and preview it as you type. There is no payment until you publish; publishing a wedding design is a one-time payment from ₹${templatePrice('elegant-wedding')} (designs for other occasions start at ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}). You get your unique link the moment you publish — ready to share on WhatsApp.`,
   },
   {
     question: 'What should a digital wedding invitation include?',
@@ -50,6 +50,18 @@ const FAQS = [
   {
     question: 'Is a digital wedding invitation better than a PDF card?',
     answer: 'For most families, yes. It loads faster than a PDF and adds a live countdown, one-tap Google Maps, a photo gallery, background music and a guest wishes section. Guests can reopen it any time before the wedding.',
+  },
+  {
+    question: 'Can I make separate invitations for the Mehendi, Sangeet and Reception?',
+    answer: 'Yes. Each function can have its own invitation — the Haldi & Mehendi and Sangeet Night designs are made for those evenings, and once you have paid for a design you can publish it again for another function, such as the reception, without paying twice. The Signature wedding suites put every function on one page instead.',
+  },
+  {
+    question: 'Which design suits a South Indian wedding?',
+    answer: 'Kalyanam is a Signature suite made for South Indian weddings, with the Nichayathartham, Muhurtham and Reception, both families and a WhatsApp RSVP on one page. For a simpler invitation, any wedding design works — write the ceremony name your family uses into the message.',
+  },
+  {
+    question: 'How long does it take to create a digital wedding invitation?',
+    answer: 'Most couples finish in 15–20 minutes: choose a design, add your names, the date, the venue with a Google Maps link, the schedule and a photo, and preview it. The link is ready the moment you publish.',
   },
 ]
 
@@ -92,7 +104,7 @@ export default function WeddingInvitationPage() {
         cities={{ base: '/wedding-invitation', title: 'Wedding invitations by city', list: CITIES }}
         related={[
           { href: '/wedding-invitation-wording', label: 'Wedding invitation wording' },
-          { href: '/wedding-invitations', label: 'Wedding designs gallery' },
+          { href: '/templates/category/wedding', label: 'Wedding designs' },
           { href: '/engagement-invitation', label: 'Engagement invitations' },
           { href: '/blog/category/wedding', label: 'Wedding ideas' },
         ]}

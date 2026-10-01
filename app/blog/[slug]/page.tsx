@@ -6,6 +6,7 @@ import JsonLd from '@/components/seo/JsonLd'
 import StickyCTA from '@/components/seo/StickyCTA'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { templatePrice } from '@/lib/plans'
+import { priceRangeSentence } from '@/lib/priceCopy'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { blogDrafts, categorySlug, findBlogPost, type BlogCategory } from '@/content/blog'
 import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, slugify, templateSeoSlug } from '@/lib/seo'
@@ -14,6 +15,7 @@ import { blogArticles, hasFullArticle } from '@/content/blog-articles'
 import Image from 'next/image'
 import PreviewButton from '@/components/catalog/PreviewButton'
 import FAQAccordion from '@/components/landing/FAQAccordion'
+import WordingCopyCard from '@/components/wording/WordingCopyCard'
 import BlogCard, { blogArt } from '@/components/blog/BlogCard'
 import CtaBand from '@/components/brand/CtaBand'
 import { Breadcrumbs } from '@/components/brand/PageHero'
@@ -271,7 +273,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           'Test the invite on both WhatsApp and direct browser access.',
         ],
         faq: [
-          { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a birthday template, fill in the celebrant\'s name, party date, venue, and schedule. Your digital birthday invitation is ready to share on WhatsApp in minutes. Free to start, no app needed for guests.' },
+          { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a birthday template, fill in the celebrant\'s name, party date, venue, and schedule. Your digital birthday invitation is ready to share on WhatsApp in minutes — preview it before you pay, and guests need no app.' },
           { q: 'What is the best way to share a birthday invitation on WhatsApp in India?', a: 'Create a digital invitation link on ShareInvite and forward it to your guest groups on WhatsApp. The link generates a clean preview card with the invitation details. Guests open it in their phone browser — no app download required.' },
           { q: 'What should I write in a first birthday invitation?', a: 'Include: baby\'s name and "First Birthday" heading, date and time, venue with address, schedule (arrival, cake cutting, meal), a warm message from parents, and a photo of the baby. Keep the tone warm and joyful — this is as much an occasion for parents as for the child.' },
         ],
@@ -353,7 +355,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           'Add specific ritual details relevant to the ceremony tradition.',
         ],
         faq: [
-          { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a baby shower or housewarming template, fill in the mother-to-be\'s name, ceremony date, venue, and schedule. Your invitation is ready to share on WhatsApp in under 5 minutes. Free to start.' },
+          { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a baby shower or housewarming template, fill in the mother-to-be\'s name, ceremony date, venue, and schedule. Your invitation is ready to share on WhatsApp in under 5 minutes, and you can preview it before you pay.' },
           { q: 'What is the difference between Godh Bharai and Seemantham?', a: 'Godh Bharai is the Hindi-belt term for the baby shower ceremony held in the 7th or 9th month of pregnancy. Seemantham is the South Indian equivalent, particularly common in Tamil Nadu and Andhra Pradesh. Both celebrate the mother-to-be with gifts, blessings, and rituals — the core invitation details are the same.' },
           { q: 'How many days before a Godh Bharai should I send the invitation?', a: 'Send invitations 7–10 days before the ceremony. For family members travelling from another city, send 2–3 weeks in advance. A digital invitation lets you resend a reminder easily by re-forwarding the same WhatsApp link.' },
         ],
@@ -478,7 +480,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a template for your event type, fill in the names, date, venue, and schedule. Your invitation is live with a WhatsApp-ready link in under 5 minutes. Guests open it in their phone browser — no app download needed.' },
-          { q: 'Are digital invitations free in India?', a: 'ShareInvite is free to build with. You can choose a template, add all your details, and preview the finished invitation at no cost. Publishing the link is a one-time payment for the design you choose — most are ₹99 to ₹499, and the Signature wedding suites are ₹1,499 to ₹1,999. There is no subscription.' },
+          { q: 'How much does a digital invitation cost in India?', a: `On ShareInvite you pay once for the design you publish. ${priceRangeSentence()} You can choose a template, add all your details and preview the finished invitation before you pay, and there is no subscription.` },
           { q: 'Can I update a digital invitation after sending it?', a: 'Yes — this is one of the biggest advantages over printed cards. You can update venue details, change a timing, correct a spelling, or add new information at any time. The same link continues to work for all guests who already received it, showing the updated information automatically.' },
         ],
         links: links['Digital Invitations'],
@@ -494,7 +496,7 @@ const CATEGORY_TEMPLATE: Record<string, string> = {
   'Housewarming': 'griha-pravesh',
   'Namakaran': 'namakaran',
   'Invitation Ideas': 'namakaran',
-  'Baby Shower': 'namakaran',
+  'Baby Shower': 'baby-shower',
   'Digital Invitations': 'elegant-wedding',
   'Anniversary': 'anniversary',
 }
@@ -523,13 +525,40 @@ function renderInline(text: string) {
  * single newlines inside a block stay as line breaks (the copy-paste message
  * samples rely on a bold label sitting directly above its quote).
  */
-function ArticleBody({ body }: { body: string }) {
+/**
+ * A copy-paste sample: a bold label line, then the message in quotes (one or
+ * more lines). Returns null for any other block.
+ */
+function parseSample(lines: string[]): { label: string; message: string } | null {
+  if (lines.length < 2) return null
+  const label = lines[0].match(/^\*\*(.+?)\*\*$/)
+  const first = lines[1]
+  const last = lines[lines.length - 1]
+  if (!label || !/^["“]/.test(first) || !/["”]$/.test(last)) return null
+  const message = lines.slice(1).join('\n').replace(/^["“]/, '').replace(/["”]$/, '').trim()
+  return message ? { label: label[1].replace(/:$/, ''), message } : null
+}
+
+function ArticleBody({ body, templateId, createHref }: { body: string; templateId: string; createHref: string }) {
   const blocks = body.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean)
 
   return (
     <>
       {blocks.map((block, i) => {
         const lines = block.split('\n').map((l) => l.trim()).filter(Boolean)
+
+        // Samples get the same copy card as the wording guides, so a reader
+        // who copies one is offered the words in a design, and the copy is
+        // counted (wording_copy).
+        const sample = parseSample(lines)
+        if (sample) {
+          return (
+            <div key={i}>
+              <p className="font-semibold text-charcoal">{sample.label}</p>
+              <WordingCopyCard templateId={templateId} ctaHref={createHref}>{sample.message}</WordingCopyCard>
+            </div>
+          )
+        }
 
         if (lines.every((l) => l.startsWith('- '))) {
           return (
@@ -556,6 +585,14 @@ function ArticleBody({ body }: { body: string }) {
   )
 }
 
+// Posts whose category default is the wrong design. Unlike BLOG_TEMPLATE these
+// only steer the CTA and the copy panel; they do not add the live-demo block.
+const SLUG_TEMPLATE: Record<string, string> = {
+  'first-birthday-invitation-ideas-for-indian-families': 'first-birthday',
+  'silver-anniversary-invitation-ideas': 'anniversary',
+  'golden-anniversary-invitation-wording': 'anniversary',
+}
+
 // Blog posts that showcase a specific template → enables the "View Live Demo" popup
 const BLOG_TEMPLATE: Record<string, string> = {
   '3d-surprise-journey-the-interactive-digital-gift-you-send-online': 'surprise-journey',
@@ -578,19 +615,16 @@ export default function BlogPostPage({ params }: Props) {
   if (!post) notFound()
 
   const demoTemplateId = BLOG_TEMPLATE[post.slug]
-  const ctaTemplateId = demoTemplateId ?? CATEGORY_TEMPLATE[post.category] ?? 'elegant-wedding'
+  const ctaTemplateId = demoTemplateId ?? SLUG_TEMPLATE[post.slug] ?? CATEGORY_TEMPLATE[post.category] ?? 'elegant-wedding'
   const createHref = `/create?template=${ctaTemplateId}&src=blog`
   const ctaPrice = templatePrice(ctaTemplateId)
   const ctaTemplate = TEMPLATES.find((t) => t.id === ctaTemplateId)
   const ctaTemplateHref = `/templates/${templateSeoSlug(ctaTemplateId)}`
-  // "Free to start" was shown on articles whose CTA points at a ₹99–₹499
+  // "Free to start" was shown on articles whose CTA points at a paid
   // template. State the real one-time price instead — a reader who learns the
   // price here and still clicks is a far better lead than one who discovers it
   // at step 5 of the builder.
-  const ctaPriceLine =
-    ctaPrice === 0
-      ? 'Free to publish · WhatsApp-ready link · No app for guests'
-      : `Build & preview free · ₹${ctaPrice.toLocaleString('en-IN')} one-time to publish · No app for guests`
+  const ctaPriceLine = `Preview before you pay · ₹${ctaPrice.toLocaleString('en-IN')} one-time to publish · No app for guests`
   const content = blogArticles[post.slug] ?? buildPostContent(post.keyword, post.category)
 
   const faqJsonLd = {
@@ -629,11 +663,11 @@ export default function BlogPostPage({ params }: Props) {
       { label: 'Digital Griha Pravesh invitations', href: '/griha-pravesh-invitation' },
     ],
     'Baby Shower': [
-      { label: 'Baby shower invitation wording guide', href: '/baby-shower-invitation-wording' },
-      { label: 'Create a digital invitation', href: '/create' },
+      { label: 'Baby shower invitation wording guide', href: '/blog/baby-shower-invitation-wording-ideas-for-india' },
+      { label: 'Godh Bharai & baby shower design', href: '/create?template=baby-shower' },
     ],
     'Invitation Ideas': [
-      { label: 'Namakaran invitation wording guide', href: '/namakaran-invitation-wording' },
+      { label: 'Naming ceremony invitation messages', href: '/blog/naming-ceremony-invitation-message-samples' },
       { label: 'Browse invitation designs', href: '/templates' },
     ],
     'Wedding Trends': [
@@ -645,7 +679,8 @@ export default function BlogPostPage({ params }: Props) {
       { label: 'Browse invitation designs', href: '/templates' },
     ],
   }
-  const guides = wordingGuides[post.category] ?? []
+  // Never link a post to itself (the baby shower and naming posts are now the guides).
+  const guides = (wordingGuides[post.category] ?? []).filter((g) => g.href !== `/blog/${post.slug}`)
 
   return (
     <main className="min-h-screen bg-champagne pb-28 text-charcoal">
@@ -711,7 +746,7 @@ export default function BlogPostPage({ params }: Props) {
             {sections.map((section) => (
               <section key={section.id} aria-labelledby={section.id}>
                 <h2 id={section.id} className="scroll-mt-28">{section.heading}</h2>
-                <ArticleBody body={section.body} />
+                <ArticleBody body={section.body} templateId={ctaTemplateId} createHref={createHref} />
               </section>
             ))}
           </div>

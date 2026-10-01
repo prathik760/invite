@@ -8,6 +8,8 @@ import { TEMPLATES } from '@/modules/templates/data'
 import { getRequiredPlan } from '@/lib/plans'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES } from './templateVisuals'
 import LiveDemoScreen from './LiveDemoScreen'
+import ShareDesignButton from '@/components/catalog/ShareDesignButton'
+import { useBackToClose } from '@/lib/useBackToClose'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -55,6 +57,8 @@ function useIsPhone() {
 
 export default function TemplatePreviewModal({ templateId, open, onClose, onUse }: Props) {
   const isPhone = useIsPhone()
+  // The phone's Back button closes the preview instead of leaving the site.
+  const releaseBack = useBackToClose(open, onClose)
 
   useEffect(() => {
     if (!open) return
@@ -95,16 +99,25 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
           <PlanBadge templateId={templateId} />
         </div>
       </div>
-      <button
-        onClick={onClose}
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors"
-        style={{ background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(44,32,28,0.07)', color: isDark ? 'rgba(255,255,255,0.7)' : '#706861' }}
-        aria-label="Close preview"
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+      <div className="flex shrink-0 items-center gap-2">
+        <ShareDesignButton
+          templateId={templateId}
+          name={name}
+          source="preview_modal"
+          className="inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-[12.5px] font-semibold transition-colors"
+          style={{ background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(44,32,28,0.07)', color: isDark ? 'rgba(255,255,255,0.85)' : '#1E2726' }}
+        />
+        <button
+          onClick={onClose}
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors"
+          style={{ background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(44,32,28,0.07)', color: isDark ? 'rgba(255,255,255,0.7)' : '#706861' }}
+          aria-label="Close preview"
+        >
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
     </div>
   )
 
@@ -115,7 +128,7 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
     >
       {!isFree && (
         <p className="text-center text-[11px]" style={{ color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(44,32,28,0.5)' }}>
-          One-time ₹{plan.price.toLocaleString('en-IN')} · No subscription · Free to build and preview
+          One-time ₹{plan.price.toLocaleString('en-IN')} · No subscription · Preview before you pay
         </p>
       )}
       {onUse ? (
@@ -128,7 +141,12 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
       ) : (
         <Link
           href={`/create?template=${templateId}`}
-          onClick={onClose}
+          // Replaces the preview's history entry, so Back from the builder returns to this page.
+          replace
+          onClick={() => {
+            releaseBack()
+            onClose()
+          }}
           className="btn-primary flex w-full items-center justify-center gap-2 rounded-2xl py-3.5 font-bold"
           style={{ fontSize: '14px' }}
         >

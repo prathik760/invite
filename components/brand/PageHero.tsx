@@ -51,7 +51,7 @@ export default function PageHero({
   actions?: ReactNode
   /** Right-hand visual (image, cards, offer summary). */
   aside?: ReactNode
-  /** Small line under the actions, e.g. "Free to build · Pay once". */
+  /** Small line under the actions, e.g. "Preview before you pay · Pay once". */
   footnote?: ReactNode
   align?: 'left' | 'center'
 }) {

@@ -49,7 +49,7 @@ const sections: LegalSection[] = [
           <><strong className="text-foreground">&ldquo;User&rdquo;, &ldquo;you&rdquo;</strong> — any person who accesses or uses the Service, including hosts who create invitations and guests who view them.</>,
           <><strong className="text-foreground">&ldquo;Invitation&rdquo;</strong> — the digital invitation website you create, personalise, and publish using our templates.</>,
           <><strong className="text-foreground">&ldquo;Content&rdquo;</strong> — text, names, dates, venue details, photos, music links, messages, guest wishes/RSVPs, and any other material added to an Invitation.</>,
-          <><strong className="text-foreground">&ldquo;Plan&rdquo;</strong> — the free tier or a one-time paid tier that unlocks specific templates and features.</>,
+          <><strong className="text-foreground">&ldquo;Plan&rdquo;</strong> — a one-time paid tier that unlocks specific templates and features.</>,
         ]}
       />
     ),
@@ -97,7 +97,7 @@ const sections: LegalSection[] = [
     body: (
       <>
         <Para>
-          Building and previewing an invitation on ShareInvite is free. Publishing requires a one-time paid plan, which
+          Building and previewing an invitation on ShareInvite does not require payment. Publishing requires a one-time paid plan, which
           unlocks the template you choose. Paid plans are a <strong className="text-foreground">one-time purchase</strong>
           {' '}— they are not a subscription and do not renew automatically, so you will not be charged on a recurring
           basis.

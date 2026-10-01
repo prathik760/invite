@@ -5,7 +5,11 @@ import Logo, { LogoMark } from '@/components/brand/Logo'
 import TrustList from '@/components/brand/TrustList'
 
 export const metadata: Metadata = {
-  title: 'Authentication | ShareInvite',
+  // Was 'Authentication | ShareInvite', which the root template turned into
+  // "Authentication | ShareInvite | ShareInvite" in GA4 and browser tabs. A
+  // plain string here would also stop the root template reaching the login and
+  // signup titles, so the template is restated for them.
+  title: { default: 'Log in or sign up | ShareInvite', template: '%s | ShareInvite' },
   robots: { index: false, follow: false },
   alternates: { canonical: `${process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'}/auth/login` },
 }

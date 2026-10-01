@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import BottomDock from '@/components/ui/BottomDock'
+import { LOWEST_PAID_PRICE } from '@/lib/plans'
 
 export default function StickyMobileCTA() {
   const [visible, setVisible] = useState(false)
@@ -31,9 +32,9 @@ export default function StickyMobileCTA() {
           href="/create"
           className="btn-primary flex w-full items-center justify-center rounded-xl py-3.5 text-sm font-semibold"
         >
-          Create your invitation — free to try
+          Create your invitation
         </Link>
-        <p className="mt-1.5 text-center text-[10px] text-muted">Free to build &amp; preview · No credit card needed</p>
+        <p className="mt-1.5 text-center text-[10px] text-muted">Preview before you pay · From ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}, one-time</p>
       </div>
     </BottomDock>
   )

@@ -29,7 +29,7 @@ export default function StickyCTA({ href, text }: StickyCTAProps) {
       <Link href={href} className="btn-primary flex w-full items-center justify-center rounded-full py-3.5 text-sm font-semibold">
         {text.replace(/\s*→$/, '')}
       </Link>
-      <p className="mt-1.5 text-center text-[0.72rem] text-muted">Free to build & preview · Pay once when you publish</p>
+      <p className="mt-1.5 text-center text-[0.72rem] text-muted">Preview before you pay · Pay once to publish</p>
     </BottomDock>
   )
 }

@@ -22,7 +22,8 @@ function entry(
 }
 
 // Slugs to exclude from the landingPages spread:
-// - gallery pages are already listed explicitly in Tier 2b with correct priorities
+// - the plural gallery slugs (wedding-invitations etc.) 301 to the singular
+//   occasion pages in next.config.mjs, so they must not be listed
 // - naming-ceremony-invitations 301-redirects to /namakaran-invitation; a sitemap
 //   must never list a URL that redirects (GSC flags it as "Page with redirect").
 //   That redirect is defined in next.config.mjs — it was missing until now, so
@@ -50,7 +51,7 @@ const SKIP_LANDING_SLUGS = new Set([
 const INDEXED_CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 'pune', 'kolkata', 'ahmedabad']
 
 /**
- * The live seasonal campaign — currently Ganesh Chaturthi.
+ * The live seasonal campaign — currently Diwali.
  *
  * Tiers 6 and 7 give every template page and every blog post the same
  * 0.65/monthly, which is right for a stable catalogue and wrong for a page that
@@ -63,9 +64,10 @@ const INDEXED_CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 
  * done by the internal links from the homepage and the template page. Point
  * these at the next festival when the campaign moves on, or set them to null.
  */
-const SEASONAL_TEMPLATE_ID: string | null = 'ganesh-chaturthi'
-const SEASONAL_BLOG_SLUG: string | null =
-  'ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template'
+// Moved from Ganesh Chaturthi (over by October) to Diwali, 8 November 2026.
+// The Diwali wording guide itself is listed weekly in Tier 5.
+const SEASONAL_TEMPLATE_ID: string | null = 'diwali-party'
+const SEASONAL_BLOG_SLUG: string | null = null
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const templateCategories = Array.from(new Set(TEMPLATES.map((t) => t.category || 'digital')))
@@ -87,12 +89,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/namakaran-invitation', 0.78),
     entry('/anniversary-invitation', 0.78),
 
-    // ─── Tier 2b: Template gallery pages (plural, browse/filter UX) ──────────
-    entry('/wedding-invitations', 0.85, 'weekly'),
-    entry('/engagement-invitations', 0.81),
-    entry('/birthday-invitations', 0.79),
-    entry('/anniversary-invitations', 0.75),
-    entry('/griha-pravesh-invitations', 0.75),
+    // (Tier 2b, the plural gallery pages — /wedding-invitations and friends —
+    // now 301 to the singular pages above, which show the same designs.)
 
     // ─── Tier 3: SEO landing pages (occasion-focused, unique content) ─────────
     // These are the /[slug] pages from landingPages in seo-pages.ts.
@@ -119,8 +117,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/engagement-invitation-wording', 0.72, 'monthly'),
     entry('/birthday-invitation-wording', 0.72, 'monthly'),
     entry('/griha-pravesh-invitation-wording', 0.70, 'monthly'),
-    entry('/namakaran-invitation-wording', 0.70, 'monthly'),
-    entry('/baby-shower-invitation-wording', 0.68, 'monthly'),
+    // /namakaran-invitation-wording and /baby-shower-invitation-wording now 301
+    // to their blog posts (listed in Tier 7), so they are not listed here.
+    entry('/diwali-invitation-wording', 0.72, 'weekly'),
 
     // ─── Tier 5b: Live seasonal campaign ──────────────────────────────────────
     ...(SEASONAL_TEMPLATE_ID

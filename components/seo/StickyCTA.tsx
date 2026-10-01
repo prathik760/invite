@@ -16,9 +16,9 @@ import { LOWEST_PAID_PRICE } from '@/lib/plans'
 export default function StickyCTA({
   pageType = 'seo_page',
   title = 'Create your invitation',
-  sub = `Free to build & preview · Pay once, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}`,
+  sub = `Preview before you pay · Pay once, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}`,
   href = '/create?src=sticky_bar',
-  label = 'Start free',
+  label = 'Start creating',
 }: {
   pageType?: string
   title?: string

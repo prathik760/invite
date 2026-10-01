@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!info) return {}
 
   const ogTitle = `Digital Wedding Invitation in ${info.display} | ShareInvite`
-  const description = `Create a digital wedding invitation for your ${info.display} wedding — WhatsApp link with countdown, Google Maps & gallery. Free to start.`
+  const description = `Create a digital wedding invitation for your ${info.display} wedding — WhatsApp link with countdown, Google Maps & gallery. Preview before you pay.`
 
   return {
     title: { absolute: ogTitle },
@@ -29,8 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
       `${info.display} wedding invitation WhatsApp`,
       `digital shaadi card ${info.display}`,
       `wedding invitation ${info.state}`,
-      `online wedding card ${info.display} free`,
-      `free digital invitation ${info.display}`,
+      `online wedding card ${info.display}`,
       `online invitation maker ${info.display}`,
     ],
     alternates: { canonical: `${APP_URL}/wedding-invitation/${city}` },
@@ -63,7 +62,7 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: `ShareInvite — Digital Wedding Invitation ${info.display}`,
-    description: `Create digital wedding invitations for ${info.display} weddings. WhatsApp-ready link with venue map, countdown, gallery, and RSVP. Free to start.`,
+    description: `Create digital wedding invitations for ${info.display} weddings. WhatsApp-ready link with venue map, countdown and gallery. Preview before you pay.`,
     url: `${APP_URL}/wedding-invitation/${city}`,
     image: `${APP_URL}/opengraph-image`,
     areaServed: {

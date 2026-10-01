@@ -4,20 +4,10 @@ import Script from 'next/script'
 import { prisma } from '@/lib/db'
 import TemplateRenderer from '@/components/templates/TemplateRenderer'
 import { getTemplateData } from '@/modules/templates/data'
-import FloatingShareBar from '@/components/ui/FloatingShareBar'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
 import ExpiredInvitation from '@/components/e/ExpiredInvitation'
 import FreePlanBanner from '@/components/e/FreePlanBanner'
-
-// Invitation expires 3 days after the event date
-function isExpired(data: Record<string, string>): boolean {
-  if (!data.date) return false
-  const [year, month, day] = data.date.split('-').map(Number)
-  if (!year || !month || !day) return false
-  const eventDate = new Date(year, month - 1, day)
-  const gracePeriodMs = 3 * 24 * 60 * 60 * 1000
-  return Date.now() > eventDate.getTime() + gracePeriodMs
-}
+import { deletionDate, isEnded } from '@/lib/retention'
 
 interface PageProps {
   params: { slug: string }
@@ -113,8 +103,10 @@ export default async function EventPage({ params }: PageProps) {
 
   const data = event.data as Record<string, string>
 
-  if (isExpired(data)) {
-    return <ExpiredInvitation templateId={event.templateId} data={data} />
+  // Ends a few days after the celebration's last day; deleted later by the
+  // daily cleanup (lib/retention.ts).
+  if (isEnded(data)) {
+    return <ExpiredInvitation templateId={event.templateId} data={data} deletesOn={deletionDate(data, event.createdAt).toISOString()} />
   }
 
   const shareUrl = `${APP_URL}/e/${event.slug}`
@@ -164,7 +156,6 @@ export default async function EventPage({ params }: PageProps) {
       />
       {!event.isPaid && <FreePlanBanner />}
       <TemplateRenderer templateId={event.templateId} data={data} eventId={event.id} />
-      <FloatingShareBar url={shareUrl} names={names} templateId={event.templateId} />
     </>
   )
 }

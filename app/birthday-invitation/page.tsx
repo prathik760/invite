@@ -7,9 +7,9 @@ import { templatePrice } from '@/lib/plans'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Digital Birthday Invitation India — Build Free, Publish ₹299 | ShareInvite' },
+  title: { absolute: `Digital Birthday Invitation Maker — ₹${templatePrice('indian-birthday')} | ShareInvite` },
   description:
-    'Create a digital birthday invitation for India in 5 minutes — live countdown, photo gallery, Google Maps and a one-tap WhatsApp link. Build and preview free; publish for ₹299 one-time. No app needed for guests.',
+    `Make a digital birthday invitation in minutes — countdown, photos, Google Maps and one WhatsApp link. Preview before you pay; ₹${templatePrice('indian-birthday')} once to publish.`,
   keywords: [
     'digital birthday invitation India',
     'online birthday invitation India',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/birthday-invitation` },
   openGraph: {
     title: 'Digital Birthday Invitation Website India | ShareInvite',
-    description: 'Create a beautiful digital birthday invitation in 5 minutes. WhatsApp-ready. Build and preview free — publish for ₹299 one-time.',
+    description: `Make a digital birthday invitation in minutes — countdown, photos, Google Maps and one WhatsApp link. Preview before you pay; ₹${templatePrice('indian-birthday')} once to publish.`,
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Birthday Invitation India' }],
@@ -67,6 +67,22 @@ const faqSchema = {
         text: 'Go to shareinvite.in/create, pick the Janamdin Birthday template, enter the celebrant\'s name, age, date, venue and message, then preview and publish. Your birthday invitation is live with a WhatsApp-shareable link in under 5 minutes.',
       },
     },
+    {
+      '@type': 'Question',
+      name: 'Is there a design for a first birthday?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Pehla Janamdin is made for a first birthday (it works for a second or fifth too) — the child\'s name and age, the parents\' names, the party theme, the plan for the day, photos and a map. The Janamdin design suits any age.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can guests RSVP on the birthday invitation?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Guests can leave a birthday wish right on the invitation, and every message appears in your dashboard. There is no attendance tracker, so for an exact headcount ask guests to confirm on WhatsApp — the messages on this site include RSVP lines you can copy.',
+      },
+    },
   ],
 }
 
@@ -91,7 +107,7 @@ export default function Page() {
         crumb="Birthday invitations"
         eyebrow="Digital birthday invitations"
         title={<>Digital Birthday Invitation <em className="font-medium text-burnished">for every age</em></>}
-        lede={`Create a beautiful birthday invitation with photos, a countdown, the venue on Google Maps and the party schedule — then share one WhatsApp link your guests open instantly. Build and preview free — publish for ₹${templatePrice('indian-birthday')} one-time.`}
+        lede={`Create a beautiful birthday invitation with photos, a countdown, the venue on Google Maps and the party schedule — then share one WhatsApp link your guests open instantly. Build and preview before you pay — publish for ₹${templatePrice('indian-birthday')} one-time.`}
         ctaLabel="Start my birthday invite"
         features={{ title: "What's included in your digital birthday invitation", items: FEATURES }}
         steps={[
@@ -104,7 +120,7 @@ export default function Page() {
         cities={{ base: '/birthday-invitation', title: 'Birthday invitations by city', list: ['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'] }}
         related={[
           { href: '/birthday-invitation-wording', label: 'Birthday invitation wording' },
-          { href: '/birthday-invitations', label: 'Birthday designs gallery' },
+          { href: '/templates/category/birthday', label: 'Birthday designs' },
           { href: '/blog/category/birthday', label: 'Birthday ideas' },
         ]}
         closing={{ title: 'Create a memorable birthday invitation' }}

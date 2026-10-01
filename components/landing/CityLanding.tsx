@@ -210,7 +210,7 @@ export default function CityLanding({
 
       <CtaBand
         title={closing.title}
-        sub={closing.sub ?? `Free to build & preview · ₹${price.toLocaleString('en-IN')} one-time to publish`}
+        sub={closing.sub ?? `Preview before you pay · ₹${price.toLocaleString('en-IN')} one-time to publish`}
         primary={{ href: `/create?template=${templateId}&src=${pageKey}_footer`, label: `Create your ${city} invitation` }}
         secondary={{ href: '/templates', label: 'Browse every design' }}
         location={`${pageKey}_footer`}

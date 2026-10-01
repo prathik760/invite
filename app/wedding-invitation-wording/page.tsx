@@ -16,7 +16,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 export const metadata: Metadata = {
   title: { absolute: '30+ Wedding Invitation Messages for WhatsApp | Copy-Paste' },
   description:
-    '30+ wedding invitation messages & wording for WhatsApp — copy & paste free. Formal, casual, traditional and bilingual samples, plus quotes & lines in English & Hindi.',
+    '30+ wedding invitation messages & wording for WhatsApp to copy — formal, casual, traditional and bilingual samples, plus quotes & lines in English & Hindi.',
   keywords: [
     'wedding invitation wording',
     'wedding invitation message',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/wedding-invitation-wording` },
   openGraph: {
     title: '30+ Wedding Invitation Messages for WhatsApp (Copy & Paste)',
-    description: 'Copy & paste wedding invitation messages & wording for WhatsApp — formal, casual, traditional and bilingual samples, plus quotes & lines. Free.',
+    description: 'Copy & paste wedding invitation messages & wording for WhatsApp — formal, casual, traditional and bilingual samples, plus quotes & lines.',
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Wedding Invitation Wording India' }],
@@ -112,7 +112,7 @@ export default function WeddingInvitationWordingPage() {
           <div className="space-y-6">
 
             {/* Sample 1 */}
-            <WordingSample title={<>1. Traditional Joint-Family Formal</>} tag="Pan-India">
+            <WordingSample templateId="indian-wedding" title={<>1. Traditional Joint-Family Formal</>} tag="Pan-India">
                   <p>With the blessings of the Almighty,</p>
                   <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
                   <p>along with</p>
@@ -126,7 +126,7 @@ export default function WeddingInvitationWordingPage() {
             </WordingSample>
 
             {/* Sample 2 */}
-            <WordingSample title={<>2. Couple-Hosted Modern Formal</>} tag="Modern">
+            <WordingSample templateId="indian-wedding" title={<>2. Couple-Hosted Modern Formal</>} tag="Modern">
                   <p>We are delighted to invite you to celebrate our wedding.</p>
                   <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
                   <p>[Day], [Date] · [Time]</p>
@@ -138,7 +138,7 @@ export default function WeddingInvitationWordingPage() {
             </WordingSample>
 
             {/* Sample 3 */}
-            <WordingSample title={<>3. Religious Blessing Opening (Formal)</>} tag="Hindu">
+            <WordingSample templateId="indian-wedding" title={<>3. Religious Blessing Opening (Formal)</>} tag="Hindu">
                   <p>॥ श्री गणेशाय नमः ॥</p>
                   <p>With the grace of God and the blessings of our ancestors,</p>
                   <p>[Father&apos;s Name] S/o [Grandfather&apos;s Name] &amp; Smt. [Mother&apos;s Name]</p>
@@ -154,7 +154,7 @@ export default function WeddingInvitationWordingPage() {
             </WordingSample>
 
             {/* Sample 4 */}
-            <WordingSample title={<>4. South Indian Formal (Muhurtham)</>} tag="South India">
+            <WordingSample templateId="indian-wedding" title={<>4. South Indian Formal (Muhurtham)</>} tag="South India">
                   <p>With the blessings of Sri [Family Deity],</p>
                   <p>[Father&apos;s Name] &amp; [Mother&apos;s Name]</p>
                   <p>cordially invite you to the</p>
@@ -200,7 +200,7 @@ export default function WeddingInvitationWordingPage() {
           </p>
           <div className="space-y-6">
 
-            <WordingSample title={<>1. Short Casual</>} tag="3–4 lines">
+            <WordingSample templateId="indian-wedding" title={<>1. Short Casual</>} tag="3–4 lines">
                   <p>We&apos;re getting married! 🎊</p>
                   <p>[Bride&apos;s Name] weds [Groom&apos;s Name]</p>
                   <p>[Date] · [Venue]</p>
@@ -208,7 +208,7 @@ export default function WeddingInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>2. With Digital Invite Link</>} tag="Recommended">
+            <WordingSample templateId="indian-wedding" title={<>2. With Digital Invite Link</>} tag="Recommended">
                   <p>We are overjoyed to share that [Bride&apos;s Name] &amp; [Groom&apos;s Name] are getting married on [Date].</p>
                   <p>Click the link below for full venue details, schedule, and Google Maps:</p>
                   <p>[Your ShareInvite Link]</p>
@@ -216,14 +216,14 @@ export default function WeddingInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>3. With RSVP Request</>} tag="RSVP">
+            <WordingSample templateId="indian-wedding" title={<>3. With RSVP Request</>} tag="RSVP">
                   <p>[Bride&apos;s Name] &amp; [Groom&apos;s Name] are tying the knot on [Date] at [Venue].</p>
                   <p>We would love to have you there. Please let us know if you can make it by [RSVP Date].</p>
                   <p>Full invitation: [Link]</p>
               
             </WordingSample>
 
-            <WordingSample title={<>4. Hindi / English Mixed</>} tag="Bilingual">
+            <WordingSample templateId="indian-wedding" title={<>4. Hindi / English Mixed</>} tag="Bilingual">
                   <p>बड़े हर्ष के साथ सूचित करते हैं कि</p>
                   <p>[Bride&apos;s Name] एवं [Groom&apos;s Name] का विवाह</p>
                   <p>[Date] को [Venue] में सम्पन्न होगा।</p>
@@ -232,7 +232,7 @@ export default function WeddingInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>5. Friends-Only Informal</>} tag="Friends">
+            <WordingSample templateId="indian-wedding" title={<>5. Friends-Only Informal</>} tag="Friends">
                   <p>Guys, I&apos;m getting married!! 🥳</p>
                   <p>[Date] at [Venue] — it&apos;s going to be a mad time.</p>
                   <p>You are all invited. No excuses accepted.</p>
@@ -254,7 +254,7 @@ export default function WeddingInvitationWordingPage() {
               'Shaadi, mehendi & reception schedule',
               'Venue address with Google Maps',
               'Background music & love story',
-              'Free to build & preview',
+              'Preview before you pay',
             ]}
             ctaHref="/wedding-invitation"
             ctaText="Get Your Wedding Invite Link →"
@@ -271,7 +271,7 @@ export default function WeddingInvitationWordingPage() {
           </p>
           <div className="space-y-6">
 
-            <WordingSample title={<>Second Marriage / Intimate Ceremony</>}>
+            <WordingSample templateId="indian-wedding" title={<>Second Marriage / Intimate Ceremony</>}>
                   <p>[Name] and [Name] joyfully invite you to celebrate their wedding.</p>
                   <p>This is an intimate ceremony, shared with close family and a few dear friends.</p>
                   <p>[Date] · [Time] · [Venue]</p>
@@ -279,7 +279,7 @@ export default function WeddingInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>Destination Wedding (Travel Note)</>}>
+            <WordingSample templateId="indian-wedding" title={<>Destination Wedding (Travel Note)</>}>
                   <p>We are getting married — and it is going to be a celebration you will remember.</p>
                   <p className="font-semibold text-charcoal">[Bride&apos;s Name] &amp; [Groom&apos;s Name]</p>
                   <p>[Date] at [Destination Hotel / Resort]</p>
@@ -289,7 +289,7 @@ export default function WeddingInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>Court Marriage / Legal Wedding Reception</>}>
+            <WordingSample templateId="indian-wedding" title={<>Court Marriage / Legal Wedding Reception</>}>
                   <p>[Name] and [Name] were married on [Date] in a private ceremony.</p>
                   <p>We now invite you to join us for a reception celebration in honour of the occasion.</p>
                   <p>[Reception Date] · [Time]</p>
@@ -298,7 +298,7 @@ export default function WeddingInvitationWordingPage() {
               
             </WordingSample>
 
-            <WordingSample title={<>Late-Evening Reception Only (Parents&apos; Hosting)</>}>
+            <WordingSample templateId="indian-wedding" title={<>Late-Evening Reception Only (Parents&apos; Hosting)</>}>
                   <p>[Father&apos;s Name] &amp; [Mother&apos;s Name] request the pleasure of your company</p>
                   <p>at a reception in honour of the marriage of their son / daughter</p>
                   <p className="font-semibold text-charcoal">[Groom&apos;s Name] with [Bride&apos;s Name]</p>
@@ -476,11 +476,11 @@ export default function WeddingInvitationWordingPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted mb-6 text-center">Related guides &amp; tools</p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { href: '/wedding-invitation', label: 'Create free digital wedding invitation' },
+              { href: '/wedding-invitation', label: 'Create a digital wedding invitation' },
               { href: '/templates', label: 'Browse wedding invitation templates' },
               { href: '/blog/indian-wedding-invitation-wording-for-whatsapp', label: 'Wedding invitation wording for WhatsApp groups' },
               { href: '/blog/how-to-create-a-whatsapp-wedding-invitation', label: 'How to create a WhatsApp wedding invitation' },
-              { href: '/create', label: 'Create your wedding invitation free' },
+              { href: '/create?template=indian-wedding', label: 'Start with the Shaadi wedding design' },
             ].map((l) => (
               <Link
                 key={l.href}
