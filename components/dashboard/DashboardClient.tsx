@@ -358,7 +358,9 @@ export default function DashboardClient({ user }: Props) {
             </motion.div>
 
           ) : (
-            <div className="space-y-5">
+            // Masked in screen recordings (Clarity) and click history: these
+            // cards carry the hosts' names, dates and guest wishes.
+            <div className="space-y-5" data-clarity-mask="true">
               {events.map((event, idx) => {
                 const d = event.data
                 const title = getEventTitle(d)

@@ -62,3 +62,23 @@ model Subscription {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 }
+
+// One row per thing a visitor did on the site: a page opened, a design
+// previewed, a builder step finished, a payment window closed. Written by
+// /api/activity from lib/journal.ts and read by /admin/activity. A visitor is
+// an anonymous id kept in their browser; userId is filled once they sign in.
+// Deleted after ACTIVITY_DAYS by the daily cleanup job (lib/retention.ts).
+model Activity {
+  id        String   @id @default(cuid())
+  visitorId String
+  sessionId String
+  userId    String?
+  name      String
+  path      String
+  data      Json?
+  createdAt DateTime @default(now())
+
+  @@index([visitorId, createdAt])
+  @@index([createdAt])
+  @@index([userId])
+}

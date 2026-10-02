@@ -27,7 +27,7 @@ export default function WhatsAppButton() {
   // the builder, where the checkout already offers a contextual support link
   // and a second floating button only competes with the pay button.
   // Invitations (and their demos) belong to the host; the builder has its own help.
-  if (pathname?.startsWith('/e/') || pathname?.startsWith('/demo/') || pathname?.startsWith('/create')) return null
+  if (pathname?.startsWith('/e/') || pathname?.startsWith('/demo/') || pathname?.startsWith('/create') || pathname?.startsWith('/admin')) return null
 
   return (
     <a

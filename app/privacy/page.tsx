@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { DELETE_AFTER_DAYS, ORPHAN_UPLOAD_DAYS, UNDATED_DELETE_AFTER_DAYS } from '@/lib/retention'
+import { ACTIVITY_DAYS, DELETE_AFTER_DAYS, ORPHAN_UPLOAD_DAYS, UNDATED_DELETE_AFTER_DAYS } from '@/lib/retention'
 import LegalPage, { Para, Bullets, type LegalSection } from '@/components/legal/LegalPage'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
-const LAST_UPDATED = '1 October 2026'
+const LAST_UPDATED = '2 October 2026'
 
 export const metadata: Metadata = {
   title: { absolute: 'Privacy Policy | ShareInvite' },
@@ -52,7 +52,7 @@ const sections: LegalSection[] = [
             <><strong className="text-foreground">Invitation content</strong> — the details you add to your invitations, such as names, event dates and times, venue and address, a maps link, photos, background music links, and personal messages.</>,
             <><strong className="text-foreground">Guest information</strong> — RSVPs, wishes, or blessings that your guests choose to submit on an invitation you publish.</>,
             <><strong className="text-foreground">Payment information</strong> — when you buy a paid plan, payment is processed by Razorpay. We receive confirmation of the transaction and limited details (such as an order/payment reference), but we do not collect or store your full card or bank account numbers.</>,
-            <><strong className="text-foreground">Usage &amp; device data</strong> — technical information collected automatically, such as your IP address, browser and device type, pages viewed, and interactions, gathered through cookies and similar technologies.</>,
+            <><strong className="text-foreground">Usage &amp; device data</strong> — technical information collected automatically, such as your IP address, approximate location (city and country), browser and device type, the site that referred you, the pages you view, the designs you open, the buttons you press and how far you get in the builder and checkout, gathered through cookies and similar technologies. Once you sign in, this record is linked to your account.</>,
           ]}
         />
       </>
@@ -96,12 +96,15 @@ const sections: LegalSection[] = [
         <Bullets
           items={[
             <><strong className="text-foreground">Essential cookies</strong> — required to keep you signed in and to operate core features such as saving your invitation draft.</>,
-            <><strong className="text-foreground">Analytics</strong> — to understand how the Service is used so we can improve it. This data is used in aggregate.</>,
+            <><strong className="text-foreground">Analytics</strong> — to understand how the Service is used so we can improve it. Google Analytics gives us totals. We also keep our own record of each visit — the pages opened, designs viewed, buttons pressed and where a visit ended — so we can find the step where people get stuck. We never record what you type into a form.</>,
+            <><strong className="text-foreground">Session recordings</strong> — Microsoft Clarity records how you move through our pages (scrolling, taps, clicks) so we can replay a visit and see what was confusing or broken. Everything you type into a form, and the details shown in your invitation preview and dashboard, are masked before they leave your browser. Microsoft processes this data under its own privacy statement. Recordings are not made on the invitation pages your guests open.</>,
+            <><strong className="text-foreground">Advertising measurement</strong> — the Meta Pixel tells us whether our ads on Facebook and Instagram lead to visits and purchases, and helps show those ads to people likely to find them useful. Meta receives technical data such as your IP address, browser, the pages you view and actions such as starting a payment, and processes it under its own privacy policy.</>,
           ]}
         />
         <Para>
           You can control cookies through your browser settings. Disabling essential cookies may affect your ability to sign
-          in or use certain features.
+          in or use certain features. If your browser sends a Global Privacy Control signal, we do not keep a visit record
+          or make a session recording.
         </Para>
       </>
     ),
@@ -118,6 +121,8 @@ const sections: LegalSection[] = [
         <Bullets
           items={[
             <><strong className="text-foreground">Service providers</strong> — trusted partners who help us run the Service, such as Razorpay (payment processing), cloud hosting and image storage providers, and email delivery services. They may process data only on our instructions.</>,
+            <><strong className="text-foreground">Analytics partners</strong> — Google (Google Analytics) and Microsoft (Clarity) receive the usage data described under Cookies &amp; Similar Technologies, to provide those services to us.</>,
+            <><strong className="text-foreground">Advertising partners</strong> — Meta (Facebook and Instagram) receives the advertising measurement data described under Cookies &amp; Similar Technologies. The pixel is not used on the invitation pages your guests open, and we never send Meta your invitation details, photos or guest list.</>,
             <><strong className="text-foreground">Legal reasons</strong> — where required to comply with the law, a court order, or a lawful government request, or to protect the rights, safety, and property of ShareInvite, our users, or the public.</>,
             <><strong className="text-foreground">Business transfers</strong> — if ShareInvite is involved in a merger, acquisition, or sale of assets, your data may be transferred as part of that transaction, subject to this Policy.</>,
           ]}
@@ -145,7 +150,8 @@ const sections: LegalSection[] = [
         Invitations are deleted automatically, together with their guest wishes and every photo and song uploaded for them,
         {' '}{DELETE_AFTER_DAYS} days after the celebration&apos;s last day (invitations without a date, such as greetings,
         {' '}{UNDATED_DELETE_AFTER_DAYS} days after they were created). Photos and music uploaded but never used in a
-        published invitation are deleted after {ORPHAN_UPLOAD_DAYS} days. Your account details and payment records are
+        published invitation are deleted after {ORPHAN_UPLOAD_DAYS} days. Our own record of how the site was used is deleted
+        after {ACTIVITY_DAYS} days. Your account details and payment records are
         kept for as long as your account exists and as long as the law requires for tax and accounting. You may ask us to
         delete your account or an invitation sooner at any time.
       </Para>

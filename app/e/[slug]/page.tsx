@@ -155,7 +155,12 @@ export default async function EventPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {!event.isPaid && <FreePlanBanner />}
-      <TemplateRenderer templateId={event.templateId} data={data} eventId={event.id} />
+      {/* Recordings never load on a guest's first page here, but a host who
+          opens their invitation from the dashboard carries one in; keep the
+          invitation's details out of it. */}
+      <div data-clarity-mask="true" style={{ display: 'contents' }}>
+        <TemplateRenderer templateId={event.templateId} data={data} eventId={event.id} />
+      </div>
     </>
   )
 }

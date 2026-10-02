@@ -6,6 +6,9 @@ import { Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
+// Imported directly, not lazily: it must be listening from hydration, or a
+// visitor who leaves within seconds is never recorded (lib/journal.ts).
+import JournalTracker from '@/components/providers/JournalTracker'
 import { hreflangAlternates } from '@/lib/i18n'
 
 // The SocialProofNotification widget was removed here. It synthesised
@@ -38,6 +41,7 @@ const LocaleSuggestion = dynamic(
   { ssr: false },
 )
 
+
 // The editorial display face for marketing headings. Self-hosted by next/font
 // at build time, so it adds no third-party request and no layout shift. It is
 // exposed only as --font-editorial: the invitation templates read
@@ -53,6 +57,12 @@ const editorial = Cormorant_Garamond({
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-5377FL2P'
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-5NYQ140ED1'
+// Meta Pixel, for measuring Facebook/Instagram ads. Off until the ID is set.
+// Digits only, so a stray space or quote in the dashboard cannot break the script.
+const META_PIXEL_ID = (process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '').replace(/\D/g, '')
+// Microsoft Clarity: screen recordings and heatmaps of each visit. Off until the
+// project ID (clarity.microsoft.com → Settings → Overview) is set.
+const CLARITY_ID = (process.env.NEXT_PUBLIC_CLARITY_ID ?? '').replace(/[^a-z0-9]/gi, '')
 const OG_IMAGE = `${APP_URL}/opengraph-image`
 
 export const metadata: Metadata = {
@@ -217,6 +227,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />
+        {/* Meta Pixel: queues events from the first paint, but downloads Meta's
+            script only once the page has loaded, so it never delays it. Skipped
+            inside frames (the live-preview phone), and on the invitations guests
+            open (/e/…): their addresses carry the hosts' names, and guests are
+            not the audience. Events are sent from lib/analytics.ts. */}
+        {META_PIXEL_ID && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `!function(w,d,id){if(w.fbq||w.top!==w||/^\\/e\\//.test(location.pathname))return;var n=w.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};w._fbq=w._fbq||n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];n('init',id);n('track','PageView');function l(){var s=d.createElement('script');s.async=!0;s.src='https://connect.facebook.net/en_US/fbevents.js';d.head.appendChild(s)}function i(){w.requestIdleCallback?w.requestIdleCallback(l,{timeout:3000}):setTimeout(l,1)}d.readyState==='complete'?i():w.addEventListener('load',i)}(window,document,'${META_PIXEL_ID}');`,
+            }}
+          />
+        )}
+        {/* Microsoft Clarity: same rules as the pixel above, plus the admin pages
+            and visitors who ask not to be tracked (Global Privacy Control). It
+            masks every form field; the builder preview is masked in
+            PreviewPane. lib/analytics.ts tags each recording with funnel steps. */}
+        {CLARITY_ID && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `!function(w,d,id){if(w.clarity||w.top!==w||navigator.globalPrivacyControl||/^\\/(e|admin)(\\/|$)/.test(location.pathname))return;w.clarity=function(){(w.clarity.q=w.clarity.q||[]).push(arguments)};function l(){var s=d.createElement('script');s.async=!0;s.src='https://www.clarity.ms/tag/'+id;d.head.appendChild(s)}function i(){w.requestIdleCallback?w.requestIdleCallback(l,{timeout:3000}):setTimeout(l,1)}d.readyState==='complete'?i():w.addEventListener('load',i)}(window,document,'${CLARITY_ID}');`,
+            }}
+          />
+        )}
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
@@ -236,6 +269,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LocaleSuggestion />
         <AnimateOnScroll />
         <SessionProvider>{children}</SessionProvider>
+        <JournalTracker />
         <WhatsAppButton />
         <ScrollPromo />
         {GTM_ID && (

@@ -1,11 +1,17 @@
 'use client'
 
+import { journal } from './journal'
+
 type AnalyticsParams = Record<string, string | number | boolean | null | undefined>
 
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>
     gtag?: (command: 'event', eventName: string, params?: AnalyticsParams) => void
+    /** Meta Pixel; defined only when NEXT_PUBLIC_META_PIXEL_ID is set (app/layout.tsx). */
+    fbq?: (...args: unknown[]) => void
+    /** Microsoft Clarity; defined only when NEXT_PUBLIC_CLARITY_ID is set (app/layout.tsx). */
+    clarity?: (...args: unknown[]) => void
   }
 }
 
@@ -107,6 +113,70 @@ export function trackEvent(eventName: string, params: AnalyticsParams = {}) {
   window.dataLayer = window.dataLayer || []
   window.dataLayer.push({ event: eventName, ...enriched })
   window.gtag?.('event', eventName, enriched)
+  trackMeta(eventName, params)
+  journal(eventName, params)
+  trackClarity(eventName, params)
+}
+
+// ─── Microsoft Clarity ───────────────────────────────────────────────────────
+
+/** Steps after which a replay is worth keeping in full, whatever Clarity's sampling. */
+const CLARITY_UPGRADE = new Set<string>([
+  seoEvents.createStart, seoEvents.paywallView, seoEvents.checkoutStart,
+  seoEvents.checkoutAbandon, seoEvents.checkoutError, seoEvents.paymentFailed, seoEvents.purchase,
+])
+
+/**
+ * Marks the replay with the funnel step and design, so Clarity can be filtered
+ * to "everyone who closed the payment window" or "everyone who tried Royal Deco".
+ */
+function trackClarity(eventName: string, params: AnalyticsParams) {
+  if (!window.clarity) return
+  window.clarity('event', eventName)
+  if (typeof params.template_id === 'string') window.clarity('set', 'template', params.template_id)
+  if (CLARITY_UPGRADE.has(eventName)) window.clarity('upgrade', eventName)
+}
+
+// ─── Meta Pixel ──────────────────────────────────────────────────────────────
+
+/**
+ * Funnel steps forwarded to Meta under its standard event names, so ads can be
+ * optimised for buyers (Purchase) rather than clicks. Everything else stays in
+ * GA4 only. Names outside Meta's standard set are sent as custom events.
+ */
+const META_EVENTS: Record<string, string> = {
+  [seoEvents.createStart]: 'ViewContent',
+  [seoEvents.templateView]: 'ViewContent',
+  [seoEvents.previewOpen]: 'ViewContent',
+  [seoEvents.paywallView]: 'AddToCart',
+  [seoEvents.checkoutStart]: 'InitiateCheckout',
+  [seoEvents.purchase]: 'Purchase',
+  [seoEvents.signupComplete]: 'CompleteRegistration',
+  [seoEvents.supportContact]: 'Contact',
+  [seoEvents.wordingCopy]: 'WordingCopy',
+}
+const META_STANDARD = new Set(['ViewContent', 'AddToCart', 'InitiateCheckout', 'Purchase', 'CompleteRegistration', 'Contact'])
+
+function trackMeta(eventName: string, params: AnalyticsParams) {
+  const metaName = META_EVENTS[eventName]
+  if (!metaName || !window.fbq) return
+  const value = typeof params.value === 'number' ? params.value : params.price
+  const data: Record<string, unknown> = {}
+  if (params.template_id) {
+    data.content_ids = [params.template_id]
+    data.content_type = 'product'
+  }
+  if (params.template_name) data.content_name = params.template_name
+  if (params.template_category) data.content_category = params.template_category
+  if (typeof value === 'number') {
+    data.value = value
+    data.currency = params.currency ?? 'INR'
+  }
+  const method = META_STANDARD.has(metaName) ? 'track' : 'trackCustom'
+  // The payment id doubles as the event id, so a server-side copy of a purchase
+  // (Conversions API) would be de-duplicated rather than counted twice.
+  if (params.transaction_id) window.fbq(method, metaName, data, { eventID: String(params.transaction_id) })
+  else window.fbq(method, metaName, data)
 }
 
 /**

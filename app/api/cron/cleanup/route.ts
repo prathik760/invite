@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { deleteR2Objects, isR2Configured, listR2UploadsOlderThan, r2KeysIn } from '@/lib/r2'
-import { deletionDate, isInternalSlug, ORPHAN_UPLOAD_DAYS } from '@/lib/retention'
+import { ACTIVITY_DAYS, deletionDate, isInternalSlug, ORPHAN_UPLOAD_DAYS } from '@/lib/retention'
 
 /**
  * Daily data cleanup, run by Vercel Cron (vercel.json).
@@ -10,6 +10,7 @@ import { deletionDate, isInternalSlug, ORPHAN_UPLOAD_DAYS } from '@/lib/retentio
  *    their guest wishes (cascade) and every photo and song uploaded for them.
  * 2. Uploads that no invitation uses (abandoned drafts) are deleted once they
  *    are ORPHAN_UPLOAD_DAYS old.
+ * 3. Visitor activity (/admin/activity) older than ACTIVITY_DAYS is deleted.
  *
  * Vercel sends `Authorization: Bearer $CRON_SECRET`; without CRON_SECRET set,
  * the job refuses to run. `?dry=1` reports what would be deleted and deletes
@@ -22,10 +23,19 @@ export const maxDuration = 60
 const DAY = 24 * 60 * 60 * 1000
 const BATCH = 200
 
+/** Forgives the spaces, line breaks or quotes easily pasted along with a value. */
+const clean = (v: string) => v.trim().replace(/^(['"])(.*)\1$/, '$2').trim()
+
 export async function GET(request: Request) {
-  const secret = process.env.CRON_SECRET
-  if (!secret || request.headers.get('authorization') !== `Bearer ${secret}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  // Says which check failed, so a misconfigured deployment can be told apart
+  // from a wrong secret; neither reason reveals anything about the secret.
+  const secret = clean(process.env.CRON_SECRET ?? '')
+  if (!secret) {
+    return NextResponse.json({ error: 'Unauthorized', reason: 'CRON_SECRET is not set on this deployment' }, { status: 401 })
+  }
+  const given = clean((request.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, ''))
+  if (given !== secret) {
+    return NextResponse.json({ error: 'Unauthorized', reason: 'Wrong secret' }, { status: 401 })
   }
   const dry = new URL(request.url).searchParams.get('dry') === '1'
   const now = new Date()
@@ -66,6 +76,19 @@ export async function GET(request: Request) {
     orphanKeys = old.filter((k) => !stillUsed.has(k) && !expiredSet.has(k))
   }
 
+  // ── 3. Old visitor activity ────────────────────────────────────────────────
+  // Kept apart from the rest: until the Activity table exists this throws, and
+  // that must not stop invitations from being cleaned up.
+  const activityBefore = new Date(now.getTime() - ACTIVITY_DAYS * DAY)
+  const activityRows = async (del: boolean) => {
+    try {
+      const where = { createdAt: { lt: activityBefore } }
+      return del ? (await prisma.activity.deleteMany({ where })).count : await prisma.activity.count({ where })
+    } catch {
+      return 0
+    }
+  }
+
   if (dry) {
     return NextResponse.json({
       dry: true,
@@ -73,6 +96,7 @@ export async function GET(request: Request) {
       invitationSlugs: expired.slice(0, 50).map((e) => e.slug),
       files: expiredKeys.length,
       orphanFiles: orphanKeys.length,
+      activityRows: await activityRows(false),
       r2Configured: r2,
     })
   }
@@ -87,6 +111,8 @@ export async function GET(request: Request) {
     invitationsDeleted += res.count
   }
 
-  console.log(`[cleanup] deleted ${invitationsDeleted} invitations, ${filesDeleted} files (${orphanKeys.length} unused uploads)`)
-  return NextResponse.json({ invitationsDeleted, filesDeleted, orphanFiles: orphanKeys.length, r2Configured: r2 })
+  const activityDeleted = await activityRows(true)
+
+  console.log(`[cleanup] deleted ${invitationsDeleted} invitations, ${filesDeleted} files (${orphanKeys.length} unused uploads), ${activityDeleted} activity rows`)
+  return NextResponse.json({ invitationsDeleted, filesDeleted, orphanFiles: orphanKeys.length, activityDeleted, r2Configured: r2 })
 }

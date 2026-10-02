@@ -18,7 +18,9 @@ export default function PreviewPane({ templateId, data }: PreviewPaneProps) {
   return (
     // No padding wrapper — template renders edge-to-edge inside the phone screen.
     // 3D experiences fill the container; 2D templates keep natural (scrolling) flow.
-    <div className={is3DExperience(templateId) ? 'h-full' : undefined}>
+    // data-clarity-mask: the preview shows what the host typed (names, venue,
+    // phone), so screen recordings and the click history leave it out.
+    <div className={is3DExperience(templateId) ? 'h-full' : undefined} data-clarity-mask="true">
       <TemplateRenderer templateId={templateId} data={data} isPreview eventId="__preview__" />
     </div>
   )

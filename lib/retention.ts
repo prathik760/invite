@@ -12,6 +12,8 @@ export const DELETE_AFTER_DAYS = 30
 export const UNDATED_DELETE_AFTER_DAYS = 60
 /** Uploads never used by a published invitation (abandoned drafts) are deleted after this many days. */
 export const ORPHAN_UPLOAD_DAYS = 30
+/** The visitor activity journal (/admin/activity) keeps each event this many days. */
+export const ACTIVITY_DAYS = 90
 
 const DAY = 24 * 60 * 60 * 1000
 
