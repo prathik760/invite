@@ -69,6 +69,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   pooja: 'Pooja',
   festival: 'Festival',
   retirement: 'Retirement',
+  savethedate: 'Save the date',
   digital: 'Digital',
 }
 

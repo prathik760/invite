@@ -4,7 +4,7 @@ import { GLOBAL_TEMPLATE_IDS, getLocale } from '@/lib/i18n'
 import { t } from '@/content/translations'
 import { templateSeoSlug } from '@/lib/seo'
 import { TEMPLATES } from '@/modules/templates/data'
-import { LOWEST_PAID_PRICE, formatTemplatePrice } from '@/lib/plans'
+import { LOWEST_PAID_PRICE, templatePrice } from '@/lib/plans'
 import { templateImage } from '@/lib/templateMedia'
 import { displayName } from '@/lib/catalog'
 import SiteHeader from '@/components/layout/SiteHeader'
@@ -13,6 +13,7 @@ import TrackedLink from '@/components/ui/TrackedLink'
 import CtaBand from '@/components/brand/CtaBand'
 import { LogoMark } from '@/components/brand/Logo'
 import { ArrowRightIcon, CheckIcon } from '@/components/ui/Icons'
+import { Price } from '@/components/price/Price'
 
 // No "edit after you share" or "RSVP" here: a published invitation cannot be
 // edited, and RSVP is on one design only — only promises the product keeps.
@@ -94,7 +95,7 @@ export default function LocalisedHome({ locale: L }: { locale: string }) {
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                     />
                     <span className="absolute end-3 top-3 rounded-full bg-charcoal/85 px-2.5 py-1 text-[0.78rem] font-bold text-paper" dir="ltr">
-                      {formatTemplatePrice(tpl.id)}
+                      <Price inr={templatePrice(tpl.id)} />
                     </span>
                   </span>
                   <span className="block p-4">

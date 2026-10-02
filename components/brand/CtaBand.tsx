@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { LogoMark } from '@/components/brand/Logo'
 import { ArrowRightIcon } from '@/components/ui/Icons'
+import { withLocalPrices } from '@/components/price/localised'
 
 /**
  * The closing statement on a page: emerald band, the brand mark, one headline
@@ -33,9 +34,9 @@ export default function CtaBand({
       />
       <div className="shell relative py-16 text-center sm:py-24" data-reveal>
         <LogoMark className="mx-auto h-14 w-14" />
-        <p className="mt-6 text-[0.8rem] font-bold uppercase tracking-[0.22em] text-gold-soft">{eyebrow}</p>
-        <h2 className="t-h2 mx-auto mt-3 max-w-3xl">{title}</h2>
-        {sub && <p className="mx-auto mt-4 max-w-lg text-[1rem] leading-7 text-paper/70">{sub}</p>}
+        <p className="mt-6 text-[0.8rem] font-bold uppercase tracking-[0.22em] text-gold-soft">{withLocalPrices(eyebrow)}</p>
+        <h2 className="t-h2 mx-auto mt-3 max-w-3xl">{withLocalPrices(title)}</h2>
+        {sub && <p className="mx-auto mt-4 max-w-lg text-[1rem] leading-7 text-paper/70">{withLocalPrices(sub)}</p>}
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <TrackedLink
             href={primary.href}

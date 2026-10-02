@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import BottomDock from '@/components/ui/BottomDock'
 import { LOWEST_PAID_PRICE } from '@/lib/plans'
+import { Price } from '@/components/price/Price'
 
 export default function StickyMobileCTA() {
   const [visible, setVisible] = useState(false)
@@ -34,7 +35,7 @@ export default function StickyMobileCTA() {
         >
           Create your invitation
         </Link>
-        <p className="mt-1.5 text-center text-[10px] text-muted">Preview before you pay · From ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}, one-time</p>
+        <p className="mt-1.5 text-center text-[10px] text-muted">Preview before you pay · From <Price inr={LOWEST_PAID_PRICE} />, one-time</p>
       </div>
     </BottomDock>
   )

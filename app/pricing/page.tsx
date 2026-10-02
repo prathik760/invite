@@ -12,13 +12,14 @@ import TrustList from '@/components/brand/TrustList'
 import { Section, SectionHeading } from '@/components/brand/Section'
 import { ArrowRightIcon, CheckIcon, EyeIcon, GlobeIcon, LinkIcon, ShieldIcon } from '@/components/ui/Icons'
 import { TEMPLATES } from '@/modules/templates/data'
-import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE, formatTemplatePrice, templatePrice } from '@/lib/plans'
+import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE, templatePrice } from '@/lib/plans'
 import { digitalOffer, templateSeoSlug } from '@/lib/seo'
 import { templateImage, templateImageUrl } from '@/lib/templateMedia'
 import { OCCASIONS, displayName, primaryOccasion } from '@/lib/catalog'
 import { OFFER } from '@/lib/offer'
 import { priceByDesignSentence, priceRangeSentence } from '@/lib/priceCopy'
 import SignatureShowcase from '@/components/brand/SignatureShowcase'
+import { Price, PayMethods, ChargeCurrency } from '@/components/price/Price'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -125,7 +126,7 @@ const PRICING_FAQS = [
   },
   {
     question: 'Is the payment secure?',
-    answer: 'Yes. All payments are processed through Razorpay, and ShareInvite never sees or stores your card details. You can pay via UPI, credit card, debit card, or net banking. Prices are charged in Indian rupees.',
+    answer: 'Yes. All payments are processed through Razorpay, and ShareInvite never sees or stores your card details. In India you can pay by UPI, credit or debit card, or net banking. You pay the price and currency shown on the design.',
   },
 ]
 
@@ -195,7 +196,7 @@ export default function PricingPage() {
         <ol className="mt-12 grid gap-4 md:grid-cols-3" data-reveal-group>
           {[
             { Icon: EyeIcon, title: 'Build & preview first', copy: 'Choose any design, add your real details and photos, and see the finished invitation. No card needed.' },
-            { Icon: ShieldIcon, title: 'Pay once for your design', copy: 'The price is on the design. One secure payment by UPI, card or net banking — no renewal, ever.' },
+            { Icon: ShieldIcon, title: 'Pay once for your design', copy: <>The price is on the design. One secure payment by <PayMethods /> — no renewal, ever.</> },
             { Icon: LinkIcon, title: 'Your invitation, handed over', copy: 'Get your link and share it on WhatsApp, Instagram, email or text with as many guests as you like.' },
           ].map(({ Icon, title, copy }, i) => (
             <li key={title} className="card p-7">
@@ -234,7 +235,7 @@ export default function PricingPage() {
                       <span className="min-w-0 flex-1 truncate font-editorial text-[1.2rem] font-semibold group-hover:text-emerald-soft">
                         {displayName(t.name)}
                       </span>
-                      <span className="shrink-0 font-editorial text-[1.35rem] font-semibold">{formatTemplatePrice(t.id)}</span>
+                      <span className="shrink-0 font-editorial text-[1.35rem] font-semibold"><Price inr={templatePrice(t.id)} /></span>
                     </Link>
                   </li>
                 ))}
@@ -288,9 +289,9 @@ export default function PricingPage() {
       <Section tone="peach" size="sm" aria-label="Payment">
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-reveal-group>
           {[
-            { Icon: ShieldIcon, t: 'Secure by Razorpay', c: 'UPI, cards and net banking' },
+            { Icon: ShieldIcon, t: 'Secure by Razorpay', c: <PayMethods capitalise /> },
             { Icon: CheckIcon, t: '7-day refund policy', c: 'For genuine problems', href: '/refund-policy' },
-            { Icon: GlobeIcon, t: 'Guests anywhere', c: 'Charged in INR, opens worldwide' },
+            { Icon: GlobeIcon, t: 'Guests anywhere', c: <>Charged in <ChargeCurrency />, opens worldwide</> },
             { Icon: LinkIcon, t: 'Help when you need it', c: 'Chat with us on WhatsApp' },
           ].map(({ Icon, t, c, href }) => (
             <li key={t} className="flex items-center gap-3.5">

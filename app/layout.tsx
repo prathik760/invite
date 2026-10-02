@@ -10,6 +10,7 @@ import AnimateOnScroll from '@/components/AnimateOnScroll'
 // visitor who leaves within seconds is never recorded (lib/journal.ts).
 import JournalTracker from '@/components/providers/JournalTracker'
 import { hreflangAlternates } from '@/lib/i18n'
+import { COUNTRY_COOKIE } from '@/lib/pricing'
 
 // The SocialProofNotification widget was removed here. It synthesised
 // "<Name> from <City> just created a <type> invitation" toasts by picking at
@@ -221,8 +222,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     // `en` matches the root's hreflang (lib/i18n.ts). `en-IN` told crawlers the
     // English site was for India only while hreflang offered it as x-default.
-    <html lang="en" className={editorial.variable}>
+    // suppressHydrationWarning: the pricing script below may add data-cc
+    // before React hydrates.
+    <html lang="en" className={editorial.variable} suppressHydrationWarning>
       <head>
+        {/* Country pricing (lib/pricing.ts): marks visitors outside India before
+            the first paint, so the INR prices in the static HTML stay hidden
+            until <Price> swaps in their own currency. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var m=document.cookie.match(/(?:^|;\\s*)${COUNTRY_COOKIE}=([A-Za-z]{2})/);if(m&&m[1].toUpperCase()!=='IN')document.documentElement.setAttribute('data-cc',m[1].toUpperCase())}catch(e){}`,
+          }}
+        />
         <meta name="theme-color" content="#052E20" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />

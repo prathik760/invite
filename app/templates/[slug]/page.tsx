@@ -25,6 +25,7 @@ import { TEMPLATES } from '@/modules/templates/data'
 import { absoluteUrl, breadcrumbJsonLd, digitalOffer, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
 import { getRequiredPlan } from '@/lib/plans'
 import { templateImage, templateImageUrl } from '@/lib/templateMedia'
+import { Price } from '@/components/price/Price'
 
 type Props = { params: { slug: string } }
 
@@ -128,6 +129,10 @@ const CATEGORY_CONTEXT: Record<string, { intro: string; guests: string }> = {
   festival: {
     intro: 'Festival evenings — Diwali, Eid and the rest — are planned in a busy week, with many invitations arriving at once.',
     guests: 'Guests want the time, the address and a sense of the evening, so an invitation that stands out gets the answer first.',
+  },
+  savethedate: {
+    intro: 'A save the date goes out six to twelve months before the wedding, so guests can book time off and travel before the formal invitation arrives.',
+    guests: 'Guests want the day, the town and somewhere to find the rest as it is settled — and a way to put the date straight into their calendar.',
   },
   retirement: {
     intro: 'A retirement or farewell gathers colleagues, friends and family who rarely meet in one place.',
@@ -273,6 +278,7 @@ export default function TemplateSeoPage({ params }: Props) {
     housewarming: { href: '/griha-pravesh-invitation', label: 'Griha Pravesh invitations' },
     naming: { href: '/namakaran-invitation', label: 'Namakaran invitations' },
     anniversary: { href: '/anniversary-invitation', label: 'Anniversary invitations' },
+    savethedate: { href: '/save-the-date', label: 'Digital save the dates' },
     ganeshchaturthi: {
       href: '/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template',
       label: 'Ganesh Chaturthi invitation guide',
@@ -378,7 +384,7 @@ export default function TemplateSeoPage({ params }: Props) {
 
               {/* Price. States the model plainly: one design, one payment. */}
               <div className="enter-2 mt-7 flex items-end gap-3">
-                <span className="font-editorial text-[3.6rem] font-semibold leading-none">₹{price.toLocaleString('en-IN')}</span>
+                <span className="font-editorial text-[3.6rem] font-semibold leading-none"><Price inr={price} /></span>
                 <span className="pb-2 text-[0.95rem] text-muted">one-time · everything in this design included</span>
               </div>
 

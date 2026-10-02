@@ -169,6 +169,20 @@ export function calendarHref(title: string, date?: string, time?: string, place?
   return `https://calendar.google.com/calendar/render?${q.toString()}`
 }
 
+/**
+ * Google Calendar link for an all-day event — a save-the-date has a day but no
+ * time yet. Google's end date is exclusive, so a one-day event ends the next day.
+ */
+export function calendarDayHref(title: string, date?: string, place?: string, details?: string): string | null {
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return null
+  const [y, m, d] = date.split('-').map(Number)
+  const f = (x: Date) => `${x.getFullYear()}${pad2(x.getMonth() + 1)}${pad2(x.getDate())}`
+  const q = new URLSearchParams({ action: 'TEMPLATE', text: title, dates: `${f(new Date(y, m - 1, d))}/${f(new Date(y, m - 1, d + 1))}` })
+  if (place) q.set('location', place)
+  if (details) q.set('details', details)
+  return `https://calendar.google.com/calendar/render?${q.toString()}`
+}
+
 /** wa.me link to the host, or null when no usable number was given. */
 export function whatsappHref(number?: string, text?: string): string | null {
   const digits = (number || '').replace(/\D/g, '')

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { seoEvents, trackEvent } from '@/lib/analytics'
 import { supportWhatsAppUrl } from '@/lib/support'
+import { useLocalPrice } from '@/components/price/Price'
 
 /**
  * Why this exists at all: every payment problem in the create flow used to be a
@@ -54,11 +55,13 @@ export default function PaymentProblem({
   error, price, templateName, onRetry, retrying,
 }: {
   error: PayError
+  /** The design's INR price; shown in the visitor's currency. */
   price: number
   templateName?: string
   onRetry: () => void
   retrying: boolean
 }) {
+  const { label } = useLocalPrice(price)
   const isCancelled = error.kind === 'cancelled'
   const isVerification = error.kind === 'verification'
 
@@ -68,8 +71,8 @@ export default function PaymentProblem({
     : { bg: 'rgba(163,58,58,0.06)', border: 'rgba(163,58,58,0.30)', accent: '#A33A3A' }
 
   const supportMessage = isVerification
-    ? `Hi, my ShareInvite payment of ₹${price.toLocaleString('en-IN')} did not go through properly.${error.paymentId ? ` Payment reference: ${error.paymentId}.` : ''}${templateName ? ` Template: ${templateName}.` : ''} Could you check it for me?`
-    : `Hi, I had trouble paying ₹${price.toLocaleString('en-IN')} on ShareInvite${templateName ? ` for the ${templateName} template` : ''}. Could you help?`
+    ? `Hi, my ShareInvite payment of ${label} did not go through properly.${error.paymentId ? ` Payment reference: ${error.paymentId}.` : ''}${templateName ? ` Template: ${templateName}.` : ''} Could you check it for me?`
+    : `Hi, I had trouble paying ${label} on ShareInvite${templateName ? ` for the ${templateName} template` : ''}. Could you help?`
 
   return (
     <div
@@ -114,7 +117,7 @@ export default function PaymentProblem({
           className="rounded-lg px-3 py-1.5 text-[11px] font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
           style={{ background: '#052E20' }}
         >
-          {retrying ? 'Opening…' : isCancelled ? `Try again — ₹${price.toLocaleString('en-IN')}` : 'Retry payment'}
+          {retrying ? 'Opening…' : isCancelled ? `Try again — ${label}` : 'Retry payment'}
         </button>
         <a
           href={supportWhatsAppUrl(supportMessage)}

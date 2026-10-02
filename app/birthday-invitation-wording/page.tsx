@@ -13,9 +13,38 @@ import CtaBand from '@/components/brand/CtaBand'
 import { Section, SectionHeading } from '@/components/brand/Section'
 import FAQAccordion from '@/components/landing/FAQAccordion'
 import { BIRTHDAY_SECTIONS } from '@/content/wording/birthday'
+import TemplateCard from '@/components/catalog/TemplateCard'
+import { buildCatalogItems } from '@/lib/catalogItems'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 const TEMPLATE_ID = 'indian-birthday'
+
+/**
+ * The design each section's "Use these words" opens, with the copied message
+ * already in it: a night-out message lands in the disco design, a 50th in the
+ * milestone dinner, a kids' message in the first-birthday storybook.
+ */
+const SECTION_TEMPLATES: Record<string, string> = {
+  simple: 'birthday-mirrorball',
+  'first-birthday': 'first-birthday',
+  son: 'first-birthday',
+  daughter: 'first-birthday',
+  kids: 'first-birthday',
+  friends: 'birthday-mirrorball',
+  family: 'indian-birthday',
+  '50th-birthday': 'birthday-champagne',
+  '60th-birthday': 'birthday-champagne',
+  'milestone-birthdays': 'birthday-gala',
+  'surprise-party': 'birthday-martini',
+  'cake-cutting': 'indian-birthday',
+  'lunch-dinner': 'birthday-long-lunch',
+  hindi: 'indian-birthday',
+  'whatsapp-groups': 'birthday-mirrorball',
+  formal: 'birthday-champagne',
+}
+
+/** Shown after the first set of messages: what those words look like as an invitation. */
+const DESIGN_IDS = ['birthday-gala', 'birthday-mirrorball', 'birthday-champagne', 'birthday-martini', 'birthday-long-lunch', 'first-birthday', 'indian-birthday', 'surprise-journey']
 const TITLE = 'Birthday Invitation Message for WhatsApp: 120+ Simple Ideas'
 const DESCRIPTION =
   'Copy a simple birthday invitation message for WhatsApp — for son, daughter, 1st, 50th & 60th birthdays, kids, friends, cake cutting, dinner & Hindi.'
@@ -91,6 +120,7 @@ const faqSchema = {
 const TOC = [...tocFrom(BIRTHDAY_SECTIONS), { id: 'quotes-captions', label: 'Quotes & captions' }]
 
 export default function BirthdayInvitationWordingPage() {
+  const DESIGNS = buildCatalogItems(DESIGN_IDS, { keepOrder: true }).slice(0, DESIGN_IDS.length)
   return (
     <main className="min-h-screen bg-champagne text-foreground">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
@@ -106,8 +136,8 @@ export default function BirthdayInvitationWordingPage() {
             <em className="font-medium text-burnished">Wording for WhatsApp</em></>}
         lede={<>120+ ready-to-copy birthday invitation messages for WhatsApp — simple and short samples, wording for son,
             daughter and kids, first, 50th and 60th birthdays, cake cutting, lunch and dinner, and messages in Hindi.</>}
-        actions={<><Link href={`/create?template=${TEMPLATE_ID}`} className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
-              Start My Birthday Invite</Link></>}
+        actions={<><Link href="#birthday-designs" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
+              See the birthday designs</Link></>}
         footnote={<TrustList />}
       />
 
@@ -115,7 +145,23 @@ export default function BirthdayInvitationWordingPage() {
 
       {BIRTHDAY_SECTIONS.map((section, i) => (
         <Fragment key={section.id}>
-          <WordingSection section={section} templateId={TEMPLATE_ID} ctaHref="/birthday-invitation" paper={i % 2 === 1} />
+          <WordingSection section={section} templateId={SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID} ctaHref="/birthday-invitation" paper={i % 2 === 1} />
+
+          {i === 0 && (
+            <Section id="birthday-designs" tone="paper" aria-label="Birthday invitation designs" className="scroll-mt-10">
+              <SectionHeading
+                eyebrow="Send these words as an invitation"
+                title="Birthday designs"
+                sub="Paste your message into any of these and guests get the date, the place, a countdown and a way to reply — from one link. Tap a design for a live preview."
+                action={{ href: '/birthday-invitation', label: 'All birthday designs' }}
+              />
+              <div className="mt-9 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3" data-reveal-group>
+                {DESIGNS.map((item) => (
+                  <TemplateCard key={item.id} item={item} source="birthday_wording_gallery" />
+                ))}
+              </div>
+            </Section>
+          )}
 
           {section.id === 'kids' && (
             <section className="border-b border-line px-5 py-2">

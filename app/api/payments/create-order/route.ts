@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
-import { getRazorpayClient, getPlanPrice } from '@/lib/razorpay'
+import { checkoutCountry, getRazorpayClient, planPriceFor } from '@/lib/razorpay'
+import { minorUnits } from '@/lib/pricing'
 import type { PlanId } from '@/lib/plans'
 import { PLAN_MAP } from '@/lib/plans'
 
@@ -19,20 +20,26 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const amount = getPlanPrice(plan)
+    // Priced for the country the request comes from (lib/pricing.ts). The
+    // price list goes into the order's notes so /verify can check the amount
+    // against the same list, even if the customer's country changes meanwhile.
+    const price = planPriceFor(plan, checkoutCountry(req))
     const razorpay = getRazorpayClient()
 
     const order = await razorpay.orders.create({
-      amount,
-      currency: 'INR',
+      amount: minorUnits(price),
+      currency: price.currency,
       receipt: `inv_${session.user.id.slice(-8)}_${Date.now()}`,
-      notes: { userId: session.user.id, plan },
+      notes: { userId: session.user.id, plan, priceList: price.list },
     })
 
     return NextResponse.json({
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
+      // Whole units and label, for analytics and the payment-problem panel.
+      price: price.amount,
+      label: price.label,
       keyId: process.env.RAZORPAY_KEY_ID,
     })
   } catch (err) {

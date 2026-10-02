@@ -12,6 +12,7 @@ import {
   snoozePromo,
 } from '@/lib/promo'
 import { templateImage } from '@/lib/templateMedia'
+import { Price } from '@/components/price/Price'
 
 /**
  * Scroll-triggered seasonal promotion.
@@ -182,10 +183,10 @@ export default function ScrollPromo() {
             {/* Price. Strike-through appears only when a real prior price is
                 configured in lib/promo.ts — never invented for urgency. */}
             <div className="mt-4 flex flex-wrap items-baseline gap-2">
-              <span className="font-editorial font-semibold text-3xl text-charcoal">₹{price.toLocaleString('en-IN')}</span>
+              <span className="font-editorial font-semibold text-3xl text-charcoal"><Price inr={price} /></span>
               {hasRealDiscount() && (
                 <>
-                  <span className="text-base text-muted line-through">₹{PROMO.originalPrice}</span>
+                  <span className="text-base text-muted line-through"><Price inr={PROMO.originalPrice as number} /></span>
                   <span
                     className="rounded-full px-2 py-0.5 text-[11px] font-bold text-white"
                     style={{ background: copy.accent }}

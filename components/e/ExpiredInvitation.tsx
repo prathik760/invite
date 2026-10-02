@@ -2,7 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Logo, { LogoMark } from '@/components/brand/Logo'
 import { templateImage } from '@/lib/templateMedia'
-import { formatTemplatePrice } from '@/lib/plans'
+import { templatePrice } from '@/lib/plans'
+import { Price } from '@/components/price/Price'
 
 // ─── Template recommendation data ────────────────────────────────────────────
 // Pick 3 recs per original category: same-category first, then cross-sell
@@ -154,7 +155,7 @@ export default function ExpiredInvitation({ templateId, data, deletesOn }: Expir
                 <span className="relative block aspect-[4/5] overflow-hidden bg-peach">
                   <Image src={templateImage(tpl.id)} alt="" fill sizes="(max-width: 640px) 100vw, 220px" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
                   <span className="absolute right-3 top-3 rounded-full bg-charcoal/85 px-2.5 py-1 text-[0.75rem] font-bold text-paper">
-                    {formatTemplatePrice(tpl.id)}
+                    <Price inr={templatePrice(tpl.id)} />
                   </span>
                 </span>
                 <span className="block px-4 py-3.5">

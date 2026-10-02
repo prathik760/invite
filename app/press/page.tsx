@@ -6,6 +6,7 @@ import PageHero from '@/components/brand/PageHero'
 import TrustList from '@/components/brand/TrustList'
 import CtaBand from '@/components/brand/CtaBand'
 import { LOWEST_PAID_PRICE } from '@/lib/plans'
+import { withLocalPrices } from '@/components/price/localised'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -90,7 +91,7 @@ export default function PressPage() {
               // label left ~130px for values like the invitation-types list.
               <div key={f.label} className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-start sm:gap-6 sm:px-6">
                 <span className="shrink-0 text-xs sm:w-40 font-semibold uppercase tracking-[0.18em] text-muted pt-0.5">{f.label}</span>
-                <span className="text-sm text-foreground leading-6">{f.value}</span>
+                <span className="text-sm text-foreground leading-6">{withLocalPrices(f.value)}</span>
               </div>
             ))}
           </div>

@@ -10,12 +10,14 @@ import { TEMPLATE_VISUALS, DARK_TEMPLATES } from './templateVisuals'
 import LiveDemoScreen from './LiveDemoScreen'
 import ShareDesignButton from '@/components/catalog/ShareDesignButton'
 import { useBackToClose } from '@/lib/useBackToClose'
+import { Price, useLocalPrice } from '@/components/price/Price'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
 function PlanBadge({ templateId }: { templateId: string }) {
   const plan = getRequiredPlan(templateId)
   const isFree = plan.price === 0
+  const price = useLocalPrice(plan.price)
   return (
     <span
       className="inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-[.1em] shrink-0"
@@ -29,7 +31,7 @@ function PlanBadge({ templateId }: { templateId: string }) {
           : { background: 'rgba(164,121,69,0.14)', color: '#A47945', border: '1px solid rgba(164,121,69,0.3)' }
       }
     >
-      {isFree ? 'Free' : `₹${plan.price.toLocaleString('en-IN')} one-time`}
+      {isFree ? 'Free' : `${price.label} one-time`}
     </span>
   )
 }
@@ -128,7 +130,7 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
     >
       {!isFree && (
         <p className="text-center text-[11px]" style={{ color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(44,32,28,0.5)' }}>
-          One-time ₹{plan.price.toLocaleString('en-IN')} · No subscription · Preview before you pay
+          One-time <Price inr={plan.price} /> · No subscription · Preview before you pay
         </p>
       )}
       {onUse ? (

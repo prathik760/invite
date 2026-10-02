@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { ArrowRightIcon } from '@/components/ui/Icons'
+import { withLocalPrices } from '@/components/price/localised'
 
 /**
  * Page building blocks. Every marketing page is a stack of <Section>s so that
@@ -80,10 +81,10 @@ export function SectionHeading({
     >
       <div className={centered ? 'mx-auto max-w-2xl' : 'max-w-2xl'}>
         {eyebrow && (
-          <p className={dark ? 'text-[0.8rem] font-bold uppercase tracking-[0.22em] text-gold-soft' : 'eyebrow'}>{eyebrow}</p>
+          <p className={dark ? 'text-[0.8rem] font-bold uppercase tracking-[0.22em] text-gold-soft' : 'eyebrow'}>{withLocalPrices(eyebrow)}</p>
         )}
-        <Tag id={id} className={`t-h2 ${eyebrow ? 'mt-3' : ''}`}>{title}</Tag>
-        {sub && <p className={`mt-4 text-[1.05rem] leading-8 ${dark ? 'text-paper/75' : 'text-charcoal/75'}`}>{sub}</p>}
+        <Tag id={id} className={`t-h2 ${eyebrow ? 'mt-3' : ''}`}>{withLocalPrices(title)}</Tag>
+        {sub && <p className={`mt-4 text-[1.05rem] leading-8 ${dark ? 'text-paper/75' : 'text-charcoal/75'}`}>{withLocalPrices(sub)}</p>}
       </div>
       {action && (
         <Link

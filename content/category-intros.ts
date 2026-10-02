@@ -43,6 +43,8 @@ export const TEMPLATE_CATEGORY_INTRO: Record<string, string> = {
     'Festival invitations for Diwali parties, Eid gatherings, Ganesh Chaturthi darshan and Raksha Bandhan — the evening’s plan, the address and a place for everyone’s wishes.',
   retirement:
     'Retirement and farewell invitations that honour a lifetime of work — the years of service, the evening’s plan and a wall where colleagues, friends and family leave their messages.',
+  savethedate:
+    'Digital save the dates for couples who want the date in people’s calendars before the invitations go out — your names, the day on a little calendar, the town and a link to your wedding website, on one page you can send by text, email or WhatsApp.',
   greeting:
     'Animated 3D greeting cards for one person rather than a guest list. No venue, no RSVP — just your photos, your words and an animation that plays as they scroll. Made to be opened properly on a phone and kept, for love notes, apologies, congratulations, festivals and friendships.',
 }

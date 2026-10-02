@@ -744,3 +744,7 @@ body.js-animate [data-reveal='unveil'].is-visible { clip-path: inset(0 0 0 0); }
   }
   .marquee-track { animation: none; }
 }
+
+/* Country pricing: outside India the static HTML's INR figure stays hidden
+   until <Price> swaps in the visitor's own currency (components/price/Price.tsx). */
+html[data-cc] [data-price='inr'] { visibility: hidden; }

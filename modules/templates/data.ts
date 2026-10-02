@@ -74,6 +74,76 @@ const GREETING_SEEDS: GreetingSeed[] = [
     reasons: 'You always show up for me\nYou know all my secrets\nOur inside jokes are unmatched\nYou make everything more fun\nBest friends, forever' },
 ]
 
+// ─── Adult birthday parties (Mirrorball, Dirty Martini, Champagne, Long Lunch) ──
+// One field set, so a host can switch between the four without retyping. The
+// RSVP contact fields are read by components/templates/kit/party.tsx.
+function partyFields(o: { venue: string; address: string; theme: string; dress: string; schedule: string; message: string; phone: string; note: string; gifts: string }): TemplateConfig['fields'] {
+  return [
+    { key: 'celebrantName', label: 'Birthday person', type: 'text', required: true, placeholder: 'Maya' },
+    { key: 'age', label: 'Turning (optional)', type: 'text', placeholder: '30' },
+    { key: 'invitedBy', label: 'Hosted by (optional)', type: 'text', placeholder: 'Sam & the girls' },
+    { key: 'celebrantPhoto', label: 'Their photo (optional)', type: 'image', placeholder: '' },
+    { key: 'date', label: 'Party date', type: 'date', required: true },
+    { key: 'time', label: 'Start time', type: 'time', required: true },
+    { key: 'venue', label: 'Venue', type: 'text', required: true, placeholder: o.venue },
+    { key: 'venueAddress', label: 'Address', type: 'text', placeholder: o.address },
+    { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+    { key: 'theme', label: 'The party, in a few words', type: 'text', placeholder: o.theme },
+    { key: 'dressCode', label: 'Dress code (optional)', type: 'text', placeholder: o.dress },
+    { key: 'schedule', label: 'The plan', type: 'textarea', placeholder: o.schedule },
+    { key: 'guestNote', label: 'A note for every guest (optional)', type: 'text', section: 'details', group: 'For your guests', hint: 'A surprise? Parking? Plus-ones? One line everyone should read.', placeholder: o.note },
+    { key: 'giftNote', label: 'Gifts (optional)', type: 'text', section: 'details', group: 'For your guests', placeholder: o.gifts },
+    { key: 'rsvpPhone', label: 'Your mobile, for replies by WhatsApp or text', type: 'text', section: 'details', group: 'RSVP', hint: 'Guests tap “I’m in” or “Can’t make it”, and a message to you opens, ready to send. Add your country code.', placeholder: o.phone },
+    { key: 'rsvpEmail', label: 'Or your email', type: 'text', section: 'details', group: 'RSVP', placeholder: 'you@example.com' },
+    { key: 'rsvpBy', label: 'Reply by (optional)', type: 'date', section: 'details', group: 'RSVP' },
+    { key: 'galleryImages', label: 'Photos (optional)', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+    { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+    { key: 'message', label: 'Personal message', type: 'textarea', placeholder: o.message },
+  ]
+}
+
+// ─── Gala: the ₹1,299 birthday weekend ────────────────────────────────────────
+const GALA_COLUMNS: TemplateFieldColumn[] = [
+  { key: 'name', label: 'Part of the celebration', placeholder: 'Welcome drinks' },
+  { key: 'date', label: 'Date', type: 'date' },
+  { key: 'time', label: 'Time', type: 'time' },
+  { key: 'venue', label: 'Venue', placeholder: 'The Fox & Feather' },
+  { key: 'address', label: 'Address', placeholder: 'Lower Swell, Gloucestershire' },
+  { key: 'dress', label: 'Dress code', placeholder: 'Smart casual' },
+]
+
+function galaFields(): TemplateConfig['fields'] {
+  return [
+    { key: 'celebrantName', label: 'Birthday person', type: 'text', required: true, placeholder: 'Alexandra' },
+    { key: 'age', label: 'Turning', type: 'text', placeholder: '40' },
+    { key: 'invitedBy', label: 'Hosted by (optional)', type: 'text', placeholder: 'Tom, Isla & Freddie' },
+    { key: 'celebrantPhoto', label: 'Their photo (optional)', type: 'image', placeholder: '' },
+    { key: 'envelopeLine', label: 'On the envelope', type: 'text', section: 'people', group: 'The envelope', hint: 'Shown when a link has no guest name. To address the envelope to one guest, add ?to= and their name to the end of your link: …?to=Sarah+and+Tom reads “For Sarah and Tom”.', placeholder: 'Our favourite people' },
+    { key: 'date', label: 'The main day', type: 'date', required: true },
+    { key: 'time', label: 'Start time', type: 'time', required: true },
+    { key: 'venue', label: 'Main venue', type: 'text', required: true, placeholder: 'Larkfield Manor' },
+    { key: 'venueAddress', label: 'Address', type: 'text', placeholder: 'Lower Swell, Gloucestershire' },
+    { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+    { key: 'theme', label: 'The celebration, in a few words', type: 'text', placeholder: 'A weekend of celebration' },
+    { key: 'city', label: 'Town or region', type: 'text', section: 'details', group: 'The celebrations', hint: 'Every part gets its own card with a map and calendar link — a Friday drink, the big night, a Sunday brunch. Leave the list empty for one evening at the main venue.', placeholder: 'The Cotswolds' },
+    { key: 'events', label: 'Parts of the celebration', type: 'textarea', columns: GALA_COLUMNS, section: 'details', group: 'The celebrations' },
+    { key: 'dressCode', label: 'Dress code', type: 'text', section: 'details', group: 'What to wear', placeholder: 'Black tie on Saturday; country casual the rest of the weekend' },
+    { key: 'palette', label: 'Colours to wear (optional)', type: 'text', section: 'details', group: 'What to wear', hint: 'Colour names — emerald, gold, champagne, blush, navy… — each shows as a swatch.', placeholder: 'Emerald, gold & champagne' },
+    { key: 'travel', label: 'Getting there & staying', type: 'textarea', section: 'details', group: 'For your guests', hint: 'Hotels, trains, taxis, parking — one line each.', placeholder: 'Rooms are held at Larkfield Manor until 1 May…' },
+    { key: 'faq', label: 'Questions', type: 'textarea', columns: [{ key: 'q', label: 'Question', placeholder: 'Can I bring the children?' }, { key: 'a', label: 'Answer', type: 'textarea', placeholder: 'Saturday is grown-ups only; bring everyone on Sunday.' }], section: 'details', group: 'For your guests' },
+    { key: 'contacts', label: 'Who to call', type: 'textarea', columns: [{ key: 'name', label: 'Name & role', placeholder: 'Tom — questions & surprises' }, { key: 'phone', label: 'Phone / WhatsApp', type: 'tel', placeholder: '+44 7700 900218' }], section: 'details', group: 'For your guests' },
+    { key: 'rsvpPhone', label: 'Your mobile, for replies by WhatsApp or text', type: 'text', section: 'details', group: 'RSVP', hint: 'Guests say which parts they’re coming to, how many of them, what they can’t eat and a song for the dance floor — it reaches you as one message. Add your country code.', placeholder: '+44 7700 900218' },
+    { key: 'rsvpEmail', label: 'Or your email', type: 'text', section: 'details', group: 'RSVP', placeholder: 'you@example.com' },
+    { key: 'rsvpBy', label: 'Reply by (optional)', type: 'date', section: 'details', group: 'RSVP' },
+    { key: 'story', label: 'Their story', type: 'textarea', columns: [{ key: 'when', label: 'Year', placeholder: '1986' }, { key: 'title', label: 'Moment', placeholder: 'Born in Bath' }, { key: 'text', label: 'A line about it', type: 'textarea', placeholder: 'Three weeks early and loud from the start.' }], section: 'enrich', group: 'Through the years', hint: 'Five or six milestones, oldest first.' },
+    { key: 'giftNote', label: 'Gifts (optional)', type: 'text', section: 'enrich', group: 'Gifts', placeholder: 'Your company is the only present she wants.' },
+    { key: 'registryUrl', label: 'Wish list or charity link (optional)', type: 'url', section: 'enrich', group: 'Gifts', placeholder: 'https://...' },
+    { key: 'galleryImages', label: 'Photos (optional)', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+    { key: 'musicUrl', label: 'A song that plays as the envelope opens', type: 'url', placeholder: 'https://example.com/music.mp3' },
+    { key: 'message', label: 'A note from the hosts', type: 'textarea', placeholder: 'We’re taking over a corner of the Cotswolds for a weekend…' },
+  ]
+}
+
 const GALLERY_SAMPLE = 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80\nhttps://images.unsplash.com/photo-1516589091380-5d8e87df6999?auto=format&fit=crop&w=800&q=80\nhttps://images.unsplash.com/photo-1503516459261-40c66117780a?auto=format&fit=crop&w=800&q=80\nhttps://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80'
 
 function buildGreetings(): TemplateData[] {
@@ -949,6 +1019,165 @@ export const TEMPLATES: TemplateData[] = [
         schedule: 'Welcome drinks - 7:00 PM\nA few words from friends - 8:00 PM\nDinner - 8:45 PM',
         galleryImages: 'https://images.unsplash.com/photo-1768508950778-3f6909b1fa13?auto=format&fit=crop&w=1000&q=75\nhttps://images.unsplash.com/photo-1768851142407-c663a54d70b8?auto=format&fit=crop&w=1000&q=75\nhttps://images.unsplash.com/photo-1758691031152-2a727e97e6b6?auto=format&fit=crop&w=1000&q=75',
         message: 'Thirty-four years, two thousand train journeys and one very patient family. Join us to thank him — and to hear what he plans to do with all that time.',
+      },
+    },
+  },
+  {
+    id: 'save-the-date',
+    name: 'Save the Date — Letterpress Card',
+    description: 'A letterpress save the date on deckle-edged cotton: your names, a little calendar with the day circled in red pencil, add-to-calendar and a link to your wedding website.',
+    category: 'savethedate',
+    config: {
+      fields: [
+        // brideName / groomName are the keys the share card, page title and
+        // slug already understand; the labels stay neutral for every couple.
+        { key: 'brideName', label: 'Partner 1', type: 'text', required: true, placeholder: 'Hattie' },
+        { key: 'groomName', label: 'Partner 2', type: 'text', required: true, placeholder: 'Sam' },
+        { key: 'couplePhoto', label: 'A photo of you two (optional)', type: 'image', placeholder: '' },
+        { key: 'date', label: 'Wedding date', type: 'date', required: true, section: 'details', group: 'The date & place', hint: 'The town is enough for now — the full address can wait for the invitation.' },
+        { key: 'city', label: 'Town or city', type: 'text', required: true, section: 'details', group: 'The date & place', placeholder: 'Hudson Valley, New York' },
+        { key: 'venue', label: 'Venue (optional)', type: 'text', section: 'details', group: 'The date & place', placeholder: 'Hollow Road Orchard' },
+        { key: 'followNote', label: 'Last line of the card', type: 'text', section: 'details', group: 'The date & place', placeholder: 'Formal invitation to follow' },
+        { key: 'websiteUrl', label: 'Wedding website (optional)', type: 'url', section: 'enrich', group: 'Wedding website', hint: 'Zola, The Knot, Joy or your own — guests get a link to it under the date.', placeholder: 'https://www.zola.com/wedding/...' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+        { key: 'message', label: 'A note to your guests', type: 'textarea', placeholder: 'We’re getting married! Keep the weekend for us — more soon.' },
+      ],
+      defaultData: {
+        brideName: 'Hattie', groomName: 'Sam', couplePhoto: '',
+        date: '', city: 'Hudson Valley, New York', venue: 'Hollow Road Orchard', followNote: 'Formal invitation to follow',
+        websiteUrl: '', musicUrl: '',
+        message: 'We’re getting married at the orchard where Sam once got us lost for three hours. Keep the weekend for us — there’ll be cider, a long table under the apple trees and, we promise, much better directions.',
+      },
+    },
+  },
+  {
+    id: 'birthday-mirrorball',
+    name: 'Mirrorball — Disco Birthday',
+    description: 'A disco birthday in a warm-black room: a mirror ball that really turns, light thrown round the walls, a lit dance floor, the night as a tracklist and an RSVP guests send by WhatsApp, text or email.',
+    category: 'birthday',
+    config: {
+      fields: partyFields({
+        venue: 'The Lacquer Room', address: '214 Kingsland Road, London E2 8AX', theme: 'A disco birthday',
+        dress: 'Disco glam — sequins, satin, anything that catches the light',
+        schedule: 'Fizz & arrivals - 9:00 PM\nCake & a toast - 10:30 PM\nThe dance floor opens - 11:00 PM',
+        message: 'Thirty years of questionable dance moves. One night to prove they’ve improved.',
+        phone: '+44 7700 900461', note: 'It’s a surprise — arrive by 8:45 and keep it quiet!', gifts: 'No gifts, please — just bring your best moves.',
+      }),
+      defaultData: {
+        celebrantName: 'Maya', age: '30', invitedBy: '', celebrantPhoto: '',
+        date: '', time: '21:00',
+        venue: 'The Lacquer Room', venueAddress: '214 Kingsland Road, London E2 8AX', mapsUrl: '',
+        theme: 'A disco birthday', dressCode: 'Disco glam — sequins, satin, anything that catches the light',
+        schedule: 'Fizz & arrivals - 9:00 PM\nCake & a toast - 10:30 PM\nThe dance floor opens - 11:00 PM\nLast song - 2:00 AM',
+        guestNote: '', giftNote: 'No gifts, please — just bring your best moves.',
+        rsvpPhone: '', rsvpEmail: '', rsvpBy: '',
+        galleryImages: '', musicUrl: '',
+        message: 'Thirty years of questionable dance moves, and one night to prove they’ve improved. Wear something that catches the light — I’ll have the playlist, you bring the energy.',
+      },
+    },
+  },
+  {
+    id: 'birthday-martini',
+    name: 'Dirty Martini — Cocktail Birthday',
+    description: 'A cocktail-hour birthday on olive velvet: a martini drawn on a scalloped napkin as the olive drops in, the evening as a bar menu, the venue on a red matchbook and an RSVP guests send by WhatsApp, text or email.',
+    category: 'birthday',
+    config: {
+      fields: partyFields({
+        venue: 'Olive & Rye', address: '88 Wythe Avenue, Brooklyn, NY 11249', theme: 'Cocktails for a birthday',
+        dress: 'Cocktail attire — dress like it’s a speakeasy',
+        schedule: 'Martinis & oysters - 7:00 PM\nA toast - 8:30 PM\nDessert & dancing - 9:30 PM',
+        message: 'Thirty-five calls for something stronger than cake.',
+        phone: '+1 212 555 0148', note: 'The bar is downstairs — look for the green door.', gifts: 'No gifts — just come thirsty.',
+      }),
+      defaultData: {
+        celebrantName: 'Jules', age: '35', invitedBy: '', celebrantPhoto: '',
+        date: '', time: '19:00',
+        venue: 'Olive & Rye', venueAddress: '88 Wythe Avenue, Brooklyn, NY 11249', mapsUrl: '',
+        theme: 'Cocktails for a birthday', dressCode: 'Cocktail attire — dress like it’s a speakeasy',
+        schedule: 'Martinis & oysters - 7:00 PM\nThe toast - 8:30 PM\nDessert & dancing - 9:30 PM',
+        guestNote: 'The bar is downstairs — look for the green door.', giftNote: 'No gifts — just come thirsty.',
+        rsvpPhone: '', rsvpEmail: '', rsvpBy: '',
+        galleryImages: '', musicUrl: '',
+        message: 'Thirty-five calls for something stronger than cake.\nCome for one, stay for three — the corner booth is ours all night.',
+      },
+    },
+  },
+  {
+    id: 'birthday-champagne',
+    name: 'Champagne — Milestone Birthday',
+    description: 'A milestone birthday dinner in ivory, black and gold foil: the age set huge, its numerals filling with champagne, formal wording, a coupe tower that pours as it comes into view and a “joyfully accepts” reply.',
+    category: 'birthday',
+    config: {
+      fields: partyFields({
+        venue: 'The Glasshouse', address: '12 Bay Street, Double Bay NSW 2028', theme: 'Dinner, dancing and a great many toasts',
+        dress: 'Black tie optional',
+        schedule: 'Champagne on the terrace - 7:00 PM\nDinner - 8:00 PM\nSpeeches & cake - 9:30 PM',
+        message: 'Fifty years of Caroline — we’d love you there to raise a glass.',
+        phone: '+61 491 570 156', note: 'Carriages at midnight — taxis are booked from 11:30.', gifts: 'Your company is the only gift she wants.',
+      }),
+      defaultData: {
+        celebrantName: 'Caroline', age: '50', invitedBy: 'Tom, Ellie & Sam', celebrantPhoto: '',
+        date: '', time: '19:00',
+        venue: 'The Glasshouse', venueAddress: '12 Bay Street, Double Bay NSW 2028', mapsUrl: '',
+        theme: 'Dinner, dancing and a great many toasts', dressCode: 'Black tie optional',
+        schedule: 'Champagne on the terrace - 7:00 PM\nDinner - 8:00 PM\nSpeeches & cake - 9:30 PM\nDancing - 10:00 PM',
+        guestNote: '', giftNote: 'Your company is the only gift she wants.',
+        rsvpPhone: '', rsvpEmail: '', rsvpBy: '',
+        galleryImages: '', musicUrl: '',
+        message: 'Fifty years of Caroline — the laugh you can hear across a room, the best advice nobody asked for, and a great many good dinners.\nWe’d love you there to raise a glass to her.',
+      },
+    },
+  },
+  {
+    id: 'birthday-long-lunch',
+    name: 'Long Lunch — Garden Birthday',
+    description: 'A birthday lunch in the sun: a striped awning that lifts in the breeze, light through the vine, painted lemons, blue-and-white tiles, a spritz counting the days and an RSVP that saves each guest a seat.',
+    category: 'birthday',
+    config: {
+      fields: partyFields({
+        venue: 'Villa Limone', address: '1450 Grand Avenue, Ojai, CA 93023', theme: 'A long lunch in the sun',
+        dress: 'Summer whites, linen & sunglasses',
+        schedule: 'Spritzes on the terrace - 12:30 PM\nLong lunch - 1:30 PM\nCake & coffee - 4:00 PM',
+        message: 'Forty feels like a reason for a very long lunch.',
+        phone: '+1 310 555 0172', note: 'Flat shoes — lunch is on the lawn.', gifts: 'No gifts — just come hungry.',
+      }),
+      defaultData: {
+        celebrantName: 'Sofia', age: '40', invitedBy: '', celebrantPhoto: '',
+        date: '', time: '12:30',
+        venue: 'Villa Limone', venueAddress: '1450 Grand Avenue, Ojai, CA 93023', mapsUrl: '',
+        theme: 'A long lunch in the sun', dressCode: 'Summer whites, linen & sunglasses',
+        schedule: 'Spritzes on the terrace - 12:30 PM\nLong lunch - 1:30 PM\nCake & coffee - 4:00 PM',
+        guestNote: 'Flat shoes — lunch is on the lawn.', giftNote: 'No gifts — just come hungry.',
+        rsvpPhone: '', rsvpEmail: '', rsvpBy: '',
+        galleryImages: '', musicUrl: '',
+        message: 'Forty feels like a reason for a very long lunch.\nBring sunglasses, an appetite and nowhere to be until sunset.',
+      },
+    },
+  },
+  {
+    id: 'birthday-gala',
+    name: 'Gala — Luxury Birthday Weekend',
+    description: 'The big one, in emerald velvet and gold: an envelope addressed to each guest that breaks its wax seal, foil balloons of the age, every part of the weekend on its own card, their story, where to stay, and an RSVP that collects who’s coming, to what, how many, dietary needs and song requests.',
+    category: 'birthday',
+    config: {
+      fields: galaFields(),
+      defaultData: {
+        celebrantName: 'Alexandra', age: '40', invitedBy: 'Tom, Isla & Freddie', celebrantPhoto: '',
+        envelopeLine: 'Our favourite people',
+        date: '', time: '19:00',
+        venue: 'Larkfield Manor', venueAddress: 'Lower Swell, Gloucestershire', mapsUrl: '',
+        theme: 'A weekend of celebration', city: 'The Cotswolds',
+        events: 'Welcome drinks |  | 19:00 | The Fox & Feather | Lower Swell, Gloucestershire | Smart casual\nThe birthday dinner |  | 19:00 | Larkfield Manor | Lower Swell, Gloucestershire | Black tie\nRecovery brunch |  | 11:00 | The Orangery at Larkfield |  | Come as you are',
+        dressCode: 'Black tie on Saturday; country casual the rest of the weekend',
+        palette: 'Emerald, gold, champagne & black',
+        travel: 'Rooms are held at Larkfield Manor until 1 May — mention Alexandra’s party when you book.\nThe nearest station is Moreton-in-Marsh; we’ve booked taxis from 6pm on Saturday.\nParking is free in the manor’s walled garden.',
+        faq: 'Can I bring the children? | Saturday night is grown-ups only. Friday and Sunday, bring everyone.\nDo I need to come to everything? | Not at all — come to whatever you can. Just tell us which in your RSVP.\nWhat time does Saturday finish? | When the band stops, around 1am. Taxis are booked.',
+        contacts: 'Tom — questions & surprises | +44 7700 900218',
+        rsvpPhone: '', rsvpEmail: '', rsvpBy: '',
+        story: '1986 | Born in Bath | Three weeks early and loud from the start.\n2004 | Edinburgh | Philosophy, a great deal of rain, and friends who are still here.\n2011 | London | First flat, first job, first very bad sofa.\n2016 | Tom | Met at a wedding. Danced to the wrong song.\n2026 | Forty | And she has never looked better.',
+        giftNote: 'Your company is the only present she wants — though if you’d like to, there’s a fund towards her trip to Japan.',
+        registryUrl: '', galleryImages: '', musicUrl: '',
+        message: 'Forty years of Alexandra — the best friend, the worst singer, the one who always books the table.\nWe’re taking over a corner of the Cotswolds for a weekend, and it wouldn’t be the same without you.',
       },
     },
   },

@@ -9,6 +9,7 @@ import { OCCASIONS, displayName, is3D, styleTag } from '@/lib/catalog'
 import BottomDock from '@/components/ui/BottomDock'
 import { ArrowRightIcon, CheckIcon, EyeIcon, SwapIcon } from '@/components/ui/Icons'
 import { TEMPLATE_VISUALS } from './templateVisuals'
+import { useLocalPrice } from '@/components/price/Price'
 
 const TemplatePreviewModal = dynamic(() => import('./TemplatePreviewModal'), { ssr: false })
 
@@ -23,9 +24,10 @@ const TABS = [
 function PlanBadge({ templateId }: { templateId: string }) {
   const plan = getRequiredPlan(templateId)
   const isFree = plan.price === 0
+  const price = useLocalPrice(plan.price)
   return (
     <span className="inline-flex shrink-0 items-center rounded-full border border-line bg-champagne px-2 py-0.5 text-[10px] font-bold tabular-nums text-charcoal">
-      {isFree ? 'Free' : `₹${plan.price.toLocaleString('en-IN')} one-time`}
+      {isFree ? 'Free' : `${price.label} one-time`}
     </span>
   )
 }

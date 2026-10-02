@@ -36,6 +36,7 @@ import { OFFER } from '@/lib/offer'
 import { TEMPLATES } from '@/modules/templates/data'
 import { priceRangeSentence } from '@/lib/priceCopy'
 import SignatureShowcase from '@/components/brand/SignatureShowcase'
+import { Price, PayMethods } from '@/components/price/Price'
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
@@ -362,14 +363,14 @@ export default function LandingPage() {
             <p className="eyebrow">Simple, honest pricing</p>
             <h2 id="offer-heading" className="t-h2 mt-3">{OFFER.headline}</h2>
             <p className="t-lede mt-5 max-w-xl">
-              Every design shows its price up front — from ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹{HIGHEST_PAID_PRICE.toLocaleString('en-IN')}. Build it,
+              Every design shows its price up front — from <Price inr={LOWEST_PAID_PRICE} /> to <Price inr={HIGHEST_PAID_PRICE} />. Build it,
               preview it, and share it with family first if you like. When you&apos;re happy, pay once and it&apos;s
               yours. No plans. No bundles. No subscription.
             </p>
             <ol className="mt-9 space-y-5" data-reveal-group>
               {[
                 { t: 'Preview it with your details', c: 'Add your real names, date and photos and see the finished invitation before you pay.' },
-                { t: 'Pay once for the one you choose', c: 'A single secure payment by UPI, card or net banking.' },
+                { t: 'Pay once for the one you choose', c: <>A single secure payment by <PayMethods />.</> },
                 { t: 'Your invitation, handed over', c: 'Your link, every feature in the design, and as many guests as you like.' },
               ].map((step, i) => (
                 <li key={step.t} className="flex gap-4">
@@ -557,13 +558,13 @@ export default function LandingPage() {
               {' '}<Link href="/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template">Raksha Bandhan invitation card online</Link>.
               Welcoming Bappa home? Make a
               {' '}<Link href="/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template">Ganesh Chaturthi invitation card online</Link>
-              {' '}for just ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}.
+              {' '}for just <Price inr={LOWEST_PAID_PRICE} />.
               Hosting a Diwali party? Start with our
               {' '}<Link href="/diwali-invitation-wording">Diwali invitation messages</Link>, or find the right words for a
               {' '}<Link href="/birthday-invitation-wording">birthday invitation message</Link>.
             </p>
             <p>
-              Build and preview before you pay — one-time payment, from ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}, only when you publish. See every design on the
+              Build and preview before you pay — one-time payment, from <Price inr={LOWEST_PAID_PRICE} />, only when you publish. See every design on the
               {' '}<Link href="/templates">templates page</Link>, see how pricing works on
               {' '}<Link href="/pricing">pricing</Link>, or read guides on the <Link href="/blog">ShareInvite blog</Link>.
             </p>

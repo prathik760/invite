@@ -2,6 +2,7 @@ import BottomDock from '@/components/ui/BottomDock'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { LogoMark } from '@/components/brand/Logo'
 import { LOWEST_PAID_PRICE } from '@/lib/plans'
+import { withLocalPrices } from '@/components/price/localised'
 
 /**
  * Site-wide sticky bar shown on SEO landing, template and blog pages.
@@ -37,8 +38,8 @@ export default function StickyCTA({
         <div className="flex min-w-0 items-center gap-3">
           <LogoMark className="hidden h-9 w-9 shrink-0 sm:block" />
           <div className="min-w-0">
-            <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{title}</p>
-            <p className="truncate text-[0.78rem] text-muted">{sub}</p>
+            <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{withLocalPrices(title)}</p>
+            <p className="truncate text-[0.78rem] text-muted">{withLocalPrices(sub)}</p>
           </div>
         </div>
         <div className="flex shrink-0 gap-2">

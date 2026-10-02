@@ -11,6 +11,8 @@ import { OFFER_INCLUDES } from '@/lib/offer'
 import { displayName } from '@/lib/catalog'
 import { ArrowRightIcon, CheckIcon, ShieldIcon } from '@/components/ui/Icons'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
+import { useLocalPrice } from '@/components/price/Price'
+import { paymentMethods } from '@/lib/pricing'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -43,7 +45,8 @@ export default function Step5Publish({
   const userHasAccess = canAccess(selectedTemplate.id, userPlan)
   const mustPay = !userHasAccess
   const name = displayName(selectedTemplate.name)
-  const price = `₹${requiredPlan.price.toLocaleString('en-IN')}`
+  const local = useLocalPrice(requiredPlan.price)
+  const price = local.label
 
   return (
     // overflow-x-clip: the preview's glow (-inset-12) reaches ~48px past a
@@ -187,13 +190,13 @@ export default function Step5Publish({
             <div className="border-t border-line bg-peach/50 px-6 py-4">
               <p className="flex items-center justify-center gap-1.5 text-[0.8rem] text-charcoal/75">
                 <ShieldIcon className="h-4 w-4 text-emerald-soft" />
-                UPI · Cards · Net banking · No subscription
+                {paymentMethods(local.currency)} · No subscription
               </p>
               <p className="mt-1.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.8rem]">
                 <Link href="/refund-policy" target="_blank" className="link">7-day refund policy</Link>
                 <span aria-hidden className="text-muted">·</span>
                 <a
-                  href={supportWhatsAppUrl(`Hi, I have a question about the ${selectedTemplate.name} design (₹${requiredPlan.price.toLocaleString('en-IN')}) before I pay.`)}
+                  href={supportWhatsAppUrl(`Hi, I have a question about the ${selectedTemplate.name} design (${price}) before I pay.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold text-[#128C4B] underline-offset-4 hover:underline"

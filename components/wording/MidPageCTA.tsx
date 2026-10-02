@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { LogoMark } from '@/components/brand/Logo'
 import { CheckIcon } from '@/components/ui/Icons'
 import { LOWEST_PAID_PRICE } from '@/lib/plans'
+import { Price } from '@/components/price/Price'
 
 interface MidPageCTAProps {
   headline: string
@@ -36,7 +37,7 @@ export default function MidPageCTA({ headline, body, features, ctaHref, ctaText 
         <Link href={ctaHref} className="btn-gold inline-flex items-center justify-center rounded-full px-7 py-3.5 text-[0.95rem] font-semibold">
           {ctaText.replace(/\s*→$/, '')}
         </Link>
-        <p className="text-[0.8rem] text-paper/60">Preview before you pay · Pay once, from ₹{LOWEST_PAID_PRICE.toLocaleString('en-IN')}</p>
+        <p className="text-[0.8rem] text-paper/60">Preview before you pay · Pay once, from <Price inr={LOWEST_PAID_PRICE} /></p>
       </div>
     </aside>
   )

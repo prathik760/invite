@@ -3,10 +3,11 @@ import Link from 'next/link'
 import { Section, SectionHeading } from '@/components/brand/Section'
 import { ArrowRightIcon, CheckIcon } from '@/components/ui/Icons'
 import { TEMPLATES } from '@/modules/templates/data'
-import { formatTemplatePrice } from '@/lib/plans'
+import { templatePrice } from '@/lib/plans'
 import { templateSeoSlug } from '@/lib/seo'
 import { templateImage } from '@/lib/templateMedia'
 import { displayName, styleTag } from '@/lib/catalog'
+import { Price } from '@/components/price/Price'
 
 const SIGNATURE = TEMPLATES.filter((t) => t.id.startsWith('signature-'))
 
@@ -52,7 +53,7 @@ export default function SignatureShowcase({ id = 'signature' }: { id?: string })
                 <Image src={templateImage(t.id)} alt={`${displayName(t.name)} invitation design`} fill sizes="(min-width: 1024px) 270px, 45vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 {/* The price rides on the artwork, so the name below never has to share its line. */}
                 <span className="absolute left-2.5 top-2.5 rounded-full bg-emerald-deep/90 px-2.5 py-1 font-editorial text-[1.05rem] font-semibold leading-none text-gold-soft shadow-[0_6px_16px_-8px_rgba(0,0,0,0.6)] sm:left-3 sm:top-3 sm:px-3 sm:text-[1.15rem]">
-                  {formatTemplatePrice(t.id)}
+                  <Price inr={templatePrice(t.id)} />
                 </span>
               </span>
               <span className="flex flex-1 items-start justify-between gap-3 px-3.5 py-3 sm:px-4 sm:py-4">

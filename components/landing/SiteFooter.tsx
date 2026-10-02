@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { LOCALES, localePath } from '@/lib/i18n'
 import { SUPPORT_EMAIL, SUPPORT_WHATSAPP_URL } from '@/lib/support'
 import Logo from '@/components/brand/Logo'
+import { PayMethods } from '@/components/price/Price'
 
 /**
  * Site-wide footer. Every link below is a real route, and the footer is the
@@ -13,6 +14,7 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
     title: 'Invitations',
     links: [
       { label: 'Wedding invitations', href: '/wedding-invitation' },
+      { label: 'Save the dates', href: '/save-the-date' },
       { label: 'Engagement invitations', href: '/engagement-invitation' },
       { label: 'Birthday invitations', href: '/birthday-invitation' },
       { label: 'Anniversary invitations', href: '/anniversary-invitation' },
@@ -193,7 +195,7 @@ export default function SiteFooter() {
             © {new Date().getFullYear()} ShareInvite · Digital invitations for every celebration ·{' '}
             Founded by <span className="text-paper/80">Prathik Thelkar</span>
           </p>
-          <p>Secure payments by Razorpay · UPI, cards &amp; net banking</p>
+          <p>Secure payments by Razorpay · <PayMethods capitalise /></p>
         </div>
       </div>
     </footer>

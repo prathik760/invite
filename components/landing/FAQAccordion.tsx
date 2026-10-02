@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'
+import { withLocalPrices } from '@/components/price/localised'
 
 export interface Faq {
   question: string
@@ -90,7 +91,7 @@ export default function FAQAccordion({ faqs = defaultFaqs }: { faqs?: Faq[] }) {
               }`}
             >
               <div className="overflow-hidden">
-                <p className="max-w-2xl pb-7 pr-12 text-[0.98rem] leading-8 text-charcoal/75">{faq.answer}</p>
+                <p className="max-w-2xl pb-7 pr-12 text-[0.98rem] leading-8 text-charcoal/75">{withLocalPrices(faq.answer)}</p>
               </div>
             </div>
           </div>

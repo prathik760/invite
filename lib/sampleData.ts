@@ -15,8 +15,69 @@ function isoInDays(days: number): string {
   return `${d.getFullYear()}-${m}-${day}`
 }
 
+/** A Saturday about eight and a half months out — when a save-the-date is usually sent. */
+function saturdayInMonths(): string {
+  const d = new Date()
+  d.setHours(12, 0, 0, 0)
+  d.setDate(d.getDate() + 260 + ((6 - ((d.getDay() + 260) % 7)) + 7) % 7)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+/** The first Saturday at least `days` from today. */
+function saturdayInDays(days: number): string {
+  const d = new Date()
+  d.setHours(12, 0, 0, 0)
+  d.setDate(d.getDate() + days)
+  d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7))
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+// Numbers reserved for fiction (Ofcom 07700 900xxx, NANP 555-01xx, ACMA 0491 570xxx), so a
+// showcase RSVP can never reach a real phone.
+const SAMPLE_RSVP: Record<string, string> = {
+  'birthday-mirrorball': '+44 7700 900461',
+  'birthday-martini': '+1 212 555 0148',
+  'birthday-champagne': '+61 491 570 156',
+  'birthday-long-lunch': '+1 310 555 0172',
+  'birthday-gala': '+44 7700 900218',
+}
+
+/** yyyy-mm-dd plus `n` days. */
+function addDays(iso: string, n: number): string {
+  const [y, m, d] = iso.split('-').map(Number)
+  const t = new Date(y, m - 1, d + n, 12)
+  return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`
+}
+
 export function withSampleDates(templateId: string, data: Record<string, string>): Record<string, string> {
   const out = { ...data }
+  if (templateId === 'save-the-date') {
+    if (!out.date) out.date = saturdayInMonths()
+    // Showcases get a snapshot on the card. It is not in the design's default
+    // data, so nobody publishes a stranger's photo by not noticing it.
+    if (!out.couplePhoto) out.couplePhoto = 'https://images.unsplash.com/photo-1637782993379-a769478d32f9?auto=format&fit=crop&w=600&q=75'
+  }
+  if (templateId.startsWith('birthday-')) {
+    // A party is on a Saturday. Showcases also get a reply-by date and an RSVP
+    // number, so the RSVP is on show; neither is in the default data, so no
+    // host publishes a stranger's phone number by not noticing it.
+    if (!out.date) out.date = saturdayInDays(40)
+    if (!out.rsvpBy) out.rsvpBy = isoInDays(26)
+    if (!out.rsvpPhone && !out.rsvpEmail) out.rsvpPhone = SAMPLE_RSVP[templateId] ?? '+44 7700 900461'
+  }
+  if (templateId === 'birthday-gala') {
+    // The weekend is laid out around the main night: earlier parts the days before, later ones after.
+    const rows = (out.events || '').split('\n').filter((l) => l.trim())
+    const main = Math.max(0, rows.findIndex((l) => /dinner|party|gala|birthday|main/i.test(l.split('|')[0])))
+    out.events = rows
+      .map((line, i) => {
+        const cells = line.split('|').map((c) => c.trim())
+        while (cells.length < 6) cells.push('')
+        if (!cells[1]) cells[1] = addDays(out.date, i - main)
+        return cells.join(' | ')
+      })
+      .join('\n')
+  }
   if (!out.date) out.date = isoInDays(46)
   if (templateId === 'luxury-wedding') {
     if (!out.haldiDate) out.haldiDate = isoInDays(44)

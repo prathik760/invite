@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
-import { getRazorpayClient, verifyPaymentSignature, getPlanPrice } from '@/lib/razorpay'
+import { getRazorpayClient, verifyPaymentSignature, planPriceIn } from '@/lib/razorpay'
+import { isPriceList, minorUnits } from '@/lib/pricing'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
 import { mergePlans, PLAN_MAP } from '@/lib/plans'
@@ -35,11 +36,22 @@ export async function POST(req: NextRequest) {
   try {
     const razorpay = getRazorpayClient()
     const order = await razorpay.orders.fetch(razorpay_order_id)
-    const expectedPaise = getPlanPrice(plan as PlanId)
+    const notes = (order.notes ?? {}) as Record<string, unknown>
 
-    if (Number(order.amount) !== expectedPaise) {
+    if (notes.plan !== undefined && notes.plan !== plan) {
+      console.error(`[verify] Plan mismatch — order was for "${String(notes.plan)}", request claims "${plan}"`)
+      return NextResponse.json({ error: 'Payment amount does not match plan price.' }, { status: 400 })
+    }
+
+    // The order records the price list it was created in (lib/pricing.ts).
+    // Orders from before country pricing have none and were always INR.
+    const list = isPriceList(notes.priceList) ? notes.priceList : 'inr'
+    const expected = planPriceIn(plan as PlanId, list)
+    const expectedMinor = minorUnits(expected)
+
+    if (Number(order.amount) !== expectedMinor || order.currency !== expected.currency) {
       console.error(
-        `[verify] Amount mismatch — order: ${order.amount} paise, plan "${plan}" expects ${expectedPaise} paise`,
+        `[verify] Amount mismatch — order: ${order.amount} ${order.currency}, plan "${plan}" in "${list}" expects ${expectedMinor} ${expected.currency}`,
       )
       return NextResponse.json({ error: 'Payment amount does not match plan price.' }, { status: 400 })
     }

@@ -5,9 +5,10 @@ import TemplateRenderer from '@/components/templates/TemplateRenderer'
 import ShareDesignButton from '@/components/catalog/ShareDesignButton'
 import { TEMPLATES } from '@/modules/templates/data'
 import { withSampleDates } from '@/lib/sampleData'
-import { formatTemplatePrice } from '@/lib/plans'
+import { formatTemplatePrice, templatePrice } from '@/lib/plans'
 import { templateSeoSlug } from '@/lib/seo'
 import { displayName } from '@/lib/catalog'
+import { Price } from '@/components/price/Price'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
@@ -82,7 +83,7 @@ export default function DemoPage({ params }: { params: { id: string } }) {
             Live Demo
           </span>
           <p className="truncate text-[11px] font-medium sm:text-xs" style={{ color: 'rgba(255,255,255,0.7)' }}>
-            {displayName(template.name)} · {formatTemplatePrice(template.id)}
+            {displayName(template.name)} · <Price inr={templatePrice(template.id)} />
           </p>
         </div>
         <ShareDesignButton

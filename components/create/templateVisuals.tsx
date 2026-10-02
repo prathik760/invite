@@ -212,11 +212,48 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#1C2A45', rgb: '28,42,69',
     image: '/templates/retirement.jpg',
   },
+  'save-the-date': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><rect x="3.5" y="4.5" width="13" height="12" rx="1" stroke="currentColor" strokeWidth={1.4} /><path d="M3.5 8h13M7 3v3M13 3v3" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" /><path d="M9.2 10.6c2.6-.9 4.4.2 3.9 1.8-.5 1.5-3.4 1.9-4.6.8-.9-.8-.3-2 1.6-2.5" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #C7CBBA 0%, #A8472A 100%)',
+    color: '#A8472A', rgb: '168,71,42',
+    image: '/templates/save-the-date.jpg',
+  },
+  'birthday-mirrorball': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 1.5v3" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" /><circle cx="10" cy="11" r="6" stroke="currentColor" strokeWidth={1.4} /><path d="M4 11h12M10 5c-2.2 1.6-2.2 10.4 0 12M10 5c2.2 1.6 2.2 10.4 0 12M5.2 7.6h9.6M5.2 14.4h9.6" stroke="currentColor" strokeWidth={1} /></svg>,
+    gradient: 'linear-gradient(135deg, #0D0A0B 0%, #FF6A3D 100%)',
+    color: '#FF6A3D', rgb: '255,106,61',
+    image: '/templates/birthday-mirrorball.jpg',
+  },
+  'birthday-martini': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M3 4h14l-7 7.5zM10 11.5V17M6.5 17.5h7" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="6.5" r="1.4" stroke="currentColor" strokeWidth={1.2} /><path d="M13 5.4l2-3" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #27310F 0%, #C8372D 100%)',
+    color: '#6E7D2C', rgb: '110,125,44',
+    image: '/templates/birthday-martini.jpg',
+  },
+  'birthday-champagne': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M4.5 4.5h11c0 3.4-2.4 5.5-5.5 5.5S4.5 7.9 4.5 4.5zM10 10v6.5M6.5 17h7" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /><circle cx="8.5" cy="6.6" r=".7" fill="currentColor" /><circle cx="11.4" cy="7.4" r=".6" fill="currentColor" /></svg>,
+    gradient: 'linear-gradient(135deg, #F7F1E6 0%, #B08A3E 100%)',
+    color: '#9E7A33', rgb: '158,122,51',
+    image: '/templates/birthday-champagne.jpg',
+  },
+  'birthday-long-lunch': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M3.5 10.5c0-3 3-5.5 6.5-5.5s6.5 2.5 6.5 5.5-3 5.5-6.5 5.5-6.5-2.5-6.5-5.5z" stroke="currentColor" strokeWidth={1.4} /><path d="M2.5 10.5h1M16.5 10.5h1M8 2.5c1 .6 1.6 1.4 2 2.5" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #F2C230 0%, #E8602C 100%)',
+    color: '#E8602C', rgb: '232,96,44',
+    image: '/templates/birthday-long-lunch.jpg',
+  },
+  'birthday-gala': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><rect x="2.5" y="5" width="15" height="11" rx="1.2" stroke="currentColor" strokeWidth={1.4} /><path d="M2.8 5.4 10 11l7.2-5.6" stroke="currentColor" strokeWidth={1.4} strokeLinejoin="round" /><circle cx="10" cy="11" r="1.8" fill="currentColor" /></svg>,
+    gradient: 'linear-gradient(135deg, #0B2A23 0%, #C9A04E 100%)',
+    color: '#C9A04E', rgb: '201,160,78',
+    image: '/templates/birthday-gala.jpg',
+  },
 }
 
 export const DARK_TEMPLATES = new Set([
   'cinematic-night', 'kgf-wedding', 'royal-deco', 'luxury-wedding', 'anniversary', 'indian-birthday',
   'surprise-journey', 'signature-nikah', 'sangeet-night', 'diwali-party', 'retirement',
+  'birthday-mirrorball', 'birthday-martini', 'birthday-gala',
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose',
   'greeting-promise', 'greeting-congratulations', 'greeting-festival', 'greeting-family',
   'greeting-friendship',

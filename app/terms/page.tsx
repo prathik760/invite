@@ -104,7 +104,7 @@ const sections: LegalSection[] = [
         </Para>
         <Bullets
           items={[
-            'All prices are listed in Indian Rupees (INR) and, unless stated otherwise, are inclusive of applicable taxes.',
+            'Prices are shown and charged in Indian Rupees (INR) in India and, where available, in a local currency elsewhere (for example US dollars, pounds sterling or euros), based on the country you visit from. You pay the price and currency shown at checkout. Unless stated otherwise, prices are inclusive of applicable taxes.',
             'Payments are processed securely by our third-party payment partner, Razorpay. We do not store your full card or banking details.',
             'Access to a paid template or feature is granted immediately after your payment is successfully confirmed.',
             'We may change our prices or plan structure at any time; changes do not affect purchases you have already completed.',

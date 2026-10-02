@@ -48,6 +48,12 @@ const THEMES: Record<string, Theme> = {
   'diwali-party': DARK('#17113A', '#FCEFDA', '#F4C65C'),
   'eid-milan': LIGHT('#FBF6EA', '#1D3A33', '#0F5B4A', '#E2D5B6'),
   retirement: DARK('#1C2A45', '#F3EBDD', '#C9A55E'),
+  'save-the-date': LIGHT('#F8F3E8', '#27302A', '#A8472A', '#C7CBBA'),
+  'birthday-mirrorball': DARK('#0D0A0B', '#F6EFE6', '#FF6A3D'),
+  'birthday-martini': DARK('#27310F', '#F4EDDD', '#E9A79B'),
+  'birthday-champagne': LIGHT('#F7F1E6', '#1D1A16', '#9E7A33', '#D9C08A'),
+  'birthday-long-lunch': LIGHT('#FBF4E6', '#233047', '#E8602C', '#F2C230'),
+  'birthday-gala': DARK('#0B2A23', '#F4ECD8', '#C9A04E'),
 }
 const GREETING = DARK('#2A0E22', '#FFFFFF', '#F0B7C4')
 
@@ -96,6 +102,7 @@ function cardFor(templateId: string, d: Record<string, string>): Card {
     const label = templateId === 'haldi-mehendi' ? 'Haldi & Mehendi'
       : templateId === 'sangeet-night' ? 'Sangeet'
       : templateId === 'signature-nikah' ? 'Nikah'
+      : templateId === 'save-the-date' ? 'Save the date'
       : 'Wedding invitation'
     return { label, names: [t(d.brideName), t(d.groomName)] }
   }
@@ -135,7 +142,8 @@ export async function renderInviteCard(templateId: string, data: Record<string, 
   const card = cardFor(templateId, data)
 
   const when = [formatDate(data.date), formatTime(data.time)].filter(Boolean).join('  ·  ')
-  const rawVenue = (data.venue || data.venueAddress || '').trim()
+  // A save-the-date names the town (and maybe the venue), not an address.
+  const rawVenue = (templateId === 'save-the-date' ? [data.venue, data.city].filter(Boolean).join(', ') : data.venue || data.venueAddress || '').trim()
   const venue = rawVenue.length > 52 ? `${rawVenue.slice(0, 51)}…` : rawVenue
   const pair = card.names.length === 2
   const longest = Math.max(...card.names.map((n) => n.length))

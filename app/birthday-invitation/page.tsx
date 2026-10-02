@@ -77,10 +77,18 @@ const faqSchema = {
     },
     {
       '@type': 'Question',
+      name: 'Do you have designs for a 30th, 40th or 50th birthday?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Mirrorball is a disco night out, Dirty Martini a cocktail party, Champagne a black-tie milestone dinner with the age set in gold and filling with champagne, and Long Lunch a daytime garden party. For the very big ones there is Gala, a whole birthday weekend: an envelope addressed to each guest that breaks its wax seal as it opens, gold foil balloons of the age, every part of the weekend on its own card, the story of their life, where to stay, and an RSVP that collects which parts each guest is coming to, how many, dietary needs and song requests. Each design is animated, shows the age you enter and takes a dress code, a note for guests and photos.',
+      },
+    },
+    {
+      '@type': 'Question',
       name: 'Can guests RSVP on the birthday invitation?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Guests can leave a birthday wish right on the invitation, and every message appears in your dashboard. There is no attendance tracker, so for an exact headcount ask guests to confirm on WhatsApp — the messages on this site include RSVP lines you can copy.',
+        text: 'Yes, on the Gala, Mirrorball, Dirty Martini, Champagne and Long Lunch designs. Guests tap “I’m in” or “Can’t make it”, and a reply to you opens on WhatsApp, as a text or by email, ready to send — you choose which in the builder, and can add a reply-by date. Replies come to your phone or inbox; there is no automatic headcount. Every design also lets guests leave a birthday wish on the invitation.',
       },
     },
   ],
@@ -92,7 +100,7 @@ const FEATURES = [
   { icon: <MapPinIcon />, title: 'Venue & Google Maps', desc: 'Venue name, address and a one-tap directions button.' },
   { icon: <CameraIcon />, title: 'Photo gallery', desc: "The birthday person's photos for a warm, personal invite." },
   { icon: <MusicIcon />, title: 'Favourite song', desc: 'Their favourite track plays when guests open the invite.' },
-  { icon: <SparklesIcon />, title: 'Party schedule', desc: 'Cocktails, cake cutting, games — a clear timeline for guests.' },
+  { icon: <SparklesIcon />, title: 'Party schedule & RSVP', desc: 'The plan for the night, a dress code, and a reply button guests send by WhatsApp, text or email.' },
 ]
 
 export default function Page() {
@@ -111,7 +119,7 @@ export default function Page() {
         ctaLabel="Start my birthday invite"
         features={{ title: "What's included in your digital birthday invitation", items: FEATURES }}
         steps={[
-          { title: 'Choose a birthday design', copy: 'A festive party invite or an interactive 3D surprise — preview each one live.' },
+          { title: 'Choose a birthday design', copy: 'A disco night, cocktails, a milestone dinner, a garden lunch or a first birthday — preview each one live.' },
           { title: 'Add the celebrant\'s details', copy: 'Name, milestone age, date, venue, schedule and photos. The preview updates as you type.' },
           { title: 'Pay once & share', copy: 'Publish for a one-time price and send the link to every family and friends group.' },
         ]}

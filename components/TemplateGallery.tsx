@@ -9,6 +9,7 @@ import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/landing/SiteFooter'
 import TemplateCard from '@/components/catalog/TemplateCard'
 import CtaBand from '@/components/brand/CtaBand'
+import { withLocalPrices } from '@/components/price/localised'
 
 interface TemplateItem {
   name: string
@@ -117,7 +118,7 @@ export default function TemplateGallery({
                     <span className="ml-4 shrink-0 text-burnished" aria-hidden>{openFaq === i ? '−' : '+'}</span>
                   </button>
                   {openFaq === i && (
-                    <div className="px-6 pb-5 text-[0.92rem] leading-7 text-charcoal/75">{item.answer}</div>
+                    <div className="px-6 pb-5 text-[0.92rem] leading-7 text-charcoal/75">{withLocalPrices(item.answer)}</div>
                   )}
                 </div>
               ))}

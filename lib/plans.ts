@@ -1,3 +1,5 @@
+import { hasLocalPrice } from './pricing'
+
 // ─── Plan definitions ────────────────────────────────────────────────────────
 
 /**
@@ -12,7 +14,7 @@
  * PLANS is ordered by ascending price and must stay that way — `getRequiredPlan`
  * and `mergePlans` both take the first match as the cheapest one.
  */
-export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'standard' | 'premium' | 'gold' | 'signature' | 'couture'
+export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'standard' | 'premium' | 'gold' | 'gala' | 'signature' | 'couture'
 
 export interface Plan {
   id: PlanId
@@ -26,12 +28,13 @@ export interface Plan {
 }
 
 // Templates assigned to each tier
-const BASIC_TEMPLATES = ['elegant-wedding', 'pooja-invite']
+const BASIC_TEMPLATES = ['elegant-wedding', 'pooja-invite', 'save-the-date']
 const RAKHI_TEMPLATES = ['rakshabandhan']
 const GANESH_TEMPLATES = ['ganesh-chaturthi']
 const STANDARD_TEMPLATES = [
   ...BASIC_TEMPLATES, ...RAKHI_TEMPLATES, ...GANESH_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',
   'first-birthday', 'haldi-mehendi', 'diwali-party', 'eid-milan', 'retirement',
+  'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch',
 ]
 const GREETING_TEMPLATES = [
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
@@ -42,7 +45,9 @@ const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'roy
 // Signature collection: full wedding suites (every function, families, story,
 // travel & stay, FAQs, contacts, RSVP). Each tier also includes everything
 // below it, like the tiers above.
-const SIGNATURE_TEMPLATES = [...GOLD_TEMPLATES, 'signature-kalyanam', 'signature-nikah', 'signature-garden']
+// Gala: the birthday weekend, between the everyday designs and the wedding suites.
+const GALA_TEMPLATES = [...GOLD_TEMPLATES, 'birthday-gala']
+const SIGNATURE_TEMPLATES = [...GALA_TEMPLATES, 'signature-kalyanam', 'signature-nikah', 'signature-garden']
 const COUTURE_TEMPLATES = [...SIGNATURE_TEMPLATES, 'signature-rajwada']
 
 export const PLANS: Plan[] = [
@@ -100,6 +105,15 @@ export const PLANS: Plan[] = [
     description: 'Every template unlocked — including KGF Royal Empire, Anniversary and more.',
     templateIds: GOLD_TEMPLATES,
     features: [`All ${GOLD_TEMPLATES.length} templates`, 'KGF Royal Empire + Royal Deco', 'Custom slug support', 'Priority support'],
+  },
+  {
+    id: 'gala',
+    name: 'Gala',
+    price: 1299,
+    badge: 'Luxury birthday',
+    description: 'Gala — the birthday weekend: an envelope addressed to each guest, every part of the celebration on its own card, their story, where to stay and a full RSVP.',
+    templateIds: GALA_TEMPLATES,
+    features: ['Envelope addressed to each guest', 'Every part of the weekend on its own card', 'RSVP with parts, numbers, dietary needs & songs', 'Everything in the designs below'],
   },
   {
     id: 'signature',
@@ -167,7 +181,11 @@ export function isFreeTemplate(templateId: string): boolean {
   return templatePrice(templateId) === 0
 }
 
-/** Formatted for display, e.g. "₹199". */
+/**
+ * Formatted in INR, e.g. "₹199". Visitors outside India see their own price:
+ * render it with <Price> / <PriceText> (components/price), which swap any "₹…"
+ * catalogue price for the local one. Metadata and JSON-LD stay in INR.
+ */
 export function formatTemplatePrice(templateId: string): string {
   const price = templatePrice(templateId)
   return price === 0 ? 'Free' : `₹${price.toLocaleString('en-IN')}`
@@ -211,5 +229,11 @@ export function mergePlans(current: PlanId, purchased: PlanId): PlanId {
 }
 
 export function planLevel(plan: PlanId): number {
-  return { free: 0, ganesh: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3, signature: 4, couture: 5 }[plan] ?? 0
+  return { free: 0, ganesh: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3, gala: 3.5, signature: 4, couture: 5 }[plan] ?? 0
+}
+
+// Every INR price needs a row in lib/pricing.ts's LADDER, or visitors abroad
+// would be shown and charged rupees. Failing here fails the build.
+for (const p of PLANS) {
+  if (!hasLocalPrice(p.price)) throw new Error(`lib/pricing.ts has no local prices for ₹${p.price} (plan "${p.id}")`)
 }

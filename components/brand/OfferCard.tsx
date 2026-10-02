@@ -2,6 +2,7 @@ import TrackedLink from '@/components/ui/TrackedLink'
 import { LogoMark } from '@/components/brand/Logo'
 import { ArrowRightIcon, CheckIcon } from '@/components/ui/Icons'
 import { OFFER, OFFER_INCLUDES } from '@/lib/offer'
+import { Price } from '@/components/price/Price'
 
 /**
  * The offer, as a single card: one price, everything it includes, one action.
@@ -41,7 +42,7 @@ export default function OfferCard({
 
         <div className="mt-6 flex items-end gap-3">
           {!price && <span className="pb-2 text-[0.95rem] text-paper/70">from</span>}
-          <span className="font-editorial text-[4.2rem] font-semibold leading-none">₹{price ?? OFFER.from}</span>
+          <span className="font-editorial text-[4.2rem] font-semibold leading-none"><Price inr={price ?? OFFER.from} /></span>
           <span className="pb-2 text-[0.95rem] text-paper/70">one-time</span>
         </div>
         <p className="mt-3 text-[0.98rem] leading-7 text-paper/75">

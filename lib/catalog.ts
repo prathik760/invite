@@ -36,7 +36,7 @@ export const OCCASIONS: Occasion[] = [
     blurb: 'Palace suites, Nikah, Kalyanam, Haldi & Sangeet',
     href: '/wedding-invitation',
     image: '/occasions/photo-wedding.jpg',
-    templateIds: ['signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'elegant-wedding', 'luxury-wedding', 'cinematic-night', 'royal-deco', 'indian-wedding', 'kgf-wedding', 'haldi-mehendi', 'sangeet-night'],
+    templateIds: ['signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'save-the-date', 'elegant-wedding', 'luxury-wedding', 'cinematic-night', 'royal-deco', 'indian-wedding', 'kgf-wedding', 'haldi-mehendi', 'sangeet-night'],
   },
   {
     key: 'engagement',
@@ -51,10 +51,10 @@ export const OCCASIONS: Occasion[] = [
     key: 'birthday',
     label: 'Birthdays',
     short: 'Birthday',
-    blurb: 'First birthdays, parties and surprises',
+    blurb: 'Milestones, parties, dinners and first birthdays',
     href: '/birthday-invitation',
     image: '/occasions/photo-birthday.jpg',
-    templateIds: ['indian-birthday', 'first-birthday', 'surprise-journey'],
+    templateIds: ['birthday-gala', 'birthday-mirrorball', 'birthday-champagne', 'birthday-martini', 'birthday-long-lunch', 'indian-birthday', 'first-birthday', 'surprise-journey'],
   },
   {
     key: 'anniversary',
@@ -159,6 +159,12 @@ const STYLE_TAGS: Record<string, string> = {
   'diwali-party': 'Festive',
   'eid-milan': 'Festive',
   'retirement': 'Warm & classic',
+  'save-the-date': 'Letterpress',
+  'birthday-mirrorball': 'Disco · Night out',
+  'birthday-martini': 'Cocktail hour',
+  'birthday-champagne': 'Milestone · Black tie',
+  'birthday-long-lunch': 'Garden party',
+  'birthday-gala': 'Luxury · Birthday weekend',
 }
 
 export function styleTag(templateId: string): string {

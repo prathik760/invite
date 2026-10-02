@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { withLocalPrices } from '@/components/price/localised'
 
 export interface Crumb {
   name: string
@@ -66,9 +67,9 @@ export default function PageHero({
         {crumbs && <Breadcrumbs items={crumbs} className={centered ? '[&_ol]:justify-center' : ''} />}
         <div className={`mt-8 grid grid-cols-1 items-center gap-10 ${aside ? 'lg:grid-cols-[1.1fr_0.9fr]' : ''}`}>
           <div className={centered ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl'}>
-            {eyebrow && <p className="eyebrow enter-0">{eyebrow}</p>}
+            {eyebrow && <p className="eyebrow enter-0">{withLocalPrices(eyebrow)}</p>}
             <h1 className={`t-h1 enter-0 ${eyebrow ? 'mt-4' : ''}`}>{title}</h1>
-            {lede && <p className={`t-lede enter-1 mt-5 ${centered ? 'mx-auto max-w-2xl' : 'max-w-2xl'}`}>{lede}</p>}
+            {lede && <p className={`t-lede enter-1 mt-5 ${centered ? 'mx-auto max-w-2xl' : 'max-w-2xl'}`}>{withLocalPrices(lede)}</p>}
             {actions && (
               <div className={`enter-2 mt-8 flex flex-col gap-3 sm:flex-row ${centered ? 'sm:justify-center' : ''}`}>{actions}</div>
             )}

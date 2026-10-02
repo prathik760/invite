@@ -6,6 +6,7 @@ import { trackCta } from '@/lib/analytics'
 import type { CatalogItem } from '@/lib/catalogItems'
 import PreviewButton from '@/components/catalog/PreviewButton'
 import { ArrowRightIcon, EyeIcon } from '@/components/ui/Icons'
+import { withLocalPrices } from '@/components/price/localised'
 
 /**
  * One design in a gallery. Three ways in, each doing one thing:
@@ -56,7 +57,7 @@ export default function TemplateCard({
           </span>
         )}
         <span className="pointer-events-none absolute right-3 top-3 rounded-full bg-charcoal/85 px-2.5 py-1 text-[0.78rem] font-bold tabular-nums text-paper shadow-sm backdrop-blur">
-          {item.priceLabel}
+          {withLocalPrices(item.priceLabel)}
         </span>
       </div>
 

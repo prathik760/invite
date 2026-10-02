@@ -27,6 +27,8 @@ import Logo, { LogoMark } from '@/components/brand/Logo'
 import { CheckIcon, ShieldIcon } from '@/components/ui/Icons'
 import { OFFER_INCLUDES } from '@/lib/offer'
 import { useBackToClose } from '@/lib/useBackToClose'
+import { useLocalPrice } from '@/components/price/Price'
+import { paymentMethods } from '@/lib/pricing'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -120,7 +122,8 @@ function UpgradeModal({
   payError: PayError | null
 }) {
   const visual = TEMPLATE_VISUALS[templateId] ?? TEMPLATE_VISUALS['elegant-wedding']
-  const price = `₹${requiredPlan.price.toLocaleString('en-IN')}`
+  const local = useLocalPrice(requiredPlan.price)
+  const price = local.label
   return (
     <ModalFrame onClose={onClose} label={`Get the ${templateName} design`}>
       <p className="eyebrow">One design · one price</p>
@@ -189,14 +192,14 @@ function UpgradeModal({
         <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.78rem] text-muted">
           <ShieldIcon className="h-3.5 w-3.5 text-emerald-soft" />
           Secured by Razorpay
-          <span aria-hidden>·</span> UPI · Card · Net banking
+          <span aria-hidden>·</span> {paymentMethods(local.currency)}
           <span aria-hidden>·</span> No subscription
         </p>
         <p className="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.8rem]">
           <Link href="/refund-policy" target="_blank" className="link">7-day refund policy</Link>
           <span className="text-muted" aria-hidden>·</span>
           <a
-            href={supportWhatsAppUrl(`Hi, I have a question about the ${templateName} design (₹${requiredPlan.price.toLocaleString('en-IN')}) before I pay.`)}
+            href={supportWhatsAppUrl(`Hi, I have a question about the ${templateName} design (${price}) before I pay.`)}
             target="_blank"
             rel="noopener noreferrer"
             className="font-semibold text-[#128C4B] underline-offset-4 hover:underline"
@@ -503,6 +506,7 @@ export default function CreatePage() {
   }
 
   const requiredPlanForSelected = getRequiredPlan(selectedId)
+  const selectedPrice = useLocalPrice(requiredPlanForSelected.price)
   const needsPayment = !canAccess(selectedId, userPlan)
 
   const openPaywall = () => {
@@ -575,7 +579,8 @@ export default function CreatePage() {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan: planId }),
       })
-      const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; keyId?: string; error?: string }
+      // `price` is in whole units of `currency` — the visitor's own price (lib/pricing.ts).
+      const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; price?: number; keyId?: string; error?: string }
       if (!orderRes.ok || !order.orderId) throw new Error(order.error ?? 'Could not start the payment. Please try again.')
       const options: RazorpayOptions = {
         key: (order.keyId ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) as string,
@@ -601,7 +606,8 @@ export default function CreatePage() {
               // amount — never on opening or dismissing the checkout sheet.
               // `currency` is required: GA4 drops `value` from revenue reports
               // without it, and a Meta Pixel Purchase needs it to optimise ads.
-              trackEvent(seoEvents.purchase, { ...ctx, transaction_id: response.razorpay_payment_id, value: plan?.price, currency: order.currency ?? 'INR' })
+              // `value` must be in the order's currency: a US$9 sale is 9, not 299.
+              trackEvent(seoEvents.purchase, { ...ctx, transaction_id: response.razorpay_payment_id, price: order.price ?? plan?.price, value: order.price ?? plan?.price, currency: order.currency ?? 'INR' })
               // Reflect the new entitlement immediately so the publish path does
               // not bounce the user back to the paywall they just paid at.
               setUserPlan(verBody.plan ?? planId)
@@ -1034,7 +1040,7 @@ export default function CreatePage() {
             {loading ? 'Creating your invitation…' : (
               <>
                 {needsPayment
-                  ? `Pay ₹${requiredPlanForSelected.price.toLocaleString('en-IN')} & publish`
+                  ? `Pay ${selectedPrice.label} & publish`
                   : 'Get my invitation link'}
                 <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -1044,7 +1050,7 @@ export default function CreatePage() {
           </button>
           {needsPayment && (
             <p className="mt-1.5 text-center text-[10px] leading-4 text-muted">
-              {!session ? 'Sign in first · ' : ''}Razorpay secured · UPI, card &amp; net banking ·{' '}
+              {!session ? 'Sign in first · ' : ''}Razorpay secured · {paymentMethods(selectedPrice.currency)} ·{' '}
               <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline text-emerald-soft">
                 7-day refunds
               </Link>

@@ -88,6 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/griha-pravesh-invitation', 0.80),
     entry('/namakaran-invitation', 0.78),
     entry('/anniversary-invitation', 0.78),
+    entry('/save-the-date', 0.80),
 
     // (Tier 2b, the plural gallery pages — /wedding-invitations and friends —
     // now 301 to the singular pages above, which show the same designs.)

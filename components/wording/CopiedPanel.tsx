@@ -3,6 +3,7 @@
 import TrackedLink from '@/components/ui/TrackedLink'
 import { seoEvents, trackEvent } from '@/lib/analytics'
 import { templatePrice } from '@/lib/plans'
+import { Price } from '@/components/price/Price'
 
 /** The builder pre-fills its message field from `message`; longer text is cut. */
 export const MESSAGE_LIMIT = 600
@@ -61,7 +62,7 @@ export default function CopiedPanel({ templateId, text }: { templateId: string; 
           Copied <span aria-hidden>✓</span> — or send these words as an animated invitation
         </p>
         <p className="mt-0.5 text-[0.78rem] leading-5 text-muted">
-          Build and preview before you pay · ₹{price.toLocaleString('en-IN')} once to publish
+          Build and preview before you pay · <Price inr={price} /> once to publish
         </p>
       </div>
       {/* `!` because blog posts render this inside .prose-brand, whose

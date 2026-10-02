@@ -13,6 +13,10 @@ interface WishesSectionProps {
   intro?: string
   /** Guest-facing word for a wish: "wish", "blessing"… */
   noun?: string
+  /** Sample wishes for the builder preview, when the default pair doesn't suit the design. */
+  previewWishes?: { name: string; message: string }[]
+  /** Example in the name field ("e.g. Anjali & Rahul"). */
+  namePlaceholder?: string
 }
 
 const MAX_MESSAGE = 320
@@ -29,9 +33,15 @@ export default function WishesSection({
   title = 'Wishes & blessings',
   intro = 'Leave a few words for the family. Your message appears here for every guest.',
   noun = 'wish',
+  previewWishes,
+  namePlaceholder = 'e.g. Anjali & Rahul',
 }: WishesSectionProps) {
   const isPreviewMode = eventId === '__preview__'
-  const [wishes, setWishes] = useState<WishRecord[]>(isPreviewMode ? PREVIEW_WISHES : [])
+  const [wishes, setWishes] = useState<WishRecord[]>(() => {
+    if (!isPreviewMode) return []
+    if (!previewWishes?.length) return PREVIEW_WISHES
+    return previewWishes.map((w, i) => ({ id: String(i + 1), eventId: '__preview__', name: w.name, message: w.message, isApproved: true, createdAt: PREVIEW_WISHES[0].createdAt }))
+  })
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -120,7 +130,7 @@ export default function WishesSection({
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Anjali & Rahul"
+                  placeholder={namePlaceholder}
                   required
                   maxLength={80}
                   className="w-full rounded-[10px] px-3.5 py-3 text-[16px] outline-none focus:ring-2"

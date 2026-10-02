@@ -23,6 +23,8 @@ import { LogoMark } from '@/components/brand/Logo'
 import { CheckIcon, EyeIcon } from '@/components/ui/Icons'
 import { displayName, is3D } from '@/lib/catalog'
 import { templateImage } from '@/lib/templateMedia'
+import { Price } from '@/components/price/Price'
+import { withLocalPrices } from '@/components/price/localised'
 
 type Props = { params: { slug: string } }
 
@@ -782,7 +784,7 @@ export default function BlogPostPage({ params }: Props) {
                 See the design first
               </TrackedLink>
             </div>
-            <p className="relative mt-3 text-[0.8rem] text-paper/60">{ctaPriceLine}</p>
+            <p className="relative mt-3 text-[0.8rem] text-paper/60">{withLocalPrices(ctaPriceLine)}</p>
           </aside>
 
           {/* Quick checklist */}
@@ -840,7 +842,7 @@ export default function BlogPostPage({ params }: Props) {
               </div>
               <div className="p-5">
                 <p className="font-editorial text-[1.35rem] font-semibold leading-tight">{ctaName}</p>
-                <p className="mt-1 text-[0.85rem] text-muted">₹{ctaPrice.toLocaleString('en-IN')} one-time · everything included</p>
+                <p className="mt-1 text-[0.85rem] text-muted"><Price inr={ctaPrice} /> one-time · everything included</p>
                 <Link href={createHref} className="btn-primary mt-4 flex items-center justify-center rounded-full py-3 text-[0.9rem] font-semibold">
                   Use this design
                 </Link>

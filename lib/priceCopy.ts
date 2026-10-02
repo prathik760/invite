@@ -35,7 +35,8 @@ export function priceByDesignSentence(): string {
 export function priceRanges() {
   const prices = TEMPLATES.map((t) => ({ id: t.id, price: templatePrice(t.id) }))
   const signature = prices.filter((p) => p.id.startsWith('signature-')).map((p) => p.price)
-  const everyday = prices.filter((p) => !p.id.startsWith('signature-')).map((p) => p.price)
+  // The Gala birthday weekend is priced with the suites, not the everyday designs.
+  const everyday = prices.filter((p) => !p.id.startsWith('signature-') && p.id !== 'birthday-gala').map((p) => p.price)
   return {
     everydayMin: Math.min(...everyday),
     everydayMax: Math.max(...everyday),
@@ -44,11 +45,12 @@ export function priceRanges() {
   }
 }
 
-/** "Most designs are ₹99–₹499; the Signature wedding suites are ₹1,499–₹1,999." */
+/** "Most designs are ₹99–₹499; the Gala birthday weekend is ₹1,299; the Signature wedding suites are ₹1,499–₹1,999." */
 export function priceRangeSentence(): string {
   const r = priceRanges()
   const everyday = `Most designs are ${inr(r.everydayMin)}–${inr(r.everydayMax)}`
-  if (r.signatureMin === null || r.signatureMax === null) return `${everyday}.`
+  const gala = TEMPLATES.some((t) => t.id === 'birthday-gala') ? `; the Gala birthday weekend is ${inr(templatePrice('birthday-gala'))}` : ''
+  if (r.signatureMin === null || r.signatureMax === null) return `${everyday}${gala}.`
   const sig = r.signatureMin === r.signatureMax ? inr(r.signatureMin) : `${inr(r.signatureMin)}–${inr(r.signatureMax)}`
-  return `${everyday}; the Signature wedding suites are ${sig}.`
+  return `${everyday}${gala}; the Signature wedding suites are ${sig}.`
 }

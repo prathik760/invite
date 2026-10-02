@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Logo, { LogoMark } from '@/components/brand/Logo'
 import TrustList from '@/components/brand/TrustList'
+import { PayMethods } from '@/components/price/Price'
 
 export const metadata: Metadata = {
   // Was 'Authentication | ShareInvite', which the root template turned into
@@ -92,7 +93,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
           <div className="enter-2 border-t border-paper/10 pt-6">
             <TrustList tone="dark" />
-            <p className="mt-3 text-[0.8rem] text-paper/50">Secure one-time payments by Razorpay — UPI, cards and net banking.</p>
+            <p className="mt-3 text-[0.8rem] text-paper/50">Secure one-time payments by Razorpay — <PayMethods />.</p>
           </div>
         </div>
       </aside>

@@ -30,6 +30,8 @@ import { templatePrice } from '@/lib/plans'
 export interface OccasionPageProps {
   /** Key in lib/catalog OCCASIONS — selects the design cards. */
   occasion: string
+  /** The design cards to show instead of the occasion's full list, in order. */
+  templateIds?: string[]
   /** Template the primary CTAs open with. */
   templateId: string
   /** Analytics placement prefix, e.g. "wedding_landing". */
@@ -58,7 +60,9 @@ const STEP_ICONS = [EyeIcon, PenIcon, LinkIcon]
 export default function OccasionPage(p: OccasionPageProps) {
   const createHref = `/create?template=${p.templateId}&src=${p.pageKey}`
   const occasion = OCCASION_MAP[p.occasion]
-  const items = buildCatalogItems(occasion?.templateIds)
+  const items = p.templateIds
+    ? buildCatalogItems(p.templateIds).sort((x, y) => p.templateIds!.indexOf(x.id) - p.templateIds!.indexOf(y.id))
+    : buildCatalogItems(occasion?.templateIds)
   const price = templatePrice(p.templateId)
 
   return (
