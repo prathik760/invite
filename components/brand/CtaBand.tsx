@@ -18,7 +18,7 @@ export default function CtaBand({
   secondary = { href: '/templates', label: 'Browse designs' },
   location = 'cta_band',
 }: {
-  eyebrow?: string
+  eyebrow?: ReactNode
   title?: ReactNode
   sub?: ReactNode
   primary?: { href: string; label: string }

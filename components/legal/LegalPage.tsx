@@ -66,7 +66,7 @@ export default function LegalPage({ eyebrow, title, subtitle, lastUpdated, intro
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[240px_minmax(0,1fr)]">
           {/* Table of contents */}
           <aside className="hidden lg:block">
-            <nav className="sticky top-24" aria-label="On this page">
+            <nav className="sticky top-[calc(6rem_+_var(--promo-bar-h,0px))]" aria-label="On this page">
               <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted">On this page</p>
               <ul className="space-y-2 border-l border-line">
                 {sections.map((s, i) => (

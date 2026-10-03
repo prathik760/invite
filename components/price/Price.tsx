@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment, useSyncExternalStore } from 'react'
-import { COUNTRY_COOKIE, currencyOf, localPrice, normaliseCountry, priceListFor, splitRupees, type LocalPrice } from '@/lib/pricing'
+import { COUNTRY_COOKIE, currencyOf, discountedPrice, localPrice, normaliseCountry, priceListFor, splitRupees, type LocalPrice } from '@/lib/pricing'
 
 /**
  * Prices in the visitor's currency (see lib/pricing.ts).
@@ -32,9 +32,13 @@ export function useLocalPrice(inr: number): LocalPrice & { ready: boolean } {
   return { ...localPrice(inr, country), ready: country !== null }
 }
 
-/** One price, e.g. <Price inr={299} /> → "₹299" in India, "US$9" in Japan, "£7" in the UK. */
-export function Price({ inr, className }: { inr: number; className?: string }) {
-  const price = useLocalPrice(inr)
+/**
+ * One price, e.g. <Price inr={299} /> → "₹299" in India, "US$9" in Japan, "£7"
+ * in the UK. `percentOff` shows it after a discount code (lib/coupons.ts).
+ */
+export function Price({ inr, percentOff, className }: { inr: number; percentOff?: number; className?: string }) {
+  const local = useLocalPrice(inr)
+  const price = percentOff ? discountedPrice(local, percentOff) : local
   return (
     <span data-price={price.ready ? 'local' : 'inr'} className={className}>
       {price.label}

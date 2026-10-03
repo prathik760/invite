@@ -128,7 +128,8 @@ for (const tpl of TEMPLATES) {
     if (cands[0]) { cands[0].click(); return (cands[0].getAttribute('aria-label') || cands[0].textContent || '').trim().slice(0, 40) }
     return ''
   })
-  if (opened && opened !== 'no-root') await page.waitForTimeout(4500)
+  // Long enough for the slowest opening (New Year's countdown and fireworks, about 7s).
+  if (opened && opened !== 'no-root') await page.waitForTimeout(8500)
   const after = await measure(page, find)
   const found = { height: after.height, out: { ...after.out } }
   // What a tap-to-open design shows before it opens is what guests see first.

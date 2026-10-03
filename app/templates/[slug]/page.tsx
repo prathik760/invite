@@ -25,7 +25,7 @@ import { TEMPLATES } from '@/modules/templates/data'
 import { absoluteUrl, breadcrumbJsonLd, digitalOffer, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
 import { getRequiredPlan } from '@/lib/plans'
 import { templateImage, templateImageUrl } from '@/lib/templateMedia'
-import { Price } from '@/components/price/Price'
+import { CouponNote, CouponPrice } from '@/components/price/CouponPrice'
 
 type Props = { params: { slug: string } }
 
@@ -384,9 +384,10 @@ export default function TemplateSeoPage({ params }: Props) {
 
               {/* Price. States the model plainly: one design, one payment. */}
               <div className="enter-2 mt-7 flex items-end gap-3">
-                <span className="font-editorial text-[3.6rem] font-semibold leading-none"><Price inr={price} /></span>
+                <span className="font-editorial text-[3.6rem] font-semibold leading-none"><CouponPrice inr={price} plan={plan.id} /></span>
                 <span className="pb-2 text-[0.95rem] text-muted">one-time · everything in this design included</span>
               </div>
+              <CouponNote inr={price} plan={plan.id} className="mt-2" />
 
               <div className="enter-2 mt-7 flex flex-col gap-3 sm:flex-row">
                 <TrackedLink
@@ -498,7 +499,7 @@ export default function TemplateSeoPage({ params }: Props) {
       </Section>
 
       <CtaBand
-        eyebrow={`${name} · ₹${price.toLocaleString('en-IN')} one-time`}
+        eyebrow={<>{name} · <CouponPrice inr={price} plan={plan.id} /> one-time</>}
         title="Make this design yours"
         sub="Preview before you pay. Pay once when you publish — every feature in the design is included."
         primary={{ href: createHref, label: 'Use this design' }}
@@ -508,7 +509,7 @@ export default function TemplateSeoPage({ params }: Props) {
       <SiteFooter />
       <StickyCTA
         pageType="template_detail"
-        title={`${name} · ₹${price.toLocaleString('en-IN')}`}
+        title={<>{name} · <CouponPrice inr={price} plan={plan.id} /></>}
         sub="One-time · everything in this design included"
         href={`/create?template=${template.id}&src=sticky_bar`}
         label="Use this design"

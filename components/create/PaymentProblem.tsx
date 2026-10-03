@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { seoEvents, trackEvent } from '@/lib/analytics'
 import { supportWhatsAppUrl } from '@/lib/support'
 import { useLocalPrice } from '@/components/price/Price'
+import { discountedPrice } from '@/lib/pricing'
 
 /**
  * Why this exists at all: every payment problem in the create flow used to be a
@@ -52,16 +53,19 @@ function CopyableRef({ paymentId }: { paymentId: string }) {
 }
 
 export default function PaymentProblem({
-  error, price, templateName, onRetry, retrying,
+  error, price, percentOff, templateName, onRetry, retrying,
 }: {
   error: PayError
   /** The design's INR price; shown in the visitor's currency. */
   price: number
+  /** A discount code's percentage, when one applies. */
+  percentOff?: number
   templateName?: string
   onRetry: () => void
   retrying: boolean
 }) {
-  const { label } = useLocalPrice(price)
+  const local = useLocalPrice(price)
+  const { label } = percentOff ? discountedPrice(local, percentOff) : local
   const isCancelled = error.kind === 'cancelled'
   const isVerification = error.kind === 'verification'
 

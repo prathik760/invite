@@ -54,6 +54,9 @@ const THEMES: Record<string, Theme> = {
   'birthday-champagne': LIGHT('#F7F1E6', '#1D1A16', '#9E7A33', '#D9C08A'),
   'birthday-long-lunch': LIGHT('#FBF4E6', '#233047', '#E8602C', '#F2C230'),
   'birthday-gala': DARK('#0B2A23', '#F4ECD8', '#C9A04E'),
+  'dasara-ambari': DARK('#1A0E45', '#FFF1D6', '#E9B949'),
+  'christmas-evergreen': DARK('#0F3324', '#FBF3E4', '#D9A441'),
+  'newyear-midnight': DARK('#07070C', '#F4EEDF', '#D8B25A'),
 }
 const GREETING = DARK('#2A0E22', '#FFFFFF', '#F0B7C4')
 
@@ -122,6 +125,9 @@ function cardFor(templateId: string, d: Record<string, string>): Card {
   if (t(d.babyName)) return { label: 'Naming ceremony', names: [t(d.babyName)], sub: t(d.parentNames) ? `with ${t(d.parentNames)}` : undefined }
   if (templateId === 'ganesh-chaturthi') return { label: t(d.title) || 'Ganesh Chaturthi', names: [t(d.hostNames) || 'You are invited'] }
   if (templateId === 'diwali-party') return { label: t(d.title) || 'Diwali Milan', names: [t(d.hostNames) || 'You are invited'] }
+  if (templateId === 'dasara-ambari') return { label: t(d.title) || 'Dasara', names: [t(d.hostNames) || 'You are invited'] }
+  if (templateId === 'christmas-evergreen') return { label: t(d.title) || 'Christmas', names: [t(d.hostNames) || 'You are invited'] }
+  if (templateId === 'newyear-midnight') return { label: t(d.title) || 'New Year’s Eve', names: [t(d.hostNames) || 'You are invited'] }
   if (templateId === 'eid-milan') return { label: t(d.title) || 'Eid Milan', names: [t(d.hostNames) || 'You are invited'] }
   if (t(d.hostNames)) return { label: 'Griha Pravesh', names: [t(d.hostNames)] }
   return { label: 'You are invited', names: ['You are invited'] }

@@ -87,10 +87,10 @@ export const OCCASIONS: Occasion[] = [
     key: 'festival',
     label: 'Festivals',
     short: 'Festival',
-    blurb: 'Diwali, Eid, Ganesh Chaturthi, Rakhi',
+    blurb: 'Dasara, Diwali, Christmas, New Year, Eid',
     href: '/templates?occasion=festival',
     image: '/occasions/photo-festival.jpg',
-    templateIds: ['diwali-party', 'ganesh-chaturthi', 'eid-milan', 'rakshabandhan', 'pooja-invite', 'greeting-festival'],
+    templateIds: ['dasara-ambari', 'christmas-evergreen', 'newyear-midnight', 'diwali-party', 'ganesh-chaturthi', 'eid-milan', 'rakshabandhan', 'pooja-invite', 'greeting-festival'],
   },
   {
     key: 'love',
@@ -165,6 +165,9 @@ const STYLE_TAGS: Record<string, string> = {
   'birthday-champagne': 'Milestone · Black tie',
   'birthday-long-lunch': 'Garden party',
   'birthday-gala': 'Luxury · Birthday weekend',
+  'dasara-ambari': 'Mysuru Dasara · Animated',
+  'christmas-evergreen': 'Christmas · Animated',
+  'newyear-midnight': 'New Year’s Eve · Fireworks',
 }
 
 export function styleTag(templateId: string): string {

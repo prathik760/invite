@@ -3,7 +3,6 @@ import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
-import StickyCTA from '@/components/seo/StickyCTA'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { templatePrice } from '@/lib/plans'
 import { priceRangeSentence } from '@/lib/priceCopy'
@@ -154,6 +153,11 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
       { label: 'Online RSVP platform', href: '/online-rsvp' },
       { label: 'Wedding invitations', href: '/wedding-invitation' },
+    ],
+    Festivals: [
+      { label: 'Festival invitation designs', href: '/templates?occasion=festival' },
+      { label: 'Diwali invitation wording', href: '/diwali-invitation-wording' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
     ],
   }
 
@@ -501,6 +505,7 @@ const CATEGORY_TEMPLATE: Record<string, string> = {
   'Baby Shower': 'baby-shower',
   'Digital Invitations': 'elegant-wedding',
   'Anniversary': 'anniversary',
+  'Festivals': 'diwali-party',
 }
 
 /**
@@ -610,6 +615,9 @@ const BLOG_TEMPLATE: Record<string, string> = {
   'friendship-day-card-online-send-a-3d-card-to-your-best-friends': 'greeting-friendship',
   'raksha-bandhan-invitation-card-online-free-digital-rakhi-template': 'rakshabandhan',
   'ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template': 'ganesh-chaturthi',
+  'dasara-invitation-card-online-mysuru-dasara-invitation-template': 'dasara-ambari',
+  'christmas-party-invitation-wording-digital-christmas-invitation': 'christmas-evergreen',
+  'new-year-party-invitation-message-new-years-eve-invitation-wording': 'newyear-midnight',
 }
 
 export default function BlogPostPage({ params }: Props) {
@@ -680,12 +688,16 @@ export default function BlogPostPage({ params }: Props) {
       { label: 'Digital invitation maker', href: '/digital-invitation' },
       { label: 'Browse invitation designs', href: '/templates' },
     ],
+    Festivals: [
+      { label: 'Festival invitation designs', href: '/templates?occasion=festival' },
+      { label: 'Diwali invitation wording', href: '/diwali-invitation-wording' },
+    ],
   }
   // Never link a post to itself (the baby shower and naming posts are now the guides).
   const guides = (wordingGuides[post.category] ?? []).filter((g) => g.href !== `/blog/${post.slug}`)
 
   return (
-    <main className="min-h-screen bg-champagne pb-28 text-charcoal">
+    <main className="min-h-screen bg-champagne text-charcoal">
       <JsonLd id="article-jsonld" data={articleJsonLd(post)} />
       <JsonLd id="blog-post-faq-jsonld" data={faqJsonLd} />
       <JsonLd
@@ -823,7 +835,7 @@ export default function BlogPostPage({ params }: Props) {
 
         {/* Sticky sidebar: contents + the design this article points to. */}
         <aside className="hidden lg:block">
-          <div className="sticky top-28 space-y-6">
+          <div className="sticky top-[calc(7rem_+_var(--promo-bar-h,0px))] space-y-6">
             {sections.length > 2 && (
               <nav aria-label="On this page" className="card-quiet p-6">
                 <p className="eyebrow">On this page</p>
@@ -872,7 +884,6 @@ export default function BlogPostPage({ params }: Props) {
         location="blog_footer_cta"
       />
       <SiteFooter />
-      <StickyCTA pageType="blog_post" />
     </main>
   )
 }

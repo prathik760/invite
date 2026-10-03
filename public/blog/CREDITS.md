@@ -67,3 +67,6 @@ Photos for `/blog` cards, article heroes and share previews. All come from Unspl
 | `friendship-day-card-online-send-a-3d-card-to-your-best-friends.jpg` | [1553009338-80e505b3f61b](https://unsplash.com/photos/bik_lIl9Nco) | Sithamshu Manoj ([@shidzuu](https://unsplash.com/@shidzuu)) |
 | `ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template.jpg` | [1563777389189-5e3564e5961c](https://images.unsplash.com/photo-1563777389189-5e3564e5961c) | not recorded (image was already on this post before the refresh) |
 | `raksha-bandhan-invitation-card-online-free-digital-rakhi-template.jpg` | [1629649052013-36f5712a4e99](https://unsplash.com/photos/VSFs4HrNqbc) | Clicking Machine ([@clicking_machine](https://unsplash.com/@clicking_machine)) |
+| `dasara-invitation-card-online-mysuru-dasara-invitation-template.jpg` | Screenshot of the ShareInvite Ambari design (`/demo/dasara-ambari`), our own work | ShareInvite |
+| `christmas-party-invitation-wording-digital-christmas-invitation.jpg` | Screenshot of the ShareInvite Evergreen design (`/demo/christmas-evergreen`), our own work | ShareInvite |
+| `new-year-party-invitation-message-new-years-eve-invitation-wording.jpg` | Screenshot of the ShareInvite Midnight design (`/demo/newyear-midnight`), our own work | ShareInvite |

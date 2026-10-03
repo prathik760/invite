@@ -176,7 +176,7 @@ export function describe(r: ActivityRow, isLast = false): Line {
     case 'sign_up':
       return { icon: '🙋', text: 'Created an account', detail: str(d.method) || undefined, tone: 'good' }
     case 'checkout_start':
-      return { icon: '💳', text: `Opened the payment window ${money(d)}`.trim(), detail: tpl || undefined, tone: 'neutral' }
+      return { icon: '💳', text: `Opened the payment window ${money(d)}`.trim(), detail: [tpl, d.coupon ? `code ${str(d.coupon)}` : ''].filter(Boolean).join(' · ') || undefined, tone: 'neutral' }
     case 'checkout_abandon':
       return { icon: '✖️', text: 'Closed the payment window without paying', detail: tpl || undefined, tone: 'warn' }
     case 'checkout_error':
@@ -184,7 +184,11 @@ export function describe(r: ActivityRow, isLast = false): Line {
     case 'payment_failed':
       return { icon: '⚠️', text: 'Paid, but our server could not confirm the payment', detail: 'check Razorpay for this payment', tone: 'bad' }
     case 'purchase':
-      return { icon: '💰', text: `Paid ${money(d, 'value')}`.trim(), detail: tpl || undefined, tone: 'good' }
+      return { icon: '💰', text: `Paid ${money(d, 'value')}`.trim(), detail: [tpl, d.coupon ? `code ${str(d.coupon)}` : ''].filter(Boolean).join(' · ') || undefined, tone: 'good' }
+    case 'coupon_applied':
+      return { icon: '🎟️', text: `Got the discount code ${str(d.coupon)}`, detail: d.source === 'link' ? 'from a campaign link' : 'typed at checkout', tone: 'good' }
+    case 'coupon_rejected':
+      return { icon: '🎟️', text: `Tried a discount code that did not work${d.coupon ? ` (${str(d.coupon)})` : ''}`, detail: str(d.reason) || undefined, tone: 'warn' }
     case 'invite_creation':
       return { icon: '🎉', text: `Published an invitation with ${tpl}`, tone: 'good' }
     case 'wording_copy':

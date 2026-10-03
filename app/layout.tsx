@@ -14,6 +14,12 @@ import CookieConsent from '@/components/providers/CookieConsent'
 import { hreflangAlternates } from '@/lib/i18n'
 import { consentBootScript } from '@/lib/consent'
 import { COUNTRY_COOKIE } from '@/lib/pricing'
+import PromoBar from '@/components/marketing/PromoBar'
+import { PROMO, PROMO_BAR_DISMISS_KEY } from '@/lib/promo'
+import { couponEndLabel, findCoupon } from '@/lib/coupons'
+import { templateSeoSlug } from '@/lib/seo'
+import { templatePrice } from '@/lib/plans'
+import { CouponCapture } from '@/components/price/CouponPrice'
 
 // The SocialProofNotification widget was removed here. It synthesised
 // "<Name> from <City> just created a <type> invitation" toasts by picking at
@@ -68,6 +74,11 @@ const META_PIXEL_ID = (process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '').replace(/\D/
 // project ID (clarity.microsoft.com → Settings → Overview) is set.
 const CLARITY_ID = (process.env.NEXT_PUBLIC_CLARITY_ID ?? '').replace(/[^a-z0-9]/gi, '')
 const OG_IMAGE = `${APP_URL}/opengraph-image`
+
+// The running campaign's offer bar (components/marketing/PromoBar.tsx). Its end
+// date and the visitor's "closed it" choice are checked by the pre-paint script
+// in <head>, not here, because these pages are built ahead of time.
+const promoBarCoupon = PROMO.enabled && PROMO.bar ? findCoupon(PROMO.coupon) : null
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -240,6 +251,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `try{var m=document.cookie.match(/(?:^|;\\s*)${COUNTRY_COOKIE}=([A-Za-z]{2})/);if(m&&m[1].toUpperCase()!=='IN')document.documentElement.setAttribute('data-cc',m[1].toUpperCase())}catch(e){}`,
           }}
         />
+        {promoBarCoupon && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `try{var n=Date.now();if(n>${new Date(promoBarCoupon.endsAt).getTime()}||n<(+localStorage.getItem('${PROMO_BAR_DISMISS_KEY}')||0))document.documentElement.setAttribute('data-promo-bar','off')}catch(e){}`,
+            }}
+          />
+        )}
         <meta name="theme-color" content="#052E20" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -288,8 +306,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         <LocaleSuggestion />
         <AnimateOnScroll />
+        {promoBarCoupon && PROMO.bar && (
+          <PromoBar
+            href={`/templates/${templateSeoSlug(PROMO.templateId)}?code=${promoBarCoupon.code}`}
+            code={promoBarCoupon.code}
+            percentOff={promoBarCoupon.percentOff}
+            inr={templatePrice(PROMO.templateId)}
+            ends={couponEndLabel(promoBarCoupon)}
+            templateId={PROMO.templateId}
+            copy={PROMO.bar}
+          />
+        )}
         <SessionProvider>{children}</SessionProvider>
         <JournalTracker />
+        {/* Keeps a discount code from a campaign link (?code=…) for checkout. */}
+        <CouponCapture />
         <CookieConsent />
         <WhatsAppButton />
         <ScrollPromo />

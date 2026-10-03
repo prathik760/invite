@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { getRazorpayClient, verifyPaymentSignature, planPriceIn } from '@/lib/razorpay'
-import { isPriceList, minorUnits } from '@/lib/pricing'
+import { discountedPrice, isPriceList, minorUnits } from '@/lib/pricing'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
 import { mergePlans, PLAN_MAP } from '@/lib/plans'
@@ -72,7 +72,12 @@ export async function POST(req: NextRequest) {
     // The order records the price list it was created in (lib/pricing.ts).
     // Orders from before country pricing have none and were always INR.
     const list = isPriceList(notes.priceList) ? notes.priceList : 'inr'
-    const expected = planPriceIn(plan as PlanId, list)
+    // A discount code's percentage is on the order too. Only our server writes
+    // order notes, and it checked the code when it did, so a code that has
+    // ended since the payment window opened is still honoured.
+    const percentOff = notes.coupon ? Number(notes.percentOff) : 0
+    const listPrice = planPriceIn(plan as PlanId, list)
+    const expected = percentOff > 0 && percentOff < 100 ? discountedPrice(listPrice, percentOff) : listPrice
     const expectedMinor = minorUnits(expected)
 
     if (Number(order.amount) !== expectedMinor || order.currency !== expected.currency) {

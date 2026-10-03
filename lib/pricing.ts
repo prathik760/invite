@@ -131,6 +131,16 @@ export function priceInList(inr: number, list: PriceListId): LocalPrice {
   return { amount, currency: CURRENCY[list], list, label: formatMoney(amount, list) }
 }
 
+/**
+ * `price` with `percentOff` taken off (a discount code, lib/coupons.ts),
+ * rounded to whole units like every list price: ₹1,999 → ₹1,599, US$49 → US$39.
+ */
+export function discountedPrice<T extends LocalPrice>(price: T, percentOff: number): T {
+  const amount = Math.round((price.amount * (100 - percentOff)) / 100)
+  const fmt = (n: number) => n.toLocaleString(price.list === 'inr' ? 'en-IN' : 'en-US')
+  return { ...price, amount, label: price.label.replace(fmt(price.amount), fmt(amount)) }
+}
+
 export function localPrice(inr: number, country: string | null | undefined): LocalPrice {
   const list = priceListFor(country)
   const price = priceInList(inr, list)

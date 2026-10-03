@@ -29,7 +29,9 @@ import { CheckIcon, ShieldIcon } from '@/components/ui/Icons'
 import { OFFER_INCLUDES } from '@/lib/offer'
 import { useBackToClose } from '@/lib/useBackToClose'
 import { useLocalPrice } from '@/components/price/Price'
-import { paymentMethods } from '@/lib/pricing'
+import { discountedPrice, paymentMethods } from '@/lib/pricing'
+import { couponEndLabel, couponMessage, normaliseCode } from '@/lib/coupons'
+import { couponForCheckout, useCoupon } from '@/lib/useCoupon'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -126,8 +128,29 @@ function UpgradeModal({
   payError: PayError | null
 }) {
   const visual = TEMPLATE_VISUALS[templateId] ?? TEMPLATE_VISUALS['elegant-wedding']
-  const local = useLocalPrice(requiredPlan.price)
+  const coupon = useCoupon(requiredPlan.id)
+  const full = useLocalPrice(requiredPlan.price)
+  const local = coupon.applied ? discountedPrice(full, coupon.applied.percentOff) : full
   const price = local.label
+
+  // Discount codes (lib/coupons.ts). The field stays behind a small link: an
+  // open, empty box sends people without a code off to search for one.
+  const [codeOpen, setCodeOpen] = useState(false)
+  const [codeInput, setCodeInput] = useState('')
+  const [codeError, setCodeError] = useState<string | null>(null)
+  const applyCode = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!normaliseCode(codeInput)) return
+    const result = coupon.apply(codeInput)
+    if (result.ok) {
+      setCodeOpen(false); setCodeError(null); setCodeInput('')
+      trackEvent(seoEvents.couponApplied, { coupon: result.coupon.code, source: 'typed', template_id: templateId })
+    } else {
+      setCodeError(couponMessage(result.reason))
+      trackEvent(seoEvents.couponRejected, { coupon: normaliseCode(codeInput), reason: result.reason, template_id: templateId })
+    }
+  }
+
   return (
     <ModalFrame onClose={onClose} label={`Get the ${templateName} design`}>
       <p className="eyebrow">One design · one price</p>
@@ -139,9 +162,47 @@ function UpgradeModal({
           <h2 className="t-h3 truncate">{templateName.split('—')[0].trim()}</h2>
           <p className="mt-1 flex items-baseline gap-1.5">
             <span className="font-editorial text-[2.2rem] font-semibold leading-none">{price}</span>
+            {coupon.applied && <s className="text-[0.95rem] text-muted">{full.label}</s>}
             <span className="text-[0.85rem] text-muted">one-time</span>
           </p>
         </div>
+      </div>
+
+      <div className="mt-4">
+        {coupon.applied ? (
+          <p className="flex items-center gap-2 rounded-xl border border-emerald-soft/30 bg-emerald-soft/5 px-3.5 py-2.5 text-[0.85rem] text-charcoal/85">
+            <CheckIcon className="h-3.5 w-3.5 shrink-0 text-emerald-soft" />
+            <span className="min-w-0 flex-1">
+              <span className="font-semibold">{coupon.applied.code}</span> · {coupon.applied.percentOff}% off until {couponEndLabel(coupon.applied)}
+            </span>
+            <button type="button" onClick={coupon.remove} className="shrink-0 text-[0.8rem] text-muted underline-offset-2 hover:text-charcoal hover:underline">
+              Remove
+            </button>
+          </p>
+        ) : codeOpen ? (
+          <form onSubmit={applyCode} noValidate>
+            <div className="flex gap-2">
+              <input
+                value={codeInput}
+                onChange={(e) => { setCodeInput(e.target.value); setCodeError(null) }}
+                placeholder="Discount code"
+                aria-label="Discount code"
+                aria-invalid={!!codeError}
+                autoCapitalize="characters"
+                autoComplete="off"
+                spellCheck={false}
+                autoFocus
+                className="min-w-0 flex-1 rounded-xl border border-line bg-paper px-3.5 py-2.5 text-[0.95rem] uppercase tracking-wide text-charcoal outline-none focus:border-emerald-soft"
+              />
+              <button type="submit" className="btn-outline shrink-0 rounded-xl px-4 text-[0.88rem] font-semibold">Apply</button>
+            </div>
+            {codeError && <p role="alert" className="mt-1.5 text-[0.8rem] text-[#A33A3A]">{codeError}</p>}
+          </form>
+        ) : (
+          <button type="button" onClick={() => setCodeOpen(true)} className="text-[0.82rem] text-muted underline underline-offset-4 hover:text-charcoal">
+            Have a discount code?
+          </button>
+        )}
       </div>
 
       <div className="mt-6 rounded-2xl border border-line bg-champagne p-4">
@@ -161,6 +222,7 @@ function UpgradeModal({
           <PaymentProblem
             error={payError}
             price={requiredPlan.price}
+            percentOff={coupon.applied?.percentOff}
             templateName={templateName}
             onRetry={() => onPay(requiredPlan.id)}
             retrying={paying}
@@ -586,7 +648,10 @@ export default function CreatePage() {
   usePreviewFollow([desktopPreviewRef, mobilePreviewRef, stripScreenRef], selectedId, focusKey, previewData, previewOpen)
 
   const requiredPlanForSelected = getRequiredPlan(selectedId)
-  const selectedPrice = useLocalPrice(requiredPlanForSelected.price)
+  const listPrice = useLocalPrice(requiredPlanForSelected.price)
+  const selectedCoupon = useCoupon(requiredPlanForSelected.id).applied
+  // What the visitor pays: after their discount code when it covers this design.
+  const selectedPrice = selectedCoupon ? discountedPrice(listPrice, selectedCoupon.percentOff) : listPrice
   const needsPayment = !canAccess(selectedId, userPlan)
 
   const openPaywall = () => {
@@ -634,11 +699,15 @@ export default function CreatePage() {
     if (payRef.current) return
     payRef.current = true; setPaying(true); setPayError(null)
     const plan = PLANS.find(p => p.id === planId)
+    // Sent only when it discounts this design: the server rejects a code for
+    // another design, and someone holding ROYAL20 may be buying something else.
+    const code = couponForCheckout(planId)
     const ctx = {
       plan: planId,
       plan_name: plan?.name,
       price: plan?.price,
       currency: 'INR',
+      coupon: code,
       template_id: upgradeTarget?.templateId,
       template_name: upgradeTarget?.templateName,
     }
@@ -646,7 +715,7 @@ export default function CreatePage() {
     try {
       const orderRes = await fetch('/api/payments/create-order', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: planId }),
+        body: JSON.stringify({ plan: planId, code }),
       })
       // `price` is in whole units of `currency` — the visitor's own price (lib/pricing.ts).
       const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; price?: number; keyId?: string; error?: string }

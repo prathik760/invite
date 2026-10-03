@@ -5463,6 +5463,624 @@ What is not changing: the obligations. Both families named, elders addressed, th
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
     ],
   },
+  'dasara-invitation-card-online-mysuru-dasara-invitation-template': {
+    intro: `Every Dasara evening at seven, the Mysuru palace lights up — nearly a lakh bulbs coming on at once — and the whole city gasps like it is seeing it for the first time. A good Dasara invitation should feel a little like that moment. It is not one event: it is ten days of dolls on the steps, haldi-kumkum evenings, the Ayudha Pooja, a Vijayadashami lunch and banni for everyone before they leave, and the people you love need to know which of those days you are hoping to see them. This guide gives you the 2026 dates, the Navratri colours day by day, more than twenty Dasara invitation messages for WhatsApp — in English, Kannada, Hindi, Marathi, Tamil and Telugu — and the wording for Bombe Habba, Golu and an office Ayudha Pooja. And if you would rather send something your family will actually remember, it shows you how to make a Dasara invitation card online that lights its own palace when they open it.`,
+    sections: [
+      {
+        heading: 'Dasara 2026 dates: Navratri, Ayudha Pooja and Vijayadashami',
+        body: `In 2026 the festival runs from Sunday 11 October to Wednesday 21 October. These are the days most families plan around:
+
+- **Navratri begins (Ghatasthapana): Sunday 11 October 2026** — the dolls go up and the first evening of haldi-kumkum begins
+- **Ayudha Pooja / Maha Navami: Monday 19 October 2026** — tools, vehicles, books and laptops are worshipped
+- **Vijayadashami (Dasara): Tuesday 20 October 2026** — the festive lunch, Saraswati's blessing for new beginnings, and banni (shami) leaves given as gold
+- **Mysuru Jamboo Savari: Wednesday 21 October 2026** — the elephant procession carrying the golden Ambari
+
+Timings differ slightly between regional calendars, so check your family panchang for the exact muhurat before you put a time on the invitation.
+
+**When to send it:** send a Dasara or Bombe Habba invitation four to six days before Navratri begins — that is, around 5 to 7 October 2026 — so people can plan which evenings to visit. Send one short reminder the day before Ayudha Pooja and again on the morning of Vijayadashami. With a link, a reminder is simply the same invitation forwarded again.`,
+      },
+      {
+        heading: 'Navratri 2026 colours, day by day',
+        body: `Because Navratri 2026 begins on a Sunday, the colour sequence most families follow starts with orange. Guests love being told the colour in advance, and it is a lovely line to add to an invitation.
+
+- **Day 1 — Sunday 11 October:** Orange
+- **Day 2 — Monday 12 October:** White
+- **Day 3 — Tuesday 13 October:** Red
+- **Day 4 — Wednesday 14 October:** Royal Blue
+- **Day 5 — Thursday 15 October:** Yellow
+- **Day 6 — Friday 16 October:** Green
+- **Day 7 — Saturday 17 October:** Grey
+- **Day 8 — Sunday 18 October:** Purple
+- **Day 9 — Monday 19 October:** Peacock Green
+
+The nine colours are a much-loved custom rather than a rule, and some regions follow their own. Our Ambari design shows all nine with their dates and picks out **today's colour** automatically, so a guest who opens your invitation on the 14th sees "Royal Blue" glowing at the top of the grid.`,
+      },
+      {
+        heading: 'Dasara invitation messages for WhatsApp (copy and paste)',
+        body: `Copy any of these, change the words in brackets, and paste your invitation link on the line below. They are written to sound like a person, not a printed card.
+
+**Dasara at home — warm and simple:**
+"Dasara greetings! 🙏 The dolls are up, the house smells of sundal, and we would love to have you with us this year. Join us for Vijayadashami lunch on Tuesday, 20 October at [Time], [Address]. Everything — the days, the map and the timings — is in the link."
+
+**Bombe Habba / Gombe Habba invitation:**
+"Our Bombe Habba is up! 🪔 Ajji's pattada gombe are back on the top step, along with a few new friends. Do drop in any evening between 11 and 20 October, 6 to 9 pm, for haldi-kumkum, sundal and a look at the dolls. — [Family Name]"
+
+**Golu invitation (Navratri Kolu):**
+"Navaratri wishes! 🙏 Our Golu is ready — nine steps this year. Please come with family any evening from 11 to 19 October, after 6 pm, for vethalai-paaku and sundal. [Address] — the full timings and map are in the link."
+
+**Navratri haldi-kumkum invitation:**
+"Happy Navaratri! 🌼 We are keeping haldi-kumkum on [Day, Date] from [Time]. Please come and take thamboola from us — and wear [Colour], it is the colour of the day! [Address]"
+
+**Vijayadashami lunch invitation:**
+"Shubh Vijayadashami! 🙏 On Tuesday, 20 October we are having a banana-leaf lunch at home at [Time], and there is banni for everyone before you leave. Do come with family. [Address]"
+
+**Inviting someone for one particular day:**
+"We would really love to see you on [Day] evening — it is the Ayudha Pooja and the whole family will be home. Come by any time after [Time]. The rest of the days are in the link if that one doesn't work."
+
+**For family who live far away:**
+"We wish you were here for Dasara this year. 🪔 The dolls, the days and photos of the steps are all on this link — open it when it is evening where you are, and leave us a wish on the page. We will read it out at the pooja."
+
+**Navratri invitation for a housing society:**
+"[Society Name] Navratri Utsav 2026 🙏 Ghatasthapana on Sunday 11 October at [Time]. Garba and dandiya every evening from [Time] in the clubhouse, Ayudha Pooja on 19 October and the Dasara get-together on 20 October. All residents and families are invited — schedule and colours of the day in the link."
+
+**Short and sweet for a busy group:**
+"Dasara at ours! 🪔 Dolls up 11–20 Oct, 6–9 pm | Vijayadashami lunch 20 Oct, [Time] | [Address]. Tap for the days and directions."
+
+**Jamboo Savari plan with friends:**
+"Mysuru Dasara plan! 🐘 We are watching the Jamboo Savari together on Wednesday, 21 October from [Place]. Meet at ours at [Time], and bring a cap and water. Details and map in the link."
+
+A small tip that makes a big difference: if you are inviting people for several evenings, say so in the first line. "Any evening between the 11th and the 20th" turns a formal invitation into an open door, and that is exactly how Bombe Habba is meant to feel.`,
+      },
+      {
+        heading: 'Dasara invitation messages in Kannada, Hindi, Marathi, Tamil and Telugu',
+        body: `Most families mix languages on WhatsApp, and elders always appreciate an invitation in their own. These are short, respectful and easy to personalise.
+
+**Kannada — Dasara and Bombe Habba:**
+"ನಾಡಹಬ್ಬ ದಸರಾ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು! 🙏 ನಮ್ಮ ಮನೆಯ ಬೊಂಬೆ ಹಬ್ಬಕ್ಕೆ ಮತ್ತು [Date] ರಂದು ವಿಜಯದಶಮಿ ಊಟಕ್ಕೆ ತಾವು ಸಕುಟುಂಬ ಸಮೇತರಾಗಿ ಬರಬೇಕೆಂದು ಆತ್ಮೀಯ ಆಹ್ವಾನ. — [Family Name]"
+
+**Hindi — Dussehra invitation:**
+"दशहरे की हार्दिक शुभकामनाएँ! 🙏 विजयादशमी के पावन अवसर पर [Date] को [Time] बजे हमारे घर पूजा और भोजन के लिए आप सपरिवार सादर आमंत्रित हैं। पता: [Address] — [Family Name]"
+
+**Marathi — Dasara invitation:**
+"दसऱ्याच्या हार्दिक शुभेच्छा! 🙏 विजयादशमीनिमित्त [Date] रोजी [Time] वाजता आमच्या घरी पूजा व स्नेहभोजनासाठी आपण सहकुटुंब यावे, ही आग्रहाची विनंती. — [Family Name]"
+
+**Tamil — Golu invitation:**
+"நவராத்திரி வாழ்த்துக்கள்! 🙏 எங்கள் வீட்டு கொலுவுக்கு [Date] முதல் [Date] வரை தினமும் மாலை [Time] மணிக்கு குடும்பத்துடன் வருமாறு அன்புடன் அழைக்கிறோம். — [Family Name]"
+
+**Telugu — Dasara invitation:**
+"దసరా శుభాకాంక్షలు! 🙏 విజయదశమి సందర్భంగా [Date] న మా ఇంటికి పూజ మరియు భోజనానికి కుటుంబ సమేతంగా రావలసిందిగా ఆహ్వానిస్తున్నాము. — [Family Name]"
+
+The Ambari invitation has a line for a greeting in your own script — type ದಸರಾ ಹಬ್ಬದ ಶುಭಾಶಯಗಳು, दशहरे की शुभकामनाएँ or நவராத்திரி வாழ்த்துக்கள், and it sits in gold above your title.`,
+      },
+      {
+        heading: 'Ayudha Pooja invitation message for employees, customers and the shop',
+        body: `Ayudha Pooja is the one day of Dasara that belongs to the workplace as much as the home. Offices, factories, shops and garages invite their teams, families and regular customers, and the invitation needs to be clear about time, place and whether families are welcome.
+
+**Ayudha Pooja invitation to employees:**
+"Dear team, 🙏 we are celebrating Ayudha Pooja at [Office / Factory Name] on Monday, 19 October 2026. The pooja begins at [Time], followed by lunch for everyone. Your families are most welcome. The office will be closed on Vijayadashami, 20 October. — [Name], [Company]"
+
+**Ayudha Pooja invitation for customers and suppliers:**
+"Ayudha Pooja greetings from all of us at [Business Name]! 🙏 We would be honoured to have you with us for the pooja on Monday, 19 October at [Time], at [Address]. Thank you for being part of our year."
+
+**Shop or garage, short version:**
+"[Shop Name] Ayudha Pooja 🙏 Monday, 19 Oct, [Time] | Pooja, sweets and prasad | All our customers and friends are invited. [Address]"
+
+For a workplace invitation, add who to contact on the day, whether there is parking, and what time lunch is served. If families are coming, say whether children are welcome — it saves a dozen messages to HR.`,
+      },
+      {
+        heading: 'What to include in a Dasara invitation card',
+        body: `A Dasara invitation is festive first and practical second — but it has to be both, because guests are coming to a real address on one or more of ten days. Make sure yours has:
+
+- **The host family's name** and, ideally, who is inviting (a grandmother's name on a Bombe Habba invitation makes elders feel personally asked)
+- **Which days you are celebrating** — the doll-viewing evenings, Ayudha Pooja, Vijayadashami lunch — each with its date and time
+- **A clear time window** for open evenings, such as 6 to 9 pm, so people do not arrive while you are mid-aarti
+- **The full address and a map link** — apartment blocks, gate numbers and landmarks matter during festival traffic
+- **What to wear**, if you have a preference — the colour of the day is a fun touch
+- **A way to reply** with which days they will come, so you know how much sundal to make
+- **A line about the dolls or the family** — the story behind your pattada gombe is the part people remember
+
+Printed cards could never hold all of that legibly, and a forwarded image goes stale the moment one time changes. A link can hold everything, update if plans change, and still look beautiful.`,
+      },
+      {
+        heading: 'Meet Ambari: an animated Mysuru Dasara invitation',
+        body: `We built Ambari for families who want their Dasara invitation to feel like the festival itself.
+
+It opens at dusk in Mysuru: a violet sky, the palace dark, a crowd waiting with their phones up. Your guest taps **"Light the palace"** — and the bulbs come on in a wave from the golden dome down, just as they do at seven every Dasara evening. Then an elephant in a red-and-gold jhool walks in carrying the golden Ambari and raises its trunk in greeting. Only then does your invitation appear, in gold, above the lit palace.
+
+Inside, it carries everything a Dasara invitation needs:
+
+- **A letter from the family**, in a handwritten style, opening with your guest's name
+- **Every day of the festival on its own card**, coloured in that day's Navratri colour, with an "Add to calendar" button
+- **The nine Navratri colours** with their dates — and today's colour picked out automatically
+- **The Bombe Habba steps**, with Channapatna-style dolls that wiggle when a child taps them, and your family's story about your dolls
+- **Directions and a map** to your door
+- **An RSVP that asks which days they will come** and how many of them — it reaches you as one WhatsApp, text or email message
+- **Banni at the end**: your guest taps "Take the banni", the leaves turn to gold, and your Vijayadashami wish appears
+- **A wishes wall** where relatives leave their blessings for everyone to read
+
+You can address it to each family too. Add ?to= and their name to the end of your link — for example, …?to=Shalini+and+family — and the invitation greets them by name before the palace lights up.
+
+It is a one-time ₹${templatePrice('dasara-ambari')} to publish, with no per-guest charge, and you can build and **preview before you pay**.`,
+      },
+      {
+        heading: 'How to make your Dasara invitation online in five minutes',
+        body: `- **Open the Ambari design** and tap "Use this design". You do not need an account to start.
+- **Add your names** — who is hosting, what you are celebrating ("Bombe Habba & Dasara at home") and, if you like, a greeting in your own language and a family photo.
+- **Add the days** — the doll evenings, Ayudha Pooja, Vijayadashami lunch, even the Jamboo Savari plan — each with a date, time and a line about it.
+- **Add the address and map link**, and the Navratri start date if you want the colours of the day.
+- **Write your letter and your banni wish.** A few honest lines about what Dasara means in your house will do more than any poem.
+- **Preview it exactly as your guests will see it**, light the palace yourself, then publish and share the link on WhatsApp.
+
+Because it is a link rather than an image, you can send the same invitation to the family group, the building group and the cousins abroad, and it looks right on every phone.`,
+      },
+      {
+        heading: 'Bombe Habba and Golu etiquette: inviting, visiting and thamboola',
+        body: `The beauty of Bombe Habba is that it is an open house. A few gentle customs make it easier for everyone:
+
+- **Invite women of the family and neighbourhood by name.** Haldi-kumkum invitations traditionally go from the lady of the house, and a personal line ("We would love to see you and Ammu on Thursday") means far more than a group forward.
+- **Give a window, not a single time.** People visit several homes in one evening during Navratri. "Any day, 6 to 9 pm" lets them plan a route.
+- **Keep thamboola ready.** Betel leaves, a coconut or fruit, kumkum and a small gift are given to married women and girls who visit — most families prepare a basket for each evening.
+- **Tell the story of your dolls.** Guests always ask about the oldest pattada gombe or the newest addition. Putting that story in the invitation makes the visit feel like part of your family's history.
+- **Children are the heart of it.** Encourage them to bring a friend — and let them tap the dolls on the invitation before they come and see the real ones.`,
+      },
+    ],
+    checklist: [
+      'Confirm the exact muhurat and pooja timings from your family panchang before you publish.',
+      'List every day you are celebrating — doll evenings, Ayudha Pooja and Vijayadashami lunch — with a date and time.',
+      'Give a time window for open evenings so guests can plan visits to several homes.',
+      'Add the full address, gate or flat number and a Google Maps link.',
+      'Add the Navratri start date so guests see the colour of the day.',
+      'Write a short line about your dolls or your family tradition.',
+      'Send the invitation around 5–7 October 2026, with reminders before Ayudha Pooja and on Vijayadashami morning.',
+    ],
+    faq: [
+      {
+        q: 'When is Dasara in 2026?',
+        a: 'In 2026 Navratri begins on Sunday 11 October, Ayudha Pooja and Maha Navami fall on Monday 19 October, Vijayadashami (Dasara) is on Tuesday 20 October, and the Mysuru Jamboo Savari is on Wednesday 21 October. Regional calendars can differ slightly, so check your panchang for exact muhurat timings.',
+      },
+      {
+        q: 'What are the Navratri colours for 2026?',
+        a: 'Navratri 2026 starts on a Sunday, so the commonly followed sequence is: Orange (11 Oct), White (12 Oct), Red (13 Oct), Royal Blue (14 Oct), Yellow (15 Oct), Green (16 Oct), Grey (17 Oct), Purple (18 Oct) and Peacock Green (19 Oct).',
+      },
+      {
+        q: 'What should I write in a Dasara invitation message?',
+        a: 'Start with a Dasara greeting, say which days you are celebrating and at what times, give the full address with a map link, and add a personal line — about your dolls, the family or why you would love to see them. End with how to reply. The samples above can be copied and personalised in a minute.',
+      },
+      {
+        q: 'How do I invite people for Bombe Habba or Golu on WhatsApp?',
+        a: 'Send one invitation link that lists the evenings your dolls are up, a time window such as 6 to 9 pm, and your address. Mention any special evening like haldi-kumkum separately. A digital invitation lets guests see all the days at once and reply with the ones they will come to.',
+      },
+      {
+        q: 'Can I write my Dasara invitation in Kannada or another Indian language?',
+        a: 'Yes. You can write the whole message in any language, and the Ambari design has a separate greeting line that shows Kannada, Hindi, Marathi, Tamil, Telugu or any other script in gold above your title.',
+      },
+      {
+        q: 'How much does the Ambari Dasara invitation cost?',
+        a: `It is a one-time ₹${templatePrice('dasara-ambari')} to publish, with no subscription and no per-guest charge. You can add every detail and preview the whole invitation before you pay.`,
+      },
+      {
+        q: 'Do my guests need to download an app?',
+        a: 'No. Your invitation is a link that opens in any phone browser — on WhatsApp, SMS, Instagram or email. Guests tap it, light the palace and read everything without installing anything.',
+      },
+      {
+        q: 'Can guests tell me which days they will visit?',
+        a: 'Yes. The RSVP lets each guest pick the days they will come and how many of them there are, and sends it to you as a single WhatsApp, text or email message — so you know who to expect each evening.',
+      },
+    ],
+    links: [
+      { label: 'Ambari — the Mysuru Dasara invitation', href: '/templates/ambari-mysuru-dasara-invitation-template' },
+      { label: 'See the Dasara invitation live', href: '/demo/dasara-ambari' },
+      { label: 'Festival invitation designs', href: '/templates?occasion=festival' },
+      { label: 'Ganesh Chaturthi invitation card online', href: '/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template' },
+      { label: 'Diwali invitation wording', href: '/diwali-invitation-wording' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'christmas-party-invitation-wording-digital-christmas-invitation': {
+    intro: `The best Christmas invitations do one thing a group text never manages: they make someone feel genuinely wanted at your table. This guide gives you more than forty pieces of Christmas party invitation wording you can copy straight into WhatsApp, iMessage or an email — for friends, for a family Christmas dinner, for Christmas Eve, for Secret Santa, for the office party, and a handful of funny ones for the friends who would never forgive you for being earnest. It also covers what every Christmas invitation needs to say, when to send it, and how to turn it into a digital Christmas invitation your guests open like a front door — knock, the door swings open, and they step into your living room.`,
+    sections: [
+      {
+        heading: 'What to include in a Christmas party invitation',
+        body: `Whatever the tone, a Christmas invitation has to answer the questions your guests will otherwise text you about. Before you worry about wording, make sure yours covers:
+
+- **Who is hosting** — your names, or the family name ("Christmas at the Hendersons'")
+- **The date and start time**, and an end time if it matters ("Christmas Eve, 6 pm until the midnight walk to church")
+- **The address**, with a map link and anything about parking, gates or stairs
+- **What kind of party it is** — dinner, drinks, a potluck, an open house, a Christmas jumper party
+- **Food and drink** — whether you are cooking, whether they should bring a dish, and any "bring a bottle" expectation
+- **Secret Santa or gift rules**, including the budget and when names are drawn
+- **The dress code**, even if it is "your worst Christmas jumper"
+- **Who is invited** — partners, children, the dog
+- **How and by when to reply**
+
+The wording below slots into any of these. If you are sending a digital invitation, most of the practical details live on the page itself, so the message you send can be short and warm.`,
+      },
+      {
+        heading: 'Christmas party invitation wording for friends',
+        body: `Copy any of these, swap the bits in brackets and add your link below.
+
+**Cosy and warm:**
+"Christmas is better with you in it. 🎄 Come round on [Day, Date] from [Time] — there will be a fire, far too much food and a playlist we refuse to apologise for. [Address]. Tell us you're coming!"
+
+**Friendsmas:**
+"Friendsmas is on! 🎁 [Day, Date], [Time] at ours. We're doing the turkey; you're doing a side, a bottle or a dessert. Secret Santa budget is [Budget]. Details and who's bringing what are in the link."
+
+**Christmas jumper party:**
+"Dust off your most questionable Christmas jumper. 🧶 We're having a jumper party on [Day, Date] from [Time]. There will be a prize for the worst one, mulled wine for everyone, and absolutely no judgement. [Address]"
+
+**Potluck Christmas:**
+"Potluck Christmas! 🍽️ [Day, Date] at [Time], [Address]. We've got the main and the mulled wine — could you bring a side or a pudding? Pop what you're bringing in your reply so we don't end up with six trifles."
+
+**Small and intimate:**
+"Just a few of us this year, and we wanted you to be one of them. 🕯️ Dinner on [Day, Date] at [Time]. Come hungry, stay late. [Address]"
+
+**Open house:**
+"Our door is open on [Day, Date] from [Time] to [Time]. ✨ Drop in for a mince pie and a mulled wine, stay for one or for five. Bring whoever's with you. [Address]"`,
+      },
+      {
+        heading: 'Christmas dinner invitation wording for family',
+        body: `Family invitations can be warmer and more sentimental — this is the one time of year nobody minds.
+
+**Christmas Day lunch:**
+"We'd love to have the whole family together for Christmas lunch this year. 🎄 Join us on Friday, 25 December at [Time] at [Address]. The table's big, the turkey's bigger. Let us know who's coming so we can set enough places."
+
+**Christmas Eve dinner:**
+"Christmas Eve at ours! ✨ Dinner at [Time] on Thursday, 24 December, then crackers, pudding and carols by the fire. Bring the children in their pyjamas — they can sleep on the way home. [Address]"
+
+**Our first Christmas in the new house:**
+"It's our first Christmas in the new house, and it won't feel like home until you've all been round. 🏡 Come for dinner on [Day, Date] at [Time]. [Address] — just look for the wreath."
+
+**For grandparents:**
+"Dear Mum and Dad, the children have already made you a place card each. 🎁 Please come and spend Christmas Day with us — we'll pick you up at [Time]. We love you."
+
+**For family who can't be there:**
+"We'll miss you at the table this year. 🎄 Everything about our Christmas — the menu, photos of the tree, the time we'll raise a glass to you — is in this link. Open it on the day and leave us a Christmas card on the page."`,
+      },
+      {
+        heading: 'Christmas Eve, Boxing Day and New Year wording',
+        body: `**Christmas Eve drinks:**
+"Christmas Eve drinks at ours, [Time] until the last carol. 🥂 Nibbles, mulled wine and the good chocolates. [Address]"
+
+**Boxing Day leftovers party:**
+"Boxing Day leftovers party! 🥪 [Time] onwards on Saturday, 26 December. Bring your appetite and your board games; we'll bring the cold turkey and the cheese. [Address]"
+
+**Christmas and New Year combined:**
+"Can't decide between a Christmas party and a New Year's do? Neither can we. 🎆 Join us on [Day, Date] from [Time] for both. [Address]"
+
+If you are planning New Year's Eve too, our guide to New Year party invitation messages has forty more ideas, and a design that counts down to midnight.`,
+      },
+      {
+        heading: 'Christmas party invitation wording for work and staff',
+        body: `Office invitations need to be clear and inclusive: say whether partners are invited, what is provided, and how people get home. Many workplaces use "holiday party" to include everyone — use what fits your team.
+
+**Office Christmas party:**
+"You're invited to the [Company] Christmas party! 🎄 Join us on [Day, Date] from [Time] at [Venue]. Dinner, drinks and a few awards nobody will admit to wanting. Partners are welcome. Please RSVP by [Date] so we can confirm numbers."
+
+**Team Christmas lunch:**
+"Team Christmas lunch on [Day, Date] at [Time], [Restaurant]. 🍽️ It's on us — just tell us your menu choice by [Date]. Out-of-office replies optional."
+
+**Staff holiday party (inclusive wording):**
+"Thank you for everything this year. ✨ Please join us for our end-of-year holiday party on [Day, Date] from [Time] at [Venue]. There will be food for every diet, non-alcoholic drinks and transport home from [Time]."
+
+**Remote team:**
+"Our first in-person get-together of the year: Christmas drinks on [Day, Date], [Time] at [Venue]. 🎁 Travel is covered — reply by [Date] and we'll book it."`,
+      },
+      {
+        heading: 'Secret Santa invitation message',
+        body: `Secret Santa works only if everyone knows the budget, the deadline and the rules. Put all three in the invitation.
+
+**Secret Santa for friends:**
+"Secret Santa time! 🎅 Names come out of the hat on [Date] — we'll message you yours. Budget is [Budget], gifts open at the party on [Day, Date]. Not a word to anyone."
+
+**Secret Santa for family:**
+"Family Secret Santa is back 🎁 One present each, [Budget] maximum, and Granny is in charge of the hat. We'll draw names on [Date] and open the presents after Christmas lunch."
+
+**Secret Santa for colleagues:**
+"Fancy a Secret Santa? 🎄 Reply by [Date] to join. Budget is [Budget], names drawn on [Date], and presents swapped at the team lunch on [Date]. Please keep it office-friendly!"
+
+In our Christmas design, the Secret Santa details hide inside a wrapped present that guests tap to unwrap — budget and rules pop out on a little card. It is a small thing, and everyone does it twice.`,
+      },
+      {
+        heading: 'Funny Christmas party invitation wording',
+        body: `For the friends who would roll their eyes at anything sincere:
+
+**Fair warning:**
+"Warning: there will be carols, and you will be expected to know the second verse. 🎤 Christmas party, [Day, Date], [Time], [Address]."
+
+**Honest host:**
+"We've bought too much food, too much wine and a tree that doesn't fit through the door. Please come and help with all three. 🎄 [Day, Date], [Time]."
+
+**Elf on the shelf:**
+"The elf has reported that you've been mostly good this year. 🧝 Party at ours on [Day, Date] — attendance is being monitored."
+
+**Sprouts:**
+"There will be sprouts. There will also be cheese, so it evens out. 🧀 Christmas dinner, [Day, Date], [Time]."
+
+Short one-liners for a group chat or an Instagram story:
+
+- Mulled wine, mince pies and your favourite people. You in?
+- Our tree is up, our oven is on, and our door is open.
+- Jingle all the way to ours on [Date].
+- Bring your appetite and your worst jumper.
+- Home is wherever the mince pies are.`,
+      },
+      {
+        heading: 'When to send Christmas party invitations',
+        body: `December fills up faster than any other month, so earlier is kinder.
+
+- **Office and large parties:** four to six weeks before — invitations by mid-November for a mid-December party
+- **Friends' Christmas parties:** three to four weeks before, ideally by the last week of November
+- **Family Christmas Day or Christmas Eve:** a month ahead, especially if anyone is travelling
+- **Secret Santa:** send the invitation at least a week before you draw names
+- **Reminders:** a short nudge a week before and again the day before
+
+With a digital invitation, a reminder is simply the same link sent again — no reprinting, and any change to the time or the menu is already on it.`,
+      },
+      {
+        heading: 'A digital Christmas invitation that opens like a front door',
+        body: `We designed Evergreen to feel like arriving at your house on a snowy night.
+
+Your guest opens the link and they are on your doorstep: a green front door under a glowing fanlight, lanterns on either side, snow falling, and a fat wreath with a kraft gift tag written out to them. They tap **"Knock on the door"**, the brass knocker raps twice, the door swings open on warm golden light — and they step through it into your living room, where the fire is crackling, there is a stocking on the mantel for everyone in your family with their names on, and the tree is twinkling.
+
+Then, as they scroll:
+
+- **"12 more sleeps"** — a countdown in sleeps, the way children count to Christmas
+- **Your letter**, in a handwritten style, on paper with a postage stamp and a postmark from your town
+- **The evening**, each moment hung on a ribbon as a bauble
+- **At the table** — a menu card showing who is making what; anything marked "You?" invites the guest to bring it
+- **Secret Santa**, inside a present they tap to unwrap
+- **Your year in photos**, hung on a garland as baubles they can tap to see larger
+- **What to wear**, on a knitted Fair Isle band
+- **Directions, a calendar button and an RSVP** that asks how many are coming, what they will bring and anything the kitchen should know — it reaches you as one WhatsApp message, text or email
+- **A Christmas card wall** where everyone can leave a message
+
+Every guest can have their own gift tag. Add ?to= and their name to the end of your link — …?to=The+Thompsons — and the tag on the door reads "For The Thompsons".
+
+Evergreen is a one-time ₹${templatePrice('christmas-evergreen')} to publish, for as many guests as you like, and you can **preview before you pay**. It works for a Christmas party, a family Christmas dinner, Christmas Eve, a Friendsmas or an office celebration.`,
+      },
+    ],
+    checklist: [
+      'Decide the type of party first — dinner, drinks, potluck or open house — and say it in the first line.',
+      'Include the date, start time, full address and a map link.',
+      'State the dress code, even if it is "your worst Christmas jumper".',
+      'Put the Secret Santa budget and the date names are drawn in the invitation.',
+      'Say clearly whether partners, children and dogs are invited.',
+      'Ask guests to reply by a specific date, and tell them what to bring if it is a potluck.',
+      'Send invitations three to six weeks ahead, with a reminder a week before.',
+    ],
+    faq: [
+      {
+        q: 'What do you write on a Christmas party invitation?',
+        a: 'Say who is hosting, what kind of party it is, the date, time and address, the dress code, whether to bring food, drink or a Secret Santa gift, who is invited, and how and by when to reply. A warm opening line — "Christmas is better with you in it" — makes it feel personal.',
+      },
+      {
+        q: 'When should you send Christmas party invitations?',
+        a: 'Send office and large party invitations four to six weeks ahead, friends\' parties three to four weeks ahead, and family Christmas Day invitations about a month before. December fills up quickly, so earlier is better, with a reminder a week before.',
+      },
+      {
+        q: 'How do you word a Christmas potluck invitation?',
+        a: 'Say you are hosting a potluck, what you are providing, and what you would like guests to bring — a side, a pudding or a bottle. Ask them to say what they are bringing when they reply so you avoid duplicates. The Evergreen menu card marks dishes with "You?" for exactly this.',
+      },
+      {
+        q: 'What should a Secret Santa invitation message say?',
+        a: 'Include the budget, the date names will be drawn, how people will find out who they are buying for, and when presents will be opened. Add a line asking everyone to keep it secret.',
+      },
+      {
+        q: 'Can I send a Christmas invitation by WhatsApp or text?',
+        a: 'Yes. A digital Christmas invitation is a single link that opens on any phone from WhatsApp, iMessage, SMS, Instagram or email. Guests do not need an app or an account.',
+      },
+      {
+        q: 'Can each guest see their own name on the invitation?',
+        a: 'Yes. Add ?to= and the guest\'s name to the end of your invitation link, and the gift tag on the front door shows their name — "For The Thompsons" — before they knock.',
+      },
+      {
+        q: 'How much does the Evergreen Christmas invitation cost?',
+        a: `It is a one-time ₹${templatePrice('christmas-evergreen')} to publish, with no subscription and no charge per guest. You can fill in every detail and preview the whole invitation before you pay.`,
+      },
+      {
+        q: 'How do guests RSVP?',
+        a: 'Guests tap "Wouldn\'t miss it" or "Sadly not", say how many of them are coming, what they will bring and any dietary needs, and the reply reaches you as one WhatsApp message, text or email.',
+      },
+    ],
+    links: [
+      { label: 'Evergreen — the Christmas party invitation', href: '/templates/evergreen-christmas-party-invitation-template' },
+      { label: 'See the Christmas invitation live', href: '/demo/christmas-evergreen' },
+      { label: 'New Year party invitation messages', href: '/blog/new-year-party-invitation-message-new-years-eve-invitation-wording' },
+      { label: 'Festival invitation designs', href: '/templates?occasion=festival' },
+      { label: 'Birthday invitation wording', href: '/birthday-invitation-wording' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'new-year-party-invitation-message-new-years-eve-invitation-wording': {
+    intro: `New Year's Eve is the only party where everyone already knows the plan: be together at midnight. Everything your invitation says is about who you want in the room when the clock strikes twelve. This guide gives you more than forty New Year party invitation messages to copy — for friends, family and colleagues, funny ones, short ones for WhatsApp and Instagram, a few in Hindi — plus New Year's Eve invitation wording for a house party, a rooftop, a black-tie dinner and a New Year's Day brunch. It covers what to put on the invitation and when to send it, and shows you a digital New Year invitation that counts down from ten, fills the screen with fireworks and has them spell out 2027.`,
+    sections: [
+      {
+        heading: 'What to put on a New Year’s Eve party invitation',
+        body: `New Year's Eve 2026 falls on a **Thursday, 31 December**, so many people will be working that day and travelling that night. A good invitation answers the practical questions up front:
+
+- **The start time — and "till late" or an end time.** "From 8 pm" tells people when to arrive; "dancing until we can't" tells them not to book an early taxi.
+- **Where you will be at midnight** — the roof, the garden, the terrace — so nobody is in the queue for the bathroom at 11:59.
+- **The dress code.** Black tie, sequins, pyjamas or "anything with sparkle".
+- **Food and drink.** Dinner, nibbles, a potluck, BYOB — say which.
+- **Getting home.** Night trains, a taxi rank, a spare room or "the sofa's yours". This is the detail guests appreciate most and hosts forget most.
+- **Plus-ones and children.** Especially if you are planning a children's countdown at 9 pm.
+- **How and by when to reply** — New Year's Eve plans change fast, so ask for replies by around 20 December.`,
+      },
+      {
+        heading: 'New Year party invitation messages for friends',
+        body: `Copy any of these, change the words in brackets and paste your invitation link underneath.
+
+**House party:**
+"Let's see this year out together. 🥂 New Year's Eve at ours on Thursday, 31 December from [Time]. Food, fizz and a countdown on the balcony. [Address] — tell us you're in!"
+
+**Rooftop countdown:**
+"Ring in 2027 on the roof. 🎆 Drinks from [Time], dinner at [Time], and the whole gang up top for the countdown at 11:55. Dress warm and sparkly. [Address]"
+
+**Black tie:**
+"The year deserves a proper send-off. ✨ Join us for a black-tie New Year's Eve dinner on 31 December at [Time], [Venue]. Champagne at the stroke of twelve, dancing after."
+
+**Small dinner:**
+"No big party this year — just a long table, good food and our favourite people. 🕯️ New Year's Eve dinner at [Time], [Address]. We'd love you to be at it."
+
+**BYOB:**
+"New Year's Eve at ours! 🍾 We've got the food, the music and the view of the fireworks — bring a bottle and your best resolution. From [Time], 31 Dec, [Address]."
+
+**Pyjama party:**
+"New Year's Eve, but make it pyjamas. 🛋️ Snacks, films and a countdown from the sofa on 31 December from [Time]. Slippers encouraged. [Address]"`,
+      },
+      {
+        heading: 'New Year party invitation messages for family',
+        body: `**Family New Year's Eve dinner:**
+"We'd love to have the whole family together to welcome 2027. 🎆 Dinner at [Time] on 31 December at [Address], then the countdown together. The children can stay up — just this once."
+
+**Kids' early countdown:**
+"Little ones welcome! 🎈 We're doing a 'midnight' countdown at 9 pm for the children, then the grown-ups carry on till the real one. New Year's Eve, from [Time], [Address]."
+
+**For grandparents:**
+"Dear Mum and Dad, the year wouldn't be complete without you. ✨ Please come for New Year's Eve dinner — we'll pick you up at [Time] and drop you home whenever you like."
+
+**New Year's Day lunch:**
+"Happy New Year in advance! 🥘 Join us for a lazy New Year's Day lunch on Friday, 1 January at [Time]. Come as you are, recover with us. [Address]"`,
+      },
+      {
+        heading: 'New Year party invitation messages in Hindi',
+        body: `For family groups in India, a message in Hindi feels warmer:
+
+**New Year party invitation — Hindi:**
+"नए साल का स्वागत साथ मिलकर करें! 🎆 31 दिसंबर की शाम [Time] बजे हमारे घर नए साल की पार्टी है। डिनर, संगीत और आधी रात का काउंटडाउन — आप सपरिवार ज़रूर आइए। पता: [Address]"
+
+**Short Hindi message for WhatsApp:**
+"नया साल, पुराने दोस्त और ढेर सारी खुशियाँ! 🥂 31 दिसंबर, रात [Time] बजे से हमारे यहाँ। ज़रूर आना!"`,
+      },
+      {
+        heading: 'New Year party invitation message for colleagues and office',
+        body: `**Office New Year party:**
+"Thank you for an incredible year. 🎉 Please join us for the [Company] New Year celebration on [Day, Date] at [Time], [Venue]. Dinner, music and a few surprises. Do RSVP by [Date]."
+
+**Team dinner:**
+"Let's close the year properly. 🥂 Team New Year dinner on [Day, Date] at [Time], [Restaurant]. It's on the company — just tell us your menu choice by [Date]."
+
+**New Year's Day brunch for the team:**
+"Fresh start, full plates. 🍳 New Year brunch for the team on [Day, Date] at [Time], [Venue]. Resolutions optional."`,
+      },
+      {
+        heading: 'Funny New Year party invitation messages',
+        body: `**Out with the old:**
+"Come and help us drink the old year under the table. 🥂 New Year's Eve, from [Time], [Address]."
+
+**Resolutions:**
+"Our resolution is to throw a better party than last year. Come and hold us to it. 🎆 31 Dec, [Time]."
+
+**Midnight kiss:**
+"Guaranteed midnight company. Possible midnight dancing. Definite midnight snacks. 🍕 New Year's Eve at ours."
+
+**Honest host:**
+"We've cleaned the flat, bought the fizz and learned the words to Auld Lang Syne. Please come so this effort isn't wasted. 🎶 [Date], [Time]."
+
+**Short one-liners for WhatsApp and Instagram:**
+
+- New year, same favourite people. Party at ours on the 31st?
+- Let's end 2026 the way it deserves — together, and loudly.
+- Countdown starts at our place. Bring your sparkle.
+- Auld acquaintance is not being forgot. See you on the 31st.
+- Last party of the year, first memory of the next.`,
+      },
+      {
+        heading: 'When to send New Year’s Eve invitations',
+        body: `New Year's Eve is the most double-booked night of the year, so send early:
+
+- **Big parties and dinners:** three to four weeks ahead — by the first week of December
+- **Small gatherings with close friends:** two to three weeks ahead
+- **Office celebrations:** four weeks ahead, since many teams break up mid-December
+- **Ask for replies by about 20 December**, so you can plan food, drinks and spare beds
+- **Send a reminder** on 30 December with the time, the address and how people are getting home
+
+A digital invitation makes the reminder effortless — it is the same link, already updated with any change.`,
+      },
+      {
+        heading: 'A New Year invitation that counts down to midnight',
+        body: `We designed Midnight to be the most dramatic invitation on anyone's phone this December.
+
+It opens on a gilded Art Deco clock at a minute to midnight, and a single line: it's almost midnight. Your guest taps **"Count us in"**. The screen counts down from ten while the second hand sweeps, and at twelve it flashes white, confetti falls and **real fireworks go up** — the last one bursting into sparks that gather in the sky to spell **2027**, then melt into gold. Only then does your invitation appear underneath.
+
+Then, as they scroll:
+
+- **A split-flap countdown to midnight**, flipping like an old airport board
+- **A letter from the hosts**, greeting each guest by name
+- **The night as gold tickets** — champagne, dinner, the countdown, dancing — with the midnight ticket in gold foil
+- **"Leave it in 2026"** — a little ritual: guests type one thing they are not taking into the new year and watch it burn away into sparks, then send a wish up to become a star. Nobody else sees it.
+- **The year in photos** on a film strip they can swipe
+- **What to wear**, with swatches taken from your dress code
+- **Where, and getting home** — the address, a map, a calendar button and your note about trains, taxis or the spare sofa
+- **An RSVP** that asks how many are coming and **a song for midnight**, sent to you as one WhatsApp message, text or email
+- **A wall for toasts** where everyone can raise a glass early
+
+You can address it to every guest. Add ?to= and their name to the end of your link — …?to=Jules+and+Sam — and the invitation opens "For Jules and Sam".
+
+Midnight is a one-time ₹${templatePrice('newyear-midnight')} to publish, for as many guests as you like, and you can **preview before you pay**. It works for a house party, a rooftop countdown, a black-tie dinner or an office celebration.`,
+      },
+      {
+        heading: 'How to make your New Year invitation online',
+        body: `- **Open the Midnight design** and tap "Use this design" — no account needed to start.
+- **Add who is hosting and what the night is called** — "New Year's Eve on the Roof".
+- **Add the date, start time and venue**, and set the date to 31 December so the countdown runs to midnight.
+- **Add the night's plan**, the dress code and a note about getting home.
+- **Write a few lines** about the year you have had — it is the part guests reply to.
+- **Preview it, count down to midnight yourself**, then publish and share the link on WhatsApp, iMessage or Instagram.`,
+      },
+    ],
+    checklist: [
+      'Give the start time and say whether it runs till late.',
+      'Say where everyone will be at midnight.',
+      'State the dress code — black tie, sequins, pyjamas or "anything with sparkle".',
+      'Say whether you are providing dinner, nibbles or a potluck, and whether to bring a bottle.',
+      'Add a note on getting home: night trains, taxis or a spare bed.',
+      'Ask for replies by about 20 December.',
+      'Send invitations three to four weeks ahead, and a reminder on 30 December.',
+    ],
+    faq: [
+      {
+        q: 'What should I write in a New Year party invitation message?',
+        a: 'Say who is hosting, that it is a New Year\'s Eve party, the date, start time and address, the dress code, whether to bring anything, how guests will get home and how to reply. Open with a warm line such as "Let\'s see this year out together".',
+      },
+      {
+        q: 'When should I send New Year\'s Eve invitations?',
+        a: 'Send them three to four weeks before — by the first week of December for big parties — and ask for replies by around 20 December. New Year\'s Eve is the most double-booked night of the year, so early invitations get the most yeses.',
+      },
+      {
+        q: 'What day is New Year\'s Eve 2026?',
+        a: 'New Year\'s Eve 2026 falls on Thursday, 31 December, and New Year\'s Day 2027 is Friday, 1 January — which makes 1 January a good day for a relaxed brunch or lunch.',
+      },
+      {
+        q: 'How do I invite friends to a New Year party on WhatsApp?',
+        a: 'Send a short, warm message with the date, time and address, and paste a link to a digital invitation underneath. The link holds every detail — the plan for the night, the map and the RSVP — so the message itself can stay short.',
+      },
+      {
+        q: 'Can I write a New Year invitation in Hindi?',
+        a: 'Yes. Copy one of the Hindi messages above, or write your own — the Midnight design shows any text you type, in any language, in your letter and the night\'s plan.',
+      },
+      {
+        q: 'Can each guest see their name on the invitation?',
+        a: 'Yes. Add ?to= and the guest\'s name to the end of your link, and the invitation opens with "For Jules and Sam" on the clock screen and greets them by name in the letter.',
+      },
+      {
+        q: 'How much does the Midnight New Year invitation cost?',
+        a: `It is a one-time ₹${templatePrice('newyear-midnight')} to publish, with no subscription and no per-guest charge. You can add every detail and preview the whole invitation — fireworks included — before you pay.`,
+      },
+      {
+        q: 'Do guests need an app to open it?',
+        a: 'No. It is a link that opens in any phone browser from WhatsApp, iMessage, SMS, Instagram or email. Guests just tap it and count down to midnight.',
+      },
+    ],
+    links: [
+      { label: 'Midnight — the New Year party invitation', href: '/templates/midnight-new-year-party-invitation-template' },
+      { label: 'See the New Year invitation live', href: '/demo/newyear-midnight' },
+      { label: 'Christmas party invitation wording', href: '/blog/christmas-party-invitation-wording-digital-christmas-invitation' },
+      { label: 'Festival invitation designs', href: '/templates?occasion=festival' },
+      { label: 'Birthday invitation wording', href: '/birthday-invitation-wording' },
+      { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
 }
 
 /**

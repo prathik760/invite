@@ -40,8 +40,8 @@ const GREETING_TEMPLATES = [
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
 ]
-const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh', ...GREETING_TEMPLATES, 'baby-shower', 'sangeet-night']
-const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'royal-deco', 'luxury-wedding']
+const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh', ...GREETING_TEMPLATES, 'baby-shower', 'sangeet-night', 'dasara-ambari']
+const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'royal-deco', 'luxury-wedding', 'christmas-evergreen', 'newyear-midnight']
 // Signature collection: full wedding suites (every function, families, story,
 // travel & stay, FAQs, contacts, RSVP). Each tier also includes everything
 // below it, like the tiers above.

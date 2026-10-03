@@ -9,6 +9,7 @@ export const blogCategories = [
   'Invitation Ideas',
   'Wedding Trends',
   'Digital Invitations',
+  'Festivals',
 ] as const
 
 export type BlogCategory = (typeof blogCategories)[number]
@@ -169,7 +170,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   // ─── Ganesh Chaturthi (premium template) ────────────────────────────────────
   {
     title: 'Ganesh Chaturthi Invitation Card Online — Make a Digital Ganpati Invite in 5 Minutes',
-    category: 'Digital Invitations',
+    category: 'Festivals',
     keyword: 'ganesh chaturthi invitation card online',
     date: '2026-09-04',
     // Slug pinned rather than generated: the generated one would carry the
@@ -183,7 +184,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   // ─── Raksha Bandhan (premium template) ──────────────────────────────────────
   {
     title: 'Raksha Bandhan Invitation Card Online — Premium Digital Rakhi Template',
-    category: 'Digital Invitations',
+    category: 'Festivals',
     keyword: 'raksha bandhan invitation card online',
     date: '2026-08-08',
     // Slug pinned to the originally-indexed URL so existing links keep working.
@@ -191,6 +192,37 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     metaTitle: 'Raksha Bandhan Invitation Card Online — Premium Digital Rakhi Invite (2026)',
     image: '/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template.jpg',
     description: 'Create a stunning Raksha Bandhan invitation card online in minutes — a premium digital Rakhi invite and greeting with photos, a live countdown, event timeline, guest wishes, RSVP and one-tap WhatsApp sharing. Just ₹199 for the whole celebration. Perfect for brothers and sisters, including NRIs celebrating from abroad.',
+  },
+  // ─── Dasara, Christmas and New Year (animated festival designs) ─────────────
+  {
+    title: 'Dasara Invitation Card Online 2026 — Mysuru Dasara, Bombe Habba & Ayudha Pooja Messages',
+    category: 'Festivals',
+    keyword: 'dasara invitation card',
+    date: '2026-10-03',
+    slug: 'dasara-invitation-card-online-mysuru-dasara-invitation-template',
+    metaTitle: 'Dasara Invitation Card Online 2026 & Messages for WhatsApp',
+    image: '/blog/dasara-invitation-card-online-mysuru-dasara-invitation-template.jpg',
+    description: 'Make a Dasara invitation card online: an animated Mysuru Dasara invite, Navratri 2026 colours and 20+ Dasara, Bombe Habba, Golu & Ayudha Pooja messages.',
+  },
+  {
+    title: 'Christmas Party Invitation Wording: 40+ Messages for Friends, Family & Work',
+    category: 'Festivals',
+    keyword: 'christmas party invitation wording',
+    date: '2026-10-03',
+    slug: 'christmas-party-invitation-wording-digital-christmas-invitation',
+    metaTitle: 'Christmas Party Invitation Wording: 40+ Messages (2026)',
+    image: '/blog/christmas-party-invitation-wording-digital-christmas-invitation.jpg',
+    description: 'Christmas party invitation wording for friends, family dinners, Christmas Eve, Secret Santa and work — plus a digital invitation that opens like a front door.',
+  },
+  {
+    title: 'New Year Party Invitation Messages & New Year’s Eve Wording for 2027',
+    category: 'Festivals',
+    keyword: 'new year party invitation message',
+    date: '2026-10-03',
+    slug: 'new-year-party-invitation-message-new-years-eve-invitation-wording',
+    metaTitle: 'New Year Party Invitation Message & NYE Wording (2027)',
+    image: '/blog/new-year-party-invitation-message-new-years-eve-invitation-wording.jpg',
+    description: '40+ New Year party invitation messages and New Year’s Eve wording for friends, family and work — funny, short and Hindi — plus an invitation with fireworks.',
   },
 ]
 

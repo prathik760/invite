@@ -749,3 +749,56 @@ body.js-animate [data-reveal='unveil'].is-visible { clip-path: inset(0 0 0 0); }
 /* Country pricing: outside India the static HTML's INR figure stays hidden
    until <Price> swaps in the visitor's own currency (components/price/Price.tsx). */
 html[data-cc] [data-price='inr'] { visibility: hidden; }
+
+/* Confetti burst (components/marketing/ConfettiBurst.tsx): out like a popper,
+   then tumbling down and fading. Offsets come from each piece's --dx/--dy. */
+.si-confetti {
+  position: absolute;
+  opacity: 0;
+  animation-name: si-confetti;
+  animation-fill-mode: forwards;
+  will-change: transform, opacity;
+}
+@keyframes si-confetti {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(0.4); animation-timing-function: cubic-bezier(0.12, 0.75, 0.3, 1); }
+  38% { opacity: 1; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(calc(var(--rot) * 0.45)) scale(1); animation-timing-function: cubic-bezier(0.45, 0, 0.8, 0.6); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx) * 1.25), calc(-50% + var(--dy) + var(--fall))) rotate(var(--rot)) scale(0.9); }
+}
+
+/* Offer bar (components/marketing/PromoBar.tsx). The root layout's inline
+   script sets data-promo-bar="off" before the first paint once the visitor has
+   closed it or the offer has ended, so it never flashes or shifts the page. */
+html[data-promo-bar='off'] .si-promo-bar { display: none; }
+.si-promo-bar__shine, .si-shine {
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 236, 190, 0.2) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: si-shine 5.5s ease-in-out 1.2s infinite;
+}
+@keyframes si-shine {
+  0% { transform: translateX(-100%); }
+  40%, 100% { transform: translateX(100%); }
+}
+.si-twinkle { animation: si-twinkle 2.4s ease-in-out infinite; }
+@keyframes si-twinkle {
+  0%, 100% { opacity: 0.6; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.1) rotate(45deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .si-promo-bar__shine, .si-shine, .si-twinkle { animation: none; }
+}
+
+/* While the sticky offer bar is on the page, sticky headers and in-page jumps
+   sit below it. 2.75rem = the bar's h-11. */
+html:has(.si-promo-bar):not([data-promo-bar='off']) {
+  --promo-bar-h: 2.75rem;
+  scroll-padding-top: var(--promo-bar-h);
+}
+
+/* Gold focus rings on the maroon offer surfaces (offer bar, promo popup), and
+   each control keeps its own rounding instead of the global 8px. */
+.si-gilt :is(a, button):focus-visible { outline-color: #E8C866; }
+.si-gilt .rounded-full:focus-visible { border-radius: 9999px; }
+.si-gilt .rounded-xl:focus-visible { border-radius: 0.75rem; }

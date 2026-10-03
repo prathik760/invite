@@ -25,6 +25,7 @@ const TEMPLATE_IDS = [
   'baby-shower', 'first-birthday', 'haldi-mehendi', 'sangeet-night', 'pooja-invite', 'diwali-party', 'eid-milan', 'retirement',
   'save-the-date',
   'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch', 'birthday-gala',
+  'dasara-ambari', 'christmas-evergreen', 'newyear-midnight',
 ] as const
 
 const TEMPLATE_IMAGES: Record<string, string> = Object.fromEntries(

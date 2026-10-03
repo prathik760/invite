@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import BottomDock from '@/components/ui/BottomDock'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { LogoMark } from '@/components/brand/Logo'
@@ -22,7 +23,7 @@ export default function StickyCTA({
   label = 'Start creating',
 }: {
   pageType?: string
-  title?: string
+  title?: ReactNode
   sub?: string
   href?: string
   label?: string

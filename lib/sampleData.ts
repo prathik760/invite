@@ -42,6 +42,9 @@ const SAMPLE_RSVP: Record<string, string> = {
   'birthday-gala': '+44 7700 900218',
 }
 
+/** Navaratri 2026 begins 11 October; Ayudha Puja 19, Vijayadashami 20, Jamboo Savari 21. */
+const DASARA_2026 = { navaratri: '2026-10-11', main: '2026-10-20', last: '2026-10-21', days: ['2026-10-11', '2026-10-19', '2026-10-20', '2026-10-21'] }
+
 /** yyyy-mm-dd plus `n` days. */
 function addDays(iso: string, n: number): string {
   const [y, m, d] = iso.split('-').map(Number)
@@ -77,6 +80,39 @@ export function withSampleDates(templateId: string, data: Record<string, string>
         return cells.join(' | ')
       })
       .join('\n')
+  }
+  if (templateId === 'dasara-ambari') {
+    // The real 2026 dates while they are ahead; after that the same weekdays
+    // 52 weeks on, so the countdown and the colour of the day keep working.
+    let shift = 0
+    while (addDays(DASARA_2026.last, shift) < isoInDays(0)) shift += 364
+    if (!out.date) out.date = addDays(DASARA_2026.main, shift)
+    if (!out.navratriStart) out.navratriStart = addDays(DASARA_2026.navaratri, shift)
+    out.days = (out.days || '')
+      .split('\n')
+      .filter((l) => l.trim())
+      .map((line, i) => {
+        const cells = line.split('|').map((c) => c.trim())
+        while (cells.length < 4) cells.push('')
+        if (!cells[1] && DASARA_2026.days[i]) cells[1] = addDays(DASARA_2026.days[i], shift)
+        return cells.join(' | ')
+      })
+      .join('\n')
+    if (!out.rsvpPhone && !out.rsvpEmail) out.rsvpEmail = 'ananya.rao@example.com'
+  }
+  if (templateId === 'christmas-evergreen') {
+    // Christmas Eve, this year's while it is ahead.
+    const t = new Date()
+    const year = t.getMonth() === 11 && t.getDate() > 24 ? t.getFullYear() + 1 : t.getFullYear()
+    if (!out.date) out.date = `${year}-12-24`
+    if (!out.rsvpBy) out.rsvpBy = `${year}-12-10` < isoInDays(0) ? '' : `${year}-12-10`
+    if (!out.rsvpPhone && !out.rsvpEmail) out.rsvpPhone = '+44 7700 900634'
+  }
+  if (templateId === 'newyear-midnight') {
+    const year = new Date().getFullYear()
+    if (!out.date) out.date = `${year}-12-31`
+    if (!out.rsvpBy) out.rsvpBy = `${year}-12-20` < isoInDays(0) ? '' : `${year}-12-20`
+    if (!out.rsvpPhone && !out.rsvpEmail) out.rsvpPhone = '+1 212 555 0186'
   }
   if (!out.date) out.date = isoInDays(46)
   if (templateId === 'luxury-wedding') {

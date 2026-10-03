@@ -1,12 +1,11 @@
-import { LOWEST_PAID_PRICE, templatePrice } from '@/lib/plans'
+import { LOWEST_PAID_PRICE, getRequiredPlan, templatePrice } from '@/lib/plans'
+import { checkCoupon, type Coupon } from '@/lib/coupons'
 
 /**
  * Seasonal promotion config — the single place to turn a campaign on or off.
  *
  * ── On the "offer" framing ───────────────────────────────────────────────────
- * `originalPrice` is intentionally null. There is no discount mechanism
- * anywhere in this codebase: the Ganesh Chaturthi template launched at ₹99
- * and has never carried another price.
+ * `originalPrice` stays null unless a design's own price really drops.
  * Showing "~~₹199~~ ₹99" would invent a reference price that never existed —
  * misleading advertising under the Consumer Protection Act 2019, and "false
  * urgency" under the CCPA's Guidelines for Prevention and Regulation of Dark
@@ -17,6 +16,10 @@ import { LOWEST_PAID_PRICE, templatePrice } from '@/lib/plans'
  * shows the saving and a countdown automatically. Until then it leads with
  * claims that are true and still strong: lowest-priced premium template,
  * one-time payment, preview before you pay.
+ *
+ * A discount code (lib/coupons.ts) is a real discount with a real end date:
+ * set `coupon` and the popup shows the price with the code, struck through
+ * against the normal price, and its CTA carries the code into the builder.
  */
 export interface Promo {
   /** Master switch. */
@@ -24,12 +27,25 @@ export interface Promo {
   templateId: string
   /** Real pre-sale price. null = no sale running; no strike-through is shown. */
   originalPrice: number | null
+  /** A discount code from lib/coupons.ts the popup advertises, or null. */
+  coupon: string | null
+  /**
+   * Pages the popup may appear on, or null for every page outside the funnel.
+   * '/' means the home page only; other entries match as prefixes.
+   */
+  onlyOn: string[] | null
   /**
    * Real end of the campaign, ISO date. Drives the countdown.
    * Set this to the actual festival date — it is deliberately left null rather
    * than guessed, because a countdown to a wrong date is worse than none.
    */
   endsAt: string | null
+  /**
+   * A visitor's first time on the site: open the popup this long after they
+   * land rather than waiting for a scroll. null = scroll for everyone.
+   * Returning visitors always get it on scroll.
+   */
+  firstVisitDelayMs: number | null
   /** Scroll depth (0–1) that triggers the popup. */
   triggerAtScroll: number
   /**
@@ -59,6 +75,20 @@ export interface Promo {
    * the id makes a switch a single, self-consistent edit.
    */
   copy: PromoCopy
+  /** The slim offer bar above the header on every page (PromoBar), or null for none. */
+  bar: PromoBarCopy | null
+}
+
+export interface PromoBarCopy {
+  /** Small caps label, shown on wider screens. */
+  eyebrow: string
+  /** What is on offer, for phones: keep it to a word or two. */
+  short: string
+  /** The same, for wider screens. */
+  long: string
+  cta: string
+  /** Days a closed bar stays hidden. */
+  snoozeDays: number
 }
 
 export interface PromoCopy {
@@ -73,28 +103,42 @@ export interface PromoCopy {
   /** Accent pair taken from the template's own palette. */
   accent: string
   accentSoft: string
+  /** The darkest shade of the accent, for the popup's lower edge. */
+  accentDeep?: string
 }
 
 export const PROMO: Promo = {
-  // Off: Ganesh Chaturthi (14–25 Sep 2026) has passed. To run the next
-  // festival, point templateId and copy at it and switch this back on.
-  enabled: false,
-  templateId: 'ganesh-chaturthi',
+  // Wedding-season launch of Rajwada with the ROYAL20 code (lib/coupons.ts):
+  // the popup on a first visit and on scroll after that, plus the offer bar on
+  // every page. Both end on their own when the code does.
+  enabled: true,
+  templateId: 'signature-rajwada',
   originalPrice: null,
-  endsAt: null,
+  coupon: 'ROYAL20',
+  onlyOn: null,
+  endsAt: '2026-12-31T23:59:59+05:30',
+  firstVisitDelayMs: 2500,
   triggerAtScroll: 0.2,
   alsoTriggerAtBottom: true,
   shortPageDelayMs: 6000,
   snoozeDays: 7,
   copy: {
-    eyebrow: 'Ganesh Chaturthi',
-    headline: 'Bring everyone home for darshan',
-    body: 'Send family, neighbours and the mandal one link that holds the sthapana muhurat, every evening\u2019s aarti time, the visarjan day and a map to your mandap \u2014 plus a wishes wall the whole family can sign.',
-    features: ['Sthapana countdown', 'Utsav schedule', 'Visarjan day & map', 'Wishes & blessings'],
-    cta: 'Make our Ganpati page \u2192',
-    imageAlt: 'Ganesh Chaturthi Premium invitation template',
-    accent: '#E4761B',
-    accentSoft: '#F0A32A',
+    eyebrow: 'Wedding season offer',
+    headline: 'Open the palace gates for your guests',
+    body: 'Our royal palace wedding suite: the gates open onto every function of the week, both families, travel and stay for guests and a WhatsApp RSVP — all on one link.',
+    features: ['Palace gates opening', 'A card for every function', 'Travel, stay & FAQs', 'WhatsApp RSVP'],
+    cta: 'Start my Rajwada invitation →',
+    imageAlt: 'Rajwada royal palace wedding invitation design',
+    accent: '#8A2E35',
+    accentSoft: '#C9A45C',
+    accentDeep: '#2A0710',
+  },
+  bar: {
+    eyebrow: 'Wedding season',
+    short: 'Rajwada',
+    long: 'Rajwada royal palace suite',
+    cta: 'Claim',
+    snoozeDays: 2,
   },
 }
 
@@ -156,3 +200,58 @@ export const PROMO_EXCLUDED_PREFIXES = [
   '/demo',
   '/pricing',
 ]
+
+/** The campaign's discount code, while it is live and covers the promoted design. */
+export function promoCoupon(): Coupon | null {
+  if (!PROMO.coupon) return null
+  const check = checkCoupon(PROMO.coupon, getRequiredPlan(PROMO.templateId).id)
+  return check.ok ? check.coupon : null
+}
+
+/** Whether the popup belongs on this page. */
+export function promoAllowedOn(pathname: string | null): boolean {
+  if (!pathname || PROMO_EXCLUDED_PREFIXES.some((p) => pathname.startsWith(p))) return false
+  return !PROMO.onlyOn || PROMO.onlyOn.some((p) => (p === '/' ? pathname === '/' : pathname.startsWith(p)))
+}
+
+// ─── First visit ─────────────────────────────────────────────────────────────
+
+const SEEN_KEY = 'si-visited'
+let firstVisit: boolean | null = null
+
+/**
+ * Whether this page load is the visitor's first time on the site. Decided once
+ * per load and remembered, so moving to a second page in the same visit, or
+ * coming back tomorrow, counts as returning.
+ */
+export function isFirstVisit(): boolean {
+  if (firstVisit !== null) return firstVisit
+  try {
+    firstVisit = !window.localStorage.getItem(SEEN_KEY)
+    if (firstVisit) window.localStorage.setItem(SEEN_KEY, String(Date.now()))
+  } catch {
+    // Storage blocked: there is no way to know, so treat them as returning
+    // and let the scroll decide, rather than opening it on every page.
+    firstVisit = false
+  }
+  return firstVisit
+}
+
+// ─── Offer bar ───────────────────────────────────────────────────────────────
+
+/** Read by the root layout's pre-paint script and written by PromoBar's close button. */
+export const PROMO_BAR_DISMISS_KEY = 'si-promo-bar-dismissed'
+
+/** Pages that keep the offer bar off: the builder, guests' invitations, account and demo screens. */
+export const PROMO_BAR_EXCLUDED_PREFIXES = ['/create', '/e/', '/admin', '/demo', '/auth', '/dashboard']
+
+export function promoBarAllowedOn(pathname: string | null): boolean {
+  return !!pathname && !PROMO_BAR_EXCLUDED_PREFIXES.some((p) => pathname.startsWith(p))
+}
+
+export function snoozePromoBar() {
+  try {
+    window.localStorage.setItem(PROMO_BAR_DISMISS_KEY, String(Date.now() + (PROMO.bar?.snoozeDays ?? 2) * 24 * 60 * 60 * 1000))
+  } catch { /* private mode: it hides for this page only */ }
+  document.documentElement.setAttribute('data-promo-bar', 'off')
+}

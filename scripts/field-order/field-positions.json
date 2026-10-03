@@ -2718,5 +2718,305 @@
     "via": "text"
    }
   ]
+ },
+ "dasara-ambari": {
+  "height": 4998,
+  "fields": [
+   {
+    "key": "hostNames",
+    "y": -99780,
+    "via": "cover"
+   },
+   {
+    "key": "title",
+    "y": 90,
+    "via": "text"
+   },
+   {
+    "key": "greeting",
+    "y": 27,
+    "via": "text"
+   },
+   {
+    "key": "familyPhoto",
+    "y": 782,
+    "via": "attr"
+   },
+   {
+    "key": "guestLine",
+    "y": -99957,
+    "via": "cover"
+   },
+   {
+    "key": "date",
+    "y": 138,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 138,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 170,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 2688,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 1701,
+    "via": "text"
+   },
+   {
+    "key": "days",
+    "y": 1345,
+    "via": "text"
+   },
+   {
+    "key": "navratriStart",
+    "y": 1805,
+    "via": "text"
+   },
+   {
+    "key": "colours",
+    "y": 1781,
+    "via": "text"
+   },
+   {
+    "key": "rsvpPhone",
+    "y": null
+   },
+   {
+    "key": "rsvpEmail",
+    "y": null
+   },
+   {
+    "key": "bombeStory",
+    "y": 2252,
+    "via": "text"
+   },
+   {
+    "key": "banniWish",
+    "y": null
+   },
+   {
+    "key": "galleryImages",
+    "y": 2319,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1028,
+    "via": "text"
+   }
+  ]
+ },
+ "christmas-evergreen": {
+  "height": 4348,
+  "fields": [
+   {
+    "key": "hostNames",
+    "y": -99976,
+    "via": "cover"
+   },
+   {
+    "key": "title",
+    "y": 52,
+    "via": "text"
+   },
+   {
+    "key": "tagline",
+    "y": 95,
+    "via": "text"
+   },
+   {
+    "key": "stockings",
+    "y": 608,
+    "via": "text"
+   },
+   {
+    "key": "familyPhoto",
+    "y": 574,
+    "via": "attr"
+   },
+   {
+    "key": "guestLine",
+    "y": -99390,
+    "via": "cover"
+   },
+   {
+    "key": "date",
+    "y": 139,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 140,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 170,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 800,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 2444,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1234,
+    "via": "text"
+   },
+   {
+    "key": "menu",
+    "y": 1487,
+    "via": "text"
+   },
+   {
+    "key": "santaBudget",
+    "y": null
+   },
+   {
+    "key": "santaNote",
+    "y": null
+   },
+   {
+    "key": "rsvpPhone",
+    "y": null
+   },
+   {
+    "key": "rsvpEmail",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 2929,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 2123,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 866,
+    "via": "text"
+   }
+  ]
+ },
+ "newyear-midnight": {
+  "height": 4715,
+  "fields": [
+   {
+    "key": "hostNames",
+    "y": -99745,
+    "via": "cover"
+   },
+   {
+    "key": "title",
+    "y": 262,
+    "via": "text"
+   },
+   {
+    "key": "guestLine",
+    "y": -99848,
+    "via": "cover"
+   },
+   {
+    "key": "date",
+    "y": 312,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 312,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 343,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 2814,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 2573,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1248,
+    "via": "text"
+   },
+   {
+    "key": "afterNote",
+    "y": 3085,
+    "via": "text"
+   },
+   {
+    "key": "rsvpPhone",
+    "y": null
+   },
+   {
+    "key": "rsvpEmail",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 3278,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 2083,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 867,
+    "via": "text"
+   }
+  ]
  }
 }

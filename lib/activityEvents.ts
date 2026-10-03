@@ -11,7 +11,7 @@
  */
 export const ACTIVITY_KEYS = [
   // design
-  'template_id', 'template_name', 'template_category', 'price', 'plan', 'value', 'currency',
+  'template_id', 'template_name', 'template_category', 'price', 'plan', 'value', 'currency', 'coupon',
   // builder
   'step', 'step_name', 'requires_payment', 'trigger', 'method', 'reason',
   // placement
@@ -23,7 +23,7 @@ export const ACTIVITY_KEYS = [
 ] as const
 
 /** Page-address query parameters kept on a page view; the rest (wording text, tokens) are not. */
-export const ACTIVITY_QUERY_KEYS = ['template', 'occasion', 'category', 'plan'] as const
+export const ACTIVITY_QUERY_KEYS = ['template', 'occasion', 'category', 'plan', 'code'] as const
 
 /** Paths the journal never records: guests' invitations, the live-preview frame, and the admin. */
 export function isUntrackedPath(path: string): boolean {

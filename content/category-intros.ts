@@ -24,6 +24,8 @@ export const BLOG_CATEGORY_INTRO: Record<string, string> = {
     'Godh Bharai, Seemantham, Valaikappu or a modern baby shower — each carries different rituals and a different tone. These guides cover what to write for each, how much detail to include about the ceremony, and how to invite family who may be travelling to attend.',
   'Digital Invitations':
     'A digital invitation is a live page, not a picture of a card. These guides cover what that changes in practice: putting maps and schedules where guests can find them, collecting replies, keeping the page fast on Indian mobile networks, and sharing it so guests actually open it.',
+  Festivals:
+    'Festivals bring people home — for ten days of dolls and pooja, for one long dinner by the fire, or for a single night that runs past midnight. These guides cover festival invitation wording you can copy in English and Indian languages, the dates and customs worth putting on an invitation, and how to send one that opens with something to remember.',
   'Invitation Ideas':
     'Wording, etiquette and design ideas that apply across occasions — anniversaries, naming ceremonies, corporate events and family gatherings. Start here when you know what you want to say but not quite how to say it.',
 }

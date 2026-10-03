@@ -12,7 +12,8 @@ import { displayName } from '@/lib/catalog'
 import { ArrowRightIcon, CheckIcon, ShieldIcon } from '@/components/ui/Icons'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
 import { useLocalPrice } from '@/components/price/Price'
-import { paymentMethods } from '@/lib/pricing'
+import { discountedPrice, paymentMethods } from '@/lib/pricing'
+import { useCoupon } from '@/lib/useCoupon'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -48,7 +49,10 @@ export default function Step5Publish({
   const userHasAccess = canAccess(selectedTemplate.id, userPlan)
   const mustPay = !userHasAccess
   const name = displayName(selectedTemplate.name)
-  const local = useLocalPrice(requiredPlan.price)
+  const listPrice = useLocalPrice(requiredPlan.price)
+  // After the visitor's discount code, when it covers this design (lib/coupons.ts).
+  const coupon = useCoupon(requiredPlan.id).applied
+  const local = coupon ? discountedPrice(listPrice, coupon.percentOff) : listPrice
   const price = local.label
 
   return (
@@ -126,7 +130,9 @@ export default function Step5Publish({
             </div>
             <div className="text-right">
               <p className="font-editorial text-[2rem] font-semibold leading-none">{mustPay ? price : 'Owned'}</p>
-              <p className="mt-1 text-[0.72rem] text-muted">{mustPay ? 'one-time' : 'already yours'}</p>
+              <p className="mt-1 text-[0.72rem] text-muted">
+                {!mustPay ? 'already yours' : coupon ? <><s>{listPrice.label}</s> · {coupon.code}</> : 'one-time'}
+              </p>
             </div>
           </div>
 

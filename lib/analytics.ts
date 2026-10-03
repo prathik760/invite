@@ -65,6 +65,10 @@ export const seoEvents = {
   checkoutError: 'checkout_error',
   /** Money may have left the account but the server could not confirm it. */
   paymentFailed: 'payment_failed',
+  /** A discount code (lib/coupons.ts) taken up, from a campaign link or typed at checkout. */
+  couponApplied: 'coupon_applied',
+  /** A typed code that did not work; `reason` says why. */
+  couponRejected: 'coupon_rejected',
 
   // ─── Promotions ──────────────────────────────────────────────────────────
   // promoView fires when the popup is actually shown, not when it mounts, so

@@ -48,8 +48,9 @@ export default function SiteHeader({
 
   return (
     <header
-      className="sticky top-0 border-b border-line bg-champagne/95 backdrop-blur-xl"
-      style={{ zIndex: 'var(--z-sticky-header)' as unknown as number }}
+      className="sticky border-b border-line bg-champagne/95 backdrop-blur-xl"
+      // Below the sticky offer bar while one is showing (components/marketing/PromoBar).
+      style={{ zIndex: 'var(--z-sticky-header)' as unknown as number, top: 'var(--promo-bar-h, 0px)' }}
     >
       {/* Below 360px (small Androids, iPhone SE 1st gen) logo + CTA + menu need
           ~35px more than the row has, so the menu button was squeezed to 17px.

@@ -248,12 +248,30 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#C9A04E', rgb: '201,160,78',
     image: '/templates/birthday-gala.jpg',
   },
+  'dasara-ambari': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M3 16.5h14M4.5 16.5v-5h11v5M7.5 11.5V8.5h5v3M10 3v1.6M8 8.5c0-2.4 1-3.6 2-4 1 .4 2 1.6 2 4" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /><circle cx="6" cy="14" r=".7" fill="currentColor" /><circle cx="14" cy="14" r=".7" fill="currentColor" /></svg>,
+    gradient: 'linear-gradient(135deg, #26114F 0%, #E9B949 100%)',
+    color: '#E9B949', rgb: '233,185,73',
+    image: '/templates/dasara-ambari.jpg',
+  },
+  'christmas-evergreen': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2.5l1 2 2.2.2-1.7 1.4.6 2.1L10 7l-2.1 1.2.6-2.1L6.8 4.7 9 4.5zM10 8.5l4.5 6h-9zM10 11.5l5.5 5h-11zM10 16.5v1.5" stroke="currentColor" strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #0F3324 0%, #B3122E 100%)',
+    color: '#B3122E', rgb: '179,18,46',
+    image: '/templates/christmas-evergreen.jpg',
+  },
+  'newyear-midnight': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><circle cx="10" cy="11" r="6.5" stroke="currentColor" strokeWidth={1.4} /><path d="M10 7.5V11l2.2 1.4M8.5 2.5h3M10 2.5v2" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #07070C 0%, #D8B25A 100%)',
+    color: '#D8B25A', rgb: '216,178,90',
+    image: '/templates/newyear-midnight.jpg',
+  },
 }
 
 export const DARK_TEMPLATES = new Set([
   'cinematic-night', 'kgf-wedding', 'royal-deco', 'luxury-wedding', 'anniversary', 'indian-birthday',
   'surprise-journey', 'signature-nikah', 'sangeet-night', 'diwali-party', 'retirement',
-  'birthday-mirrorball', 'birthday-martini', 'birthday-gala',
+  'birthday-mirrorball', 'birthday-martini', 'birthday-gala', 'dasara-ambari', 'christmas-evergreen', 'newyear-midnight',
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose',
   'greeting-promise', 'greeting-congratulations', 'greeting-festival', 'greeting-family',
   'greeting-friendship',
