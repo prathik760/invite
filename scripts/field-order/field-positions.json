@@ -1,0 +1,2722 @@
+{
+ "elegant-wedding": {
+  "height": 3450,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": 287,
+    "via": "text"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 117,
+    "via": "attr"
+   },
+   {
+    "key": "groomName",
+    "y": 371,
+    "via": "text"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 117,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 587,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 638,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 716,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 744,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 787,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1226,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1502,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 954,
+    "via": "text"
+   }
+  ]
+ },
+ "cinematic-night": {
+  "height": 3378,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": 148,
+    "via": "text"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 831,
+    "via": "attr"
+   },
+   {
+    "key": "groomName",
+    "y": 228,
+    "via": "text"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 831,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 435,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 467,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 467,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1409,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 1292,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1756,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1959,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 642,
+    "via": "text"
+   }
+  ]
+ },
+ "indian-wedding": {
+  "height": 3844,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": 597,
+    "via": "text"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 451,
+    "via": "attr"
+   },
+   {
+    "key": "groomName",
+    "y": 678,
+    "via": "text"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 451,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 790,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 821,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 915,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 950,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 993,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1466,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1659,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1233,
+    "via": "text"
+   }
+  ]
+ },
+ "indian-engagement": {
+  "height": 3504,
+  "fields": [
+   {
+    "key": "partner1Name",
+    "y": 433,
+    "via": "text"
+   },
+   {
+    "key": "partner1Photo",
+    "y": 90,
+    "via": "attr"
+   },
+   {
+    "key": "partner2Name",
+    "y": 512,
+    "via": "text"
+   },
+   {
+    "key": "partner2Photo",
+    "y": 90,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 659,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 682,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 735,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 761,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 800,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1173,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1324,
+    "via": "attr"
+   },
+   {
+    "key": "message",
+    "y": 962,
+    "via": "text"
+   }
+  ]
+ },
+ "indian-birthday": {
+  "height": 3223,
+  "fields": [
+   {
+    "key": "celebrantName",
+    "y": 145,
+    "via": "text"
+   },
+   {
+    "key": "celebrantPhoto",
+    "y": 84,
+    "via": "attr"
+   },
+   {
+    "key": "age",
+    "y": 190,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 502,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 499,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 537,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1147,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "theme",
+    "y": 391,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1663,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1868,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 692,
+    "via": "text"
+   }
+  ]
+ },
+ "griha-pravesh": {
+  "height": 3698,
+  "fields": [
+   {
+    "key": "hostNames",
+    "y": 412,
+    "via": "text"
+   },
+   {
+    "key": "hostPhoto",
+    "y": 839,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 611,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 644,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 710,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 755,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "pooja",
+    "y": 1278,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1343,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1587,
+    "via": "attr"
+   },
+   {
+    "key": "message",
+    "y": 1030,
+    "via": "text"
+   }
+  ]
+ },
+ "namakaran": {
+  "height": 2977,
+  "fields": [
+   {
+    "key": "babyName",
+    "y": 408,
+    "via": "text"
+   },
+   {
+    "key": "babyPhoto",
+    "y": 117,
+    "via": "attr"
+   },
+   {
+    "key": "babyGender",
+    "y": null
+   },
+   {
+    "key": "parentNames",
+    "y": 315,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 517,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 546,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 546,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 942,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "schedule",
+    "y": 1460,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1622,
+    "via": "attr"
+   },
+   {
+    "key": "message",
+    "y": 1239,
+    "via": "text"
+   }
+  ]
+ },
+ "kgf-wedding": {
+  "height": 3391,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": 225,
+    "via": "text"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 1007,
+    "via": "attr"
+   },
+   {
+    "key": "groomName",
+    "y": 133,
+    "via": "text"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 858,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 439,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 479,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 505,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1984,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 2139,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 2255,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1335,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 629,
+    "via": "text"
+   },
+   {
+    "key": "coupleStory",
+    "y": 1274,
+    "via": "text"
+   },
+   {
+    "key": "groomFamilyDetails",
+    "y": 938,
+    "via": "text"
+   },
+   {
+    "key": "brideFamilyDetails",
+    "y": 1087,
+    "via": "text"
+   }
+  ]
+ },
+ "royal-deco": {
+  "height": 4309,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": 298,
+    "via": "text"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 863,
+    "via": "attr"
+   },
+   {
+    "key": "groomName",
+    "y": 203,
+    "via": "text"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 863,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 495,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 638,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 667,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 2403,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 2508,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 2190,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 2893,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1603,
+    "via": "text"
+   },
+   {
+    "key": "coupleStory",
+    "y": 1931,
+    "via": "text"
+   },
+   {
+    "key": "groomFamilyDetails",
+    "y": 1085,
+    "via": "text"
+   },
+   {
+    "key": "brideFamilyDetails",
+    "y": 1225,
+    "via": "text"
+   }
+  ]
+ },
+ "anniversary": {
+  "height": 3599,
+  "fields": [
+   {
+    "key": "coupleNames",
+    "y": 62,
+    "via": "text"
+   },
+   {
+    "key": "couplePhoto",
+    "y": 521,
+    "via": "attr"
+   },
+   {
+    "key": "years",
+    "y": 62,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 1027,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 1071,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 1187,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1221,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 1258,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1819,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 2080,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1575,
+    "via": "text"
+   }
+  ]
+ },
+ "luxury-wedding": {
+  "height": 4488,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": -99765,
+    "via": "cover"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 244,
+    "via": "attr"
+   },
+   {
+    "key": "groomName",
+    "y": -99765,
+    "via": "cover"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 244,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": -99598,
+    "via": "cover"
+   },
+   {
+    "key": "time",
+    "y": -99421,
+    "via": "cover"
+   },
+   {
+    "key": "venue",
+    "y": -99400,
+    "via": "cover"
+   },
+   {
+    "key": "venueAddress",
+    "y": -99400,
+    "via": "cover"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "mehendiDate",
+    "y": 1646,
+    "via": "text"
+   },
+   {
+    "key": "mehendiTime",
+    "y": 1593,
+    "via": "text"
+   },
+   {
+    "key": "mehendiVenue",
+    "y": 1618,
+    "via": "text"
+   },
+   {
+    "key": "haldiDate",
+    "y": 2034,
+    "via": "text"
+   },
+   {
+    "key": "haldiTime",
+    "y": 1981,
+    "via": "text"
+   },
+   {
+    "key": "haldiVenue",
+    "y": 2005,
+    "via": "text"
+   },
+   {
+    "key": "sangeetDate",
+    "y": 1316,
+    "via": "text"
+   },
+   {
+    "key": "sangeetTime",
+    "y": 1263,
+    "via": "text"
+   },
+   {
+    "key": "sangeetVenue",
+    "y": 1287,
+    "via": "text"
+   },
+   {
+    "key": "receptionDate",
+    "y": 1481,
+    "via": "text"
+   },
+   {
+    "key": "receptionTime",
+    "y": 1428,
+    "via": "text"
+   },
+   {
+    "key": "receptionVenue",
+    "y": 1453,
+    "via": "text"
+   },
+   {
+    "key": "whatsappNumber",
+    "y": null
+   },
+   {
+    "key": "brideFamily",
+    "y": 2266,
+    "via": "text"
+   },
+   {
+    "key": "groomFamily",
+    "y": 2383,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 2547,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": -99380,
+    "via": "cover"
+   }
+  ]
+ },
+ "rakshabandhan": {
+  "height": 3008,
+  "fields": [
+   {
+    "key": "sisterName",
+    "y": 309,
+    "via": "text"
+   },
+   {
+    "key": "brotherName",
+    "y": 309,
+    "via": "text"
+   },
+   {
+    "key": "heroImage",
+    "y": 569,
+    "via": "attr"
+   },
+   {
+    "key": "tagline",
+    "y": 34,
+    "via": "text"
+   },
+   {
+    "key": "title",
+    "y": 204,
+    "via": "text"
+   },
+   {
+    "key": "subtitle",
+    "y": 255,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 370,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 404,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 443,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 472,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "story",
+    "y": 968,
+    "via": "text"
+   },
+   {
+    "key": "timeline",
+    "y": 1190,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1423,
+    "via": "attr"
+   },
+   {
+    "key": "sampleWishes",
+    "y": null
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   }
+  ]
+ },
+ "ganesh-chaturthi": {
+  "height": 3999,
+  "fields": [
+   {
+    "key": "hostNames",
+    "y": 497,
+    "via": "text"
+   },
+   {
+    "key": "idolImage",
+    "y": 42,
+    "via": "attr"
+   },
+   {
+    "key": "tagline",
+    "y": 315,
+    "via": "text"
+   },
+   {
+    "key": "title",
+    "y": 352,
+    "via": "text"
+   },
+   {
+    "key": "subtitle",
+    "y": 399,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 622,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 682,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 774,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 805,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "pooja",
+    "y": 1730,
+    "via": "text"
+   },
+   {
+    "key": "visarjanDate",
+    "y": 1977,
+    "via": "text"
+   },
+   {
+    "key": "visarjanTime",
+    "y": 2008,
+    "via": "text"
+   },
+   {
+    "key": "dressCode",
+    "y": 1806,
+    "via": "text"
+   },
+   {
+    "key": "invocation",
+    "y": 917,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1293,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 2389,
+    "via": "attr"
+   },
+   {
+    "key": "sampleWishes",
+    "y": null
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1028,
+    "via": "text"
+   }
+  ]
+ },
+ "signature-rajwada": {
+  "height": 6482,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": -99869,
+    "via": "cover"
+   },
+   {
+    "key": "groomName",
+    "y": -99756,
+    "via": "cover"
+   },
+   {
+    "key": "couplePhoto",
+    "y": 763,
+    "via": "attr"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 1082,
+    "via": "attr"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 1389,
+    "via": "attr"
+   },
+   {
+    "key": "brideParents",
+    "y": 1327,
+    "via": "text"
+   },
+   {
+    "key": "groomParents",
+    "y": 1635,
+    "via": "text"
+   },
+   {
+    "key": "invocation",
+    "y": -99971,
+    "via": "cover"
+   },
+   {
+    "key": "blessings",
+    "y": 1765,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": -99670,
+    "via": "cover"
+   },
+   {
+    "key": "time",
+    "y": -99612,
+    "via": "cover"
+   },
+   {
+    "key": "venue",
+    "y": -99569,
+    "via": "cover"
+   },
+   {
+    "key": "venueAddress",
+    "y": 3557,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 3629,
+    "via": "text"
+   },
+   {
+    "key": "events",
+    "y": 2125,
+    "via": "text"
+   },
+   {
+    "key": "travel",
+    "y": 3917,
+    "via": "text"
+   },
+   {
+    "key": "contacts",
+    "y": 4211,
+    "via": "text"
+   },
+   {
+    "key": "whatsappNumber",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 4668,
+    "via": "text"
+   },
+   {
+    "key": "story",
+    "y": 2527,
+    "via": "text"
+   },
+   {
+    "key": "faq",
+    "y": 4432,
+    "via": "text"
+   },
+   {
+    "key": "hashtag",
+    "y": 5242,
+    "via": "text"
+   },
+   {
+    "key": "livestreamUrl",
+    "y": null
+   },
+   {
+    "key": "galleryImages",
+    "y": 2776,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 691,
+    "via": "text"
+   }
+  ]
+ },
+ "signature-kalyanam": {
+  "height": 6161,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": -99794,
+    "via": "cover"
+   },
+   {
+    "key": "groomName",
+    "y": -99718,
+    "via": "cover"
+   },
+   {
+    "key": "couplePhoto",
+    "y": 735,
+    "via": "attr"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 1078,
+    "via": "attr"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 1318,
+    "via": "attr"
+   },
+   {
+    "key": "brideParents",
+    "y": 1251,
+    "via": "text"
+   },
+   {
+    "key": "groomParents",
+    "y": 1491,
+    "via": "text"
+   },
+   {
+    "key": "invocation",
+    "y": -99829,
+    "via": "cover"
+   },
+   {
+    "key": "blessings",
+    "y": 1631,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": -99643,
+    "via": "cover"
+   },
+   {
+    "key": "time",
+    "y": -99596,
+    "via": "cover"
+   },
+   {
+    "key": "venue",
+    "y": -99539,
+    "via": "cover"
+   },
+   {
+    "key": "venueAddress",
+    "y": -99515,
+    "via": "cover"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 3382,
+    "via": "text"
+   },
+   {
+    "key": "events",
+    "y": 1921,
+    "via": "text"
+   },
+   {
+    "key": "travel",
+    "y": 3646,
+    "via": "text"
+   },
+   {
+    "key": "contacts",
+    "y": 3851,
+    "via": "text"
+   },
+   {
+    "key": "whatsappNumber",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 4313,
+    "via": "text"
+   },
+   {
+    "key": "story",
+    "y": 2380,
+    "via": "text"
+   },
+   {
+    "key": "faq",
+    "y": 4032,
+    "via": "text"
+   },
+   {
+    "key": "hashtag",
+    "y": 4908,
+    "via": "text"
+   },
+   {
+    "key": "livestreamUrl",
+    "y": null
+   },
+   {
+    "key": "galleryImages",
+    "y": 2644,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 665,
+    "via": "text"
+   }
+  ]
+ },
+ "signature-nikah": {
+  "height": 5989,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": -99788,
+    "via": "cover"
+   },
+   {
+    "key": "groomName",
+    "y": -99788,
+    "via": "cover"
+   },
+   {
+    "key": "couplePhoto",
+    "y": 783,
+    "via": "attr"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 1232,
+    "via": "attr"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 1493,
+    "via": "attr"
+   },
+   {
+    "key": "brideParents",
+    "y": 1409,
+    "via": "text"
+   },
+   {
+    "key": "groomParents",
+    "y": 1670,
+    "via": "text"
+   },
+   {
+    "key": "invocation",
+    "y": -99883,
+    "via": "cover"
+   },
+   {
+    "key": "blessings",
+    "y": 1794,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": -99571,
+    "via": "cover"
+   },
+   {
+    "key": "time",
+    "y": -99535,
+    "via": "cover"
+   },
+   {
+    "key": "venue",
+    "y": -99491,
+    "via": "cover"
+   },
+   {
+    "key": "venueAddress",
+    "y": -99460,
+    "via": "cover"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 3649,
+    "via": "text"
+   },
+   {
+    "key": "events",
+    "y": 2196,
+    "via": "text"
+   },
+   {
+    "key": "travel",
+    "y": 3745,
+    "via": "text"
+   },
+   {
+    "key": "contacts",
+    "y": 3856,
+    "via": "text"
+   },
+   {
+    "key": "whatsappNumber",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 4304,
+    "via": "text"
+   },
+   {
+    "key": "story",
+    "y": 2716,
+    "via": "text"
+   },
+   {
+    "key": "faq",
+    "y": 4053,
+    "via": "text"
+   },
+   {
+    "key": "hashtag",
+    "y": 4726,
+    "via": "text"
+   },
+   {
+    "key": "livestreamUrl",
+    "y": null
+   },
+   {
+    "key": "galleryImages",
+    "y": 3011,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1170,
+    "via": "text"
+   }
+  ]
+ },
+ "signature-garden": {
+  "height": 5732,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": -99791,
+    "via": "cover"
+   },
+   {
+    "key": "groomName",
+    "y": -99791,
+    "via": "cover"
+   },
+   {
+    "key": "couplePhoto",
+    "y": -99830,
+    "via": "cover"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 1038,
+    "via": "attr"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 1038,
+    "via": "attr"
+   },
+   {
+    "key": "brideParents",
+    "y": -99639,
+    "via": "cover"
+   },
+   {
+    "key": "groomParents",
+    "y": -99624,
+    "via": "cover"
+   },
+   {
+    "key": "invocation",
+    "y": -99664,
+    "via": "cover"
+   },
+   {
+    "key": "blessings",
+    "y": 1342,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": -99772,
+    "via": "cover"
+   },
+   {
+    "key": "time",
+    "y": -99598,
+    "via": "cover"
+   },
+   {
+    "key": "venue",
+    "y": -99732,
+    "via": "cover"
+   },
+   {
+    "key": "venueAddress",
+    "y": -99591,
+    "via": "cover"
+   },
+   {
+    "key": "destination",
+    "y": -99786,
+    "via": "cover"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 1511,
+    "via": "text"
+   },
+   {
+    "key": "events",
+    "y": 1684,
+    "via": "text"
+   },
+   {
+    "key": "travel",
+    "y": 2124,
+    "via": "text"
+   },
+   {
+    "key": "contacts",
+    "y": 3423,
+    "via": "text"
+   },
+   {
+    "key": "whatsappNumber",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 3992,
+    "via": "text"
+   },
+   {
+    "key": "story",
+    "y": 2601,
+    "via": "text"
+   },
+   {
+    "key": "faq",
+    "y": 3306,
+    "via": "text"
+   },
+   {
+    "key": "hashtag",
+    "y": 4419,
+    "via": "text"
+   },
+   {
+    "key": "livestreamUrl",
+    "y": null
+   },
+   {
+    "key": "registryUrl",
+    "y": null
+   },
+   {
+    "key": "galleryImages",
+    "y": 2788,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1253,
+    "via": "text"
+   }
+  ]
+ },
+ "baby-shower": {
+  "height": 2988,
+  "fields": [
+   {
+    "key": "motherName",
+    "y": 278,
+    "via": "text"
+   },
+   {
+    "key": "motherPhoto",
+    "y": 952,
+    "via": "attr"
+   },
+   {
+    "key": "hostNames",
+    "y": 224,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 476,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 517,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 585,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 616,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 654,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1437,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1622,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1178,
+    "via": "text"
+   }
+  ]
+ },
+ "first-birthday": {
+  "height": 2858,
+  "fields": [
+   {
+    "key": "celebrantName",
+    "y": 441,
+    "via": "text"
+   },
+   {
+    "key": "celebrantPhoto",
+    "y": 264,
+    "via": "attr"
+   },
+   {
+    "key": "age",
+    "y": 44,
+    "via": "text"
+   },
+   {
+    "key": "parentNames",
+    "y": 542,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 685,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 751,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 836,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 866,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "theme",
+    "y": 409,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1362,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1527,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1116,
+    "via": "text"
+   }
+  ]
+ },
+ "haldi-mehendi": {
+  "height": 3986,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": 76,
+    "via": "text"
+   },
+   {
+    "key": "groomName",
+    "y": 76,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 456,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 531,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 591,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1166,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "mehendiDate",
+    "y": 456,
+    "via": "text"
+   },
+   {
+    "key": "mehendiTime",
+    "y": 531,
+    "via": "text"
+   },
+   {
+    "key": "mehendiVenue",
+    "y": 1634,
+    "via": "text"
+   },
+   {
+    "key": "dressCode",
+    "y": 1869,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 2097,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 2273,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 761,
+    "via": "text"
+   }
+  ]
+ },
+ "sangeet-night": {
+  "height": 3476,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": 756,
+    "via": "text"
+   },
+   {
+    "key": "groomName",
+    "y": 756,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 497,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 523,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 555,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1927,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 1105,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": null
+   },
+   {
+    "key": "hashtag",
+    "y": 2220,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1304,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 710,
+    "via": "text"
+   }
+  ]
+ },
+ "pooja-invite": {
+  "height": 3079,
+  "fields": [
+   {
+    "key": "poojaName",
+    "y": 155,
+    "via": "text"
+   },
+   {
+    "key": "hostNames",
+    "y": 68,
+    "via": "text"
+   },
+   {
+    "key": "hostPhoto",
+    "y": 741,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 453,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 485,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 485,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1355,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "pooja",
+    "y": 608,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1154,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1735,
+    "via": "attr"
+   },
+   {
+    "key": "message",
+    "y": 887,
+    "via": "text"
+   }
+  ]
+ },
+ "diwali-party": {
+  "height": 3162,
+  "fields": [
+   {
+    "key": "hostNames",
+    "y": 244,
+    "via": "text"
+   },
+   {
+    "key": "title",
+    "y": 309,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 377,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 377,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 402,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1088,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 1129,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1474,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1682,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 673,
+    "via": "text"
+   }
+  ]
+ },
+ "eid-milan": {
+  "height": 3388,
+  "fields": [
+   {
+    "key": "hostNames",
+    "y": 413,
+    "via": "text"
+   },
+   {
+    "key": "title",
+    "y": 471,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 532,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 532,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 557,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1174,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 1215,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1598,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1818,
+    "via": "attr"
+   },
+   {
+    "key": "message",
+    "y": 740,
+    "via": "text"
+   }
+  ]
+ },
+ "retirement": {
+  "height": 3054,
+  "fields": [
+   {
+    "key": "honoreeName",
+    "y": 292,
+    "via": "text"
+   },
+   {
+    "key": "honoreePhoto",
+    "y": 97,
+    "via": "attr"
+   },
+   {
+    "key": "milestone",
+    "y": 345,
+    "via": "text"
+   },
+   {
+    "key": "hostNames",
+    "y": 229,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 429,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 466,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 466,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1398,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "schedule",
+    "y": 1172,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1781,
+    "via": "attr"
+   },
+   {
+    "key": "message",
+    "y": 960,
+    "via": "text"
+   }
+  ]
+ },
+ "save-the-date": {
+  "height": 2285,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": 128,
+    "via": "text"
+   },
+   {
+    "key": "groomName",
+    "y": 158,
+    "via": "text"
+   },
+   {
+    "key": "couplePhoto",
+    "y": 42,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 234,
+    "via": "text"
+   },
+   {
+    "key": "city",
+    "y": 463,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 438,
+    "via": "text"
+   },
+   {
+    "key": "followNote",
+    "y": 501,
+    "via": "text"
+   },
+   {
+    "key": "websiteUrl",
+    "y": null
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 639,
+    "via": "text"
+   }
+  ]
+ },
+ "birthday-mirrorball": {
+  "height": 3763,
+  "fields": [
+   {
+    "key": "celebrantName",
+    "y": 326,
+    "via": "text"
+   },
+   {
+    "key": "age",
+    "y": 349,
+    "via": "text"
+   },
+   {
+    "key": "invitedBy",
+    "y": 1781,
+    "via": "text"
+   },
+   {
+    "key": "celebrantPhoto",
+    "y": 1993,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 300,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 513,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 513,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1072,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "theme",
+    "y": 486,
+    "via": "text"
+   },
+   {
+    "key": "dressCode",
+    "y": 1141,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1587,
+    "via": "text"
+   },
+   {
+    "key": "guestNote",
+    "y": 1294,
+    "via": "text"
+   },
+   {
+    "key": "giftNote",
+    "y": 1827,
+    "via": "text"
+   },
+   {
+    "key": "rsvpPhone",
+    "y": null
+   },
+   {
+    "key": "rsvpEmail",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 2460,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 2078,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1735,
+    "via": "text"
+   }
+  ]
+ },
+ "birthday-martini": {
+  "height": 3552,
+  "fields": [
+   {
+    "key": "celebrantName",
+    "y": 390,
+    "via": "text"
+   },
+   {
+    "key": "age",
+    "y": 432,
+    "via": "text"
+   },
+   {
+    "key": "invitedBy",
+    "y": 1532,
+    "via": "text"
+   },
+   {
+    "key": "celebrantPhoto",
+    "y": 1799,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 228,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 228,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 474,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 1201,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "theme",
+    "y": 174,
+    "via": "text"
+   },
+   {
+    "key": "dressCode",
+    "y": 920,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 848,
+    "via": "text"
+   },
+   {
+    "key": "guestNote",
+    "y": 968,
+    "via": "text"
+   },
+   {
+    "key": "giftNote",
+    "y": 1710,
+    "via": "text"
+   },
+   {
+    "key": "rsvpPhone",
+    "y": null
+   },
+   {
+    "key": "rsvpEmail",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 2257,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1800,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1492,
+    "via": "text"
+   }
+  ]
+ },
+ "birthday-champagne": {
+  "height": 3890,
+  "fields": [
+   {
+    "key": "celebrantName",
+    "y": 219,
+    "via": "text"
+   },
+   {
+    "key": "age",
+    "y": 154,
+    "via": "text"
+   },
+   {
+    "key": "invitedBy",
+    "y": 129,
+    "via": "text"
+   },
+   {
+    "key": "celebrantPhoto",
+    "y": 1972,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 462,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 515,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 552,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 963,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "theme",
+    "y": 741,
+    "via": "text"
+   },
+   {
+    "key": "dressCode",
+    "y": 1040,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1300,
+    "via": "text"
+   },
+   {
+    "key": "guestNote",
+    "y": 1180,
+    "via": "text"
+   },
+   {
+    "key": "giftNote",
+    "y": 1825,
+    "via": "text"
+   },
+   {
+    "key": "rsvpPhone",
+    "y": null
+   },
+   {
+    "key": "rsvpEmail",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 2386,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1972,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1729,
+    "via": "text"
+   }
+  ]
+ },
+ "birthday-long-lunch": {
+  "height": 3478,
+  "fields": [
+   {
+    "key": "celebrantName",
+    "y": 266,
+    "via": "text"
+   },
+   {
+    "key": "age",
+    "y": 342,
+    "via": "text"
+   },
+   {
+    "key": "invitedBy",
+    "y": 1438,
+    "via": "text"
+   },
+   {
+    "key": "celebrantPhoto",
+    "y": 1614,
+    "via": "attr"
+   },
+   {
+    "key": "date",
+    "y": 451,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 482,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 482,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 994,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "theme",
+    "y": 238,
+    "via": "text"
+   },
+   {
+    "key": "dressCode",
+    "y": 1117,
+    "via": "text"
+   },
+   {
+    "key": "schedule",
+    "y": 1273,
+    "via": "text"
+   },
+   {
+    "key": "guestNote",
+    "y": 1158,
+    "via": "text"
+   },
+   {
+    "key": "giftNote",
+    "y": 1513,
+    "via": "text"
+   },
+   {
+    "key": "rsvpPhone",
+    "y": null
+   },
+   {
+    "key": "rsvpEmail",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 2156,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 1613,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1391,
+    "via": "text"
+   }
+  ]
+ },
+ "birthday-gala": {
+  "height": 4398,
+  "fields": [
+   {
+    "key": "celebrantName",
+    "y": -99674,
+    "via": "cover"
+   },
+   {
+    "key": "age",
+    "y": -99650,
+    "via": "cover"
+   },
+   {
+    "key": "invitedBy",
+    "y": -99762,
+    "via": "cover"
+   },
+   {
+    "key": "celebrantPhoto",
+    "y": 1708,
+    "via": "attr"
+   },
+   {
+    "key": "envelopeLine",
+    "y": -99623,
+    "via": "cover"
+   },
+   {
+    "key": "date",
+    "y": 438,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": null
+   },
+   {
+    "key": "venue",
+    "y": null
+   },
+   {
+    "key": "venueAddress",
+    "y": null
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "theme",
+    "y": 414,
+    "via": "text"
+   },
+   {
+    "key": "city",
+    "y": 494,
+    "via": "text"
+   },
+   {
+    "key": "events",
+    "y": 896,
+    "via": "text"
+   },
+   {
+    "key": "dressCode",
+    "y": 1239,
+    "via": "text"
+   },
+   {
+    "key": "palette",
+    "y": null
+   },
+   {
+    "key": "travel",
+    "y": 2181,
+    "via": "text"
+   },
+   {
+    "key": "faq",
+    "y": 2275,
+    "via": "text"
+   },
+   {
+    "key": "contacts",
+    "y": 2370,
+    "via": "text"
+   },
+   {
+    "key": "rsvpPhone",
+    "y": null
+   },
+   {
+    "key": "rsvpEmail",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 2846,
+    "via": "text"
+   },
+   {
+    "key": "story",
+    "y": 1606,
+    "via": "text"
+   },
+   {
+    "key": "giftNote",
+    "y": 2570,
+    "via": "text"
+   },
+   {
+    "key": "registryUrl",
+    "y": null
+   },
+   {
+    "key": "galleryImages",
+    "y": 1901,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1377,
+    "via": "text"
+   }
+  ]
+ }
+}

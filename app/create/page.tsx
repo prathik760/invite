@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
@@ -14,6 +14,7 @@ import BottomDock from '@/components/ui/BottomDock'
 import PaymentProblem, { type PayError } from '@/components/create/PaymentProblem'
 import { supportWhatsAppUrl } from '@/lib/support'
 import { carryOverDetails } from '@/lib/carryOver'
+import { usePreviewFollow } from '@/lib/usePreviewFollow'
 
 import StepProgress from '@/components/create/StepProgress'
 import Step1Templates from '@/components/create/Step1Templates'
@@ -34,6 +35,38 @@ const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { s
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 const DRAFT_KEY = 'invitely-draft'
+/** A signed-out buyer's purchase pass (lib/purchasePass.ts), kept so a reload can still publish. */
+const PASS_KEY = 'si_purchase_pass'
+/** Invitations published from this device, so a buyer without an account can find them again. */
+const MINE_KEY = 'si_my_invitations'
+
+type TemplateDef = (typeof TEMPLATES)[number]
+const hasText = (v: unknown): v is string => typeof v === 'string' && v.trim() !== ''
+
+/**
+ * The form starts empty — people type into blank fields instead of deleting
+ * sample text first. The preview fills every field they have not touched yet
+ * with the design's sample, so it always looks finished while they work.
+ */
+function withSample(tpl: TemplateDef, data: Record<string, string>): Record<string, string> {
+  return { ...tpl.config.defaultData, ...Object.fromEntries(Object.entries(data).filter(([, v]) => hasText(v))) }
+}
+
+/** Exactly what gets published: only what was typed. Sample text never goes live. */
+function toPublish(tpl: TemplateDef, data: Record<string, string>): Record<string, string> {
+  const out: Record<string, string> = { ...tpl.config.defaultData }
+  for (const f of tpl.config.fields) out[f.key] = typeof data[f.key] === 'string' ? data[f.key] : ''
+  return out
+}
+
+const WHEN_WHERE = new Set(['date', 'time', 'venue', 'venueAddress', 'destination', 'mapsUrl', 'dressCode', 'theme', 'pooja', 'visarjanDate', 'visarjanTime', 'whatsappNumber'])
+/** The builder step a field is edited on (mirrors FormEditor's grouping). */
+function stepOfField(f: TemplateDef['config']['fields'][number]): 2 | 3 | 4 {
+  if (f.group) return f.section === 'enrich' ? 4 : f.section === 'details' ? 3 : 2
+  if (f.key === 'schedule' || WHEN_WHERE.has(f.key)) return 3
+  if (f.key === 'galleryImages' || f.key === 'musicUrl' || f.key === 'message') return 4
+  return 2
+}
 
 function Spinner() {
   return (
@@ -74,35 +107,6 @@ function ModalFrame({ onClose, children, label }: { onClose: () => void; childre
         {children}
       </motion.div>
     </motion.div>
-  )
-}
-
-// ─── Login prompt modal ────────────────────────────────────────────────────────
-function LoginPromptModal({ onClose, onContinueAsGuest }: { onClose: () => void; onContinueAsGuest: () => void }) {
-  return (
-    <ModalFrame onClose={onClose} label="Sign in to publish">
-      <LogoMark className="h-12 w-12" />
-      <p className="eyebrow mt-5">Almost there</p>
-      <h2 className="t-h2 mt-2">Sign in to publish</h2>
-      <p className="mt-3 text-[0.95rem] leading-7 text-charcoal/70">
-        Your design and details are saved. An account keeps your invitation, your purchase and your guests&apos; wishes together.
-      </p>
-      <div className="mt-7 space-y-2.5">
-        <Link href="/auth/login?callbackUrl=/create"
-          className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[0.95rem] font-semibold">
-          Sign in to my account
-        </Link>
-        <Link href="/auth/signup?callbackUrl=/create"
-          className="btn-outline flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[0.95rem] font-semibold">
-          Create an account
-        </Link>
-      </div>
-      <div className="mt-5 border-t border-line pt-4 text-center">
-        <button type="button" onClick={onContinueAsGuest} className="text-[0.82rem] text-muted underline-offset-4 transition-colors hover:text-charcoal hover:underline">
-          Continue without an account — the invitation won&apos;t be saved to a dashboard
-        </button>
-      </div>
-    </ModalFrame>
   )
 }
 
@@ -164,24 +168,20 @@ function UpgradeModal({
         </div>
       )}
 
+      {/* No account needed to pay: Razorpay asks for a phone and email, and the
+          purchase is kept on the account for that email. Signing in stays
+          available for anyone who already has one. */}
       <div className="mt-6">
-        {!isLoggedIn ? (
-          <div className="space-y-2">
-            <Link href="/auth/login?callbackUrl=/create"
-              className="btn-primary flex w-full items-center justify-center rounded-full py-4 text-[0.95rem] font-semibold">
-              Sign in to get this design
-            </Link>
-            <p className="text-center text-[0.82rem] text-muted">
-              New here?{' '}
-              <Link href="/auth/signup?callbackUrl=/create" className="link">Create an account</Link>
-            </p>
-          </div>
-        ) : (
-          <button type="button" onClick={() => onPay(requiredPlan.id)} disabled={paying}
-            className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-4 text-[1rem] font-semibold disabled:opacity-60">
-            {paying && <Spinner />}
-            {paying ? 'Opening secure payment…' : `Pay ${price} — one time`}
-          </button>
+        <button type="button" onClick={() => onPay(requiredPlan.id)} disabled={paying}
+          className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-4 text-[1rem] font-semibold disabled:opacity-60">
+          {paying && <Spinner />}
+          {paying ? 'Opening secure payment…' : `Pay ${price} & publish`}
+        </button>
+        {!isLoggedIn && (
+          <p className="mt-2.5 text-center text-[0.8rem] text-muted">
+            No account needed.{' '}
+            <Link href="/auth/login?callbackUrl=/create" className="link">Have one? Sign in</Link>
+          </p>
         )}
       </div>
 
@@ -258,7 +258,24 @@ export default function CreatePage() {
   }, [])
   const [selectedId, setSelectedId] = useState(TEMPLATES[0].id)
   const selectedTemplate = TEMPLATES.find(t => t.id === selectedId) ?? TEMPLATES[0]
-  const [data, setData] = useState<Record<string, string>>(selectedTemplate.config.defaultData)
+  // What the host has typed. Starts empty; see withSample / toPublish.
+  const [data, setData] = useState<Record<string, string>>({})
+  const previewData = useMemo(() => withSample(selectedTemplate, data), [selectedTemplate, data])
+  const publishData = useMemo(() => toPublish(selectedTemplate, data), [selectedTemplate, data])
+  const missingRequired = useMemo(
+    () => selectedTemplate.config.fields.filter((f) => f.required && !hasText(data[f.key])),
+    [selectedTemplate, data],
+  )
+  // A signed-out buyer's proof of payment, sent with the publish request.
+  const [pass, setPass] = useState<string | null>(null)
+  useEffect(() => {
+    try { setPass(localStorage.getItem(PASS_KEY)) } catch { /* private mode */ }
+  }, [])
+  // Each design remembers what was typed into it, so trying another design and
+  // coming back never loses the first one's details.
+  const draftsRef = useRef<Record<string, Record<string, string>>>({})
+  const [switched, setSwitched] = useState<{ from: string; to: string } | null>(null)
+  const switchedTimer = useRef<number | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [createdSlug, setCreatedSlug] = useState<string | null>(null)
@@ -270,7 +287,6 @@ export default function CreatePage() {
   // structured error so the UI can show the payment reference, a retry and a
   // route to a human instead.
   const [payError, setPayError] = useState<PayError | null>(null)
-  const [showLoginPrompt, setShowLoginPrompt] = useState(false)
   const [savedToast, setSavedToast] = useState(false)
   // Blocks the autosave effect until the stored draft has been read back, so
   // the default form values cannot clobber it on first paint.
@@ -287,7 +303,7 @@ export default function CreatePage() {
       // invitation"): the copied words become the design's personal message.
       const message = (params.get('message') ?? '').trim().slice(0, 600)
       const hasMessageField = tpl.config.fields.some((f) => f.key === 'message')
-      setData(message && hasMessageField ? { ...tpl.config.defaultData, message } : tpl.config.defaultData)
+      setData(message && hasMessageField ? { message } : {})
       setCurrentStep(2)
     }
     // Fires once per arrival at the builder. Previously nothing was recorded
@@ -329,9 +345,10 @@ export default function CreatePage() {
     try {
       const raw = localStorage.getItem(DRAFT_KEY)
       if (raw) {
-        const draft = JSON.parse(raw) as { templateId: string; data: Record<string, string>; step?: number }
+        const draft = JSON.parse(raw) as { templateId: string; data: Record<string, string>; step?: number; others?: Record<string, Record<string, string>> }
         const tpl = TEMPLATES.find(t => t.id === draft.templateId)
         if (tpl && draft.data) {
+          draftsRef.current = draft.others ?? {}
           setSelectedId(draft.templateId)
           setData(draft.data)
           setCurrentStep(Math.min(Math.max(draft.step ?? 2, 1), 4))
@@ -348,7 +365,7 @@ export default function CreatePage() {
   useEffect(() => {
     if (!draftLoaded || createdSlug) return
     try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data, step: currentStep }))
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data, step: currentStep, others: draftsRef.current }))
     } catch { /* quota or private mode — autosave is best-effort */ }
   }, [draftLoaded, selectedId, data, currentStep, createdSlug])
 
@@ -358,11 +375,20 @@ export default function CreatePage() {
     if (id === selectedId) return
     const tpl = TEMPLATES.find(t => t.id === id) ?? TEMPLATES[0]
     const prev = TEMPLATES.find(t => t.id === selectedId)
+    const typedSomething = Object.values(data).some(hasText)
+    if (typedSomething) draftsRef.current = { ...draftsRef.current, [selectedId]: data }
     setSelectedId(id)
-    // Keep what the user typed (names, date, venue…) wherever the new design
-    // has the same kind of field, so designs can be compared with real details.
-    setData(carryOverDetails(prev, data, tpl))
+    // Back to a design already worked on: everything typed into it returns.
+    // A new one starts with whatever carries over (names, date, venue…).
+    const saved = draftsRef.current[id]
+    setData(saved ?? carryOverDetails(prev, data, tpl))
     setError('')
+    // A design changed under a stray tap must be one tap from coming back.
+    if (typedSomething) {
+      setSwitched({ from: selectedId, to: id })
+      if (switchedTimer.current) window.clearTimeout(switchedTimer.current)
+      switchedTimer.current = window.setTimeout(() => setSwitched(null), 7000)
+    }
     trackEvent(seoEvents.templateView, {
       template_id: tpl.id,
       template_name: tpl.name,
@@ -393,10 +419,36 @@ export default function CreatePage() {
   const stepStack = useRef<number[]>([])
   const baseStep = useRef(1)
   const pendingStep = useRef<number | null>(null)
+  // True while a Back is travelling through history. Safari shows the new step
+  // only when popstate arrives, and each extra tap meanwhile went back one more
+  // entry — four taps on "Edit details" landed on the design picker, where the
+  // last tap picked a different design.
+  const goingBack = useRef(false)
+  const priceSeenFor = useRef<string | null>(null)
+
+  // The input box in use. Each preview scrolls to that field on the design.
+  const [focusKey, setFocusKey] = useState<string | null>(null)
+  const desktopPreviewRef = useRef<HTMLDivElement>(null)
+  const mobilePreviewRef = useRef<HTMLDivElement>(null)
+  const stripScreenRef = useRef<HTMLDivElement>(null)
+  const trackField = (e: React.SyntheticEvent) => {
+    const key = (e.target as HTMLElement).closest?.('[data-field]')?.getAttribute('data-field')
+    if (key) setFocusKey(key)
+  }
+  // For a moment after each step change, taps are ignored. A second tap on
+  // "Edit details" otherwise lands on whatever the next step has in the same
+  // place — "Change design" — and from there on a design card.
+  const [tapShield, setTapShield] = useState(false)
+  useEffect(() => {
+    setTapShield(true)
+    const t = window.setTimeout(() => setTapShield(false), 800)
+    return () => window.clearTimeout(t)
+  }, [currentStep])
   const currentStepRef = useRef(currentStep)
   currentStepRef.current = currentStep
   useEffect(() => {
     const onPop = () => {
+      goingBack.current = false
       const state = window.history.state
       if (state?.__siOverlay) return
       let target: number
@@ -425,11 +477,14 @@ export default function CreatePage() {
     // Only a forward move completes the step you were on. Going Back must not
     // record a completion, or the funnel inflates every time someone edits.
     if (step < currentStep) {
+      if (goingBack.current) return
       // Unwind the entries for the steps being left, so Back and the on-page
       // Back button stay in step; the popstate handler shows the step.
       const above = stepStack.current.filter((s) => s > step).length
       if (above > 0) {
         if (step < baseStep.current || stepStack.current.length === above) pendingStep.current = step
+        goingBack.current = true
+        window.setTimeout(() => { goingBack.current = false }, 3000)
         window.history.go(-above)
         return
       }
@@ -449,22 +504,32 @@ export default function CreatePage() {
     }
     setCurrentStep(step)
     scrollToStepTop()
+    // Step 5 shows the price and the pay button — that is when the price is
+    // seen, whether or not they press Pay.
+    if (step === 5 && priceSeenFor.current !== selectedId) {
+      priceSeenFor.current = selectedId
+      trackEvent(seoEvents.paywallView, {
+        template_id: selectedId,
+        template_name: selectedTemplate.name,
+        plan: getRequiredPlan(selectedId).id,
+        price: getRequiredPlan(selectedId).price,
+      })
+    }
     if (step > 1) {
       setSavedToast(true)
       setTimeout(() => setSavedToast(false), 2200)
     }
   }
 
-  const doCreate = async () => {
-    const required = selectedTemplate.config.fields.filter(f => f.required)
-    const missing = required.filter(f => !data[f.key]?.trim())
-    if (missing.length > 0) { setError(`Please fill in: ${missing.map(f => f.label).join(', ')}`); return }
+  const doCreate = async (passOverride?: string) => {
+    if (missingRequired.length > 0) { setError(`Please fill in: ${missingRequired.map(f => f.label).join(', ')}`); return }
     setLoading(true); setError('')
+    const purchasePass = passOverride ?? pass
     try {
       const res = await fetch('/api/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ templateId: selectedTemplate.id, data }),
+        body: JSON.stringify({ templateId: selectedTemplate.id, data: publishData, ...(!session && purchasePass ? { pass: purchasePass } : {}) }),
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({})) as { error?: string; code?: string }
@@ -480,7 +545,12 @@ export default function CreatePage() {
       const { slug } = await res.json() as { slug: string }
       // Published — drop the draft so the next visit starts clean instead of
       // reopening an invitation that already exists.
-      try { localStorage.removeItem(DRAFT_KEY) } catch { }
+      try {
+        localStorage.removeItem(DRAFT_KEY)
+        const mine = JSON.parse(localStorage.getItem(MINE_KEY) || '[]') as unknown[]
+        localStorage.setItem(MINE_KEY, JSON.stringify([{ slug, templateId: selectedTemplate.id, names: names ?? '', at: Date.now() }, ...mine].slice(0, 20)))
+      } catch { }
+      draftsRef.current = {}
       setCreatedSlug(slug)
       trackEvent(seoEvents.inviteCreation, {
         template_id: selectedTemplate.id,
@@ -505,17 +575,21 @@ export default function CreatePage() {
     setPreviewOpen(true)
   }
 
+  useEffect(() => {
+    if (currentStep < 2 || currentStep > 4) return
+    const id = requestAnimationFrame(() => {
+      const key = formPanelRef.current?.querySelector('[data-field]')?.getAttribute('data-field')
+      setFocusKey(key ?? null)
+    })
+    return () => cancelAnimationFrame(id)
+  }, [currentStep, selectedId])
+  usePreviewFollow([desktopPreviewRef, mobilePreviewRef, stripScreenRef], selectedId, focusKey, previewData, previewOpen)
+
   const requiredPlanForSelected = getRequiredPlan(selectedId)
   const selectedPrice = useLocalPrice(requiredPlanForSelected.price)
   const needsPayment = !canAccess(selectedId, userPlan)
 
   const openPaywall = () => {
-    trackEvent(seoEvents.paywallView, {
-      template_id: selectedId,
-      template_name: selectedTemplate.name,
-      plan: requiredPlanForSelected.id,
-      price: requiredPlanForSelected.price,
-    })
     setPayError(null)
     setUpgradeTarget({ templateId: selectedId, templateName: selectedTemplate.name })
   }
@@ -529,13 +603,15 @@ export default function CreatePage() {
       signed_in: !!session,
     })
 
-    if (!session) {
-      // No explicit save needed — the autosave effect above has already stored
-      // this draft, and it survives the round trip through sign-in.
-      trackEvent(seoEvents.signupStart, { trigger: 'publish', template_id: selectedId })
-      setShowLoginPrompt(true)
+    // Everything the design needs is checked before any money changes hands.
+    // It used to be checked after payment, so a missing date could stop a
+    // customer who had just paid.
+    if (missingRequired.length > 0) {
+      setError(`Please fill in: ${missingRequired.map(f => f.label).join(', ')}`)
       return
     }
+    // Signing in is optional. A signed-out buyer pays first; the purchase is
+    // kept on the account for the email they give Razorpay.
     // Was `getRequiredPlan(selectedId).price > 0`, which ignored what the user
     // had already bought — a paying customer was shown the upgrade modal again
     // on every publish and could never use the template they owned.
@@ -546,13 +622,6 @@ export default function CreatePage() {
     doCreate()
   }
 
-  const handleContinueAsGuest = () => {
-    setShowLoginPrompt(false)
-    // Every template is a purchase now, so a guest can never publish: the
-    // account is what the purchase attaches to, and the API rejects the request
-    // regardless. Send them to the paywall rather than into a failed create.
-    openPaywall()
-  }
 
   // The steps 2-4 form lives in its own `overflow-y-auto` panel, so
   // `window.scrollTo` never moved it: pressing Continue after scrolling down
@@ -600,7 +669,7 @@ export default function CreatePage() {
               method: 'POST', headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ ...response, plan: planId }),
             })
-            const verBody = await verRes.json() as { success?: boolean; error?: string; plan?: PlanId }
+            const verBody = await verRes.json() as { success?: boolean; error?: string; plan?: PlanId; pass?: string }
             if (verRes.ok && verBody.success) {
               // Fires only after the server verified the Razorpay signature and
               // amount — never on opening or dismissing the checkout sheet.
@@ -612,7 +681,12 @@ export default function CreatePage() {
               // not bounce the user back to the paywall they just paid at.
               setUserPlan(verBody.plan ?? planId)
               setUpgradeTarget(null)
-              setTimeout(() => doCreate(), 300)
+              if (verBody.pass) {
+                setPass(verBody.pass)
+                try { localStorage.setItem(PASS_KEY, verBody.pass) } catch { /* private mode */ }
+              }
+              const paidPass = verBody.pass
+              setTimeout(() => doCreate(paidPass), 300)
             } else {
               // The worst case in the whole flow: Razorpay may have taken the
               // money but we could not confirm it. Never a bare alert here —
@@ -727,7 +801,9 @@ export default function CreatePage() {
               (the "See the full design" button) clears the fixed bottom nav bar. */}
           <aside
             ref={formPanelRef}
-            className="w-full md:w-[380px] lg:w-[440px] xl:w-[480px] shrink-0 md:border-r border-line overflow-y-auto scrollbar-hide md:pb-0"
+            onFocusCapture={trackField}
+            onPointerDownCapture={trackField}
+            className="w-full md:w-[380px] lg:w-[440px] xl:w-[480px] shrink-0 md:border-r border-line overflow-y-auto scrollbar-hide md:pb-0 scroll-pt-[230px] md:scroll-pt-0"
             style={{
               background: '#FFFAF4',
               // dvh, not vh: on mobile Safari `100vh` is the *expanded* viewport,
@@ -749,6 +825,9 @@ export default function CreatePage() {
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-soft" /> Editing live
                 </p>
                 <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{selectedTemplate.name.split('—')[0].trim()}</p>
+                <p className="truncate text-[0.72rem] text-muted">
+                  {needsPayment ? <><span className="font-semibold text-charcoal">{selectedPrice.label}</span> · pay only when you publish</> : 'Already yours'}
+                </p>
               </div>
               <button
                 type="button"
@@ -757,6 +836,23 @@ export default function CreatePage() {
               >
                 Change design
               </button>
+            </div>
+
+            {/* Mobile: the invitation itself, pinned above the form as it
+                scrolls — the phone's version of the side-by-side preview. It
+                follows the box in use; tap it for full screen. */}
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => openMobilePreview()}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMobilePreview() } }}
+              className="sticky top-0 z-20 block w-full cursor-pointer pb-1 md:hidden"
+              style={{ background: '#FFFAF4', boxShadow: '0 8px 12px -10px rgba(44,32,28,0.25)' }}
+              aria-label="Open full-screen preview of your invitation"
+            >
+              {isDesktop === false && !previewOpen && (
+                <MobilePreviewStrip templateId={selectedId} data={previewData} isDark={isDark} color={tv.color} compact screenRef={stripScreenRef} />
+              )}
             </div>
 
             {/* Step content */}
@@ -789,33 +885,6 @@ export default function CreatePage() {
               />
             )}
 
-            {/* Mobile: inline mini-preview — tap to open the full live preview.
-                (role="button", not <button>, because the mini-preview contains its
-                own buttons — nested <button> is invalid HTML.) */}
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => openMobilePreview()}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMobilePreview() } }}
-              className="block w-full cursor-pointer md:hidden"
-              aria-label="Open full-screen preview of your invitation"
-            >
-              {isDesktop === false && !previewOpen && (
-                <MobilePreviewStrip
-                  templateId={selectedId}
-                  data={data}
-                  isDark={isDark}
-                  color={tv.color}
-                />
-              )}
-              <span className="btn-primary mx-4 mb-6 flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold">
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                See the full design
-              </span>
-            </div>
           </aside>
 
           {/* RIGHT: Live preview — desktop only */}
@@ -880,8 +949,8 @@ export default function CreatePage() {
 
                     <div className="overflow-hidden relative bg-paper"
                       style={{ borderRadius: 'clamp(22px, 10%, 36px)', height: 'min(590px, max(360px, calc(100dvh - 290px)))' }}>
-                      <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
-                        {isDesktop === true && <PreviewPane templateId={selectedId} data={data} />}
+                      <div ref={desktopPreviewRef} className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
+                        {isDesktop === true && <PreviewPane templateId={selectedId} data={previewData} />}
                       </div>
                       {!is3DTemplate(selectedId) && (
                         <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none z-10"
@@ -952,15 +1021,15 @@ export default function CreatePage() {
                   <div style={{ marginTop: '7px', width: '82px', height: '20px', background: '#1C1C1E', borderRadius: '10px' }} />
                 </div>
                 <div className="overflow-hidden bg-paper" style={{ borderRadius: 'clamp(20px, 9%, 32px)', height: 'calc(100dvh - 210px)' }}>
-                  <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
-                    {isDesktop === false && <PreviewPane templateId={selectedId} data={data} />}
+                  <div ref={mobilePreviewRef} className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
+                    {isDesktop === false && <PreviewPane templateId={selectedId} data={previewData} />}
                   </div>
                 </div>
                 <div className="flex justify-center" style={{ paddingTop: '7px', paddingBottom: '2px' }}>
                   <div style={{ width: '74px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.22)' }} />
                 </div>
               </div>
-              <p className="mt-4 text-center text-xs text-muted">This is exactly what your guests will see. Scroll to explore.</p>
+              <p className="mt-4 text-center text-xs text-muted">Sample words show until you add your own. Scroll to explore.</p>
             </div>
           </div>
         </div>
@@ -970,7 +1039,9 @@ export default function CreatePage() {
       {currentStep === 5 && (
         <Step5Publish
           selectedTemplate={selectedTemplate}
-          data={data}
+          data={publishData}
+          missing={missingRequired.map((f) => ({ label: f.label, step: stepOfField(f) }))}
+          onFix={(step: number) => goToStep(step)}
           userPlan={userPlan}
           session={session}
           loading={loading}
@@ -1050,7 +1121,7 @@ export default function CreatePage() {
           </button>
           {needsPayment && (
             <p className="mt-1.5 text-center text-[10px] leading-4 text-muted">
-              {!session ? 'Sign in first · ' : ''}Razorpay secured · {paymentMethods(selectedPrice.currency)} ·{' '}
+              No account needed · Razorpay secured · {paymentMethods(selectedPrice.currency)} ·{' '}
               <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline text-emerald-soft">
                 7-day refunds
               </Link>
@@ -1086,12 +1157,31 @@ export default function CreatePage() {
       </AnimatePresence>
 
       {/* ─── Modals ──────────────────────────────────────────────────────── */}
+      {tapShield && <div aria-hidden className="fixed inset-0" style={{ zIndex: 2147483000 }} />}
+
+      {/* ─── "Switched design — Undo" ───────────────────────────────────── */}
       <AnimatePresence>
-        {showLoginPrompt && (
-          <LoginPromptModal
-            onClose={() => setShowLoginPrompt(false)}
-            onContinueAsGuest={handleContinueAsGuest}
-          />
+        {switched && !createdSlug && (
+          <motion.div
+            initial={{ opacity: 0, y: 16, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 16, x: '-50%' }}
+            transition={{ duration: 0.25, ease: BEZIER }}
+            role="status"
+            className="fixed left-1/2 flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full bg-charcoal py-2 pl-4 pr-2 text-paper shadow-lg"
+            style={{ bottom: 'calc(var(--bottom-dock-h, 0px) + 14px)', zIndex: 'var(--z-overlay)' as unknown as number }}
+          >
+            <span className="truncate text-[0.85rem]">
+              Switched to {(TEMPLATES.find(t => t.id === switched.to)?.name ?? '').split('—')[0].trim()}
+            </span>
+            <button
+              type="button"
+              onClick={() => { const back = switched.from; setSwitched(null); handleTemplateChange(back); setSwitched(null) }}
+              className="shrink-0 rounded-full bg-paper px-3.5 py-1.5 text-[0.8rem] font-semibold text-charcoal"
+            >
+              Undo
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -1173,17 +1263,22 @@ export default function CreatePage() {
                       Go to my invitations
                     </Link>
                   ) : (
-                    <div className="flex items-start gap-3 rounded-2xl border border-line bg-peach/60 px-4 py-3.5">
-                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald text-paper">
-                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6} aria-hidden>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                        </svg>
-                      </span>
-                      <div className="flex-1">
-                        <p className="text-[0.88rem] font-semibold text-charcoal">Keep track of guest wishes</p>
-                        <p className="mt-0.5 text-[0.8rem] leading-5 text-charcoal/70">Create an account to manage your invitations in one place.</p>
-                        <Link href="/auth/signup" className="link mt-1.5 inline-flex text-[0.82rem]">
-                          Create an account
+                    <div className="rounded-2xl border border-line bg-peach/60 px-4 py-4">
+                      <p className="text-[0.88rem] font-semibold text-charcoal">Keep your link safe</p>
+                      <p className="mt-0.5 text-[0.8rem] leading-5 text-charcoal/70">
+                        It&apos;s saved on this phone. Send it to yourself too, and to see it in a dashboard later, sign in with Google using the email you paid with — optional.
+                      </p>
+                      <div className="mt-3 grid grid-cols-2 gap-2">
+                        <a
+                          href={`https://wa.me/?text=${encodeURIComponent(`My invitation: ${shareUrl}`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-outline flex items-center justify-center rounded-full py-2.5 text-[0.82rem] font-semibold"
+                        >
+                          Send to my WhatsApp
+                        </a>
+                        <Link href="/auth/login?callbackUrl=/dashboard" className="btn-outline flex items-center justify-center rounded-full py-2.5 text-[0.82rem] font-semibold">
+                          Save to my account
                         </Link>
                       </div>
                     </div>

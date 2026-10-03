@@ -9,7 +9,10 @@ import AnimateOnScroll from '@/components/AnimateOnScroll'
 // Imported directly, not lazily: it must be listening from hydration, or a
 // visitor who leaves within seconds is never recorded (lib/journal.ts).
 import JournalTracker from '@/components/providers/JournalTracker'
+// Also direct: in the UK and EU it has to ask before the trackers start.
+import CookieConsent from '@/components/providers/CookieConsent'
 import { hreflangAlternates } from '@/lib/i18n'
+import { consentBootScript } from '@/lib/consent'
 import { COUNTRY_COOKIE } from '@/lib/pricing'
 
 // The SocialProofNotification widget was removed here. It synthesised
@@ -226,6 +229,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // before React hydrates.
     <html lang="en" className={editorial.variable} suppressHydrationWarning>
       <head>
+        {/* Cookie consent (lib/consent.ts): first, so that in the UK, EU and
+            Switzerland every tracker below waits for the visitor's answer. */}
+        <script dangerouslySetInnerHTML={{ __html: consentBootScript() }} />
         {/* Country pricing (lib/pricing.ts): marks visitors outside India before
             the first paint, so the INR prices in the static HTML stay hidden
             until <Price> swaps in their own currency. */}
@@ -242,22 +248,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             script only once the page has loaded, so it never delays it. Skipped
             inside frames (the live-preview phone), and on the invitations guests
             open (/e/…): their addresses carry the hosts' names, and guests are
-            not the audience. Events are sent from lib/analytics.ts. */}
+            not the audience. Waits for consent where it is needed
+            (lib/consent.ts). Events are sent from lib/analytics.ts. */}
         {META_PIXEL_ID && (
           <script
             dangerouslySetInnerHTML={{
-              __html: `!function(w,d,id){if(w.fbq||w.top!==w||/^\\/e\\//.test(location.pathname))return;var n=w.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};w._fbq=w._fbq||n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];n('init',id);n('track','PageView');function l(){var s=d.createElement('script');s.async=!0;s.src='https://connect.facebook.net/en_US/fbevents.js';d.head.appendChild(s)}function i(){w.requestIdleCallback?w.requestIdleCallback(l,{timeout:3000}):setTimeout(l,1)}d.readyState==='complete'?i():w.addEventListener('load',i)}(window,document,'${META_PIXEL_ID}');`,
+              __html: `!function(w,d,id){if(!w.siConsent||w.top!==w||/^\\/e\\//.test(location.pathname))return;w.siConsent.run(function(){if(w.fbq)return;var n=w.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};w._fbq=w._fbq||n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];n('init',id);n('track','PageView');function l(){var s=d.createElement('script');s.async=!0;s.src='https://connect.facebook.net/en_US/fbevents.js';d.head.appendChild(s)}function i(){w.requestIdleCallback?w.requestIdleCallback(l,{timeout:3000}):setTimeout(l,1)}d.readyState==='complete'?i():w.addEventListener('load',i)})}(window,document,'${META_PIXEL_ID}');`,
             }}
           />
         )}
         {/* Microsoft Clarity: same rules as the pixel above, plus the admin pages
             and visitors who ask not to be tracked (Global Privacy Control). It
             masks every form field; the builder preview is masked in
-            PreviewPane. lib/analytics.ts tags each recording with funnel steps. */}
+            PreviewPane. Waits for consent where it is needed, and is then told
+            it was given (Clarity's consentv2). lib/analytics.ts tags each
+            recording with funnel steps. */}
         {CLARITY_ID && (
           <script
             dangerouslySetInnerHTML={{
-              __html: `!function(w,d,id){if(w.clarity||w.top!==w||navigator.globalPrivacyControl||/^\\/(e|admin)(\\/|$)/.test(location.pathname))return;w.clarity=function(){(w.clarity.q=w.clarity.q||[]).push(arguments)};function l(){var s=d.createElement('script');s.async=!0;s.src='https://www.clarity.ms/tag/'+id;d.head.appendChild(s)}function i(){w.requestIdleCallback?w.requestIdleCallback(l,{timeout:3000}):setTimeout(l,1)}d.readyState==='complete'?i():w.addEventListener('load',i)}(window,document,'${CLARITY_ID}');`,
+              __html: `!function(w,d,id){if(!w.siConsent||w.top!==w||navigator.globalPrivacyControl||/^\\/(e|admin)(\\/|$)/.test(location.pathname))return;w.siConsent.run(function(){if(w.clarity)return;w.clarity=function(){(w.clarity.q=w.clarity.q||[]).push(arguments)};if(w.siConsent.choice)w.clarity('consentv2',{ad_Storage:'granted',analytics_Storage:'granted'});function l(){var s=d.createElement('script');s.async=!0;s.src='https://www.clarity.ms/tag/'+id;d.head.appendChild(s)}function i(){w.requestIdleCallback?w.requestIdleCallback(l,{timeout:3000}):setTimeout(l,1)}d.readyState==='complete'?i():w.addEventListener('load',i)})}(window,document,'${CLARITY_ID}');`,
             }}
           />
         )}
@@ -281,6 +290,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnimateOnScroll />
         <SessionProvider>{children}</SessionProvider>
         <JournalTracker />
+        <CookieConsent />
         <WhatsAppButton />
         <ScrollPromo />
         {GTM_ID && (

@@ -82,3 +82,15 @@ model Activity {
   @@index([createdAt])
   @@index([userId])
 }
+
+// Uploads by signed-out visitors, counted per address per clock hour so every
+// server instance enforces the same limit (lib/uploadQuota.ts). The key is a
+// keyed hash of the address and the hour, never the address itself. Rows are
+// deleted by the daily cleanup once their hour is over.
+model UploadQuota {
+  key       String   @id
+  count     Int      @default(0)
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}

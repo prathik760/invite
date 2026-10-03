@@ -293,7 +293,7 @@ export function exitReason(rows: ActivityRow[]): Exit {
     const last = steps.reduce((a, b) => (Number(b.step) > Number(a.step) ? b : a))
     return exit('builder', `Left the builder after step ${last.step} (${str(last.step_name)})`)
   }
-  if (has('create_start')) return exit('builder_start', 'Opened the builder, left before finishing step 1')
+  if (has('create_start')) return exit('builder_start', 'Opened the builder, left without filling it in')
   if (has('sign_up')) return exit('signed_up', 'Created an account, then left without starting', 'neutral')
   if (has('support_contact')) return exit('support', 'Went to WhatsApp to talk to you', 'neutral')
   if (has('wording_copy')) return exit('wording', 'Copied a wording sample, then left', 'neutral')

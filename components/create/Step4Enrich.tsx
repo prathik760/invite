@@ -30,6 +30,7 @@ export default function Step4Enrich({
           filling in is locked only makes them doubt the purchase. */}
       <FormEditor
         key={selectedTemplate.id}
+        templateId={selectedTemplate.id}
         config={selectedTemplate.config}
         data={data}
         onChange={onChange}

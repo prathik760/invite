@@ -41,7 +41,12 @@ const EXT_MAP: Record<string, string> = {
   'audio/ogg': 'ogg',
 }
 
-export async function createPresignedUploadUrl(contentType: string, folder: 'gallery' | 'music' | 'portraits') {
+/**
+ * A short-lived URL the browser uploads one file to. `size` is signed into it,
+ * so storage rejects a body of any other length: the size limit checked by
+ * /api/upload holds for what is actually stored, not just what was declared.
+ */
+export async function createPresignedUploadUrl(contentType: string, folder: 'gallery' | 'music' | 'portraits', size: number) {
   const bucket = process.env.R2_BUCKET_NAME!
   const publicBase = process.env.NEXT_PUBLIC_R2_PUBLIC_URL!.replace(/\/$/, '')
   const ext = EXT_MAP[contentType] ?? contentType.split('/')[1] ?? 'bin'
@@ -52,6 +57,7 @@ export async function createPresignedUploadUrl(contentType: string, folder: 'gal
     Bucket: bucket,
     Key: key,
     ContentType: contentType,
+    ContentLength: size,
   })
 
   const uploadUrl = await getSignedUrl(client, command, { expiresIn: 300 })

@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useRef, useState } from 'react'
 import type { TemplateConfig, TemplateField } from '@/types'
+import { FIELD_ORDER } from '@/lib/fieldOrder'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -12,6 +13,8 @@ interface FormEditorProps {
   compact?: boolean
   /** When provided, only the specified section groups are rendered */
   sections?: Array<'people' | 'details' | 'enrich'>
+  /** The design being edited: its boxes follow the order its content appears in (lib/fieldOrder.ts). */
+  templateId?: string
 }
 
 interface ScheduleRow { id: string; name: string; time: string }
@@ -166,10 +169,10 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
   const hint = FIELD_HINTS[field.key]
   const isUrl = field.type === 'url' || field.key === 'mapsUrl'
 
-  if (field.columns?.length) return <RowsEditor field={field} initial={value} onChange={onChange} />
+  if (field.columns?.length) return <div data-field={field.key}><RowsEditor field={field} initial={value} onChange={onChange} /></div>
 
   return (
-    <div>
+    <div data-field={field.key}>
       <label className="field-label">
         {field.label}
         {field.required && <span className="ml-1 text-burnished-deep" aria-hidden>*</span>}
@@ -702,171 +705,176 @@ const MusicUploader = memo(function MusicUploader({ initial, onChange }: { initi
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export default function FormEditor({ config, data, onChange, compact = false, sections }: FormEditorProps) {
+/** A titled block of the form, placed by where its first field shows on the design. */
+interface Block { rank: number; key: string; render: (number: number) => React.ReactNode }
+
+export default function FormEditor({ config, data, onChange, compact = false, sections, templateId }: FormEditorProps) {
   const show = (group: 'people' | 'details' | 'enrich') => !sections || sections.includes(group)
   const handleChange = useCallback((key: string, value: string) => {
     onChange({ ...data, [key]: value })
   }, [data, onChange])
 
+  // Boxes follow the design: the field shown highest on the page comes first.
+  // Designs without a measured order keep their field definition order.
+  const measured = templateId ? FIELD_ORDER[templateId] : undefined
+  const rank = (key: string) => {
+    const i = measured ? measured.indexOf(key) : -1
+    return i >= 0 ? i : 1000 + config.fields.findIndex((f) => f.key === key)
+  }
+  const byRank = (a: TemplateField, b: TemplateField) => rank(a.key) - rank(b.key)
+  const first = (fields: TemplateField[]) => Math.min(...fields.map((f) => rank(f.key)))
+
   const grouped = groupFields(config.fields)
   const peopleLabel = getPeopleLabel(grouped.people)
+  const input = (field: TemplateField) => (
+    <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
+  )
+  const groupBlock = (g: ReturnType<typeof groupFields>['groups'][number]): Block => ({
+    rank: first(g.fields),
+    key: `group-${g.title}`,
+    render: (n) => (
+      <Section key={g.title} number={n} label={g.title} hint={g.hint}>
+        <div className="space-y-4">{[...g.fields].sort(byRank).map(input)}</div>
+      </Section>
+    ),
+  })
 
-  // Compute dynamic section numbers
-  let sNum = 0
-  const n = () => ++sNum
-
-  return (
-    <div className={compact ? 'space-y-4 p-4 sm:p-5' : 'space-y-5 p-5 sm:p-6'}>
-
-      {!compact && (
-      <div className="rounded-2xl border border-line/60 overflow-hidden"
-        style={{ background: 'linear-gradient(135deg,rgba(255,248,241,0.95),rgba(255,255,255,0.98))', boxShadow: '0 2px 16px rgba(60,36,20,0.07)' }}>
-        <div className="h-[2px] bg-gradient-to-r from-emerald via-burnished to-gold-soft" />
-        <div className="px-5 py-4">
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <div className="flex-1 min-w-0">
-              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: '#0B4A34' }}>Invitation Builder</p>
-              <h2 className="t-h3">Make it personal.</h2>
-              <p className="mt-1 text-sm leading-6 text-muted">
-                Fill in your details — the invite updates live as you type.
-              </p>
-            </div>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 mt-1"
-              style={{ background: 'rgba(11,74,52,0.08)' }}>
-              <span style={{ color: '#0B4A34', fontSize: '18px', lineHeight: 1 }}>♥</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 pt-3 border-t border-line/40">
-            <div className="flex items-center gap-1 shrink-0">
-              <div className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
-                style={{ background: '#0B4A34', color: '#fff' }}>✓</div>
-              <span className="text-[10px] font-medium text-muted/70">Choose style</span>
-            </div>
-            <div className="h-px flex-1 bg-border/60" />
-            <div className="flex items-center gap-1 shrink-0">
-              <div className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
-                style={{ background: '#0B4A34', color: '#fff' }}>2</div>
-              <span className="text-[10px] font-semibold" style={{ color: '#0B4A34' }}>Fill details</span>
-            </div>
-            <div className="h-px flex-1 bg-border/60" />
-            <div className="flex items-center gap-1 shrink-0">
-              <div className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
-                style={{ background: 'rgba(44,32,28,0.08)', color: 'rgba(44,32,28,0.3)' }}>3</div>
-              <span className="text-[10px] font-medium" style={{ color: 'rgba(44,32,28,0.3)' }}>Share link</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      )}
-
-      {/* 1. People */}
-      {show('people') && (grouped.people.length > 0 || grouped.images.length > 0) && (
-        <Section number={n()} label={peopleLabel}>
-          {grouped.images.length > 0 && (
-            <div className="flex justify-center gap-6 pb-3 border-b border-line/40 mb-1">
-              {grouped.images.map(field => (
-                <SingleImageUploader
-                  key={field.key}
-                  label={field.label}
-                  value={data[field.key] ?? ''}
-                  onChange={v => handleChange(field.key, v)}
-                />
-              ))}
-            </div>
-          )}
-          <div className={grouped.people.length >= 2 ? 'grid grid-cols-1 gap-4 sm:grid-cols-2' : 'space-y-4'}>
-            {grouped.people.map(field => (
-              <div key={field.key} className={grouped.people.length >= 2 && field.type === 'textarea' ? 'sm:col-span-2' : ''}>
-                <FieldInput field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {show('people') && grouped.groups.filter(g => g.section === 'people').map(g => (
-        <Section key={g.title} number={n()} label={g.title} hint={g.hint}>
+  // ── Step 2: who it is for ─────────────────────────────────────────────────
+  const people: Block[] = []
+  if (grouped.people.length > 0 || grouped.images.length > 0) {
+    // Names and photos in the order the design shows them; photos that sit
+    // together on the design sit together here, side by side.
+    const ordered = [...grouped.people, ...grouped.images].sort(byRank)
+    const runs: TemplateField[][] = []
+    for (const f of ordered) {
+      const last = runs[runs.length - 1]
+      if (last && f.type === 'image' && last[0].type === 'image') last.push(f)
+      else if (last && f.type !== 'image' && last[0].type !== 'image') last.push(f)
+      else runs.push([f])
+    }
+    people.push({
+      rank: first(ordered),
+      key: 'people',
+      render: (n) => (
+        <Section key="people" number={n} label={peopleLabel}>
           <div className="space-y-4">
-            {g.fields.map(field => (
-              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
-            ))}
-          </div>
-        </Section>
-      ))}
-
-      {/* 2. When & Where */}
-      {show('details') && grouped.whenWhere.length > 0 && (
-        <Section number={n()} label="When &amp; Where" hint="Date, time, location, and dress expectations.">
-          <div className="space-y-4">
-            {/* Date + Time side by side */}
-            {(() => {
-              const dateField = grouped.whenWhere.find(f => f.key === 'date')
-              const timeField = grouped.whenWhere.find(f => f.key === 'time')
-              const rest = grouped.whenWhere.filter(f => f.key !== 'date' && f.key !== 'time')
-              return (
-                <>
-                  {(dateField || timeField) && (
-                    <div className="grid grid-cols-2 gap-4">
-                      {dateField && <FieldInput field={dateField} value={data['date'] ?? ''} onChange={v => handleChange('date', v)} />}
-                      {timeField && <FieldInput field={timeField} value={data['time'] ?? ''} onChange={v => handleChange('time', v)} />}
+            {runs.map((run, i) =>
+              run[0].type === 'image' ? (
+                <div key={`img-${i}`} className="flex justify-center gap-6">
+                  {run.map(field => (
+                    <div key={field.key} data-field={field.key}>
+                      <SingleImageUploader label={field.label} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
                     </div>
-                  )}
-                  {rest.map(field => (
-                    <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
                   ))}
-                </>
-              )
-            })()}
+                </div>
+              ) : (
+                <div key={`txt-${i}`} className={run.length >= 2 ? 'grid grid-cols-1 gap-4 sm:grid-cols-2' : 'space-y-4'}>
+                  {run.map(field => (
+                    <div key={field.key} className={run.length >= 2 && field.type === 'textarea' ? 'sm:col-span-2' : ''}>{input(field)}</div>
+                  ))}
+                </div>
+              ),
+            )}
           </div>
         </Section>
-      )}
+      ),
+    })
+  }
+  people.push(...grouped.groups.filter(g => g.section === 'people').map(groupBlock))
 
-      {/* Secret unlock (3D Surprise Journey) */}
-      {show('details') && grouped.unlock.length > 0 && (
-        <Section number={n()} label="The Secret Unlock" hint="They'll enter this PIN to open the surprise. Pick something only they would know.">
+  // ── Step 3: when and where ────────────────────────────────────────────────
+  const details: Block[] = []
+  if (grouped.whenWhere.length > 0) {
+    const ordered = [...grouped.whenWhere].sort(byRank)
+    details.push({
+      rank: first(ordered),
+      key: 'when-where',
+      render: (n) => (
+        <Section key="when-where" number={n} label="When &amp; Where" hint="Date, time, location, and dress expectations.">
           <div className="space-y-4">
-            {grouped.unlock.map(field => (
-              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
-            ))}
+            {ordered.map((field, i) => {
+              // Date and time share a row when the design shows them together.
+              const next = ordered[i + 1]
+              const prev = ordered[i - 1]
+              const pair = (a?: TemplateField, b?: TemplateField) => a?.key === 'date' && b?.key === 'time'
+              if (pair(prev, field)) return null
+              if (pair(field, next)) {
+                return (
+                  <div key="date-time" className="grid grid-cols-2 gap-4">
+                    {input(field)}
+                    {input(next as TemplateField)}
+                  </div>
+                )
+              }
+              return input(field)
+            })}
           </div>
         </Section>
-      )}
-
-      {/* 3. Event Schedule */}
-      {show('details') && grouped.scheduleField && (
-        <Section number={n()} label="Event Schedule" hint="Build your event timeline — each row is one moment.">
-          <ScheduleEditor initial={data['schedule'] ?? ''} onChange={v => handleChange('schedule', v)} />
+      ),
+    })
+  }
+  if (grouped.unlock.length > 0) {
+    details.push({
+      rank: first(grouped.unlock),
+      key: 'unlock',
+      render: (n) => (
+        <Section key="unlock" number={n} label="The Secret Unlock" hint="They'll enter this PIN to open the surprise. Pick something only they would know.">
+          <div className="space-y-4">{[...grouped.unlock].sort(byRank).map(input)}</div>
         </Section>
-      )}
-
-      {show('details') && grouped.groups.filter(g => g.section === 'details').map(g => (
-        <Section key={g.title} number={n()} label={g.title} hint={g.hint}>
-          <div className="space-y-4">
-            {g.fields.map(field => (
-              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
-            ))}
+      ),
+    })
+  }
+  if (grouped.scheduleField) {
+    details.push({
+      rank: rank('schedule'),
+      key: 'schedule',
+      render: (n) => (
+        <Section key="schedule" number={n} label="Event Schedule" hint="Build your event timeline — each row is one moment.">
+          <div data-field="schedule">
+            <ScheduleEditor initial={data['schedule'] ?? ''} onChange={v => handleChange('schedule', v)} />
           </div>
         </Section>
-      ))}
+      ),
+    })
+  }
+  details.push(...grouped.groups.filter(g => g.section === 'details').map(groupBlock))
 
-      {/* 4. Photo Gallery */}
-      {show('enrich') && grouped.galleryField && (
-        <Section number={n()} label="Photo Gallery" hint="Add beautiful photos that appear in the invitation slideshow.">
-          <GalleryUploader initial={data['galleryImages'] ?? ''} onChange={v => handleChange('galleryImages', v)} />
+  // ── Step 4: photos, music and the personal touches ────────────────────────
+  const enrich: Block[] = []
+  if (grouped.galleryField) {
+    enrich.push({
+      rank: rank('galleryImages'),
+      key: 'gallery',
+      render: (n) => (
+        <Section key="gallery" number={n} label="Photo Gallery" hint="Add beautiful photos that appear in the invitation slideshow.">
+          <div data-field="galleryImages">
+            <GalleryUploader initial={data['galleryImages'] ?? ''} onChange={v => handleChange('galleryImages', v)} />
+          </div>
         </Section>
-      )}
-
-      {/* 5. Background Music */}
-      {show('enrich') && grouped.musicField && (
-        <Section number={n()} label="Background Music" hint="A song that plays softly as guests view the invite.">
-          <MusicUploader initial={data['musicUrl'] ?? ''} onChange={v => handleChange('musicUrl', v)} />
+      ),
+    })
+  }
+  if (grouped.musicField) {
+    enrich.push({
+      // The music has no place on the page; it comes last.
+      rank: 10000,
+      key: 'music',
+      render: (n) => (
+        <Section key="music" number={n} label="Background Music" hint="A song that plays softly as guests view the invite.">
+          <div data-field="musicUrl">
+            <MusicUploader initial={data['musicUrl'] ?? ''} onChange={v => handleChange('musicUrl', v)} />
+          </div>
         </Section>
-      )}
-
-      {/* 6. Personal Note */}
-      {show('enrich') && grouped.extras.map(field => (
-        <Section key={field.key} number={n()} label="Personal Note" hint="A heartfelt message from you to your guests.">
-          <div>
+      ),
+    })
+  }
+  for (const field of grouped.extras) {
+    enrich.push({
+      rank: rank(field.key),
+      key: `extra-${field.key}`,
+      render: (n) => (
+        <Section key={field.key} number={n} label="Personal Note" hint="A heartfelt message from you to your guests.">
+          <div data-field={field.key}>
             <textarea
               value={data[field.key] ?? ''}
               onChange={e => handleChange(field.key, e.target.value)}
@@ -879,22 +887,17 @@ export default function FormEditor({ config, data, onChange, compact = false, se
             </p>
           </div>
         </Section>
-      ))}
-
-      {show('enrich') && grouped.groups.filter(g => g.section === 'enrich').map(g => (
-        <Section key={g.title} number={n()} label={g.title} hint={g.hint}>
-          <div className="space-y-4">
-            {g.fields.map(field => (
-              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
-            ))}
-          </div>
-        </Section>
-      ))}
-
-      {/* Reasons / little notes (3D Greeting) */}
-      {show('enrich') && grouped.greetingExtras.map(field => (
-        <Section key={field.key} number={n()} label="Reasons You Love Them" hint="One per line — they'll be revealed one at a time, building to your message.">
-          <div>
+      ),
+    })
+  }
+  enrich.push(...grouped.groups.filter(g => g.section === 'enrich').map(groupBlock))
+  for (const field of grouped.greetingExtras) {
+    enrich.push({
+      rank: rank(field.key),
+      key: `greeting-${field.key}`,
+      render: (n) => (
+        <Section key={field.key} number={n} label="Reasons You Love Them" hint="One per line — they'll be revealed one at a time, building to your message.">
+          <div data-field={field.key}>
             <textarea
               value={data[field.key] ?? ''}
               onChange={e => handleChange(field.key, e.target.value)}
@@ -905,19 +908,30 @@ export default function FormEditor({ config, data, onChange, compact = false, se
             <p className="mt-1.5 text-xs text-muted/60">Each line becomes a reveal card in the greeting.</p>
           </div>
         </Section>
-      ))}
-
-      {/* Interactive touches (3D Surprise Journey) */}
-      {show('enrich') && grouped.journeyExtras.length > 0 && (
-        <Section number={n()} label="Personal Touches" hint="Balloon wishes, the scratch-card secret, and your handwritten letter.">
-          <div className="space-y-4">
-            {grouped.journeyExtras.map(field => (
-              <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
-            ))}
-          </div>
+      ),
+    })
+  }
+  if (grouped.journeyExtras.length > 0) {
+    enrich.push({
+      rank: first(grouped.journeyExtras),
+      key: 'journey',
+      render: (n) => (
+        <Section key="journey" number={n} label="Personal Touches" hint="Balloon wishes, the scratch-card secret, and your handwritten letter.">
+          <div className="space-y-4">{[...grouped.journeyExtras].sort(byRank).map(input)}</div>
         </Section>
-      )}
+      ),
+    })
+  }
 
+  const blocks = [
+    ...(show('people') ? [...people].sort((a, b) => a.rank - b.rank) : []),
+    ...(show('details') ? [...details].sort((a, b) => a.rank - b.rank) : []),
+    ...(show('enrich') ? [...enrich].sort((a, b) => a.rank - b.rank) : []),
+  ]
+
+  return (
+    <div className={compact ? 'space-y-4 p-4 sm:p-5' : 'space-y-5 p-5 sm:p-6'}>
+      {blocks.map((b, i) => b.render(i + 1))}
       <div className="pb-6" />
     </div>
   )

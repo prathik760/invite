@@ -1,6 +1,7 @@
 'use client'
 
 import { ACTIVITY_KEYS, ACTIVITY_QUERY_KEYS, MAX_EVENTS_PER_BATCH, MAX_STRING, isUntrackedPath } from './activityEvents'
+import { CONSENT_EVENT, consentState } from './consent'
 
 /**
  * The visitor journal: a first-party record of what each visitor did, shown
@@ -11,6 +12,10 @@ import { ACTIVITY_KEYS, ACTIVITY_QUERY_KEYS, MAX_EVENTS_PER_BATCH, MAX_STRING, i
  * at once when the tab is hidden or closed (sendBeacon survives the unload).
  * A visitor is a random id in localStorage; a session ends after 30 minutes
  * without activity. Nothing typed into a form is ever read.
+ *
+ * Where cookies need a yes (lib/consent.ts), nothing is stored or sent until
+ * the visitor accepts: events wait in memory and go out the moment they do,
+ * and are dropped if they say no.
  */
 
 type Params = Record<string, string | number | boolean | null | undefined>
@@ -20,6 +25,8 @@ const STORE_KEY = 'si_journal'
 const SESSION_IDLE = 30 * 60 * 1000
 const FLUSH_AFTER = 4000
 const FLUSH_MAX_WAIT = 15000
+/** Events kept while waiting for consent; the oldest go first beyond this. */
+const MAX_HELD = 300
 
 let ids: { v: string; s: string; at: number } | null = null
 let sessionsThisPage = 0
@@ -42,11 +49,12 @@ export function journalEnabled(): boolean {
   if (window.top !== window) return false
   if ((navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl) return false
   if (navigator.webdriver) return false
+  if (consentState() === 'denied') return false
   return !isUntrackedPath(location.pathname)
 }
 
 function loadIds() {
-  if (!ids) {
+  if (!ids && consentState() === 'granted') {
     try {
       const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null')
       if (saved && typeof saved.v === 'string' && typeof saved.s === 'string') ids = saved
@@ -70,10 +78,15 @@ function currentIds(now: number) {
     sessionsThisPage++
   }
   ids.at = now
+  saveIds()
+  return ids
+}
+
+function saveIds() {
+  if (!ids || consentState() !== 'granted') return
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(ids))
   } catch {}
-  return ids
 }
 
 /** Where the visit came from. The server adds device and country. */
@@ -113,13 +126,28 @@ function pick(params: Params): Record<string, string | number | boolean> | undef
 }
 
 let unloadHooked = false
-/** Sends the queue as the page goes away, even if the tracker never mounted. */
+/**
+ * Sends the queue as the page goes away, even if the tracker never mounted, and
+ * as soon as a visitor who was asked accepts (or forgets it if they decline).
+ */
 function hookUnload() {
   if (unloadHooked) return
   unloadHooked = true
   window.addEventListener('pagehide', () => flush(true))
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') flush(true)
+  })
+  window.addEventListener(CONSENT_EVENT, () => {
+    if (consentState() === 'granted') {
+      saveIds()
+      flush(false)
+      return
+    }
+    queue.length = 0
+    ids = null
+    try {
+      localStorage.removeItem(STORE_KEY)
+    } catch {}
   })
 }
 
@@ -131,6 +159,7 @@ export function journal(name: string, params: Params = {}) {
   currentIds(now)
   if (name !== 'click') lastNamedAt = now
   queue.push({ n: name, p: location.pathname, t: now, d: pick(params) })
+  if (queue.length > MAX_HELD) queue.splice(0, queue.length - MAX_HELD)
   if (!firstQueuedAt) firstQueuedAt = now
   if (queue.length >= 20) return flush(false)
   if (timer) clearTimeout(timer)
@@ -142,7 +171,7 @@ export function flush(leaving: boolean) {
   if (timer) clearTimeout(timer)
   timer = null
   firstQueuedAt = 0
-  if (!queue.length || !ids) return
+  if (!queue.length || !ids || consentState() !== 'granted') return
   const sent = queue.splice(0, MAX_EVENTS_PER_BATCH)
   // text/plain keeps this a simple request, which sendBeacon sends in every browser.
   const body = JSON.stringify({ v: ids.v, s: ids.s, now: Date.now(), e: sent })

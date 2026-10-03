@@ -23,6 +23,7 @@ export default function Step3Details({ selectedTemplate, data, onChange, onBack,
     >
       <FormEditor
         key={selectedTemplate.id}
+        templateId={selectedTemplate.id}
         config={selectedTemplate.config}
         data={data}
         onChange={onChange}

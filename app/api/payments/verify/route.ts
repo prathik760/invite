@@ -6,12 +6,38 @@ import { isPriceList, minorUnits } from '@/lib/pricing'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
 import { mergePlans, PLAN_MAP } from '@/lib/plans'
+import { issuePass } from '@/lib/purchasePass'
+
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/**
+ * The account a signed-out buyer's purchase is recorded on: theirs if the
+ * email they gave Razorpay already has one, otherwise a new one with no
+ * password, which they reach later with "Continue with Google" on the same
+ * address. A payment without a usable email (Razorpay sends void@razorpay.com
+ * when the field is hidden) gets an internal address of its own, so the
+ * purchase still lands somewhere; their phone stays in the Razorpay dashboard.
+ */
+async function payerAccount(paymentId: string): Promise<string> {
+  let email = ''
+  try {
+    const payment = await getRazorpayClient().payments.fetch(paymentId)
+    email = String(payment.email ?? '').trim().toLowerCase()
+  } catch (err) {
+    console.error('[verify] could not read the payer from Razorpay', err instanceof Error ? err.message : err)
+  }
+  const usable = EMAIL.test(email) && !email.endsWith('@razorpay.com')
+  const address = usable ? email : `guest-${paymentId.toLowerCase()}@guests.shareinvite.in`
+  const user = await prisma.user.upsert({ where: { email: address }, update: {}, create: { email: address } })
+  return user.id
+}
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions)
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  // Signing in is optional: a signed-out buyer's purchase goes on the account
+  // for the email they paid with (payerAccount), and they get a purchase pass
+  // to publish with instead of a session.
+  const session = await getServerSession(authOptions).catch(() => null)
+  const sessionUserId = session?.user?.id ?? null
 
   const body = await req.json().catch(() => null)
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature, plan } = body ?? {}
@@ -61,8 +87,10 @@ export async function POST(req: NextRequest) {
       where: { razorpayPaymentId: razorpay_payment_id },
     })
     if (existing) {
-      return NextResponse.json({ success: true, plan: existing.plan })
+      return NextResponse.json({ success: true, plan: existing.plan, ...(sessionUserId ? {} : { pass: issuePass(existing.userId) }) })
     }
+
+    const userId = sessionUserId ?? (await payerAccount(razorpay_payment_id))
 
     // Never revoke templates on a later purchase. A customer on All Access who
     // then buys the standalone Raksha Bandhan plan must keep All Access — a
@@ -71,7 +99,7 @@ export async function POST(req: NextRequest) {
     // both ₹199 and neither contains the other), where a level comparison alone
     // would drop whichever was bought first.
     const current = await prisma.subscription.findUnique({
-      where: { userId: session.user.id },
+      where: { userId },
       select: { plan: true, status: true },
     })
     const effectivePlan =
@@ -80,7 +108,7 @@ export async function POST(req: NextRequest) {
         : (plan as PlanId)
 
     await prisma.subscription.upsert({
-      where: { userId: session.user.id },
+      where: { userId },
       update: {
         plan: effectivePlan,
         status: 'active',
@@ -88,7 +116,7 @@ export async function POST(req: NextRequest) {
         razorpayOrderId: razorpay_order_id,
       },
       create: {
-        userId: session.user.id,
+        userId,
         plan: effectivePlan,
         status: 'active',
         razorpayPaymentId: razorpay_payment_id,
@@ -96,7 +124,7 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return NextResponse.json({ success: true, plan: effectivePlan })
+    return NextResponse.json({ success: true, plan: effectivePlan, ...(sessionUserId ? {} : { pass: issuePass(userId) }) })
   } catch (err) {
     console.error('[POST /api/payments/verify]', err)
     return NextResponse.json({ error: 'Could not activate subscription. Contact support with payment ID.' }, { status: 500 })

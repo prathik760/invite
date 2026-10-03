@@ -43,6 +43,7 @@
   --z-toast: 55;           /* transient toasts                                 */
   --z-overlay: 60;         /* modals, paywalls, full-screen overlays           */
   --z-promo: 61;           /* promo popup, deliberately above ordinary modals  */
+  --z-consent: 62;         /* cookie choice: answerable even over the promo    */
 
   /* Height of whatever fixed bar is docked to the bottom of the viewport, in
      px. Published by <BottomDock> and read by the floating button and by page

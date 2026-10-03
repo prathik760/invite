@@ -7,10 +7,10 @@ import type { PlanId } from '@/lib/plans'
 import { PLAN_MAP } from '@/lib/plans'
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions)
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Please sign in to continue.' }, { status: 401 })
-  }
+  // No sign-in needed to pay: /verify records a signed-out buyer's purchase on
+  // the account for the email they give Razorpay.
+  const session = await getServerSession(authOptions).catch(() => null)
+  const buyer = session?.user?.id ?? 'guest'
 
   const body = await req.json().catch(() => null)
   const plan = body?.plan as PlanId | undefined
@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
     const order = await razorpay.orders.create({
       amount: minorUnits(price),
       currency: price.currency,
-      receipt: `inv_${session.user.id.slice(-8)}_${Date.now()}`,
-      notes: { userId: session.user.id, plan, priceList: price.list },
+      receipt: `inv_${buyer.slice(-8)}_${Date.now()}`,
+      notes: { userId: buyer, plan, priceList: price.list },
     })
 
     return NextResponse.json({

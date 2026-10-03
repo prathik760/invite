@@ -3,7 +3,7 @@ import { ACTIVITY_DAYS, DELETE_AFTER_DAYS, ORPHAN_UPLOAD_DAYS, UNDATED_DELETE_AF
 import LegalPage, { Para, Bullets, type LegalSection } from '@/components/legal/LegalPage'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
-const LAST_UPDATED = '2 October 2026'
+const LAST_UPDATED = '3 October 2026'
 
 export const metadata: Metadata = {
   title: { absolute: 'Privacy Policy | ShareInvite' },
@@ -95,16 +95,22 @@ const sections: LegalSection[] = [
         <Para>We use a small number of cookies and browser storage technologies, including:</Para>
         <Bullets
           items={[
-            <><strong className="text-foreground">Essential cookies</strong> — required to keep you signed in and to operate core features such as saving your invitation draft, and, where local-currency pricing is available, to remember the country you are visiting from so prices are shown in your currency.</>,
+            <><strong className="text-foreground">Essential cookies</strong> — required to keep you signed in and to operate core features such as saving your invitation draft, to remember your cookie choice and whether you are visiting from a country where we ask for it, and, where local-currency pricing is available, to remember the country you are visiting from so prices are shown in your currency.</>,
             <><strong className="text-foreground">Analytics</strong> — to understand how the Service is used so we can improve it. Google Analytics gives us totals. We also keep our own record of each visit — the pages opened, designs viewed, buttons pressed and where a visit ended — so we can find the step where people get stuck. We never record what you type into a form.</>,
             <><strong className="text-foreground">Session recordings</strong> — Microsoft Clarity records how you move through our pages (scrolling, taps, clicks) so we can replay a visit and see what was confusing or broken. Everything you type into a form, and the details shown in your invitation preview and dashboard, are masked before they leave your browser. Microsoft processes this data under its own privacy statement. Recordings are not made on the invitation pages your guests open.</>,
             <><strong className="text-foreground">Advertising measurement</strong> — the Meta Pixel tells us whether our ads on Facebook and Instagram lead to visits and purchases, and helps show those ads to people likely to find them useful. Meta receives technical data such as your IP address, browser, the pages you view and actions such as starting a payment, and processes it under its own privacy policy.</>,
           ]}
         />
         <Para>
-          You can control cookies through your browser settings. Disabling essential cookies may affect your ability to sign
-          in or use certain features. If your browser sends a Global Privacy Control signal, we do not keep a visit record
-          or make a session recording.
+          If you visit from the United Kingdom, the European Union or wider EEA, or Switzerland, we ask first. Until you
+          choose Accept, Google Analytics runs without cookies and our own visit record, Clarity and the Meta Pixel do not
+          run at all; if you choose Reject, that stays so. Anyone can change their choice at any time from &ldquo;Cookie
+          settings&rdquo; at the bottom of every page.
+        </Para>
+        <Para>
+          You can also control cookies through your browser settings. Disabling essential cookies may affect your ability
+          to sign in or use certain features. If your browser sends a Global Privacy Control signal, we do not keep a visit
+          record or make a session recording.
         </Para>
       </>
     ),

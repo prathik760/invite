@@ -34,10 +34,13 @@ interface Step5PublishProps {
   error: string
   onBack: () => void
   onPublish: () => void
+  /** Required fields still empty, and the step each is on. Checked before payment. */
+  missing?: { label: string; step: number }[]
+  onFix?: (step: number) => void
 }
 
 export default function Step5Publish({
-  selectedTemplate, data, userPlan, session, loading, error, onBack, onPublish,
+  selectedTemplate, data, userPlan, session, loading, error, onBack, onPublish, missing = [], onFix,
 }: Step5PublishProps) {
   const isDark = DARK_TEMPLATES.has(selectedTemplate.id)
   const tv = TEMPLATE_VISUALS[selectedTemplate.id] ?? TEMPLATE_VISUALS['elegant-wedding']
@@ -142,7 +145,24 @@ export default function Step5Publish({
                 no "plan" to report and nothing to upgrade to — the price of the
                 design they picked is already on the button. */}
 
-            {error && (
+            {missing.length > 0 && (
+              <div className="mt-5 rounded-xl border border-burnished/30 bg-peach/70 px-4 py-3.5">
+                <p className="text-[0.88rem] font-semibold text-charcoal">Before you publish, add:</p>
+                <ul className="mt-2 space-y-1.5">
+                  {missing.map((m) => (
+                    <li key={m.label} className="flex items-center justify-between gap-3 text-[0.86rem] text-charcoal/85">
+                      <span>{m.label.replace(/\s*\*$/, '')}</span>
+                      {onFix && (
+                        <button type="button" onClick={() => onFix(m.step)} className="link shrink-0 text-[0.82rem]">
+                          Add it
+                        </button>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {error && missing.length === 0 && (
               <div role="alert" className="mt-5 rounded-xl border border-[#A33A3A]/20 bg-[#A33A3A]/[0.06] px-4 py-2.5 text-center text-[0.85rem] font-medium text-[#A33A3A]">
                 {error}
               </div>

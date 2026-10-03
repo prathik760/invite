@@ -11,6 +11,7 @@ import { ACTIVITY_DAYS, deletionDate, isInternalSlug, ORPHAN_UPLOAD_DAYS } from 
  * 2. Uploads that no invitation uses (abandoned drafts) are deleted once they
  *    are ORPHAN_UPLOAD_DAYS old.
  * 3. Visitor activity (/admin/activity) older than ACTIVITY_DAYS is deleted.
+ * 4. Guest upload counts (lib/uploadQuota.ts) are deleted once their hour is over.
  *
  * Vercel sends `Authorization: Bearer $CRON_SECRET`; without CRON_SECRET set,
  * the job refuses to run. `?dry=1` reports what would be deleted and deletes
@@ -113,6 +114,13 @@ export async function GET(request: Request) {
 
   const activityDeleted = await activityRows(true)
 
-  console.log(`[cleanup] deleted ${invitationsDeleted} invitations, ${filesDeleted} files (${orphanKeys.length} unused uploads), ${activityDeleted} activity rows`)
-  return NextResponse.json({ invitationsDeleted, filesDeleted, orphanFiles: orphanKeys.length, activityDeleted, r2Configured: r2 })
+  // Guest upload counts (lib/uploadQuota.ts) whose hour is over. Kept apart
+  // like the activity rows: a missing table must not fail the job.
+  const quotaDeleted = await prisma.uploadQuota
+    .deleteMany({ where: { expiresAt: { lt: now } } })
+    .then((r) => r.count)
+    .catch(() => 0)
+
+  console.log(`[cleanup] deleted ${invitationsDeleted} invitations, ${filesDeleted} files (${orphanKeys.length} unused uploads), ${activityDeleted} activity rows, ${quotaDeleted} upload counts`)
+  return NextResponse.json({ invitationsDeleted, filesDeleted, orphanFiles: orphanKeys.length, activityDeleted, quotaDeleted, r2Configured: r2 })
 }

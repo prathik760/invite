@@ -6,6 +6,7 @@ import { generateSlug } from '@/lib/utils'
 import { getTemplateData } from '@/modules/templates/data'
 import { createLocalEvent, shouldUseLocalStore } from '@/lib/local-store'
 import { canAccess, templatePrice, type PlanId } from '@/lib/plans'
+import { readPass } from '@/lib/purchasePass'
 
 // Strip HTML tags from a string value to prevent stored XSS.
 // Safe for all text fields — URLs (mapsUrl, musicUrl) are left intact since they pass URL validation.
@@ -36,8 +37,10 @@ export async function POST(req: NextRequest) {
   const sanitizedData = sanitizeData(data as Record<string, unknown>)
 
   // Attach userId if authenticated, and resolve the plan actually purchased.
+  // A signed-out buyer who has just paid sends the purchase pass from
+  // /api/payments/verify instead; it names the account the purchase is on.
   const session = await getServerSession(authOptions).catch(() => null)
-  const userId = session?.user?.id ?? undefined
+  const userId = session?.user?.id ?? readPass(body?.pass) ?? undefined
 
   let userPlan: PlanId = 'free'
   if (userId) {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { createPresignedUploadUrl, isR2Configured } from '@/lib/r2'
+import { takeGuestUpload } from '@/lib/uploadQuota'
 
 const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
 const ALLOWED_AUDIO_TYPES = new Set(['audio/mpeg', 'audio/mp3', 'audio/mp4', 'audio/aac', 'audio/wav', 'audio/ogg'])
@@ -9,12 +10,19 @@ const ALLOWED_AUDIO_TYPES = new Set(['audio/mpeg', 'audio/mp3', 'audio/mp4', 'au
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024   // 5 MB
 const MAX_AUDIO_BYTES = 15 * 1024 * 1024  // 15 MB
 
-export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions).catch(() => null)
-  if (!session?.user) {
-    return NextResponse.json({ error: 'Sign in to upload files' }, { status: 401 })
-  }
+/*
+ * Uploads no longer need an account: people add their photos while building,
+ * before they decide to pay. The size and type limits below still apply (the
+ * size is signed into the upload URL, so storage enforces it too), every
+ * upload no published invitation uses is deleted after ORPHAN_UPLOAD_DAYS by
+ * the daily cleanup, and a signed-out visitor gets a modest hourly allowance
+ * (lib/uploadQuota.ts).
+ */
+function clientIp(req: NextRequest): string {
+  return (req.headers.get('x-forwarded-for') ?? '').split(',')[0].trim() || req.headers.get('x-real-ip') || 'unknown'
+}
 
+export async function POST(req: NextRequest) {
   if (!isR2Configured()) {
     return NextResponse.json({ error: 'File storage not configured' }, { status: 503 })
   }
@@ -43,7 +51,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Only audio files allowed for music' }, { status: 400 })
   }
 
-  if (typeof size !== 'number' || size <= 0) {
+  if (typeof size !== 'number' || !Number.isInteger(size) || size <= 0) {
     return NextResponse.json({ error: 'file size is required' }, { status: 400 })
   }
 
@@ -53,8 +61,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `File too large — max ${mb} MB` }, { status: 413 })
   }
 
+  // Counted only for a request that would get an upload URL.
+  const session = await getServerSession(authOptions).catch(() => null)
+  if (!session?.user && !(await takeGuestUpload(clientIp(req)))) {
+    return NextResponse.json({ error: 'Too many uploads for now — please try again in a little while.' }, { status: 429 })
+  }
+
   try {
-    const result = await createPresignedUploadUrl(contentType, folder)
+    const result = await createPresignedUploadUrl(contentType, folder, size)
     return NextResponse.json(result)
   } catch (err) {
     console.error('[upload] presign error', err)

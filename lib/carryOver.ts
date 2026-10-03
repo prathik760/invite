@@ -37,7 +37,9 @@ export function carryOverDetails(
   prevData: Record<string, string>,
   next: TemplateLike,
 ): Record<string, string> {
-  const out: Record<string, string> = { ...next.config.defaultData }
+  // The builder's form holds only what was typed (sample text lives in the
+  // preview), so a switch starts the new design empty too.
+  const out: Record<string, string> = {}
   if (!prev) return out
 
   const prevDefaults = prev.config.defaultData

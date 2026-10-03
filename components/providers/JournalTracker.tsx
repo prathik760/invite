@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
+import { CONSENT_EVENT } from '@/lib/consent'
 import { journalEnabled, journalPageView, startJournal, visitorId } from '@/lib/journal'
 
 // A layout effect runs before every page's own effects, so "Opened Builder"
@@ -28,10 +29,16 @@ export default function JournalTracker() {
       return { seconds: Math.round((Date.now() - page.current.start) / 1000), scroll: page.current.scroll }
     })
     // Lets a Clarity replay be found from the visitor's page at /admin/activity.
-    const id = visitorId()
-    if (id) window.clarity?.('set', 'visitor', id)
+    // Where Clarity waits for consent (lib/consent.ts), it starts on the yes.
+    const tagClarity = () => {
+      const id = visitorId()
+      if (id) window.clarity?.('set', 'visitor', id)
+    }
+    tagClarity()
+    window.addEventListener(CONSENT_EVENT, tagClarity)
     return () => {
       window.removeEventListener('scroll', measure)
+      window.removeEventListener(CONSENT_EVENT, tagClarity)
       stop()
     }
   }, [])

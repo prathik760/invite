@@ -3,6 +3,7 @@ import { LOCALES, localePath } from '@/lib/i18n'
 import { SUPPORT_EMAIL, SUPPORT_WHATSAPP_URL } from '@/lib/support'
 import Logo from '@/components/brand/Logo'
 import { PayMethods } from '@/components/price/Price'
+import { CookieSettingsLink } from '@/components/providers/CookieConsent'
 
 /**
  * Site-wide footer. Every link below is a real route, and the footer is the
@@ -195,7 +196,10 @@ export default function SiteFooter() {
             © {new Date().getFullYear()} ShareInvite · Digital invitations for every celebration ·{' '}
             Founded by <span className="text-paper/80">Prathik Thelkar</span>
           </p>
-          <p>Secure payments by Razorpay · <PayMethods capitalise /></p>
+          <p>
+            Secure payments by Razorpay · <PayMethods capitalise /> ·{' '}
+            <CookieSettingsLink className="inline-block py-1.5 hover:text-paper" />
+          </p>
         </div>
       </div>
     </footer>

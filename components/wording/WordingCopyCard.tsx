@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Link from 'next/link'
-import CopiedPanel, { copyText, trackWordingCopy } from '@/components/wording/CopiedPanel'
+import CopiedPanel, { builderHref, copyText, trackWordingCopy } from '@/components/wording/CopiedPanel'
 
 interface WordingCopyCardProps {
   children: React.ReactNode
@@ -12,7 +12,12 @@ interface WordingCopyCardProps {
 }
 
 /** A wording sample as a quote card, with one-tap copy. */
-export default function WordingCopyCard({ children, templateId, ctaHref = '/create' }: WordingCopyCardProps) {
+export default function WordingCopyCard({ children, templateId, ctaHref }: WordingCopyCardProps) {
+  // Straight into the builder, in this section's design, with these words in
+  // it. It used to go to the occasion's landing page, whose button opened that
+  // page's own design — a parent reading first-birthday wording ended up in an
+  // adult party design.
+  const href = typeof children === 'string' ? builderHref(templateId, children) : ctaHref ?? `/create?template=${encodeURIComponent(templateId)}`
   const textRef = useRef<HTMLParagraphElement>(null)
   const [copied, setCopied] = useState(false)
   // Kept after the button resets, so the panel stays put while they decide.
@@ -48,7 +53,7 @@ export default function WordingCopyCard({ children, templateId, ctaHref = '/crea
         </p>
         {!copiedText && (
           <figcaption className="mt-4">
-            <Link href={ctaHref} className="link inline-flex items-center gap-1 text-[0.85rem]">
+            <Link href={href} className="link inline-flex items-center gap-1 text-[0.85rem]">
               Use these words in a beautiful design →
             </Link>
           </figcaption>

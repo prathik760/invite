@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { LOCALE_CODES, LOCALISED_PATHS, getLocale, localeHref, stripLocale } from '@/lib/i18n'
 import { trackEvent } from '@/lib/analytics'
+import { CONSENT_EVENT, consentState } from '@/lib/consent'
 
 const DISMISS_KEY = 'si-locale-suggestion'
 
@@ -32,6 +33,17 @@ const EXCLUDED_PREFIXES = ['/create', '/e/', '/dashboard', '/auth', '/admin', '/
 export default function LocaleSuggestion() {
   const pathname = usePathname() || '/'
   const [suggest, setSuggest] = useState<string | null>(null)
+  // Waits while the cookie choice (CookieConsent) is open: both sit in the same
+  // spot, and that question comes first.
+  const [consentOpen, setConsentOpen] = useState(false)
+
+  useEffect(() => {
+    if (consentState() !== 'pending') return
+    setConsentOpen(true)
+    const done = () => setConsentOpen(false)
+    window.addEventListener(CONSENT_EVENT, done)
+    return () => window.removeEventListener(CONSENT_EVENT, done)
+  }, [])
 
   useEffect(() => {
     try {
@@ -52,7 +64,7 @@ export default function LocaleSuggestion() {
     trackEvent('locale_suggestion_view', { suggested: browser, current })
   }, [pathname])
 
-  if (!suggest) return null
+  if (!suggest || consentOpen) return null
 
   const target = getLocale(suggest)
   const { path } = stripLocale(pathname)
