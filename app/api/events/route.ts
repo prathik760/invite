@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { isDeliverable, sendLater, sendMail } from '@/lib/mail'
+import { invitationLiveEmail } from '@/lib/emails'
+import { eventTitle } from '@/lib/inviteCardText'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/db'
@@ -17,6 +20,18 @@ function stripHtml(value: unknown): unknown {
 
 function sanitizeData(data: Record<string, unknown>): Record<string, unknown> {
   return Object.fromEntries(Object.entries(data).map(([k, v]) => [k, stripHtml(v)]))
+}
+
+/** The first word of the link for designs that name only their hosts. */
+const OCCASION_SLUG: Record<string, string> = {
+  'diwali-party': 'diwali', 'eid-milan': 'eid', 'ganesh-chaturthi': 'ganesh', 'pooja-invite': 'pooja',
+  'dasara-ambari': 'dasara', 'christmas-evergreen': 'christmas', 'newyear-midnight': 'new-year',
+  'baby-shower': 'baby-shower', retirement: 'retirement',
+}
+
+/** Designs that greet a guest by name from a ?to= link, with an example for the email. */
+const PERSONAL_LINK_EXAMPLE: Record<string, string> = {
+  'birthday-gala': 'Sarah+and+Tom', 'dasara-ambari': 'Shalini+and+family', 'christmas-evergreen': 'The+Thompsons', 'newyear-midnight': 'Jules+and+Sam',
 }
 
 export async function POST(req: NextRequest) {
@@ -93,6 +108,9 @@ export async function POST(req: NextRequest) {
       d.brideName && d.groomName ? `${d.brideName}-${d.groomName}` :
       d.partner1Name && d.partner2Name ? `${d.partner1Name}-${d.partner2Name}` :
       d.celebrantName ? d.celebrantName :
+      // Designs that name only their hosts say what the occasion is; they all
+      // used to start "griha-", so a Christmas party's link read like a housewarming.
+      OCCASION_SLUG[templateId] ? OCCASION_SLUG[templateId] :
       d.hostNames ? 'griha' :
       d.babyName ? d.babyName :
       d.coupleNames ? 'anniversary' :
@@ -109,6 +127,27 @@ export async function POST(req: NextRequest) {
         ...(userId ? { userId } : {}),
       },
     })
+
+    // Congratulations, with the link, once the invitation is live.
+    if (isPaid && userId) {
+      const owner = userId
+      sendLater(async () => {
+        const user = await prisma.user.findUnique({ where: { id: owner }, select: { email: true, name: true } })
+        if (!isDeliverable(user?.email)) return
+        await sendMail(
+          invitationLiveEmail({
+            to: user.email,
+            name: user.name || d.hostNames || d.celebrantName || d.brideName || d.partner1Name || '',
+            slug: event.slug,
+            title: eventTitle(d, templateId),
+            designName: templateDef.name,
+            dateLabel: d.date || undefined,
+            personalLinks: templateId in PERSONAL_LINK_EXAMPLE,
+            example: PERSONAL_LINK_EXAMPLE[templateId],
+          }),
+        )
+      })
+    }
 
     return NextResponse.json({ slug: event.slug, id: event.id }, { status: 201 })
   } catch (err) {

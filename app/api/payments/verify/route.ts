@@ -7,6 +7,9 @@ import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
 import { mergePlans, PLAN_MAP } from '@/lib/plans'
 import { issuePass } from '@/lib/purchasePass'
+import { getTemplateData } from '@/modules/templates/data'
+import { isDeliverable, sendLater, sendMail } from '@/lib/mail'
+import { paymentReceiptEmail } from '@/lib/emails'
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -18,7 +21,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  * when the field is hidden) gets an internal address of its own, so the
  * purchase still lands somewhere; their phone stays in the Razorpay dashboard.
  */
-async function payerAccount(paymentId: string): Promise<string> {
+async function payerAccount(paymentId: string): Promise<{ id: string; email: string }> {
   let email = ''
   try {
     const payment = await getRazorpayClient().payments.fetch(paymentId)
@@ -29,7 +32,17 @@ async function payerAccount(paymentId: string): Promise<string> {
   const usable = EMAIL.test(email) && !email.endsWith('@razorpay.com')
   const address = usable ? email : `guest-${paymentId.toLowerCase()}@guests.shareinvite.in`
   const user = await prisma.user.upsert({ where: { email: address }, update: {}, create: { email: address } })
-  return user.id
+  return { id: user.id, email: address }
+}
+
+/** "₹399", "£12", "US$15.50" — what was actually charged, from the order. */
+function paidLabel(amountMinor: number, currency: string): string {
+  const amount = amountMinor / 100
+  try {
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency, minimumFractionDigits: Number.isInteger(amount) ? 0 : 2 }).format(amount)
+  } catch {
+    return `${currency} ${amount}`
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -95,7 +108,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, plan: existing.plan, ...(sessionUserId ? {} : { pass: issuePass(existing.userId) }) })
     }
 
-    const userId = sessionUserId ?? (await payerAccount(razorpay_payment_id))
+    const payer = sessionUserId ? null : await payerAccount(razorpay_payment_id)
+    const userId = sessionUserId ?? payer!.id
 
     // Never revoke templates on a later purchase. A customer on All Access who
     // then buys the standalone Raksha Bandhan plan must keep All Access — a
@@ -127,6 +141,26 @@ export async function POST(req: NextRequest) {
         razorpayPaymentId: razorpay_payment_id,
         razorpayOrderId: razorpay_order_id,
       },
+    })
+
+    // The receipt, after the response: the buyer is not kept waiting on it.
+    const template = typeof notes.templateId === 'string' ? getTemplateData(notes.templateId) : undefined
+    sendLater(async () => {
+      const account = sessionUserId ? await prisma.user.findUnique({ where: { id: sessionUserId }, select: { email: true, name: true } }) : null
+      const to = account?.email ?? payer?.email
+      if (!isDeliverable(to)) return
+      await sendMail(
+        paymentReceiptEmail({
+          to,
+          name: account?.name,
+          designName: template?.name ?? PLAN_MAP[plan as PlanId]?.name,
+          templateId: template?.id,
+          amount: paidLabel(Number(order.amount), String(order.currency)),
+          paymentId: razorpay_payment_id,
+          orderId: razorpay_order_id,
+          paidAt: new Date(),
+        }),
+      )
     })
 
     return NextResponse.json({ success: true, plan: effectivePlan, ...(sessionUserId ? {} : { pass: issuePass(userId) }) })

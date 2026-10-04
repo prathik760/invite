@@ -18,6 +18,13 @@ const CSP = [
 const nextConfig = {
   compress: true,
   poweredByHeader: false,
+  experimental: {
+    // The invitation share card reads its fonts from disk at request time
+    // (lib/ogFonts.ts); make sure every one of them ships with those routes.
+    outputFileTracingIncludes: {
+      '/e/**': ['./assets/og-fonts/**/*'],
+    },
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 31536000,

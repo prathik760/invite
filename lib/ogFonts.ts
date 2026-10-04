@@ -24,3 +24,14 @@ export function ogFonts() {
   ])
   return cache
 }
+
+let scriptCache: Promise<{ name: string; data: Buffer; weight: 400; style: 'normal' }[]> | null = null
+
+/**
+ * Pinyon Script, a copperplate hand, for the names on an invitation's share
+ * card. Loaded only by that card (lib/inviteCard.tsx); TTF, which Satori reads.
+ */
+export function ogScriptFonts() {
+  scriptCache ??= Promise.all([load('PinyonScript-400.ttf').then((data) => ({ name: 'Pinyon', data, weight: 400 as const, style: 'normal' as const }))])
+  return scriptCache
+}

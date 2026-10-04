@@ -1,13 +1,18 @@
 import { ImageResponse } from 'next/og'
-import { ogFonts } from '@/lib/ogFonts'
+import { ogFonts, ogScriptFonts } from '@/lib/ogFonts'
+import { cardFor } from '@/lib/inviteCardText'
 
 export const INVITE_CARD_SIZE = { width: 1200, height: 630 }
 
 /*
  * The card WhatsApp, iMessage and Instagram show when a host shares their
- * link. It is typeset from the host's own details — names, date, venue — in
- * the palette of the design they chose, like the front of a printed card.
- * (A screenshot of the design can't be used: it carries sample names.)
+ * link: a printed invitation photographed on velvet. An ivory card, slightly
+ * askew, with a second one peeking out behind it; a double gold rule and gold
+ * flourishes in its corners; a wax seal with the host's initial; the names
+ * written in a copperplate hand. The velvet, the seal and the card behind take
+ * the palette of the design they chose. Everything on it is typeset from the
+ * host's own details. (A screenshot of the design can't be used: it carries
+ * sample names.)
  */
 
 interface Theme {
@@ -77,69 +82,60 @@ function formatTime(value?: string): string {
   return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`
 }
 
-/** 21 -> "21st", 12 -> "12th" */
-function ordinal(n: number): string {
-  const tens = n % 100
-  if (tens >= 11 && tens <= 13) return `${n}th`
-  return `${n}${({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th'}`
+/* ── Colour helpers ─────────────────────────────────────────────────── */
+
+const rgb = (hex: string) => {
+  const h = hex.replace('#', '').slice(0, 6)
+  const n = parseInt(h.length === 3 ? h.split('').map((c) => c + c).join('') : h, 16)
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+}
+const toHex = (c: number[]) => `#${c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('')}`
+/** Mix `hex` towards `to` by `t` (0–1). */
+const mix = (hex: string, to: string, t: number) => {
+  const a = rgb(hex)
+  const b = rgb(to)
+  return toHex(a.map((v, i) => v + (b[i] - v) * t))
+}
+const luminance = (hex: string) => {
+  const [r, g, b] = rgb(hex).map((v) => {
+    const s = v / 255
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4
+  })
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 
-interface Card {
-  label: string
-  names: [string] | [string, string]
-  /** Small italic line under the names. */
-  sub?: string
+const IVORY = '#FBF6EC'
+const INK = '#2B2118'
+const INK_SOFT = '#5B4C3E'
+const GOLD = '#A27B2E'
+const GOLD_LIGHT = '#D9B566'
+
+/** Copperplate size for the longest name: script runs wide, so it steps down early. */
+function scriptSize(longest: number, stacked: boolean): number {
+  const base = stacked ? 84 : 98
+  if (longest <= 7) return base
+  if (longest <= 10) return base - 10
+  if (longest <= 14) return base - 22
+  if (longest <= 18) return base - 32
+  if (longest <= 24) return base - 40
+  return base - 48
 }
 
-function cardFor(templateId: string, d: Record<string, string>): Card {
-  const t = (v?: string) => (v || '').trim()
-  const age = Number(t(d.age))
-  const years = Number(t(d.years))
-  if (templateId.startsWith('greeting-')) {
-    return { label: t(d.headline) || 'A message for you', names: [`For ${t(d.recipientName) || 'you'}`], sub: t(d.senderName) ? `with love, ${t(d.senderName)}` : undefined }
-  }
-  if (templateId === 'surprise-journey') {
-    return { label: t(d.occasion) || 'A surprise for you', names: [`For ${t(d.recipientName) || 'you'}`], sub: t(d.senderName) ? `from ${t(d.senderName)}` : undefined }
-  }
-  if (t(d.brideName) && t(d.groomName)) {
-    const label = templateId === 'haldi-mehendi' ? 'Haldi & Mehendi'
-      : templateId === 'sangeet-night' ? 'Sangeet'
-      : templateId === 'signature-nikah' ? 'Nikah'
-      : templateId === 'save-the-date' ? 'Save the date'
-      : 'Wedding invitation'
-    return { label, names: [t(d.brideName), t(d.groomName)] }
-  }
-  if (t(d.motherName)) return { label: 'Baby shower', names: [t(d.motherName)], sub: t(d.hostNames) ? `hosted by ${t(d.hostNames)}` : undefined }
-  if (t(d.honoreeName)) return { label: 'Retirement celebration', names: [t(d.honoreeName)], sub: t(d.milestone) || undefined }
-  if (t(d.poojaName)) return { label: t(d.poojaName), names: [t(d.hostNames) || 'You are invited'] }
-  if (t(d.partner1Name) && t(d.partner2Name)) return { label: 'Engagement', names: [t(d.partner1Name), t(d.partner2Name)] }
-  if (t(d.sisterName) && t(d.brotherName)) return { label: t(d.title) || 'Raksha Bandhan', names: [t(d.sisterName), t(d.brotherName)] }
-  if (t(d.coupleNames)) {
-    const parts = t(d.coupleNames).split(/\s*&\s*|\s+and\s+/i).filter(Boolean)
-    const label = Number.isFinite(years) && years > 0 ? `${ordinal(years)} wedding anniversary` : 'Anniversary celebration'
-    return parts.length === 2 ? { label, names: [parts[0], parts[1]] } : { label, names: [t(d.coupleNames)] }
-  }
-  if (t(d.celebrantName)) {
-    return { label: Number.isFinite(age) && age > 0 ? `${ordinal(age)} birthday` : 'Birthday celebration', names: [t(d.celebrantName)] }
-  }
-  if (t(d.babyName)) return { label: 'Naming ceremony', names: [t(d.babyName)], sub: t(d.parentNames) ? `with ${t(d.parentNames)}` : undefined }
-  if (templateId === 'ganesh-chaturthi') return { label: t(d.title) || 'Ganesh Chaturthi', names: [t(d.hostNames) || 'You are invited'] }
-  if (templateId === 'diwali-party') return { label: t(d.title) || 'Diwali Milan', names: [t(d.hostNames) || 'You are invited'] }
-  if (templateId === 'dasara-ambari') return { label: t(d.title) || 'Dasara', names: [t(d.hostNames) || 'You are invited'] }
-  if (templateId === 'christmas-evergreen') return { label: t(d.title) || 'Christmas', names: [t(d.hostNames) || 'You are invited'] }
-  if (templateId === 'newyear-midnight') return { label: t(d.title) || 'New Year’s Eve', names: [t(d.hostNames) || 'You are invited'] }
-  if (templateId === 'eid-milan') return { label: t(d.title) || 'Eid Milan', names: [t(d.hostNames) || 'You are invited'] }
-  if (t(d.hostNames)) return { label: 'Griha Pravesh', names: [t(d.hostNames)] }
-  return { label: 'You are invited', names: ['You are invited'] }
-}
-
-function nameSize(longest: number, pair: boolean): number {
-  const base = pair ? 104 : 96
-  if (longest <= 8) return base
-  if (longest <= 12) return base - 14
-  if (longest <= 16) return base - 28
-  if (longest <= 22) return base - 40
-  return base - 50
+/** A gold flourish for a corner of the card: two rules on a quarter curve, with leaves. */
+function Flourish({ rotate, color }: { rotate: number; color: string }) {
+  return (
+    <svg width="118" height="118" viewBox="0 0 118 118" style={{ transform: `rotate(${rotate}deg)` }}>
+      <path d="M8 110 C8 52 52 8 110 8" stroke={color} strokeWidth="1.6" fill="none" />
+      <path d="M17 110 C17 60 60 17 110 17" stroke={color} strokeWidth="0.8" fill="none" opacity="0.7" />
+      <path d="M8 8 m-3 0 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0" fill={color} />
+      <path d="M30 52 C24 44 26 34 34 30 C36 40 36 46 30 52 Z" fill={color} opacity="0.85" />
+      <path d="M52 30 C44 24 34 26 30 34 C40 36 46 36 52 30 Z" fill={color} opacity="0.85" />
+      <path d="M22 78 C14 74 12 66 16 60 C22 66 24 70 22 78 Z" fill={color} opacity="0.7" />
+      <path d="M78 22 C74 14 66 12 60 16 C66 22 70 24 78 22 Z" fill={color} opacity="0.7" />
+      <path d="M40 40 C48 48 58 50 66 46" stroke={color} strokeWidth="1" fill="none" opacity="0.8" />
+      <path d="M40 40 C48 48 50 58 46 66" stroke={color} strokeWidth="1" fill="none" opacity="0.8" />
+    </svg>
+  )
 }
 
 /** The share card for one invitation, from its template id and the host's data. */
@@ -147,23 +143,37 @@ export async function renderInviteCard(templateId: string, data: Record<string, 
   const theme = templateId.startsWith('greeting-') ? GREETING : THEMES[templateId] ?? THEMES['elegant-wedding']
   const card = cardFor(templateId, data)
 
+  // The velvet is the design's deepest colour: its background when that is
+  // dark, its ink when the design is a light one.
+  const velvet = luminance(theme.bg) < 0.2 ? theme.bg : luminance(theme.ink) < 0.2 ? theme.ink : mix(theme.ink, '#000000', 0.5)
+  const accent = theme.accent
+  // The seal is the design's accent, deepened so it reads as wax on ivory.
+  const seal = luminance(accent) > 0.35 ? mix(accent, '#5A3A10', 0.35) : accent
+  const behind = mix(accent, velvet, 0.45)
+
   const when = [formatDate(data.date), formatTime(data.time)].filter(Boolean).join('  ·  ')
   // A save-the-date names the town (and maybe the venue), not an address.
   const rawVenue = (templateId === 'save-the-date' ? [data.venue, data.city].filter(Boolean).join(', ') : data.venue || data.venueAddress || '').trim()
-  const venue = rawVenue.length > 52 ? `${rawVenue.slice(0, 51)}…` : rawVenue
+  const venue = rawVenue.length > 48 ? `${rawVenue.slice(0, 47)}…` : rawVenue
   const pair = card.names.length === 2
   const longest = Math.max(...card.names.map((n) => n.length))
-  const fontSize = nameSize(longest, pair)
   // Short couples sit on one line ("Priya & Arjun"); longer ones stack.
-  const oneLine = pair && card.names[0].length + (card.names[1] ?? '').length <= 16
+  const oneLine = !pair || card.names[0].length + (card.names[1] ?? '').length <= 15
+  const size = scriptSize(pair && oneLine ? card.names[0].length + (card.names[1] ?? '').length + 3 : longest, pair && !oneLine)
+  const initial = (card.names[0] === 'You are invited' ? card.label : card.names[0]).replace(/^(for|the)\s+/i, '').trim().charAt(0).toUpperCase() || 'S'
 
-  const rule = (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 30, marginBottom: 26 }}>
-      <div style={{ display: 'flex', width: 72, height: 0, borderTop: `1.5px solid ${theme.accent}` }} />
-      <div style={{ width: 8, height: 8, background: theme.accent, transform: 'rotate(45deg)' }} />
-      <div style={{ display: 'flex', width: 72, height: 0, borderTop: `1.5px solid ${theme.accent}` }} />
+  const ornament = (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 18, marginBottom: 16 }}>
+      <div style={{ display: 'flex', width: 64, height: 1, background: `linear-gradient(90deg, rgba(162,123,46,0), ${GOLD})` }} />
+      <div style={{ display: 'flex', width: 7, height: 7, background: GOLD, transform: 'rotate(45deg)' }} />
+      <div style={{ display: 'flex', width: 64, height: 1, background: `linear-gradient(90deg, ${GOLD}, rgba(162,123,46,0))` }} />
     </div>
   )
+
+  // A few flecks of gold on the velvet, always in the same places.
+  const flecks = [
+    [64, 70, 4], [140, 520, 3], [1110, 96, 5], [1050, 560, 3], [210, 140, 2], [990, 470, 2], [92, 330, 3], [1150, 300, 2], [600, 30, 2], [430, 600, 2],
+  ]
 
   return new ImageResponse(
     (
@@ -175,54 +185,114 @@ export async function renderInviteCard(templateId: string, data: Record<string, 
           position: 'relative',
           alignItems: 'center',
           justifyContent: 'center',
-          background: theme.bg,
-          color: theme.ink,
+          backgroundColor: velvet,
+          backgroundImage: `radial-gradient(circle at 50% 42%, ${mix(velvet, '#FFFFFF', 0.16)} 0%, ${velvet} 55%, ${mix(velvet, '#000000', 0.45)} 100%)`,
           fontFamily: 'Cormorant, Mukta',
+          color: INK,
         }}
       >
-        <div style={{ position: 'absolute', top: 26, left: 26, right: 26, bottom: 26, border: `1px solid ${theme.frame}`, display: 'flex' }} />
-        <div style={{ position: 'absolute', top: 32, left: 32, right: 32, bottom: 32, border: `1px solid ${theme.frame}`, opacity: 0.5, display: 'flex' }} />
+        {flecks.map(([x, y, r], i) => (
+          <div key={i} style={{ position: 'absolute', left: x, top: y, width: r * 2, height: r * 2, borderRadius: r, background: GOLD_LIGHT, opacity: 0.55, display: 'flex' }} />
+        ))}
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '0 110px' }}>
-          <div style={{ fontFamily: 'Jost, Mukta', fontWeight: 500, fontSize: 22, letterSpacing: 6, textTransform: 'uppercase', color: theme.accent }}>
-            {card.label}
+        {/* the card behind */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 196,
+            top: 76,
+            width: 820,
+            height: 478,
+            display: 'flex',
+            background: behind,
+            border: `1px solid ${mix(accent, '#FFFFFF', 0.3)}`,
+            transform: 'rotate(3.2deg)',
+            boxShadow: '0 24px 50px rgba(0,0,0,0.35)',
+          }}
+        />
+
+        {/* the invitation */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 180,
+            top: 70,
+            width: 840,
+            height: 490,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: IVORY,
+            backgroundImage: 'radial-gradient(circle at 30% 20%, #FFFDF8 0%, #FBF6EC 55%, #F1E7D3 100%)',
+            transform: 'rotate(-1.4deg)',
+            boxShadow: '0 34px 70px rgba(0,0,0,0.5), 0 2px 0 rgba(255,255,255,0.6) inset',
+          }}
+        >
+          <div style={{ position: 'absolute', top: 16, left: 16, right: 16, bottom: 16, border: `1.5px solid ${GOLD}`, display: 'flex' }} />
+          <div style={{ position: 'absolute', top: 23, left: 23, right: 23, bottom: 23, border: `0.75px solid ${GOLD}`, opacity: 0.6, display: 'flex' }} />
+          {/* flourishes in three corners; the seal takes the fourth */}
+          <div style={{ position: 'absolute', top: 8, left: 8, display: 'flex' }}><Flourish rotate={0} color={GOLD} /></div>
+          <div style={{ position: 'absolute', top: 8, right: 8, display: 'flex' }}><Flourish rotate={90} color={GOLD} /></div>
+          <div style={{ position: 'absolute', bottom: 8, left: 8, display: 'flex' }}><Flourish rotate={270} color={GOLD} /></div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '0 96px', marginTop: 6 }}>
+            <div style={{ display: 'flex', fontFamily: 'Jost, Mukta', fontWeight: 500, fontSize: 17, letterSpacing: 6, textTransform: 'uppercase', color: GOLD }}>
+              {card.label}
+            </div>
+
+            {pair && oneLine ? (
+              <div style={{ display: 'flex', alignItems: 'center', marginTop: 10, fontFamily: 'Pinyon, Mukta', fontSize: size, lineHeight: 1.25, color: INK }}>
+                <span>{card.names[0]}</span>
+                <span style={{ fontFamily: 'Cormorant', fontStyle: 'italic', fontWeight: 500, color: GOLD, fontSize: size * 0.56, margin: '0 18px' }}>&amp;</span>
+                <span>{card.names[1]}</span>
+              </div>
+            ) : pair ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 6, fontFamily: 'Pinyon, Mukta', fontSize: size, lineHeight: 1.12, color: INK }}>
+                <span>{card.names[0]}</span>
+                <span style={{ fontFamily: 'Cormorant', fontStyle: 'italic', fontWeight: 500, color: GOLD, fontSize: Math.max(32, size * 0.6), lineHeight: 1 }}>&amp;</span>
+                <span>{card.names[1]}</span>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', marginTop: 10, fontFamily: 'Pinyon, Mukta', fontSize: size, lineHeight: 1.25, color: INK, maxWidth: 660, textAlign: 'center' }}>{card.names[0]}</div>
+            )}
+
+            {card.sub && <div style={{ display: 'flex', marginTop: 2, fontSize: 26, fontStyle: 'italic', color: INK_SOFT }}>{card.sub}</div>}
+
+            {(when || venue) && ornament}
+
+            {when && <div style={{ display: 'flex', fontSize: 27, fontWeight: 600, letterSpacing: 0.6, color: INK }}>{when}</div>}
+            {venue && <div style={{ display: 'flex', marginTop: 4, fontSize: 26, fontStyle: 'italic', color: INK_SOFT }}>{venue}</div>}
           </div>
-
-          {pair && oneLine ? (
-            <div style={{ display: 'flex', alignItems: 'baseline', marginTop: 26, fontSize, fontWeight: 600, lineHeight: 1 }}>
-              <span>{card.names[0]}</span>
-              <span style={{ fontStyle: 'italic', fontWeight: 500, color: theme.accent, fontSize: fontSize * 0.7, margin: '0 22px' }}>&amp;</span>
-              <span>{card.names[1]}</span>
-            </div>
-          ) : pair ? (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 22, fontSize: fontSize * 0.86, fontWeight: 600, lineHeight: 1.02 }}>
-              <span>{card.names[0]}</span>
-              <span style={{ fontStyle: 'italic', fontWeight: 500, color: theme.accent, fontSize: fontSize * 0.5, margin: '4px 0' }}>&amp;</span>
-              <span>{card.names[1]}</span>
-            </div>
-          ) : (
-            <div style={{ display: 'flex', marginTop: 24, fontSize, fontWeight: 600, lineHeight: 1.04, maxWidth: 960 }}>{card.names[0]}</div>
-          )}
-
-          {card.sub && (
-            <div style={{ display: 'flex', marginTop: 16, fontSize: 34, fontStyle: 'italic', color: theme.soft }}>{card.sub}</div>
-          )}
-
-          {(when || venue) && rule}
-
-          {when && (
-            <div style={{ display: 'flex', fontFamily: 'Jost, Mukta', fontSize: 28, fontWeight: 500, letterSpacing: 0.5 }}>{when}</div>
-          )}
-          {venue && (
-            <div style={{ display: 'flex', marginTop: 10, fontSize: 34, fontStyle: 'italic', color: theme.soft }}>{venue}</div>
-          )}
         </div>
 
-        <div style={{ position: 'absolute', bottom: 48, display: 'flex', fontFamily: 'Jost', fontSize: 17, letterSpacing: 2, color: theme.soft, opacity: 0.8 }}>
+        {/* the wax seal */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 930,
+            top: 470,
+            width: 104,
+            height: 104,
+            borderRadius: 52,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundImage: `radial-gradient(circle at 36% 32%, ${mix(seal, '#FFFFFF', 0.35)} 0%, ${seal} 48%, ${mix(seal, '#000000', 0.45)} 100%)`,
+            boxShadow: '0 10px 22px rgba(0,0,0,0.45)',
+            transform: 'rotate(-8deg)',
+          }}
+        >
+          <div style={{ display: 'flex', width: 80, height: 80, borderRadius: 40, border: `1.5px solid ${mix(seal, '#FFFFFF', 0.4)}`, alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', fontFamily: 'Pinyon', fontSize: 52, lineHeight: 1, color: mix(seal, '#FFFFFF', 0.72), marginTop: 6 }}>{initial}</div>
+          </div>
+        </div>
+
+        <div style={{ position: 'absolute', bottom: 22, left: 0, right: 0, display: 'flex', justifyContent: 'center', fontFamily: 'Jost', fontSize: 15, letterSpacing: 3, color: mix(velvet, '#FFFFFF', 0.6) }}>
           shareinvite.in
         </div>
       </div>
     ),
-    { ...INVITE_CARD_SIZE, fonts: await ogFonts() },
+    { ...INVITE_CARD_SIZE, fonts: [...(await ogFonts()), ...(await ogScriptFonts())] },
   )
 }

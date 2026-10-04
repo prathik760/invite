@@ -715,7 +715,7 @@ export default function CreatePage() {
     try {
       const orderRes = await fetch('/api/payments/create-order', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: planId, code }),
+        body: JSON.stringify({ plan: planId, code, templateId: upgradeTarget?.templateId }),
       })
       // `price` is in whole units of `currency` — the visitor's own price (lib/pricing.ts).
       const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; price?: number; keyId?: string; error?: string }

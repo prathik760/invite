@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { eventTitle } from '@/lib/inviteCardText'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { prisma } from '@/lib/db'
@@ -15,27 +16,6 @@ interface PageProps {
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
-function ordinal(n: number): string {
-  if (n % 100 >= 11 && n % 100 <= 13) return `${n}th`
-  return `${n}${({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th'}`
-}
-
-function getEventTitle(data: Record<string, string>, templateId?: string): string {
-  if (templateId === 'save-the-date' && data.brideName && data.groomName) return `${data.brideName} & ${data.groomName} — Save the Date`
-  if (data.headline && data.recipientName) return `${data.headline} — for ${data.recipientName}`
-  if (data.recipientName) return `${data.occasion || 'A Surprise'} for ${data.recipientName} 🎁`
-  if (data.brideName && data.groomName) return `${data.brideName} & ${data.groomName} — Wedding Invitation`
-  if (data.partner1Name && data.partner2Name) return `${data.partner1Name} & ${data.partner2Name} — Engagement Invitation`
-  if (data.celebrantName) {
-    const age = Number((data.age || '').match(/^\s*(\d{1,3})/)?.[1])
-    return `${data.celebrantName}'s ${age > 0 ? `${ordinal(age)} ` : ''}Birthday Celebration`
-  }
-  if (data.hostNames) return `${data.hostNames} — Griha Pravesh`
-  if (data.babyName) return `Namakaran of ${data.babyName}`
-  if (data.coupleNames) return `${data.coupleNames}${data.years ? ` — ${data.years} Years` : ''} Anniversary`
-  if (data.sisterName && data.brotherName) return `${data.sisterName} & ${data.brotherName} — Raksha Bandhan`
-  return 'You are Invited'
-}
 
 function getEventNames(data: Record<string, string>): string | undefined {
   return data.brideName && data.groomName
@@ -67,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!event) return { title: 'Invitation Not Found' }
 
   const data = event.data as Record<string, string>
-  const title = getEventTitle(data, event.templateId)
+  const title = eventTitle(data, event.templateId)
   const description = data.message
     ?? `${title}${data.venue ? ` at ${data.venue}` : ''}${data.date ? ` on ${data.date}` : ''}. RSVP and view details on ShareInvite.`
   const url = `${APP_URL}/e/${params.slug}`
@@ -130,7 +110,7 @@ export default async function EventPage({ params }: PageProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
-    name: getEventTitle(data, event.templateId),
+    name: eventTitle(data, event.templateId),
     description: data.message || `You are cordially invited to join us for a special celebration.`,
     ...(startDate && { startDate }),
     ...(data.venue && {

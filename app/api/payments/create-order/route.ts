@@ -6,6 +6,7 @@ import { discountedPrice, minorUnits } from '@/lib/pricing'
 import { checkCoupon, couponMessage } from '@/lib/coupons'
 import type { PlanId } from '@/lib/plans'
 import { PLAN_MAP } from '@/lib/plans'
+import { getTemplateData } from '@/modules/templates/data'
 
 export async function POST(req: NextRequest) {
   // No sign-in needed to pay: /verify records a signed-out buyer's purchase on
@@ -19,6 +20,8 @@ export async function POST(req: NextRequest) {
   if (!plan || plan === 'free' || !PLAN_MAP[plan]) {
     return NextResponse.json({ error: 'Invalid plan selected.' }, { status: 400 })
   }
+  // Which design is being bought: kept on the order for the receipt email.
+  const templateId = typeof body?.templateId === 'string' && getTemplateData(body.templateId) ? body.templateId : undefined
 
   // A discount code is checked here, not trusted from the browser. A code that
   // has ended or is for another design stops the checkout with the reason,
@@ -42,6 +45,7 @@ export async function POST(req: NextRequest) {
       receipt: `inv_${buyer.slice(-8)}_${Date.now()}`,
       notes: {
         userId: buyer, plan, priceList: price.list,
+        ...(templateId ? { templateId } : {}),
         // Read back by /verify to expect the discounted amount; also how the
         // Razorpay dashboard shows which sales came through which code.
         ...(coupon?.ok ? { coupon: coupon.coupon.code, percentOff: coupon.coupon.percentOff } : {}),
