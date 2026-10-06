@@ -48,7 +48,7 @@ const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'roy
 // Gala: the birthday weekend, between the everyday designs and the wedding suites.
 const GALA_TEMPLATES = [...GOLD_TEMPLATES, 'birthday-gala']
 const SIGNATURE_TEMPLATES = [...GALA_TEMPLATES, 'signature-kalyanam', 'signature-nikah', 'signature-garden']
-const COUTURE_TEMPLATES = [...SIGNATURE_TEMPLATES, 'signature-rajwada']
+const COUTURE_TEMPLATES = [...SIGNATURE_TEMPLATES, 'signature-rajwada', 'signature-aquarelle']
 
 export const PLANS: Plan[] = [
   {
@@ -129,9 +129,9 @@ export const PLANS: Plan[] = [
     name: 'Signature Couture',
     price: 1999,
     badge: 'Signature collection',
-    description: 'Rajwada — the royal palace wedding suite, with the gates-opening welcome and the full week of functions.',
+    description: 'Rajwada, the royal palace suite with the gates-opening welcome, or Aquarelle, a watercolour that paints itself as the vellum lifts — each with the full week of functions.',
     templateIds: COUTURE_TEMPLATES,
-    features: ['Rajwada palace suite', 'Every function on its own card', 'Travel, stay, FAQs & contacts for guests', 'Everything in the designs below'],
+    features: ['Rajwada palace or Aquarelle watercolour suite', 'Every function on its own card', 'Travel, stay, FAQs & contacts for guests', 'Everything in the designs below'],
   },
 ]
 

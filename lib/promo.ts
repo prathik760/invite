@@ -204,7 +204,7 @@ export const PROMO_EXCLUDED_PREFIXES = [
 /** The campaign's discount code, while it is live and covers the promoted design. */
 export function promoCoupon(): Coupon | null {
   if (!PROMO.coupon) return null
-  const check = checkCoupon(PROMO.coupon, getRequiredPlan(PROMO.templateId).id)
+  const check = checkCoupon(PROMO.coupon, getRequiredPlan(PROMO.templateId).id, PROMO.templateId)
   return check.ok ? check.coupon : null
 }
 

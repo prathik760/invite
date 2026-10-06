@@ -294,7 +294,8 @@ export default function SignatureKalyanam({ data, eventId, isPreview = false }: 
   }, [phase])
 
   const lb = useLightbox(photos.length)
-  const nameSize = fit([bride, groom], 58, 0.56, 34, 58)
+  // 0.62: Gloock's widest letters; a low floor so a long surname fits a narrow phone.
+  const nameSize = fit([bride, groom], 58, 0.62, 20, 58)
   const music = Boolean(data.musicUrl && /^https?:\/\//i.test(data.musicUrl))
 
   return (

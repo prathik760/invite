@@ -5,7 +5,7 @@ import WishesSection from './WishesSection'
 import { instrument } from './kit/fonts/instrument'
 import { syne } from './kit/fonts/syne'
 import { jost } from './kit/fonts/jost'
-import { calendarHref, dateParts, galleryImages, mapsHref, parseLines, parseSchedule, timeLabel, useCountdown, pad2, type InviteProps } from './kit/core'
+import { calendarHref, dateParts, galleryImages, mapsHref, parseLines, parseSchedule, timeLabel, useCountdown, pad2, type InviteProps, fitCqi } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import { ChannelIcon, ageOf, ordinal, partyName, useRsvp } from './kit/party'
 import type { InviteTheme } from './kit/theme'
@@ -534,7 +534,10 @@ export default function BirthdayMirrorball({ data, eventId, isPreview = false }:
   const animate = !isPreview
 
   // The name is set as large as its length allows.
-  const nameCqi = Math.min(26, 92 / (Math.max(name.length + 2, 5) * 0.52))
+  // Sized by the longest word (the last one carries the "’s"), so a long
+  // name wraps between words and shrinks rather than breaking mid-word.
+  const nameWords = name.split(/\s+/)
+  const nameCqi = Math.min(26, 88 / (Math.max(5, ...nameWords.map((w, i) => w.length + (i === nameWords.length - 1 ? 2 : 0))) * 0.5))
   const sideA = plan.slice(0, Math.ceil(plan.length / 2))
   const sideB = plan.slice(Math.ceil(plan.length / 2))
 
@@ -611,7 +614,7 @@ export default function BirthdayMirrorball({ data, eventId, isPreview = false }:
               style={chrome({
                 fontFamily: serif,
                 fontStyle: 'italic',
-                fontSize: `clamp(52px, ${nameCqi.toFixed(1)}cqi, 132px)`,
+                fontSize: `clamp(22px, ${nameCqi.toFixed(1)}cqi, 132px)`,
                 letterSpacing: '-0.015em',
                 backgroundImage: `linear-gradient(100deg, transparent 42%, rgba(255,255,255,0.95) 50%, transparent 58%), ${CHROME}`,
                 filter: 'drop-shadow(0 6px 22px rgba(255,120,70,0.22))',
@@ -781,9 +784,12 @@ export default function BirthdayMirrorball({ data, eventId, isPreview = false }:
 
         {/* ── Foot ───────────────────────────────────────────────────── */}
         <footer className="relative overflow-hidden px-6 pb-10 pt-16 text-center" style={{ background: `radial-gradient(80% 60% at 50% 100%, rgba(255,106,61,0.18), transparent 70%), ${P.deep}` }}>
-          <p style={chrome({ fontFamily: serif, fontStyle: 'italic', fontSize: 54, lineHeight: 1 })}>
-            {name}{age ? ` · ${age}` : ''}
-          </p>
+          {/* its own container, so a long name is sized to the footer instead of running off it */}
+          <div style={{ containerType: 'inline-size', width: '100%' }}>
+            <p style={chrome({ fontFamily: serif, fontStyle: 'italic', fontSize: `clamp(24px, ${fitCqi(name, { em: 0.52, max: 54 })}cqi, 54px)`, lineHeight: 1.05 })}>
+              {name}{age ? ` · ${age}` : ''}
+            </p>
+          </div>
           <p className="mt-3 uppercase" style={{ fontFamily: display, fontSize: 11, fontWeight: 700, letterSpacing: '0.32em', color: P.faint }}>
             {[date ? `${date.day} ${date.month} ${date.year}` : '', venue].filter(Boolean).join(' · ')}
           </p>

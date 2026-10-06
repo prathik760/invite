@@ -6,7 +6,7 @@ import { playfair } from './kit/fonts/playfair'
 import { pinyon } from './kit/fonts/pinyon'
 import { baloo } from './kit/fonts/baloo'
 import { jost } from './kit/fonts/jost'
-import { calendarHref, dateParts, galleryImages, grain, mapsHref, pad2, parseLines, parseRows, telHref, timeLabel, useCountdown, whatsappHref, type DateParts, type InviteProps } from './kit/core'
+import { calendarHref, dateParts, galleryImages, grain, mapsHref, pad2, parseLines, parseRows, telHref, timeLabel, useCountdown, whatsappHref, type DateParts, type InviteProps, fitCqi } from './kit/core'
 import { Credit, DirectionsLink, Reveal } from './kit/ui'
 import { numberWords, ordinalWords } from './kit/words'
 import { ChannelIcon, ageOf, canReply, partyName, rsvpChannels } from './kit/party'
@@ -782,7 +782,7 @@ export default function BirthdayGala({ data, eventId, isPreview = false }: Invit
               <div className={`gl-card relative z-[1] mx-auto -mt-[10cqi] w-[min(90cqi,430px)] px-[7cqi] pb-[10cqi] text-center ${age && String(age).length > 2 ? 'pt-[19cqi]' : 'pt-[15cqi]'}`} style={gilded()}>
                 <Caps>{hosts ? `${hosts} invite you to celebrate` : 'You’re invited to celebrate'}</Caps>
                 <h1 className="mt-[4cqi]" style={{ fontWeight: 400 }}>
-                  <span className="block" style={{ fontFamily: display, fontStyle: 'italic', fontSize: `clamp(30px, ${nameCqi.toFixed(1)}cqi, 92px)`, lineHeight: 1, letterSpacing: '-0.01em', overflowWrap: 'break-word' }}>
+                  <span className="block" style={{ fontFamily: display, fontStyle: 'italic', fontSize: `clamp(18px, ${nameCqi.toFixed(1)}cqi, 92px)`, lineHeight: 1, letterSpacing: '-0.01em', overflowWrap: 'break-word' }}>
                     {name.replace(/-/g, '-​')}
                   </span>
                   <span className="mt-[2.4cqi] block" style={{ fontFamily: script, fontSize: 'clamp(30px, 10.5cqi, 48px)', lineHeight: 1.1, color: P.goldDeep }}>
@@ -1004,7 +1004,10 @@ export default function BirthdayGala({ data, eventId, isPreview = false }: Invit
           {/* ── Foot ───────────────────────────────────────────────── */}
           <footer className="px-6 pb-10 pt-16 text-center" style={{ background: P.velvetDeep }}>
             <div className="mx-auto h-16 w-16"><Seal initial={initial} uid={`${uid}f`} /></div>
-            <p className="mt-5" style={{ fontFamily: display, fontStyle: 'italic', fontSize: 34, lineHeight: 1, color: P.cream }}>{name}{age ? ` at ${age}` : ''}</p>
+            {/* its own container, so a long name is sized to the footer instead of running off it */}
+            <div style={{ containerType: 'inline-size', width: '100%' }}>
+              <p className="mt-5" style={{ fontFamily: display, fontStyle: 'italic', fontSize: `clamp(20px, ${fitCqi(name, { em: 0.6, max: 34 })}cqi, 34px)`, lineHeight: 1.1, color: P.cream }}>{name}{age ? ` at ${age}` : ''}</p>
+            </div>
             <p className="mt-3 uppercase" style={{ fontSize: 11, letterSpacing: '0.32em', color: P.creamFaint }}>{[range, place].filter(Boolean).join(' · ')}</p>
             <div className="mt-9">
               <Credit isPreview={isPreview} color={P.creamFaint} linkColor={P.cream} />

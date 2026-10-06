@@ -7,6 +7,7 @@ import { TEMPLATES } from '@/modules/templates/data'
 import { withSampleDates } from '@/lib/sampleData'
 import { formatTemplatePrice, templatePrice } from '@/lib/plans'
 import { templateSeoSlug } from '@/lib/seo'
+import { templateImageUrl } from '@/lib/templateMedia'
 import { displayName } from '@/lib/catalog'
 import { Price } from '@/components/price/Price'
 
@@ -31,7 +32,7 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
   const title = `${name} invitation — live demo | ShareInvite`
   const description = `See the ${name} invitation exactly as your guests will. ${formatTemplatePrice(template.id)} one-time · preview with your own details before you pay.`
   const url = `${SITE_URL}/demo/${template.id}`
-  const image = `${SITE_URL}/templates/${template.id}.jpg`
+  const image = templateImageUrl(template.id)
   return {
     title: { absolute: title },
     description,

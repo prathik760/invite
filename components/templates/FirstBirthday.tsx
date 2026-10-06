@@ -14,6 +14,7 @@ import {
   timeLabel,
   useCountdown,
   type InviteProps,
+  fitCqi,
 } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import { numberWords, ordinalWords } from './kit/words'
@@ -362,7 +363,7 @@ export default function FirstBirthday({ data, eventId, isPreview = false }: Invi
 
   const longest = Math.max(...name.split(/\s+/).map((w) => w.length), 1)
   const nameCqi = Math.min(22, 90 / (longest * 0.6))
-  const nameSize = `clamp(42px, ${nameCqi.toFixed(1)}cqi, ${Math.round(nameCqi * 4.2)}px)`
+  const nameSize = `clamp(20px, ${nameCqi.toFixed(1)}cqi, ${Math.round(nameCqi * 4.2)}px)`
 
   const WISHES_THEME: InviteTheme = {
     bg: C.skyWash,
@@ -600,7 +601,9 @@ export default function FirstBirthday({ data, eventId, isPreview = false }: Invi
       <footer className="relative text-center" style={{ backgroundColor: C.cream }}>
         <div className="px-6 pb-8 pt-14">
           <LittleBalloon fill="url(#fb-sun)" className="mx-auto h-[62px] w-[42px]" />
-          <p className="mt-3" style={{ fontSize: 30, fontWeight: 800 }}>{name}</p>
+          <div style={{ containerType: 'inline-size', width: '100%' }}>
+            <p className="mt-3" style={{ fontSize: `clamp(18px, ${fitCqi(name, { em: 0.6, max: 30 })}cqi, 30px)`, fontWeight: 800 }}>{name}</p>
+          </div>
           {date && <p style={{ fontSize: 16, color: C.inkSoft }}>{date.day} {date.month} {date.year}</p>}
           <div className="mt-8">
             <Credit isPreview={isPreview} color={C.inkFaint} linkColor={C.coralDeep} />

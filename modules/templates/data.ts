@@ -779,6 +779,40 @@ export const TEMPLATES: TemplateData[] = [
       },
     },
   },
+  {
+    id: 'signature-aquarelle',
+    name: 'Aquarelle — Signature Watercolour Wedding',
+    description: 'A hand-painted wedding suite on midnight linen. It arrives tied with silk ribbon under a wax seal pressed with your initials; inside, bouquets of Redouté’s roses, irises and amaryllis, a suite of deckle-edged cards in blush, sage, sky and butter, and your date hidden under gold foil for guests to scratch — with every function, both families, your story, travel, FAQs and RSVP.',
+    category: 'signature',
+    config: {
+      fields: [
+        ...signatureFields({ invocation: '', venue: 'The Carlton, Kodaikanal', registry: true, destination: true }).map((f) =>
+          f.key === 'destination' ? { ...f, label: 'Town or city (optional)', hint: 'Ends the line under your names: “…at their wedding in Kodaikanal”.', placeholder: 'Kodaikanal' } : f,
+        ),
+        { key: 'guestLine', label: 'Who it’s for', type: 'text', section: 'people', group: 'Addressed to your guests', hint: 'Printed on the vellum when a link has no guest name. To address it to one family, add ?to= and their name to the end of your link: …?to=Shalini+and+family reads “Shalini and family”.', placeholder: 'Our dear family & friends' },
+      ],
+      defaultData: {
+        brideName: 'Anaya', groomName: 'Vihaan',
+        couplePhoto: '', bridePhoto: '', groomPhoto: '',
+        brideParents: 'Daughter of Meenakshi & Raghavan Iyer',
+        groomParents: 'Son of Kavita & Sanjay Mehra',
+        invocation: '',
+        blessings: 'Smt. Lakshmi Iyer\nShri Harish & Smt. Asha Mehra',
+        date: '', time: '10:30',
+        venue: 'The Carlton', venueAddress: 'Lake Road, Kodaikanal, Tamil Nadu 624101', destination: 'Kodaikanal', mapsUrl: '',
+        dressCode: 'Pastels and ivory — and a shawl for the evenings by the lake',
+        events: 'Mehendi & Haldi |  | 11:00 | The Lakeside Lawn | Yellows and greens\nSangeet |  | 19:00 | The Boat Club | Festive, with shoes to dance in\nThe Wedding |  | 10:30 | The Carlton | Pastels and ivory\nReception |  | 19:30 | The Carlton Ballroom | Evening formal',
+        story: '2019 | A view worth sharing | Two strangers, one window over a lake, and a conversation that has not stopped since.\n2024 | The question | A ring, a rowing boat, and a yes before he had finished asking.\n2026 | Back to the lake | This time, with everyone we love.',
+        travel: 'Kodaikanal is about three hours by road from Madurai airport (IXM). Cars will meet the morning flights the day before the wedding.\nRooms are held for our guests at The Carlton until a month before — mention our names when you book.\nEvenings by the lake are cool, so bring a shawl or a light jacket.',
+        faq: 'Can we bring the children? | Of course — there is a play area and a sitter on hand during every function.\nIs there parking? | Yes, at the hotel and the boat club, with valet on the wedding day.\nWill there be vegetarian food? | Every meal is vegetarian-friendly, with Jain options on request.',
+        contacts: 'Rohan — Vihaan’s brother | ',
+        whatsappNumber: '', rsvpBy: '', hashtag: '#AnayaWedsVihaan', livestreamUrl: '', registryUrl: '',
+        galleryImages: 'https://images.unsplash.com/photo-1622462281019-f6118fc42e46?auto=format&fit=crop&w=1000&q=75\nhttps://images.unsplash.com/photo-1612883833766-7930d960e16f?auto=format&fit=crop&w=1000&q=75\nhttps://images.unsplash.com/photo-1611106211090-8f3c79eb8552?auto=format&fit=crop&w=1000&q=75', musicUrl: '',
+        message: 'We found each other on a holiday neither of us wanted to end. Now we are making it last a lifetime.\nCome and spend a few days with us by the lake — there will be music, long dinners and everyone we love. It would not be the same without you.',
+        guestLine: 'Our dear family & friends',
+      },
+    },
+  },
   // ═══════════════════════════════════════════════════════════════════════
   // More occasions
   // ═══════════════════════════════════════════════════════════════════════

@@ -36,7 +36,7 @@ export const OCCASIONS: Occasion[] = [
     blurb: 'Palace suites, Nikah, Kalyanam, Haldi & Sangeet',
     href: '/wedding-invitation',
     image: '/occasions/photo-wedding.jpg',
-    templateIds: ['signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'save-the-date', 'elegant-wedding', 'luxury-wedding', 'cinematic-night', 'royal-deco', 'indian-wedding', 'kgf-wedding', 'haldi-mehendi', 'sangeet-night'],
+    templateIds: ['signature-rajwada', 'signature-aquarelle', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'save-the-date', 'elegant-wedding', 'luxury-wedding', 'cinematic-night', 'royal-deco', 'indian-wedding', 'kgf-wedding', 'haldi-mehendi', 'sangeet-night'],
   },
   {
     key: 'engagement',
@@ -151,6 +151,7 @@ const STYLE_TAGS: Record<string, string> = {
   'signature-kalyanam': 'Signature · South Indian',
   'signature-nikah': 'Signature · Nikah',
   'signature-garden': 'Signature · Destination',
+  'signature-aquarelle': 'Signature · Hand-painted florals',
   'baby-shower': 'Soft & playful',
   'first-birthday': 'Storybook',
   'haldi-mehendi': 'Pre-wedding',

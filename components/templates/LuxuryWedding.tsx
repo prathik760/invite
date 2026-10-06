@@ -15,6 +15,7 @@ import {
   timeLabel,
   useCountdown,
   whatsappHref,
+  fitCqi,
   type InviteProps,
 } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
@@ -474,10 +475,11 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
                   </div>
                 )}
 
-                <h1 className="mt-6 uppercase" style={{ fontFamily: caps, fontWeight: 400, color: C.ink }}>
-                  <span className="block leading-[1.05]" style={{ fontSize: 'clamp(34px, 11cqi, 54px)', letterSpacing: '0.08em' }}>{bride}</span>
+                {/* Its own container, so the spaced capitals are sized to the card and a long name never runs past it. */}
+                <h1 className="mt-6 uppercase" style={{ fontFamily: caps, fontWeight: 400, color: C.ink, containerType: 'inline-size', width: '100%' }}>
+                  <span className="block leading-[1.05]" style={{ fontSize: `clamp(18px, ${fitCqi(bride, { em: 0.76, max: 15 })}cqi, 54px)`, letterSpacing: '0.08em' }}>{bride}</span>
                   <span className="my-1 block normal-case italic leading-none" style={{ fontFamily: serif, fontSize: 'clamp(28px, 8cqi, 36px)', color: C.gold }}>&amp;</span>
-                  <span className="block leading-[1.05]" style={{ fontSize: 'clamp(34px, 11cqi, 54px)', letterSpacing: '0.08em' }}>{groom}</span>
+                  <span className="block leading-[1.05]" style={{ fontSize: `clamp(18px, ${fitCqi(groom, { em: 0.76, max: 15 })}cqi, 54px)`, letterSpacing: '0.08em' }}>{groom}</span>
                 </h1>
 
                 <p className="mx-auto mt-6 max-w-[17rem] text-balance italic leading-[1.4]" style={{ fontSize: 20, color: C.soft }}>

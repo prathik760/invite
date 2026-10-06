@@ -233,7 +233,10 @@ export default function LandingPage() {
   }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-champagne text-charcoal">
+    // overflow-x-clip, not -hidden: "hidden" makes <main> a scroll container,
+    // and the sticky header then measured its top from <main> instead of the
+    // window — a gap under the offer bar on phones, and a header that scrolled away.
+    <main className="min-h-screen overflow-x-clip bg-champagne text-charcoal">
       <SoftwareAppSchema />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />

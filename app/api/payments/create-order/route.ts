@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   // A discount code is checked here, not trusted from the browser. A code that
   // has ended or is for another design stops the checkout with the reason,
   // rather than quietly charging the full price to someone expecting less.
-  const coupon = body?.code ? checkCoupon(body.code, plan) : null
+  const coupon = body?.code ? checkCoupon(body.code, plan, templateId) : null
   if (coupon && !coupon.ok) {
     return NextResponse.json({ error: couponMessage(coupon.reason), coupon: coupon.reason }, { status: 400 })
   }

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Logo, { LogoMark } from '@/components/brand/Logo'
 import TrustList from '@/components/brand/TrustList'
 import { PayMethods } from '@/components/price/Price'
+import { templateImage } from '@/lib/templateMedia'
 
 export const metadata: Metadata = {
   // Was 'Authentication | ShareInvite', which the root template turned into
@@ -73,7 +74,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <div className="float-slower relative" style={{ ['--tilt' as string]: '-3deg' }}>
                 <div className="relative aspect-[4/5] w-[min(24vh,13rem)] overflow-hidden rounded-[1.4rem] border border-gold-soft/30 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.6)]">
                   <Image
-                    src="/templates/luxury-wedding.jpg"
+                    src={templateImage('luxury-wedding')}
                     alt="The Luxury Wedding invitation design"
                     fill
                     sizes="(min-width: 1280px) 16rem, (min-width: 1024px) 13rem, 1px"

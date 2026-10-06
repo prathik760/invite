@@ -15,6 +15,7 @@ import {
   timeLabel,
   useCountdown,
   type InviteProps,
+  fitCqi,
 } from './kit/core'
 import { Credit, DirectionsLink, Reveal } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
@@ -213,10 +214,11 @@ export default function IndianEngagement({ data, eventId, isPreview = false }: I
           Together with their families
         </p>
 
-        <h1 className="mt-3" style={{ fontFamily: display, fontWeight: 400 }}>
-          <span className="ie-in block leading-[1]" style={{ fontSize: 'clamp(46px, 15cqi, 72px)', animationDelay: '650ms' }}>{p1}</span>
+        {/* Its own container: each name is sized by its longest word, so a long surname shrinks instead of running off the page. */}
+        <h1 className="mt-3" style={{ fontFamily: display, fontWeight: 400, containerType: 'inline-size', width: '100%' }}>
+          <span className="ie-in block leading-[1]" style={{ fontSize: `clamp(20px, ${fitCqi(p1, { em: 0.56, max: 20 })}cqi, 72px)`, animationDelay: '650ms' }}>{p1}</span>
           <span className="ie-in my-1 block leading-none" style={{ fontSize: 'clamp(26px, 8cqi, 36px)', color: C.rose, animationDelay: '750ms' }}>&amp;</span>
-          <span className="ie-in block leading-[1]" style={{ fontSize: 'clamp(46px, 15cqi, 72px)', animationDelay: '850ms' }}>{p2}</span>
+          <span className="ie-in block leading-[1]" style={{ fontSize: `clamp(20px, ${fitCqi(p2, { em: 0.56, max: 20 })}cqi, 72px)`, animationDelay: '850ms' }}>{p2}</span>
         </h1>
 
         <p className="ie-in mx-auto mt-5 max-w-[16rem] text-balance text-[17px] leading-[1.5]" style={{ color: C.soft, animationDelay: '1000ms' }}>

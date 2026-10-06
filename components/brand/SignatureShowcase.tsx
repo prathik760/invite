@@ -18,7 +18,7 @@ const ADDS = [
   'Your story, told as a timeline',
   'Travel & stay, the people to call, and answers to guests’ questions',
   'RSVP on WhatsApp, a livestream link for family abroad, your hashtag',
-  'A signature opening — palace doors, a lattice window, a postcard',
+  'A signature opening — palace doors, a lattice window, a postcard, a sheet of vellum',
 ]
 
 /** A line under each name that says what the suite is (its style tag for Nikah would just repeat the name). */
@@ -27,11 +27,12 @@ const SUBTITLES: Record<string, string> = {
   'signature-kalyanam': 'South Indian temple',
   'signature-nikah': 'Lattice & lanterns',
   'signature-garden': 'Destination postcard',
+  'signature-aquarelle': 'Redouté florals · Wax seal',
 }
 
 /**
- * The Signature collection on an emerald band: the four wedding suites with
- * their prices, and exactly what they add. Used on the homepage and pricing.
+ * The Signature collection on an emerald band: the wedding suites with their
+ * prices, and exactly what they add. Used on the homepage and pricing.
  */
 export default function SignatureShowcase({ id = 'signature' }: { id?: string }) {
   if (SIGNATURE.length === 0) return null
@@ -44,13 +45,13 @@ export default function SignatureShowcase({ id = 'signature' }: { id?: string })
         sub="Complete wedding suites for celebrations that run across days and cities — everything your guests need, in one link that feels like it was made by hand."
         action={{ href: '/templates/category/signature', label: 'See the collection' }}
       />
-      {/* The four suites in one row on a laptop, two by two on a phone. */}
-      <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5" data-reveal-group>
-        {SIGNATURE.map((t) => (
-          <li key={t.id}>
+      {/* The suites in one row on a laptop, two by two on a phone — an odd last one centred under the pairs, the width of the others. */}
+      <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5 lg:gap-5" data-reveal-group>
+        {SIGNATURE.map((t, i) => (
+          <li key={t.id} className={SIGNATURE.length % 2 && i === SIGNATURE.length - 1 ? 'col-span-2 mx-auto w-[calc((100%_-_0.75rem)/2)] sm:w-[calc((100%_-_1rem)/2)] lg:col-span-1 lg:w-auto' : undefined}>
             <Link href={`/templates/${templateSeoSlug(t.id)}`} className="lift group flex h-full flex-col overflow-hidden rounded-3xl border border-gold-soft/25 bg-emerald-deep">
               <span className="relative block aspect-[4/5] overflow-hidden">
-                <Image src={templateImage(t.id)} alt={`${displayName(t.name)} invitation design`} fill sizes="(min-width: 1024px) 270px, 45vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                <Image src={templateImage(t.id)} alt={`${displayName(t.name)} invitation design`} fill sizes="(min-width: 1024px) 230px, 45vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 {/* The price rides on the artwork, so the name below never has to share its line. */}
                 <span className="absolute left-2.5 top-2.5 rounded-full bg-emerald-deep/90 px-2.5 py-1 font-editorial text-[1.05rem] font-semibold leading-none text-gold-soft shadow-[0_6px_16px_-8px_rgba(0,0,0,0.6)] sm:left-3 sm:top-3 sm:px-3 sm:text-[1.15rem]">
                   <Price inr={templatePrice(t.id)} />

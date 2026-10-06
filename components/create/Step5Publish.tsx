@@ -51,7 +51,7 @@ export default function Step5Publish({
   const name = displayName(selectedTemplate.name)
   const listPrice = useLocalPrice(requiredPlan.price)
   // After the visitor's discount code, when it covers this design (lib/coupons.ts).
-  const coupon = useCoupon(requiredPlan.id).applied
+  const coupon = useCoupon(requiredPlan.id, selectedTemplate.id).applied
   const local = coupon ? discountedPrice(listPrice, coupon.percentOff) : listPrice
   const price = local.label
 

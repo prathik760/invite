@@ -1,6 +1,30 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse, type NextFetchEvent, type NextRequest } from 'next/server'
+import { botLogKey, botOf, botPath } from '@/lib/bots'
 import { CONSENT_COUNTRIES, REGION_COOKIE } from '@/lib/consent'
 import { COUNTRY_COOKIE, intlPricingEnabled, normaliseCountry } from '@/lib/pricing'
+
+/**
+ * Counts a page fetched by a search engine, AI assistant or other bot, for the
+ * Bots tab of /admin/activity. Sent after the response (waitUntil), so the
+ * bot is never kept waiting, and it can never fail the page.
+ */
+function logBot(req: NextRequest, event: NextFetchEvent) {
+  if (process.env.NODE_ENV !== 'production') return
+  const bot = botOf(req.headers.get('user-agent'))
+  if (!bot) return
+  event.waitUntil(
+    botLogKey()
+      .then(async (key) => {
+        if (!key) return
+        await fetch(new URL('/api/bot-hit', req.nextUrl.origin), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-bot-key': key },
+          body: JSON.stringify({ bot: bot.name, kind: bot.kind, path: botPath(req.nextUrl.pathname) }),
+        })
+      })
+      .catch(() => {}),
+  )
+}
 
 /**
  * Remembers where the visitor is, for two things a static page cannot work out
@@ -16,7 +40,8 @@ import { COUNTRY_COOKIE, intlPricingEnabled, normaliseCountry } from '@/lib/pric
  * country header itself, so editing the cookie cannot change what anyone is
  * charged.
  */
-export function middleware(req: NextRequest) {
+export function middleware(req: NextRequest, event: NextFetchEvent) {
+  logBot(req, event)
   const res = NextResponse.next()
 
   // Vercel sets this header on every request. Locally there is none, so in

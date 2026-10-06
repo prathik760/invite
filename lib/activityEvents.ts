@@ -13,11 +13,11 @@ export const ACTIVITY_KEYS = [
   // design
   'template_id', 'template_name', 'template_category', 'price', 'plan', 'value', 'currency', 'coupon',
   // builder
-  'step', 'step_name', 'requires_payment', 'trigger', 'method', 'reason',
+  'step', 'step_name', 'requires_payment', 'trigger', 'method', 'reason', 'entry_point',
   // placement
   'source', 'cta_text', 'cta_location', 'destination', 'channel', 'occasion', 'from', 'to', 'response_type',
   // journal's own events (clicks, errors, page exits, session start)
-  'label', 'href', 'seconds', 'scroll', 'message', 'q',
+  'label', 'href', 'seconds', 'scroll', 'interacted', 'message', 'q',
   'referrer', 'landing', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
   'ad_click', 'lang', 'screen', 'returning',
 ] as const
@@ -29,6 +29,9 @@ export const ACTIVITY_QUERY_KEYS = ['template', 'occasion', 'category', 'plan', 
 export function isUntrackedPath(path: string): boolean {
   return /^\/(e|admin)(\/|$)/.test(path) || /^\/demo\/[^/]+\/embed/.test(path)
 }
+
+/** Set by /admin/activity in the owner's own browsers; the journal records nothing there. */
+export const OWNER_KEY = 'si_owner'
 
 export const MAX_EVENTS_PER_BATCH = 40
 export const MAX_STRING = 200

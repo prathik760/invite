@@ -19,6 +19,7 @@ import {
   useCountdown,
   whatsappHref,
   type InviteProps,
+  fitCqi,
 } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
@@ -975,7 +976,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
                     <div className="absolute bottom-[9%] left-[6%] top-[9%] flex w-[44%] flex-col justify-between text-left">
                       <p className="uppercase" style={{ fontSize: 'clamp(9px, 2.7cqi, 11px)', letterSpacing: '0.34em', color: G.faint }}>Post card</p>
                       <div>
-                        <p className="text-balance leading-[1.1]" style={{ fontFamily: display, fontSize: 'clamp(18px, 6cqi, 25px)', color: G.ink }}>{couple}</p>
+                        <p className="text-balance leading-[1.1]" style={{ fontFamily: display, fontSize: `clamp(11px, ${fitCqi(couple, { em: 0.62, room: 36, max: 6 })}cqi, 25px)`, color: G.ink }}>{couple}</p>
                         <p className="mt-1.5 leading-[1.35]" style={{ fontSize: 'clamp(11px, 3.4cqi, 14px)', color: G.soft }}>are getting married</p>
                         <p className="leading-[1.35]" style={{ fontSize: 'clamp(11px, 3.4cqi, 14px)', color: G.soft }}>{date ? `${date.day} ${date.month} ${date.year}` : 'Date to be announced'}</p>
                       </div>
@@ -1018,11 +1019,12 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
                   </div>
                 )}
                 <Label>Together with their families</Label>
-                <h1 className="mt-5" style={{ fontFamily: display, fontWeight: 400, color: G.ink }}>
-                  <span className="block text-balance leading-[1.02]" style={{ fontSize: 'clamp(40px, 13cqi, 58px)' }}>{bride}</span>
+                {/* Its own container: each name is sized by its longest word, so a long surname shrinks instead of overflowing the card. */}
+                <h1 className="mt-5" style={{ fontFamily: display, fontWeight: 400, color: G.ink, containerType: 'inline-size', width: '100%' }}>
+                  <span className="block text-balance leading-[1.02]" style={{ fontSize: `clamp(20px, ${fitCqi(bride, { em: 0.62, max: 20 })}cqi, 58px)` }}>{bride}</span>
                   {data.brideParents?.trim() && <span className="mt-1.5 block text-balance leading-[1.4]" style={{ fontFamily: text, fontSize: 15, color: G.soft }}>{data.brideParents}</span>}
                   <span className="my-2 block leading-none" style={{ fontSize: 'clamp(26px, 8cqi, 34px)', color: G.terra }}>&amp;</span>
-                  <span className="block text-balance leading-[1.02]" style={{ fontSize: 'clamp(40px, 13cqi, 58px)' }}>{groom}</span>
+                  <span className="block text-balance leading-[1.02]" style={{ fontSize: `clamp(20px, ${fitCqi(groom, { em: 0.62, max: 20 })}cqi, 58px)` }}>{groom}</span>
                   {data.groomParents?.trim() && <span className="mt-1.5 block text-balance leading-[1.4]" style={{ fontFamily: text, fontSize: 15, color: G.soft }}>{data.groomParents}</span>}
                 </h1>
                 <p className="mx-auto mt-6 max-w-[17rem] text-balance leading-[1.5]" style={{ fontSize: 17, fontWeight: 300, color: G.ink }}>

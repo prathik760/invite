@@ -6,7 +6,7 @@ import { gloock } from './kit/fonts/gloock'
 import { italianno } from './kit/fonts/italianno'
 import { jost } from './kit/fonts/jost'
 import { caveat } from './kit/fonts/caveat'
-import { calendarHref, dateParts, galleryImages, grain, mapsHref, parseLines, parseSchedule, timeLabel, useCountdown, type InviteProps } from './kit/core'
+import { calendarHref, dateParts, galleryImages, grain, mapsHref, parseLines, parseSchedule, timeLabel, useCountdown, type InviteProps, fitCqi } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import { numberWords } from './kit/words'
 import { ChannelIcon, ageOf, partyName, useRsvp } from './kit/party'
@@ -384,7 +384,7 @@ export default function BirthdayMartini({ data, eventId, isPreview = false }: In
                 <Martini uid={uid} />
               </div>
               <h1 className="mt-[1cqi]" style={{ fontWeight: 400 }}>
-                <span className="block" style={{ overflowWrap: 'break-word', fontFamily: serif, fontSize: `clamp(30px, ${nameCqi.toFixed(1)}cqi, 92px)`, lineHeight: 0.92, letterSpacing: '-0.02em', color: P.ink }}>
+                <span className="block" style={{ overflowWrap: 'break-word', fontFamily: serif, fontSize: `clamp(18px, ${nameCqi.toFixed(1)}cqi, 92px)`, lineHeight: 0.92, letterSpacing: '-0.02em', color: P.ink }}>
                   {name}
                 </span>
                 <span className="dm-script -mt-[1.5cqi] block" style={{ fontFamily: script, fontSize: 'clamp(40px, 15cqi, 66px)', lineHeight: 1, color: P.pimento }}>
@@ -521,7 +521,10 @@ export default function BirthdayMartini({ data, eventId, isPreview = false }: In
 
       {/* ── Foot ───────────────────────────────────────────────────── */}
       <footer className="px-6 pb-10 pt-14 text-center" style={{ background: P.velvetDeep }}>
-        <p style={{ fontFamily: script, fontSize: 56, lineHeight: 1, color: '#E9A79B' }}>Cheers to {name}</p>
+        {/* its own container, so a long name is sized to the footer instead of running off it */}
+        <div style={{ containerType: 'inline-size', width: '100%' }}>
+          <p style={{ fontFamily: script, fontSize: `clamp(30px, ${fitCqi(name, { em: 0.38, max: 56 })}cqi, 56px)`, lineHeight: 1, color: '#E9A79B' }}>Cheers to {name}</p>
+        </div>
         <p className="mt-3 uppercase" style={{ fontFamily: sans, fontSize: 11, fontWeight: 600, letterSpacing: '0.32em', color: P.creamFaint }}>
           {[date ? `${date.day} ${date.month} ${date.year}` : '', venue].filter(Boolean).join(' · ')}
         </p>

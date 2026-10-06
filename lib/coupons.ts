@@ -19,15 +19,17 @@ import type { PlanId } from './plans'
 export interface Coupon {
   code: string
   percentOff: number
-  /** Plans the code discounts: 'couture' is the Rajwada suite. */
+  /** Plans the code discounts. */
   plans: PlanId[]
+  /** Only these designs within those plans, when set: one plan can hold several designs ('couture' is Rajwada and Aquarelle). */
+  templates?: string[]
   /** Last moment the code works, with its time zone. */
   endsAt: string
 }
 
 export const COUPONS: Coupon[] = [
   // Wedding-season launch offer for Rajwada (₹1,999 → ₹1,599).
-  { code: 'ROYAL20', percentOff: 20, plans: ['couture'], endsAt: '2026-12-31T23:59:59+05:30' },
+  { code: 'ROYAL20', percentOff: 20, plans: ['couture'], templates: ['signature-rajwada'], endsAt: '2026-12-31T23:59:59+05:30' },
 ]
 
 export type CouponCheck =
@@ -44,12 +46,17 @@ export function findCoupon(value: unknown): Coupon | null {
   return (code && COUPONS.find((c) => c.code === code)) || null
 }
 
-/** Whether `value` is a live code for `plan` (any plan when omitted). */
-export function checkCoupon(value: unknown, plan?: string, now = Date.now()): CouponCheck {
+/**
+ * Whether `value` is a live code for buying `templateId` on `plan` (any
+ * purchase when both are omitted). A code limited to some designs needs the
+ * design named: without it, a purchase on the right plan is still refused.
+ */
+export function checkCoupon(value: unknown, plan?: string, templateId?: string, now = Date.now()): CouponCheck {
   const coupon = findCoupon(value)
   if (!coupon) return { ok: false, reason: 'unknown' }
   if (now > new Date(coupon.endsAt).getTime()) return { ok: false, reason: 'expired' }
   if (plan && !coupon.plans.includes(plan as PlanId)) return { ok: false, reason: 'not_for_design' }
+  if (plan && coupon.templates && !(templateId && coupon.templates.includes(templateId))) return { ok: false, reason: 'not_for_design' }
   return { ok: true, coupon }
 }
 

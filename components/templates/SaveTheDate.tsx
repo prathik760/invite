@@ -413,11 +413,14 @@ export default function SaveTheDate({ data, eventId, isPreview = false }: Invite
   const map = mapsHref(undefined, venue, city)
   const animate = !isPreview
 
-  // Names are sized by their longest line, and the column is narrower when the snapshot sits beside them.
-  const longest = Math.max(a.length, b.length + 2, 4)
-  const column = photo ? 52 : 82
-  const nameCqi = Math.min(15.5, column / (longest * 0.56))
-  const nameSize = `clamp(26px, ${nameCqi.toFixed(1)}cqi, ${Math.round(nameCqi * 4.1)}px)`
+  // Names are sized by their longest word, so a long surname shrinks the
+  // names rather than breaking in the middle. "& Sam" travels as one unit,
+  // and the column is narrower where the snapshot sits beside the names.
+  const wordsB = b.split(/\s+/)
+  const longest = Math.max(4, ...a.split(/\s+/).map((w) => w.length), 2 + wordsB[0].length, ...wordsB.slice(1).map((w) => w.length))
+  const column = photo ? 50 : 80
+  const nameCqi = Math.min(15.5, column / (longest * 0.6))
+  const nameSize = `clamp(16px, ${nameCqi.toFixed(1)}cqi, ${Math.round(nameCqi * 4.1)}px)`
 
   const rules = useMemo(() => ({ month: handRule(300, 7), letter: handRule(300, 19, 0.9) }), [])
 

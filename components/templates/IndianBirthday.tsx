@@ -262,7 +262,8 @@ function splitTime(value?: string): [string, string] | null {
 function fitSize(text: string, max: number, per = 0.6, room = 88) {
   const longest = Math.max(...text.split(/\s+/).map((w) => w.length), 1)
   const cqi = Math.min(max, room / (longest * per))
-  return `clamp(${room < 60 ? 24 : 30}px, ${cqi.toFixed(1)}cqi, ${Math.round(cqi * 4.6)}px)`
+  // A low floor: on a narrow phone the cqi size wins, so the longest word still fits.
+  return `clamp(${room < 60 ? 15 : 18}px, ${cqi.toFixed(1)}cqi, ${Math.round(cqi * 4.6)}px)`
 }
 
 function Time({ value, big, small }: { value: string; big: CSSProperties; small: CSSProperties }) {
@@ -346,7 +347,7 @@ export default function IndianBirthday({ data, eventId, isPreview = false }: Inv
                 {age !== null && (
                   <p
                     className="mt-6 break-words leading-[0.95]"
-                    style={{ ...display(800), fontSize: fitSize(name, portrait ? 15 : 17, 0.6, portrait ? 54 : 88), letterSpacing: '-0.01em' }}
+                    style={{ ...display(800), fontSize: fitSize(name, portrait ? 15 : 17, 0.64, portrait ? 52 : 80), letterSpacing: '-0.01em' }}
                   >
                     {name}
                   </p>

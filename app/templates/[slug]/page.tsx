@@ -226,6 +226,8 @@ function designFeatures(template: NonNullable<ReturnType<typeof findTemplateBySl
   const out: Feature[] = []
   if (is3D(template.id)) out.push({ Icon: SparklesIcon, title: '3D animation', copy: 'An animated experience that plays as they open it.' })
   if (keys.has('pin')) out.push({ Icon: SparklesIcon, title: 'Secret unlock & surprises', copy: 'A PIN with a hint, balloon pops, a puzzle, a scratch card and a letter.' })
+  if (template.id === 'signature-aquarelle') out.push({ Icon: SparklesIcon, title: 'Scratch to reveal', copy: 'Guests scratch away a panel of gold foil to find your wedding date.' })
+  if (keys.has('guestLine')) out.push({ Icon: PenIcon, title: 'Addressed to each guest', copy: 'Add a name to your link and the cover greets that guest by name.' })
   if (!is3D(template.id)) out.push({ Icon: ClockIcon, title: 'Live countdown', copy: 'Days, hours and minutes to the moment.' })
   if (keys.has('mapsUrl')) out.push({ Icon: MapPinIcon, title: 'Venue & Google Maps', copy: 'The address with one-tap directions.' })
   if (keys.has('events')) out.push({ Icon: CalendarIcon, title: 'Every function', copy: 'Each function on its own card — date, time, venue, dress code, map and calendar link.' })
@@ -384,10 +386,10 @@ export default function TemplateSeoPage({ params }: Props) {
 
               {/* Price. States the model plainly: one design, one payment. */}
               <div className="enter-2 mt-7 flex items-end gap-3">
-                <span className="font-editorial text-[3.6rem] font-semibold leading-none"><CouponPrice inr={price} plan={plan.id} /></span>
+                <span className="font-editorial text-[3.6rem] font-semibold leading-none"><CouponPrice inr={price} plan={plan.id} templateId={template.id} /></span>
                 <span className="pb-2 text-[0.95rem] text-muted">one-time · everything in this design included</span>
               </div>
-              <CouponNote inr={price} plan={plan.id} className="mt-2" />
+              <CouponNote inr={price} plan={plan.id} templateId={template.id} className="mt-2" />
 
               <div className="enter-2 mt-7 flex flex-col gap-3 sm:flex-row">
                 <TrackedLink
@@ -499,7 +501,7 @@ export default function TemplateSeoPage({ params }: Props) {
       </Section>
 
       <CtaBand
-        eyebrow={<>{name} · <CouponPrice inr={price} plan={plan.id} /> one-time</>}
+        eyebrow={<>{name} · <CouponPrice inr={price} plan={plan.id} templateId={template.id} /> one-time</>}
         title="Make this design yours"
         sub="Preview before you pay. Pay once when you publish — every feature in the design is included."
         primary={{ href: createHref, label: 'Use this design' }}
@@ -509,7 +511,7 @@ export default function TemplateSeoPage({ params }: Props) {
       <SiteFooter />
       <StickyCTA
         pageType="template_detail"
-        title={<>{name} · <CouponPrice inr={price} plan={plan.id} /></>}
+        title={<>{name} · <CouponPrice inr={price} plan={plan.id} templateId={template.id} /></>}
         sub="One-time · everything in this design included"
         href={`/create?template=${template.id}&src=sticky_bar`}
         label="Use this design"

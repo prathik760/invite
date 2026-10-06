@@ -5,7 +5,7 @@ import WishesSection from './WishesSection'
 import { fraunces } from './kit/fonts/fraunces'
 import { caveat } from './kit/fonts/caveat'
 import { jost } from './kit/fonts/jost'
-import { calendarHref, dateParts, galleryImages, grain, mapsHref, parseLines, parseSchedule, timeLabel, useCountdown, type InviteProps } from './kit/core'
+import { calendarHref, dateParts, galleryImages, grain, mapsHref, parseLines, parseSchedule, timeLabel, useCountdown, type InviteProps, fitCqi } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import { numberWords } from './kit/words'
 import { ChannelIcon, ageOf, partyName, useRsvp } from './kit/party'
@@ -403,7 +403,9 @@ export default function BirthdayLongLunch({ data, eventId, isPreview = false }: 
   const signer = data.invitedBy?.trim() || name
   const animate = !isPreview
 
-  const nameCqi = Math.min(34, 92 / (Math.max(name.length, 4) * 0.52))
+  // Sized by the longest word: a two-word name wraps between the words, and a
+  // long surname shrinks the name instead of breaking in the middle.
+  const nameCqi = Math.min(34, 78 / (Math.max(4, ...name.split(/\s+/).map((w) => w.length)) * 0.5))
 
   return (
     <div className={`ll relative ${animate ? 'll-in' : ''}`} style={{ backgroundColor: P.plaster, color: P.ink, fontFamily: sans, overflowX: 'clip', containerType: 'inline-size' }}>
@@ -475,7 +477,7 @@ export default function BirthdayLongLunch({ data, eventId, isPreview = false }: 
             <Label color={P.aperolDeep}>{theme}</Label>
           </div>
           <h1 className="mt-[4cqi]" style={{ fontWeight: 400 }}>
-            <span className="ll-rise block break-words" style={{ ...SOFT, fontFamily: serif, fontStyle: 'italic', fontSize: `clamp(56px, ${nameCqi.toFixed(1)}cqi, 168px)`, lineHeight: 0.9, letterSpacing: '-0.02em', color: P.ink, animationDelay: '.8s' }}>
+            <span className="ll-rise block break-words" style={{ ...SOFT, fontFamily: serif, fontStyle: 'italic', fontSize: `clamp(28px, ${nameCqi.toFixed(1)}cqi, 168px)`, lineHeight: 0.9, letterSpacing: '-0.02em', color: P.ink, animationDelay: '.8s' }}>
               {name}
             </span>
             <span className="ll-write mt-[2cqi] block" style={{ fontFamily: hand, fontSize: 'clamp(38px, 14cqi, 64px)', lineHeight: 1, color: P.aperol, transform: 'rotate(-3deg)', transformOrigin: 'left' }}>
@@ -610,7 +612,10 @@ export default function BirthdayLongLunch({ data, eventId, isPreview = false }: 
       <footer className="text-center" style={{ background: P.cobalt, color: P.cream }}>
         <TileBand uid={`${uid}f`} height={36} />
         <div className="px-6 pb-10 pt-12">
-          <p style={{ ...SOFT, fontFamily: serif, fontStyle: 'italic', fontSize: 50, lineHeight: 1 }}>{name}{age ? ` at ${age}` : ''}</p>
+          {/* its own container, so a long name is sized to the footer instead of running off it */}
+          <div style={{ containerType: 'inline-size', width: '100%' }}>
+            <p style={{ ...SOFT, fontFamily: serif, fontStyle: 'italic', fontSize: `clamp(24px, ${fitCqi(name, { em: 0.52, max: 50 })}cqi, 50px)`, lineHeight: 1.02 }}>{name}{age ? ` at ${age}` : ''}</p>
+          </div>
           <p className="mt-3 uppercase" style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.32em', color: 'rgba(255,244,226,0.65)' }}>
             {[date ? `${date.day} ${date.month} ${date.year}` : '', venue].filter(Boolean).join(' · ')}
           </p>

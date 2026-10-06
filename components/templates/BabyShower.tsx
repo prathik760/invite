@@ -14,6 +14,7 @@ import {
   timeLabel,
   useCountdown,
   type InviteProps,
+  fitCqi,
 } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
@@ -452,7 +453,7 @@ export default function BabyShower({ data, eventId, isPreview = false }: InviteP
 
   const longest = Math.max(...mother.split(/\s+/).map((w) => w.length), 1)
   const nameCqi = Math.min(24, 88 / (longest * 0.56))
-  const nameSize = `clamp(44px, ${nameCqi.toFixed(1)}cqi, ${Math.round(nameCqi * 4.3)}px)`
+  const nameSize = `clamp(20px, ${nameCqi.toFixed(1)}cqi, ${Math.round(nameCqi * 4.3)}px)`
 
   const WISHES_THEME: InviteTheme = {
     bg: C.paper,
@@ -724,7 +725,10 @@ export default function BabyShower({ data, eventId, isPreview = false }: InviteP
       <footer className="relative px-6 pb-10 pt-16 text-center" style={{ backgroundColor: C.blush }}>
         <div aria-hidden className="absolute left-0 right-0 top-0" style={scallopEdge(C.paper)} />
         <Motif kind="bangles" className="mx-auto h-12 w-12" />
-        <p className="mt-2" style={{ fontFamily: display, fontSize: 30 }}>{mother}</p>
+        {/* its own container, so a long name is sized to the footer instead of running off it */}
+        <div style={{ containerType: 'inline-size', width: '100%' }}>
+          <p className="mt-2" style={{ fontFamily: display, fontSize: `clamp(18px, ${fitCqi(mother, { em: 0.6, max: 30 })}cqi, 30px)` }}>{mother}</p>
+        </div>
         <p className="mt-1" style={{ fontSize: 15, color: C.plumSoft }}>
           {ritual}
           {date && <> · {date.day} {date.month} {date.year}</>}

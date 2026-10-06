@@ -15,7 +15,7 @@ const useBeforePageEffects = typeof window === 'undefined' ? useEffect : useLayo
  */
 export default function JournalTracker() {
   const pathname = usePathname()
-  const page = useRef({ start: Date.now(), scroll: 0 })
+  const page = useRef({ start: Date.now(), scroll: 0, interacted: false })
 
   useEffect(() => {
     const measure = () => {
@@ -23,10 +23,26 @@ export default function JournalTracker() {
       const seen = el.scrollHeight > 0 ? (window.scrollY + window.innerHeight) / el.scrollHeight : 1
       page.current.scroll = Math.max(page.current.scroll, Math.min(100, Math.round(seen * 100)))
     }
-    window.addEventListener('scroll', measure, { passive: true })
+    const onScroll = () => {
+      page.current.interacted = true
+      measure()
+    }
+    // Whether a person did anything on the page at all: a tap, a key, a scroll.
+    // An automated browser that only loads the page does none of these, which
+    // is how /admin/activity tells it from a real visitor who left quickly.
+    const acted = () => {
+      page.current.interacted = true
+    }
+    const ACTS = ['pointerdown', 'keydown', 'touchstart', 'wheel'] as const
+    window.addEventListener('scroll', onScroll, { passive: true })
+    ACTS.forEach((e) => window.addEventListener(e, acted, { passive: true, capture: true }))
     const stop = startJournal(() => {
       measure()
-      return { seconds: Math.round((Date.now() - page.current.start) / 1000), scroll: page.current.scroll }
+      return {
+        seconds: Math.round((Date.now() - page.current.start) / 1000),
+        scroll: page.current.scroll,
+        interacted: page.current.interacted,
+      }
     })
     // Lets a Clarity replay be found from the visitor's page at /admin/activity.
     // Where Clarity waits for consent (lib/consent.ts), it starts on the yes.
@@ -37,14 +53,15 @@ export default function JournalTracker() {
     tagClarity()
     window.addEventListener(CONSENT_EVENT, tagClarity)
     return () => {
-      window.removeEventListener('scroll', measure)
+      window.removeEventListener('scroll', onScroll)
+      ACTS.forEach((e) => window.removeEventListener(e, acted, { capture: true }))
       window.removeEventListener(CONSENT_EVENT, tagClarity)
       stop()
     }
   }, [])
 
   useBeforePageEffects(() => {
-    page.current = { start: Date.now(), scroll: 0 }
+    page.current = { start: Date.now(), scroll: 0, interacted: false }
     if (journalEnabled()) journalPageView()
   }, [pathname])
 

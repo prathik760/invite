@@ -3018,5 +3018,154 @@
     "via": "text"
    }
   ]
+ },
+ "signature-aquarelle": {
+  "height": 5818,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": -99851,
+    "via": "cover"
+   },
+   {
+    "key": "groomName",
+    "y": -99789,
+    "via": "cover"
+   },
+   {
+    "key": "couplePhoto",
+    "y": 910,
+    "via": "attr"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 1560,
+    "via": "attr"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 1560,
+    "via": "attr"
+   },
+   {
+    "key": "brideParents",
+    "y": 1725,
+    "via": "text"
+   },
+   {
+    "key": "groomParents",
+    "y": 1725,
+    "via": "text"
+   },
+   {
+    "key": "invocation",
+    "y": -99914,
+    "via": "cover"
+   },
+   {
+    "key": "blessings",
+    "y": 1810,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": 691,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 732,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 732,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": null
+   },
+   {
+    "key": "destination",
+    "y": -99485,
+    "via": "cover"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 3252,
+    "via": "text"
+   },
+   {
+    "key": "events",
+    "y": 2781,
+    "via": "text"
+   },
+   {
+    "key": "travel",
+    "y": 3568,
+    "via": "text"
+   },
+   {
+    "key": "contacts",
+    "y": 3755,
+    "via": "text"
+   },
+   {
+    "key": "whatsappNumber",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 4280,
+    "via": "text"
+   },
+   {
+    "key": "story",
+    "y": 2332,
+    "via": "text"
+   },
+   {
+    "key": "faq",
+    "y": 3652,
+    "via": "text"
+   },
+   {
+    "key": "hashtag",
+    "y": 3817,
+    "via": "text"
+   },
+   {
+    "key": "livestreamUrl",
+    "y": null
+   },
+   {
+    "key": "registryUrl",
+    "y": null
+   },
+   {
+    "key": "galleryImages",
+    "y": 2119,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 1168,
+    "via": "text"
+   },
+   {
+    "key": "guestLine",
+    "y": -99710,
+    "via": "cover"
+   }
+  ]
  }
 }

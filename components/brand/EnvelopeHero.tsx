@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { LogoMark } from '@/components/brand/Logo'
 import { CheckIcon, HeartIcon, MapPinIcon } from '@/components/ui/Icons'
+import { templateImage } from '@/lib/templateMedia'
 
 /**
  * The signature visual: a real design rising out of an opening envelope, with
@@ -11,9 +12,9 @@ import { CheckIcon, HeartIcon, MapPinIcon } from '@/components/ui/Icons'
  * animation is transform-only, so it paints on the first frame.
  */
 export default function EnvelopeHero({
-  card = { src: '/templates/indian-wedding.jpg', alt: 'Shaadi wedding invitation design' },
-  left = { src: '/templates/indian-birthday.jpg', alt: 'Birthday invitation design', label: 'Birthday' },
-  right = { src: '/templates/namakaran.jpg', alt: 'Naming ceremony invitation design', label: 'Naming ceremony' },
+  card = { src: templateImage('indian-wedding'), alt: 'Shaadi wedding invitation design' },
+  left = { src: templateImage('indian-birthday'), alt: 'Birthday invitation design', label: 'Birthday' },
+  right = { src: templateImage('namakaran'), alt: 'Naming ceremony invitation design', label: 'Naming ceremony' },
 }: {
   card?: { src: string; alt: string }
   left?: { src: string; alt: string; label: string }

@@ -137,6 +137,8 @@ export function withSampleDates(templateId: string, data: Record<string, string>
         return cells.join(' | ')
       })
       .join('\n')
+    // Aquarelle's RSVP card is part of the show; a number reserved for fiction keeps it on view.
+    if (templateId === 'signature-aquarelle' && !out.whatsappNumber) out.whatsappNumber = '+44 7700 900372'
     // A reply-by date only means something alongside a way to reply.
     if (!out.rsvpBy && out.whatsappNumber) out.rsvpBy = isoInDays(30)
   }

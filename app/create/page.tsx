@@ -128,7 +128,7 @@ function UpgradeModal({
   payError: PayError | null
 }) {
   const visual = TEMPLATE_VISUALS[templateId] ?? TEMPLATE_VISUALS['elegant-wedding']
-  const coupon = useCoupon(requiredPlan.id)
+  const coupon = useCoupon(requiredPlan.id, templateId)
   const full = useLocalPrice(requiredPlan.price)
   const local = coupon.applied ? discountedPrice(full, coupon.applied.percentOff) : full
   const price = local.label
@@ -649,7 +649,7 @@ export default function CreatePage() {
 
   const requiredPlanForSelected = getRequiredPlan(selectedId)
   const listPrice = useLocalPrice(requiredPlanForSelected.price)
-  const selectedCoupon = useCoupon(requiredPlanForSelected.id).applied
+  const selectedCoupon = useCoupon(requiredPlanForSelected.id, selectedId).applied
   // What the visitor pays: after their discount code when it covers this design.
   const selectedPrice = selectedCoupon ? discountedPrice(listPrice, selectedCoupon.percentOff) : listPrice
   const needsPayment = !canAccess(selectedId, userPlan)
@@ -701,7 +701,7 @@ export default function CreatePage() {
     const plan = PLANS.find(p => p.id === planId)
     // Sent only when it discounts this design: the server rejects a code for
     // another design, and someone holding ROYAL20 may be buying something else.
-    const code = couponForCheckout(planId)
+    const code = couponForCheckout(planId, upgradeTarget?.templateId)
     const ctx = {
       plan: planId,
       plan_name: plan?.name,

@@ -45,6 +45,7 @@ const THEMES: Record<string, Theme> = {
   'signature-kalyanam': LIGHT('#FBF4E3', '#5A140E', '#9E2218', '#D89A1C'),
   'signature-nikah': DARK('#0F3B35', '#F4EBD7', '#E2C68C'),
   'signature-garden': LIGHT('#FBF8F1', '#2E3531', '#56684F', '#E9BDB2'),
+  'signature-aquarelle': LIGHT('#FBF7EF', '#1E2738', '#86384C', '#D8BF86'),
   'baby-shower': LIGHT('#F7DED7', '#4A2744', '#A3405F', '#F1BDB6'),
   'first-birthday': LIGHT('#FFF6E6', '#23305A', '#C8543F', '#86C3E3'),
   'haldi-mehendi': LIGHT('#FBF2DC', '#3A2511', '#3E5A28', '#F2B226'),

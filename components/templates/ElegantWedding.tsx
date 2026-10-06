@@ -14,6 +14,7 @@ import {
   timeLabel,
   useCountdown,
   type InviteProps,
+  fitCqi,
 } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import { ordinalWords, timeWords, yearWords } from './kit/words'
@@ -134,10 +135,11 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Inv
               <Label>Together with their families</Label>
             </div>
 
-            <h1 className="mt-6" style={{ fontWeight: 300 }}>
+            {/* Its own container: each name is sized to the card by its longest word, so a long surname shrinks instead of overflowing. */}
+            <h1 className="mt-6" style={{ fontWeight: 300, containerType: 'inline-size', width: '100%' }}>
               <span
                 className="ew-in block italic leading-[0.95]"
-                style={{ fontSize: 'clamp(46px, 15cqi, 78px)', animationDelay: '500ms' }}
+                style={{ fontSize: `clamp(20px, ${fitCqi(bride, { em: 0.48, max: 24 })}cqi, 78px)`, animationDelay: '500ms' }}
               >
                 {bride}
               </span>
@@ -149,7 +151,7 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Inv
               </span>
               <span
                 className="ew-in block italic leading-[0.95]"
-                style={{ fontSize: 'clamp(46px, 15cqi, 78px)', animationDelay: '800ms' }}
+                style={{ fontSize: `clamp(20px, ${fitCqi(groom, { em: 0.48, max: 24 })}cqi, 78px)`, animationDelay: '800ms' }}
               >
                 {groom}
               </span>

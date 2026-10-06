@@ -83,6 +83,21 @@ model Activity {
   @@index([userId])
 }
 
+// Pages fetched by bots (search engines, AI assistants, link previews), one
+// row per bot, page and day (India time) with a running count — so the table
+// grows with the number of pages, not with traffic. middleware.ts →
+// /api/bot-hit; shown on the Bots tab of /admin/activity; kept ACTIVITY_DAYS.
+model BotHit {
+  day    String
+  bot    String
+  kind   String
+  path   String
+  hits   Int      @default(1)
+  lastAt DateTime @default(now())
+
+  @@id([day, bot, path])
+}
+
 // Uploads by signed-out visitors, counted per address per clock hour so every
 // server instance enforces the same limit (lib/uploadQuota.ts). The key is a
 // keyed hash of the address and the hour, never the address itself. Rows are

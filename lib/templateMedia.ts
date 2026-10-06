@@ -21,20 +21,27 @@ const TEMPLATE_IDS = [
   'surprise-journey', 'rakshabandhan', 'ganesh-chaturthi',
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
-  'signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden',
+  'signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-aquarelle',
   'baby-shower', 'first-birthday', 'haldi-mehendi', 'sangeet-night', 'pooja-invite', 'diwali-party', 'eid-milan', 'retirement',
   'save-the-date',
   'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch', 'birthday-gala',
   'dasara-ambari', 'christmas-evergreen', 'newyear-midnight',
 ] as const
 
+/**
+ * Bump whenever the images are re-shot. next/image responses are cached for a
+ * year (images.minimumCacheTTL), so a replaced file only reaches returning
+ * visitors under a new URL. Every use goes through templateImage() for this.
+ */
+const IMAGE_VERSION = 2
+
 const TEMPLATE_IMAGES: Record<string, string> = Object.fromEntries(
-  TEMPLATE_IDS.map((id) => [id, `/templates/${id}.jpg`]),
+  TEMPLATE_IDS.map((id) => [id, `/templates/${id}.jpg?v=${IMAGE_VERSION}`]),
 )
 
 /** Path (or remote URL) for use in <img>/next/image `src`. */
 export function templateImage(templateId: string): string {
-  return TEMPLATE_IMAGES[templateId] ?? '/templates/elegant-wedding.jpg'
+  return TEMPLATE_IMAGES[templateId] ?? TEMPLATE_IMAGES['elegant-wedding']
 }
 
 /** Absolute, crawlable URL — required by Product/Offer structured data and OG tags. */

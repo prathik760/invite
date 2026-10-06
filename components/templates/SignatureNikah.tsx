@@ -17,6 +17,7 @@ import {
   useCountdown,
   whatsappHref,
   type InviteProps,
+  fitCqi,
 } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import { ordinalWords, timeWords } from './kit/words'
@@ -945,10 +946,11 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
               )}
               <Divider color={C.gold} width={128} />
               <p className="mt-4 italic" style={{ fontSize: 19, color: C.onDarkSoft }}>the Nikah of</p>
-              <h1 className="mt-2" style={{ fontWeight: 400, color: C.onDark }}>
-                <span className="block text-balance leading-[1.08]" style={{ fontSize: 'clamp(40px, 13cqi, 60px)' }}>{bride}</span>
+              {/* Its own container: each name is sized by its longest word, so a long surname shrinks instead of overflowing. */}
+              <h1 className="mt-2" style={{ fontWeight: 400, color: C.onDark, containerType: 'inline-size', width: '100%' }}>
+                <span className="block text-balance leading-[1.08]" style={{ fontSize: `clamp(20px, ${fitCqi(bride, { em: 0.52, max: 20 })}cqi, 60px)` }}>{bride}</span>
                 <span className="my-1 block italic leading-none" style={{ fontSize: 'clamp(24px, 7cqi, 30px)', color: C.goldLight }}>&amp;</span>
-                <span className="block text-balance leading-[1.08]" style={{ fontSize: 'clamp(40px, 13cqi, 60px)' }}>{groom}</span>
+                <span className="block text-balance leading-[1.08]" style={{ fontSize: `clamp(20px, ${fitCqi(groom, { em: 0.52, max: 20 })}cqi, 60px)` }}>{groom}</span>
               </h1>
               <Divider color={C.gold} width={128} className="mt-6" />
               <div className="mt-5">
@@ -1008,7 +1010,7 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
               >
                 <div className="px-6 pb-7 pt-3 text-center">
                   <p className="italic" style={{ fontSize: 16, color: C.soft }}>the Nikah of</p>
-                  <p className="mt-1 text-balance leading-[1.15]" style={{ fontSize: 'clamp(24px, 7.6cqi, 30px)', color: C.ink }}>
+                  <p className="mt-1 text-balance leading-[1.15]" style={{ fontSize: `clamp(16px, ${fitCqi(`${bride} & ${groom}`, { em: 0.52, room: 78, max: 7.6 })}cqi, 30px)`, color: C.ink }}>
                     {bride} <span className="italic" style={{ color: C.gold }}>&amp;</span> {groom}
                   </p>
                   {date && <p className="mt-2 tabular-nums" style={{ fontSize: 16, letterSpacing: '0.12em', color: C.gold }}>{date.dayPadded} · {pad2(Number(data.date.slice(5, 7)))} · {date.year}</p>}

@@ -3,6 +3,7 @@ import { getToken } from 'next-auth/jwt'
 import { Prisma } from '@prisma/client'
 import { prisma } from '@/lib/db'
 import { ACTIVITY_KEYS, MAX_EVENTS_PER_BATCH, MAX_STRING, isUntrackedPath } from '@/lib/activityEvents'
+import { botOf } from '@/lib/bots'
 
 /**
  * Receives batches from the visitor journal (lib/journal.ts) and stores them
@@ -18,7 +19,6 @@ export const dynamic = 'force-dynamic'
 const MAX_BODY = 32 * 1024
 const ID = /^[A-Za-z0-9_-]{8,40}$/
 const NAME = /^[a-z][a-z0-9_]{1,40}$/
-const BOTS = /bot|crawl|spider|slurp|headless|lighthouse|pagespeed|preview|facebookexternalhit|whatsapp|python|curl|wget/i
 const KEYS = new Set<string>(ACTIVITY_KEYS)
 const MAX_AGE = 6 * 60 * 60 * 1000
 
@@ -59,7 +59,9 @@ function header(req: NextRequest, name: string) {
 
 export async function POST(req: NextRequest) {
   const ua = req.headers.get('user-agent') ?? ''
-  if (!ua || BOTS.test(ua)) return done()
+  // A bot that runs the page's JavaScript is counted on the Bots tab instead
+  // (middleware.ts saw it fetch the page), not as a visitor.
+  if (botOf(ua)) return done()
   // Another site's pages may not post into our journal. (A script can forge
   // this header; the size caps below are what bound that.)
   const origin = req.headers.get('origin')

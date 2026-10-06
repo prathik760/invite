@@ -6,7 +6,7 @@ import { bodoniDisplay } from './kit/fonts/bodoniDisplay'
 import { italiana } from './kit/fonts/italiana'
 import { cormorant } from './kit/fonts/cormorant'
 import { jost } from './kit/fonts/jost'
-import { calendarHref, dateParts, galleryImages, grain, mapsHref, parseLines, parseSchedule, timeLabel, useCountdown, type InviteProps } from './kit/core'
+import { calendarHref, dateParts, galleryImages, grain, mapsHref, parseLines, parseSchedule, timeLabel, useCountdown, type InviteProps, fitCqi } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import { numberWords, ordinalWords, timeWords } from './kit/words'
 import { ChannelIcon, ageOf, partyName, useRsvp } from './kit/party'
@@ -484,7 +484,7 @@ export default function BirthdayChampagne({ data, eventId, isPreview = false }: 
                 {age ? `to celebrate the ${ageWords} birthday of` : 'to celebrate the birthday of'}
               </p>
             </div>
-            <h1 className="ch-rise mt-[3cqi] break-words uppercase" style={{ fontFamily: caps, fontWeight: 400, fontSize: `clamp(24px, ${nameCqi.toFixed(1)}cqi, 76px)`, letterSpacing: '0.14em', lineHeight: 1.05, color: P.ink, animationDelay: '.5s', marginRight: '-0.14em' }}>
+            <h1 className="ch-rise mt-[3cqi] break-words uppercase" style={{ fontFamily: caps, fontWeight: 400, fontSize: `clamp(16px, ${nameCqi.toFixed(1)}cqi, 76px)`, letterSpacing: '0.14em', lineHeight: 1.05, color: P.ink, animationDelay: '.5s', marginRight: '-0.14em' }}>
               {/* a double-barrelled name breaks after its hyphen, never before it */}
               {name.replace(/-/g, '-\u200B')}
             </h1>
@@ -625,7 +625,10 @@ export default function BirthdayChampagne({ data, eventId, isPreview = false }: 
 
       {/* ── Foot ───────────────────────────────────────────────────── */}
       <footer className="px-6 pb-10 pt-14 text-center" style={{ background: P.ink, color: P.ivory }}>
-        <p className="uppercase" style={{ fontFamily: caps, fontSize: 30, letterSpacing: '0.2em', marginRight: '-0.2em' }}>{name}</p>
+        {/* its own container, so a long name is sized to the footer instead of running off it */}
+        <div style={{ containerType: 'inline-size', width: '100%' }}>
+          <p className="uppercase" style={{ fontFamily: caps, fontSize: `clamp(15px, ${fitCqi(name, { em: 0.84, max: 30 })}cqi, 30px)`, letterSpacing: '0.2em', marginRight: '-0.2em' }}>{name}</p>
+        </div>
         {age && <p className="mt-1" style={foilText({ fontFamily: numerals, fontSize: 58, lineHeight: 1 }, FOIL)}>{age}</p>}
         <p className="mt-3 uppercase" style={{ fontSize: 11, letterSpacing: '0.32em', color: 'rgba(247,241,230,0.55)' }}>
           {[date ? `${date.day} ${date.month} ${date.year}` : '', venue].filter(Boolean).join(' · ')}

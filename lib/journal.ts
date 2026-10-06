@@ -1,6 +1,6 @@
 'use client'
 
-import { ACTIVITY_KEYS, ACTIVITY_QUERY_KEYS, MAX_EVENTS_PER_BATCH, MAX_STRING, isUntrackedPath } from './activityEvents'
+import { ACTIVITY_KEYS, ACTIVITY_QUERY_KEYS, MAX_EVENTS_PER_BATCH, MAX_STRING, OWNER_KEY, isUntrackedPath } from './activityEvents'
 import { CONSENT_EVENT, consentState } from './consent'
 
 /**
@@ -50,6 +50,9 @@ export function journalEnabled(): boolean {
   if ((navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl) return false
   if (navigator.webdriver) return false
   if (consentState() === 'denied') return false
+  try {
+    if (localStorage.getItem(OWNER_KEY)) return false
+  } catch {}
   return !isUntrackedPath(location.pathname)
 }
 
@@ -69,12 +72,16 @@ export function visitorId(): string | null {
   return journalEnabled() ? loadIds().v : null
 }
 
-function currentIds(now: number) {
+function currentIds(now: number, name: string) {
   ids = loadIds()
   if (!ids.s || now - ids.at > SESSION_IDLE) {
     const returning = Boolean(ids.s)
     ids = { ...ids, s: randomId(), at: now }
     queue.push({ n: 'session_start', p: location.pathname, t: now, d: sessionContext(returning) })
+    // A visit that begins on a page already open (back to a tab after 30 idle
+    // minutes) starts with a click or a leave, not a page load; say which page
+    // it was on, or the visit reads as "0 pages".
+    if (name !== 'page_view') queue.push({ n: 'page_view', p: location.pathname, t: now })
     sessionsThisPage++
   }
   ids.at = now
@@ -156,7 +163,7 @@ export function journal(name: string, params: Params = {}) {
   if (!journalEnabled()) return
   hookUnload()
   const now = Date.now()
-  currentIds(now)
+  currentIds(now, name)
   if (name !== 'click') lastNamedAt = now
   queue.push({ n: name, p: location.pathname, t: now, d: pick(params) })
   if (queue.length > MAX_HELD) queue.splice(0, queue.length - MAX_HELD)
@@ -226,7 +233,7 @@ function describe(el: Element): { label: string; href?: string } | null {
  * Starts the click, rage-click, error and leave listeners. Returns a cleanup
  * function. `onLeave` supplies the current page's time and scroll depth.
  */
-export function startJournal(onLeave: () => { seconds: number; scroll: number }) {
+export function startJournal(onLeave: () => { seconds: number; scroll: number; interacted: boolean }) {
   const recent: { x: number; y: number; t: number }[] = []
   let lastRage = 0
   let errors = 0

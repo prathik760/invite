@@ -210,3 +210,17 @@ export function telHref(number?: string): string | null {
   const digits = (number || '').replace(/[^\d+]/g, '')
   return digits.replace(/\D/g, '').length >= 8 ? `tel:${digits}` : null
 }
+
+/**
+ * A size that keeps the longest word of a name on one line, in cqi of the
+ * name's container: `room` is the share of that width the name may use, `em`
+ * the face's widest letter, in ems, plus any letter-spacing (measured per face:
+ * about 0.46 for Cormorant italic, 0.68 for Marcellus capitals, 0.41 for Great
+ * Vibes). Short names keep `max`; long ones step down until they fit. Use it
+ * with a small floor, `clamp(18px, ${fitCqi(…)}cqi, 54px)`, and put the name in
+ * its own `containerType: 'inline-size'` box so 100cqi is exactly its width.
+ */
+export function fitCqi(text: string, { room = 94, em = 0.55, max = 14 }: { room?: number; em?: number; max?: number } = {}): string {
+  const longest = Math.max(3, ...text.split(/\s+/).map((w) => Array.from(w).length))
+  return Math.min(max, room / (longest * em)).toFixed(2)
+}

@@ -245,6 +245,10 @@ function RevealBeat({ theme, headline, subtitle, avatar, dateStr, dateBadge, tex
   theme: GreetingTheme; headline: string; subtitle: string; avatar: string; dateStr: string | null; dateBadge: string | null
   textColor: string; subColor: string; onNext: () => void
 }) {
+  // A long single word ("Congratulations!") cannot wrap, so it is sized down
+  // until it fits a phone screen. Headlines of shorter words keep the full size.
+  const longest = Math.max(...headline.split(/\s+/).map((w) => w.length))
+  const fit = longest > 12 ? 12 / longest : 1
   return (
     <motion.div {...beatIn} className="flex flex-col items-center text-center" style={{ pointerEvents: 'none' }}>
       {avatar && (
@@ -268,7 +272,7 @@ function RevealBeat({ theme, headline, subtitle, avatar, dateStr, dateBadge, tex
           fontFamily: theme.display,
           fontStyle: theme.italic ? 'italic' : 'normal',
           fontWeight: theme.display === serif.fraunces ? 600 : 400,
-          fontSize: 'clamp(46px, 15cqw, 92px)',
+          fontSize: `clamp(${Math.round(46 * fit)}px, ${(15 * fit).toFixed(2)}cqw, ${Math.round(92 * fit)}px)`,
           lineHeight: 1,
           letterSpacing: '-0.01em',
           textWrap: 'balance',

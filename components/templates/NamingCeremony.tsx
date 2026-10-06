@@ -179,8 +179,8 @@ export default function NamingCeremony({ data, eventId, isPreview = false }: Inv
   const calendar = calendarHref(`Naming ceremony of ${baby}`, data.date, data.time, [data.venue, data.venueAddress].filter(Boolean).join(', '), 3)
 
   const longest = Math.max(...baby.split(/\s+/).map((w) => w.length), 1)
-  const nameCqi = Math.min(21, 86 / (longest * 0.64))
-  const nameSize = `clamp(40px, ${nameCqi.toFixed(1)}cqi, ${Math.round(nameCqi * 4.4)}px)`
+  const nameCqi = Math.min(21, 86 / (longest * 0.7))
+  const nameSize = `clamp(20px, ${nameCqi.toFixed(1)}cqi, ${Math.round(nameCqi * 4.4)}px)`
 
   const label: CSSProperties = { fontFamily: sans, fontSize: 12, fontWeight: 500, letterSpacing: '0.22em', textTransform: 'uppercase', color: A.deep }
 

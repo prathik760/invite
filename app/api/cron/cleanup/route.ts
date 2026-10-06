@@ -121,6 +121,14 @@ export async function GET(request: Request) {
     .then((r) => r.count)
     .catch(() => 0)
 
-  console.log(`[cleanup] deleted ${invitationsDeleted} invitations, ${filesDeleted} files (${orphanKeys.length} unused uploads), ${activityDeleted} activity rows, ${quotaDeleted} upload counts`)
-  return NextResponse.json({ invitationsDeleted, filesDeleted, orphanFiles: orphanKeys.length, activityDeleted, quotaDeleted, r2Configured: r2 })
+  // Bot visit counts (the Bots tab) are kept as long as visitor activity. Days
+  // are stored as YYYY-MM-DD text, which sorts like a date.
+  const botDayBefore = activityBefore.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' })
+  const botRowsDeleted = await prisma.botHit
+    .deleteMany({ where: { day: { lt: botDayBefore } } })
+    .then((r) => r.count)
+    .catch(() => 0)
+
+  console.log(`[cleanup] deleted ${invitationsDeleted} invitations, ${filesDeleted} files (${orphanKeys.length} unused uploads), ${activityDeleted} activity rows, ${botRowsDeleted} bot rows, ${quotaDeleted} upload counts`)
+  return NextResponse.json({ invitationsDeleted, filesDeleted, orphanFiles: orphanKeys.length, activityDeleted, botRowsDeleted, quotaDeleted, r2Configured: r2 })
 }

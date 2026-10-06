@@ -14,6 +14,7 @@ import {
   parseSchedule,
   timeLabel,
   useCountdown,
+  fitCqi,
   type InviteProps,
 } from './kit/core'
 import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
@@ -444,14 +445,15 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Invi
                 </div>
               )}
 
-              <h1 className="mt-6" style={{ fontFamily: display, fontWeight: 400 }}>
-                <span className="iw-in block leading-[1.05]" style={{ fontSize: 'clamp(42px, 13.5cqi, 66px)', color: C.maroon, animationDelay: '1150ms' }}>
+              {/* Its own container, so each name is sized to the card: a long surname shrinks instead of running into the border. */}
+              <h1 className="mt-6" style={{ fontFamily: display, fontWeight: 400, containerType: 'inline-size', width: '100%' }}>
+                <span className="iw-in block leading-[1.05]" style={{ fontSize: `clamp(20px, ${fitCqi(bride, { em: 0.58, max: 18 })}cqi, 66px)`, color: C.maroon, animationDelay: '1150ms' }}>
                   {bride}
                 </span>
                 <span className="iw-in my-1.5 block italic" style={{ fontSize: 'clamp(18px, 5cqi, 22px)', color: C.sindoor, animationDelay: '1250ms' }}>
                   with
                 </span>
-                <span className="iw-in block leading-[1.05]" style={{ fontSize: 'clamp(42px, 13.5cqi, 66px)', color: C.maroon, animationDelay: '1350ms' }}>
+                <span className="iw-in block leading-[1.05]" style={{ fontSize: `clamp(20px, ${fitCqi(groom, { em: 0.58, max: 18 })}cqi, 66px)`, color: C.maroon, animationDelay: '1350ms' }}>
                   {groom}
                 </span>
               </h1>

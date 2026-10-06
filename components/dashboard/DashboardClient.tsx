@@ -342,7 +342,7 @@ export default function DashboardClient({ user }: Props) {
               className="relative overflow-hidden rounded-[2rem] border border-line bg-paper px-6 py-16 text-center shadow-soft sm:py-20">
               <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_50%_0%,rgba(232,200,102,0.18),transparent_70%)]" />
               <div className="relative mx-auto flex w-fit -space-x-6">
-                {['/templates/elegant-wedding.jpg', '/templates/indian-wedding.jpg', '/templates/indian-birthday.jpg'].map((src, i) => (
+                {['elegant-wedding', 'indian-wedding', 'indian-birthday'].map(templateImage).map((src, i) => (
                   <span key={src} className={`relative h-28 w-20 overflow-hidden rounded-xl border-4 border-paper shadow-soft ${i === 1 ? 'z-10 -translate-y-2' : i === 0 ? '-rotate-6' : 'rotate-6'}`}>
                     <Image src={src} alt="" fill sizes="80px" className="object-cover" />
                   </span>

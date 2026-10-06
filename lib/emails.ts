@@ -1,6 +1,7 @@
 import { SUPPORT_EMAIL, SUPPORT_WHATSAPP_DISPLAY, SUPPORT_WHATSAPP_URL } from '@/lib/support'
 import { ENDS_AFTER_DAYS } from '@/lib/retention'
 import type { Mail } from '@/lib/mail'
+import { templateImage } from '@/lib/templateMedia'
 
 /*
  * The two emails a buyer gets: the receipt when the payment clears, and the
@@ -95,7 +96,7 @@ export function paymentReceiptEmail(r: ReceiptDetails): Mail {
   const who = firstName(r.name)
   const when = r.paidAt.toLocaleString('en-IN', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Asia/Kolkata' }) + ' IST'
   const design = r.designName || 'your design'
-  const image = r.templateId ? `${APP_URL}/templates/${r.templateId}.jpg` : ''
+  const image = r.templateId ? `${APP_URL}${templateImage(r.templateId)}` : ''
   const row = (k: string, v: string, last = false) =>
     `<tr><td style="padding:12px 0;${last ? '' : `border-bottom:1px solid ${C.line};`}font-family:${SANS};font-size:13px;letter-spacing:0.4px;color:${C.faint};">${esc(k)}</td><td align="right" style="padding:12px 0;${last ? '' : `border-bottom:1px solid ${C.line};`}font-family:${SANS};font-size:14px;color:${C.ink};">${v}</td></tr>`
 

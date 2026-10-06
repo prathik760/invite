@@ -276,7 +276,8 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
   }, [phase, isPreview])
 
   const lb = useLightbox(photos.length)
-  const nameSize = fit([bride, groom], 64, 0.5, 38, 70)
+  // 0.6: Gilda's widest letters; a low floor so a long surname fits a narrow phone.
+  const nameSize = fit([bride, groom], 64, 0.6, 20, 70)
   const music = Boolean(data.musicUrl && /^https?:\/\//i.test(data.musicUrl))
   const u = (n: number) => `${((n / CROWN.span) * 100).toFixed(3)}cqi`
 

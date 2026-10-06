@@ -18,15 +18,15 @@ export function CouponCapture() {
   return null
 }
 
-/** A design's price, after the visitor's discount code when it covers `plan`. */
-export function CouponPrice({ inr, plan, className }: { inr: number; plan: string; className?: string }) {
-  const { applied } = useCoupon(plan)
+/** A design's price, after the visitor's discount code when it covers this design. */
+export function CouponPrice({ inr, plan, templateId, className }: { inr: number; plan: string; templateId: string; className?: string }) {
+  const { applied } = useCoupon(plan, templateId)
   return <Price inr={inr} percentOff={applied?.percentOff} className={className} />
 }
 
 /** "₹1,999 · ROYAL20 · 20% off until 31 December", only while a code applies. */
-export function CouponNote({ inr, plan, className = '' }: { inr: number; plan: string; className?: string }) {
-  const { applied } = useCoupon(plan)
+export function CouponNote({ inr, plan, templateId, className = '' }: { inr: number; plan: string; templateId: string; className?: string }) {
+  const { applied } = useCoupon(plan, templateId)
   if (!applied) return null
   return (
     <p className={`text-[0.9rem] text-muted ${className}`}>

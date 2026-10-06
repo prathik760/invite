@@ -52,22 +52,22 @@ export function rememberCouponFromUrl(): string | null {
   return coupon.code
 }
 
-/** The saved code, if it is live and discounts `plan` — what the checkout should send. */
-export function couponForCheckout(plan: string): string | undefined {
-  const check = checkCoupon(read(), plan)
+/** The saved code, if it is live and discounts this design on `plan` — what the checkout should send. */
+export function couponForCheckout(plan: string, templateId?: string): string | undefined {
+  const check = checkCoupon(read(), plan, templateId)
   return check.ok ? check.coupon.code : undefined
 }
 
-export function useCoupon(plan?: string) {
+export function useCoupon(plan?: string, templateId?: string) {
   const code = useSyncExternalStore(subscribe, read, () => null)
-  const check = code ? checkCoupon(code, plan) : null
+  const check = code ? checkCoupon(code, plan, templateId) : null
   return {
     code,
-    /** The coupon, when the saved code is live and discounts this plan. */
+    /** The coupon, when the saved code is live and discounts this design. */
     applied: check?.ok ? check.coupon : null,
-    /** Checks a typed code for this plan and keeps it when it works. */
+    /** Checks a typed code for this design and keeps it when it works. */
     apply(input: string): CouponCheck {
-      const result = checkCoupon(input, plan)
+      const result = checkCoupon(input, plan, templateId)
       if (result.ok) write(result.coupon.code)
       return result
     },
