@@ -20,7 +20,7 @@ import { PROMO, isFirstVisit, isPromoSnoozed, promoAllowedOn, promoCoupon } from
  */
 const ScrollPromo = dynamic(() => import('./ScrollPromo'), { ssr: false })
 
-export default function ScrollPromoMount() {
+export default function ScrollPromoMount({ designHref }: { designHref: string }) {
   const pathname = usePathname()
   const [trigger, setTrigger] = useState<'arrival' | 'scroll' | null>(null)
   const triggered = trigger !== null
@@ -95,5 +95,5 @@ export default function ScrollPromoMount() {
   }, [pathname, triggered])
 
   if (!trigger) return null
-  return <ScrollPromo trigger={trigger} />
+  return <ScrollPromo trigger={trigger} designHref={designHref} />
 }

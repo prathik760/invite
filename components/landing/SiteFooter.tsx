@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { LOCALES, localePath } from '@/lib/i18n'
 import { SUPPORT_EMAIL, SUPPORT_WHATSAPP_URL } from '@/lib/support'
 import Logo from '@/components/brand/Logo'
-import { PayMethods } from '@/components/price/Price'
+import PaymentLogos from '@/components/price/PaymentLogos'
 import { CookieSettingsLink } from '@/components/providers/CookieConsent'
 
 /**
@@ -191,13 +191,34 @@ export default function SiteFooter() {
           </nav>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-paper/10 py-7 text-[0.8rem] text-paper/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-5 border-t border-paper/10 pt-8 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45">Pay securely with</p>
+            <PaymentLogos className="mt-3" />
+            <p className="mt-3 text-[0.8rem] text-paper/50">
+              One-time payment through Razorpay. ShareInvite never sees or stores your card details.
+            </p>
+          </div>
+          {/* Razorpay's own merchant badge, loaded from Razorpay as their embed code does. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://badges.razorpay.com/badge-dark.png"
+            referrerPolicy="origin"
+            alt="Payments powered by Razorpay"
+            width={113}
+            height={45}
+            loading="lazy"
+            decoding="async"
+            className="h-[45px] w-[113px] shrink-0 rounded-[5px]"
+          />
+        </div>
+
+        <div className="mt-8 flex flex-col gap-3 border-t border-paper/10 py-7 text-[0.8rem] text-paper/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} ShareInvite · Digital invitations for every celebration ·{' '}
             Founded by <span className="text-paper/80">Prathik Thelkar</span>
           </p>
           <p>
-            Secure payments by Razorpay · <PayMethods capitalise /> ·{' '}
             <CookieSettingsLink className="inline-block py-1.5 hover:text-paper" />
           </p>
         </div>

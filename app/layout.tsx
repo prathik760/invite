@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { NAV } from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
 import Script from 'next/script'
@@ -320,10 +321,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SessionProvider>{children}</SessionProvider>
         <JournalTracker />
         {/* Keeps a discount code from a campaign link (?code=…) for checkout. */}
-        <CouponCapture />
+        <Suspense fallback={null}><CouponCapture /></Suspense>
         <CookieConsent />
         <WhatsAppButton />
-        <ScrollPromo />
+        <ScrollPromo designHref={`/templates/${templateSeoSlug(PROMO.templateId)}`} />
         {GTM_ID && (
           <Script
             id="gtm"

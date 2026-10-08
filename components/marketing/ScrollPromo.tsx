@@ -64,7 +64,7 @@ function useCountdown(endsAt: string | null) {
  * Rendered only once ScrollPromoMount has fired: on arrival for a first-time
  * visitor, otherwise on scroll.
  */
-export default function ScrollPromo({ trigger = 'scroll' }: { trigger?: 'arrival' | 'scroll' }) {
+export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigger?: 'arrival' | 'scroll'; designHref: string }) {
   const [open, setOpen] = useState(true)
   const [copied, setCopied] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -77,7 +77,10 @@ export default function ScrollPromo({ trigger = 'scroll' }: { trigger?: 'arrival
   const coupon = promoCoupon()
   const hasDiscount = hasRealDiscount() || coupon !== null
   const copy = PROMO.copy
-  const href = `/create?template=${PROMO.templateId}&src=scroll_promo${coupon ? `&code=${coupon.code}` : ''}`
+  // The design's own page, where the live preview opens the gates, rather than
+  // the builder: straight into an empty form, most people left at the names.
+  // The layout's CouponCapture keeps ?code= for checkout from there.
+  const href = `${designHref}${coupon ? `?code=${coupon.code}` : ''}`
 
   useEffect(() => {
     setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { couponEndLabel } from '@/lib/coupons'
 import { seoEvents, trackEvent } from '@/lib/analytics'
 import { rememberCouponFromUrl, useCoupon } from '@/lib/useCoupon'
@@ -9,12 +10,19 @@ import { Price } from '@/components/price/Price'
 /**
  * Keeps a discount code from a campaign link (`?code=ROYAL20` on any page) so
  * it is waiting at checkout. Mounted once in the root layout; renders nothing.
+ *
+ * Runs on every navigation, not only the first load: the offer bar and popup
+ * link to `?code=` inside the site, and a client-side move never remounts the
+ * layout — so those codes were never saved. The layout wraps this in Suspense,
+ * so reading the query string keeps the rest of the page static.
  */
 export function CouponCapture() {
+  const code = useSearchParams()?.get('code') ?? null
   useEffect(() => {
-    const code = rememberCouponFromUrl()
-    if (code) trackEvent(seoEvents.couponApplied, { coupon: code, source: 'link' })
-  }, [])
+    if (!code) return
+    const saved = rememberCouponFromUrl()
+    if (saved) trackEvent(seoEvents.couponApplied, { coupon: saved, source: 'link' })
+  }, [code])
   return null
 }
 

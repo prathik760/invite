@@ -46,8 +46,8 @@ You're invited to [Name]'s birthday — do join us!` },
   {
     id: 'first-birthday',
     toc: 'First birthday',
-    title: 'First Birthday Invitation Messages for WhatsApp',
-    intro: 'The first birthday is one of the most celebrated milestones for Indian families. These messages cover every context — from a traditional family celebration to a themed party.',
+    title: 'First (1st) Birthday Invitation Messages for WhatsApp',
+    intro: 'The first birthday is one of the most celebrated milestones for Indian families. These messages cover every context — a traditional family celebration, a themed party, a baby girl or boy, twins, and an invitation from the grandparents.',
     messages: [
       { title: '1. Traditional Indian — with family blessings', text: `With the blessings of our elders and the grace of God, we joyfully announce that our little one is turning ONE!
 
@@ -103,6 +103,52 @@ RSVP: [Phone Number]` },
 
 Our little one turns 1 — join us for the celebration!
 — [Father's Name] & [Mother's Name]` },
+      { title: '6. For a baby girl', text: `Our little princess is turning ONE! 👑🎀
+
+Please join us for the first birthday of
+[Child's Name]
+
+📅 [Date] · ⏰ [Time]
+📍 [Venue], [City]
+
+Come and bless our girl on her very first birthday!
+— [Father's Name] & [Mother's Name]` },
+      { title: '7. For a baby boy', text: `Our little prince is turning ONE! 🎈
+
+You're invited to the first birthday of
+[Child's Name]
+
+📅 [Date] · ⏰ [Time]
+📍 [Venue], [City]
+
+Your love and blessings are the best gift for our boy.
+— [Father's Name] & [Mother's Name]` },
+      { title: "8. Daughter's 1st birthday, from proud parents", text: `A whole year of giggles, sleepless nights and endless love — our daughter [Child's Name] is turning one! 💕
+
+We would love you to celebrate with us on [Date] at [Time], at [Venue].
+
+See you there!
+— [Father's Name] & [Mother's Name]` },
+      { title: '9. Twins', text: `Double the joy! 🎂🎂
+Our twins [Name] & [Name] are turning ONE.
+
+Join us on [Date] at [Time]
+[Venue], [City]
+
+Two little reasons to celebrate — please come and bless them both!` },
+      { title: '10. With the cake-cutting time', text: `[Child's Name]'s first birthday! 🎂
+Cake cutting at [Time] sharp, followed by dinner.
+📍 [Venue], [City] · 📅 [Date]
+Please be on time — the birthday baby gets sleepy early! 😄` },
+      { title: '11. From the grandparents', text: `With great joy, we invite you to the first birthday of our grandchild
+[Child's Name]
+(son / daughter of [Father's Name] & [Mother's Name])
+
+[Day], [Date] · [Time] onwards
+[Venue], [City]
+
+Your blessings will make the day complete.
+— [Grandparents' Names]` },
     ],
   },
   {

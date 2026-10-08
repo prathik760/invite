@@ -394,7 +394,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
 "By God's grace, [Parents' Names] joyfully invite you to the Namakaran Sanskar of their child on [Date] at [Muhurat Time] at [Venue]. The ceremony will begin with Ganesh Pooja, followed by the naming ritual and family blessings. We seek your presence and prayers."`,
       },
       {
-        heading: 'Short naming ceremony messages for WhatsApp groups',
+        heading: 'Short naming ceremony text messages for WhatsApp groups',
         body: `Family groups move fast, so the first line has to carry the occasion, the date and the place. Paste your invitation link on the line below and let it hold the rest.
 
 **Sample 9 — Two lines for the family group:**
