@@ -112,8 +112,6 @@ const MILESTONES = [
   { year: '60th', name: 'Diamond Anniversary', theme: 'Diamond Anniversary', desc: 'Sixty years together represents a love as enduring and rare as a diamond. A Diamond Anniversary celebration is a deeply emotional, once-in-a-lifetime event that the entire family will treasure forever.' },
 ]
 
-const CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 'pune', 'kolkata', 'ahmedabad']
-
 export default function Page() {
   const faqs = faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))
   return (
@@ -142,7 +140,6 @@ export default function Page() {
         ]}
         faqTitle="Digital anniversary invitation questions"
         faqs={faqs}
-        cities={{ base: '/anniversary-invitation', title: 'Anniversary invitations by city', list: CITIES }}
         related={[
           { href: '/wedding-invitation', label: 'Wedding invitations' },
           { href: '/engagement-invitation', label: 'Engagement invitations' },

@@ -53,7 +53,10 @@ export default function WordingCopyCard({ children, templateId, ctaHref }: Wordi
         </p>
         {!copiedText && (
           <figcaption className="mt-4">
-            <Link href={href} className="link inline-flex items-center gap-1 text-[0.85rem]">
+            {/* nofollow: hundreds of these builder URLs (one per message, each
+                canonical to /create) would otherwise take Google's crawl
+                visits away from the pages it should be indexing. */}
+            <Link href={href} rel="nofollow" className="link inline-flex items-center gap-1 text-[0.85rem]">
               Use these words in a beautiful design →
             </Link>
           </figcaption>

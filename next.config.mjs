@@ -55,6 +55,13 @@ const nextConfig = {
         destination: '/namakaran-invitation',
         permanent: true,
       },
+      // Same for anniversary: the page linked to eight city pages that were
+      // never built, and Google listed every one as Not found (404).
+      {
+        source: '/anniversary-invitation/:city',
+        destination: '/anniversary-invitation',
+        permanent: true,
+      },
       // /naming-ceremony-invitations duplicates /namakaran-invitation: same
       // query intent, same templates, generic body copy. app/sitemap.ts already
       // excluded it on the assumption this redirect existed — it did not, so the
