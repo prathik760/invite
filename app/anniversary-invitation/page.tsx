@@ -141,6 +141,7 @@ export default function Page() {
         faqTitle="Digital anniversary invitation questions"
         faqs={faqs}
         related={[
+          { href: '/anniversary-invitation-wording', label: 'Anniversary invitation messages' },
           { href: '/wedding-invitation', label: 'Wedding invitations' },
           { href: '/engagement-invitation', label: 'Engagement invitations' },
           { href: '/digital-invitation', label: 'All digital invitations' },

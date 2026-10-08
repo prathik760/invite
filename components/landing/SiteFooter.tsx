@@ -42,6 +42,7 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
       { label: 'Wedding invitation wording', href: '/wedding-invitation-wording' },
       { label: 'Engagement invitation wording', href: '/engagement-invitation-wording' },
       { label: 'Birthday invitation wording', href: '/birthday-invitation-wording' },
+      { label: 'Anniversary invitation wording', href: '/anniversary-invitation-wording' },
       { label: 'Baby shower invitation wording', href: '/blog/baby-shower-invitation-wording-ideas-for-india' },
       { label: 'Housewarming invitation wording', href: '/griha-pravesh-invitation-wording' },
       { label: 'Naming ceremony wording', href: '/blog/naming-ceremony-invitation-message-samples' },

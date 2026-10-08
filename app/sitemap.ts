@@ -117,6 +117,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/wedding-invitation-wording', 0.74, 'monthly'),
     entry('/engagement-invitation-wording', 0.72, 'monthly'),
     entry('/birthday-invitation-wording', 0.72, 'monthly'),
+    entry('/anniversary-invitation-wording', 0.72, 'monthly'),
     entry('/griha-pravesh-invitation-wording', 0.70, 'monthly'),
     // /namakaran-invitation-wording and /baby-shower-invitation-wording now 301
     // to their blog posts (listed in Tier 7), so they are not listed here.

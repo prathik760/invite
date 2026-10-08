@@ -4120,6 +4120,7 @@ Keep the formal register for the parents' generation and elders. A separate cove
       },
     ],
     links: [
+      { label: 'Anniversary invitation messages', href: '/anniversary-invitation-wording' },
       { label: 'Anniversary invitations', href: '/anniversary-invitation' },
       { label: 'Browse all templates', href: '/templates' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
@@ -4212,6 +4213,7 @@ Finally, leave the invitation page live afterwards. For an event like this, fami
       },
     ],
     links: [
+      { label: 'Anniversary invitation messages', href: '/anniversary-invitation-wording' },
       { label: 'Anniversary invitations', href: '/anniversary-invitation' },
       { label: 'Browse all templates', href: '/templates' },
       { label: 'Digital invitation websites', href: '/digital-invitation' },
