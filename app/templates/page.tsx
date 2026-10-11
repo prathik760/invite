@@ -5,6 +5,7 @@ import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/landing/SiteFooter'
 import TemplateBrowser from '@/components/catalog/TemplateBrowser'
 import PageHero from '@/components/brand/PageHero'
+import TemplateFanHero from '@/components/brand/TemplateFanHero'
 import CtaBand from '@/components/brand/CtaBand'
 import TrustList from '@/components/brand/TrustList'
 import { Section } from '@/components/brand/Section'
@@ -62,6 +63,8 @@ export default function TemplatesIndexPage() {
         eyebrow="The collection"
         title={<>Digital invitation <em className="font-medium text-burnished">templates</em></>}
         lede="Animated invitations and 3D greetings for weddings, birthdays, festivals and every celebration. Open any design in a live preview, try it with your own details before you pay, and pay once for the one you publish."
+        aside={<TemplateFanHero />}
+        asideClassName="hidden lg:block"
         footnote={<TrustList items={['Preview before you pay', `One price per design, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}`, 'Switch designs any time — details carry over', 'One link guests open on any phone']} />}
       />
 
@@ -74,7 +77,7 @@ export default function TemplatesIndexPage() {
           <ul className="mt-5 flex flex-wrap gap-2.5">
             {OCCASIONS.filter((o) => !o.href.startsWith('/templates')).map((o) => (
               <li key={o.key}>
-                <Link href={o.href} className="inline-flex rounded-full border border-line bg-champagne px-4 py-2 text-[0.9rem] font-semibold hover:border-burnished">
+                <Link href={o.href} prefetch={false} className="inline-flex rounded-full border border-line bg-champagne px-4 py-2 text-[0.9rem] font-semibold hover:border-burnished">
                   {o.label}
                 </Link>
               </li>
@@ -85,6 +88,7 @@ export default function TemplatesIndexPage() {
             {categories.map((category) => (
               <li key={category}>
                 <Link
+                  prefetch={false}
                   href={`/templates/category/${templateCategorySlug(category)}`}
                   className="inline-flex rounded-full border border-line bg-champagne px-4 py-2 text-[0.85rem] text-charcoal/80 hover:border-burnished"
                 >

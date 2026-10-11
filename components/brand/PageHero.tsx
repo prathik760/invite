@@ -41,6 +41,7 @@ export default function PageHero({
   lede,
   actions,
   aside,
+  asideClassName = '',
   footnote,
   align = 'left',
 }: {
@@ -52,6 +53,8 @@ export default function PageHero({
   actions?: ReactNode
   /** Right-hand visual (image, cards, offer summary). */
   aside?: ReactNode
+  /** Classes for the visual's column, e.g. `hidden lg:block` to keep phones text-first. */
+  asideClassName?: string
   /** Small line under the actions, e.g. "Preview before you pay · Pay once". */
   footnote?: ReactNode
   align?: 'left' | 'center'
@@ -75,7 +78,7 @@ export default function PageHero({
             )}
             {footnote && <div className={`enter-2 mt-5 text-[0.88rem] text-muted ${centered ? '[&_ul]:justify-center' : ''}`}>{footnote}</div>}
           </div>
-          {aside && <div className="enter-4">{aside}</div>}
+          {aside && <div className={`enter-4 ${asideClassName}`}>{aside}</div>}
         </div>
       </div>
     </section>

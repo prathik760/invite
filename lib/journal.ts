@@ -271,7 +271,11 @@ export function startJournal(onLeave: () => { seconds: number; scroll: number; i
     if (errors >= 5 || !e.message || e.message === 'Script error.') return
     if (e.filename && !e.filename.startsWith(location.origin)) return
     errors++
-    journal('js_error', { message: e.message })
+    // Where it came from: one of our files (path:line:col), or "injected" —
+    // no file at all, which is how browser extensions, translators and in-app
+    // browsers' scripts show up. Lets /admin/activity tell our bugs from theirs.
+    const source = e.filename ? `${e.filename.slice(location.origin.length) || '/'}:${e.lineno}:${e.colno}` : 'injected'
+    journal('js_error', { message: e.message, source })
   }
   const onRejection = (e: PromiseRejectionEvent) => {
     if (errors >= 5) return

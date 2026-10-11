@@ -212,7 +212,9 @@ export default function RoyalDeco({ data, eventId, isPreview = false }: InvitePr
       className="rd relative overflow-x-hidden"
       style={{ background: R.navy, color: R.cream, fontFamily: sans, containerType: 'inline-size', ...grain(0.07) }}
     >
-      <style>{`
+      {/* Raw CSS, not a text child: React escapes > and " in text on the server, which
+          breaks those rules until hydration and fails hydration on Safari (React #425). */}
+      <style dangerouslySetInnerHTML={{ __html: `
         .rd .rd-ray { stroke-dasharray: 1; stroke-dashoffset: 1; animation: rd-draw .9s cubic-bezier(.3,.6,.2,1) forwards; }
         .rd .rd-in { opacity: 0; animation: rd-in 1.1s ease forwards; }
         .rd .rd-frame { opacity: 0; animation: rd-in 1.4s ease forwards 200ms; }
@@ -227,7 +229,7 @@ export default function RoyalDeco({ data, eventId, isPreview = false }: InvitePr
           .rd .rd-ray { animation: none; stroke-dashoffset: 0; }
           .rd .rd-in, .rd .rd-frame { animation: none; opacity: 1; }
         }
-      `}</style>
+      ` }} />
 
       <MusicToggle src={data.musicUrl} isPreview={isPreview} color={R.cream} background="rgba(10,19,34,0.75)" border={R.line} />
 

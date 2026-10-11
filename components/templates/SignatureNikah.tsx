@@ -874,7 +874,9 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
       className="sn relative"
       style={{ background: C.paper, color: C.ink, fontFamily: serif, containerType: 'inline-size', overflowX: 'clip' }}
     >
-      <style>{`
+      {/* Raw CSS, not a text child: React escapes > and " in text on the server, which
+          breaks those rules until hydration and fails hydration on Safari (React #425). */}
+      <style dangerouslySetInnerHTML={{ __html: `
         .sn .sn-panel { transition: transform 1.75s cubic-bezier(.66,0,.22,1) .32s; will-change: transform; }
         .sn .is-opening .sn-panel-l { transform: translateX(-101%); }
         .sn .is-opening .sn-panel-r { transform: translateX(101%); }
@@ -909,7 +911,7 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
           .sn .sn-panel, .sn .sn-dolly, .sn .sn-veil, .sn .sn-plaque { transition: none; }
           .sn .sn-swing .sn-lantern, .sn .sn-rise { animation: none; opacity: 1; transform: none; }
         }
-      `}</style>
+      ` }} />
 
       <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.onDark} background="rgba(10,43,39,0.85)" border={C.goldHair} />
 

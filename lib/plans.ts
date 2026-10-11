@@ -47,7 +47,7 @@ const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'roy
 // below it, like the tiers above.
 // Gala: the birthday weekend, between the everyday designs and the wedding suites.
 const GALA_TEMPLATES = [...GOLD_TEMPLATES, 'birthday-gala']
-const SIGNATURE_TEMPLATES = [...GALA_TEMPLATES, 'signature-kalyanam', 'signature-nikah', 'signature-garden']
+const SIGNATURE_TEMPLATES = [...GALA_TEMPLATES, 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-saptapadi']
 const COUTURE_TEMPLATES = [...SIGNATURE_TEMPLATES, 'signature-rajwada', 'signature-aquarelle']
 
 export const PLANS: Plan[] = [

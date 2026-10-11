@@ -165,6 +165,12 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#6E7B5F', rgb: '110,123,95',
     image: templateImage('signature-garden'),
   },
+  'signature-saptapadi': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2.5c1.6 2.2 2.2 3.8.4 6.2-1.8-2.4-2-4-.4-6.2zM6.5 9.5h7c0 1-.7 1.4-.7 1.8 2.2.8 3.7 2.6 3.7 4.3 0 1.9-2.9 2.9-6.5 2.9s-6.5-1-6.5-2.9c0-1.7 1.5-3.5 3.7-4.3 0-.4-.7-.8-.7-1.8z" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #E2B04A 0%, #9B0F1E 55%, #4A040C 100%)',
+    color: '#9B0F1E', rgb: '155,15,30',
+    image: templateImage('signature-saptapadi'),
+  },
   'signature-aquarelle': {
     icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM10 5c1 .6 1.4 1.6 1 2.6-.4 1-1.6 1.3-2.4.7M7.6 10.8 6 17l2.2-1.2L9.4 18l.6-6.5M12.4 10.8 14 17l-2.2-1.2L10.6 18" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
     gradient: 'linear-gradient(135deg, #1B2537 0%, #86384C 58%, #E9B9BE 100%)',
@@ -277,7 +283,7 @@ export const TEMPLATE_VISUALS: Record<string, {
 
 export const DARK_TEMPLATES = new Set([
   'cinematic-night', 'kgf-wedding', 'royal-deco', 'luxury-wedding', 'anniversary', 'indian-birthday',
-  'surprise-journey', 'signature-nikah', 'sangeet-night', 'diwali-party', 'retirement',
+  'surprise-journey', 'signature-nikah', 'signature-saptapadi', 'sangeet-night', 'diwali-party', 'retirement',
   'birthday-mirrorball', 'birthday-martini', 'birthday-gala', 'dasara-ambari', 'christmas-evergreen', 'newyear-midnight',
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose',
   'greeting-promise', 'greeting-congratulations', 'greeting-festival', 'greeting-family',

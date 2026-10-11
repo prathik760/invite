@@ -146,7 +146,7 @@ export default function SiteFooter() {
                 <ul className="mt-3 space-y-0.5">
                   {col.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="inline-block py-1.5 text-[0.9rem] text-paper/65 transition-colors hover:text-paper">
+                      <Link href={link.href} prefetch={false} className="inline-block py-1.5 text-[0.9rem] text-paper/65 transition-colors hover:text-paper">
                         {link.label}
                       </Link>
                     </li>
@@ -163,7 +163,7 @@ export default function SiteFooter() {
             <ul className="mt-2 flex flex-wrap gap-x-4">
               {BLOG_TOPICS.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">{l.label}</Link>
+                  <Link href={l.href} prefetch={false} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -173,7 +173,7 @@ export default function SiteFooter() {
             <ul className="mt-2 flex flex-wrap gap-x-4">
               {CITY_PAGES.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">{l.label}</Link>
+                  <Link href={l.href} prefetch={false} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -183,7 +183,7 @@ export default function SiteFooter() {
             <ul className="mt-2 flex flex-wrap gap-x-4">
               {LOCALES.map((l) => (
                 <li key={l.code}>
-                  <Link href={localePath('/', l.code)} hrefLang={l.htmlLang} dir={l.dir} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">
+                  <Link href={localePath('/', l.code)} prefetch={false} hrefLang={l.htmlLang} dir={l.dir} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">
                     {l.label}
                   </Link>
                 </li>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import TemplateRenderer from '@/components/templates/TemplateRenderer'
+import EmbedStage from '@/components/templates/EmbedStage'
 import { TEMPLATES } from '@/modules/templates/data'
 import { withSampleDates } from '@/lib/sampleData'
 
@@ -35,13 +36,15 @@ export default function DemoEmbedPage({ params }: { params: { id: string } }) {
     <>
       {/* A phone screen has no scrollbar; a framed page on Windows would show one. */}
       <style>{'html{scrollbar-width:none}html::-webkit-scrollbar{display:none}'}</style>
+      {/* EmbedStage tells the live preview when the first screen is ready
+          and restarts the design the moment the preview shows it. */}
       {usePreview ? (
         <div className="relative h-[100svh] overflow-hidden">
-          <TemplateRenderer templateId={params.id} data={data} isPreview />
+          <EmbedStage><TemplateRenderer templateId={params.id} data={data} isPreview /></EmbedStage>
         </div>
       ) : (
         <div className="overflow-x-hidden">
-          <TemplateRenderer templateId={params.id} data={data} isPreview={false} />
+          <EmbedStage><TemplateRenderer templateId={params.id} data={data} isPreview={false} /></EmbedStage>
         </div>
       )}
     </>

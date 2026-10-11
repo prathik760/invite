@@ -43,6 +43,7 @@ const THEMES: Record<string, Theme> = {
   'surprise-journey': DARK('#24102A', '#FFFFFF', '#EBC37A'),
   'signature-rajwada': DARK('#6B1A1E', '#F5E7CD', '#D9B96C'),
   'signature-kalyanam': LIGHT('#FBF4E3', '#5A140E', '#9E2218', '#D89A1C'),
+  'signature-saptapadi': DARK('#8E0D1C', '#FFF4DF', '#F7DB8E'),
   'signature-nikah': DARK('#0F3B35', '#F4EBD7', '#E2C68C'),
   'signature-garden': LIGHT('#FBF8F1', '#2E3531', '#56684F', '#E9BDB2'),
   'signature-aquarelle': LIGHT('#FBF7EF', '#1E2738', '#86384C', '#D8BF86'),

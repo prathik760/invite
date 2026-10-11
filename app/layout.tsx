@@ -325,25 +325,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CookieConsent />
         <WhatsAppButton />
         <ScrollPromo designHref={`/templates/${templateSeoSlug(PROMO.templateId)}`} />
+        {/* GTM and GA4 are skipped inside frames, like the pixel and Clarity
+            above: the live preview frames /demo/<id>/embed, where they cost
+            ~350 KB on the visitor's connection while the design is loading,
+            and counted every preview as a second page view. */}
         {GTM_ID && (
           <Script
             id="gtm"
             strategy="lazyOnload"
             dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`,
+              __html: `(function(w,d,s,l,i){if(w.top!==w)return;w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`,
             }}
           />
         )}
         {GA_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="lazyOnload"
-            />
-            <Script id="ga4" strategy="lazyOnload">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
-            </Script>
-          </>
+          <Script id="ga4" strategy="lazyOnload">
+            {`(function(w,d,id){if(w.top!==w)return;w.dataLayer=w.dataLayer||[];w.gtag=function(){w.dataLayer.push(arguments)};w.gtag('js',new Date());w.gtag('config',id);var s=d.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+id;d.head.appendChild(s)})(window,document,'${GA_ID}');`}
+          </Script>
         )}
       </body>
     </html>

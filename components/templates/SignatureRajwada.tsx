@@ -294,7 +294,9 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
         ['--rw-display' as string]: display,
       }}
     >
-      <style>{`
+      {/* Raw CSS, not a text child: React escapes > and " in text on the server, which
+          breaks those rules until hydration and fails hydration on Safari (React #425). */}
+      <style dangerouslySetInnerHTML={{ __html: `
         .rw .rw-leaf { transition: transform 1.85s cubic-bezier(.6,.02,.28,1); will-change: transform; transform-style: preserve-3d; }
         .rw .rw-stage.is-open .rw-leaf-l { transform: rotateY(84deg); }
         .rw .rw-stage.is-open .rw-leaf-r { transform: rotateY(-84deg); }
@@ -329,7 +331,7 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
           .rw .rw-hint, .rw .rw-ring, .rw .rw-doors { animation: none; }
           .rw[data-ph] .rw-scene { transform: none; }
         }
-      `}</style>
+      ` }} />
 
       <MusicToggle src={data.musicUrl} isPreview={isPreview} color={R.maroon} background="rgba(246,239,227,0.9)" border={R.rule} />
 

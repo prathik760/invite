@@ -546,30 +546,30 @@ export default function LandingPage() {
               instantly in any phone browser, anywhere in the world.
             </p>
             <p>
-              Make a <Link href="/wedding-invitation">digital wedding invitation</Link>,
-              a <Link href="/birthday-invitation">birthday invitation</Link>,
-              an <Link href="/engagement-invitation">engagement invite</Link>,
-              an <Link href="/anniversary-invitation">anniversary invitation</Link>,
-              a <Link href="/griha-pravesh-invitation">griha pravesh invitation</Link>, or a
-              {' '}<Link href="/namakaran-invitation">namakaran invitation</Link>.
+              Make a <Link prefetch={false} href="/wedding-invitation">digital wedding invitation</Link>,
+              a <Link prefetch={false} href="/birthday-invitation">birthday invitation</Link>,
+              an <Link prefetch={false} href="/engagement-invitation">engagement invite</Link>,
+              an <Link prefetch={false} href="/anniversary-invitation">anniversary invitation</Link>,
+              a <Link prefetch={false} href="/griha-pravesh-invitation">griha pravesh invitation</Link>, or a
+              {' '}<Link prefetch={false} href="/namakaran-invitation">namakaran invitation</Link>.
               Prefer something more personal? Send an interactive
-              {' '}<Link href="/blog/3d-surprise-journey-the-interactive-digital-gift-you-send-online">3D Surprise Journey</Link>,
-              a <Link href="/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp">Valentine&apos;s Day card</Link>,
-              an <Link href="/blog/anniversary-card-online-create-a-3d-animated-anniversary-card">anniversary card</Link>, or a
-              {' '}<Link href="/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes">3D proposal card</Link>.
+              {' '}<Link prefetch={false} href="/blog/3d-surprise-journey-the-interactive-digital-gift-you-send-online">3D Surprise Journey</Link>,
+              a <Link prefetch={false} href="/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp">Valentine&apos;s Day card</Link>,
+              an <Link prefetch={false} href="/blog/anniversary-card-online-create-a-3d-animated-anniversary-card">anniversary card</Link>, or a
+              {' '}<Link prefetch={false} href="/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes">3D proposal card</Link>.
               Celebrating Rakhi apart from your sibling? Send a
-              {' '}<Link href="/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template">Raksha Bandhan invitation card online</Link>.
+              {' '}<Link prefetch={false} href="/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template">Raksha Bandhan invitation card online</Link>.
               Welcoming Bappa home? Make a
-              {' '}<Link href="/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template">Ganesh Chaturthi invitation card online</Link>
+              {' '}<Link prefetch={false} href="/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template">Ganesh Chaturthi invitation card online</Link>
               {' '}for just <Price inr={LOWEST_PAID_PRICE} />.
               Hosting a Diwali party? Start with our
-              {' '}<Link href="/diwali-invitation-wording">Diwali invitation messages</Link>, or find the right words for a
-              {' '}<Link href="/birthday-invitation-wording">birthday invitation message</Link>.
+              {' '}<Link prefetch={false} href="/diwali-invitation-wording">Diwali invitation messages</Link>, or find the right words for a
+              {' '}<Link prefetch={false} href="/birthday-invitation-wording">birthday invitation message</Link>.
             </p>
             <p>
               Build and preview before you pay — one-time payment, from <Price inr={LOWEST_PAID_PRICE} />, only when you publish. See every design on the
-              {' '}<Link href="/templates">templates page</Link>, see how pricing works on
-              {' '}<Link href="/pricing">pricing</Link>, or read guides on the <Link href="/blog">ShareInvite blog</Link>.
+              {' '}<Link prefetch={false} href="/templates">templates page</Link>, see how pricing works on
+              {' '}<Link prefetch={false} href="/pricing">pricing</Link>, or read guides on the <Link prefetch={false} href="/blog">ShareInvite blog</Link>.
             </p>
           </div>
         </div>

@@ -26,7 +26,10 @@ const nextConfig = {
     },
   },
   images: {
-    formats: ['image/avif', 'image/webp'],
+    // WebP only. With AVIF as well, every image width was generated twice,
+    // and Vercel's Hobby plan counts each one against its monthly
+    // transformation allowance. WebP works in every current browser.
+    formats: ['image/webp'],
     minimumCacheTTL: 31536000,
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },

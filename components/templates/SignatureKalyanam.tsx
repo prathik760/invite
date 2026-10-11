@@ -304,7 +304,9 @@ export default function SignatureKalyanam({ data, eventId, isPreview = false }: 
       data-ph={phase}
       style={{ background: K.cream, color: K.ink, fontFamily: text, containerType: 'inline-size', overflowX: 'clip' }}
     >
-      <style>{`
+      {/* Raw CSS, not a text child: React escapes > and " in text on the server, which
+          breaks those rules until hydration and fails hydration on Safari (React #425). */}
+      <style dangerouslySetInnerHTML={{ __html: `
         .kl .kl-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: kl-draw 2.6s cubic-bezier(.45,.1,.35,1) forwards; }
         @keyframes kl-draw { to { stroke-dashoffset: 0; } }
         .kl .kl-strand { transition: transform 1.35s cubic-bezier(.5,.05,.25,1) var(--lag), opacity .6s ease calc(var(--lag) + .9s); transform-origin: 50% 0; }
@@ -333,7 +335,7 @@ export default function SignatureKalyanam({ data, eventId, isPreview = false }: 
           .kl .kl-strand, .kl .kl-thirai, .kl .kl-rise, .kl .kl-seal { transition: none; }
           .kl .kl-hint { animation: none; }
         }
-      `}</style>
+      ` }} />
 
       <MusicToggle src={data.musicUrl} isPreview={isPreview} color={K.red} background="rgba(251,244,227,0.92)" border={K.rule} />
 

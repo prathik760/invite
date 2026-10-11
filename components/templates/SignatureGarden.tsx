@@ -857,7 +857,9 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
 
   return (
     <div className="sg relative" style={{ background: G.paper, color: G.ink, fontFamily: text, containerType: 'inline-size', overflowX: 'clip' }}>
-      <style>{`
+      {/* Raw CSS, not a text child: React escapes > and " in text on the server, which
+          breaks those rules until hydration and fails hydration on Safari (React #425). */}
+      <style dangerouslySetInnerHTML={{ __html: `
         .sg .sg-move { transition: transform 1.25s cubic-bezier(.5,0,.22,1) .05s; }
         .sg .sg-card { transform-style: preserve-3d; transition: transform 1.3s cubic-bezier(.45,.05,.22,1) .08s; }
         .sg .sg-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
@@ -883,7 +885,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
           .sg .sg-move, .sg .sg-card, .sg .sg-flap { transition: none; }
           .sg .is-opening .sg-lift { animation: none; }
         }
-      `}</style>
+      ` }} />
 
       <MusicToggle src={data.musicUrl} isPreview={isPreview} color={G.ink} background="rgba(251,248,241,0.9)" border={G.rule} />
 

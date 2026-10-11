@@ -261,7 +261,7 @@ export function describe(r: ActivityRow, isLast = false, gallery = false): Line 
     case 'rage_click':
       return { icon: '😤', text: `Clicked “${str(d.label)}” again and again`, detail: 'it may not have responded', tone: 'bad' }
     case 'js_error':
-      return { icon: '🐞', text: 'Hit a page error', detail: str(d.message), tone: 'bad' }
+      return { icon: '🐞', text: 'Hit a page error', detail: [str(d.message), str(d.source) && `(from ${str(d.source)})`].filter(Boolean).join(' '), tone: 'bad' }
     default:
       return { icon: '•', text: words(r.name), detail: tpl || undefined, tone: 'neutral' }
   }

@@ -59,7 +59,7 @@ export default function TemplateCard({
       <div className="flex flex-1 flex-col p-3.5 sm:p-4">
         <div className="flex items-start justify-between gap-2">
           <h3 className="min-w-0 font-editorial text-[1.35rem] font-semibold leading-tight text-charcoal">
-            <Link href={`/templates/${item.slug}`} className="hover:text-emerald-soft">
+            <Link href={`/templates/${item.slug}`} prefetch={false} className="hover:text-emerald-soft">
               {item.name}
             </Link>
           </h3>
@@ -72,6 +72,7 @@ export default function TemplateCard({
         <div className="mt-auto flex gap-2 pt-3">
           <Link
             href={`/create?template=${item.id}&src=${source}`}
+            prefetch={false}
             onClick={() =>
               trackCta('Use design', source, {
                 template_id: item.id,

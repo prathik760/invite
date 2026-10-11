@@ -3167,5 +3167,141 @@
     "via": "cover"
    }
   ]
+ },
+ "signature-saptapadi": {
+  "height": 8521,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": -99813,
+    "via": "cover"
+   },
+   {
+    "key": "groomName",
+    "y": -99715,
+    "via": "cover"
+   },
+   {
+    "key": "couplePhoto",
+    "y": 768,
+    "via": "attr"
+   },
+   {
+    "key": "bridePhoto",
+    "y": 1088,
+    "via": "attr"
+   },
+   {
+    "key": "groomPhoto",
+    "y": 1389,
+    "via": "attr"
+   },
+   {
+    "key": "brideParents",
+    "y": 1329,
+    "via": "text"
+   },
+   {
+    "key": "groomParents",
+    "y": 1630,
+    "via": "text"
+   },
+   {
+    "key": "invocation",
+    "y": -99929,
+    "via": "cover"
+   },
+   {
+    "key": "blessings",
+    "y": 1758,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": -99646,
+    "via": "cover"
+   },
+   {
+    "key": "time",
+    "y": -99587,
+    "via": "cover"
+   },
+   {
+    "key": "venue",
+    "y": -99548,
+    "via": "cover"
+   },
+   {
+    "key": "venueAddress",
+    "y": 5492,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 5564,
+    "via": "text"
+   },
+   {
+    "key": "events",
+    "y": 2234,
+    "via": "text"
+   },
+   {
+    "key": "travel",
+    "y": 5852,
+    "via": "text"
+   },
+   {
+    "key": "contacts",
+    "y": 6149,
+    "via": "text"
+   },
+   {
+    "key": "whatsappNumber",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 6610,
+    "via": "text"
+   },
+   {
+    "key": "story",
+    "y": 4486,
+    "via": "text"
+   },
+   {
+    "key": "faq",
+    "y": 6367,
+    "via": "text"
+   },
+   {
+    "key": "hashtag",
+    "y": 7184,
+    "via": "text"
+   },
+   {
+    "key": "livestreamUrl",
+    "y": null
+   },
+   {
+    "key": "galleryImages",
+    "y": 4816,
+    "via": "attr"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 698,
+    "via": "text"
+   }
+  ]
  }
 }

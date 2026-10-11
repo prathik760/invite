@@ -21,7 +21,7 @@ const TEMPLATE_IDS = [
   'surprise-journey', 'rakshabandhan', 'ganesh-chaturthi',
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
-  'signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-aquarelle',
+  'signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-aquarelle', 'signature-saptapadi',
   'baby-shower', 'first-birthday', 'haldi-mehendi', 'sangeet-night', 'pooja-invite', 'diwali-party', 'eid-milan', 'retirement',
   'save-the-date',
   'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch', 'birthday-gala',

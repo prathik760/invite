@@ -25,6 +25,7 @@ const ADDS = [
 const SUBTITLES: Record<string, string> = {
   'signature-rajwada': 'Palace doors · Rajasthani',
   'signature-kalyanam': 'South Indian temple',
+  'signature-saptapadi': 'Antarpat · Seven vows',
   'signature-nikah': 'Lattice & lanterns',
   'signature-garden': 'Destination postcard',
   'signature-aquarelle': 'Redouté florals · Wax seal',
@@ -49,7 +50,7 @@ export default function SignatureShowcase({ id = 'signature' }: { id?: string })
       <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5 lg:gap-5" data-reveal-group>
         {SIGNATURE.map((t, i) => (
           <li key={t.id} className={SIGNATURE.length % 2 && i === SIGNATURE.length - 1 ? 'col-span-2 mx-auto w-[calc((100%_-_0.75rem)/2)] sm:w-[calc((100%_-_1rem)/2)] lg:col-span-1 lg:w-auto' : undefined}>
-            <Link href={`/templates/${templateSeoSlug(t.id)}`} className="lift group flex h-full flex-col overflow-hidden rounded-3xl border border-gold-soft/25 bg-emerald-deep">
+            <Link href={`/templates/${templateSeoSlug(t.id)}`} prefetch={false} className="lift group flex h-full flex-col overflow-hidden rounded-3xl border border-gold-soft/25 bg-emerald-deep">
               <span className="relative block aspect-[4/5] overflow-hidden">
                 <Image src={templateImage(t.id)} alt={`${displayName(t.name)} invitation design`} fill sizes="(min-width: 1024px) 230px, 45vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
                 {/* The price rides on the artwork, so the name below never has to share its line. */}
