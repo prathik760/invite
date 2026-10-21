@@ -5,8 +5,15 @@ import EmbedStage from '@/components/templates/EmbedStage'
 import { TEMPLATES } from '@/modules/templates/data'
 import { withSampleDates } from '@/lib/sampleData'
 
-export const metadata: Metadata = {
-  robots: { index: false, follow: false },
+const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
+
+// Its own canonical: without one it inherited the root layout's, so a noindex
+// page declared itself a duplicate of the homepage.
+export function generateMetadata({ params }: { params: { id: string } }): Metadata {
+  return {
+    robots: { index: false, follow: false },
+    alternates: { canonical: `${SITE_URL}/demo/${params.id}/embed` },
+  }
 }
 
 // Sample dates are relative to today; rebuild daily so the countdown stays live.

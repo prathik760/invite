@@ -24,6 +24,10 @@ export function generateStaticParams() {
  * Demos stay out of search (the design's /templates page is the indexed one),
  * but they are what gets sent to customers on WhatsApp — so they carry a real
  * link preview: the design's name, price and its thumbnail.
+ *
+ * The canonical is the demo itself. It used to name the /templates page, and
+ * noindex plus a canonical elsewhere are contradictory signals: Google may
+ * carry the noindex over to the canonical target, the page we want to rank.
  */
 export function generateMetadata({ params }: { params: { id: string } }): Metadata {
   const template = TEMPLATES.find((t) => t.id === params.id)
@@ -37,7 +41,7 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
     title: { absolute: title },
     description,
     robots: { index: false, follow: false },
-    alternates: { canonical: `${SITE_URL}/templates/${templateSeoSlug(template.id)}` },
+    alternates: { canonical: url },
     openGraph: { title, description, url, siteName: 'ShareInvite', type: 'website', images: [{ url: image, width: 960, height: 1200, alt: `${name} invitation design` }] },
     twitter: { card: 'summary_large_image', title, description, images: [image] },
   }
