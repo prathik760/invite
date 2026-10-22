@@ -68,9 +68,10 @@ const editorial = Cormorant_Garamond({
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-5377FL2P'
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-5NYQ140ED1'
-// Meta Pixel, for measuring Facebook/Instagram ads. Off until the ID is set.
-// Digits only, so a stray space or quote in the dashboard cannot break the script.
-const META_PIXEL_ID = (process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '').replace(/\D/g, '')
+// Meta Pixel (dataset) of the ShareInvite ad account, for measuring Facebook and
+// Instagram ads. NEXT_PUBLIC_META_PIXEL_ID overrides it, e.g. to test a new
+// dataset. Digits only, so a stray space or quote in the dashboard cannot break the script.
+const META_PIXEL_ID = (process.env.NEXT_PUBLIC_META_PIXEL_ID || '1855165148948042').replace(/\D/g, '')
 // Microsoft Clarity: screen recordings and heatmaps of each visit. Off until the
 // project ID (clarity.microsoft.com → Settings → Overview) is set.
 const CLARITY_ID = (process.env.NEXT_PUBLIC_CLARITY_ID ?? '').replace(/[^a-z0-9]/gi, '')
