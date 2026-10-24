@@ -54,6 +54,7 @@ const TEMPLATE_COMPONENTS: Record<string, TemplateComponent> = {
   'signature-rajwada': dynamic(() => import('./SignatureRajwada')),
   'signature-kalyanam': dynamic(() => import('./SignatureKalyanam')),
   'signature-saptapadi': dynamic(() => import('./SignatureSaptapadi')),
+  'signature-two-worlds': dynamic(() => import('./SignatureTwoWorlds')),
   'signature-nikah': dynamic(() => import('./SignatureNikah')),
   'signature-garden': dynamic(() => import('./SignatureGarden')),
   'signature-aquarelle': dynamic(() => import('./SignatureAquarelle')),

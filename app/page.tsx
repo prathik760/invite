@@ -145,9 +145,13 @@ const HERO_OCCASIONS = [
   { label: 'Diwali & Eid', href: '/templates/category/festival' },
 ]
 
+// The gallery opens on the most striking designs, a mix of occasions and prices (the first eight show
+// under "All designs"); every occasion filter then leads with its own best-looking ones.
 const FEATURED_FIRST = [
-  'luxury-wedding', 'indian-birthday', 'greeting-love', 'anniversary',
-  'elegant-wedding', 'ganesh-chaturthi', 'namakaran', 'surprise-journey',
+  'signature-two-worlds', 'haldi-mehendi', 'signature-rajwada', 'sangeet-night',
+  'birthday-mirrorball', 'signature-aquarelle', 'diwali-party', 'baby-shower',
+  'signature-saptapadi', 'indian-birthday', 'birthday-gala', 'dasara-ambari',
+  'first-birthday', 'christmas-evergreen', 'signature-nikah', 'signature-kalyanam',
 ]
 
 // Left and right of the phone in the feature showcase.
@@ -249,39 +253,41 @@ export default function LandingPage() {
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_60%_at_80%_20%,rgba(232,200,102,0.22),transparent_70%),radial-gradient(45%_50%_at_0%_100%,rgba(251,239,227,0.95),transparent_70%)]"
         />
-        <div className="shell relative grid items-center gap-10 pb-12 pt-8 sm:gap-12 md:pb-16 md:pt-12 lg:grid-cols-[1.02fr_1fr] lg:gap-8 lg:pb-20 lg:pt-14">
+        <div className="shell relative grid items-center gap-10 pb-12 pt-8 max-sm:gap-7 max-sm:pb-10 max-sm:pt-6 sm:gap-12 md:pb-16 md:pt-12 lg:grid-cols-[1.02fr_1fr] lg:gap-8 lg:pb-20 lg:pt-14">
           <div className="min-w-0">
-            <p className="enter-0 inline-flex items-center gap-2 rounded-full border border-line bg-paper/80 px-3.5 py-1.5 text-[0.78rem] font-semibold text-charcoal/80">
+            <p className="enter-0 inline-flex items-center gap-2 rounded-full border border-line bg-paper/80 px-3.5 py-1.5 text-[0.78rem] font-semibold text-charcoal/80 max-sm:px-3 max-sm:py-1 max-sm:text-[0.72rem]">
               <span className="h-1.5 w-1.5 rounded-full bg-burnished" aria-hidden />
               Digital invitation maker
             </p>
-            <h1 id="hero-headline" className="t-display enter-0 mt-5" style={{ fontSize: 'clamp(2.55rem, 5.4vw, 4.9rem)' }}>
+            <h1 id="hero-headline" className="t-display enter-0 mt-5 max-sm:mt-4 max-sm:!text-[2.3rem] max-sm:!leading-[1.08]" style={{ fontSize: 'clamp(2.55rem, 5.4vw, 4.9rem)' }}>
               Digital invitations, <em className="font-medium text-burnished">beautifully</em> made for every celebration
             </h1>
-            <p className="t-lede enter-1 mt-5 max-w-[34rem] sm:mt-6">
+            <p className="t-lede enter-1 mt-5 max-w-[34rem] max-sm:mt-4 max-sm:text-[1rem] max-sm:leading-[1.65] sm:mt-6">
               Choose a design you love, make it yours in minutes, and send one link your guests open anywhere —
               WhatsApp, Instagram, email or text. You only pay when it&apos;s ready to share.
             </p>
 
-            <div className="enter-2 mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="enter-2 mt-8 flex flex-col gap-3 max-sm:mt-6 max-sm:gap-1 sm:flex-row">
               <TrackedLink
                 href="/create"
                 location="home_hero"
-                className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold"
+                className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold max-sm:py-3.5"
               >
                 Create your invitation
                 <ArrowRightIcon />
               </TrackedLink>
               <Link
                 href="/templates"
-                className="btn-outline inline-flex items-center justify-center rounded-full px-8 py-4 text-[1rem] font-semibold"
+                className="btn-outline inline-flex items-center justify-center rounded-full px-8 py-4 text-[1rem] font-semibold max-sm:gap-1.5 max-sm:border-transparent max-sm:bg-transparent max-sm:py-2.5 max-sm:text-[0.95rem] max-sm:shadow-none"
               >
                 See the designs
+                <ArrowRightIcon className="h-4 w-4 sm:hidden" />
               </Link>
             </div>
-            <TrustList className="enter-3 mt-6" items={['Preview before you pay', 'Pay once, from ₹' + LOWEST_PAID_PRICE, 'No app for guests']} />
+            <TrustList className="enter-3 mt-6 max-sm:mt-3 max-sm:gap-x-3.5 max-sm:gap-y-1 max-sm:text-[0.8rem]" items={['Preview before you pay', 'Pay once, from ₹' + LOWEST_PAID_PRICE, 'No app for guests']} />
 
-            <nav aria-label="Popular occasions" className="enter-3 mt-8 border-t border-line pt-5">
+            {/* On a phone the occasions follow straight after the hero, so these give way to the designs. */}
+            <nav aria-label="Popular occasions" className="enter-3 mt-8 border-t border-line pt-5 max-sm:hidden">
               <p className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-muted">Popular right now</p>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {HERO_OCCASIONS.map((o) => (
@@ -307,14 +313,14 @@ export default function LandingPage() {
       <Marquee />
 
       {/* ─── OCCASIONS ─── */}
-      <Section id="occasions" aria-label="Occasions">
+      <Section id="occasions" aria-label="Occasions" innerClassName="max-sm:py-11">
         <SectionHeading
           eyebrow="Start with your occasion"
           title="For every celebration, big or small"
           sub="Weddings and birthdays, festivals and first names, proposals and thank-yous — begin with what you're celebrating."
           action={{ href: '/templates', label: 'All designs' }}
         />
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5" data-reveal-group>
+        <ul className="phone-rail mt-10 grid grid-cols-2 gap-3 max-sm:mt-7 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5" style={{ ['--rail' as string]: '46%' }} data-reveal-group>
           {OCCASIONS.map((o) => (
             <li key={o.key}>
               <Link href={o.href} className="lift group block overflow-hidden rounded-3xl border border-line bg-paper">
@@ -338,30 +344,30 @@ export default function LandingPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-8 text-center text-[0.95rem] text-muted" data-reveal>
+        <p className="mt-8 text-center text-[0.95rem] text-muted max-sm:mt-6" data-reveal>
           Celebrating something else?{' '}
           <a href="#custom-template" className="link">We&apos;ll design it for you</a>
         </p>
       </Section>
 
       {/* ─── DESIGNS ─── */}
-      <Section tone="paper" id="templates" aria-label="Featured designs">
+      <Section tone="paper" id="templates" aria-label="Featured designs" innerClassName="max-sm:py-11">
         <SectionHeading
           eyebrow="The collection"
           title="Choose a design you love"
           sub="Open any design in a live preview, exactly as guests will see it, and try it with your own details before you pay."
           action={{ href: '/templates', label: 'See every design' }}
         />
-        <div className="mt-9">
-          <TemplateBrowser items={items} chips={chips} source="home_gallery" limit={8} showCount={false} />
+        <div className="mt-9 max-sm:mt-7">
+          <TemplateBrowser items={items} chips={chips} source="home_gallery" limit={8} showCount={false} phoneRail />
         </div>
       </Section>
 
       <SignatureShowcase id="signature-collection" />
 
       {/* ─── THE OFFER ─── */}
-      <Section id="pricing" aria-labelledby="offer-heading">
-        <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr]">
+      <Section id="pricing" aria-labelledby="offer-heading" innerClassName="max-sm:py-11">
+        <div className="grid items-center gap-12 max-sm:gap-9 lg:grid-cols-[1fr_0.9fr]">
           <div data-reveal>
             <p className="eyebrow">Simple, honest pricing</p>
             <h2 id="offer-heading" className="t-h2 mt-3">{OFFER.headline}</h2>
@@ -370,7 +376,7 @@ export default function LandingPage() {
               preview it, and share it with family first if you like. When you&apos;re happy, pay once and it&apos;s
               yours. No plans. No bundles. No subscription.
             </p>
-            <ol className="mt-9 space-y-5" data-reveal-group>
+            <ol className="mt-9 space-y-5 max-sm:mt-6 max-sm:space-y-4" data-reveal-group>
               {[
                 { t: 'Preview it with your details', c: 'Add your real names, date and photos and see the finished invitation before you pay.' },
                 { t: 'Pay once for the one you choose', c: <>A single secure payment by <PayMethods />.</> },
@@ -398,12 +404,12 @@ export default function LandingPage() {
       </Section>
 
       {/* ─── HOW IT WORKS ─── */}
-      <Section tone="peach" id="how-it-works" aria-label="How it works">
+      <Section tone="peach" id="how-it-works" aria-label="How it works" innerClassName="max-sm:py-11">
         <SectionHeading align="center" eyebrow="Three simple steps" title="From idea to invitation in minutes" />
-        <div className="mt-12">
-          <HowItWorks />
+        <div className="mt-12 max-sm:mt-8">
+          <HowItWorks phoneRail />
         </div>
-        <div className="mt-10 flex flex-col items-center gap-3" data-reveal>
+        <div className="mt-10 flex flex-col items-center gap-3 max-sm:mt-7" data-reveal>
           <TrackedLink href="/create" location="home_steps" className="btn-primary inline-flex items-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
             Start with a design
             <ArrowRightIcon />
@@ -415,18 +421,19 @@ export default function LandingPage() {
       </Section>
 
       {/* ─── FEATURE SHOWCASE ─── */}
-      <Section id="features" aria-label="What an invitation includes">
+      <Section id="features" aria-label="What an invitation includes" innerClassName="max-sm:py-11">
         <SectionHeading
           align="center"
           eyebrow="More than a card"
           title="Everything guests need, in one link"
           sub="No more forwarding the address, the timings and the photos as five separate messages."
         />
-        <div className="mt-14 grid items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1" data-reveal-group>
+        <div className="mt-14 grid items-center gap-10 max-sm:mt-8 max-sm:gap-3 lg:grid-cols-[1fr_auto_1fr]">
+          <ul className="grid gap-4 max-sm:gap-3 sm:grid-cols-2 lg:grid-cols-1" data-reveal-group>
             {FEATURES_LEFT.map((f) => <FeatureItem key={f.title} {...f} align="right" />)}
           </ul>
-          <div className="relative mx-auto w-[15.5rem]" data-reveal="scale">
+          {/* On a phone the hero already shows real designs on phones; the list says the rest. */}
+          <div className="relative mx-auto w-[15.5rem] max-sm:hidden" data-reveal="scale">
             <div aria-hidden className="absolute -inset-10 rounded-full bg-[radial-gradient(closest-side,rgba(232,200,102,0.35),transparent)]" />
             <div className="relative rounded-[2.4rem] bg-charcoal p-[7px] shadow-[0_40px_80px_-30px_rgba(5,46,32,0.7)]">
               <div className="relative aspect-[9/19] overflow-hidden rounded-[2rem] bg-peach">
@@ -435,18 +442,18 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1" data-reveal-group>
+          <ul className="grid gap-4 max-sm:gap-3 sm:grid-cols-2 lg:grid-cols-1" data-reveal-group>
             {FEATURES_RIGHT.map((f) => <FeatureItem key={f.title} {...f} align="left" />)}
           </ul>
         </div>
-        <p className="mt-10 text-center text-[0.85rem] text-muted">
+        <p className="mt-10 text-center text-[0.85rem] text-muted max-sm:mt-6">
           Features vary by design — the live preview shows exactly what each one includes.
         </p>
       </Section>
 
       {/* ─── GLOBAL ─── */}
-      <Section tone="emerald" aria-labelledby="global-heading">
-        <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+      <Section tone="emerald" aria-labelledby="global-heading" innerClassName="max-sm:py-11">
+        <div className="grid items-center gap-12 max-sm:gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div data-reveal>
             <p className="text-[0.8rem] font-bold uppercase tracking-[0.22em] text-gold-soft">One link · every language</p>
             <h2 id="global-heading" className="t-h2 mt-3">Celebrate with people wherever they call home</h2>
@@ -460,7 +467,7 @@ export default function LandingPage() {
               ))}
             </ul>
           </div>
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4" data-reveal-group>
+          <ul className="phone-rail grid grid-cols-2 gap-3 sm:grid-cols-4" style={{ ['--rail' as string]: '40%' }} data-reveal-group>
             {LOCALES.map((l) => (
               <li key={l.code}>
                 <Link
@@ -481,8 +488,8 @@ export default function LandingPage() {
       </Section>
 
       {/* ─── WISHES ─── */}
-      <Section aria-label="Guest wishes">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+      <Section aria-label="Guest wishes" innerClassName="max-sm:py-11">
+        <div className="grid items-center gap-12 max-sm:gap-8 lg:grid-cols-2">
           <div data-reveal>
             <p className="eyebrow">Guest wishes</p>
             <h2 className="t-h2 mt-3">An invitation that fills up with love</h2>
@@ -523,9 +530,9 @@ export default function LandingPage() {
       </Section>
 
       {/* ─── FAQ ─── */}
-      <Section tone="paper" id="faq" aria-label="Frequently asked questions">
+      <Section tone="paper" id="faq" aria-label="Frequently asked questions" innerClassName="max-sm:py-11">
         <SectionHeading align="center" eyebrow="Questions" title="Everything you'd want to know" />
-        <div className="mt-10">
+        <div className="mt-10 max-sm:mt-7">
           <FAQAccordion faqs={HOME_FAQS} />
         </div>
       </Section>
@@ -536,9 +543,10 @@ export default function LandingPage() {
 
       {/* ─── SEO CONTENT (crawlable copy + internal links) ─── */}
       <section className="bg-paper" aria-label="About ShareInvite digital invitation maker">
-        <div className="shell max-w-3xl py-14">
+        <div className="shell max-w-3xl py-14 max-sm:py-10">
           <h2 className="font-editorial text-[1.9rem] font-semibold">The digital invitation maker for every celebration</h2>
-          <div className="prose-brand mt-5 text-[0.95rem]">
+          <input type="checkbox" id="about-more" className="phone-more-check sr-only" aria-label="Show all of About ShareInvite" />
+          <div className="phone-more-body prose-brand mt-5 text-[0.95rem]">
             <p>
               <strong>ShareInvite</strong> is an online invitation maker for creating beautiful digital
               invitations and animated 3D greeting cards in minutes — no design skills and no app needed for your guests.
@@ -572,6 +580,7 @@ export default function LandingPage() {
               {' '}<Link prefetch={false} href="/pricing">pricing</Link>, or read guides on the <Link prefetch={false} href="/blog">ShareInvite blog</Link>.
             </p>
           </div>
+          <label htmlFor="about-more" className="phone-more-toggle mt-3 text-[0.9rem] font-semibold text-emerald underline underline-offset-4" />
         </div>
       </section>
 
@@ -593,7 +602,7 @@ function FeatureItem({
   align: 'left' | 'right'
 }) {
   return (
-    <li className={`flex items-start gap-4 rounded-3xl border border-line bg-paper p-5 ${align === 'right' ? 'lg:flex-row-reverse lg:text-right' : ''}`}>
+    <li className={`flex items-start gap-4 rounded-3xl border border-line bg-paper p-5 max-sm:gap-3.5 max-sm:p-4 ${align === 'right' ? 'lg:flex-row-reverse lg:text-right' : ''}`}>
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald text-gold-soft">
         <Icon className="h-5 w-5" />
       </span>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { templateImage } from '@/lib/templateMedia'
 import { formatTemplatePrice, templatePrice } from '@/lib/plans'
+import { tierOf } from '@/lib/tiers'
 import { is3D } from '@/lib/catalog'
 import type { CatalogItem } from '@/lib/catalogItems'
 import SiteHeader from '@/components/layout/SiteHeader'
@@ -53,6 +54,9 @@ function toCard(t: TemplateItem): CatalogItem {
     occasionLabel: t.category,
     style: t.theme,
     is3D: is3D(t.templateId),
+    tier: tierOf(templatePrice(t.templateId)),
+    // This page family shows no per-level summary, so the features go unused here.
+    features: [],
   }
 }
 

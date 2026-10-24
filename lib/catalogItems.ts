@@ -3,6 +3,7 @@ import { formatTemplatePrice, templatePrice } from '@/lib/plans'
 import { templateSeoSlug } from '@/lib/seo'
 import { templateImage } from '@/lib/templateMedia'
 import { OCCASIONS, catalogueOrder, displayName, is3D, primaryOccasion, styleTag } from '@/lib/catalog'
+import { tierOf, type FeatureKey, type TierKey } from '@/lib/tiers'
 
 /**
  * Everything a template card needs, flattened to plain values.
@@ -23,6 +24,29 @@ export interface CatalogItem {
   occasionLabel: string
   style: string
   is3D: boolean
+  /** Classic, Premium or Signature, by price (lib/tiers.ts). */
+  tier: TierKey
+  /** What the design can hold, read from its own fields. */
+  features: FeatureKey[]
+}
+
+/** The things a design can hold, from the fields its builder asks for. Every one is used by its design. */
+function featuresOf(t: (typeof TEMPLATES)[number]): FeatureKey[] {
+  const keys = new Set(t.config.fields.map((f) => f.key))
+  const types = new Set(t.config.fields.map((f) => f.type))
+  const has: Record<FeatureKey, boolean> = {
+    functions: keys.has('events'),
+    guide: keys.has('travel') || keys.has('faq'),
+    rsvp: keys.has('whatsappNumber'),
+    film: keys.has('videoUrl') || types.has('video'),
+    photos: keys.has('galleryImages') || types.has('gallery'),
+    music: keys.has('musicUrl'),
+    programme: keys.has('schedule'),
+    map: keys.has('mapsUrl'),
+    // Every event design has the wishes wall; the 3D greetings and Surprise Journey are messages, not events.
+    wishes: !t.id.startsWith('greeting-') && t.id !== 'surprise-journey',
+  }
+  return (Object.keys(has) as FeatureKey[]).filter((k) => has[k])
 }
 
 /**
@@ -50,6 +74,8 @@ export function buildCatalogItems(ids?: string[], { keepOrder = false } = {}): C
       occasionLabel: primaryOccasion(t.id)?.short ?? 'Celebration',
       style: styleTag(t.id),
       is3D: is3D(t.id),
+      tier: tierOf(templatePrice(t.id)),
+      features: featuresOf(t),
     }))
 }
 

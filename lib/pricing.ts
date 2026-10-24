@@ -49,6 +49,7 @@ const LADDER: Record<number, Record<ForeignList, number>> = {
   1299: { usd: 35, 'usd-world': 15, gbp: 27, eur: 32, cad: 45, aud: 52, aed: 129, sgd: 45 },
   1499: { usd: 39, 'usd-world': 17, gbp: 29, eur: 35, cad: 49, aud: 59, aed: 145, sgd: 49 },
   1999: { usd: 49, 'usd-world': 22, gbp: 39, eur: 45, cad: 65, aud: 75, aed: 185, sgd: 65 },
+  3999: { usd: 89, 'usd-world': 45, gbp: 69, eur: 79, cad: 119, aud: 135, aed: 329, sgd: 119 },
 }
 
 /** ISO 4217 code charged through Razorpay. Every one has two decimal places. */

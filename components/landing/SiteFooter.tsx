@@ -94,7 +94,7 @@ export default function SiteFooter() {
     // Pages that end in this footer often dock a CTA bar to the bottom of the
     // viewport; without this the last rows sit underneath it and are unreadable.
     <footer className="bg-charcoal text-paper" style={{ paddingBottom: 'var(--bottom-dock-h, 0px)' }}>
-      <div className="mx-auto max-w-7xl px-5 pt-16 sm:px-6">
+      <div className="mx-auto max-w-7xl px-5 pt-16 max-sm:pt-12 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div className="max-w-sm">
             <Link href="/" aria-label="ShareInvite home">
@@ -139,14 +139,14 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-4">
+          <div className="grid grid-cols-2 gap-8 max-sm:grid-cols-1 max-sm:gap-5 sm:grid-cols-4 lg:col-span-4">
             {COLUMNS.map((col) => (
               <nav key={col.title} aria-label={col.title}>
                 <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-gold-soft">{col.title}</p>
-                <ul className="mt-3 space-y-0.5">
+                <ul className="mt-3 space-y-0.5 max-sm:mt-1.5 max-sm:flex max-sm:flex-wrap max-sm:gap-x-4 max-sm:space-y-0">
                   {col.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} prefetch={false} className="inline-block py-1.5 text-[0.9rem] text-paper/65 transition-colors hover:text-paper">
+                      <Link href={link.href} prefetch={false} className="inline-block py-1.5 text-[0.9rem] text-paper/65 transition-colors hover:text-paper max-sm:py-1 max-sm:text-[0.86rem]">
                         {link.label}
                       </Link>
                     </li>
@@ -157,7 +157,7 @@ export default function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-6 border-t border-paper/10 pt-8 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 border-t border-paper/10 pt-8 max-sm:mt-9 max-sm:gap-5 max-sm:pt-6 md:grid-cols-3">
           <nav aria-label="Blog topics">
             <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45">From the blog</p>
             <ul className="mt-2 flex flex-wrap gap-x-4">

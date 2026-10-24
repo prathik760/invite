@@ -66,6 +66,9 @@ export const authOptions: NextAuthOptions = {
       return true
     },
     async jwt({ token, user, account }) {
+      // How this session signed in. Google proves the email address; a password sign-up doesn't
+      // (lib/priceOverrides.ts relies on this).
+      if (account) token.provider = account.provider
       if (account?.provider === 'credentials' && user) {
         // Credentials authorize() already returns our DB id.
         token.id = user.id

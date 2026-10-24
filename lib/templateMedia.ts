@@ -21,7 +21,7 @@ const TEMPLATE_IDS = [
   'surprise-journey', 'rakshabandhan', 'ganesh-chaturthi',
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
-  'signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-aquarelle', 'signature-saptapadi',
+  'signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-aquarelle', 'signature-saptapadi', 'signature-two-worlds',
   'baby-shower', 'first-birthday', 'haldi-mehendi', 'sangeet-night', 'pooja-invite', 'diwali-party', 'eid-milan', 'retirement',
   'save-the-date',
   'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch', 'birthday-gala',
@@ -35,8 +35,16 @@ const TEMPLATE_IDS = [
  */
 const IMAGE_VERSION = 2
 
+/**
+ * Images re-shot on their own since the last full reshoot, each with its own
+ * version, so only that card's cached copy is replaced.
+ */
+const RESHOT: Partial<Record<(typeof TEMPLATE_IDS)[number], number>> = {
+  'signature-two-worlds': 4,
+}
+
 const TEMPLATE_IMAGES: Record<string, string> = Object.fromEntries(
-  TEMPLATE_IDS.map((id) => [id, `/templates/${id}.jpg?v=${IMAGE_VERSION}`]),
+  TEMPLATE_IDS.map((id) => [id, `/templates/${id}.jpg?v=${RESHOT[id] ?? IMAGE_VERSION}`]),
 )
 
 /** Path (or remote URL) for use in <img>/next/image `src`. */

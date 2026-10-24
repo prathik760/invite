@@ -139,6 +139,11 @@ export function withSampleDates(templateId: string, data: Record<string, string>
       .join('\n')
     // Aquarelle's RSVP card is part of the show; a number reserved for fiction keeps it on view.
     if (templateId === 'signature-aquarelle' && !out.whatsappNumber) out.whatsappNumber = '+44 7700 900372'
+    if (templateId === 'signature-two-worlds') {
+      if (!out.whatsappNumber) out.whatsappNumber = '+44 7700 900518'
+      // The sample story is four years long; keep it four years to the sample wedding date.
+      if (!out.togetherSince || out.togetherSince === '2022') out.togetherSince = String(Number(out.date.slice(0, 4)) - 4)
+    }
     // A reply-by date only means something alongside a way to reply.
     if (!out.rsvpBy && out.whatsappNumber) out.rsvpBy = isoInDays(30)
   }

@@ -26,6 +26,7 @@ const SUBTITLES: Record<string, string> = {
   'signature-rajwada': 'Palace doors · Rajasthani',
   'signature-kalyanam': 'South Indian temple',
   'signature-saptapadi': 'Antarpat · Seven vows',
+  'signature-two-worlds': 'Love story · Two cultures',
   'signature-nikah': 'Lattice & lanterns',
   'signature-garden': 'Destination postcard',
   'signature-aquarelle': 'Redouté florals · Wax seal',
@@ -47,7 +48,7 @@ export default function SignatureShowcase({ id = 'signature' }: { id?: string })
         action={{ href: '/templates/category/signature', label: 'See the collection' }}
       />
       {/* The suites in one row on a laptop, two by two on a phone — an odd last one centred under the pairs, the width of the others. */}
-      <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5 lg:gap-5" data-reveal-group>
+      <ul className="phone-rail mt-12 grid grid-cols-2 gap-3 max-sm:mt-8 sm:gap-4 lg:grid-cols-5 lg:gap-5" style={{ ['--rail' as string]: '56%' }} data-reveal-group>
         {SIGNATURE.map((t, i) => (
           <li key={t.id} className={SIGNATURE.length % 2 && i === SIGNATURE.length - 1 ? 'col-span-2 mx-auto w-[calc((100%_-_0.75rem)/2)] sm:w-[calc((100%_-_1rem)/2)] lg:col-span-1 lg:w-auto' : undefined}>
             <Link href={`/templates/${templateSeoSlug(t.id)}`} prefetch={false} className="lift group flex h-full flex-col overflow-hidden rounded-3xl border border-gold-soft/25 bg-emerald-deep">
@@ -73,15 +74,15 @@ export default function SignatureShowcase({ id = 'signature' }: { id?: string })
       {/* What every suite adds: one full-width band under the row, so both edges line up. */}
       <div className="mt-6 rounded-3xl border border-gold-soft/25 bg-emerald-deep/60 p-6 sm:mt-8 sm:p-9 lg:p-10">
         <p className="eyebrow text-gold-soft">What a Signature suite adds</p>
-        <ul className="mt-6 grid gap-x-10 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-6 grid gap-x-10 gap-y-4 max-sm:mt-4 max-sm:gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
           {ADDS.map((f) => (
-            <li key={f} className="flex items-start gap-3 text-[0.98rem] leading-7 text-paper/85">
+            <li key={f} className="flex items-start gap-3 text-[0.98rem] leading-7 text-paper/85 max-sm:text-[0.93rem] max-sm:leading-6">
               <CheckIcon className="mt-1.5 h-4 w-4 shrink-0 text-gold-soft" />
               {f}
             </li>
           ))}
         </ul>
-        <div className="mt-8 flex flex-col gap-5 border-t border-gold-soft/15 pt-7 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+        <div className="mt-8 flex flex-col gap-5 border-t border-gold-soft/15 pt-7 max-sm:mt-6 max-sm:gap-4 max-sm:pt-5 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <p className="max-w-2xl text-[0.9rem] leading-7 text-paper/60">
             Plus everything in every design: countdown, photo gallery, music, the guest wishes wall and one private link. Build and preview the whole suite before you pay — pay once when you publish.
           </p>

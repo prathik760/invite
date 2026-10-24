@@ -26,19 +26,22 @@ const DEFAULT_STEPS = [
 export default function HowItWorks({
   steps = DEFAULT_STEPS,
   tone = 'peach',
+  phoneRail = false,
 }: {
   steps?: { title: string; copy: string; Icon?: (p: { className?: string }) => JSX.Element }[]
   tone?: Tone
+  /** On a phone, one row you swipe through instead of three stacked cards. */
+  phoneRail?: boolean
 }) {
   const dark = tone === 'emerald' || tone === 'charcoal'
   return (
-    <ol className="relative grid gap-4 md:grid-cols-3 md:gap-5" data-reveal-group>
+    <ol className={`relative grid gap-4 md:grid-cols-3 md:gap-5 ${phoneRail ? 'phone-rail' : ''}`} style={phoneRail ? { ['--rail' as string]: '80%' } : undefined} data-reveal-group>
       {steps.map((step, i) => {
         const Icon = step.Icon ?? DEFAULT_STEPS[i % 3].Icon
         return (
           <li
             key={step.title}
-            className={`relative rounded-3xl border p-7 ${dark ? 'border-paper/15 bg-paper/[0.06]' : 'border-line bg-paper shadow-soft'}`}
+            className={`relative rounded-3xl border p-7 ${phoneRail ? 'max-sm:p-6' : ''} ${dark ? 'border-paper/15 bg-paper/[0.06]' : 'border-line bg-paper shadow-soft'}`}
           >
             <div className="flex items-center justify-between">
               <span className={`flex h-12 w-12 items-center justify-center rounded-full ${dark ? 'bg-gold-soft text-emerald-deep' : 'bg-emerald text-paper'}`}>

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { getRazorpayClient, verifyPaymentSignature, planPriceIn } from '@/lib/razorpay'
-import { discountedPrice, isPriceList, minorUnits } from '@/lib/pricing'
+import { discountedPrice, isPriceList, minorUnits, priceInList } from '@/lib/pricing'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
 import { mergePlans, PLAN_MAP } from '@/lib/plans'
@@ -90,7 +90,14 @@ export async function POST(req: NextRequest) {
     // ended since the payment window opened is still honoured.
     const percentOff = notes.coupon ? Number(notes.percentOff) : 0
     const listPrice = planPriceIn(plan as PlanId, list)
-    const expected = percentOff > 0 && percentOff < 100 ? discountedPrice(listPrice, percentOff) : listPrice
+    // A token price for one account (lib/priceOverrides.ts) is on the order the same way, in rupees.
+    const overrideInr = notes.priceOverrideInr !== undefined ? Number(notes.priceOverrideInr) : NaN
+    const expected =
+      overrideInr > 0
+        ? priceInList(overrideInr, 'inr')
+        : percentOff > 0 && percentOff < 100
+          ? discountedPrice(listPrice, percentOff)
+          : listPrice
     const expectedMinor = minorUnits(expected)
 
     if (Number(order.amount) !== expectedMinor || order.currency !== expected.currency) {

@@ -14,7 +14,7 @@ import { hasLocalPrice } from './pricing'
  * PLANS is ordered by ascending price and must stay that way — `getRequiredPlan`
  * and `mergePlans` both take the first match as the cheapest one.
  */
-export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'standard' | 'premium' | 'gold' | 'gala' | 'signature' | 'couture'
+export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'standard' | 'premium' | 'gold' | 'gala' | 'signature' | 'couture' | 'heirloom'
 
 export interface Plan {
   id: PlanId
@@ -49,6 +49,8 @@ const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'roy
 const GALA_TEMPLATES = [...GOLD_TEMPLATES, 'birthday-gala']
 const SIGNATURE_TEMPLATES = [...GALA_TEMPLATES, 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-saptapadi']
 const COUTURE_TEMPLATES = [...SIGNATURE_TEMPLATES, 'signature-rajwada', 'signature-aquarelle']
+// Heirloom: story-led suites built around the couple's own photos, film and love story.
+const HEIRLOOM_TEMPLATES = [...COUTURE_TEMPLATES, 'signature-two-worlds']
 
 export const PLANS: Plan[] = [
   {
@@ -132,6 +134,15 @@ export const PLANS: Plan[] = [
     description: 'Rajwada, the royal palace suite with the gates-opening welcome, or Aquarelle, a watercolour that paints itself as the vellum lifts — each with the full week of functions.',
     templateIds: COUTURE_TEMPLATES,
     features: ['Rajwada palace or Aquarelle watercolour suite', 'Every function on its own card', 'Travel, stay, FAQs & contacts for guests', 'Everything in the designs below'],
+  },
+  {
+    id: 'heirloom',
+    name: 'Signature Heirloom',
+    price: 3999,
+    badge: 'Your love story',
+    description: 'Two Worlds — an invitation told as your love story: where you met, the years since, two cultures becoming one, your own film and photos, then every detail of the wedding.',
+    templateIds: HEIRLOOM_TEMPLATES,
+    features: ['Your story in chapters, with your film and photos', 'Two cultures woven into one design', 'Every function, travel, FAQs & WhatsApp RSVP', 'Everything in the designs below'],
   },
 ]
 
@@ -229,7 +240,7 @@ export function mergePlans(current: PlanId, purchased: PlanId): PlanId {
 }
 
 export function planLevel(plan: PlanId): number {
-  return { free: 0, ganesh: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3, gala: 3.5, signature: 4, couture: 5 }[plan] ?? 0
+  return { free: 0, ganesh: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3, gala: 3.5, signature: 4, couture: 5, heirloom: 6 }[plan] ?? 0
 }
 
 // Every INR price needs a row in lib/pricing.ts's LADDER, or visitors abroad

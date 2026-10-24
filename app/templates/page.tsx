@@ -69,7 +69,7 @@ export default function TemplatesIndexPage() {
       />
 
       <Section aria-label="All designs">
-        <TemplateBrowser items={items} chips={chips} source="templates_page" syncUrl />
+        <TemplateBrowser items={items} chips={chips} source="templates_page" syncUrl tiered />
       </Section>
 
       <Section tone="paper" aria-label="Browse by occasion">

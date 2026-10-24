@@ -32,6 +32,7 @@ const OCCASION_SLUG: Record<string, string> = {
 /** Designs that greet a guest by name from a ?to= link, with an example for the email. */
 const PERSONAL_LINK_EXAMPLE: Record<string, string> = {
   'birthday-gala': 'Sarah+and+Tom', 'dasara-ambari': 'Shalini+and+family', 'christmas-evergreen': 'The+Thompsons', 'newyear-midnight': 'Jules+and+Sam', 'signature-saptapadi': 'Sharma+family',
+  'signature-two-worlds': 'Mehra+family',
 }
 
 export async function POST(req: NextRequest) {

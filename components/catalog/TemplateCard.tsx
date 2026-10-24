@@ -49,9 +49,18 @@ export default function TemplateCard({
           </span>
         </PreviewButton>
 
-        {item.is3D && (
-          <span className="pointer-events-none absolute left-2.5 top-2.5 rounded-full bg-emerald px-2 py-0.5 text-[0.7rem] font-semibold text-paper shadow-sm">
-            3D
+        {(item.is3D || item.tier !== 'classic') && (
+          <span className="pointer-events-none absolute left-2.5 top-2.5 flex gap-1.5">
+            {item.tier === 'signature' && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-charcoal/90 px-2 py-0.5 text-[0.7rem] font-semibold text-gold-soft shadow-sm backdrop-blur">
+                <span aria-hidden className="h-1.5 w-1.5 rotate-45 bg-gold-soft" />
+                Signature
+              </span>
+            )}
+            {item.tier === 'premium' && (
+              <span className="rounded-full bg-paper/95 px-2 py-0.5 text-[0.7rem] font-semibold text-burnished-deep shadow-sm backdrop-blur">Premium</span>
+            )}
+            {item.is3D && <span className="rounded-full bg-emerald px-2 py-0.5 text-[0.7rem] font-semibold text-paper shadow-sm">3D</span>}
           </span>
         )}
       </div>

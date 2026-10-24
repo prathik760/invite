@@ -66,7 +66,7 @@ const WHEN_WHERE = new Set(['date', 'time', 'venue', 'venueAddress', 'destinatio
 function stepOfField(f: TemplateDef['config']['fields'][number]): 2 | 3 | 4 {
   if (f.group) return f.section === 'enrich' ? 4 : f.section === 'details' ? 3 : 2
   if (f.key === 'schedule' || WHEN_WHERE.has(f.key)) return 3
-  if (f.key === 'galleryImages' || f.key === 'musicUrl' || f.key === 'message') return 4
+  if (f.key === 'galleryImages' || f.type === 'gallery' || f.key === 'musicUrl' || f.key === 'videoUrl' || f.type === 'video' || f.key === 'message') return 4
   return 2
 }
 
@@ -718,7 +718,7 @@ export default function CreatePage() {
         body: JSON.stringify({ plan: planId, code, templateId: upgradeTarget?.templateId }),
       })
       // `price` is in whole units of `currency` — the visitor's own price (lib/pricing.ts).
-      const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; price?: number; keyId?: string; error?: string }
+      const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; price?: number; keyId?: string; error?: string; test?: boolean }
       if (!orderRes.ok || !order.orderId) throw new Error(order.error ?? 'Could not start the payment. Please try again.')
       const options: RazorpayOptions = {
         key: (order.keyId ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) as string,
@@ -745,7 +745,8 @@ export default function CreatePage() {
               // `currency` is required: GA4 drops `value` from revenue reports
               // without it, and a Meta Pixel Purchase needs it to optimise ads.
               // `value` must be in the order's currency: a US$9 sale is 9, not 299.
-              trackEvent(seoEvents.purchase, { ...ctx, transaction_id: response.razorpay_payment_id, price: order.price ?? plan?.price, value: order.price ?? plan?.price, currency: order.currency ?? 'INR' })
+              // A test purchase at a token price (lib/priceOverrides.ts) is kept out of GA4 and the Meta Pixel.
+              if (!order.test) trackEvent(seoEvents.purchase, { ...ctx, transaction_id: response.razorpay_payment_id, price: order.price ?? plan?.price, value: order.price ?? plan?.price, currency: order.currency ?? 'INR' })
               // Reflect the new entitlement immediately so the publish path does
               // not bounce the user back to the paywall they just paid at.
               setUserPlan(verBody.plan ?? planId)

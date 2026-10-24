@@ -39,6 +39,9 @@ const EXT_MAP: Record<string, string> = {
   'audio/aac': 'aac',
   'audio/wav': 'wav',
   'audio/ogg': 'ogg',
+  'video/mp4': 'mp4',
+  'video/webm': 'webm',
+  'video/quicktime': 'mov',
 }
 
 /**
@@ -46,7 +49,9 @@ const EXT_MAP: Record<string, string> = {
  * so storage rejects a body of any other length: the size limit checked by
  * /api/upload holds for what is actually stored, not just what was declared.
  */
-export async function createPresignedUploadUrl(contentType: string, folder: 'gallery' | 'music' | 'portraits', size: number) {
+export type UploadFolder = 'gallery' | 'music' | 'portraits' | 'video'
+
+export async function createPresignedUploadUrl(contentType: string, folder: UploadFolder, size: number) {
   const bucket = process.env.R2_BUCKET_NAME!
   const publicBase = process.env.NEXT_PUBLIC_R2_PUBLIC_URL!.replace(/\/$/, '')
   const ext = EXT_MAP[contentType] ?? contentType.split('/')[1] ?? 'bin'
@@ -68,7 +73,7 @@ export async function createPresignedUploadUrl(contentType: string, folder: 'gal
 
 // ─── Cleanup (used by the daily retention job) ────────────────────────────────
 
-const UPLOAD_FOLDERS = ['gallery', 'music', 'portraits'] as const
+const UPLOAD_FOLDERS = ['gallery', 'music', 'portraits', 'video'] as const
 
 /**
  * Every R2 object key referenced from an invitation's data (photos, music).

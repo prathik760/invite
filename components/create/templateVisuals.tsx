@@ -171,6 +171,12 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#9B0F1E', rgb: '155,15,30',
     image: templateImage('signature-saptapadi'),
   },
+  'signature-two-worlds': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M2.5 11c3-4 6 4 9 0M17.5 9c-3 4-6-4-9 0" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeDasharray="2 1.6" /><circle cx="10" cy="10" r="2" stroke="currentColor" strokeWidth={1.4} /></svg>,
+    gradient: 'linear-gradient(135deg, #E3C995 0%, #A9262F 55%, #3B0E17 100%)',
+    color: '#5B1A26', rgb: '91,26,38',
+    image: templateImage('signature-two-worlds'),
+  },
   'signature-aquarelle': {
     icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM10 5c1 .6 1.4 1.6 1 2.6-.4 1-1.6 1.3-2.4.7M7.6 10.8 6 17l2.2-1.2L9.4 18l.6-6.5M12.4 10.8 14 17l-2.2-1.2L10.6 18" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
     gradient: 'linear-gradient(135deg, #1B2537 0%, #86384C 58%, #E9B9BE 100%)',

@@ -8,7 +8,8 @@ export interface TemplateFieldColumn {
 export interface TemplateField {
   key: string
   label: string
-  type: 'text' | 'date' | 'time' | 'url' | 'textarea' | 'image'
+  /** 'gallery' is a second set of uploaded photos (one URL per line), beside the design's `galleryImages`. */
+  type: 'text' | 'date' | 'time' | 'url' | 'textarea' | 'image' | 'video' | 'gallery'
   required?: boolean
   placeholder?: string
   /**

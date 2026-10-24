@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
+import { getToken } from 'next-auth/jwt'
 import { authOptions } from '@/lib/auth'
 import { checkoutCountry, getRazorpayClient, planPriceFor } from '@/lib/razorpay'
-import { discountedPrice, minorUnits } from '@/lib/pricing'
+import { discountedPrice, minorUnits, priceInList } from '@/lib/pricing'
+import { priceOverride } from '@/lib/priceOverrides'
 import { checkCoupon, couponMessage } from '@/lib/coupons'
 import type { PlanId } from '@/lib/plans'
 import { PLAN_MAP } from '@/lib/plans'
@@ -23,10 +25,15 @@ export async function POST(req: NextRequest) {
   // Which design is being bought: kept on the order for the receipt email.
   const templateId = typeof body?.templateId === 'string' && getTemplateData(body.templateId) ? body.templateId : undefined
 
+  // A token price set for this signed-in account and design (lib/priceOverrides.ts) replaces the
+  // price, and any discount code, entirely.
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET }).catch(() => null)
+  const tokenPrice = priceOverride({ email: session?.user?.email, provider: typeof token?.provider === 'string' ? token.provider : null, plan, templateId })
+
   // A discount code is checked here, not trusted from the browser. A code that
   // has ended or is for another design stops the checkout with the reason,
   // rather than quietly charging the full price to someone expecting less.
-  const coupon = body?.code ? checkCoupon(body.code, plan, templateId) : null
+  const coupon = body?.code && tokenPrice === null ? checkCoupon(body.code, plan, templateId) : null
   if (coupon && !coupon.ok) {
     return NextResponse.json({ error: couponMessage(coupon.reason), coupon: coupon.reason }, { status: 400 })
   }
@@ -35,7 +42,7 @@ export async function POST(req: NextRequest) {
     // Priced for the country the request comes from (lib/pricing.ts). The
     // price list goes into the order's notes so /verify can check the amount
     // against the same list, even if the customer's country changes meanwhile.
-    const full = planPriceFor(plan, checkoutCountry(req))
+    const full = tokenPrice !== null ? priceInList(tokenPrice, 'inr') : planPriceFor(plan, checkoutCountry(req))
     const price = coupon?.ok ? discountedPrice(full, coupon.coupon.percentOff) : full
     const razorpay = getRazorpayClient()
 
@@ -49,6 +56,8 @@ export async function POST(req: NextRequest) {
         // Read back by /verify to expect the discounted amount; also how the
         // Razorpay dashboard shows which sales came through which code.
         ...(coupon?.ok ? { coupon: coupon.coupon.code, percentOff: coupon.coupon.percentOff } : {}),
+        // Read back by /verify to expect the token price; also marks the sale in the Razorpay dashboard.
+        ...(tokenPrice !== null ? { priceOverrideInr: tokenPrice } : {}),
       },
     })
 
@@ -59,6 +68,8 @@ export async function POST(req: NextRequest) {
       // Whole units and label, for analytics and the payment-problem panel.
       price: price.amount,
       label: price.label,
+      // A token-price order is a test: the page leaves it out of ad and analytics purchase reports.
+      ...(tokenPrice !== null ? { test: true } : {}),
       keyId: process.env.RAZORPAY_KEY_ID,
     })
   } catch (err) {

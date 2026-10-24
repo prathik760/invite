@@ -99,7 +99,8 @@ export function MusicToggle({
 
   return (
     <div className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-3 z-40`}>
-      <audio ref={audioRef} src={src} loop preload="none" />
+      {/* Follows the audio itself, so a pause from elsewhere (a design playing its film) shows here too. */}
+      <audio ref={audioRef} src={src} loop preload="none" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
       <button
         type="button"
         onClick={toggle}

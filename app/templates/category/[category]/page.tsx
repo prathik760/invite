@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/landing/SiteFooter'
-import TemplateCard from '@/components/catalog/TemplateCard'
+import TieredGrid from '@/components/catalog/TieredGrid'
 import PageHero from '@/components/brand/PageHero'
 import CtaBand from '@/components/brand/CtaBand'
 import { Section } from '@/components/brand/Section'
@@ -82,9 +82,7 @@ export default function TemplateCategoryPage({ params }: Props) {
         }
       />
       <Section aria-label={`${label} designs`}>
-        <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4" data-reveal-group>
-          {items.map((item, i) => <TemplateCard key={item.id} item={item} source="template_category" priority={i < 2} />)}
-        </div>
+        <TieredGrid items={items} source="template_category" />
         <p className="mt-10 text-center">
           <Link href="/templates" className="link">Browse every design</Link>
         </p>

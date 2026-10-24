@@ -52,7 +52,7 @@ export default function CustomRequestSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-20">
+        <div className="grid gap-12 max-sm:gap-8 lg:grid-cols-2 lg:items-start lg:gap-20">
 
           {/* ── Left: Copy ── */}
           <div>
@@ -70,7 +70,7 @@ export default function CustomRequestSection() {
             </p>
 
             {/* Feature list */}
-            <ul className="mt-8 space-y-4">
+            <ul className="mt-8 space-y-4 max-sm:mt-6 max-sm:space-y-3">
               {[
                 { icon: '✦', title: 'Tailored design language', desc: 'Custom colors, fonts, motifs matching your exact theme' },
                 { icon: '✦', title: 'Any occasion or occasion style', desc: 'Fusion, regional, modern, or completely original' },
@@ -94,7 +94,7 @@ export default function CustomRequestSection() {
 
           {/* ── Right: Form ── */}
           <div
-            className="card p-7 sm:p-9"
+            className="card p-7 max-sm:p-5 sm:p-9"
             data-reveal="right"
           >
             {/* Gold top bar */}
@@ -116,7 +116,7 @@ export default function CustomRequestSection() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-5 max-sm:space-y-4">
                 <div>
                   <h3 className="t-h3 mb-1">Request a custom design</h3>
                   <p className="text-xs text-muted leading-5">Fill in your details and describe your vision — we&apos;ll take it from there.</p>

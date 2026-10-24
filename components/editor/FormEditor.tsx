@@ -31,7 +31,7 @@ const GREETING_EXTRA_KEYS = new Set(['reasons'])
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-async function uploadToR2(file: File, folder: 'gallery' | 'music' | 'portraits'): Promise<string> {
+async function uploadToR2(file: File, folder: 'gallery' | 'music' | 'portraits' | 'video'): Promise<string> {
   const res = await fetch('/api/upload', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -87,6 +87,8 @@ function groupFields(fields: TemplateField[]) {
   let scheduleField: TemplateField | null = null
   let galleryField: TemplateField | null = null
   let musicField: TemplateField | null = null
+  const galleryFields: TemplateField[] = []
+  const videoFields: TemplateField[] = []
   const extras: TemplateField[] = []
   const unlock: TemplateField[] = []
   const journeyExtras: TemplateField[] = []
@@ -101,7 +103,9 @@ function groupFields(fields: TemplateField[]) {
     }
     else if (f.key === 'schedule') scheduleField = f
     else if (f.key === 'galleryImages') galleryField = f
+    else if (f.type === 'gallery') galleryFields.push(f)
     else if (f.key === 'musicUrl') musicField = f
+    else if (f.key === 'videoUrl' || f.type === 'video') videoFields.push(f)
     else if (UNLOCK_KEYS.has(f.key)) unlock.push(f)
     else if (JOURNEY_EXTRA_KEYS.has(f.key)) journeyExtras.push(f)
     else if (GREETING_EXTRA_KEYS.has(f.key)) greetingExtras.push(f)
@@ -110,7 +114,7 @@ function groupFields(fields: TemplateField[]) {
     else if (EXTRAS_KEYS.has(f.key)) extras.push(f)
     else people.push(f)
   }
-  return { people, images, whenWhere, scheduleField, galleryField, musicField, extras, unlock, journeyExtras, greetingExtras, groups }
+  return { people, images, whenWhere, scheduleField, galleryField, galleryFields, musicField, videoFields, extras, unlock, journeyExtras, greetingExtras, groups }
 }
 
 function getPeopleLabel(fields: TemplateField[]): string {
@@ -170,6 +174,8 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
   const isUrl = field.type === 'url' || field.key === 'mapsUrl'
 
   if (field.columns?.length) return <div data-field={field.key}><RowsEditor field={field} initial={value} onChange={onChange} /></div>
+  // A photo inside a titled group (most photos sit together in the first step instead).
+  if (field.type === 'image') return <div data-field={field.key} className="flex justify-center"><SingleImageUploader label={field.label} value={value} onChange={onChange} /></div>
 
   return (
     <div data-field={field.key}>
@@ -703,6 +709,109 @@ const MusicUploader = memo(function MusicUploader({ initial, onChange }: { initi
   )
 })
 
+// ─── Video uploader ───────────────────────────────────────────────────────────
+
+const VIDEO_TYPES = 'video/mp4,video/webm,video/quicktime'
+const isVideoLink = (v: string) => /^https?:\/\/(www\.)?(youtube\.com|youtu\.be|vimeo\.com|player\.vimeo\.com)\//i.test(v)
+
+/**
+ * A short film for the designs that have one. Upload a file (stored like the
+ * photos, deleted with the invitation), or paste a YouTube or Vimeo link.
+ */
+const VideoUploader = memo(function VideoUploader({ initial, onChange }: { initial: string; onChange: (v: string) => void }) {
+  const [value, setValue] = useState(initial)
+  const [filename, setFilename] = useState('')
+  const [link, setLink] = useState('')
+  const [dragging, setDragging] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleFile = useCallback(async (file: File | null | undefined) => {
+    if (!file) return
+    if (!VIDEO_TYPES.split(',').includes(file.type)) { setUploadError('Please choose an MP4, MOV or WebM video.'); return }
+    setUploading(true)
+    setUploadError('')
+    try {
+      const url = await uploadToR2(file, 'video')
+      setValue(url)
+      setFilename(file.name)
+      onChange(url)
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Upload failed')
+    } finally {
+      setUploading(false)
+    }
+  }, [onChange])
+
+  const useLink = () => {
+    const v = link.trim()
+    if (!isVideoLink(v)) { setUploadError('Paste a YouTube or Vimeo link, or upload a video file.'); return }
+    setUploadError(''); setValue(v); setFilename(''); onChange(v)
+  }
+  const clear = () => { setValue(''); setFilename(''); setLink(''); setUploadError(''); onChange('') }
+
+  if (value) {
+    return (
+      <div className="rounded-2xl border border-line bg-champagne p-4">
+        <div className="mb-3 flex items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style={{ background: 'rgba(11,74,52,0.08)' }}>
+            <svg className="h-[18px] w-[18px]" style={{ color: '#0B4A34' }} fill="currentColor" viewBox="0 0 24 24"><path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h8.25a3 3 0 003-3v-9a3 3 0 00-3-3H4.5zM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06z" /></svg>
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold text-charcoal">{filename || (isVideoLink(value) ? 'Video link' : 'Your film')}</p>
+            <p className="text-xs text-muted">{isVideoLink(value) ? 'Guests tap to play it on the invitation' : 'Ready, guests tap to play it'}</p>
+          </div>
+          <button onClick={clear} className="shrink-0 rounded-lg px-2 py-1 text-xs text-muted transition-colors hover:bg-rose/8 hover:text-rose">Remove</button>
+        </div>
+        {isVideoLink(value)
+          ? <p className="truncate rounded-lg bg-paper px-3 py-2 text-xs text-muted">{value}</p>
+          : <video src={value} controls playsInline preload="metadata" className="aspect-video w-full rounded-lg bg-charcoal object-contain" />}
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <div
+        onDrop={async e => { e.preventDefault(); setDragging(false); await handleFile(e.dataTransfer.files?.[0]) }}
+        onDragOver={e => { e.preventDefault(); setDragging(true) }}
+        onDragLeave={() => setDragging(false)}
+        onClick={() => !uploading && inputRef.current?.click()}
+        className="flex cursor-pointer select-none flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed px-4 py-8 text-center transition-all"
+        style={{ borderColor: dragging ? '#A47945' : '#EADFD2', background: dragging ? 'rgba(164,121,69,0.06)' : 'rgba(255,248,241,0.5)', cursor: uploading ? 'wait' : 'pointer' }}
+      >
+        <div className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: 'rgba(11,74,52,0.08)' }}>
+          {uploading ? (
+            <svg className="h-5 w-5 animate-spin" style={{ color: '#0B4A34' }} fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+            </svg>
+          ) : (
+            <svg className="h-5 w-5" style={{ color: '#0B4A34' }} fill="currentColor" viewBox="0 0 24 24"><path d="M4.5 4.5a3 3 0 00-3 3v9a3 3 0 003 3h8.25a3 3 0 003-3v-9a3 3 0 00-3-3H4.5zM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06z" /></svg>
+          )}
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-charcoal">{uploading ? 'Uploading your film… keep this page open' : dragging ? 'Drop the video here' : 'Upload a video'}</p>
+          <p className="mt-0.5 text-xs text-muted">MP4 or MOV · max 80 MB · about a minute or two is perfect</p>
+        </div>
+        <input ref={inputRef} type="file" accept={VIDEO_TYPES} className="hidden" onChange={e => handleFile(e.target.files?.[0])} />
+      </div>
+      <div className="mt-3 flex gap-2">
+        <input
+          type="url"
+          value={link}
+          onChange={e => setLink(e.target.value)}
+          placeholder="…or paste a YouTube or Vimeo link"
+          className="field-input min-w-0 flex-1"
+        />
+        <button type="button" onClick={useLink} className="shrink-0 rounded-xl border border-line px-4 text-sm font-semibold text-charcoal hover:bg-paper">Use link</button>
+      </div>
+      {uploadError && <p className="mt-2 text-xs font-medium" style={{ color: '#A33A3A' }}>{uploadError}</p>}
+    </div>
+  )
+})
+
 // ─── Main component ───────────────────────────────────────────────────────────
 
 /** A titled block of the form, placed by where its first field shows on the design. */
@@ -846,9 +955,36 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: rank('galleryImages'),
       key: 'gallery',
       render: (n) => (
-        <Section key="gallery" number={n} label="Photo Gallery" hint="Add beautiful photos that appear in the invitation slideshow.">
+        // A design with two sets of photos names each; the rest share the usual title.
+        <Section key="gallery" number={n} label={grouped.galleryField?.hint ? grouped.galleryField.label : 'Photo Gallery'} hint={grouped.galleryField?.hint ?? 'Add beautiful photos that appear in the invitation slideshow.'}>
           <div data-field="galleryImages">
             <GalleryUploader initial={data['galleryImages'] ?? ''} onChange={v => handleChange('galleryImages', v)} />
+          </div>
+        </Section>
+      ),
+    })
+  }
+  for (const gf of grouped.galleryFields) {
+    enrich.push({
+      rank: rank(gf.key),
+      key: `gallery-${gf.key}`,
+      render: (n) => (
+        <Section key={`gallery-${gf.key}`} number={n} label={gf.label} hint={gf.hint}>
+          <div data-field={gf.key}>
+            <GalleryUploader initial={data[gf.key] ?? ''} onChange={v => handleChange(gf.key, v)} />
+          </div>
+        </Section>
+      ),
+    })
+  }
+  for (const vf of grouped.videoFields) {
+    enrich.push({
+      rank: rank(vf.key),
+      key: `video-${vf.key}`,
+      render: (n) => (
+        <Section key={`video-${vf.key}`} number={n} label={vf.key === 'videoUrl' ? 'Your film' : vf.label} hint={vf.hint ?? 'A short video of the two of you. It waits for guests to tap play.'}>
+          <div data-field={vf.key}>
+            <VideoUploader initial={data[vf.key] ?? ''} onChange={v => handleChange(vf.key, v)} />
           </div>
         </Section>
       ),
