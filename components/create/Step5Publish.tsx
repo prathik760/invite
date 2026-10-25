@@ -194,17 +194,17 @@ export default function Step5Publish({
               )}
             </button>
 
-            {/* Tell the user exactly what the next tap does. The old copy said
-                "No account needed" while the button in fact opened a sign-in
-                modal — the single most common reason to abandon at step 5.
-                A logged-out user on a paid design meets the sign-in step first,
-                so say so rather than promising the payment sheet. */}
+            {/* Tell the user exactly what the next tap does: it opens the payment
+                window, signed in or not (a signed-out buyer's purchase is kept on
+                the account for the email they give Razorpay). This used to say
+                "You'll sign in first" after sign-in stopped being needed, right
+                above the payment window's own "No account needed". */}
             <p className="mt-3 text-center text-[0.8rem] leading-5 text-muted">
-              {!session
-                ? 'You’ll sign in first, so your invitation and payment stay linked to your account.'
-                : mustPay
-                  ? 'Secure one-time payment via Razorpay — your invitation publishes right after.'
-                  : 'Publishes instantly — share the link on WhatsApp.'}
+              {mustPay
+                ? !session
+                  ? 'No account needed: pay securely with Razorpay and your invitation publishes right after.'
+                  : 'Secure one-time payment via Razorpay — your invitation publishes right after.'
+                : 'Publishes instantly — share the link on WhatsApp.'}
             </p>
           </div>
 

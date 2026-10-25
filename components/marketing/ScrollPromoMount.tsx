@@ -25,6 +25,12 @@ export default function ScrollPromoMount({ designHref }: { designHref: string })
   const [trigger, setTrigger] = useState<'arrival' | 'scroll' | null>(null)
   const triggered = trigger !== null
 
+  // Into the funnel, the popup goes away: tapping "Use this design" just as it
+  // opened carried it into the builder, on top of the builder's own first sheet.
+  useEffect(() => {
+    if (!promoAllowedOn(pathname)) setTrigger(null)
+  }, [pathname])
+
   useEffect(() => {
     if (!PROMO.enabled || triggered) return
     if (!promoAllowedOn(pathname)) return

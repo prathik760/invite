@@ -7,7 +7,7 @@ const CSP = [
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https:",
   "media-src 'self' https:",
-  "connect-src 'self' https://checkout.razorpay.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://api.razorpay.com https://*.r2.cloudflarestorage.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net https://*.clarity.ms https://c.bing.com",
+  "connect-src 'self' https://checkout.razorpay.com https://lumberjack.razorpay.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://api.razorpay.com https://*.r2.cloudflarestorage.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net https://*.clarity.ms https://c.bing.com",
   "frame-src 'self' https://api.razorpay.com https://www.googletagmanager.com https://www.youtube-nocookie.com https://player.vimeo.com",
   "object-src 'none'",
   "base-uri 'self'",

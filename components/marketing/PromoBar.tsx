@@ -103,7 +103,7 @@ export default function PromoBar({
         </button>
       </div>
       {/* Outside the clipped strip, so the burst can fall over the page. */}
-      {burst && <ConfettiBurst x="50%" y="70%" direction="down" count={50} spread={1.2} delay={500} />}
+      {burst && <ConfettiBurst x="50%" y="70%" direction="down" count={50} spread={1.2} delay={500} contain />}
     </div>
   )
 }

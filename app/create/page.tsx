@@ -667,7 +667,13 @@ export default function CreatePage() {
       if (sessionStorage.getItem(key)) return
       sessionStorage.setItem(key, '1')
     } catch { /* private mode: offer it anyway */ }
-    const t = window.setTimeout(() => setTeamOffer(true), 350)
+    // Waits while another dialog is open (the full-screen preview, an offer), so two never stack.
+    let t = 0
+    const offer = () => {
+      if (document.querySelector('[aria-modal="true"]')) t = window.setTimeout(offer, 1000)
+      else setTeamOffer(true)
+    }
+    t = window.setTimeout(offer, 350)
     return () => window.clearTimeout(t)
     // Offered on arriving at a design, not again as the form changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps

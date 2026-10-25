@@ -50,6 +50,7 @@ export default function ConfettiBurst({
   delay = 0,
   direction = 'up',
   reach = 1,
+  contain = false,
 }: {
   x?: string
   y?: string
@@ -61,6 +62,8 @@ export default function ConfettiBurst({
   direction?: 'up' | 'down'
   /** How far pieces fly before falling: 1 = full popper, smaller stays close. */
   reach?: number
+  /** Keep pieces within the parent's sides (a full-width bar in the page flow). */
+  contain?: boolean
 }) {
   const [burst, setBurst] = useState<Piece[] | null>(null)
 
@@ -73,7 +76,9 @@ export default function ConfettiBurst({
 
   if (!burst) return null
   return (
-    <span aria-hidden className="pointer-events-none absolute inset-0 z-[2] overflow-visible">
+    // `contain` clips the sides only: pieces still fall over the page, but none
+    // past the screen's edges, where they made a phone's page scroll sideways.
+    <span aria-hidden className="pointer-events-none absolute inset-0 z-[2] overflow-visible" style={contain ? { overflowX: 'clip' } : undefined}>
       {burst.map((p, i) => (
         <span key={i} className="si-confetti" style={{ left: x, top: y, ...p.style }} />
       ))}
