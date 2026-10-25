@@ -12,7 +12,8 @@ import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'
  * Every line here must stay true of the product:
  *  - nothing is feature-gated after purchase (no plan checks outside lib/plans)
  *  - published invitations expire 3 days after the event date (app/e/[slug])
- *  - a published invitation cannot currently be edited — do not promise it
+ *  - a published invitation can be edited until its celebration ends (app/create
+ *    edit mode, lib/eventEdit.ts), on the same link
  *  - many designs carry a small "Made with ShareInvite" credit, so the claim is
  *    "no banner or ads", not "no branding"
  */
@@ -23,13 +24,16 @@ export const OFFER = {
   to: HIGHEST_PAID_PRICE,
 } as const
 
+/** Editing after publishing (app/create edit mode): one of the inclusions, and said again beside the review page's Pay button. */
+export const OFFER_EDIT = 'Change the details until your event, same link'
+
 export const OFFER_INCLUDES = [
   'Your invitation on its own private link',
   'Every feature in the design, nothing locked',
   'Share on WhatsApp, Instagram, email or text',
   'Opens on any phone, no app for guests',
   'No banner or ads on your invitation',
-  'Change the details until your event, same link',
+  OFFER_EDIT,
   'Live through your event, and three days after',
   'Secure one-time payment, no subscription',
 ] as const

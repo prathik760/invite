@@ -11,13 +11,14 @@ import { PLANS, canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
 import ShareBar from '@/components/ui/ShareBar'
 import { CREATE_STEPS, seoEvents, trackEvent } from '@/lib/analytics'
 import BottomDock from '@/components/ui/BottomDock'
-import PaymentProblem, { type PayError } from '@/components/create/PaymentProblem'
+import type { PayError } from '@/components/create/PaymentProblem'
 import { supportWhatsAppUrl } from '@/lib/support'
 import { displayName } from '@/lib/catalog'
 import { carryOverDetails } from '@/lib/carryOver'
 import { usePreviewFollow } from '@/lib/usePreviewFollow'
 import { coupleLine } from '@/lib/inviteCardText'
 import { DoneForYouChoice, DoneForYouStrip, type DoneForYouDesign } from '@/components/create/DoneForYou'
+import { FlaggedFields } from '@/components/editor/FormEditor'
 
 import StepProgress from '@/components/create/StepProgress'
 import Step1Templates from '@/components/create/Step1Templates'
@@ -28,12 +29,9 @@ import Step5Publish from '@/components/create/Step5Publish'
 import MobilePreviewStrip from '@/components/create/MobilePreviewStrip'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from '@/components/create/templateVisuals'
 import Logo, { LogoMark } from '@/components/brand/Logo'
-import { CheckIcon, ShieldIcon } from '@/components/ui/Icons'
-import { OFFER_INCLUDES } from '@/lib/offer'
 import { useBackToClose } from '@/lib/useBackToClose'
 import { useLocalPrice } from '@/components/price/Price'
-import { discountedPrice, paymentMethods } from '@/lib/pricing'
-import { couponEndLabel, couponMessage, normaliseCode } from '@/lib/coupons'
+import { discountedPrice } from '@/lib/pricing'
 import { couponForCheckout, useCoupon } from '@/lib/useCoupon'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
@@ -131,172 +129,6 @@ function ModalFrame({ onClose, children, label }: { onClose: () => void; childre
   )
 }
 
-// ─── Checkout modal ─────────────────────────────────────────────────────────────
-// Named UpgradeModal historically; it sells exactly one design. No plan, tier or
-// upgrade language reaches the customer.
-function UpgradeModal({
-  templateId, templateName, requiredPlan, isLoggedIn, onClose, onPay, paying, payError,
-}: {
-  templateId: string
-  templateName: string
-  requiredPlan: typeof PLANS[number]
-  isLoggedIn: boolean
-  onClose: () => void
-  onPay: (planId: PlanId) => void
-  paying: boolean
-  payError: PayError | null
-}) {
-  const visual = TEMPLATE_VISUALS[templateId] ?? TEMPLATE_VISUALS['elegant-wedding']
-  const coupon = useCoupon(requiredPlan.id, templateId)
-  const full = useLocalPrice(requiredPlan.price)
-  const local = coupon.applied ? discountedPrice(full, coupon.applied.percentOff) : full
-  const price = local.label
-
-  // Discount codes (lib/coupons.ts). The field stays behind a small link: an
-  // open, empty box sends people without a code off to search for one.
-  const [codeOpen, setCodeOpen] = useState(false)
-  const [codeInput, setCodeInput] = useState('')
-  const [codeError, setCodeError] = useState<string | null>(null)
-  const applyCode = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (!normaliseCode(codeInput)) return
-    const result = coupon.apply(codeInput)
-    if (result.ok) {
-      setCodeOpen(false); setCodeError(null); setCodeInput('')
-      trackEvent(seoEvents.couponApplied, { coupon: result.coupon.code, source: 'typed', template_id: templateId })
-    } else {
-      setCodeError(couponMessage(result.reason))
-      trackEvent(seoEvents.couponRejected, { coupon: normaliseCode(codeInput), reason: result.reason, template_id: templateId })
-    }
-  }
-
-  return (
-    <ModalFrame onClose={onClose} label={`Get the ${templateName} design`}>
-      <p className="eyebrow">One design · one price</p>
-      <div className="mt-4 flex items-center gap-4">
-        <span className="relative h-20 w-16 shrink-0 overflow-hidden rounded-2xl border border-line bg-peach shadow-soft">
-          <Image src={visual.image} alt="" fill sizes="64px" className="object-cover" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <h2 className="t-h3 truncate">{displayName(templateName)}</h2>
-          <p className="mt-1 flex items-baseline gap-1.5">
-            <span className="font-editorial text-[2.2rem] font-semibold leading-none">{price}</span>
-            {coupon.applied && <s className="text-[0.95rem] text-muted">{full.label}</s>}
-            <span className="text-[0.85rem] text-muted">one-time</span>
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-4">
-        {coupon.applied ? (
-          <p className="flex items-center gap-2 rounded-xl border border-emerald-soft/30 bg-emerald-soft/5 px-3.5 py-2.5 text-[0.85rem] text-charcoal/85">
-            <CheckIcon className="h-3.5 w-3.5 shrink-0 text-emerald-soft" />
-            <span className="min-w-0 flex-1">
-              <span className="font-semibold">{coupon.applied.code}</span> · {coupon.applied.percentOff}% off until {couponEndLabel(coupon.applied)}
-            </span>
-            <button type="button" onClick={coupon.remove} className="shrink-0 text-[0.8rem] text-muted underline-offset-2 hover:text-charcoal hover:underline">
-              Remove
-            </button>
-          </p>
-        ) : codeOpen ? (
-          <form onSubmit={applyCode} noValidate>
-            <div className="flex gap-2">
-              <input
-                value={codeInput}
-                onChange={(e) => { setCodeInput(e.target.value); setCodeError(null) }}
-                placeholder="Discount code"
-                aria-label="Discount code"
-                aria-invalid={!!codeError}
-                autoCapitalize="characters"
-                autoComplete="off"
-                spellCheck={false}
-                autoFocus
-                className="min-w-0 flex-1 rounded-xl border border-line bg-paper px-3.5 py-2.5 text-[0.95rem] uppercase tracking-wide text-charcoal outline-none focus:border-emerald-soft"
-              />
-              <button type="submit" className="btn-outline shrink-0 rounded-xl px-4 text-[0.88rem] font-semibold">Apply</button>
-            </div>
-            {codeError && <p role="alert" className="mt-1.5 text-[0.8rem] text-[#A33A3A]">{codeError}</p>}
-          </form>
-        ) : (
-          <button type="button" onClick={() => setCodeOpen(true)} className="text-[0.82rem] text-muted underline underline-offset-4 hover:text-charcoal">
-            Have a discount code?
-          </button>
-        )}
-      </div>
-
-      <div className="mt-6 rounded-2xl border border-line bg-champagne p-4">
-        <p className="text-[0.75rem] font-bold uppercase tracking-[0.16em] text-muted">Everything included</p>
-        <ul className="mt-3 space-y-2">
-          {OFFER_INCLUDES.map(f => (
-            <li key={f} className="flex items-start gap-2 text-[0.86rem] text-charcoal/85">
-              <CheckIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-soft" />
-              {f}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {payError && (
-        <div className="mt-5">
-          <PaymentProblem
-            error={payError}
-            price={requiredPlan.price}
-            percentOff={coupon.applied?.percentOff}
-            templateName={templateName}
-            onRetry={() => onPay(requiredPlan.id)}
-            retrying={paying}
-          />
-        </div>
-      )}
-
-      {/* No account needed to pay: Razorpay asks for a phone and email, and the
-          purchase is kept on the account for that email. Signing in stays
-          available for anyone who already has one. */}
-      <div className="mt-6">
-        <button type="button" onClick={() => onPay(requiredPlan.id)} disabled={paying}
-          className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-4 text-[1rem] font-semibold disabled:opacity-60">
-          {paying && <Spinner />}
-          {paying ? 'Opening secure payment…' : `Pay ${price} & publish`}
-        </button>
-        {!isLoggedIn && (
-          <p className="mt-2.5 text-center text-[0.8rem] text-muted">
-            No account needed.{' '}
-            <Link href="/auth/login?callbackUrl=/create" className="link">Have one? Sign in</Link>
-          </p>
-        )}
-      </div>
-
-      {/* Trust row. This modal is the moment of decision and until now it
-          offered no refund policy, no support route and no payment marks —
-          all of which exist elsewhere on the site but not where they count. */}
-      <div className="mt-5 border-t border-line pt-4">
-        <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.78rem] text-muted">
-          <ShieldIcon className="h-3.5 w-3.5 text-emerald-soft" />
-          Secured by Razorpay
-          <span aria-hidden>·</span> {paymentMethods(local.currency)}
-          <span aria-hidden>·</span> No subscription
-        </p>
-        <p className="mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.8rem]">
-          <Link href="/refund-policy" target="_blank" className="link">7-day refund policy</Link>
-          <span className="text-muted" aria-hidden>·</span>
-          <a
-            href={supportWhatsAppUrl(`Hi, I have a question about the ${templateName} design (${price}) before I pay.`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-[#128C4B] underline-offset-4 hover:underline"
-          >
-            Question? Chat with us
-          </a>
-        </p>
-      </div>
-
-      <button type="button" onClick={onClose} className="mt-3 w-full py-2.5 text-[0.88rem] text-muted transition-colors hover:text-charcoal">
-        Maybe later
-      </button>
-    </ModalFrame>
-  )
-}
-
 // ─── Success link with copy feedback ───────────────────────────────────────────
 function SuccessLink({ url }: { url: string }) {
   const [copied, setCopied] = useState(false)
@@ -361,7 +193,6 @@ export default function CreatePage() {
   const [error, setError] = useState('')
   const [createdSlug, setCreatedSlug] = useState<string | null>(null)
   const [userPlan, setUserPlan] = useState<PlanId>('free')
-  const [upgradeTarget, setUpgradeTarget] = useState<{ templateId: string; templateName: string } | null>(null)
   const [paying, setPaying] = useState(false)
   // Payment problems used to surface as browser alert() dialogs — including
   // after the customer's money had already left their account. This holds a
@@ -377,6 +208,11 @@ export default function CreatePage() {
   const [editing, setEditing] = useState<{ slug: string; key: string | null } | null>(null)
   const [editProblem, setEditProblem] = useState<{ slug: string; status: number; message: string } | null>(null)
   const [edited, setEdited] = useState(false)
+  // Required boxes the host moved past while empty: flagged on their step (FlaggedFields).
+  const [flagged, setFlagged] = useState<string[]>([])
+  const flaggedSet = useMemo(() => new Set(flagged), [flagged])
+  // The step whose missing boxes were last pointed out: a second Continue there goes on.
+  const warnedStep = useRef<number | null>(null)
 
   // Pre-select template from URL param, skip straight to Step 2
   useEffect(() => {
@@ -739,14 +575,55 @@ export default function CreatePage() {
   }, [currentStep, selectedId, draftLoaded])
   useBackToClose(teamOffer, () => setTeamOffer(false))
 
+  // Pay opens Razorpay straight from the review page. There used to be a second window
+  // ("One design · one price") with its own Pay button between the two, and most people who
+  // saw the price never got past it.
   const openPaywall = () => {
     setPayError(null)
-    setUpgradeTarget({ templateId: selectedId, templateName: selectedTemplate.name })
+    void handleUpgradePayment(requiredPlanForSelected.id)
+  }
+
+  /** Brings a builder box into view and puts the cursor in it. */
+  const focusField = (key: string) => {
+    window.setTimeout(() => {
+      const box = document.querySelector<HTMLElement>(`[data-field="${key}"] input, [data-field="${key}"] textarea, [data-field="${key}"] select`)
+      box?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+      box?.focus({ preventScroll: true })
+    }, 380)
+  }
+
+  /** Takes the host to one field on its step, flagging every required box still empty. */
+  const goToField = (step: number, key: string) => {
+    setFlagged(missingRequired.map((f) => f.key))
+    if (step !== currentStep) goToStep(step)
+    focusField(key)
+  }
+
+  /** The first required detail still empty, on its step. Used instead of a silent Pay button. */
+  const goToMissing = () => {
+    const first = missingRequired[0]
+    if (first) goToField(stepOfField(first), first.key)
+  }
+
+  /**
+   * Continue from a builder step. Required boxes left empty on it are pointed out first (amber
+   * edge, a note, the cursor in the first); pressing Continue again goes on, so nobody is held up,
+   * but nobody finds out about a missing name only at the pay button either.
+   */
+  const continueFrom = (from: number) => {
+    const empty = missingRequired.filter((f) => stepOfField(f) === from)
+    if (empty.length > 0 && warnedStep.current !== from) {
+      warnedStep.current = from
+      setFlagged((prev) => Array.from(new Set([...prev, ...empty.map((f) => f.key)])))
+      focusField(empty[0].key)
+      return
+    }
+    goToStep(from + 1)
   }
 
   const saveChanges = async () => {
     if (!editing) return
-    if (missingRequired.length > 0) { setError(`Please fill in: ${missingRequired.map(f => f.label).join(', ')}`); return }
+    if (missingRequired.length > 0) { goToMissing(); return }
     setLoading(true); setError('')
     try {
       const res = await fetch(`/api/events/${encodeURIComponent(editing.slug)}`, {
@@ -778,7 +655,7 @@ export default function CreatePage() {
     // It used to be checked after payment, so a missing date could stop a
     // customer who had just paid.
     if (missingRequired.length > 0) {
-      setError(`Please fill in: ${missingRequired.map(f => f.label).join(', ')}`)
+      goToMissing()
       return
     }
     // Signing in is optional. A signed-out buyer pays first; the purchase is
@@ -801,27 +678,27 @@ export default function CreatePage() {
   const formPanelRef = useRef<HTMLElement>(null)
 
   const payRef = useRef<boolean>(false)
-  const handleUpgradePayment = useCallback(async (planId: PlanId) => {
+  const handleUpgradePayment = async (planId: PlanId) => {
     if (payRef.current) return
     payRef.current = true; setPaying(true); setPayError(null)
     const plan = PLANS.find(p => p.id === planId)
     // Sent only when it discounts this design: the server rejects a code for
     // another design, and someone holding ROYAL20 may be buying something else.
-    const code = couponForCheckout(planId, upgradeTarget?.templateId)
+    const code = couponForCheckout(planId, selectedId)
     const ctx = {
       plan: planId,
       plan_name: plan?.name,
       price: plan?.price,
       currency: 'INR',
       coupon: code,
-      template_id: upgradeTarget?.templateId,
-      template_name: upgradeTarget?.templateName,
+      template_id: selectedId,
+      template_name: selectedTemplate.name,
     }
     trackEvent(seoEvents.checkoutStart, ctx)
     try {
       const orderRes = await fetch('/api/payments/create-order', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: planId, code, templateId: upgradeTarget?.templateId }),
+        body: JSON.stringify({ plan: planId, code, templateId: selectedId }),
       })
       // `price` is in whole units of `currency` — the visitor's own price (lib/pricing.ts).
       const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; price?: number; keyId?: string; error?: string; test?: boolean }
@@ -834,7 +711,7 @@ export default function CreatePage() {
         // Shown inside the Razorpay sheet. Naming the template the customer
         // actually chose beats a tier name they never asked for and would not
         // recognise on their bank statement.
-        description: `${upgradeTarget?.templateName ?? 'Invitation template'} (one-time)`,
+        description: `${displayName(selectedTemplate.name)} (one-time)`,
         order_id: order.orderId as string,
         prefill: { email: session?.user?.email ?? undefined, name: session?.user?.name ?? undefined },
         theme: { color: '#0B4A34' },
@@ -856,7 +733,6 @@ export default function CreatePage() {
               // Reflect the new entitlement immediately so the publish path does
               // not bounce the user back to the paywall they just paid at.
               setUserPlan(verBody.plan ?? planId)
-              setUpgradeTarget(null)
               if (verBody.pass) {
                 setPass(verBody.pass)
                 try { localStorage.setItem(PASS_KEY, verBody.pass) } catch { /* private mode */ }
@@ -905,8 +781,7 @@ export default function CreatePage() {
       setPayError({ kind: 'setup', message: e instanceof Error ? e.message : 'We could not start the payment. Please try again.' })
       setPaying(false); payRef.current = false
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session, upgradeTarget])
+  }
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
   const shareUrl = createdSlug ? `${appUrl}/e/${createdSlug}` : ''
@@ -926,7 +801,6 @@ export default function CreatePage() {
     price: requiredPlanForSelected.price,
     names,
   }
-  const upgradeRequiredPlan = upgradeTarget ? getRequiredPlan(upgradeTarget.templateId) : null
 
   const isSplitStep = currentStep === 2 || currentStep === 3 || currentStep === 4
 
@@ -1043,8 +917,9 @@ export default function CreatePage() {
               )}
             </div>
 
-            <DoneForYouStrip design={teamDesign} />
+            {!editing && <DoneForYouStrip design={teamDesign} step={currentStep} />}
 
+            <FlaggedFields.Provider value={flaggedSet}>
             {/* Step content */}
             {currentStep === 2 && (
               <Step2Names
@@ -1053,7 +928,7 @@ export default function CreatePage() {
                 onChange={setData}
                 session={session}
                 onBack={() => goToStep(1)}
-                onContinue={() => goToStep(3)}
+                onContinue={() => continueFrom(2)}
               />
             )}
             {currentStep === 3 && (
@@ -1062,7 +937,7 @@ export default function CreatePage() {
                 data={data}
                 onChange={setData}
                 onBack={() => goToStep(2)}
-                onContinue={() => goToStep(4)}
+                onContinue={() => continueFrom(3)}
               />
             )}
             {currentStep === 4 && (
@@ -1071,10 +946,11 @@ export default function CreatePage() {
                 data={data}
                 onChange={setData}
                 onBack={() => goToStep(3)}
-                onContinue={() => goToStep(5)}
+                onContinue={() => continueFrom(4)}
               />
             )}
 
+            </FlaggedFields.Provider>
           </aside>
 
           {/* RIGHT: Live preview — desktop only */}
@@ -1230,8 +1106,11 @@ export default function CreatePage() {
         <Step5Publish
           selectedTemplate={selectedTemplate}
           data={publishData}
-          missing={missingRequired.map((f) => ({ label: f.label, step: stepOfField(f) }))}
-          onFix={(step: number) => goToStep(step)}
+          missing={missingRequired.map((f) => ({ label: f.label, step: stepOfField(f), key: f.key }))}
+          onFix={goToField}
+          paying={paying}
+          payError={payError}
+          onRetry={() => void handleUpgradePayment(requiredPlanForSelected.id)}
           userPlan={userPlan}
           session={session}
           loading={loading}
@@ -1264,7 +1143,7 @@ export default function CreatePage() {
               ← Back
             </button>
             <button
-              onClick={() => goToStep(currentStep + 1)}
+              onClick={() => continueFrom(currentStep)}
               className="btn-primary flex-[2] rounded-full py-3.5 text-sm font-semibold"
             >
               {currentStep === 4 ? (editing ? 'Review & save →' : 'Preview & Publish →') : 'Continue →'}
@@ -1293,15 +1172,22 @@ export default function CreatePage() {
           }}
         >
           {error && <p role="alert" className="mb-2 text-center text-xs font-medium text-[#A33A3A]">{error}</p>}
+          {payError && !error && (
+            <p role="alert" className="mb-2 text-center text-xs font-medium text-[#A33A3A]">
+              {payError.kind === 'cancelled' ? 'Payment cancelled. You have not been charged.' : 'The payment did not go through. Details are above.'}
+            </p>
+          )}
           <button
             onClick={handleCreate}
-            disabled={loading}
+            disabled={loading || paying}
             className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-4 text-[15px] font-semibold disabled:opacity-50"
           >
-            {loading && <Spinner />}
-            {loading ? (editing ? 'Saving your changes…' : 'Creating your invitation…') : (
+            {(loading || paying) && <Spinner />}
+            {loading || paying ? (paying ? 'Opening secure payment…' : editing ? 'Saving your changes…' : 'Creating your invitation…') : (
               <>
-                {editing
+                {missingRequired.length > 0
+                  ? `Add ${missingRequired.length} missing detail${missingRequired.length === 1 ? '' : 's'}`
+                  : editing
                   ? 'Save changes'
                   : needsPayment
                   ? `Pay ${selectedPrice.label} & publish`
@@ -1314,7 +1200,7 @@ export default function CreatePage() {
           </button>
           {needsPayment && (
             <p className="mt-1.5 text-center text-[10px] leading-4 text-muted">
-              No account needed · Razorpay secured · {paymentMethods(selectedPrice.currency)} ·{' '}
+              No account needed · Edit until your event ·{' '}
               <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline text-emerald-soft">
                 7-day refunds
               </Link>
@@ -1423,21 +1309,6 @@ export default function CreatePage() {
           <ModalFrame onClose={() => setTeamOffer(false)} label="How would you like to make your invitation?">
             <DoneForYouChoice design={teamDesign} onSelf={() => setTeamOffer(false)} onTeam={() => setTeamOffer(false)} />
           </ModalFrame>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {upgradeTarget && upgradeRequiredPlan && (
-          <UpgradeModal
-            templateId={upgradeTarget.templateId}
-            templateName={upgradeTarget.templateName}
-            requiredPlan={upgradeRequiredPlan}
-            isLoggedIn={!!session}
-            onClose={() => { setUpgradeTarget(null); setPayError(null) }}
-            onPay={handleUpgradePayment}
-            paying={paying}
-            payError={payError}
-          />
         )}
       </AnimatePresence>
 

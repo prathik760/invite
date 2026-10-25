@@ -145,7 +145,7 @@ export default function BirthdayInvitationWordingPage() {
 
       {BIRTHDAY_SECTIONS.map((section, i) => (
         <Fragment key={section.id}>
-          <WordingSection section={section} templateId={SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID} ctaHref="/birthday-invitation" paper={i % 2 === 1} />
+          <WordingSection section={section} templateId={SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID} ctaHref="/birthday-invitation" paper={i % 2 === 1} banner={i === 0 ? SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID : undefined} />
 
           {i === 0 && (
             <Section id="birthday-designs" tone="paper" aria-label="Birthday invitation designs" className="scroll-mt-10">
@@ -351,7 +351,7 @@ export default function BirthdayInvitationWordingPage() {
         primary={{ href: `/create?template=${TEMPLATE_ID}`, label: 'Start My Birthday Invite' }}
       />
 
-      <StickyCTA href="/birthday-invitation" text="Start My Birthday Invite →" />
+      <StickyCTA templateId={TEMPLATE_ID} afterId={BIRTHDAY_SECTIONS[0].id} />
 
       <SiteFooter />
     </main>

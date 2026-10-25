@@ -144,7 +144,7 @@ export default function AnniversaryInvitationWordingPage() {
 
       {ANNIVERSARY_SECTIONS.map((section, i) => (
         <Fragment key={section.id}>
-          <WordingSection section={section} templateId={TEMPLATE_ID} ctaHref="/anniversary-invitation" paper={i % 2 === 1} />
+          <WordingSection section={section} templateId={TEMPLATE_ID} ctaHref="/anniversary-invitation" paper={i % 2 === 1} banner={i === 0 ? TEMPLATE_ID : undefined} />
 
           {i === 0 && (
             <Section id="anniversary-designs" tone="paper" aria-label="Anniversary invitation designs" className="scroll-mt-10">
@@ -311,7 +311,7 @@ export default function AnniversaryInvitationWordingPage() {
         primary={{ href: `/create?template=${TEMPLATE_ID}`, label: 'Start the Anniversary Invite' }}
       />
 
-      <StickyCTA href="/anniversary-invitation" text="Start the Anniversary Invite →" />
+      <StickyCTA templateId={TEMPLATE_ID} afterId={ANNIVERSARY_SECTIONS[0].id} />
 
       <SiteFooter />
     </main>

@@ -177,7 +177,7 @@ export default function WeddingInvitationWordingPage() {
 
       {WEDDING_SECTIONS.map((section, i) => (
         <Fragment key={section.id}>
-          <WordingSection section={section} templateId={SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID} ctaHref="/wedding-invitation" paper={i % 2 === 1} />
+          <WordingSection section={section} templateId={SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID} ctaHref="/wedding-invitation" paper={i % 2 === 1} banner={i === 0 ? SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID : undefined} />
 
           {i === 0 && (
             <Section id="wedding-designs" tone="paper" aria-label="Wedding invitation designs" className="scroll-mt-10">
@@ -421,7 +421,7 @@ export default function WeddingInvitationWordingPage() {
         primary={{ href: `/create?template=${TEMPLATE_ID}`, label: 'Start My Wedding Invite' }}
       />
 
-      <StickyCTA href="/wedding-invitation" text="Start My Wedding Invite →" />
+      <StickyCTA templateId={TEMPLATE_ID} afterId={WEDDING_SECTIONS[0].id} />
 
       <SiteFooter />
     </main>

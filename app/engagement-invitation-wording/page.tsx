@@ -150,7 +150,7 @@ export default function EngagementInvitationWordingPage() {
 
       {ENGAGEMENT_SECTIONS.map((section, i) => (
         <Fragment key={section.id}>
-          <WordingSection section={section} templateId={TEMPLATE_ID} ctaHref="/engagement-invitation" paper={i % 2 === 0} />
+          <WordingSection section={section} templateId={TEMPLATE_ID} ctaHref="/engagement-invitation" paper={i % 2 === 0} banner={i === 0 ? TEMPLATE_ID : undefined} />
 
           {i === 0 && (
             <Section id="engagement-designs" aria-label="Engagement invitation designs" className="scroll-mt-10">
@@ -457,7 +457,7 @@ export default function EngagementInvitationWordingPage() {
         primary={{ href: '/create?template=indian-engagement', label: 'Start My Engagement Invite' }}
       />
 
-      <StickyCTA href="/engagement-invitation" text="Start My Engagement Invite →" />
+      <StickyCTA templateId={TEMPLATE_ID} afterId={ENGAGEMENT_SECTIONS[0].id} />
 
       <SiteFooter />
     </main>

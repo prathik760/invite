@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useCallback, useRef, useState } from 'react'
+import { createContext, memo, useCallback, useContext, useRef, useState } from 'react'
 import type { TemplateConfig, TemplateField } from '@/types'
 import { FIELD_ORDER } from '@/lib/fieldOrder'
 
@@ -169,9 +169,20 @@ function Section({ number, label, hint, children }: { number: number; label: str
 
 // ─── Generic field input ──────────────────────────────────────────────────────
 
+/**
+ * Required boxes the host tried to move past while empty (app/create sets it). Each shows a
+ * short note and an amber edge until it is filled, so a missing name or date is spotted on its
+ * own step instead of at the pay button.
+ */
+export const FlaggedFields = createContext<ReadonlySet<string>>(new Set())
+
+const FLAG_STYLE = { borderColor: '#C9741F', boxShadow: '0 0 0 3px rgba(201,116,31,0.14)' }
+
 function FieldInput({ field, value, onChange }: { field: TemplateField; value: string; onChange: (v: string) => void }) {
   const hint = FIELD_HINTS[field.key]
   const isUrl = field.type === 'url' || field.key === 'mapsUrl'
+  const flagged = useContext(FlaggedFields).has(field.key) && !value.trim()
+  const flagStyle = flagged ? FLAG_STYLE : undefined
 
   if (field.columns?.length) return <div data-field={field.key}><RowsEditor field={field} initial={value} onChange={onChange} /></div>
   // A photo inside a titled group (most photos sit together in the first step instead).
@@ -224,6 +235,8 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
           placeholder={field.placeholder || ''}
           rows={3}
           className="field-input resize-none"
+          style={flagStyle}
+          aria-invalid={flagged || undefined}
         />
       ) : isUrl ? (
         <div className="relative">
@@ -238,6 +251,8 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
             onChange={e => onChange(e.target.value)}
             placeholder={field.placeholder || 'https://…'}
             className="field-input pl-10"
+            style={flagStyle}
+            aria-invalid={flagged || undefined}
           />
         </div>
       ) : (
@@ -247,7 +262,15 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
           onChange={e => onChange(e.target.value)}
           placeholder={field.placeholder || ''}
           className="field-input"
+          style={flagStyle}
+          aria-invalid={flagged || undefined}
         />
+      )}
+
+      {flagged && (
+        <p className="mt-1.5 text-[0.8rem] font-medium" style={{ color: '#A35A12' }}>
+          Needed to publish. Add it now, or continue and add it before you pay.
+        </p>
       )}
 
       {hint && field.type !== 'textarea' && field.type !== 'date' && field.type !== 'time' && (

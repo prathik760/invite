@@ -12,10 +12,14 @@ export const MESSAGE_LIMIT = 600
  * Builder link that carries the copied words. Cut by code point, not UTF-16
  * unit: slicing through an emoji leaves a lone surrogate, which makes
  * encodeURIComponent throw.
+ *
+ * `src` becomes the `source` of the builder's create_start event, so each
+ * placement (this panel, the card's own "Send as an invitation") can be told
+ * apart in the funnel.
  */
-export function builderHref(templateId: string, text: string): string {
+export function builderHref(templateId: string, text: string, src = 'wording_copy'): string {
   const message = Array.from(text.trim()).slice(0, MESSAGE_LIMIT).join('')
-  return `/create?template=${encodeURIComponent(templateId)}&message=${encodeURIComponent(message)}&src=wording_copy`
+  return `/create?template=${encodeURIComponent(templateId)}&message=${encodeURIComponent(message)}&src=${encodeURIComponent(src)}`
 }
 
 /**

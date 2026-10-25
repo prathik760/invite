@@ -44,8 +44,23 @@ function whatsappLink(d: DoneForYouDesign): string {
   )
 }
 
-function track(d: DoneForYouDesign, source: string) {
-  trackEvent(seoEvents.lead, { lead_type: 'done_for_you', template_id: d.id, template_name: d.name, price: d.price, source })
+function track(d: DoneForYouDesign, source: string, leadType: 'done_for_you' | 'save_for_later' = 'done_for_you') {
+  trackEvent(seoEvents.lead, { lead_type: leadType, template_id: d.id, template_name: d.name, price: d.price, source })
+}
+
+/**
+ * "Not ready yet? Send me this design": the customer messages the team for the design's link
+ * to come back to later. Most people who open the builder leave at the names step within half
+ * a minute; this keeps them, and is a lead too.
+ */
+function saveForLaterLink(d: DoneForYouDesign): string {
+  return supportWhatsAppUrl(
+    [
+      `Hi ShareInvite! I like the ${d.name} design (${d.priceLabel}).`,
+      'Please send me the link so I can finish my invitation later:',
+      `${SITE_URL}/create?template=${encodeURIComponent(d.id)}`,
+    ].join('\n'),
+  )
 }
 
 /** What happens, in three short steps. */
@@ -117,7 +132,39 @@ export function DoneForYouChoice({ design, onSelf, onTeam }: { design: DoneForYo
 }
 
 /** A slim reminder above the form, for anyone who starts typing and would rather not finish. */
-export function DoneForYouStrip({ design }: { design: DoneForYouDesign }) {
+export function DoneForYouStrip({ design, step }: { design: DoneForYouDesign; step: number }) {
+  // The names step, where most people leave: both ways out of filling it in now.
+  if (step === 2) {
+    return (
+      <div className="mx-4 mt-3 rounded-2xl border px-3.5 py-3 sm:mx-5 md:mx-5" style={{ borderColor: 'rgba(31,168,85,0.35)', background: 'rgba(31,168,85,0.05)' }}>
+        <p className="text-[0.82rem] font-semibold text-charcoal">Not ready to fill it in now?</p>
+        <div className="mt-2 grid grid-cols-1 gap-2 min-[420px]:grid-cols-2">
+          <a
+            href={saveForLaterLink(design)}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track(design, 'builder_save_for_later', 'save_for_later')}
+            className="flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-[0.8rem] font-semibold text-white transition-[filter] hover:brightness-105"
+            style={{ background: WHATSAPP_GREEN }}
+          >
+            <WhatsAppIcon className="h-4 w-4" />
+            Send me this design
+          </a>
+          <a
+            href={whatsappLink(design)}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track(design, 'builder_strip')}
+            className="flex items-center justify-center gap-2 rounded-xl border bg-white px-3 py-2.5 text-[0.8rem] font-semibold transition-colors hover:bg-white/70"
+            style={{ borderColor: 'rgba(31,168,85,0.45)', color: '#137A3E' }}
+          >
+            Our team fills it in
+          </a>
+        </div>
+        <p className="mt-1.5 text-[0.72rem] leading-4 text-charcoal/60">On WhatsApp. We send you the link to finish later, or make it for you within 24 hours.</p>
+      </div>
+    )
+  }
   return (
     <a
       href={whatsappLink(design)}

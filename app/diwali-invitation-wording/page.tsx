@@ -102,7 +102,7 @@ export default function DiwaliInvitationWordingPage() {
 
       {DIWALI_SECTIONS.map((section, i) => (
         <Fragment key={section.id}>
-          <WordingSection section={section} templateId={TEMPLATE_ID} ctaHref={CREATE_HREF} paper={i % 2 === 1} />
+          <WordingSection section={section} templateId={TEMPLATE_ID} ctaHref={CREATE_HREF} paper={i % 2 === 1} banner={i === 0 ? TEMPLATE_ID : undefined} />
           {section.id === 'lakshmi-puja' && (
             <section className="border-b border-line bg-paper px-5 py-2">
               <div className="mx-auto max-w-3xl">
@@ -219,7 +219,7 @@ export default function DiwaliInvitationWordingPage() {
         location="diwali_wording_closing"
       />
 
-      <StickyCTA href={CREATE_HREF} text="Start My Diwali Invite →" />
+      <StickyCTA templateId={TEMPLATE_ID} afterId={DIWALI_SECTIONS[0].id} />
 
       <SiteFooter />
     </main>

@@ -255,7 +255,9 @@ export function describe(r: ActivityRow, isLast = false, gallery = false): Line 
     case 'enquiry_submit':
       return { icon: '📨', text: 'Sent a custom design request', tone: 'good' }
     case 'generate_lead':
-      return { icon: '🙌', text: 'Asked your team to fill in their invitation, on WhatsApp', detail: tpl || undefined, tone: 'good' }
+      return d.source === 'builder_save_for_later'
+        ? { icon: '📩', text: 'Asked on WhatsApp for the design’s link, to finish later', detail: tpl || undefined, tone: 'good' }
+        : { icon: '🙌', text: 'Asked your team to fill in their invitation, on WhatsApp', detail: tpl || undefined, tone: 'good' }
     case 'promo_view':
       return { icon: '🎁', text: 'Saw the promo popup', tone: 'neutral' }
     case 'promo_click':

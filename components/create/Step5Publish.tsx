@@ -7,13 +7,15 @@ import type { Session } from 'next-auth'
 import type { TemplateData } from '@/modules/templates/data'
 import { canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
 import { supportWhatsAppUrl } from '@/lib/support'
-import { OFFER_INCLUDES } from '@/lib/offer'
+import { OFFER_EDIT, OFFER_INCLUDES } from '@/lib/offer'
 import { displayName } from '@/lib/catalog'
-import { ArrowRightIcon, CheckIcon, ShieldIcon } from '@/components/ui/Icons'
+import { ArrowRightIcon, CheckIcon, PenIcon, ShieldIcon } from '@/components/ui/Icons'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisuals'
 import { useLocalPrice } from '@/components/price/Price'
 import { discountedPrice, paymentMethods } from '@/lib/pricing'
 import { useCoupon } from '@/lib/useCoupon'
+import CouponField from './CouponField'
+import PaymentProblem, { type PayError } from './PaymentProblem'
 
 const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { ssr: false })
 
@@ -36,14 +38,20 @@ interface Step5PublishProps {
   onBack: () => void
   onPublish: () => void
   /** Required fields still empty, and the step each is on. Checked before payment. */
-  missing?: { label: string; step: number }[]
-  onFix?: (step: number) => void
+  missing?: { label: string; step: number; key: string }[]
+  /** Takes the host to that field on its step. */
+  onFix?: (step: number, key: string) => void
+  /** Razorpay is opening (the button here opens it directly; there is no second window). */
+  paying?: boolean
+  payError?: PayError | null
+  onRetry?: () => void
   /** Changing a published invitation: nothing to pay, and the button saves to the same link. */
   editing?: boolean
 }
 
 export default function Step5Publish({
   selectedTemplate, data, userPlan, session, loading, error, onBack, onPublish, missing = [], onFix, editing = false,
+  paying = false, payError = null, onRetry,
 }: Step5PublishProps) {
   const isDark = DARK_TEMPLATES.has(selectedTemplate.id)
   const tv = TEMPLATE_VISUALS[selectedTemplate.id] ?? TEMPLATE_VISUALS['elegant-wedding']
@@ -138,10 +146,17 @@ export default function Step5Publish({
             </div>
           </div>
 
+          {mustPay && (
+            <div className="border-b border-line px-6 py-3.5">
+              <CouponField planId={requiredPlan.id} templateId={selectedTemplate.id} />
+            </div>
+          )}
+
           <div className="p-6">
             <p className="text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-muted">Everything included</p>
             <ul className="mt-3 space-y-2.5">
-              {OFFER_INCLUDES.map((line) => (
+              {/* The edit line sits beside the Pay button instead, with the refund and the human. */}
+              {OFFER_INCLUDES.filter((line) => line !== OFFER_EDIT).map((line) => (
                 <li key={line} className="flex items-start gap-2.5 text-[0.9rem] text-charcoal/85">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-soft" />
                   {line}
@@ -161,13 +176,25 @@ export default function Step5Publish({
                     <li key={m.label} className="flex items-center justify-between gap-3 text-[0.86rem] text-charcoal/85">
                       <span>{m.label.replace(/\s*\*$/, '')}</span>
                       {onFix && (
-                        <button type="button" onClick={() => onFix(m.step)} className="link shrink-0 text-[0.82rem]">
+                        <button type="button" onClick={() => onFix(m.step, m.key)} className="link shrink-0 text-[0.82rem]">
                           Add it
                         </button>
                       )}
                     </li>
                   ))}
                 </ul>
+              </div>
+            )}
+            {payError && missing.length === 0 && (
+              <div className="mt-5">
+                <PaymentProblem
+                  error={payError}
+                  price={requiredPlan.price}
+                  percentOff={coupon?.percentOff}
+                  templateName={selectedTemplate.name}
+                  onRetry={() => onRetry?.()}
+                  retrying={paying}
+                />
               </div>
             )}
             {error && missing.length === 0 && (
@@ -180,14 +207,19 @@ export default function Step5Publish({
                 docked to the bottom of the viewport by the create page, and
                 rendering both produced two buttons for one action with the
                 off-screen one carrying the price. */}
+            {/* With details missing the button says so and takes the host to the first one; it used
+                to stay "Pay & publish" and do nothing visible on a computer, so people pressed it again
+                and again. */}
             <button
               type="button"
-              onClick={onPublish}
-              disabled={loading}
+              onClick={missing.length > 0 && onFix ? () => onFix(missing[0].step, missing[0].key) : onPublish}
+              disabled={loading || paying}
               className="btn-primary mt-6 hidden w-full items-center justify-center gap-2.5 rounded-full py-4 text-[1rem] font-semibold disabled:opacity-50 md:flex"
             >
-              {loading ? (
-                <><Spinner />{editing ? 'Saving your changes…' : 'Creating your invitation…'}</>
+              {loading || paying ? (
+                <><Spinner />{paying ? 'Opening secure payment…' : editing ? 'Saving your changes…' : 'Creating your invitation…'}</>
+              ) : missing.length > 0 ? (
+                <>Add {missing.length} missing detail{missing.length === 1 ? '' : 's'}<ArrowRightIcon /></>
               ) : (
                 <>
                   {editing ? 'Save changes' : mustPay ? `Pay ${price} & publish` : 'Publish & get my link'}
@@ -210,6 +242,34 @@ export default function Step5Publish({
                   : 'Secure one-time payment via Razorpay. Your invitation publishes right after.'
                 : 'Publishes instantly. Share the link on WhatsApp.'}
             </p>
+
+            {mustPay && (
+              <ul className="mt-4 space-y-2 rounded-2xl border border-line bg-champagne/70 px-4 py-3.5 text-[0.84rem] text-charcoal/85">
+                <li className="flex items-start gap-2.5">
+                  <PenIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-soft" />
+                  <span>{OFFER_EDIT}</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-soft" />
+                  <span>
+                    <Link href="/refund-policy" target="_blank" className="link">7-day refund policy</Link>
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <svg aria-hidden viewBox="0 0 24 24" className="mt-0.5 h-4 w-4 shrink-0 text-[#128C4B]" fill="currentColor">
+                    <path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1112 20z" />
+                  </svg>
+                  <a
+                    href={supportWhatsAppUrl(`Hi, I have a question about the ${displayName(selectedTemplate.name)} design (${price}) before I pay.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[#128C4B] underline-offset-4 hover:underline"
+                  >
+                    Talk to a human first
+                  </a>
+                </li>
+              </ul>
+            )}
           </div>
 
           {/* Reassurance at the point of payment. All of this existed on the
@@ -220,19 +280,7 @@ export default function Step5Publish({
             <div className="border-t border-line bg-peach/50 px-6 py-4">
               <p className="flex items-center justify-center gap-1.5 text-[0.8rem] text-charcoal/75">
                 <ShieldIcon className="h-4 w-4 text-emerald-soft" />
-                {paymentMethods(local.currency)} · No subscription
-              </p>
-              <p className="mt-1.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.8rem]">
-                <Link href="/refund-policy" target="_blank" className="link">7-day refund policy</Link>
-                <span aria-hidden className="text-muted">·</span>
-                <a
-                  href={supportWhatsAppUrl(`Hi, I have a question about the ${selectedTemplate.name} design (${price}) before I pay.`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-[#128C4B] underline-offset-4 hover:underline"
-                >
-                  Talk to a human first
-                </a>
+                Secured by Razorpay · {paymentMethods(local.currency)} · No subscription
               </p>
             </div>
           )}

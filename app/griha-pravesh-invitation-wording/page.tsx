@@ -126,7 +126,7 @@ export default function GrihaPraveshInvitationWordingPage() {
       />
 
       <SiteHeader createHref={`/create?template=${TEMPLATE_ID}`} />
-      <StickyCTA href="/create?template=griha-pravesh" text="Start My Griha Pravesh Invite →" />
+      <StickyCTA templateId={TEMPLATE_ID} afterId={GRIHA_SECTIONS[0].id} />
 
       {/* Hero */}
       <PageHero
@@ -146,7 +146,7 @@ export default function GrihaPraveshInvitationWordingPage() {
 
       {GRIHA_SECTIONS.map((section, i) => (
         <Fragment key={section.id}>
-          <WordingSection section={section} templateId={SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID} ctaHref="/griha-pravesh-invitation" paper={i % 2 === 1} />
+          <WordingSection section={section} templateId={SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID} ctaHref="/griha-pravesh-invitation" paper={i % 2 === 1} banner={i === 0 ? SECTION_TEMPLATES[section.id] ?? TEMPLATE_ID : undefined} />
 
           {i === 0 && (
             <Section id="griha-designs" tone="paper" aria-label="Griha Pravesh invitation designs" className="scroll-mt-10">
