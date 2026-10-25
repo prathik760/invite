@@ -8,7 +8,7 @@ import { templatePrice } from '@/lib/plans'
 import { priceRangeSentence } from '@/lib/priceCopy'
 import SiteFooter from '@/components/landing/SiteFooter'
 import { blogDrafts, categorySlug, findBlogPost, type BlogCategory } from '@/content/blog'
-import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, slugify, templateSeoSlug } from '@/lib/seo'
+import { absoluteUrl, brandTitle, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, slugify, templateSeoSlug } from '@/lib/seo'
 import { TEMPLATES } from '@/modules/templates/data'
 import { blogArticles, hasFullArticle } from '@/content/blog-articles'
 import Image from '@/components/ui/Image'
@@ -43,7 +43,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const shareSize = post.image ? { width: 1200, height: 750 } : { width: 1200, height: 630 }
 
   return {
-    title: { absolute: post.metaTitle ?? `${post.title} | ShareInvite Blog` },
+    title: { absolute: post.metaTitle ?? brandTitle(post.title) },
     description: post.description,
     // Posts still running on generated filler are kept out of the index until
     // real copy exists. `follow` is retained so they keep passing equity to the

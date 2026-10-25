@@ -195,7 +195,7 @@ export const landingPages: SeoPage[] = [
   },
   {
     slug: 'baby-shower-invitations',
-    title: 'Baby Shower Invitation Maker | Digital Godh Bharai Invites',
+    title: 'Baby Shower & Godh Bharai Invitation Maker',
     description:
       'Create beautiful baby shower and Godh Bharai invitations online with theme, venue, schedule, WhatsApp sharing, RSVP, and guest wishes.',
     h1: 'Baby Shower Invitations for Godh Bharai and Family Celebrations',
@@ -263,7 +263,7 @@ export const landingPages: SeoPage[] = [
   },
   {
     slug: 'corporate-event-invitations',
-    title: 'Corporate Event Invitation Maker | Online RSVP Platform',
+    title: 'Corporate Event Invitations with Online RSVP',
     description:
       'Create digital corporate event invitations for launches, team parties, conferences, and office celebrations, shared on WhatsApp with one link.',
     h1: 'Corporate Event Invitations with Online RSVP',
@@ -297,7 +297,7 @@ export const landingPages: SeoPage[] = [
   },
   {
     slug: 'whatsapp-invitation-maker',
-    title: 'WhatsApp Invitation Card Maker | Share Digital Invites',
+    title: 'WhatsApp Invitation Card Maker Online',
     description:
       'Make WhatsApp invitation cards as live web pages for weddings, birthdays, engagements, Griha Pravesh, baby showers and corporate events.',
     h1: 'WhatsApp Invitation Maker for Digital Invitation Cards',
@@ -331,7 +331,7 @@ export const landingPages: SeoPage[] = [
   },
   {
     slug: 'online-rsvp',
-    title: 'Online RSVP Platform India | Track Event Responses',
+    title: 'Online RSVP for Weddings & Events in India',
     description:
       'Collect guest replies on your invitation for weddings, birthdays, housewarming & naming ceremonies. Guests leave a wish on the page; you see every message in your dashboard.',
     h1: 'Online RSVP Platform for Indian Events',
@@ -389,7 +389,7 @@ export const locationPages: LocationPage[] = cities.map((city) => {
   return {
     slug: `digital-invitations-${city}`,
     city: cityName,
-    title: `Digital Invitations in ${cityName} | Wedding & Event Maker`,
+    title: `Digital Invitations in ${cityName} for Weddings & Events`,
     description: `Create digital invitations in ${cityName} for weddings, birthdays, Griha Pravesh & engagements. WhatsApp-ready with guest wishes. Preview before you pay.`,
     faqs: [
       {

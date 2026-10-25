@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import LocalisedHome from '@/components/i18n/LocalisedHome'
 import { getLocale, hreflangAlternates } from '@/lib/i18n'
 import { t } from '@/content/translations'
-import { SITE_URL } from '@/lib/seo'
+import { brandTitle, SITE_URL } from '@/lib/seo'
 
 // Static locale route. A dynamic [locale] segment cannot be used here because
 // app/[slug] already occupies that position, and Next forbids two differently
@@ -13,7 +13,7 @@ const LOCALE = 'ar'
 export function generateMetadata(): Metadata {
   const locale = getLocale(LOCALE)
   const url = `${SITE_URL}/${LOCALE}`
-  const title = `ShareInvite — ${t('hero.tagline', LOCALE)}`
+  const title = brandTitle(t('hero.tagline', LOCALE))
   const description = t('hero.sub', LOCALE)
   return {
     title: { absolute: title },

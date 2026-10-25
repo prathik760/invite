@@ -28,6 +28,7 @@ import {
 } from '@/content/seo-pages'
 import {
   absoluteUrl,
+  brandTitle,
   breadcrumbJsonLd,
   collectionPageJsonLd,
   DEFAULT_OG_IMAGE,
@@ -52,7 +53,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const url = absoluteUrl(`/${params.slug}`)
 
   return {
-    title,
+    title: { absolute: brandTitle(title) },
     description,
     robots: { index: true, follow: true },
     keywords: page ? pageKeywords(page) : ['digital invitations', `digital invitations ${locationPage!.city}`, 'online invitation maker', 'whatsapp invitation card'],

@@ -22,7 +22,8 @@ import StickyCTA from '@/components/seo/StickyCTA'
 import SiteFooter from '@/components/landing/SiteFooter'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { TEMPLATES } from '@/modules/templates/data'
-import { absoluteUrl, breadcrumbJsonLd, digitalOffer, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
+import { absoluteUrl, brandTitle, breadcrumbJsonLd, digitalOffer, SITE_NAME, templateCategorySlug, templateSeoSlug } from '@/lib/seo'
+import { TEMPLATE_TITLES } from '@/content/template-titles'
 import { getRequiredPlan } from '@/lib/plans'
 import { templateImage, templateImageUrl } from '@/lib/templateMedia'
 import { CouponNote, CouponPrice } from '@/components/price/CouponPrice'
@@ -46,7 +47,7 @@ export function generateMetadata({ params }: Props): Metadata {
   // Price in the title earns the click on commercial queries — "cost"/"price"
   // is the most common qualifier on these searches, and a visible price
   // pre-qualifies the visitor instead of surprising them at step 5.
-  const title = `${template.name} Invitation Template — ${priceLabel} | ShareInvite`
+  const title = brandTitle((TEMPLATE_TITLES[template.id] ?? `${template.name.split('—')[0].trim()} Invitation Template, {price}`).replace('{price}', priceLabel))
   const description =
     template.id === 'royal-deco'
       ? `Royal wedding invitation template — ${priceLabel}, one-time. Add your names, date, venue, Google Maps and photos, then share the link on WhatsApp. No app needed for guests.`

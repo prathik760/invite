@@ -2,6 +2,19 @@ import { TEMPLATES } from '@/modules/templates/data'
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 export const SITE_NAME = 'ShareInvite'
+
+/** About as much of a page title as Google shows in a result before cutting it off with "…". */
+export const TITLE_MAX = 60
+
+/**
+ * "<title> | ShareInvite" when that fits in a search result, otherwise the
+ * title alone: the words people search for matter more than the brand, which
+ * Google shows beside every result anyway. Pass the result as an absolute title.
+ */
+export function brandTitle(title: string): string {
+  const branded = `${title} | ${SITE_NAME}`
+  return branded.length <= TITLE_MAX ? branded : title
+}
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/opengraph-image`
 
 export const PRIMARY_KEYWORDS = [

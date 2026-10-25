@@ -12,7 +12,7 @@ import { templateImageUrl } from '@/lib/templateMedia'
  */
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
-const TITLE = 'Digital Save the Date — Send by Text, Email or WhatsApp | ShareInvite'
+const TITLE = 'Digital Save the Date: Send on WhatsApp, Text or Email'
 const DESCRIPTION =
   'Letterpress-style digital save the date with your names, the day circled on a calendar, add-to-calendar and your wedding website. Send by text, email or WhatsApp.'
 

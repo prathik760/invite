@@ -15,7 +15,7 @@ export const blogCategories = [
 export type BlogCategory = (typeof blogCategories)[number]
 
 const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string; metaTitle?: string; slug?: string; image?: string }> = [
-  { title: 'Best Digital Wedding Invitation Templates in India', category: 'Wedding', keyword: 'digital wedding invitation templates India', image: '/blog/best-digital-wedding-invitation-templates-in-india.jpg' },
+  { title: 'Best Digital Wedding Invitation Templates in India', metaTitle: '5 Best Digital Wedding Invitation Templates in India', category: 'Wedding', keyword: 'digital wedding invitation templates India', image: '/blog/best-digital-wedding-invitation-templates-in-india.jpg' },
   { title: 'How To Create A WhatsApp Wedding Invitation', category: 'Wedding', keyword: 'WhatsApp wedding invitation', image: '/blog/how-to-create-a-whatsapp-wedding-invitation.jpg' },
   { title: 'Digital Wedding Invitation Vs Printed Cards', category: 'Digital Invitations', keyword: 'digital wedding invitation vs printed cards', image: '/blog/digital-wedding-invitation-vs-printed-cards.jpg' },
   { title: 'Best Engagement Invitation Ideas', category: 'Engagement', keyword: 'engagement invitation ideas', image: '/blog/best-engagement-invitation-ideas.jpg' },
@@ -32,7 +32,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'Indian Wedding Invitation Wording For WhatsApp', category: 'Wedding', keyword: 'Indian wedding invitation wording WhatsApp', image: '/blog/indian-wedding-invitation-wording-for-whatsapp.jpg' },
   { title: 'Online RSVP Guide For Indian Weddings', category: 'Wedding', keyword: 'online RSVP Indian weddings', image: '/blog/online-rsvp-guide-for-indian-weddings.jpg' },
   { title: 'Best Wedding Website Features For Guests', category: 'Digital Invitations', keyword: 'wedding website features', image: '/blog/best-wedding-website-features-for-guests.jpg' },
-  { title: 'Engagement Invitation Wording For Ring Ceremony', category: 'Engagement', keyword: 'ring ceremony invitation wording', image: '/blog/engagement-invitation-wording-for-ring-ceremony.jpg' },
+  { title: 'Engagement Invitation Wording For Ring Ceremony', metaTitle: 'Ring Ceremony Invitation Wording: 7 Samples | ShareInvite', category: 'Engagement', keyword: 'ring ceremony invitation wording', image: '/blog/engagement-invitation-wording-for-ring-ceremony.jpg' },
   { title: 'Birthday Invitation Text For WhatsApp Groups', category: 'Birthday', keyword: 'birthday invitation text WhatsApp', metaTitle: 'Birthday Invitation Text for WhatsApp Groups: Samples', description: '50+ birthday invitation text messages for WhatsApp groups to copy and paste — short and simple samples in English for family and friends groups.', image: '/blog/birthday-invitation-text-for-whatsapp-groups.jpg' },
   { title: 'Minimal Wedding Invitation Design Ideas', category: 'Wedding Trends', keyword: 'minimal wedding invitation design', image: '/blog/minimal-wedding-invitation-design-ideas.jpg' },
   { title: 'Royal Wedding Invitation Design Ideas', category: 'Wedding Trends', keyword: 'royal wedding invitation design', image: '/blog/royal-wedding-invitation-design-ideas.jpg' },
@@ -40,7 +40,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'Why Digital Invitations Are Growing In India', category: 'Digital Invitations', keyword: 'digital invitations India', image: '/blog/why-digital-invitations-are-growing-in-india.jpg' },
   { title: 'Mehendi And Sangeet Invitation Ideas', category: 'Wedding', keyword: 'Mehendi Sangeet invitation ideas', image: '/blog/mehendi-and-sangeet-invitation-ideas.jpg' },
   { title: 'Roka Ceremony Invitation Ideas And Wording', category: 'Engagement', keyword: 'Roka invitation ideas', metaTitle: 'Roka Ceremony Invitation Messages & Wording for WhatsApp', description: '40+ Roka ceremony invitation messages, wording and ideas for WhatsApp to copy and paste, in English & Hindi. Ready-to-send samples for a modern Roka invite.', image: '/blog/roka-ceremony-invitation-ideas-and-wording.jpg' },
-  { title: 'First Birthday Invitation Ideas For Indian Families', category: 'Birthday', keyword: 'first birthday invitation ideas India', image: '/blog/first-birthday-invitation-ideas-for-indian-families.jpg' },
+  { title: 'First Birthday Invitation Ideas For Indian Families', metaTitle: 'First Birthday Invitation Ideas & Messages | ShareInvite', category: 'Birthday', keyword: 'first birthday invitation ideas India', image: '/blog/first-birthday-invitation-ideas-for-indian-families.jpg' },
   { title: '60th Birthday Invitation Ideas For Parents', category: 'Birthday', keyword: '60th birthday invitation ideas', image: '/blog/60th-birthday-invitation-ideas-for-parents.jpg' },
   { title: 'Silver Anniversary Invitation Ideas', category: 'Invitation Ideas', keyword: 'silver anniversary invitation ideas', image: '/blog/silver-anniversary-invitation-ideas.jpg' },
   { title: 'Golden Anniversary Invitation Wording', category: 'Invitation Ideas', keyword: 'golden anniversary invitation wording', image: '/blog/golden-anniversary-invitation-wording.jpg' },
@@ -48,7 +48,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'Seemantham Invitation Message Examples', category: 'Baby Shower', keyword: 'Seemantham invitation message', image: '/blog/seemantham-invitation-message-examples.jpg' },
   { title: 'Namakaran Invitation Ideas For Baby Boys', category: 'Invitation Ideas', keyword: 'Namakaran invitation baby boy', image: '/blog/namakaran-invitation-ideas-for-baby-boys.jpg' },
   { title: 'Namakaran Invitation Ideas For Baby Girls', category: 'Invitation Ideas', keyword: 'Namakaran invitation baby girl', image: '/blog/namakaran-invitation-ideas-for-baby-girls.jpg' },
-  { title: 'Wedding Invitation Timeline For Indian Families', category: 'Wedding', keyword: 'wedding invitation timeline India', image: '/blog/wedding-invitation-timeline-for-indian-families.jpg' },
+  { title: 'Wedding Invitation Timeline For Indian Families', metaTitle: 'Indian Wedding Invitation Timeline: When to Send What', category: 'Wedding', keyword: 'wedding invitation timeline India', image: '/blog/wedding-invitation-timeline-for-indian-families.jpg' },
   { title: 'How To Add Google Maps To Wedding Invitations', category: 'Digital Invitations', keyword: 'Google Maps wedding invitation', image: '/blog/how-to-add-google-maps-to-wedding-invitations.jpg' },
   { title: 'Digital Invitation Checklist Before Sharing', category: 'Digital Invitations', keyword: 'digital invitation checklist', image: '/blog/digital-invitation-checklist-before-sharing.jpg' },
   { title: 'Best Fonts For Indian Wedding Invitations', category: 'Wedding Trends', keyword: 'Indian wedding invitation fonts', image: '/blog/best-fonts-for-indian-wedding-invitations.jpg' },
@@ -56,12 +56,12 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'Budget Friendly Wedding Invitation Ideas', category: 'Wedding', keyword: 'budget wedding invitation ideas', image: '/blog/budget-friendly-wedding-invitation-ideas.jpg' },
   { title: 'Eco Friendly Wedding Invitations In India', category: 'Wedding Trends', keyword: 'eco friendly wedding invitations India', image: '/blog/eco-friendly-wedding-invitations-in-india.jpg' },
   { title: 'Destination Wedding Invitation Website Guide', category: 'Wedding', keyword: 'destination wedding invitation website', image: '/blog/destination-wedding-invitation-website-guide.jpg' },
-  { title: 'Corporate Event Invitation Email And WhatsApp Ideas', category: 'Invitation Ideas', keyword: 'corporate event invitation ideas', image: '/blog/corporate-event-invitation-email-and-whatsapp-ideas.jpg' },
+  { title: 'Corporate Event Invitation Email And WhatsApp Ideas', metaTitle: 'Corporate Event Invitation Email & WhatsApp Wording', category: 'Invitation Ideas', keyword: 'corporate event invitation ideas', image: '/blog/corporate-event-invitation-email-and-whatsapp-ideas.jpg' },
   { title: 'Office Party Invitation Templates For Teams', category: 'Invitation Ideas', keyword: 'office party invitation templates', image: '/blog/office-party-invitation-templates-for-teams.jpg' },
   { title: 'How RSVP Tracking Reduces Event Follow Up', category: 'Digital Invitations', keyword: 'RSVP tracking events', image: '/blog/how-rsvp-tracking-reduces-event-follow-up.jpg' },
-  { title: 'WhatsApp Invitation Etiquette For Indian Families', category: 'Invitation Ideas', keyword: 'WhatsApp invitation etiquette India', image: '/blog/whatsapp-invitation-etiquette-for-indian-families.jpg' },
-  { title: 'Invitation Landing Page SEO For Wedding Planners', category: 'Digital Invitations', keyword: 'invitation landing page SEO', image: '/blog/invitation-landing-page-seo-for-wedding-planners.jpg' },
-  { title: 'Best Photo Gallery Ideas For Digital Invitations', category: 'Invitation Ideas', keyword: 'photo gallery digital invitations', image: '/blog/best-photo-gallery-ideas-for-digital-invitations.jpg' },
+  { title: 'WhatsApp Invitation Etiquette For Indian Families', metaTitle: 'WhatsApp Invitation Etiquette for Indian Families', category: 'Invitation Ideas', keyword: 'WhatsApp invitation etiquette India', image: '/blog/whatsapp-invitation-etiquette-for-indian-families.jpg' },
+  { title: 'Invitation Landing Page SEO For Wedding Planners', metaTitle: 'Invitation Landing Page SEO for Wedding Planners', category: 'Digital Invitations', keyword: 'invitation landing page SEO', image: '/blog/invitation-landing-page-seo-for-wedding-planners.jpg' },
+  { title: 'Best Photo Gallery Ideas For Digital Invitations', metaTitle: 'Photo Gallery Ideas for Digital Invitations | ShareInvite', category: 'Invitation Ideas', keyword: 'photo gallery digital invitations', image: '/blog/best-photo-gallery-ideas-for-digital-invitations.jpg' },
   { title: 'Music Ideas For Wedding Invitation Websites', category: 'Wedding', keyword: 'wedding invitation website music', image: '/blog/music-ideas-for-wedding-invitation-websites.jpg' },
   { title: 'How To Write A Personal Wedding Invite Message', category: 'Wedding', keyword: 'personal wedding invite message', image: '/blog/how-to-write-a-personal-wedding-invite-message.jpg' },
   { title: 'Birthday Party Schedule Ideas For Invitations', category: 'Birthday', keyword: 'birthday party schedule invitation', image: '/blog/birthday-party-schedule-ideas-for-invitations.jpg' },
@@ -70,6 +70,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'Digital Invitation Trends For Indian Events', category: 'Wedding Trends', keyword: 'digital invitation trends India', image: '/blog/digital-invitation-trends-for-indian-events.jpg' },
   {
     title: 'My College Friend Got Engaged — His WhatsApp Digital Invitation Left Everyone Speechless',
+    metaTitle: 'His WhatsApp Engagement Invitation Left Everyone Speechless',
     category: 'Engagement',
     keyword: 'digital engagement invitation WhatsApp India',
     date: '2026-02-14',
@@ -80,6 +81,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   // ─── 3D & animated greeting templates ──────────────────────────────────────
   {
     title: '3D Surprise Journey: The Interactive Digital Gift You Send Online',
+    metaTitle: '3D Surprise Journey: An Interactive Digital Gift Online',
     category: 'Digital Invitations',
     keyword: '3d digital invitation gift online',
     date: '2026-07-01',
@@ -88,6 +90,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: '3D Love Card Online — Send a Romantic Animated Card in Minutes',
+    metaTitle: '3D Love Card Online: Send a Romantic Animated Card',
     category: 'Invitation Ideas',
     keyword: 'love card online',
     date: '2026-07-03',
@@ -96,6 +99,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Valentines Day Card Online — Send a 3D Animated Valentine on WhatsApp',
+    metaTitle: 'Valentine’s Day Card Online: 3D Animated, on WhatsApp',
     category: 'Invitation Ideas',
     keyword: 'valentines day card online',
     date: '2026-07-05',
@@ -104,6 +108,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Anniversary Card Online — Create a 3D Animated Anniversary Card',
+    metaTitle: 'Anniversary Card Online: 3D Animated, With Your Photos',
     category: 'Invitation Ideas',
     keyword: 'anniversary card online',
     date: '2026-07-07',
@@ -112,6 +117,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Digital Proposal Card — A 3D Will You Marry Me Card That Says Yes',
+    metaTitle: 'Digital Proposal Card: A 3D Will You Marry Me Card',
     category: 'Invitation Ideas',
     keyword: 'digital proposal card',
     date: '2026-07-09',
@@ -120,6 +126,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Promise Day Card Online — Send a Heartfelt 3D Promise',
+    metaTitle: 'Promise Day Card Online: Send a Heartfelt 3D Promise',
     category: 'Invitation Ideas',
     keyword: 'promise day card online',
     date: '2026-07-11',
@@ -128,6 +135,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Sorry Card Online — Say Sorry With a Heartfelt Animated Card',
+    metaTitle: 'Sorry Card Online: A Heartfelt Animated Apology',
     category: 'Invitation Ideas',
     keyword: 'sorry card online',
     date: '2026-07-13',
@@ -136,6 +144,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Congratulations Card Online — Send an Animated Congrats Card',
+    metaTitle: 'Congratulations Card Online: Animated Congrats Card',
     category: 'Invitation Ideas',
     keyword: 'congratulations card online',
     date: '2026-07-15',
@@ -144,6 +153,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Festival Wishes Card Online — Diwali and Festival Greetings',
+    metaTitle: 'Festival Wishes Card Online: Animated Diwali Greetings',
     category: 'Invitation Ideas',
     keyword: 'festival wishes card online',
     date: '2026-07-16',
@@ -152,6 +162,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Family Wishes Card Online — A Heartfelt Digital Card for Family',
+    metaTitle: 'Family Wishes Card Online: A Heartfelt Digital Card',
     category: 'Invitation Ideas',
     keyword: 'family wishes card online',
     date: '2026-07-17',
@@ -160,6 +171,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Friendship Day Card Online — Send a 3D Card to Your Best Friends',
+    metaTitle: 'Friendship Day Card Online: Send a 3D Card to Friends',
     category: 'Invitation Ideas',
     keyword: 'friendship day card online',
     date: '2026-07-18',
@@ -189,7 +201,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     date: '2026-08-08',
     // Slug pinned to the originally-indexed URL so existing links keep working.
     slug: 'raksha-bandhan-invitation-card-online-free-digital-rakhi-template',
-    metaTitle: 'Raksha Bandhan Invitation Card Online — Premium Digital Rakhi Invite (2026)',
+    metaTitle: 'Raksha Bandhan Invitation Card Online: Digital Rakhi Invite',
     image: '/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template.jpg',
     description: 'Create a stunning Raksha Bandhan invitation card online in minutes — a premium digital Rakhi invite and greeting with photos, a live countdown, event timeline, guest wishes, RSVP and one-tap WhatsApp sharing. Just ₹199 for the whole celebration. Perfect for brothers and sisters, including NRIs celebrating from abroad.',
   },

@@ -17,7 +17,7 @@ import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, 
 
 // The count was hard-coded as "11" while the catalogue held 24 designs.
 const COUNT = TEMPLATES.length
-const TITLE = 'Digital Invitation Templates for Every Occasion | ShareInvite'
+const TITLE = 'Digital Invitation Templates for Every Event | ShareInvite'
 const DESCRIPTION = `${COUNT} digital invitation templates for weddings, birthdays, engagements, anniversaries, festivals, housewarmings and naming ceremonies — plus animated 3D greetings. Preview before you pay, share on WhatsApp.`
 
 export const metadata: Metadata = {

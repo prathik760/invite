@@ -11,7 +11,7 @@ import PageHero from '@/components/brand/PageHero'
 import CtaBand from '@/components/brand/CtaBand'
 import { Section } from '@/components/brand/Section'
 import BlogCard from '@/components/blog/BlogCard'
-import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
+import { absoluteUrl, brandTitle, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, SITE_NAME } from '@/lib/seo'
 
 type Props = { params: { category: string } }
 
@@ -26,17 +26,30 @@ export function generateStaticParams() {
   return blogCategories.map((category) => ({ category: categorySlug(category) }))
 }
 
+/** Each category's search title. */
+const CATEGORY_TITLES: Record<string, string> = {
+  Wedding: 'Wedding Invitation Ideas, Wording & Tips',
+  Engagement: 'Engagement Invitation Ideas & Wording',
+  Birthday: 'Birthday Invitation Ideas & Wording',
+  Housewarming: 'Housewarming & Griha Pravesh Invitation Ideas',
+  'Baby Shower': 'Baby Shower & Godh Bharai Invitation Ideas',
+  'Invitation Ideas': 'Invitation Ideas, Tips & Etiquette',
+  'Wedding Trends': 'Wedding Invitation Trends & Design Ideas',
+  'Digital Invitations': 'Digital Invitation Guides & WhatsApp Tips',
+  Festivals: 'Festival Invitation Ideas & Wording',
+}
+
 export function generateMetadata({ params }: Props): Metadata {
   const category = findBlogCategory(params.category)
   if (!category) return {}
   const url = absoluteUrl(`/blog/category/${params.category}`)
-  const title = `${category} Invitation Ideas | ShareInvite Blog`
+  const title = CATEGORY_TITLES[category] ?? `${category} Invitation Ideas`
   const description =
     BLOG_CATEGORY_INTRO[category]?.slice(0, 155) ??
     `Tips, ideas, and guides for ${category.toLowerCase()} invitations — WhatsApp sharing, wording samples, RSVP, and digital invitation inspiration for Indian families.`
 
   return {
-    title,
+    title: { absolute: brandTitle(title) },
     description,
     robots:
       indexable(category) >= MIN_INDEXABLE_POSTS
