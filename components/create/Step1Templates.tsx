@@ -60,7 +60,7 @@ export default function Step1Templates({ selectedId, onSelect, onContinue }: Ste
           </h1>
           <p className="mt-2 max-w-2xl text-[0.98rem] leading-7 text-charcoal/75">
             Tap <strong className="font-semibold text-charcoal">Live preview</strong> to see any design exactly as your
-            guests will. Nothing is final — you can come back and switch at any time.
+            guests will. Nothing is final: you can come back and switch at any time.
           </p>
           <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-peach px-3 py-1.5 text-[0.8rem] font-medium text-charcoal">
             <SwapIcon className="h-3.5 w-3.5 text-emerald-soft" />
@@ -110,7 +110,7 @@ export default function Step1Templates({ selectedId, onSelect, onContinue }: Ste
                   isActive ? 'border-emerald shadow-lift' : 'border-line hover:border-burnished/60'
                 }`}
                 aria-pressed={isActive}
-                aria-label={`${displayName(tpl.name)} — ${isActive ? 'selected' : 'select this design'}`}
+                aria-label={`${displayName(tpl.name)}, ${isActive ? 'selected' : 'select this design'}`}
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-peach">
                   <Image

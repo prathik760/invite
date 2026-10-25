@@ -551,9 +551,9 @@ export default function HaldiMehendi({ data, eventId, isPreview = false }: Invit
   const mDirections = ownMehendiVenue ? mapsHref(undefined, ownMehendiVenue, data.venueAddress) : hDirections
   const hPlace = [hVenue, data.venueAddress].filter(Boolean).join(', ')
   const mPlace = [mVenue, data.venueAddress].filter(Boolean).join(', ')
-  const hCalendar = calendarHref(`Haldi — ${couple}`, data.date, data.time, hPlace || undefined, 3)
+  const hCalendar = calendarHref(`Haldi: ${couple}`, data.date, data.time, hPlace || undefined, 3)
   const mCalendar = calendarHref(
-    `Mehendi — ${couple}`,
+    `Mehendi: ${couple}`,
     mDateValue,
     data.mehendiTime || (sameDay ? addHours(data.time, 4) : undefined),
     mPlace || undefined,
@@ -693,7 +693,7 @@ export default function HaldiMehendi({ data, eventId, isPreview = false }: Invit
             {data.message}
           </p>
           <p className="relative mt-4 text-[15px]" style={{ color: C.inkSoft }}>
-            — {couple}
+            {couple}
           </p>
         </Reveal>
       )}

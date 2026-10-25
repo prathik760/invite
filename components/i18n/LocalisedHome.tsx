@@ -112,7 +112,7 @@ export default function LocalisedHome({ locale: L }: { locale: string }) {
       <CtaBand
         eyebrow={t('price.noSubscription', L)}
         title={t('cta.createInvitation', L)}
-        sub={`${t('price.previewFirst', L)} · ${t('price.oneTime', L)} — ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}+`}
+        sub={`${t('price.previewFirst', L)} · ${t('price.oneTime', L)}: ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}+`}
         primary={{ href: '/create?src=global_home_footer', label: t('cta.start', L) }}
         secondary={null}
         location="global_home_footer"

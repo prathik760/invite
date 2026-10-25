@@ -94,7 +94,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
           <div className="enter-2 border-t border-paper/10 pt-6">
             <TrustList tone="dark" />
-            <p className="mt-3 text-[0.8rem] text-paper/50">Secure one-time payments by Razorpay — <PayMethods />.</p>
+            <p className="mt-3 text-[0.8rem] text-paper/50">Secure one-time payments by Razorpay: <PayMethods />.</p>
           </div>
         </div>
       </aside>

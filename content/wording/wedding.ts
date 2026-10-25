@@ -30,7 +30,7 @@ Every function, the venue map and the timings are here:
 [Invitation Link]
 We would love to see you there.` },
       { title: '4. With an RSVP request', text: `Shaadi time! 💐 [Bride] weds [Groom] on [Date] at [Venue].
-Please let us know by [RSVP Date] if you can join us — just reply here.
+Please let us know by [RSVP Date] if you can join us. Just reply here.
 Full invitation: [Invitation Link]` },
       { title: '5. Simple formal (English)', text: `We cordially invite you and your family to the wedding of
 [Bride] with [Groom]
@@ -47,16 +47,16 @@ We are happy to invite you to the wedding of [Bride] and [Groom] on [Day], [Date
 Muhurat: [Time]
 Venue: [Venue], [Address], [City]
 Your blessings are most important to us. Please do come.
-— [Family Name]` },
+[Family Name]` },
     ],
   },
   {
     id: 'my-wedding',
     toc: 'Your own wedding',
     title: 'My Marriage Invitation Message (From the Bride or Groom)',
-    intro: 'When you are the one getting married, the invitation can sound like you. These are written in the first person — from the bride or the groom — for friends, relatives and everyone in between.',
+    intro: 'When you are the one getting married, the invitation can sound like you. These are written in the first person (from the bride or the groom) for friends, relatives and everyone in between.',
     messages: [
-      { title: '1. From the groom, to friends', text: `Big news — I'm getting married! 🎉
+      { title: '1. From the groom, to friends', text: `Big news: I'm getting married! 🎉
 [Groom] & [Bride] · [Date] · [City]
 It won't be the same without you, so block the dates now.
 All the details: [Invitation Link]` },
@@ -76,13 +76,13 @@ Your presence would make the day complete. Please do come. ❤️` },
 With the blessings of the family, my wedding with [Partner's Name] is fixed for [Date] at [Venue], [City].
 It would mean a lot to me to receive your blessings in person.
 The full invitation is here: [Invitation Link]` },
-      { title: '5. To a group of friends', text: `Guys, it's official — I'm getting married! 🥳
+      { title: '5. To a group of friends', text: `Guys, it's official: I'm getting married! 🥳
 [Date] at [Venue], [City].
-Mehendi, sangeet, the wedding — you're invited to all of it.
+Mehendi, sangeet, the wedding: you're invited to all of it.
 Details: [Invitation Link]
 No excuses accepted. 😄` },
       { title: '6. Short & sweet', text: `We're getting married! 💐
-[Your Name] & [Partner's Name] — [Date], [City].
+[Your Name] & [Partner's Name]: [Date], [City].
 Save the date and come celebrate with us.` },
     ],
   },
@@ -90,7 +90,7 @@ Save the date and come celebrate with us.` },
     id: 'son',
     toc: "Son's wedding",
     title: "Son's Marriage Invitation Message (From Parents)",
-    intro: "For parents inviting relatives, friends and colleagues to their son's wedding. Formal where elders expect it, warm where it's family — the bride's parents are named, as Indian families expect.",
+    intro: "For parents inviting relatives, friends and colleagues to their son's wedding. Formal where elders expect it, warm where it's family. The bride's parents are named, as Indian families expect.",
     messages: [
       { title: '1. Warm & simple', text: `With great joy, we invite you to the wedding of our son
 [Groom's Name]
@@ -101,8 +101,8 @@ with [Bride's Name]
 📍 [Venue], [City]
 
 Your blessings are all we ask.
-— [Father's Name] & [Mother's Name]` },
-      { title: '2. Formal — with family names', text: `[Father's Name] & [Mother's Name]
+[Father's Name] & [Mother's Name]` },
+      { title: '2. Formal, with family names', text: `[Father's Name] & [Mother's Name]
 request the pleasure of your company
 at the marriage of their son
 
@@ -129,20 +129,20 @@ Wedding: [Venue], [City]
 Dinner: [Time] onwards
 
 Your presence will add to our joy.
-— [Family Name]` },
+[Family Name]` },
       { title: "6. Reception hosted by the groom's family", text: `On the happy occasion of the marriage of our son [Groom] with [Bride],
 we request the pleasure of your company at a reception
 on [Day], [Date], from [Time]
 at [Venue], [City].
 
-— [Father's Name] & [Mother's Name]` },
+[Father's Name] & [Mother's Name]` },
     ],
   },
   {
     id: 'daughter',
     toc: "Daughter's wedding",
     title: "Daughter's Marriage Invitation Message (From Parents)",
-    intro: "Wording for parents inviting guests to their daughter's wedding — from the formal card text to a short message for the family group. The groom's parents are named, as is customary.",
+    intro: "Wording for parents inviting guests to their daughter's wedding, from the formal card text to a short message for the family group. The groom's parents are named, as is customary.",
     messages: [
       { title: '1. Warm & simple', text: `With the blessings of God and our elders, we invite you to the wedding of our daughter
 [Bride's Name]
@@ -153,7 +153,7 @@ with [Groom's Name]
 📍 [Venue], [City]
 
 Do come and bless the couple.
-— [Father's Name] & [Mother's Name]` },
+[Father's Name] & [Mother's Name]` },
       { title: '2. Formal card wording', text: `[Father's Name] & [Mother's Name]
 solicit your gracious presence
 at the marriage of their beloved daughter
@@ -177,33 +177,33 @@ Please join us with your family. All the functions are in the invitation:
 I am happy to invite you to my daughter [Bride]'s wedding with [Groom] on [Date].
 Reception: [Time] onwards at [Venue], [City].
 It would be lovely to celebrate with you.
-— [Your Name]` },
+[Your Name]` },
       { title: '6. Bilingual (Hindi + English)', text: `हमारी लाडली बिटिया [Bride] का शुभ विवाह
 [Groom] के साथ
 [Date] को [Venue], [City] में है।
 
 We warmly invite you and your family to bless the couple.
-— [Father's Name] & [Mother's Name]` },
+[Father's Name] & [Mother's Name]` },
     ],
   },
   {
     id: 'sister',
     toc: "Sister's wedding",
     title: "Sister's Marriage Invitation Message",
-    intro: 'Invitations from a brother or sister — for your friends, college groups and colleagues. Proud, warm and easy to forward.',
+    intro: 'Invitations from a brother or sister, for your friends, college groups and colleagues. Proud, warm and easy to forward.',
     messages: [
       { title: '1. Simple', text: `My sister is getting married! 💐
 [Sister's Name] weds [Groom's Name]
 📅 [Date] · 📍 [Venue], [City]
-You have to be there — all the details are here: [Invitation Link]` },
+You have to be there. All the details are here: [Invitation Link]` },
       { title: '2. Formal, on behalf of the family', text: `Dear [Name],
 I am delighted to invite you and your family to the wedding of my sister [Sister's Name] with [Groom's Name] on [Day], [Date] at [Venue], [City].
 Your presence and blessings would mean a lot to our family.
-— [Your Name]` },
+[Your Name]` },
       { title: '3. Elder sister (didi), to friends', text: `Shaadi in the family! 🎉 My didi [Sister's Name] is getting married on [Date].
-Haldi, mehendi, sangeet — you're invited to everything. Come for the dancing, stay for the food. 😄
+Haldi, mehendi, sangeet: you're invited to everything. Come for the dancing, stay for the food. 😄
 [Invitation Link]` },
-      { title: '4. Younger sister, emotional', text: `Can't believe I'm writing this — my little sister [Sister's Name] is getting married! 🥹
+      { title: '4. Younger sister, emotional', text: `Can't believe I'm writing this. My little sister [Sister's Name] is getting married! 🥹
 [Sister's Name] & [Groom's Name] · [Date] · [City]
 Please come and bless her.
 Invitation: [Invitation Link]` },
@@ -215,19 +215,19 @@ Reception from [Time]. Details: [Invitation Link]` },
     id: 'brother',
     toc: "Brother's wedding",
     title: "Brother's Marriage Invitation Message",
-    intro: "For inviting friends and colleagues to your brother's wedding — from a respectful note to a baraat call your friends won't ignore.",
+    intro: "For inviting friends and colleagues to your brother's wedding, from a respectful note to a baraat call your friends won't ignore.",
     messages: [
       { title: '1. Simple', text: `My brother is getting married! 🎊
 [Brother's Name] weds [Bride's Name]
 📅 [Date] · 📍 [Venue], [City]
-Come celebrate with us — invitation here: [Invitation Link]` },
+Come celebrate with us. Invitation here: [Invitation Link]` },
       { title: '2. Formal', text: `Dear [Name],
 It is my pleasure to invite you and your family to the wedding of my brother [Brother's Name] with [Bride's Name] on [Day], [Date] at [Venue], [City].
 We look forward to your presence and blessings.
-— [Your Name]` },
+[Your Name]` },
       { title: '3. Baraat call, to friends', text: `Bhai ki shaadi hai! 🥁
 [Brother's Name] weds [Bride's Name] on [Date].
-Baraat leaves at [Time] from [Place] — and you're dancing in it. 😄
+Baraat leaves at [Time] from [Place], and you're dancing in it. 😄
 All the details: [Invitation Link]` },
       { title: '4. Elder brother (bhaiya)', text: `Our [Bhaiya] [Brother's Name] is finally getting married! 💍
 [Brother's Name] & [Bride's Name] · [Date] · [City]
@@ -241,30 +241,30 @@ Invitation: [Invitation Link]` },
     id: 'friends',
     toc: 'For friends',
     title: 'Wedding Invitation Messages for Friends',
-    intro: "Relaxed and personal — what you send to the school group, the college gang or the friend you've known forever.",
+    intro: "Relaxed and personal: what you send to the school group, the college gang or the friend you've known forever.",
     messages: [
-      { title: '1. You are family', text: `It's happening — we're getting married! 💍
+      { title: '1. You are family', text: `It's happening: we're getting married! 💍
 [Bride] & [Groom] · [Date] · [City]
 You're not a guest, you're family. See you there!
 [Invitation Link]` },
       { title: '2. For the college group', text: `Calling the whole gang! 🎉
 [Name] is getting married on [Date] in [City].
-Book your tickets, iron your kurtas — it's going to be one big reunion.
+Book your tickets, iron your kurtas. It's going to be one big reunion.
 Details: [Invitation Link]` },
       { title: '3. One-to-one, to a best friend', text: `[Friend's Name], you were there for every chapter, so you have to be there for this one. ❤️
 I'm getting married on [Date] at [Venue], [City].
-Please come early — I'll need you.
+Please come early. I'll need you.
 [Invitation Link]` },
       { title: "4. Inviting a friend's family", text: `Dear [Friend's Name],
 I'm getting married on [Date] at [Venue], [City], and I'd love for you to come with [Partner's Name / your family].
 It wouldn't be the same without you.
 Invitation: [Invitation Link]` },
-      { title: '5. For a friend abroad', text: `I know it's a long way, but I had to ask — I'm getting married on [Date] in [City]! ✈️
-Everything you need to plan the trip — venues, dates, where to stay — is in the invitation:
+      { title: '5. For a friend abroad', text: `I know it's a long way, but I had to ask: I'm getting married on [Date] in [City]! ✈️
+Everything you need to plan the trip (venues, dates, where to stay) is in the invitation:
 [Invitation Link]
 It would mean the world to see you there.` },
       { title: '6. Short', text: `Wedding bells! 🔔
-[Bride] weds [Groom] — [Date], [City].
+[Bride] weds [Groom]: [Date], [City].
 Be there! [Invitation Link]` },
     ],
   },
@@ -272,13 +272,13 @@ Be there! [Invitation Link]` },
     id: 'colleagues',
     toc: 'For colleagues',
     title: 'Wedding Invitation Message for Colleagues & Office',
-    intro: 'Polite, short and easy to say yes to. If colleagues are invited only to the reception, say so — it saves an awkward question.',
+    intro: 'Polite, short and easy to say yes to. If colleagues are invited only to the reception, say so. It saves an awkward question.',
     messages: [
       { title: '1. Office WhatsApp group', text: `Dear all,
 I am happy to share that I am getting married on [Date].
 I would be delighted if you could join us for the reception on [Date] at [Venue], [City], from [Time] onwards.
 Invitation with the map: [Invitation Link]` },
-      { title: '2. Email to your team', text: `Subject: Wedding invitation — [Your Name] & [Partner's Name]
+      { title: '2. Email to your team', text: `Subject: Wedding invitation from [Your Name] & [Partner's Name]
 
 Dear team,
 I'm getting married on [Date], and I would love to celebrate with you. The reception is on [Date], [Time] onwards, at [Venue], [Address].
@@ -294,7 +294,7 @@ Thank you,
 [Your Name]` },
       { title: '4. Wedding and reception both', text: `Hello everyone,
 I'm getting married! The wedding is on [Date] at [Time] and the reception on [Date] from [Time], both at [Venue], [City].
-Please join us for either — or both!
+Please join us for either, or both!
 [Invitation Link]` },
       { title: '5. Short', text: `Hi team 👋 I'm getting married on [Date]!
 Reception: [Venue], [Time] onwards.
@@ -305,7 +305,7 @@ Would love to see you there. [Invitation Link]` },
     id: 'formal',
     toc: 'Formal card wording',
     title: 'Formal Wedding Invitation Wording in English (Card Matter)',
-    intro: 'The classic wording used on printed cards, for elders and community invitations. Replace the bracketed placeholders with your own details and keep the line breaks — they are what make it read like a card.',
+    intro: 'The classic wording used on printed cards, for elders and community invitations. Replace the bracketed placeholders with your own details and keep the line breaks. They are what make it read like a card.',
     messages: [
       { title: '1. Traditional joint family', text: `With the blessings of the Almighty,
 [Father's Name] & [Mother's Name]
@@ -368,7 +368,7 @@ on [Date] at [Time]
     id: 'hindu',
     toc: 'Hindu wedding',
     title: 'Hindu Wedding Invitation Wording (with Ganesh Blessing)',
-    intro: 'Hindu invitations traditionally open with a prayer to Lord Ganesha and give the muhurat for each ceremony. These samples follow that order — blessing, family, couple, then the schedule.',
+    intro: 'Hindu invitations traditionally open with a prayer to Lord Ganesha and give the muhurat for each ceremony. These samples follow that order: blessing, family, couple, then the schedule.',
     messages: [
       { title: '1. Ganesh blessing opening', text: `॥ श्री गणेशाय नमः ॥
 With the grace of God and the blessings of our elders,
@@ -424,11 +424,11 @@ Your presence and blessings are requested.` },
     title: 'South Indian Wedding Invitation Wording (Muhurtham)',
     intro: 'South Indian invitations give the muhurtham window and often hold the reception the evening before. "Chi." and "Chi. Sow." are the customary prefixes for the groom and the bride.',
     messages: [
-      { title: '1. Muhurtham — formal', text: `With the blessings of Sri [Family Deity],
+      { title: '1. Muhurtham (formal)', text: `With the blessings of Sri [Family Deity],
 [Father's Name] & [Mother's Name]
 cordially invite you to the
 
-Muhurtham — Wedding Ceremony
+Muhurtham (Wedding Ceremony)
 of their daughter / son
 [Bride's Name] with [Groom's Name]
 
@@ -452,7 +452,7 @@ Chi. [Groom's Name]
 Muhurtham: [Day], [Date], between [Time] and [Time]
 Reception: [Date], [Time] onwards
 [Kalyana Mandapam], [Address], [City]` },
-      { title: '3. Kerala — with sadya', text: `With the blessings of the Almighty, we invite you to the wedding of our daughter [Bride] with [Groom] on [Date].
+      { title: '3. Kerala, with sadya', text: `With the blessings of the Almighty, we invite you to the wedding of our daughter [Bride] with [Groom] on [Date].
 Muhurtham: [Time] – [Time]
 [Temple / Auditorium], [City]
 Sadya will be served after the ceremony.` },
@@ -497,7 +497,7 @@ Your duas are our greatest gift.` },
       { title: '4. Walima invitation', text: `Alhamdulillah, [Bride] & [Groom] are now married.
 We invite you to the Walima on [Date] at [Time], at [Venue], [City].
 Your presence will be our honour.
-— [Family Name]` },
+[Family Name]` },
       { title: '5. Mehndi & Nikah together', text: `Insha'Allah, we invite you to celebrate with us:
 
 Mehndi: [Date], [Time]
@@ -505,7 +505,7 @@ Nikah: [Date], after [Prayer] prayers
 Walima: [Date], [Time]
 
 [Venue], [City]
-— [Family Name]` },
+[Family Name]` },
     ],
   },
   {
@@ -533,7 +533,7 @@ son of Mr. & Mrs. [Groom's Father's Name]
 Nuptial Mass: [Date], [Time]
 [Church Name], [City]
 Reception to follow at [Venue]` },
-      { title: '3. With a Bible verse', text: `"Two are better than one." — Ecclesiastes 4:9
+      { title: '3. With a Bible verse', text: `"Two are better than one." (Ecclesiastes 4:9)
 
 [Bride] & [Groom]
 invite you to celebrate their wedding
@@ -543,7 +543,7 @@ at [Church Name], [City].
 Reception at [Venue] from [Time].` },
       { title: '4. Short, for WhatsApp', text: `We're getting married! 💒
 [Bride] & [Groom] · [Date]
-[Church Name], [City] at [Time] — reception to follow.
+[Church Name], [City] at [Time]. Reception to follow.
 Please join us as we say "I do".
 [Invitation Link]` },
       { title: '5. Formal, with the parish', text: `By the grace of God,
@@ -581,7 +581,7 @@ Reception: [Venue], [Time]` },
 📅 [तारीख] · 📍 [स्थान]
 आप सपरिवार पधारकर वर-वधू को आशीर्वाद दें।` },
       { title: "3. Sister's wedding (बहन की शादी)", text: `मेरी प्यारी बहन [नाम] की शादी [तारीख] को [स्थान] में है।
-आप सभी सपरिवार आमंत्रित हैं — आपके आने से हमारी खुशियाँ दोगुनी हो जाएँगी। 🙏
+आप सभी सपरिवार आमंत्रित हैं। आपके आने से हमारी खुशियाँ दोगुनी हो जाएँगी। 🙏
 निमंत्रण: [Invitation Link]` },
       { title: "4. Brother's wedding (भाई की शादी)", text: `मेरे भाई [नाम] की शादी [तारीख] को है! 🎉
 बारात [समय] बजे [स्थान] से निकलेगी।
@@ -604,7 +604,7 @@ Invitation: [Invitation Link]` },
     id: 'reception',
     toc: 'Reception',
     title: 'Wedding Reception Invitation Message',
-    intro: 'For a reception on its own, after a court or destination wedding, or hosted by the groom\'s family. Say whether dinner is served — guests plan their evening around it.',
+    intro: 'For a reception on its own, after a court or destination wedding, or hosted by the groom\'s family. Say whether dinner is served: guests plan their evening around it.',
     messages: [
       { title: '1. Parents hosting, evening reception', text: `[Father's Name] & [Mother's Name] request the pleasure of your company
 at a reception in honour of the marriage of their son / daughter
@@ -628,27 +628,27 @@ Reception of [Bride] & [Groom]
 [Date] · [Time] onwards · [Venue], [City]
 Dinner will be served.
 [Invitation Link]` },
-      { title: '4. After an intimate or destination wedding', text: `We got married in a small ceremony in [Place] — and now we'd love to celebrate with you! 💛
+      { title: '4. After an intimate or destination wedding', text: `We got married in a small ceremony in [Place], and now we'd love to celebrate with you! 💛
 Reception: [Date], [Time] onwards at [Venue], [City].
 See you there! [Invitation Link]` },
       { title: "5. Groom's family welcoming the bride", text: `With joy, we welcome our new daughter-in-law [Bride] into the family.
 Please join us for a reception in honour of [Groom] & [Bride]
 on [Date], from [Time], at [Venue], [City].
-— [Family Name]` },
+[Family Name]` },
     ],
   },
   {
     id: 'functions',
     toc: 'Haldi, mehendi & sangeet',
     title: 'Haldi, Mehendi & Sangeet Invitation Messages',
-    intro: 'Each function gets its own short message — with the dress colour, because every guest asks. Send them a day or two before each one, or put them all in one invitation link.',
+    intro: 'Each function gets its own short message, with the dress colour, because every guest asks. Send them a day or two before each one, or put them all in one invitation link.',
     messages: [
       { title: '1. Haldi', text: `Haldi hai! 💛
 Join us for [Bride / Groom]'s haldi on [Date] at [Time], [Venue].
 Dress code: yellow. Come ready to get messy! 😄` },
       { title: '2. Mehendi', text: `Mehendi night! 🌿
 You're invited to [Bride]'s mehendi on [Date] at [Time], [Venue].
-Music, chai and mehendi for everyone — wear green if you can! 💚` },
+Music, chai and mehendi for everyone. Wear green if you can! 💚` },
       { title: '3. Sangeet', text: `Get your dancing shoes ready! 💃🕺
 Sangeet night for [Bride] & [Groom]
 [Date] · [Time] onwards · [Venue]
@@ -657,7 +657,7 @@ Dress code: [Theme]. Family performances guaranteed!
       { title: '4. Tilak ceremony', text: `With the blessings of our elders, we invite you to the Tilak ceremony of [Groom]
 on [Date] at [Time], [Venue], [City].
 Your presence will make the occasion complete.
-— [Family Name]` },
+[Family Name]` },
       { title: '5. Cocktail night', text: `Before the pheras, the party! 🥂
 Cocktail night for [Bride] & [Groom]
 [Date] · [Time] onwards · [Venue]
@@ -665,11 +665,11 @@ Dress code: [Black tie / Indo-western]` },
       { title: '6. Every function in one message', text: `Our wedding week 🎊
 [Bride] & [Groom]
 
-Haldi — [Date], [Time]
-Mehendi — [Date], [Time]
-Sangeet — [Date], [Time]
-Wedding — [Date], [Time]
-Reception — [Date], [Time]
+Haldi: [Date], [Time]
+Mehendi: [Date], [Time]
+Sangeet: [Date], [Time]
+Wedding: [Date], [Time]
+Reception: [Date], [Time]
 
 Venue for all: [Venue], [City]
 Every function, map and dress code: [Invitation Link]` },
@@ -685,7 +685,7 @@ Every function, map and dress code: [Invitation Link]` },
 This is an intimate ceremony, shared with close family and a few dear friends.
 [Date] · [Time] · [Venue]
 Your warm wishes and presence will make this moment complete.` },
-      { title: '2. Destination wedding, with a travel note', text: `We are getting married — and it is going to be a celebration to remember.
+      { title: '2. Destination wedding, with a travel note', text: `We are getting married, and it is going to be a celebration to remember.
 
 [Bride's Name] & [Groom's Name]
 [Date] at [Destination Hotel / Resort]
@@ -693,12 +693,12 @@ Your warm wishes and presence will make this moment complete.` },
 
 Travel and stay details are in our invitation. Please RSVP by [Date] so we can plan your arrangements.
 Full details: [Invitation Link]` },
-      { title: '3. Small, family-only wedding', text: `We are keeping our wedding small — just the people who matter most, and that includes you.
+      { title: '3. Small, family-only wedding', text: `We are keeping our wedding small: just the people who matter most, and that includes you.
 [Bride] & [Groom]
 [Date] · [Time] · [Venue], [City]
 Please join us.` },
       { title: '4. New date', text: `An update on our wedding: the ceremony of [Bride] & [Groom] will now take place on [New Date] at [Venue], [City].
-We hope you can still join us — the invitation has the new details: [Invitation Link]
+We hope you can still join us. The invitation has the new details: [Invitation Link]
 Thank you for understanding.` },
       { title: '5. For guests watching online', text: `Can't travel? Join us online!
 The wedding of [Bride] & [Groom] will be streamed live on [Date] at [Time] IST:
@@ -710,14 +710,14 @@ Your blessings, from wherever you are, mean the world to us.` },
     id: 'reminders',
     toc: 'Reminders & thank-yous',
     title: 'Wedding Reminder Messages',
-    intro: 'A reminder a week before and another the day before save a dozen phone calls. Re-send the same invitation link — the timings and the map are already in it.',
+    intro: 'A reminder a week before and another the day before save a dozen phone calls. Re-send the same invitation link: the timings and the map are already in it.',
     messages: [
       { title: '1. One week before', text: `Just one week to go! 🎊
 [Bride] & [Groom]'s wedding is on [Date] at [Venue], [City].
 The invitation has all the timings and the map: [Invitation Link]
 See you there!` },
       { title: '2. The day before', text: `See you tomorrow! 💐
-Wedding of [Bride] & [Groom] — [Time] at [Venue].
+Wedding of [Bride] & [Groom]: [Time] at [Venue].
 Directions: [Map Link]
 Parking: [Location]` },
       { title: '3. RSVP reminder', text: `Hi [Name], we hope you can make it to [Bride] & [Groom]'s wedding on [Date]!
@@ -732,17 +732,17 @@ With love,
     id: 'save-the-date',
     toc: 'Save the date',
     title: 'Save the Date Messages for a Wedding',
-    intro: 'Sent months ahead, before the invitation itself — just the names, the date and the city, so guests can plan leave and travel.',
+    intro: 'Sent months ahead, before the invitation itself: just the names, the date and the city, so guests can plan leave and travel.',
     messages: [
       { title: '1. Classic', text: `Save the date! 💍
 [Bride] & [Groom] are getting married on [Date] in [City].
 Formal invitation to follow.` },
       { title: '2. Short', text: `Mark your calendar 📅
-[Date] — [Bride] & [Groom]'s wedding, [City].
+[Date]: [Bride] & [Groom]'s wedding, [City].
 Invitation coming soon!` },
       { title: '3. Destination wedding', text: `Pack your bags for [Date]! ✈️
 [Bride] & [Groom] are getting married in [Destination].
-Save the date — travel details will follow with the invitation.` },
+Save the date. Travel details will follow with the invitation.` },
       { title: '4. Formal', text: `Please save the date
 for the wedding of
 [Bride's Name] & [Groom's Name]

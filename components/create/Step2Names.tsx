@@ -20,7 +20,7 @@ export default function Step2Names({ selectedTemplate, data, onChange, session, 
     <StepShell
       step={2}
       title="Who's it for?"
-      sub="Add names and photos — the preview updates as you type."
+      sub="Add names and photos. The preview updates as you type."
       onBack={onBack}
       onContinue={onContinue}
     >
@@ -28,7 +28,7 @@ export default function Step2Names({ selectedTemplate, data, onChange, session, 
           browser either way; an account keeps the invitation and its wishes. */}
       {!session && (
         <p className="mx-4 mt-3 text-[0.8rem] leading-5 text-charcoal/70 sm:mx-5">
-          <span className="font-semibold text-charcoal">No account needed</span> — your progress is saved on this device.{' '}
+          <span className="font-semibold text-charcoal">No account needed</span>. Your progress is saved on this device.{' '}
           <Link href="/auth/login?callbackUrl=/create" className="link">Sign in</Link> if you have one.
         </p>
       )}

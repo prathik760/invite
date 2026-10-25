@@ -354,7 +354,7 @@ export default function RakshaBandhanPremium({ data, eventId, isPreview = false 
   const venue = data.venue?.trim()
   const venueAddress = data.venueAddress?.trim()
   const place = [venue, venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`${title} — ${sister} & ${brother}`, data.date, data.time, place || undefined)
+  const calendar = calendarHref(`${title}: ${sister} & ${brother}`, data.date, data.time, place || undefined)
   const directions = mapsHref(data.mapsUrl, venue, venueAddress)
   const animate = !isPreview
 

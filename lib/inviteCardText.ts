@@ -15,6 +15,11 @@ function ordinal(n: number): string {
 /** Designs that name the groom first, then the bride (Two Worlds, at its first couple's request). */
 const GROOM_FIRST = new Set(['signature-two-worlds'])
 
+/** Whether a design names the groom before the bride: in its titles, its share card and its link. */
+export function groomFirst(templateId?: string): boolean {
+  return Boolean(templateId && GROOM_FIRST.has(templateId))
+}
+
 /** The couple's names, "Bride & Groom", or "Groom & Bride" for a design that puts him first. */
 export function coupleLine(d: Record<string, string>, templateId?: string): string {
   const bride = (d.brideName || '').trim()
@@ -74,18 +79,18 @@ export function cardFor(templateId: string, d: Record<string, string>): Card {
 
 /** The title of a published invitation: the browser tab, the bold line under a shared link's picture, the email. */
 export function eventTitle(data: Record<string, string>, templateId?: string): string {
-  if (templateId === 'save-the-date' && data.brideName && data.groomName) return `${data.brideName} & ${data.groomName} — Save the Date`
-  if (data.headline && data.recipientName) return `${data.headline} — for ${data.recipientName}`
+  if (templateId === 'save-the-date' && data.brideName && data.groomName) return `${data.brideName} & ${data.groomName}: Save the Date`
+  if (data.headline && data.recipientName) return `${data.headline} (for ${data.recipientName})`
   if (data.recipientName) return `${data.occasion || 'A Surprise'} for ${data.recipientName} 🎁`
-  if (data.brideName && data.groomName) return `${coupleLine(data, templateId)} — Wedding Invitation`
-  if (data.partner1Name && data.partner2Name) return `${data.partner1Name} & ${data.partner2Name} — Engagement Invitation`
+  if (data.brideName && data.groomName) return `${coupleLine(data, templateId)}: Wedding Invitation`
+  if (data.partner1Name && data.partner2Name) return `${data.partner1Name} & ${data.partner2Name}: Engagement Invitation`
   if (data.celebrantName) {
     const age = Number((data.age || '').match(/^\s*(\d{1,3})/)?.[1])
     return `${data.celebrantName}'s ${age > 0 ? `${ordinal(age)} ` : ''}Birthday Celebration`
   }
   if (data.babyName) return `Namakaran of ${data.babyName}`
-  if (data.coupleNames) return `${data.coupleNames}${data.years ? ` — ${data.years} Years` : ''} Anniversary`
-  if (data.sisterName && data.brotherName) return `${data.sisterName} & ${data.brotherName} — Raksha Bandhan`
+  if (data.coupleNames) return `${data.coupleNames}${data.years ? `: ${data.years} Years` : ''} Anniversary`
+  if (data.sisterName && data.brotherName) return `${data.sisterName} & ${data.brotherName}: Raksha Bandhan`
   // The festival, pooja, baby shower and retirement designs all name their
   // hosts. Every one of them used to fall through to "— Griha Pravesh", so a
   // Diwali party went out titled as a housewarming. They take their words from
@@ -94,9 +99,9 @@ export function eventTitle(data: Record<string, string>, templateId?: string): s
     const card = cardFor(templateId, data)
     if (card.label !== 'You are invited' && card.label !== 'Griha Pravesh') {
       const who = card.names.filter((n) => n !== 'You are invited').join(' & ')
-      return who ? `${card.label} — ${who}` : card.label
+      return who ? `${card.label}: ${who}` : card.label
     }
   }
-  if (data.hostNames) return `${data.hostNames} — Griha Pravesh`
+  if (data.hostNames) return `${data.hostNames}: Griha Pravesh`
   return 'You are Invited'
 }

@@ -102,7 +102,7 @@ export default function SiteFooter() {
             </Link>
             <p className="mt-3 font-editorial text-[1.35rem] italic text-gold-soft">Beautifully invited.</p>
             <p className="mt-4 text-[0.95rem] leading-7 text-paper/65">
-              Beautiful digital invitations for every celebration — weddings, birthdays, festivals and the little
+              Beautiful digital invitations for every celebration: weddings, birthdays, festivals and the little
               moments in between. Built once, shared anywhere with a single link.
             </p>
             <div className="mt-5 flex flex-wrap gap-2">

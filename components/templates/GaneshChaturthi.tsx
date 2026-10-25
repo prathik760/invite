@@ -376,7 +376,7 @@ export default function GaneshChaturthi({ data, eventId, isPreview = false }: In
   const idol = data.idolImage && /^(https?:)?\//.test(data.idolImage) ? data.idolImage : ''
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
-  const calendar = calendarHref(`${title} — ${hosts}`, data.date, data.time, place || undefined)
+  const calendar = calendarHref(`${title}: ${hosts}`, data.date, data.time, place || undefined)
   const animate = !isPreview
 
   const button = 'inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold transition-colors'
@@ -506,7 +506,7 @@ export default function GaneshChaturthi({ data, eventId, isPreview = false }: In
               {data.message}
             </p>
             <p className="mt-4 italic" style={{ fontFamily: serif, fontSize: 19, color: C.vermilion }}>
-              — {hosts}
+              {hosts}
             </p>
           </Reveal>
         )}

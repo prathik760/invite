@@ -142,7 +142,7 @@ export default function OccasionPage(p: OccasionPageProps) {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-[0.85rem] text-muted">Features vary by design — the live preview shows exactly what each one includes.</p>
+        <p className="mt-6 text-[0.85rem] text-muted">Features vary by design. The live preview shows exactly what each one includes.</p>
       </Section>
 
       <Section tone="peach" aria-label="How it works">

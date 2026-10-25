@@ -313,7 +313,7 @@ export default function Retirement({ data, eventId, isPreview = false }: InviteP
   const photo = data.honoreePhoto && /^(https?:)?\//.test(data.honoreePhoto) ? data.honoreePhoto : null
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
-  const calendar = calendarHref(`Retirement celebration — ${name}`, data.date, data.time, place, 4)
+  const calendar = calendarHref(`Retirement celebration: ${name}`, data.date, data.time, place, 4)
 
   const endYear = date?.year ?? new Date().getFullYear()
   const service = milestone ? serviceOf(milestone, endYear) : null
@@ -429,7 +429,7 @@ export default function Retirement({ data, eventId, isPreview = false }: InviteP
           </div>
           {service && (
             <p className="mt-3" style={{ fontFamily: serif, fontSize: 20, color: C.inkSoft }}>
-              {service.from} <span style={{ color: C.gold }}>—</span> {endYear}
+              {service.from} <span style={{ color: C.gold }}>to</span> {endYear}
             </p>
           )}
         </Reveal>
@@ -442,7 +442,7 @@ export default function Retirement({ data, eventId, isPreview = false }: InviteP
           <p className="mt-6 leading-[1.45]" style={{ fontFamily: serif, fontSize: 'clamp(22px, 6.6cqi, 26px)', textWrap: 'pretty' }}>
             {data.message}
           </p>
-          {hosts && <p className="mt-5" style={{ fontSize: 16, fontWeight: 500, color: C.rust }}>— {hosts}</p>}
+          {hosts && <p className="mt-5" style={{ fontSize: 16, fontWeight: 500, color: C.rust }}>{hosts}</p>}
         </Reveal>
       )}
 
@@ -568,7 +568,7 @@ export default function Retirement({ data, eventId, isPreview = false }: InviteP
             eventId={eventId}
             theme={WISHES_THEME}
             title={`Messages for ${first}`}
-            intro={`A memory, a thank-you, a wish for what comes next — write a few words for ${first}. Every guest can read them here.`}
+            intro={`A memory, a thank-you, a wish for what comes next: write a few words for ${first}. Every guest can read them here.`}
             noun="message"
           />
         </div>

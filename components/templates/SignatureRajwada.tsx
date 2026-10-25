@@ -716,15 +716,15 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
                   </h3>
                   <ul className="mt-4 border-t" style={{ borderColor: R.rule }}>
                     {contacts.map((c, i) => {
-                      const [who, ...role] = c.name.split(/\s+[—–-]\s+/)
+                      const [who, ...role] = c.name.split(/\s+[—–-]\s+|\s*,\s+/)
                       const tel = telHref(c.phone)
-                      const wa = whatsappHref(c.phone, `Namaste ${who.split(' ')[0]}, I'm a guest at ${couple}'s wedding — `)
+                      const wa = whatsappHref(c.phone, `Namaste ${who.split(' ')[0]}, I'm a guest at ${couple}'s wedding. `)
                       return (
                         <li key={`${c.name}-${i}`} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b py-4" style={{ borderColor: R.rule }}>
                           <div className="min-w-0">
                             <p style={{ fontFamily: display, fontSize: 20, color: R.ink }}>{who}</p>
                             {role.length > 0 && (
-                              <p style={{ fontFamily: text, fontSize: 15, color: R.soft }}>{cap(role.join(' — '))}</p>
+                              <p style={{ fontFamily: text, fontSize: 15, color: R.soft }}>{cap(role.join(', '))}</p>
                             )}
                           </div>
                           {(tel || wa) && (

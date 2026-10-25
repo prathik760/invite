@@ -48,7 +48,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Is RSVP tracking included with digital wedding invitations?',
         answer:
-          'Guests reply by leaving a wish right on the invitation — no app to install — and every message appears in your dashboard, where you can also remove any. The Luxury Wedding design adds a one-tap RSVP to you on WhatsApp. A full headcount tracker is not included.',
+          'Guests reply by leaving a wish right on the invitation (no app to install) and every message appears in your dashboard, where you can also remove any. The Luxury Wedding design adds a one-tap RSVP to you on WhatsApp. A full headcount tracker is not included.',
       },
       {
         question: 'Can I share the invitation as a WhatsApp wedding card?',
@@ -155,7 +155,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Does ShareInvite support RSVP for anniversary parties?',
         answer:
-          'Guests can reply with a wish on the invitation, and every message appears in your dashboard. For a formal headcount, share the invitation and ask guests to confirm on WhatsApp — there is no separate attendance tracker.',
+          'Guests can reply with a wish on the invitation, and every message appears in your dashboard. For a formal headcount, share the invitation and ask guests to confirm on WhatsApp. There is no separate attendance tracker.',
       },
     ],
   },
@@ -281,7 +281,7 @@ export const landingPages: SeoPage[] = [
       {
         question: 'Can I track RSVPs for business guests?',
         answer:
-          'Not as a headcount tool. Guests can leave a message on the invitation and you see every one in your dashboard, but there is no attendance tracker — for a precise count, ask guests to confirm directly.',
+          'Not as a headcount tool. Guests can leave a message on the invitation and you see every one in your dashboard, but there is no attendance tracker. For a precise count, ask guests to confirm directly.',
       },
       {
         question: 'Can I include agenda and venue details?',

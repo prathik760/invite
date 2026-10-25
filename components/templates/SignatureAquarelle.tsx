@@ -70,7 +70,7 @@ const WISHES_THEME: InviteTheme = {
 }
 
 const SAMPLE_WISHES = [
-  { name: 'Meera & Arjun', message: 'Two of our favourite people by a lake — we would not miss it for anything. Save us a seat near the dance floor!' },
+  { name: 'Meera & Arjun', message: 'Two of our favourite people by a lake. We would not miss it for anything. Save us a seat near the dance floor!' },
   { name: 'Nani', message: 'May your home always be full of music and good food. All my blessings, my darlings.' },
 ]
 
@@ -828,8 +828,8 @@ function Rsvp({ anchor, couple, fns, phone, rsvpBy, guest, isPreview, initials }
   const list = picked.length <= 1 ? picked.join('') : `${picked.slice(0, -1).join(', ')} and ${picked[picked.length - 1]}`
   const text =
     answer === 'no'
-      ? `Dear ${couple}, ${name ? `it’s ${name} — ` : ''}with love and regret, we won’t be able to join you. Wishing you both a beautiful wedding.${note.trim() ? ` ${note.trim()}` : ''}`
-      : `Dear ${couple}, ${name ? `it’s ${name} — ` : ''}we joyfully accept!${list ? ` We’ll be there for ${list}.` : ''} ${count === 1 ? 'Just me.' : `${count} of us.`}${note.trim() ? ` ${note.trim()}` : ''}`
+      ? `Dear ${couple}, ${name ? `it’s ${name}. With` : 'with'} love and regret, we won’t be able to join you. Wishing you both a beautiful wedding.${note.trim() ? ` ${note.trim()}` : ''}`
+      : `Dear ${couple}, ${name ? `it’s ${name}. We` : 'we'} joyfully accept!${list ? ` We’ll be there for ${list}.` : ''} ${count === 1 ? 'Just me.' : `${count} of us.`}${note.trim() ? ` ${note.trim()}` : ''}`
   const href = whatsappHref(phone, text)
   const by = dateParts(rsvpBy)
   const line: CSSProperties = { fontFamily: script, fontSize: 26, lineHeight: 1.2, background: 'transparent', borderBottom: `1px solid ${P.ink}`, color: P.ink }
@@ -1311,7 +1311,7 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
                     <ol className="mt-8">
                       {fns.map((f, i) => {
                         const dp = dateParts(f.date)
-                        const cal = calendarHref(`${f.name} — ${couple}`, f.date || data.date, f.time || data.time, placeLabel(f.venue) || undefined, 3)
+                        const cal = calendarHref(`${f.name}: ${couple}`, f.date || data.date, f.time || data.time, placeLabel(f.venue) || undefined, 3)
                         const map = placeHref(f.venue)
                         const tones = f.dress ? swatches(f.dress).slice(0, 4) : []
                         return (
@@ -1435,7 +1435,7 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
                           <ul className="mt-2 space-y-1">
                             {contacts.map((c, i) => {
                               const tel = telHref(c.phone)
-                              const wa = whatsappHref(c.phone, `Hello! A question about ${couple}'s wedding — `)
+                              const wa = whatsappHref(c.phone, `Hello! A question about ${couple}'s wedding: `)
                               return (
                                 <li key={i} className="flex flex-wrap items-center justify-between gap-x-3">
                                   <span className="min-w-0 italic" style={{ fontSize: 18, color: P.ink }}>{c.name}</span>

@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!info) return {}
 
   const ogTitle = `Digital Wedding Invitation in ${info.display} | ShareInvite`
-  const description = `Create a digital wedding invitation for your ${info.display} wedding — WhatsApp link with countdown, Google Maps & gallery. Preview before you pay.`
+  const description = `Create a digital wedding invitation for your ${info.display} wedding: WhatsApp link with countdown, Google Maps & gallery. Preview before you pay.`
 
   return {
     title: { absolute: ogTitle },
@@ -61,7 +61,7 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: `ShareInvite — Digital Wedding Invitation ${info.display}`,
+    name: `ShareInvite Digital Wedding Invitations, ${info.display}`,
     description: `Create digital wedding invitations for ${info.display} weddings. WhatsApp-ready link with venue map, countdown and gallery. Preview before you pay.`,
     url: `${APP_URL}/wedding-invitation/${city}`,
     image: `${APP_URL}/opengraph-image`,
@@ -104,8 +104,8 @@ export default async function CityWeddingPage({ params }: { params: Promise<{ ci
         eyebrow={`${info.display} · ${info.state}`}
         title={<>Digital Wedding Invitation <em className="font-medium text-burnished">in {info.display}</em></>}
         lede={info.localDetail}
-        local={{ title: `Built for ${info.display} weddings`, paras: [info.localDetail, info.localDetail2], chips: [{ label: `${info.weddingStyle} — ceremonies we support`, items: info.traditions }, { label: `Popular ${info.display} venues`, items: info.venues }] }}
-        faqTitle={`${info.display} wedding invitation — FAQs`}
+        local={{ title: `Built for ${info.display} weddings`, paras: [info.localDetail, info.localDetail2], chips: [{ label: `${info.weddingStyle}: ceremonies we support`, items: info.traditions }, { label: `Popular ${info.display} venues`, items: info.venues }] }}
+        faqTitle={`${info.display} wedding invitation: FAQs`}
         faqs={info.faqs}
         links={[{ href: '/wedding-invitation', label: 'Wedding invitations' }, { href: `/engagement-invitation/${city}`, label: `Engagement invitations in ${info.display}` }, { href: `/griha-pravesh-invitation/${city}`, label: `Griha Pravesh invitations in ${info.display}` }, { href: '/wedding-invitation-wording', label: 'Wedding invitation wording' }, { href: '/templates', label: 'All designs' }]}
         closing={{ title: `Create your ${info.display} wedding invitation`, sub: info.ctaTagline }}

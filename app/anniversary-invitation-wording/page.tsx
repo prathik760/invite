@@ -26,7 +26,7 @@ const DESIGN_IDS = ['anniversary', 'greeting-anniversary']
 const MESSAGE_COUNT = ANNIVERSARY_SECTIONS.reduce((n, s) => n + s.messages.length, 0)
 const TITLE = 'Anniversary Invitation Message for WhatsApp: 80+ Ideas'
 const DESCRIPTION =
-  "Copy an anniversary invitation message for WhatsApp — 25th silver & 50th golden jubilee, parents' anniversary from children, surprise party, pooja & Hindi."
+  "Copy an anniversary invitation message for WhatsApp: 25th silver & 50th golden jubilee, parents' anniversary from children, surprise party, pooja & Hindi."
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -51,7 +51,7 @@ const faqSchema = {
       name: 'What is a simple anniversary invitation message for WhatsApp?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Keep it to four or five lines with the couple, the milestone, the date and the venue first — for example: "You\'re invited to celebrate [Names]\' [Number]th wedding anniversary! [Date] · [Time] · [Venue]. Your presence would make the day special." Paste a digital invitation link underneath so guests get the venue map and timings in one tap.',
+        text: 'Keep it to four or five lines with the couple, the milestone, the date and the venue first. For example: "You\'re invited to celebrate [Names]\' [Number]th wedding anniversary! [Date] · [Time] · [Venue]. Your presence would make the day special." Paste a digital invitation link underneath so guests get the venue map and timings in one tap.',
       },
     },
     {
@@ -59,7 +59,7 @@ const faqSchema = {
       name: "What should I write in my parents' anniversary invitation?",
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Name your parents first, say how many years they are celebrating, and sign it from the children: "Our parents [Father\'s Name] & [Mother\'s Name] are celebrating [Number] years of marriage! Please join us on [Date] at [Venue] to bless them. — [Children\'s Names]". For elders and relatives, a formal version that begins "[Children\'s Names] request the pleasure of your company…" reads better.',
+        text: 'Name your parents first, say how many years they are celebrating, and sign it from the children: "Our parents [Father\'s Name] & [Mother\'s Name] are celebrating [Number] years of marriage! Please join us on [Date] at [Venue] to bless them. With love, [Children\'s Names]". For elders and relatives, a formal version that begins "[Children\'s Names] request the pleasure of your company…" reads better.',
       },
     },
     {
@@ -67,7 +67,7 @@ const faqSchema = {
       name: 'What are the 25th and 50th wedding anniversaries called?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The 25th wedding anniversary is the silver jubilee (रजत जयंती), the 50th is the golden jubilee (स्वर्ण जयंती) and the 60th is the diamond jubilee. Other traditional names include pearl for the 30th and ruby for the 40th — a nice opening line for the invitation.',
+        text: 'The 25th wedding anniversary is the silver jubilee (रजत जयंती), the 50th is the golden jubilee (स्वर्ण जयंती) and the 60th is the diamond jubilee. Other traditional names include pearl for the 30th and ruby for the 40th, which make a nice opening line for the invitation.',
       },
     },
     {
@@ -83,7 +83,7 @@ const faqSchema = {
       name: 'How early should I send an anniversary invitation?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Two to three weeks ahead for a dinner or a party. For a 25th or 50th anniversary with relatives travelling from other cities, send it four to six weeks ahead. Send a reminder the day before — the same invitation link again is enough.',
+        text: 'Two to three weeks ahead for a dinner or a party. For a 25th or 50th anniversary with relatives travelling from other cities, send it four to six weeks ahead. Send a reminder the day before: the same invitation link again is enough.',
       },
     },
     {
@@ -132,7 +132,7 @@ export default function AnniversaryInvitationWordingPage() {
         eyebrow={`${MESSAGE_COUNT} messages · WhatsApp-ready · Copy in one tap`}
         title={<>Anniversary Invitation Messages &amp;<br />
             <em className="font-medium text-burnished">Wording for WhatsApp</em></>}
-        lede={<>{MESSAGE_COUNT} ready-to-copy anniversary invitation messages for WhatsApp — for a 25th silver jubilee or a
+        lede={<>{MESSAGE_COUNT} ready-to-copy anniversary invitation messages for WhatsApp: for a 25th silver jubilee or a
             50th golden jubilee, your parents&apos; anniversary from the children, a surprise party, a dinner or a pooja,
             formal card wording, and messages in Hindi.</>}
         actions={<><Link href="#anniversary-designs" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
@@ -151,7 +151,7 @@ export default function AnniversaryInvitationWordingPage() {
               <SectionHeading
                 eyebrow="Send these words as an invitation"
                 title="Anniversary designs"
-                sub="Paste your message into either design and guests get the date, the venue map, a countdown, your photos through the years and a place to send their wishes — from one link. Tap a design for a live preview."
+                sub="Paste your message into either design and guests get the date, the venue map, a countdown, your photos through the years and a place to send their wishes, all from one link. Tap a design for a live preview."
                 action={{ href: '/anniversary-invitation', label: 'About anniversary invitations' }}
               />
               <div className="mx-auto mt-9 grid max-w-2xl grid-cols-2 gap-3 sm:gap-5" data-reveal-group>
@@ -167,7 +167,7 @@ export default function AnniversaryInvitationWordingPage() {
               <div className="mx-auto max-w-3xl">
                 <MidPageCTA
                   headline="Give them an invitation as special as their story"
-                  body="A text message tells guests the date. A digital anniversary invitation shows photos from the wedding day to today, counts down to the celebration, gives the venue on a map, and collects wishes from everyone — from one link shared on WhatsApp."
+                  body="A text message tells guests the date. A digital anniversary invitation shows photos from the wedding day to today, counts down to the celebration, gives the venue on a map, and collects wishes from everyone, all from one link shared on WhatsApp."
                   features={[
                     'Photos through the years',
                     'Live countdown to the celebration',
@@ -188,7 +188,7 @@ export default function AnniversaryInvitationWordingPage() {
         <div className="mx-auto max-w-3xl">
           <h2 className="t-h2 mb-3">Wedding Anniversary Names by Year</h2>
           <p className="text-sm text-muted leading-7 mb-8">
-            Each milestone has a traditional name — open your invitation with it (&ldquo;the Silver Jubilee of…&rdquo;) or use it as the theme for the celebration.
+            Each milestone has a traditional name. Open your invitation with it (&ldquo;the Silver Jubilee of…&rdquo;) or use it as the theme for the celebration.
           </p>
           <table className="w-full overflow-hidden rounded-2xl border border-line bg-champagne text-left text-sm shadow-sm">
             <thead>
@@ -221,12 +221,12 @@ export default function AnniversaryInvitationWordingPage() {
               <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Anniversary invitation lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
                 <li>&ldquo;[Number] years of love, and the story is still being written.&rdquo;</li>
-                <li>&ldquo;Still holding hands after all these years — come celebrate with us.&rdquo;</li>
+                <li>&ldquo;Still holding hands after all these years. Come celebrate with us.&rdquo;</li>
                 <li>&ldquo;A love that has stood the test of time deserves a celebration.&rdquo;</li>
-                <li>&ldquo;Every year together is a reason to celebrate — this one most of all.&rdquo;</li>
+                <li>&ldquo;Every year together is a reason to celebrate, this one most of all.&rdquo;</li>
                 <li>&ldquo;Two hearts, one journey, [Number] beautiful years.&rdquo;</li>
                 <li>&ldquo;Here&apos;s to the love that built our family.&rdquo;</li>
-                <li>&ldquo;Happily married for [Number] years — and counting.&rdquo;</li>
+                <li>&ldquo;Happily married for [Number] years, and counting.&rdquo;</li>
                 <li>&ldquo;Forever is made of years like these.&rdquo;</li>
               </ul>
             </div>
@@ -245,7 +245,7 @@ export default function AnniversaryInvitationWordingPage() {
             <p className="text-xs text-muted leading-6 pt-1">
               Tip: open with any line, then paste your{' '}
               <Link href="/anniversary-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital anniversary invitation link</Link>{' '}
-              below it — guests get the venue map, a countdown, your photos and a place to leave wishes in one tap.
+              below it. Guests get the venue map, a countdown, your photos and a place to leave wishes in one tap.
             </p>
           </div>
         </div>
@@ -256,15 +256,15 @@ export default function AnniversaryInvitationWordingPage() {
         <div className="mx-auto max-w-4xl">
           <h2 className="t-h2 mb-3">What to Include in an Anniversary Invitation</h2>
           <p className="text-sm text-muted leading-7 mb-10">
-            Everything a guest needs to say yes and arrive on time — in the order they look for it.
+            Everything a guest needs to say yes and arrive on time, in the order they look for it.
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             {[
               { item: "The couple's names", detail: 'Both names, as the family knows them. When the children host, name the parents first and sign from the children.' },
-              { item: 'The milestone', detail: "Say the number — 25th, 50th — or the jubilee's name. It is the reason guests make the effort to come." },
-              { item: 'What the celebration is', detail: 'Dinner, lunch at home, a pooja, a party night or a surprise — guests plan their evening around it.' },
+              { item: 'The milestone', detail: "Say the number (25th, 50th) or the jubilee's name. It is the reason guests make the effort to come." },
+              { item: 'What the celebration is', detail: 'Dinner, lunch at home, a pooja, a party night or a surprise. Guests plan their evening around it.' },
               { item: 'Date, time and venue', detail: 'The full address with a Google Maps link. For a pooja followed by a meal, give both times.' },
-              { item: 'Who is hosting', detail: '"The children of…", "the [Family Name] family" or the couple themselves — it sets the tone of the whole invitation.' },
+              { item: 'Who is hosting', detail: '"The children of…", "the [Family Name] family" or the couple themselves. It sets the tone of the whole invitation.' },
               { item: 'Gifts and RSVP', detail: 'A gentle "your presence is the only gift we wish for" if you mean it, and a number to confirm on.' },
             ].map((c) => (
               <div key={c.item} className="rounded-2xl border border-line bg-champagne p-6 shadow-sm">
@@ -299,7 +299,7 @@ export default function AnniversaryInvitationWordingPage() {
 
       {/* FAQ */}
       <Section tone="paper" id="faq" aria-label="Questions">
-        <SectionHeading align="center" eyebrow="Questions" title={'Anniversary Invitation Messages — FAQ'} />
+        <SectionHeading align="center" eyebrow="Questions" title={'Anniversary Invitation Messages: FAQ'} />
         <div className="mt-10">
           <FAQAccordion faqs={faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))} />
         </div>

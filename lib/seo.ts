@@ -50,7 +50,7 @@ export function slugify(value: string) {
 export function templateSeoSlug(templateId: string) {
   const template = TEMPLATES.find((item) => item.id === templateId)
   if (!template) return `${templateId}-invitation-template`
-  const base = slugify(template.name.replace(/—/g, ' '))
+  const base = slugify(template.name.replace(/[·—]/g, ' '))
   return base.includes('invitation') ? `${base}-template` : `${base}-invitation-template`
 }
 

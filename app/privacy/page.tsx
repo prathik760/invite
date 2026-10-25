@@ -8,7 +8,7 @@ const LAST_UPDATED = '3 October 2026'
 export const metadata: Metadata = {
   title: { absolute: 'Privacy Policy | ShareInvite' },
   description:
-    'How ShareInvite collects, uses, shares, and protects your personal data — including account details, invitation content, and guest RSVPs. Learn your rights under India\'s DPDP Act, 2023.',
+    'How ShareInvite collects, uses, shares, and protects your personal data, including account details, invitation content, and guest RSVPs. Learn your rights under India\'s DPDP Act, 2023.',
   keywords: ['ShareInvite privacy policy', 'digital invitation privacy', 'DPDP Act privacy policy', 'invitation data protection'],
   alternates: { canonical: `${APP_URL}/privacy` },
   openGraph: {
@@ -48,11 +48,11 @@ const sections: LegalSection[] = [
         <Para>We collect the following categories of information:</Para>
         <Bullets
           items={[
-            <><strong className="text-foreground">Account information</strong> — such as your name and email address when you sign up or sign in.</>,
-            <><strong className="text-foreground">Invitation content</strong> — the details you add to your invitations, such as names, event dates and times, venue and address, a maps link, photos, background music links, and personal messages.</>,
-            <><strong className="text-foreground">Guest information</strong> — RSVPs, wishes, or blessings that your guests choose to submit on an invitation you publish.</>,
-            <><strong className="text-foreground">Payment information</strong> — when you buy a paid plan, payment is processed by Razorpay. We receive confirmation of the transaction and limited details (such as an order/payment reference), but we do not collect or store your full card or bank account numbers.</>,
-            <><strong className="text-foreground">Usage &amp; device data</strong> — technical information collected automatically, such as your IP address, approximate location (city and country), browser and device type, the site that referred you, the pages you view, the designs you open, the buttons you press and how far you get in the builder and checkout, gathered through cookies and similar technologies. Once you sign in, this record is linked to your account.</>,
+            <><strong className="text-foreground">Account information</strong>: such as your name and email address when you sign up or sign in.</>,
+            <><strong className="text-foreground">Invitation content</strong>: the details you add to your invitations, such as names, event dates and times, venue and address, a maps link, photos, background music links, and personal messages.</>,
+            <><strong className="text-foreground">Guest information</strong>: RSVPs, wishes, or blessings that your guests choose to submit on an invitation you publish.</>,
+            <><strong className="text-foreground">Payment information</strong>: when you buy a paid plan, payment is processed by Razorpay. We receive confirmation of the transaction and limited details (such as an order/payment reference), but we do not collect or store your full card or bank account numbers.</>,
+            <><strong className="text-foreground">Usage &amp; device data</strong>: technical information collected automatically, such as your IP address, approximate location (city and country), browser and device type, the site that referred you, the pages you view, the designs you open, the buttons you press and how far you get in the builder and checkout, gathered through cookies and similar technologies. Once you sign in, this record is linked to your account.</>,
           ]}
         />
       </>
@@ -95,10 +95,10 @@ const sections: LegalSection[] = [
         <Para>We use a small number of cookies and browser storage technologies, including:</Para>
         <Bullets
           items={[
-            <><strong className="text-foreground">Essential cookies</strong> — required to keep you signed in and to operate core features such as saving your invitation draft, to remember your cookie choice and whether you are visiting from a country where we ask for it, and, where local-currency pricing is available, to remember the country you are visiting from so prices are shown in your currency.</>,
-            <><strong className="text-foreground">Analytics</strong> — to understand how the Service is used so we can improve it. Google Analytics gives us totals. We also keep our own record of each visit — the pages opened, designs viewed, buttons pressed and where a visit ended — so we can find the step where people get stuck. We never record what you type into a form.</>,
-            <><strong className="text-foreground">Session recordings</strong> — Microsoft Clarity records how you move through our pages (scrolling, taps, clicks) so we can replay a visit and see what was confusing or broken. Everything you type into a form, and the details shown in your invitation preview and dashboard, are masked before they leave your browser. Microsoft processes this data under its own privacy statement. Recordings are not made on the invitation pages your guests open.</>,
-            <><strong className="text-foreground">Advertising measurement</strong> — the Meta Pixel tells us whether our ads on Facebook and Instagram lead to visits and purchases, and helps show those ads to people likely to find them useful. Meta receives technical data such as your IP address, browser, the pages you view and actions such as starting a payment, and processes it under its own privacy policy.</>,
+            <><strong className="text-foreground">Essential cookies</strong>: required to keep you signed in and to operate core features such as saving your invitation draft, to remember your cookie choice and whether you are visiting from a country where we ask for it, and, where local-currency pricing is available, to remember the country you are visiting from so prices are shown in your currency.</>,
+            <><strong className="text-foreground">Analytics</strong>: to understand how the Service is used so we can improve it. Google Analytics gives us totals. We also keep our own record of each visit (the pages opened, designs viewed, buttons pressed and where a visit ended) so we can find the step where people get stuck. We never record what you type into a form.</>,
+            <><strong className="text-foreground">Session recordings</strong>: Microsoft Clarity records how you move through our pages (scrolling, taps, clicks) so we can replay a visit and see what was confusing or broken. Everything you type into a form, and the details shown in your invitation preview and dashboard, are masked before they leave your browser. Microsoft processes this data under its own privacy statement. Recordings are not made on the invitation pages your guests open.</>,
+            <><strong className="text-foreground">Advertising measurement</strong>: the Meta Pixel tells us whether our ads on Facebook and Instagram lead to visits and purchases, and helps show those ads to people likely to find them useful. Meta receives technical data such as your IP address, browser, the pages you view and actions such as starting a payment, and processes it under its own privacy policy.</>,
           ]}
         />
         <Para>
@@ -126,11 +126,11 @@ const sections: LegalSection[] = [
         </Para>
         <Bullets
           items={[
-            <><strong className="text-foreground">Service providers</strong> — trusted partners who help us run the Service, such as Razorpay (payment processing), cloud hosting and image storage providers, and email delivery services. They may process data only on our instructions.</>,
-            <><strong className="text-foreground">Analytics partners</strong> — Google (Google Analytics) and Microsoft (Clarity) receive the usage data described under Cookies &amp; Similar Technologies, to provide those services to us.</>,
-            <><strong className="text-foreground">Advertising partners</strong> — Meta (Facebook and Instagram) receives the advertising measurement data described under Cookies &amp; Similar Technologies. The pixel is not used on the invitation pages your guests open, and we never send Meta your invitation details, photos or guest list.</>,
-            <><strong className="text-foreground">Legal reasons</strong> — where required to comply with the law, a court order, or a lawful government request, or to protect the rights, safety, and property of ShareInvite, our users, or the public.</>,
-            <><strong className="text-foreground">Business transfers</strong> — if ShareInvite is involved in a merger, acquisition, or sale of assets, your data may be transferred as part of that transaction, subject to this Policy.</>,
+            <><strong className="text-foreground">Service providers</strong>: trusted partners who help us run the Service, such as Razorpay (payment processing), cloud hosting and image storage providers, and email delivery services. They may process data only on our instructions.</>,
+            <><strong className="text-foreground">Analytics partners</strong>: Google (Google Analytics) and Microsoft (Clarity) receive the usage data described under Cookies &amp; Similar Technologies, to provide those services to us.</>,
+            <><strong className="text-foreground">Advertising partners</strong>: Meta (Facebook and Instagram) receives the advertising measurement data described under Cookies &amp; Similar Technologies. The pixel is not used on the invitation pages your guests open, and we never send Meta your invitation details, photos or guest list.</>,
+            <><strong className="text-foreground">Legal reasons</strong>: where required to comply with the law, a court order, or a lawful government request, or to protect the rights, safety, and property of ShareInvite, our users, or the public.</>,
+            <><strong className="text-foreground">Business transfers</strong>: if ShareInvite is involved in a merger, acquisition, or sale of assets, your data may be transferred as part of that transaction, subject to this Policy.</>,
           ]}
         />
       </>
@@ -168,8 +168,8 @@ const sections: LegalSection[] = [
     title: 'Data Security',
     body: (
       <Para>
-        We use reasonable technical and organisational measures — such as encryption in transit, access controls, and use of
-        reputable infrastructure providers — to protect your data. However, no method of transmission or storage is
+        We use reasonable technical and organisational measures (such as encryption in transit, access controls, and use of
+        reputable infrastructure providers) to protect your data. However, no method of transmission or storage is
         completely secure, and we cannot guarantee absolute security. Please keep your account credentials confidential.
       </Para>
     ),
@@ -180,7 +180,7 @@ const sections: LegalSection[] = [
     body: (
       <Para>
         The Service is intended for adults. You must be at least 18 to create an account. Some invitations (such as a
-        Namakaran or birthday) may include information about a child — in those cases, the adult host is responsible for
+        Namakaran or birthday) may include information about a child. In those cases, the adult host is responsible for
         obtaining any necessary consent and for the content they publish about a minor. We do not knowingly collect personal
         data directly from children. If you believe a child has provided us data, please contact us so we can remove it.
       </Para>

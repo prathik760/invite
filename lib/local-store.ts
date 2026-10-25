@@ -80,6 +80,16 @@ export async function createLocalEvent(templateId: string, data: Record<string, 
   return event
 }
 
+/** Replaces a published invitation's details (an edit after publishing). */
+export async function updateLocalEvent(slug: string, data: Record<string, string>) {
+  const store = await readStore()
+  const event = store.events.find((e) => e.slug === slug)
+  if (!event) return null
+  event.data = data
+  await writeStore(store)
+  return event
+}
+
 export async function getLocalEventBySlug(slug: string) {
   const store = await readStore()
   return store.events.find((event) => event.slug === slug) ?? null

@@ -509,7 +509,7 @@ function LetterStage({ body, signature, sender, isPreview }: { body: string; sig
           {done && (
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
               className="mt-[34px] text-right" style={{ color: ROSE, fontFamily: hand, fontSize: 28, lineHeight: '34px' }}>
-              {signature || (sender ? `— ${sender}` : '')}
+              {signature || sender}
             </motion.p>
           )}
         </AnimatePresence>

@@ -12,15 +12,15 @@ export interface Faq {
 const defaultFaqs: Faq[] = [
   {
     question: 'What is a digital invitation website?',
-    answer: 'A digital invitation website is a mobile-friendly event page guests open from a link. It includes event details, photos, countdown, music, map directions, and guest wishes — all in one beautifully designed page they can save and revisit.',
+    answer: 'A digital invitation website is a mobile-friendly event page guests open from a link. It includes event details, photos, countdown, music, map directions, and guest wishes, all in one beautifully designed page they can save and revisit.',
   },
   {
     question: 'Can guests open the invitation on WhatsApp?',
-    answer: 'Yes. ShareInvite creates a shareable link that works on WhatsApp, Instagram, email, and any mobile browser. Guests do not need to install an app — the invite opens instantly in their phone browser.',
+    answer: 'Yes. ShareInvite creates a shareable link that works on WhatsApp, Instagram, email, and any mobile browser. Guests do not need to install an app. The invite opens instantly in their phone browser.',
   },
   {
     question: 'Is this designed for Indian weddings and family events?',
-    answer: 'Yes. The product is built for Indian event workflows where families share invites on WhatsApp and guests need quick access to date, time, venue, maps, and ceremony details. Every template is designed for Indian celebrations — weddings, engagements, birthdays, Griha Pravesh, Namakaran, and anniversaries.',
+    answer: 'Yes. The product is built for Indian event workflows where families share invites on WhatsApp and guests need quick access to date, time, venue, maps, and ceremony details. Every template is designed for Indian celebrations: weddings, engagements, birthdays, Griha Pravesh, Namakaran, and anniversaries.',
   },
   {
     question: 'Which template should I choose, and what does it cost?',
@@ -28,7 +28,7 @@ const defaultFaqs: Faq[] = [
   },
   {
     question: 'How much does a digital invitation cost in India?',
-    answer: 'There is no payment until you publish — you can build and preview the whole invitation first, with no card needed. Publishing is a one-time payment for the design you choose, and the price is shown on the design. There are no monthly fees or hidden charges.',
+    answer: 'There is no payment until you publish: you can build and preview the whole invitation first, with no card needed. Publishing is a one-time payment for the design you choose, and the price is shown on the design. There are no monthly fees or hidden charges.',
   },
   {
     question: 'Can I add bride and groom photos to the invitation?',

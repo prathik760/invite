@@ -133,7 +133,7 @@ ${para('Your invitation link will arrive in a separate email the moment it is pu
 
   return {
     to: r.to,
-    subject: `Payment received — ${design} is yours`,
+    subject: `Payment received: ${design} is yours`,
     html: layout({ title: 'Payment received', preheader: `Receipt for ${r.amount} · ${design}`, body }),
     text,
   }
@@ -152,6 +152,8 @@ export interface LiveDetails {
   /** Designs that greet a guest by name from a ?to= link. */
   personalLinks?: boolean
   example?: string
+  /** Opens this invitation in the builder to change it (lib/editKey.ts). Anyone with it can edit, so it goes only to the owner. */
+  editUrl?: string
 }
 
 export function invitationLiveEmail(l: LiveDetails): Mail {
@@ -160,9 +162,12 @@ export function invitationLiveEmail(l: LiveDetails): Mail {
   const card = `${url}/opengraph-image`
   const wa = `https://wa.me/?text=${encodeURIComponent(`You're invited! ${l.title}\n${url}`)}`
   const tips = [
-    'Send it to yourself first and open it on your phone — check the names, the date and the map.',
+    'Send it to yourself first and open it on your phone. Check the names, the date and the map.',
     l.personalLinks
       ? `Make it personal: add <span style="font-family:Menlo,Consolas,monospace;font-size:13px;color:${C.ink};">?to=${esc(l.example || 'Shalini+and+family')}</span> to the end of the link, and it greets that guest by name.`
+      : '',
+    l.editUrl
+      ? `Something to change? <a href="${esc(l.editUrl)}" style="color:${C.emerald};">Edit your invitation</a>. The link stays the same, and guests see the change the next time they open it. Keep this email private: the edit link works without signing in.`
       : '',
     'Guests can leave their wishes on the invitation, and everyone who opens it can read them.',
     l.dateLabel ? `It stays online until ${ENDS_AFTER_DAYS} days after the day, so latecomers can still find the address.` : '',
@@ -187,7 +192,7 @@ ${rule}
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;">
 ${tips.map((t) => `<tr><td valign="top" style="padding:10px 12px 0 0;color:${C.gold};font-size:12px;">&#9670;</td><td style="padding:10px 0 0;font-family:${SERIF};font-size:16px;line-height:25px;color:${C.soft};">${t}</td></tr>`).join('\n')}
 </table>
-${para(`See all your invitations any time at <a href="${APP_URL}/dashboard" style="color:${C.emerald};">shareinvite.in/dashboard</a> — sign in with Google using this email address.`)}
+${para(`See all your invitations any time at <a href="${APP_URL}/dashboard" style="color:${C.emerald};">shareinvite.in/dashboard</a>. Sign in with Google using this email address.`)}
 ${para(`With love,<br><span style="font-style:italic;color:${C.ink};">the ShareInvite team</span>`)}`
 
   const text = [
@@ -200,8 +205,9 @@ ${para(`With love,<br><span style="font-style:italic;color:${C.ink};">the ShareI
     '',
     'A few things worth knowing:',
     ...tips.map((t) => `- ${t.replace(/<[^>]+>/g, '')}`),
+    ...(l.editUrl ? ['', `Edit your invitation: ${l.editUrl}`] : []),
     '',
-    `See all your invitations at ${APP_URL}/dashboard — sign in with Google using this email address.`,
+    `See all your invitations at ${APP_URL}/dashboard. Sign in with Google using this email address.`,
     '',
     'With love,',
     'the ShareInvite team',
@@ -210,7 +216,7 @@ ${para(`With love,<br><span style="font-style:italic;color:${C.ink};">the ShareI
   return {
     to: l.to,
     subject: `Congratulations! Your invitation is live`,
-    html: layout({ title: 'Your invitation is live', preheader: `${l.title} — your link is ready to share`, body }),
+    html: layout({ title: 'Your invitation is live', preheader: `${l.title}. Your link is ready to share`, body }),
     text,
   }
 }

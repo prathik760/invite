@@ -141,10 +141,10 @@ const FIELD_HINTS: Record<string, string> = {
   theme: 'e.g. Bollywood Glam, Royal, Garden Party',
   pooja: 'e.g. Ganesh Pooja at 9:00 AM sharp',
   venueAddress: 'Full address helps guests find the venue easily',
-  destination: 'The town or region your postcard is "from" — e.g. Lake Como, Udaipur, Goa',
+  destination: 'The town or region your postcard is "from" (e.g. Lake Como, Udaipur, Goa)',
   age: 'The age being celebrated',
   years: 'Number of years together',
-  babyGender: 'Boy or Girl — affects the invite colour scheme',
+  babyGender: 'Boy or Girl (affects the invite colour scheme)',
   whatsappNumber: 'Guests tap RSVP and a WhatsApp message to this number opens, ready to send',
 }
 
@@ -481,7 +481,7 @@ const ScheduleEditor = memo(function ScheduleEditor({ initial, onChange }: { ini
   return (
     <div>
       <p className="text-xs text-muted/70 mb-3 leading-4">
-        Add each event on its own row — name and time. Guests will see these as a timeline.
+        Add each event on its own row: name and time. Guests will see these as a timeline.
       </p>
       <div className="space-y-2.5">
         {rows.map((row, idx) => (
@@ -601,7 +601,7 @@ const GalleryUploader = memo(function GalleryUploader({ initial, onChange }: { i
           <p className="text-sm font-semibold text-charcoal">
             {uploading ? 'Uploading…' : dragging ? 'Drop photos here' : 'Upload photos'}
           </p>
-          <p className="text-xs text-muted mt-0.5">Drag &amp; drop or click — JPG, PNG, WebP · max 5 MB each</p>
+          <p className="text-xs text-muted mt-0.5">Drag &amp; drop or click. JPG, PNG, WebP · max 5 MB each</p>
         </div>
         <input ref={inputRef} type="file" accept="image/*" multiple className="hidden"
           onChange={e => addFiles(e.target.files)} />
@@ -977,7 +977,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: rank('schedule'),
       key: 'schedule',
       render: (n) => (
-        <Section key="schedule" number={n} label="Event Schedule" hint="Build your event timeline — each row is one moment.">
+        <Section key="schedule" number={n} label="Event Schedule" hint="Build your event timeline: each row is one moment.">
           <div data-field="schedule">
             <ScheduleEditor initial={data['schedule'] ?? ''} onChange={v => handleChange('schedule', v)} />
           </div>
@@ -1071,7 +1071,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: rank(field.key),
       key: `greeting-${field.key}`,
       render: (n) => (
-        <Section key={field.key} number={n} label="Reasons You Love Them" hint="One per line — they'll be revealed one at a time, building to your message.">
+        <Section key={field.key} number={n} label="Reasons You Love Them" hint="One per line. They'll be revealed one at a time, building to your message.">
           <div data-field={field.key}>
             <textarea
               value={data[field.key] ?? ''}

@@ -500,7 +500,7 @@ function Ritual({ oldYear, newYear, isPreview }: { oldYear: number; newYear: num
       <Reveal disabled={isPreview} className="relative">
         <Heading kicker="Before midnight">Leave it in {oldYear}</Heading>
         <p className="mx-auto mt-3 max-w-[22rem] text-center text-[15px] leading-6" style={{ color: P.soft }}>
-          Write one thing you’re not taking with you. Nobody else sees it — not even us.
+          Write one thing you’re not taking with you. Nobody else sees it, not even us.
         </p>
       </Reveal>
       <div className="relative mx-auto mt-7 w-[min(100%,24rem)]">
@@ -517,7 +517,7 @@ function Ritual({ oldYear, newYear, isPreview }: { oldYear: number; newYear: num
           </form>
         ) : (
           <div className="relative flex min-h-[86px] flex-col items-center justify-center text-center">
-            <p className="relative text-[22px]" style={{ fontFamily: display, fontStyle: 'italic' }} aria-label={`${burnt} — gone`}>
+            <p className="relative text-[22px]" style={{ fontFamily: display, fontStyle: 'italic' }} aria-label={`${burnt}, gone`}>
               {letters.map((l, i) => (
                 <span key={i} className="ny-burn inline-block whitespace-pre" style={{ '--x': `${l.x}px`, '--y': `${l.y}px`, '--r': `${l.r}deg`, animationDelay: `${l.d}ms` } as CSSProperties}>{l.ch}</span>
               ))}
@@ -569,9 +569,9 @@ function NewYearRsvp({ anchor, hosts, what, phone, email, rsvpBy, guest, isPrevi
   const name = who.trim()
   const text =
     answer === 'no'
-      ? `${hosts ? `${hosts} — ` : ''}${name ? `it’s ${name}. ` : ''}We can’t make ${what}, and we’re gutted. Have the best night — happy New Year!`
-      : `${hosts ? `${hosts}! ` : ''}${name ? `It’s ${name} — ` : ''}count us in for ${what}. ${count === 1 ? 'Just me.' : `${count} of us.`}${song.trim() ? ` Our song for midnight: ${song.trim()}.` : ''} See you on the other side!`
-  const channels = rsvpChannels({ phone, email, text, subject: answer === 'no' ? `Can’t make ${what}` : `RSVP — ${what}` })
+      ? `${hosts ? `${hosts}! ` : ''}${name ? `It’s ${name}. ` : ''}We can’t make ${what}, and we’re gutted. Have the best night. Happy New Year!`
+      : `${hosts ? `${hosts}! ` : ''}${name ? `It’s ${name}. ` : ''}Count us in for ${what}. ${count === 1 ? 'Just me.' : `${count} of us.`}${song.trim() ? ` Our song for midnight: ${song.trim()}.` : ''} See you on the other side!`
+  const channels = rsvpChannels({ phone, email, text, subject: answer === 'no' ? `Can’t make ${what}` : `RSVP: ${what}` })
   const by = dateParts(rsvpBy)
   const field: CSSProperties = { fontFamily: sans, background: 'rgba(244,238,223,0.06)', border: `1px solid ${P.rule}`, color: P.text }
   const chip = (on: boolean): CSSProperties => (on ? { background: FOIL, color: P.black, border: '1px solid transparent' } : { color: P.goldLight, border: `1px solid ${P.rule}` })
@@ -650,7 +650,7 @@ export default function NewYearMidnight({ data, eventId, isPreview = false }: In
   const photos = useMemo(() => galleryImages(data.galleryImages, 8), [data.galleryImages])
   const music = /^https?:\/\//i.test(data.musicUrl || '') ? data.musicUrl : ''
   const homeNote = data.afterNote?.trim() || ''
-  const what = /new year/i.test(title) ? title : `${title} — New Year’s Eve`
+  const what = /new year/i.test(title) ? title : `${title} on New Year’s Eve`
 
   const [guest, setGuest] = useState('')
   useEffect(() => {
@@ -828,7 +828,7 @@ export default function NewYearMidnight({ data, eventId, isPreview = false }: In
             </p>
             <div className="absolute inset-x-6" style={{ top: 'calc(27% + clamp(46px, 15cqi, 86px))' }}>
               <div className="ny-rise" style={{ animationDelay: '500ms' }}>
-                <Caps size={11}>{guest ? `${guest} — ` : ''}{hosts ? `${hosts} invite you to` : 'You’re invited to'}</Caps>
+                <Caps size={11}>{guest ? `${guest}, ` : ''}{hosts ? `${hosts} invite you to` : 'You’re invited to'}</Caps>
               </div>
               <h1 className="ny-rise mt-3" style={{ fontFamily: deco, fontWeight: 400, fontSize: `clamp(34px, ${titleCqi.toFixed(1)}cqi, 64px)`, lineHeight: 1.05, color: P.text, textWrap: 'balance', animationDelay: '650ms' }}>
                 {title}
@@ -961,7 +961,7 @@ export default function NewYearMidnight({ data, eventId, isPreview = false }: In
                 )}
                 <div className="mt-6 flex flex-wrap justify-center gap-2.5">
                   <Btn href={mapsHref(data.mapsUrl, venue, address)} isPreview={isPreview} solid>Directions</Btn>
-                  <Btn href={calendarHref(`${title}${hosts ? ` — ${hosts}` : ''}`, data.date, data.time, where, 6)} isPreview={isPreview}>Calendar</Btn>
+                  <Btn href={calendarHref(`${title}${hosts ? `: ${hosts}` : ''}`, data.date, data.time, where, 6)} isPreview={isPreview}>Calendar</Btn>
                 </div>
                 {homeNote && (
                   <div className="mt-8 border-t pt-6" style={{ borderColor: P.rule }}>
@@ -980,7 +980,7 @@ export default function NewYearMidnight({ data, eventId, isPreview = false }: In
               eventId={eventId}
               theme={WISHES_THEME}
               title={`Toasts for ${year}`}
-              intro={`Raise a glass early — leave a toast for ${hosts || 'the hosts'}. Everyone who opens this invitation can read it.`}
+              intro={`Raise a glass early and leave a toast for ${hosts || 'the hosts'}. Everyone who opens this invitation can read it.`}
               noun="toast"
               previewWishes={SAMPLE_WISHES}
               namePlaceholder="e.g. Jules & Sam"

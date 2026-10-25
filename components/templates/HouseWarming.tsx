@@ -268,7 +268,7 @@ export default function HouseWarming({ data, eventId, isPreview = false }: Invit
   const hostPhoto = data.hostPhoto && /^(https?:)?\//.test(data.hostPhoto) ? data.hostPhoto : ''
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
-  const calendar = calendarHref(`Griha Pravesh — ${host}`, data.date, data.time, place || undefined)
+  const calendar = calendarHref(`Griha Pravesh: ${host}`, data.date, data.time, place || undefined)
   const animate = !isPreview
 
   const button =
@@ -398,7 +398,7 @@ export default function HouseWarming({ data, eventId, isPreview = false }: Invit
               </p>
             )}
             <p className="mt-4" style={{ fontFamily: hand, fontSize: 24, color: C.terra }}>
-              — {host}
+              {host}
             </p>
           </Reveal>
         )}

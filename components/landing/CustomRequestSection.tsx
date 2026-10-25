@@ -65,7 +65,7 @@ export default function CustomRequestSection() {
             </h2>
 
             <p className="t-lede mt-5 max-w-md">
-              Baby shower, graduation, a corporate launch, a reunion — tell us your vision and our design team
+              Baby shower, graduation, a corporate launch, a reunion: tell us your vision and our design team
               will craft an invitation for your event, style and language.
             </p>
 
@@ -119,7 +119,7 @@ export default function CustomRequestSection() {
               <form onSubmit={handleSubmit} className="space-y-5 max-sm:space-y-4">
                 <div>
                   <h3 className="t-h3 mb-1">Request a custom design</h3>
-                  <p className="text-xs text-muted leading-5">Fill in your details and describe your vision — we&apos;ll take it from there.</p>
+                  <p className="text-xs text-muted leading-5">Fill in your details and describe your vision. We&apos;ll take it from there.</p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -190,7 +190,7 @@ export default function CustomRequestSection() {
                     value={form.description}
                     onChange={set('description')}
                     rows={4}
-                    placeholder="Describe your dream invitation — style, colours, theme, any special elements or references you love…"
+                    placeholder="Describe your dream invitation: style, colours, theme, any special elements or references you love…"
                     className="field-input resize-none"
                   />
                 </div>

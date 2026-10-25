@@ -271,7 +271,7 @@ export default function PoojaInvite({ data, eventId, isPreview = false }: Invite
   const photo = data.hostPhoto && /^(https?:)?\//.test(data.hostPhoto) ? data.hostPhoto : null
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
-  const calendar = calendarHref(hosts ? `${pooja} — ${hosts}` : pooja, data.date, data.time, place, 3)
+  const calendar = calendarHref(hosts ? `${pooja}: ${hosts}` : pooja, data.date, data.time, place, 3)
 
   const words = pooja.split(/\s+/)
   const longest = Math.max(...words.map((w) => w.length), 1)
@@ -383,7 +383,7 @@ export default function PoojaInvite({ data, eventId, isPreview = false }: Invite
               <p className="leading-[1.55]" style={{ fontSize: 'clamp(19px, 5.8cqi, 22px)', textWrap: 'pretty' }}>{data.message}</p>
               {hosts && (
                 <p className="mt-5" style={{ fontFamily: display, fontSize: 20, fontWeight: 600, color: C.kumkum }}>
-                  — {hosts}
+                  {hosts}
                 </p>
               )}
             </>
@@ -491,7 +491,7 @@ export default function PoojaInvite({ data, eventId, isPreview = false }: Invite
             eventId={eventId}
             theme={WISHES_THEME}
             title="Blessings & wishes"
-            intro={`Can’t be there for the ${pooja.toLowerCase().includes('pooja') || pooja.toLowerCase().includes('puja') ? 'pooja' : pooja}? Leave a few words for the family — they appear here for every guest.`}
+            intro={`Can’t be there for the ${pooja.toLowerCase().includes('pooja') || pooja.toLowerCase().includes('puja') ? 'pooja' : pooja}? Leave a few words for the family. They appear here for every guest.`}
             noun="wish"
           />
         </div>

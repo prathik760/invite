@@ -30,7 +30,7 @@ function Phone({ screen, priority, sizes }: { screen: Screen; priority?: boolean
 }
 
 export default function PhoneFanHero({
-  centre = { src: '/templates/phone/signature-rajwada.jpg', alt: 'Rajwada — a Signature wedding invitation on a phone' },
+  centre = { src: '/templates/phone/signature-rajwada.jpg', alt: 'Rajwada, a Signature wedding invitation on a phone' },
   left = { src: '/templates/phone/haldi-mehendi.jpg', alt: 'Haldi & Mehendi invitation on a phone' },
   right = { src: '/templates/phone/signature-nikah.jpg', alt: 'Nikah invitation on a phone' },
 }: {
@@ -82,7 +82,7 @@ export default function PhoneFanHero({
           </span>
         </div>
         <figcaption className="flex items-end justify-between gap-2 px-1.5 pb-0.5 pt-1.5">
-          <span className="text-[0.72rem] leading-snug text-[#111B21] sm:text-[0.8rem]">You&apos;re invited — tap to open</span>
+          <span className="text-[0.72rem] leading-snug text-[#111B21] sm:text-[0.8rem]">You&apos;re invited. Tap to open</span>
           <span className="flex shrink-0 items-center gap-0.5 text-[0.6rem] text-[#667781]">
             7:42 pm
             <CheckIcon className="h-3 w-3 text-[#53BDEB]" />

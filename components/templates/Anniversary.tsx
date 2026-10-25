@@ -175,7 +175,7 @@ export default function Anniversary({ data, eventId, isPreview = false }: Invite
   const since = years && date ? date.year - years : null
 
   const calendar = calendarHref(
-    `${couple} — ${years ? `${years}${suffix(years)} ` : ''}wedding anniversary`,
+    `${couple}: ${years ? `${years}${suffix(years)} ` : ''}wedding anniversary`,
     data.date,
     data.time,
     [data.venue, data.venueAddress].filter(Boolean).join(', '),
@@ -237,7 +237,7 @@ export default function Anniversary({ data, eventId, isPreview = false }: Invite
           {years !== null ? (
             <h1 className="mt-2">
               <span className="sr-only">
-                {couple} — celebrating {numberWords(years)} {years === 1 ? 'year' : 'years'} of marriage
+                {couple}, celebrating {numberWords(years)} {years === 1 ? 'year' : 'years'} of marriage
               </span>
               <span
                 aria-hidden
@@ -291,7 +291,7 @@ export default function Anniversary({ data, eventId, isPreview = false }: Invite
 
           {since !== null && since > 1900 && (
             <p className="mt-4 tabular-nums" style={{ ...label, fontSize: 13, letterSpacing: '0.34em', color: C.goldSoft }}>
-              {since} &nbsp;&mdash;&nbsp; {date?.year}
+              {since} to {date?.year}
             </p>
           )}
         </div>

@@ -525,7 +525,7 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Invi
             <p className="mx-auto mt-5 max-w-[24rem] leading-[1.55]" style={{ fontFamily: display, fontSize: 21, color: C.maroon }}>
               {data.message}
             </p>
-            <p className="mt-4 text-[15px]" style={{ color: C.soft }}>— {bride} &amp; {groom}</p>
+            <p className="mt-4 text-[15px]" style={{ color: C.soft }}>{bride} &amp; {groom}</p>
           </Reveal>
         )}
 

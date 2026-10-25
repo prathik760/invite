@@ -28,7 +28,7 @@ import { ArrowRightIcon, ChevronDownIcon } from '@/components/ui/Icons'
  */
 export const NAV = [
   { label: 'Templates', key: 'nav.templates', href: '/templates', description: 'Browse digital invitation templates for weddings, birthdays, festivals, anniversaries and every celebration.' },
-  { label: 'Pricing', key: 'nav.pricing', href: '/pricing', description: 'One-time pricing per template — no subscription.' },
+  { label: 'Pricing', key: 'nav.pricing', href: '/pricing', description: 'One-time pricing per template, no subscription.' },
   { label: 'Blog', key: 'nav.blog', href: '/blog', description: 'Guides, wording ideas and inspiration for digital invitations.' },
 ] as const
 

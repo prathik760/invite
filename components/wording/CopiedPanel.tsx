@@ -59,7 +59,7 @@ export default function CopiedPanel({ templateId, text }: { templateId: string; 
     >
       <div className="min-w-0">
         <p className="text-[0.92rem] font-semibold leading-6 text-charcoal">
-          Copied <span aria-hidden>✓</span> — or send these words as an animated invitation
+          Copied <span aria-hidden>✓</span>. Or send these words as an animated invitation
         </p>
         <p className="mt-0.5 text-[0.78rem] leading-5 text-muted">
           Build and preview before you pay · <Price inr={price} /> once to publish

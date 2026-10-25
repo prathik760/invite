@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
     const notes = (order.notes ?? {}) as Record<string, unknown>
 
     if (notes.plan !== undefined && notes.plan !== plan) {
-      console.error(`[verify] Plan mismatch — order was for "${String(notes.plan)}", request claims "${plan}"`)
+      console.error(`[verify] Plan mismatch: order was for "${String(notes.plan)}", request claims "${plan}"`)
       return NextResponse.json({ error: 'Payment amount does not match plan price.' }, { status: 400 })
     }
 
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
 
     if (Number(order.amount) !== expectedMinor || order.currency !== expected.currency) {
       console.error(
-        `[verify] Amount mismatch — order: ${order.amount} ${order.currency}, plan "${plan}" in "${list}" expects ${expectedMinor} ${expected.currency}`,
+        `[verify] Amount mismatch. Order: ${order.amount} ${order.currency}, plan "${plan}" in "${list}" expects ${expectedMinor} ${expected.currency}`,
       )
       return NextResponse.json({ error: 'Payment amount does not match plan price.' }, { status: 400 })
     }

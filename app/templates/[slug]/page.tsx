@@ -47,11 +47,11 @@ export function generateMetadata({ params }: Props): Metadata {
   // Price in the title earns the click on commercial queries — "cost"/"price"
   // is the most common qualifier on these searches, and a visible price
   // pre-qualifies the visitor instead of surprising them at step 5.
-  const title = brandTitle((TEMPLATE_TITLES[template.id] ?? `${template.name.split('—')[0].trim()} Invitation Template, {price}`).replace('{price}', priceLabel))
+  const title = brandTitle((TEMPLATE_TITLES[template.id] ?? `${displayName(template.name)} Invitation Template, {price}`).replace('{price}', priceLabel))
   const description =
     template.id === 'royal-deco'
-      ? `Royal wedding invitation template — ${priceLabel}, one-time. Add your names, date, venue, Google Maps and photos, then share the link on WhatsApp. No app needed for guests.`
-      : `${template.description} ${priceLabel}, one-time — add your details, preview it before you pay, and share the invitation link on WhatsApp. No app needed for guests.`
+      ? `Royal wedding invitation template: ${priceLabel}, one-time. Add your names, date, venue, Google Maps and photos, then share the link on WhatsApp. No app needed for guests.`
+      : `${template.description} ${priceLabel}, one-time. Add your details, preview it before you pay, and share the invitation link on WhatsApp. No app needed for guests.`
   const ogImage = templateImageUrl(template.id)
 
   return {
@@ -113,7 +113,7 @@ function productJsonLd(template: NonNullable<ReturnType<typeof findTemplateBySlu
 const CATEGORY_CONTEXT: Record<string, { intro: string; guests: string }> = {
   signature: {
     intro: 'A wedding of several days asks guests to plan: which functions they are invited to, what to wear to each, where to stay and how to get there.',
-    guests: 'Guests — especially those travelling from other cities or abroad — want every function, venue, dress code, hotel and contact in one link they can reopen all week.',
+    guests: 'Guests, especially those travelling from other cities or abroad, want every function, venue, dress code, hotel and contact in one link they can reopen all week.',
   },
   babyshower: {
     intro: 'A Godh Bharai or baby shower is planned around the mother’s comfort, often at home and at short notice.',
@@ -121,50 +121,50 @@ const CATEGORY_CONTEXT: Record<string, { intro: string; guests: string }> = {
   },
   prewedding: {
     intro: 'Haldi, Mehendi and Sangeet are the most relaxed and the most crowded days of a wedding, and they move around more than the wedding itself.',
-    guests: 'Guests want the timing, the venue and above all the dress code — yellow for the Haldi, green for the Mehendi, glamour for the Sangeet.',
+    guests: 'Guests want the timing, the venue and above all the dress code: yellow for the Haldi, green for the Mehendi, glamour for the Sangeet.',
   },
   pooja: {
     intro: 'A home pooja is fixed around its muhurat, so the start time matters more than anything else on the invitation.',
     guests: 'Guests want the pooja and aarti timings, the address and whether prasad or lunch will be served.',
   },
   festival: {
-    intro: 'Festival evenings — Diwali, Eid and the rest — are planned in a busy week, with many invitations arriving at once.',
+    intro: 'Festival evenings (Diwali, Eid and the rest) are planned in a busy week, with many invitations arriving at once.',
     guests: 'Guests want the time, the address and a sense of the evening, so an invitation that stands out gets the answer first.',
   },
   savethedate: {
     intro: 'A save the date goes out six to twelve months before the wedding, so guests can book time off and travel before the formal invitation arrives.',
-    guests: 'Guests want the day, the town and somewhere to find the rest as it is settled — and a way to put the date straight into their calendar.',
+    guests: 'Guests want the day, the town and somewhere to find the rest as it is settled, and a way to put the date straight into their calendar.',
   },
   retirement: {
     intro: 'A retirement or farewell gathers colleagues, friends and family who rarely meet in one place.',
     guests: 'Guests want the venue, the time and a place to leave a message for the person of the evening.',
   },
   wedding: {
-    intro: 'Indian weddings run across several days and several venues, and the details move right up to the last week — a muhurat shifts, a hall changes, a function gets added.',
+    intro: 'Indian weddings run across several days and several venues, and the details move right up to the last week: a muhurat shifts, a hall changes, a function gets added.',
     guests: 'Guests travelling in from other cities need the venue address, a map pin and the ceremony timings in one place they can reopen on the morning of the wedding.',
   },
   engagement: {
     intro: 'A Mangni, Roka or Sagai is usually arranged on shorter notice than the wedding itself, often within a few weeks of the families agreeing.',
-    guests: 'Because the guest list is smaller and more personal, the invitation carries more weight — guests look for the ring ceremony time, the venue and who is hosting.',
+    guests: 'Because the guest list is smaller and more personal, the invitation carries more weight. Guests look for the ring ceremony time, the venue and who is hosting.',
   },
   birthday: {
-    intro: 'Birthday plans change more than any other event — the venue, the time and the theme are often confirmed only days before.',
+    intro: 'Birthday plans change more than any other event: the venue, the time and the theme are often confirmed only days before.',
     guests: 'Parents and friends want the party time, the address with directions, and a sense of the theme so they know what to bring and what to wear.',
   },
   housewarming: {
     intro: 'A Griha Pravesh is scheduled around a muhurat, which means the timing matters more than almost anything else on the invitation.',
-    guests: 'Guests need the pooja start time, the full new address — usually somewhere they have never been — and a map link, since new developments are often missing from older directions.',
+    guests: 'Guests need the pooja start time, the full new address (usually somewhere they have never been) and a map link, since new developments are often missing from older directions.',
   },
   naming: {
     intro: 'A Namakaran or cradle ceremony is typically held within weeks of the birth, when the family has very little time to organise printing and delivery.',
-    guests: 'Close family and neighbours need the ceremony time, the venue and the baby\u2019s name reveal — and they tend to reopen the invitation to show relatives.',
+    guests: 'Close family and neighbours need the ceremony time, the venue and the baby\u2019s name reveal, and they tend to reopen the invitation to show relatives.',
   },
   anniversary: {
     intro: 'A milestone anniversary is usually organised by children or family rather than the couple themselves, often as a surprise.',
-    guests: 'Guests want the celebration time, the venue and a sense of the couple\u2019s story — photographs from across the years do more work here than on any other invitation.',
+    guests: 'Guests want the celebration time, the venue and a sense of the couple\u2019s story. Photographs from across the years do more work here than on any other invitation.',
   },
   movie: {
-    intro: 'A cinematic wedding invitation sets a tone before a single detail is read — it signals the scale and mood of the celebration.',
+    intro: 'A cinematic wedding invitation sets a tone before a single detail is read: it signals the scale and mood of the celebration.',
     guests: 'The dramatic treatment is what gets it forwarded, but guests still need the practical details underneath: dates, venue, schedule and directions.',
   },
   retro: {
@@ -172,7 +172,7 @@ const CATEGORY_CONTEXT: Record<string, { intro: string; guests: string }> = {
     guests: 'A clear dress code matters more with this kind of event, alongside the usual timings, venue and map link.',
   },
   interactive: {
-    intro: 'This is a gift rather than a notice — something the recipient unlocks and moves through, rather than reads once.',
+    intro: 'This is a gift rather than a notice: something the recipient unlocks and moves through, rather than reads once.',
     guests: 'It is made for one person, not a guest list: the whole point is the moment they open it and work through what you have hidden inside.',
   },
   rakshabandhan: {
@@ -184,7 +184,7 @@ const CATEGORY_CONTEXT: Record<string, { intro: string; guests: string }> = {
     guests: 'Relatives, neighbours and mandal members come for darshan across different days, so they reopen the same link to check that evening\u2019s aarti time and find the mandap on a map.',
   },
   greeting: {
-    intro: 'This is an animated greeting for one person rather than an event invitation \u2014 there is no venue, no guest list and no RSVP.',
+    intro: 'This is an animated greeting for one person rather than an event invitation, so there is no venue, no guest list and no RSVP.',
     guests: 'It is built to be opened once, properly, on a phone: your photos, your words, and an animation that plays as they scroll.',
   },
 }
@@ -231,7 +231,7 @@ function designFeatures(template: NonNullable<ReturnType<typeof findTemplateBySl
   if (keys.has('guestLine')) out.push({ Icon: PenIcon, title: 'Addressed to each guest', copy: 'Add a name to your link and the cover greets that guest by name.' })
   if (!is3D(template.id)) out.push({ Icon: ClockIcon, title: 'Live countdown', copy: 'Days, hours and minutes to the moment.' })
   if (keys.has('mapsUrl')) out.push({ Icon: MapPinIcon, title: 'Venue & Google Maps', copy: 'The address with one-tap directions.' })
-  if (keys.has('events')) out.push({ Icon: CalendarIcon, title: 'Every function', copy: 'Each function on its own card — date, time, venue, dress code, map and calendar link.' })
+  if (keys.has('events')) out.push({ Icon: CalendarIcon, title: 'Every function', copy: 'Each function on its own card: date, time, venue, dress code, map and calendar link.' })
   else if (keys.has('sangeetDate') || keys.has('haldiDate')) out.push({ Icon: CalendarIcon, title: 'Every function', copy: 'Mehendi, Haldi, Sangeet and Reception, each with its own date and venue.' })
   else if (keys.has('mehendiDate')) out.push({ Icon: CalendarIcon, title: 'Haldi and Mehendi', copy: 'Both functions, each with its own time and venue.' })
   else if (keys.has('schedule') || keys.has('timeline')) out.push({ Icon: CalendarIcon, title: 'Event schedule', copy: 'Each moment of the day, in order.' })
@@ -302,11 +302,11 @@ export default function TemplateSeoPage({ params }: Props) {
     },
     {
       question: `How do I create an invitation with the ${template.name} template?`,
-      answer: `Choose "Use this design", fill in your details — names, date, venue, schedule and photos — and preview the invitation as you type. When you're happy, pay once and publish to get your link, ready to share on WhatsApp.`,
+      answer: `Choose "Use this design", fill in your details (names, date, venue, schedule and photos) and preview the invitation as you type. When you're happy, pay once and publish to get your link, ready to share on WhatsApp.`,
     },
     {
       question: 'Do guests need to download an app to view the invitation?',
-      answer: 'No app download required. Guests open the invitation link in their phone browser — it works on any Android or iOS device, in any country.',
+      answer: 'No app download required. Guests open the invitation link in their phone browser. It works on any Android or iOS device, in any country.',
     },
   ]
   const faqJsonLd = {
@@ -425,7 +425,7 @@ export default function TemplateSeoPage({ params }: Props) {
         <SectionHeading
           eyebrow="What's in this design"
           title={`Everything the ${name} design includes`}
-          sub="Taken from the design itself — nothing here is an add-on, and nothing is locked once it's yours."
+          sub="Taken from the design itself. Nothing here is an add-on, and nothing is locked once it's yours."
         />
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
           {features.map(({ Icon, title, copy }) => (
@@ -504,7 +504,7 @@ export default function TemplateSeoPage({ params }: Props) {
       <CtaBand
         eyebrow={<>{name} · <CouponPrice inr={price} plan={plan.id} templateId={template.id} /> one-time</>}
         title="Make this design yours"
-        sub="Preview before you pay. Pay once when you publish — every feature in the design is included."
+        sub="Preview before you pay. Pay once when you publish, and every feature in the design is included."
         primary={{ href: createHref, label: 'Use this design' }}
         secondary={{ href: `/demo/${template.id}`, label: 'Open the full demo' }}
         location="template_page_closing"

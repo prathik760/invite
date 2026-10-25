@@ -79,7 +79,7 @@ const WISHES_THEME: InviteTheme = {
 }
 
 const SAMPLE_WISHES = [
-  { name: 'Shalini & family', message: 'We’ll come on Saturday for the dolls — Meera’s cricket team is all the children have talked about. Happy Dasara to all of you!' },
+  { name: 'Shalini & family', message: 'We’ll come on Saturday for the dolls. Meera’s cricket team is all the children have talked about. Happy Dasara to all of you!' },
   { name: 'Prakash mama', message: 'Banni for Ajji first, as always. See you on Vijayadashami.' },
 ]
 
@@ -756,9 +756,9 @@ function DasaraRsvp({ anchor, days, hosts, phone, email, guest, isPreview }: { a
   const name = who.trim()
   const text =
     answer === 'no'
-      ? `Dear ${hosts || 'all'}, ${name ? `${name} here — ` : ''}we can’t make it this Dasara, and we’ll miss seeing the dolls. Wishing your family a very happy Vijayadashami!`
-      : `Namaskara${hosts ? ` ${hosts}` : ''}! ${name ? `${name} here — ` : ''}we’ll come${joined ? ` for ${joined}` : ''}. ${count === 1 ? 'Just me.' : `${count} of us.`} Happy Dasara!`
-  const channels = rsvpChannels({ phone, email, text, subject: answer === 'no' ? 'Can’t make it this Dasara' : `Dasara — ${name || 'we’re coming'}` })
+      ? `Dear ${hosts || 'all'}, ${name ? `${name} here. We` : 'we'} can’t make it this Dasara, and we’ll miss seeing the dolls. Wishing your family a very happy Vijayadashami!`
+      : `Namaskara${hosts ? ` ${hosts}` : ''}! ${name ? `${name} here. ` : ''}We’ll come${joined ? ` for ${joined}` : ''}. ${count === 1 ? 'Just me.' : `${count} of us.`} Happy Dasara!`
+  const channels = rsvpChannels({ phone, email, text, subject: answer === 'no' ? 'Can’t make it this Dasara' : `Dasara: ${name || 'we’re coming'}` })
   if (!rsvpChannels({ phone, email, text: '', subject: '' }).length) return null
 
   const chip = (on: boolean): CSSProperties => ({
@@ -1078,7 +1078,7 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
               <p className="am-rise" style={{ fontFamily: kannada, fontWeight: 700, fontSize: 'clamp(17px, 5.4cqi, 23px)', color: P.goldLight, animationDelay: '0ms' }}>{greeting}</p>
             )}
             <div className="am-rise mt-3" style={{ animationDelay: '120ms' }}>
-              <Caps color={P.creamSoft} size={11.5}>{guest ? `${guest} — ` : ''}{hosts ? `${hosts} invite you to` : 'You are invited to'}</Caps>
+              <Caps color={P.creamSoft} size={11.5}>{guest ? `${guest}, ` : ''}{hosts ? `${hosts} invite you to` : 'You are invited to'}</Caps>
             </div>
             <h1 className="am-rise mt-3" style={{ ...goldText({ fontFamily: display, fontWeight: 400, fontSize: `clamp(34px, ${titleCqi.toFixed(1)}cqi, 76px)`, lineHeight: 1.02, textWrap: 'balance', filter: 'drop-shadow(0 2px 12px rgba(255,170,60,0.35))' }), animationDelay: '220ms' }}>
               {title}
@@ -1127,7 +1127,7 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
                     {note.map((line, i) => (
                       <p key={i} className="mt-3">{line}</p>
                     ))}
-                    {hosts && <p className="mt-5 text-right" style={{ color: P.maroon }}>— {hosts}</p>}
+                    {hosts && <p className="mt-5 text-right" style={{ color: P.maroon }}>{hosts}</p>}
                   </div>
                 )}
               </Reveal>
@@ -1161,7 +1161,7 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
                   const bg = colourOf(d.date) ?? [P.maroon, P.peacock, P.silk][i % 3]
                   const fg = onColour(bg)
                   const dp = dateParts(d.date)
-                  const cal = calendarHref(`${d.name}${hosts ? ` — ${hosts}` : ''}`, d.date, d.time || data.time, where || undefined, 3)
+                  const cal = calendarHref(`${d.name}${hosts ? ` with ${hosts}` : ''}`, d.date, d.time || data.time, where || undefined, 3)
                   return (
                     <Reveal key={i} disabled={isPreview} delay={i * 70}>
                       <article className="relative overflow-hidden rounded-[22px] p-5" style={{ background: bg, color: fg, boxShadow: '0 16px 34px -22px rgba(42,22,16,0.7)', border: bg === '#FFFFFF' ? `1px solid ${P.rule}` : 'none' }}>
@@ -1198,7 +1198,7 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
               <Reveal disabled={isPreview}>
                 <Heading kicker="Navaratri">Colour of the day</Heading>
                 <p className="mx-auto mt-3 max-w-[22rem] text-center text-[15px] leading-6" style={{ color: P.soft }}>
-                  {data.dressCode?.trim() || 'Wear the colour of the day when you visit — the dolls notice.'}
+                  {data.dressCode?.trim() || 'Wear the colour of the day when you visit. The dolls notice.'}
                 </p>
               </Reveal>
               <div className="mx-auto mt-8 grid w-[min(100%,26rem)] grid-cols-3 gap-2.5">
@@ -1286,7 +1286,7 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
                   {data.dressCode?.trim() && colours.length === 0 && <p className="mt-3 text-[15px]" style={{ fontFamily: hand, color: P.soft }}>Wear: {data.dressCode.trim()}</p>}
                   <div className="mt-6 flex flex-wrap justify-center gap-2.5">
                     <Btn href={mapsHref(data.mapsUrl, venue, address)} isPreview={isPreview} tone="gold">Directions</Btn>
-                    <Btn href={calendarHref(`${title}${hosts ? ` — ${hosts}` : ''}`, data.date, data.time, where, 4)} isPreview={isPreview}>Add to calendar</Btn>
+                    <Btn href={calendarHref(`${title}${hosts ? `: ${hosts}` : ''}`, data.date, data.time, where, 4)} isPreview={isPreview}>Add to calendar</Btn>
                   </div>
                 </div>
               </Reveal>
@@ -1303,7 +1303,7 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
               eventId={eventId}
               theme={WISHES_THEME}
               title="Dasara wishes"
-              intro={`Leave a few words for ${hosts || 'the family'} — everyone who opens this invitation can read them.`}
+              intro={`Leave a few words for ${hosts || 'the family'}. Everyone who opens this invitation can read them.`}
               noun="wish"
               previewWishes={SAMPLE_WISHES}
               namePlaceholder="e.g. Shalini & family"
@@ -1334,7 +1334,7 @@ function BanniMoment({ wish, hosts, isPreview }: { wish: string; hosts: string; 
       <Reveal disabled={isPreview}>
         <Heading kicker="Vijayadashami" color={P.cream} kickerColor={P.gold}>A little gold for you</Heading>
         <p className="mx-auto mt-3 max-w-[21rem] text-[15px] leading-6" style={{ color: P.creamSoft }}>
-          On Vijayadashami we give banni — leaves of the shami tree — to the people we love, as gold.
+          On Vijayadashami we give banni (leaves of the shami tree) to the people we love, as gold.
         </p>
       </Reveal>
       <div className="mx-auto mt-6 w-[min(56%,14rem)]">
@@ -1352,7 +1352,7 @@ function BanniMoment({ wish, hosts, isPreview }: { wish: string; hosts: string; 
       ) : (
         <div className="am-pop mx-auto mt-4 max-w-[23rem]">
           <p style={{ ...goldText({ fontFamily: display, fontSize: 'clamp(24px, 7.6cqi, 32px)', lineHeight: 1.2 }) }}>{wish}</p>
-          {hosts && <p className="mt-3" style={{ fontFamily: hand, fontSize: 18, color: P.creamSoft }}>— {hosts}</p>}
+          {hosts && <p className="mt-3" style={{ fontFamily: hand, fontSize: 18, color: P.creamSoft }}>{hosts}</p>}
         </div>
       )}
     </section>

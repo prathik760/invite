@@ -181,7 +181,7 @@ const orgSchema = {
     height: 512,
     caption: 'ShareInvite',
   },
-  description: 'Digital invitation maker for weddings, birthdays, festivals and every celebration — shared with one link, anywhere in the world.',
+  description: 'Digital invitation maker for weddings, birthdays, festivals and every celebration, shared with one link, anywhere in the world.',
   foundingDate: '2026',
   areaServed: 'Worldwide',
   contactPoint: {

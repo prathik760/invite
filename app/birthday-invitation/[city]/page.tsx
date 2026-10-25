@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!info) return {}
 
   const ogTitle = `Digital Birthday Invitation in ${info.display} | ShareInvite`
-  const description = `Create a digital birthday invitation for your ${info.display} party — WhatsApp link with countdown, Google Maps & photo gallery. Preview before you pay.`
+  const description = `Create a digital birthday invitation for your ${info.display} party: WhatsApp link with countdown, Google Maps & photo gallery. Preview before you pay.`
 
   return {
     title: { absolute: ogTitle },
@@ -70,7 +70,7 @@ export default async function CityBirthdayPage({ params }: { params: Promise<{ c
         title={<>Digital Birthday Invitation <em className="font-medium text-burnished">in {info.display}</em></>}
         lede={info.heroIntro}
         local={{ title: `Built for ${info.display} birthday parties`, paras: [info.builtForPara], chips: [{ label: `Popular ${info.display} party venues`, items: info.venues }] }}
-        faqTitle={`${info.display} birthday invitation — FAQs`}
+        faqTitle={`${info.display} birthday invitation: FAQs`}
         faqs={info.faqs}
         links={[{ href: '/birthday-invitation', label: 'Birthday invitations' }, { href: `/wedding-invitation/${city}`, label: `Wedding invitations in ${info.display}` }, { href: `/engagement-invitation/${city}`, label: `Engagement invitations in ${info.display}` }, { href: '/birthday-invitation-wording', label: 'Birthday invitation wording' }, { href: '/templates', label: 'All designs' }]}
         closing={{ title: `Create your ${info.display} birthday invitation`, sub: info.ctaTagline }}

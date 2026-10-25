@@ -717,16 +717,16 @@ export default function SignatureKalyanam({ data, eventId, isPreview = false }: 
               {contacts.length > 0 && (
                 <Reveal disabled={isPreview} className="mt-8 space-y-3">
                   {contacts.map((c, i) => {
-                    const [who, ...role] = c.name.split(/\s+[—–-]\s+/)
+                    const [who, ...role] = c.name.split(/\s+[—–-]\s+|\s*,\s+/)
                     const tel = telHref(c.phone)
-                    const wa = whatsappHref(c.phone, `Vanakkam ${who.split(' ')[0]}, I'm a guest at ${couple}'s wedding — `)
+                    const wa = whatsappHref(c.phone, `Vanakkam ${who.split(' ')[0]}, I'm a guest at ${couple}'s wedding. `)
                     return (
                       <div key={`${c.name}-${i}`} className="grid grid-cols-[6px_1fr] overflow-hidden" style={{ background: K.paper, boxShadow: `0 0 0 1px ${K.rule}` }}>
                         <span aria-hidden style={{ background: K.turmeric }} />
                         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3.5">
                           <div className="min-w-0">
                             <p style={{ fontFamily: display, fontSize: 19, color: K.ink }}>{who}</p>
-                            {role.length > 0 && <p style={{ fontSize: 15, color: K.soft }}>{cap(role.join(' — '))}</p>}
+                            {role.length > 0 && <p style={{ fontSize: 15, color: K.soft }}>{cap(role.join(', '))}</p>}
                           </div>
                           {(tel || wa) && (
                             <div className="flex gap-2">

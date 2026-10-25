@@ -11,9 +11,9 @@ import { withLocalPrices } from '@/components/price/localised'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Press & Media | ShareInvite — Digital Invitation Platform' },
+  title: { absolute: 'Press & Media | ShareInvite: Digital Invitation Platform' },
   description:
-    'Press kit, logos, and company facts for ShareInvite — India\'s digital invitation platform. Contact our media team for interviews and coverage requests.',
+    'Press kit, logos, and company facts for ShareInvite, India\'s digital invitation platform. Contact our media team for interviews and coverage requests.',
   keywords: [
     'ShareInvite press',
     'ShareInvite media kit',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/press` },
   openGraph: {
     title: 'Press & Media Kit | ShareInvite',
-    description: 'Press resources, company facts, and media contact for ShareInvite — India\'s digital invitation platform.',
+    description: 'Press resources, company facts, and media contact for ShareInvite, India\'s digital invitation platform.',
     type: 'website',
     locale: 'en_IN',
   },
@@ -46,7 +46,7 @@ const coverageTopics = [
   'The environmental case for eco-friendly digital invitations',
   'How Indian wedding tech is catching up with global event platforms',
   'The rise of the Indian wedding economy and digital-first tools',
-  'Regional diversity in Indian weddings — how one platform serves all traditions',
+  'Regional diversity in Indian weddings: how one platform serves all traditions',
 ]
 
 export default function PressPage() {
@@ -72,7 +72,7 @@ export default function PressPage() {
               ShareInvite was founded in 2026 by <strong className="text-charcoal font-semibold">Prathik Thelkar</strong> with one straightforward observation: Indian families were spending thousands on printed wedding cards while the link they actually shared with guests was a blurry WhatsApp image. There had to be a better way.
             </p>
             <p>
-              ShareInvite is an Indian digital invitation platform that lets families create beautiful invitation websites for weddings, engagements, birthdays, Griha Pravesh, Namakaran, and all life events — and share them instantly on WhatsApp. One link. Everything guests need: venue map, ceremony schedule, photo gallery, background music, countdown, and a wishes section where family can leave blessings.
+              ShareInvite is an Indian digital invitation platform that lets families create beautiful invitation websites for weddings, engagements, birthdays, Griha Pravesh, Namakaran, and all life events, and share them instantly on WhatsApp. One link. Everything guests need: venue map, ceremony schedule, photo gallery, background music, countdown, and a wishes section where family can leave blessings.
             </p>
             <p>
               The platform is built specifically for the Indian market: WhatsApp-first sharing, regional ceremony name support (Roka, Mangni, Nishchayathartham, Griha Pravesh, Gruhapravesham, Godh Bharai, Namakaran, and more), and mobile-optimised pages that load quickly across Indian network conditions. Prathik built ShareInvite after watching families navigate the gap between how much care went into planning a celebration and how little that showed in the way invitations were shared.

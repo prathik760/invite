@@ -164,11 +164,11 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
   switch (category) {
     case 'Wedding':
       return {
-        intro: `Planning a wedding invitation is one of the first decisions families make after finalising the date. The format matters — it sets expectations for dress code, ceremony timing, and the overall mood of the event. This guide covers ${keyword}: from choosing the right format to sharing it effectively on WhatsApp.`,
+        intro: `Planning a wedding invitation is one of the first decisions families make after finalising the date. The format matters: it sets expectations for dress code, ceremony timing, and the overall mood of the event. This guide covers ${keyword}: from choosing the right format to sharing it effectively on WhatsApp.`,
         sections: [
           {
             heading: 'Why digital wedding invitations work better in India',
-            body: `Traditional printed wedding cards are beautiful but limited. They carry a fixed amount of information, cannot be updated after printing, and require physical distribution that takes time and coordination. A digital wedding invitation solves all three problems. Guests receive one shareable link they can open on any device directly from WhatsApp — and the host can update it anytime without reprinting.`,
+            body: `Traditional printed wedding cards are beautiful but limited. They carry a fixed amount of information, cannot be updated after printing, and require physical distribution that takes time and coordination. A digital wedding invitation solves all three problems. Guests receive one shareable link they can open on any device directly from WhatsApp, and the host can update it anytime without reprinting.`,
           },
           {
             heading: 'What to include in a complete wedding invitation',
@@ -176,15 +176,15 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'How to share across multiple family groups',
-            body: `For Indian weddings, the ceremony schedule is critical. Families share a single link across multiple WhatsApp groups — the bride's family, groom's family, friends, office colleagues, and distant relatives. Each group may attend different parts of the ceremony. A digital invitation that lists all events (Sangeet, Mehendi, Baraat, Varmala, Pheras, Reception) with timings dramatically reduces follow-up messages.`,
+            body: `For Indian weddings, the ceremony schedule is critical. Families share a single link across multiple WhatsApp groups: the bride's family, groom's family, friends, office colleagues, and distant relatives. Each group may attend different parts of the ceremony. A digital invitation that lists all events (Sangeet, Mehendi, Baraat, Varmala, Pheras, Reception) with timings dramatically reduces follow-up messages.`,
           },
           {
             heading: `Printed cards vs digital: what Indian families actually do`,
-            body: `Most families today use both: a beautifully printed card for close family and elders, and a digital link for the broader guest list. The ShareInvite link works as the primary communication channel for venue details, timings, and RSVP — while the printed card carries emotional and ceremonial weight for the inner circle.`,
+            body: `Most families today use both: a beautifully printed card for close family and elders, and a digital link for the broader guest list. The ShareInvite link works as the primary communication channel for venue details, timings, and RSVP, while the printed card carries emotional and ceremonial weight for the inner circle.`,
           },
           {
             heading: 'Last-minute changes are easy with a digital invite',
-            body: `Every guest gets the same complete page — venue, ceremony timings, dress code and a tap-to-open map — and can reopen it from the chat whenever they need it. For a ${keyword}, that alone saves a great many phone calls in the days before the wedding.`,
+            body: `Every guest gets the same complete page (venue, ceremony timings, dress code and a tap-to-open map) and can reopen it from the chat whenever they need it. For a ${keyword}, that alone saves a great many phone calls in the days before the wedding.`,
           },
         ],
         checklist: [
@@ -198,8 +198,8 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         faq: [
           { q: `How do I create a ${keyword}?`, a: `Go to shareinvite.in/create, choose a wedding template, fill in the couple's names, date, muhurat time, venue address, and ceremony schedule. Your invitation is live with a WhatsApp-ready link in under 5 minutes. No design skills needed.` },
           { q: 'How far in advance should I send a digital wedding invitation in India?', a: 'Send the digital wedding invitation 14–21 days before the wedding date, with a WhatsApp reminder 2–3 days before. For destination weddings, send 4–6 weeks in advance so guests can make travel arrangements.' },
-          { q: 'Can guests RSVP through the digital wedding invitation?', a: 'Guests can leave a wish on the invitation page itself, and every message appears in your dashboard. There is no formal attendance tracker — for an exact headcount, ask guests to confirm on WhatsApp. The Luxury Wedding design also includes an RSVP section.' },
-          { q: 'Should I still send printed wedding cards if I have a digital invitation?', a: 'Most Indian families use both — a printed card for close family, grandparents, and elders as a mark of respect, and a digital link for the broader guest list, colleagues, and friends. The digital invite serves as the practical reference guests use for venue and timing details.' },
+          { q: 'Can guests RSVP through the digital wedding invitation?', a: 'Guests can leave a wish on the invitation page itself, and every message appears in your dashboard. There is no formal attendance tracker. For an exact headcount, ask guests to confirm on WhatsApp. The Luxury Wedding design also includes an RSVP section.' },
+          { q: 'Should I still send printed wedding cards if I have a digital invitation?', a: 'Most Indian families use both: a printed card for close family, grandparents, and elders as a mark of respect, and a digital link for the broader guest list, colleagues, and friends. The digital invite serves as the practical reference guests use for venue and timing details.' },
         ],
         links: links[category],
       }
@@ -210,15 +210,15 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         sections: [
           {
             heading: 'What makes an engagement invitation different',
-            body: `The ring ceremony — known as Roka, Mangni, Sagai, or Nishchayathartham depending on region — is often the first public event where both families come together formally. This makes the invitation significant not just for logistics but for tone. A well-designed digital engagement invitation communicates the formality and joy of the occasion before guests even arrive.`,
+            body: `The ring ceremony (known as Roka, Mangni, Sagai, or Nishchayathartham depending on region) is often the first public event where both families come together formally. This makes the invitation significant not just for logistics but for tone. A well-designed digital engagement invitation communicates the formality and joy of the occasion before guests even arrive.`,
           },
           {
             heading: 'What to include in an engagement invitation',
-            body: `Key elements include: the couple's names with both family references, the exact date, time, and venue, ceremony schedule, dress code for both families, and a warm personal message. For venues in busy city areas, a Google Maps link is far more useful than a text address alone — most guests will navigate from the invitation on the day.`,
+            body: `Key elements include: the couple's names with both family references, the exact date, time, and venue, ceremony schedule, dress code for both families, and a warm personal message. For venues in busy city areas, a Google Maps link is far more useful than a text address alone. Most guests will navigate from the invitation on the day.`,
           },
           {
             heading: 'How WhatsApp sharing works for engagement invites',
-            body: `WhatsApp is the primary sharing channel for ${keyword} in India. The link preview — the image, title, and snippet that appear in chat — needs to look polished. ShareInvite generates correct Open Graph metadata for every invitation so the preview looks professional even before guests open it.`,
+            body: `WhatsApp is the primary sharing channel for ${keyword} in India. The link preview (the image, title, and snippet that appear in chat) needs to look polished. ShareInvite generates correct Open Graph metadata for every invitation so the preview looks professional even before guests open it.`,
           },
           {
             heading: 'Using the invite as an RSVP hub',
@@ -226,7 +226,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'Regional ceremony names across India',
-            body: `The engagement ceremony has different names — Roka, Mangni, Sagai in North India; Nishchayathartham or Nischitartham in South India; Gol Dhana in Gujarat; Misri in some communities. ShareInvite lets you use the term your family recognises, making the invitation feel authentic to your tradition rather than generic.`,
+            body: `The engagement ceremony has different names: Roka, Mangni, Sagai in North India; Nishchayathartham or Nischitartham in South India; Gol Dhana in Gujarat; Misri in some communities. ShareInvite lets you use the term your family recognises, making the invitation feel authentic to your tradition rather than generic.`,
           },
         ],
         checklist: [
@@ -239,7 +239,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose an engagement template, fill in the couple\'s names, ceremony date, venue, and schedule. Your digital engagement invitation is ready to share on WhatsApp in under 5 minutes.' },
-          { q: 'What is the difference between Roka, Sagai, and Mangni invitations?', a: 'Roka is the initial family agreement ceremony common in North Indian families. Sagai and Mangni refer to the formal ring exchange event. Both deserve a proper invitation — Roka is usually more intimate (close family only), while Sagai is the broader celebration.' },
+          { q: 'What is the difference between Roka, Sagai, and Mangni invitations?', a: 'Roka is the initial family agreement ceremony common in North Indian families. Sagai and Mangni refer to the formal ring exchange event. Both deserve a proper invitation. Roka is usually more intimate (close family only), while Sagai is the broader celebration.' },
           { q: 'How early should I send an engagement invitation?', a: 'Send the engagement invitation 10–14 days before the ceremony for local guests. If family is travelling from other cities, send at least 3 weeks in advance so they can plan travel and accommodation.' },
         ],
         links: links[category],
@@ -247,7 +247,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
 
     case 'Birthday':
       return {
-        intro: `Birthday celebrations in India range from intimate family gatherings to elaborate themed parties. The invitation sets the tone — it tells guests what to wear, when to arrive, and what kind of celebration to expect. This guide covers ${keyword} for Indian families, from wording to WhatsApp sharing.`,
+        intro: `Birthday celebrations in India range from intimate family gatherings to elaborate themed parties. The invitation sets the tone: it tells guests what to wear, when to arrive, and what kind of celebration to expect. This guide covers ${keyword} for Indian families, from wording to WhatsApp sharing.`,
         sections: [
           {
             heading: 'What a birthday invitation needs to communicate',
@@ -255,7 +255,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'What to include in a birthday invitation',
-            body: `Essentials include: celebrant name and age (if appropriate), date, time, venue, theme or dress code, schedule of events, and a wishes prompt for guests. For milestone birthdays — 1st, 21st, 50th, 60th — adding a personal note or gallery makes the invitation feel commemorative rather than just logistical.`,
+            body: `Essentials include: celebrant name and age (if appropriate), date, time, venue, theme or dress code, schedule of events, and a wishes prompt for guests. For milestone birthdays (1st, 21st, 50th, 60th), adding a personal note or gallery makes the invitation feel commemorative rather than just logistical.`,
           },
           {
             heading: 'Why WhatsApp birthday invitations work better than images',
@@ -263,7 +263,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'Mobile-first matters for birthday party invites',
-            body: `For ${keyword}, mobile-first design is essential. Birthday guests check their phones for venue details and directions right before the party starts. An invitation that loads fast, shows the address clearly, and has a one-tap Maps button reduces confusion — and last-minute calls to the host — significantly.`,
+            body: `For ${keyword}, mobile-first design is essential. Birthday guests check their phones for venue details and directions right before the party starts. An invitation that loads fast, shows the address clearly, and has a one-tap Maps button reduces confusion (and last-minute calls to the host) significantly.`,
           },
           {
             heading: 'Milestone birthday invitations deserve special treatment',
@@ -273,30 +273,30 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         checklist: [
           'Include celebrant name and age if celebrating a milestone.',
           'Add party theme and dress code if applicable.',
-          'Include the full schedule — arrival, cake cutting, dinner, DJ.',
+          'Include the full schedule: arrival, cake cutting, dinner, DJ.',
           'Add a Google Maps link for easier navigation.',
           'Enable guest wishes on the invitation page.',
           'Test the invite on both WhatsApp and direct browser access.',
         ],
         faq: [
-          { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a birthday template, fill in the celebrant\'s name, party date, venue, and schedule. Your digital birthday invitation is ready to share on WhatsApp in minutes — preview it before you pay, and guests need no app.' },
-          { q: 'What is the best way to share a birthday invitation on WhatsApp in India?', a: 'Create a digital invitation link on ShareInvite and forward it to your guest groups on WhatsApp. The link generates a clean preview card with the invitation details. Guests open it in their phone browser — no app download required.' },
-          { q: 'What should I write in a first birthday invitation?', a: 'Include: baby\'s name and "First Birthday" heading, date and time, venue with address, schedule (arrival, cake cutting, meal), a warm message from parents, and a photo of the baby. Keep the tone warm and joyful — this is as much an occasion for parents as for the child.' },
+          { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a birthday template, fill in the celebrant\'s name, party date, venue, and schedule. Your digital birthday invitation is ready to share on WhatsApp in minutes. Preview it before you pay, and guests need no app.' },
+          { q: 'What is the best way to share a birthday invitation on WhatsApp in India?', a: 'Create a digital invitation link on ShareInvite and forward it to your guest groups on WhatsApp. The link generates a clean preview card with the invitation details. Guests open it in their phone browser: no app download required.' },
+          { q: 'What should I write in a first birthday invitation?', a: 'Include: baby\'s name and "First Birthday" heading, date and time, venue with address, schedule (arrival, cake cutting, meal), a warm message from parents, and a photo of the baby. Keep the tone warm and joyful. This is as much an occasion for parents as for the child.' },
         ],
         links: links[category],
       }
 
     case 'Housewarming':
       return {
-        intro: `Griha Pravesh is one of the most significant milestones for an Indian family — the formal entry into a new home with pooja, rituals, and a shared meal. This guide covers ${keyword}: what to include, how to word it, and how to share it so guests have everything they need.`,
+        intro: `Griha Pravesh is one of the most significant milestones for an Indian family: the formal entry into a new home with pooja, rituals, and a shared meal. This guide covers ${keyword}: what to include, how to word it, and how to share it so guests have everything they need.`,
         sections: [
           {
             heading: 'What a Griha Pravesh invitation must include',
-            body: `A Griha Pravesh invitation needs to communicate more than most event invitations. The muhurat time is critical — guests need to arrive on schedule for the pooja. The new address must be completely clear because many guests may not know the locality. The schedule of pooja, lunch, and expected departure time helps guests plan their whole day correctly.`,
+            body: `A Griha Pravesh invitation needs to communicate more than most event invitations. The muhurat time is critical: guests need to arrive on schedule for the pooja. The new address must be completely clear because many guests may not know the locality. The schedule of pooja, lunch, and expected departure time helps guests plan their whole day correctly.`,
           },
           {
             heading: 'Wording and tone for a housewarming invitation',
-            body: `For ${keyword}, the tone should be warm and auspicious. Traditional language — blessings, new beginnings, divine grace — fits the occasion better than casual copy. The design should reflect the celebration: bright colours, floral motifs, or earthy tones depending on the family's tradition and taste.`,
+            body: `For ${keyword}, the tone should be warm and auspicious. Traditional language (blessings, new beginnings, divine grace) fits the occasion better than casual copy. The design should reflect the celebration: bright colours, floral motifs, or earthy tones depending on the family's tradition and taste.`,
           },
           {
             heading: 'Why Google Maps matters for housewarming invitations',
@@ -304,11 +304,11 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'Sharing the pooja schedule with family',
-            body: `Many families use the Griha Pravesh invitation to share the pooja schedule so family members who cannot attend physically can follow along. A digital page with the ceremony programme is accessible throughout the event day — guests can check the schedule without calling the host mid-ceremony.`,
+            body: `Many families use the Griha Pravesh invitation to share the pooja schedule so family members who cannot attend physically can follow along. A digital page with the ceremony programme is accessible throughout the event day, so guests can check the schedule without calling the host mid-ceremony.`,
           },
           {
             heading: 'When to send and how to remind guests',
-            body: `Send the ${keyword} at least 10 days before the ceremony, with a reminder reshared 2 days before. A digital invitation makes reminders effortless — it is simply a re-forward of the same link. No reprinting, no new image file, no new design required. The host can also add parking or entry notes at any point before the event.`,
+            body: `Send the ${keyword} at least 10 days before the ceremony, with a reminder reshared 2 days before. A digital invitation makes reminders effortless: it is simply a re-forward of the same link. No reprinting, no new image file, no new design required. The host can also add parking or entry notes at any point before the event.`,
           },
         ],
         checklist: [
@@ -321,7 +321,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a housewarming template, fill in the muhurat time, new address, pooja schedule, and a family message. Your Griha Pravesh invitation is ready to share on WhatsApp in under 5 minutes.' },
-          { q: 'What is the difference between Griha Pravesh and Gruhapravesham?', a: 'Both refer to the same ceremony — the auspicious entry into a new home. Griha Pravesh is the North Indian / Sanskrit term. Gruhapravesham is the South Indian (Tamil/Telugu) variant. Ghar Pravesh is the common Hindi usage. ShareInvite lets you use whichever term your family tradition follows.' },
+          { q: 'What is the difference between Griha Pravesh and Gruhapravesham?', a: 'Both refer to the same ceremony: the auspicious entry into a new home. Griha Pravesh is the North Indian / Sanskrit term. Gruhapravesham is the South Indian (Tamil/Telugu) variant. Ghar Pravesh is the common Hindi usage. ShareInvite lets you use whichever term your family tradition follows.' },
           { q: 'How far in advance should I send a Griha Pravesh invitation?', a: 'Send at least 10–14 days before the ceremony so guests can plan around the muhurat time. Share a reminder on WhatsApp 2 days before. If family is travelling from another city, send 3 weeks in advance.' },
         ],
         links: links[category],
@@ -329,15 +329,15 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
 
     case 'Baby Shower':
       return {
-        intro: `Baby showers, Godh Bharai, and Seemantham ceremonies celebrate new life and family blessings. The invitation sets the emotional tone — warmth, joy, and anticipation. This guide covers ${keyword}: what to include, how to word it, and how to share it with family across India.`,
+        intro: `Baby showers, Godh Bharai, and Seemantham ceremonies celebrate new life and family blessings. The invitation sets the emotional tone: warmth, joy, and anticipation. This guide covers ${keyword}: what to include, how to word it, and how to share it with family across India.`,
         sections: [
           {
             heading: 'Who typically attends a Godh Bharai or baby shower',
-            body: `Godh Bharai is celebrated primarily among women in the family and close friends — the guest list is usually personal and intimate. A digital invitation makes it easy to share within these close WhatsApp groups without the effort of printed cards. For Seemantham and other regional ceremonies, the guest list often extends to extended family across multiple cities.`,
+            body: `Godh Bharai is celebrated primarily among women in the family and close friends, so the guest list is usually personal and intimate. A digital invitation makes it easy to share within these close WhatsApp groups without the effort of printed cards. For Seemantham and other regional ceremonies, the guest list often extends to extended family across multiple cities.`,
           },
           {
             heading: 'What to include in a baby shower invitation',
-            body: `Include: the mother-to-be's name, date and time, venue, theme or dress code, schedule of events (rituals, blessings, lunch or tea), and a warm family message. Whether to include the baby's gender or keep it a surprise is a personal choice — reflect that decision in how you word the invitation.`,
+            body: `Include: the mother-to-be's name, date and time, venue, theme or dress code, schedule of events (rituals, blessings, lunch or tea), and a warm family message. Whether to include the baby's gender or keep it a surprise is a personal choice. Reflect that decision in how you word the invitation.`,
           },
           {
             heading: 'Collecting family blessings through the invitation',
@@ -345,11 +345,11 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'Including guests from other cities',
-            body: `The demand for ${keyword} has grown as families look to include guests from multiple cities. A link shared on a family WhatsApp group reaches everyone simultaneously — from the nearest aunt to a cousin in another country — making the invitation feel inclusive while keeping the host's effort minimal.`,
+            body: `The demand for ${keyword} has grown as families look to include guests from multiple cities. A link shared on a family WhatsApp group reaches everyone simultaneously, from the nearest aunt to a cousin in another country, making the invitation feel inclusive while keeping the host's effort minimal.`,
           },
           {
             heading: 'Design and tone for a baby shower invitation',
-            body: `Soft pastels, floral accents, and gentle typography signal the occasion before a guest reads a single word. The design should feel warm rather than formal. ShareInvite templates carry this visual warmth while still displaying all the practical event information guests need — venue, timings, schedule, and map.`,
+            body: `Soft pastels, floral accents, and gentle typography signal the occasion before a guest reads a single word. The design should feel warm rather than formal. ShareInvite templates carry this visual warmth while still displaying all the practical event information guests need: venue, timings, schedule, and map.`,
           },
         ],
         checklist: [
@@ -362,7 +362,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a baby shower or housewarming template, fill in the mother-to-be\'s name, ceremony date, venue, and schedule. Your invitation is ready to share on WhatsApp in under 5 minutes, and you can preview it before you pay.' },
-          { q: 'What is the difference between Godh Bharai and Seemantham?', a: 'Godh Bharai is the Hindi-belt term for the baby shower ceremony held in the 7th or 9th month of pregnancy. Seemantham is the South Indian equivalent, particularly common in Tamil Nadu and Andhra Pradesh. Both celebrate the mother-to-be with gifts, blessings, and rituals — the core invitation details are the same.' },
+          { q: 'What is the difference between Godh Bharai and Seemantham?', a: 'Godh Bharai is the Hindi-belt term for the baby shower ceremony held in the 7th or 9th month of pregnancy. Seemantham is the South Indian equivalent, particularly common in Tamil Nadu and Andhra Pradesh. Both celebrate the mother-to-be with gifts, blessings, and rituals. The core invitation details are the same.' },
           { q: 'How many days before a Godh Bharai should I send the invitation?', a: 'Send invitations 7–10 days before the ceremony. For family members travelling from another city, send 2–3 weeks in advance. A digital invitation lets you resend a reminder easily by re-forwarding the same WhatsApp link.' },
         ],
         links: links[category],
@@ -374,7 +374,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         sections: [
           {
             heading: 'The most common invitation mistake Indian families make',
-            body: `The most common mistake is over-complicating the design while under-delivering on content. Guests need clarity: when, where, what to wear, and how to respond. Everything else is secondary. The best invitations balance visual warmth with practical utility — giving guests exactly what they need without friction.`,
+            body: `The most common mistake is over-complicating the design while under-delivering on content. Guests need clarity: when, where, what to wear, and how to respond. Everything else is secondary. The best invitations balance visual warmth with practical utility, giving guests exactly what they need without friction.`,
           },
           {
             heading: 'What Indian guests always look for in an invitation',
@@ -386,7 +386,7 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'How personalisation makes the difference',
-            body: `Personalisation is what separates a memorable invitation from a generic one. A short note about the occasion, a meaningful photo, a music track that fits the mood — these small additions make guests feel genuinely invited rather than administratively notified. ShareInvite supports all of these through gallery, music, and message fields.`,
+            body: `Personalisation is what separates a memorable invitation from a generic one. A short note about the occasion, a meaningful photo, a music track that fits the mood: these small additions make guests feel genuinely invited rather than administratively notified. ShareInvite supports all of these through gallery, music, and message fields.`,
           },
           {
             heading: 'When to send and when to remind',
@@ -403,31 +403,31 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `What are the best ${keyword} for Indian families?`, a: 'The best digital invitation ideas for Indian families include: a live countdown to the event, a photo gallery of the hosts or celebrant, a WhatsApp-native link that opens instantly in the phone browser, a one-tap Google Maps button, background music that fits the occasion, and a guest wishes section for RSVP and messages.' },
-          { q: 'What should I write in an invitation message for a family event?', a: 'Keep the message warm and personal. Name the event, mention the date and venue, include a personal line from the host, and invite the guest specifically. Avoid generic wording — the message should feel like it was written for the reader, not copied from a template.' },
-          { q: 'How do I make an invitation stand out on WhatsApp?', a: 'A digital invitation link generates a WhatsApp preview card with an image, title, and description when forwarded. Use a clean, high-contrast invitation image and a specific title. Avoid forwarding image files — a link stays accessible and clickable long after the original message is buried in the chat.' },
+          { q: 'What should I write in an invitation message for a family event?', a: 'Keep the message warm and personal. Name the event, mention the date and venue, include a personal line from the host, and invite the guest specifically. Avoid generic wording. The message should feel like it was written for the reader, not copied from a template.' },
+          { q: 'How do I make an invitation stand out on WhatsApp?', a: 'A digital invitation link generates a WhatsApp preview card with an image, title, and description when forwarded. Use a clean, high-contrast invitation image and a specific title. Avoid forwarding image files. A link stays accessible and clickable long after the original message is buried in the chat.' },
         ],
         links: links[category],
       }
 
     case 'Wedding Trends':
       return {
-        intro: `Wedding invitation trends in India change with each season — colours, typography, format, and content style all evolve as couples look for ways to stand out. This guide explores ${keyword} and why digital formats are increasingly the primary choice for modern Indian weddings.`,
+        intro: `Wedding invitation trends in India change with each season: colours, typography, format, and content style all evolve as couples look for ways to stand out. This guide explores ${keyword} and why digital formats are increasingly the primary choice for modern Indian weddings.`,
         sections: [
           {
             heading: 'The shift from printed cards to digital experiences',
-            body: `The shift toward digital wedding invitations is not just practical — it reflects a broader trend toward experiences over objects. A beautifully designed invite page with music, a live countdown, and a photo gallery offers something a printed card cannot: it creates emotion and anticipation in the days leading up to the wedding.`,
+            body: `The shift toward digital wedding invitations is not just practical. It reflects a broader trend toward experiences over objects. A beautifully designed invite page with music, a live countdown, and a photo gallery offers something a printed card cannot: it creates emotion and anticipation in the days leading up to the wedding.`,
           },
           {
             heading: 'Current design trends in Indian wedding invitations',
-            body: `Design trends for ${keyword} currently favour: clean typography over decorative overload, dark cinematic designs for younger couples, traditional gold and red for family-oriented ceremonies, and minimal ivory-and-gold for modern secular weddings. Templates that reflect regional culture — South Indian floral patterns, Rajasthani mirror motifs, Bengali kalka prints — are in consistent demand.`,
+            body: `Design trends for ${keyword} currently favour: clean typography over decorative overload, dark cinematic designs for younger couples, traditional gold and red for family-oriented ceremonies, and minimal ivory-and-gold for modern secular weddings. Templates that reflect regional culture (South Indian floral patterns, Rajasthani mirror motifs, Bengali kalka prints) are in consistent demand.`,
           },
           {
             heading: 'How WhatsApp sharing changes invitation design',
-            body: `WhatsApp sharing has changed how invitations propagate. A visually strong invite gets forwarded beyond the original recipient list — guests share it to their own networks. This organic amplification rewards high-quality designs, making aesthetic choices increasingly important from a reach perspective. The WhatsApp preview card is the first impression the invitation makes.`,
+            body: `WhatsApp sharing has changed how invitations propagate. A visually strong invite gets forwarded beyond the original recipient list: guests share it to their own networks. This organic amplification rewards high-quality designs, making aesthetic choices increasingly important from a reach perspective. The WhatsApp preview card is the first impression the invitation makes.`,
           },
           {
             heading: 'What couples are personalising in 2025 and 2026',
-            body: `Personalisation is the defining characteristic of the best invitation designs in current trends. Generic templates are losing ground to designs that feel curated — with couple photos, a short love story, a meaningful music track, and a custom URL. These elements together create an invitation that feels like the couple rather than a product category.`,
+            body: `Personalisation is the defining characteristic of the best invitation designs in current trends. Generic templates are losing ground to designs that feel curated, with couple photos, a short love story, a meaningful music track, and a custom URL. These elements together create an invitation that feels like the couple rather than a product category.`,
           },
           {
             heading: 'The future: invitation as event hub',
@@ -444,8 +444,8 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         ],
         faq: [
           { q: `What are the current trends in ${keyword}?`, a: 'In 2025–26, Indian wedding invitation trends favour: digital-first formats shared on WhatsApp, dark cinematic designs for younger couples, traditional gold-on-ivory for family ceremonies, regional cultural motifs (South Indian, Rajasthani, Bengali), couple photo galleries, and background music tracks personalised to the couple.' },
-          { q: 'Are digital wedding invitations replacing printed cards in India?', a: 'Most modern Indian families use both — a beautifully printed card for close family and elders, and a digital link for the broader guest list. The digital invitation has become the primary practical reference: guests use it for venue navigation, timings, and RSVP. The printed card carries ceremonial and emotional weight.' },
-          { q: 'What makes a wedding invitation look premium and modern?', a: 'Premium digital wedding invitations combine: clean display typography, couple photos in a gallery, background music, a custom short URL (e.g. shareinvite.in/ananya-vihaan), a live countdown to the wedding, and a guest wishes section. The WhatsApp preview card — the thumbnail image and title that appears when forwarded — is the first impression and should be visually strong.' },
+          { q: 'Are digital wedding invitations replacing printed cards in India?', a: 'Most modern Indian families use both: a beautifully printed card for close family and elders, and a digital link for the broader guest list. The digital invitation has become the primary practical reference: guests use it for venue navigation, timings, and RSVP. The printed card carries ceremonial and emotional weight.' },
+          { q: 'What makes a wedding invitation look premium and modern?', a: 'Premium digital wedding invitations combine: clean display typography, couple photos in a gallery, background music, a custom short URL (e.g. shareinvite.in/ananya-vihaan), a live countdown to the wedding, and a guest wishes section. The WhatsApp preview card (the thumbnail image and title that appears when forwarded) is the first impression and should be visually strong.' },
         ],
         links: links[category],
       }
@@ -457,11 +457,11 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
         sections: [
           {
             heading: 'Why digital invitations have become the default in India',
-            body: `The case for digital invitations is settled for most Indian families. Lower cost, instant delivery, easy updating, and WhatsApp-native sharing are clear advantages. What has changed is the quality bar — guests now expect digital invitations to feel as premium as the events themselves, not like a hastily sent image.`,
+            body: `The case for digital invitations is settled for most Indian families. Lower cost, instant delivery, easy updating, and WhatsApp-native sharing are clear advantages. What has changed is the quality bar: guests now expect digital invitations to feel as premium as the events themselves, not like a hastily sent image.`,
           },
           {
             heading: 'Principles that make a digital invitation work',
-            body: `For ${keyword}, a few principles consistently produce strong results. Mobile-first design matters most — virtually all guests open invitations on phones. Fast loading prevents drop-offs before guests read anything. Clear typographic hierarchy ensures the most important details — names, date, venue — are readable without scrolling.`,
+            body: `For ${keyword}, a few principles consistently produce strong results. Mobile-first design matters most: virtually all guests open invitations on phones. Fast loading prevents drop-offs before guests read anything. Clear typographic hierarchy ensures the most important details (names, date, venue) are readable without scrolling.`,
           },
           {
             heading: 'RSVP and guest management through the invitation',
@@ -469,11 +469,11 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           },
           {
             heading: 'The 10-second test every invitation should pass',
-            body: `The key metric for any digital invitation is whether a guest can find the venue in under 10 seconds after opening the link. Many invitations fail this test — venue details buried below a large hero image, or a text address with no Maps link. Designing around this test produces significantly better guest satisfaction on the day.`,
+            body: `The key metric for any digital invitation is whether a guest can find the venue in under 10 seconds after opening the link. Many invitations fail this test: venue details buried below a large hero image, or a text address with no Maps link. Designing around this test produces significantly better guest satisfaction on the day.`,
           },
           {
             heading: 'Technical quality: Open Graph and WhatsApp previews',
-            body: `The technical side of ${keyword} matters for sharing quality. Open Graph metadata determines what the invitation preview looks like when forwarded on WhatsApp — the image, title, and description that appear in chat. ShareInvite generates correct, invitation-specific OG metadata for every published invite, ensuring the preview looks professional before guests even open it.`,
+            body: `The technical side of ${keyword} matters for sharing quality. Open Graph metadata determines what the invitation preview looks like when forwarded on WhatsApp: the image, title, and description that appear in chat. ShareInvite generates correct, invitation-specific OG metadata for every published invite, ensuring the preview looks professional before guests even open it.`,
           },
         ],
         checklist: [
@@ -485,9 +485,9 @@ function buildPostContent(keyword: string, category: BlogCategory): ContentBlock
           'Reshare the link as a reminder 2 days before the event.',
         ],
         faq: [
-          { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a template for your event type, fill in the names, date, venue, and schedule. Your invitation is live with a WhatsApp-ready link in under 5 minutes. Guests open it in their phone browser — no app download needed.' },
+          { q: `How do I create a ${keyword}?`, a: 'Go to shareinvite.in/create, choose a template for your event type, fill in the names, date, venue, and schedule. Your invitation is live with a WhatsApp-ready link in under 5 minutes. Guests open it in their phone browser: no app download needed.' },
           { q: 'How much does a digital invitation cost in India?', a: `On ShareInvite you pay once for the design you publish. ${priceRangeSentence()} You can choose a template, add all your details and preview the finished invitation before you pay, and there is no subscription.` },
-          { q: 'Can I update a digital invitation after sending it?', a: 'Yes — this is one of the biggest advantages over printed cards. You can update venue details, change a timing, correct a spelling, or add new information at any time. The same link continues to work for all guests who already received it, showing the updated information automatically.' },
+          { q: 'Can I update a digital invitation after sending it?', a: 'Yes, this is one of the biggest advantages over printed cards. You can update venue details, change a timing, correct a spelling, or add new information at any time. The same link continues to work for all guests who already received it, showing the updated information automatically.' },
         ],
         links: links['Digital Invitations'],
       }
@@ -742,7 +742,7 @@ export default function BlogPostPage({ params }: Props) {
             <div className="mb-10 flex flex-col gap-4 rounded-3xl border border-line bg-paper p-6 shadow-soft sm:flex-row sm:items-center sm:justify-between">
               <div className="min-w-0">
                 <p className="t-h3">See this design live</p>
-                <p className="mt-1 text-[0.9rem] text-charcoal/70">Open the real, interactive design — exactly what your recipient sees.</p>
+                <p className="mt-1 text-[0.9rem] text-charcoal/70">Open the real, interactive design: exactly what your recipient sees.</p>
               </div>
               <div className="flex shrink-0 flex-wrap items-center gap-2.5">
                 <PreviewButton templateId={demoTemplateId} source="blog_demo" className="btn-outline inline-flex items-center gap-1.5 rounded-full px-5 py-3 text-[0.9rem] font-semibold">

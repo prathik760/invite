@@ -83,7 +83,7 @@ export default function LiveDemoScreen({
           key={templateId}
           ref={frameRef}
           src={`/demo/${templateId}/embed`}
-          title={`${title} — live preview`}
+          title={`${title}: live preview`}
           onLoad={reveal}
           className="absolute left-0 top-0 border-0"
           style={{

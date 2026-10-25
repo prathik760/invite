@@ -482,18 +482,18 @@ function GalaRsvp({ anchor, parts, phone, email, what, rsvpBy, guest, isPreview 
   }
   const chosen = parts.filter((_, i) => isGoing(i))
 
-  const lines = [`RSVP — ${what}`, who.trim() ? `From: ${who.trim()}` : '']
+  const lines = [`RSVP: ${what}`, who.trim() ? `From: ${who.trim()}` : '']
   if (answer === 'yes') {
-    lines.push(`Joyfully coming${count > 1 ? ` — ${count} of us` : ''}`)
+    lines.push(`Joyfully coming${count > 1 ? `, ${count} of us` : ''}`)
     if (parts.length > 1) lines.push(chosen.length === parts.length ? 'For all of it' : `For: ${chosen.map(label).join(', ')}`)
     if (diet.trim()) lines.push(`Dietary needs: ${diet.trim()}`)
     if (song.trim()) lines.push(`Song request: ${song.trim()}`)
   } else if (answer === 'no') {
-    lines.push('Sadly can’t make it — wishing you the most wonderful celebration.')
+    lines.push('Sadly can’t make it. Wishing you the most wonderful celebration.')
   }
   const text = lines.filter(Boolean).join('\n')
   const ready = answer === 'no' || (answer === 'yes' && (parts.length < 2 || chosen.length > 0))
-  const channels = rsvpChannels({ phone, email, text, subject: `RSVP — ${what}${who.trim() ? ` — ${who.trim()}` : ''}` })
+  const channels = rsvpChannels({ phone, email, text, subject: `RSVP: ${what}${who.trim() ? `, from ${who.trim()}` : ''}` })
 
   const field: CSSProperties = { fontFamily: sans, fontSize: 16, color: P.ink, background: 'transparent', borderBottom: `1px solid rgba(28,41,36,0.3)` }
 
@@ -558,7 +558,7 @@ function GalaRsvp({ anchor, parts, phone, email, what, rsvpBy, guest, isPreview 
             </label>
             <label className="block">
               <span className="block uppercase" style={{ fontFamily: sans, fontSize: 10.5, letterSpacing: '0.26em', color: P.faint }}>A song for the dance floor</span>
-              <input value={song} onChange={(e) => setSong(e.target.value.slice(0, 120))} placeholder="e.g. September — Earth, Wind & Fire" className="mt-1.5 w-full py-2 outline-none" style={field} />
+              <input value={song} onChange={(e) => setSong(e.target.value.slice(0, 120))} placeholder="e.g. September by Earth, Wind & Fire" className="mt-1.5 w-full py-2 outline-none" style={field} />
             </label>
           </div>
         )}
@@ -567,7 +567,7 @@ function GalaRsvp({ anchor, parts, phone, email, what, rsvpBy, guest, isPreview 
           <div className="gl-pop mt-8">
             {ready ? (
               <>
-                <p className="text-center" style={{ fontFamily: script, fontSize: 30, lineHeight: 1.1, color: P.goldDeep }}>{answer === 'yes' ? 'Wonderful — send it on' : 'We’ll miss you — send it on'}</p>
+                <p className="text-center" style={{ fontFamily: script, fontSize: 30, lineHeight: 1.1, color: P.goldDeep }}>{answer === 'yes' ? 'Wonderful, send it on' : 'We’ll miss you. Send it on'}</p>
                 <div className="mt-3 grid gap-2">
                   {channels.map((c) => (
                     <a
@@ -584,7 +584,7 @@ function GalaRsvp({ anchor, parts, phone, email, what, rsvpBy, guest, isPreview 
                     </a>
                   ))}
                 </div>
-                <p className="mt-3 text-center" style={{ fontSize: 12.5, color: P.faint }}>Your reply opens ready to send — nothing is sent until you press send.</p>
+                <p className="mt-3 text-center" style={{ fontSize: 12.5, color: P.faint }}>Your reply opens ready to send. Nothing is sent until you press send.</p>
               </>
             ) : (
               <p className="text-center" style={{ fontSize: 14.5, color: P.soft }}>Tick at least one part of the celebration.</p>
@@ -833,7 +833,7 @@ export default function BirthdayGala({ data, eventId, isPreview = false }: Invit
                         {p.dress && <p className="mt-3" style={{ fontFamily: display, fontStyle: 'italic', fontSize: 17, color: P.goldDeep }}>Dress: {p.dress}</p>}
                         <div className="mt-5 grid grid-cols-2 gap-2">
                           <Btn href={mapsHref(undefined, p.venue, p.address)} isPreview={isPreview}>Map</Btn>
-                          <Btn href={calendarHref(`${p.name} — ${what}`, p.date, p.time, where || undefined, 4)} isPreview={isPreview}>Calendar</Btn>
+                          <Btn href={calendarHref(`${p.name}: ${what}`, p.date, p.time, where || undefined, 4)} isPreview={isPreview}>Calendar</Btn>
                         </div>
                       </div>
                     </Reveal>
@@ -994,7 +994,7 @@ export default function BirthdayGala({ data, eventId, isPreview = false }: Invit
               eventId={eventId}
               theme={WISHES_THEME}
               title="The birthday book"
-              intro={`A memory, a toast, a wish for the next ${age ? numberWords(age) : 'many'} years — write a page in ${name}’s birthday book. Everyone who opens this invitation can read it.`}
+              intro={`A memory, a toast, a wish for the next ${age ? numberWords(age) : 'many'} years: write a page in ${name}’s birthday book. Everyone who opens this invitation can read it.`}
               noun="page"
               previewWishes={SAMPLE_WISHES}
               namePlaceholder="e.g. Hattie & Jo"

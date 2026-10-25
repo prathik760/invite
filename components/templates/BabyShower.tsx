@@ -639,7 +639,7 @@ export default function BabyShower({ data, eventId, isPreview = false }: InviteP
               <p className="mx-auto mt-6 leading-[1.5]" style={{ fontFamily: display, fontSize: 'clamp(21px, 6.2cqi, 25px)', textWrap: 'pretty' }}>
                 {data.message}
               </p>
-              {hosts && <p className="mt-5" style={{ fontSize: 16, fontWeight: 500, color: C.rose }}>— {hosts}</p>}
+              {hosts && <p className="mt-5" style={{ fontSize: 16, fontWeight: 500, color: C.rose }}>{hosts}</p>}
             </>
           )}
         </Reveal>

@@ -6,9 +6,9 @@ import { PersonIcon, ClockIcon, MapPinIcon, CameraIcon, ClipboardIcon, MessageIc
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: `Digital Namakaran Invitation Online — ₹${templatePrice('namakaran')} | ShareInvite` },
+  title: { absolute: `Digital Namakaran Invitation Online: ₹${templatePrice('namakaran')} | ShareInvite` },
   description:
-    `Namakaran invitation on one WhatsApp link — ceremony schedule, Google Maps, baby photos & a blessings wall. Preview before you pay; ₹${templatePrice('namakaran')} once.`,
+    `Namakaran invitation on one WhatsApp link: ceremony schedule, Google Maps, baby photos & a blessings wall. Preview before you pay; ₹${templatePrice('namakaran')} once.`,
   keywords: [
     'digital namakaran invitation',
     'namakaran e-invite India',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${APP_URL}/namakaran-invitation` },
   openGraph: {
     title: 'Digital Namakaran Invitation | Naming Ceremony E-Invite India | ShareInvite',
-    description: `Namakaran invitation on one WhatsApp link — ceremony schedule, Google Maps, baby photos & a blessings wall. Preview before you pay; ₹${templatePrice('namakaran')} once.`,
+    description: `Namakaran invitation on one WhatsApp link: ceremony schedule, Google Maps, baby photos & a blessings wall. Preview before you pay; ₹${templatePrice('namakaran')} once.`,
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Namakaran Invitation India' }],
@@ -39,7 +39,7 @@ const faqSchema = {
       name: 'How do I create a digital Namakaran invitation in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Go to shareinvite.in/create, choose a template, enter the baby\'s name, parents\' names, ceremony date, venue, and a personal message. Your Namakaran invitation is live in under 5 minutes — share the link directly on WhatsApp with all family groups.',
+        text: 'Go to shareinvite.in/create, choose a template, enter the baby\'s name, parents\' names, ceremony date, venue, and a personal message. Your Namakaran invitation is live in under 5 minutes. Share the link directly on WhatsApp with all family groups.',
       },
     },
     {
@@ -55,7 +55,7 @@ const faqSchema = {
       name: 'What is the difference between Namakaran, Naamkaran, and Cradle ceremony?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Namakaran (or Namakarana) is the Sanskrit term for the baby naming ceremony. Naamkaran is the common Hindi spelling. Cradle ceremony is the English term used widely in South India. All refer to the same event — the formal naming of the newborn. ShareInvite lets you use whichever term suits your tradition.',
+        text: 'Namakaran (or Namakarana) is the Sanskrit term for the baby naming ceremony. Naamkaran is the common Hindi spelling. Cradle ceremony is the English term used widely in South India. All refer to the same event: the formal naming of the newborn. ShareInvite lets you use whichever term suits your tradition.',
       },
     },
     {
@@ -71,7 +71,7 @@ const faqSchema = {
       name: 'How much does a digital Namakaran invitation cost?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Namakaran template is ₹299 as a one-time payment — no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step.',
+        text: 'The Namakaran template is ₹299 as a one-time payment: no subscription, and no charge per guest. You can fill in every detail and preview the finished invitation before paying; payment is only requested at the final publish step.',
       },
     },
   ],
@@ -79,13 +79,13 @@ const faqSchema = {
 
 const FEATURES = [
   { icon: <PersonIcon />, title: 'Baby & Parents Names', desc: 'Display the baby\'s name reveal and parents\' names in beautiful display typography.' },
-  { icon: <ClockIcon />, title: 'Muhurat Time', desc: 'Show the auspicious naming ceremony time prominently — the most important detail for family.' },
+  { icon: <ClockIcon />, title: 'Muhurat Time', desc: 'Show the auspicious naming ceremony time prominently, the most important detail for family.' },
   { icon: <MapPinIcon />, title: 'Venue + Google Maps', desc: 'Full venue address with one-tap Google Maps so family navigates to the right place.' },
   { icon: <CameraIcon />, title: 'Baby Photo Gallery', desc: 'Share the baby\'s first photos to make the invitation warm and personal for everyone.' },
-  { icon: <ClipboardIcon />, title: 'Ceremony Schedule', desc: 'List the full programme — pooja, name reveal, blessings, lunch — in a clear timeline.' },
+  { icon: <ClipboardIcon />, title: 'Ceremony Schedule', desc: 'List the full programme (pooja, name reveal, blessings, lunch) in a clear timeline.' },
   { icon: <MessageIcon />, title: 'Family Blessings', desc: 'Collect blessings and wishes from relatives attending and those joining remotely.' },
   { icon: <MusicIcon />, title: 'Background Music', desc: 'Set a gentle, celebratory track to play as guests open the invitation.' },
-  { icon: <ShareIcon />, title: 'WhatsApp Sharing', desc: 'Send the invite to all family groups with one tap — no app download for guests.' },
+  { icon: <ShareIcon />, title: 'WhatsApp Sharing', desc: 'Send the invite to all family groups with one tap. No app download for guests.' },
 ]
 
 const CEREMONY_NAMES = [
@@ -109,12 +109,12 @@ export default function Page() {
         crumb="Namakaran invitations"
         eyebrow="Digital naming ceremony invitations"
         title={<>Digital Namakaran Invitation <em className="font-medium text-burnished">Naming · Cradle Ceremony</em></>}
-        lede={`Share the muhurat, ceremony schedule, venue map and your baby's first photos — a beautiful naming ceremony invitation on one WhatsApp link. Build and preview before you pay — publish for ₹${templatePrice('namakaran')} one-time.`}
+        lede={`Share the muhurat, ceremony schedule, venue map and your baby's first photos. A beautiful naming ceremony invitation on one WhatsApp link. Build and preview before you pay, then publish for ₹${templatePrice('namakaran')} one-time.`}
         ctaLabel="Start my Namakaran invite"
         types={{
           eyebrow: 'Every tradition',
           title: 'Namakaran invitations for every naming tradition',
-          sub: 'Namakaran, Naamkaran, Cradle Ceremony, Namakarana — one digital invitation works for every regional tradition.',
+          sub: 'Namakaran, Naamkaran, Cradle Ceremony, Namakarana: one digital invitation works for every regional tradition.',
           items: CEREMONY_NAMES.map((t) => ({ name: t.name, tag: t.region, desc: t.desc })),
         }}
         features={{ title: "What's included in your Namakaran invitation", items: FEATURES }}

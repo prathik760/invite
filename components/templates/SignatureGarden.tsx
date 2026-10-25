@@ -807,7 +807,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
     return out
   }, [functions])
 
-  const reply = whatsappHref(data.whatsappNumber, `Hello! Replying to ${couple}'s wedding invitation — `)
+  const reply = whatsappHref(data.whatsappNumber, `Hello! Replying to ${couple}'s wedding invitation. `)
   const rsvpBy = dateParts(data.rsvpBy)
   const live = data.livestreamUrl && /^https?:\/\//i.test(data.livestreamUrl) ? data.livestreamUrl : null
   const registry = data.registryUrl && /^https?:\/\//i.test(data.registryUrl) ? data.registryUrl : null
@@ -1167,7 +1167,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
                         {day.items.map((fn, i) => {
                           const t = timeLabel(fn.time)
                           const fnPlace = [fn.venue || data.venue, data.venueAddress].filter(Boolean).join(', ')
-                          const cal = calendarHref(`${fn.name} — ${couple}`, fn.date, fn.time, fnPlace || undefined, 3)
+                          const cal = calendarHref(`${fn.name}: ${couple}`, fn.date, fn.time, fnPlace || undefined, 3)
                           const dir = fn.venue ? mapsHref(undefined, fn.venue, data.venueAddress) : directions
                           return (
                             <Reveal key={`${fn.name}-${i}`} disabled={isPreview} delay={i * 60}>
@@ -1327,7 +1327,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
                     <ul className="mt-3 space-y-3">
                       {contacts.map((c, i) => {
                         const tel = telHref(c.phone)
-                        const wa = whatsappHref(c.phone, `Hi! A question about ${couple}'s wedding — `)
+                        const wa = whatsappHref(c.phone, `Hi! A question about ${couple}'s wedding: `)
                         return (
                           <li key={i} className="p-4" style={{ background: G.card, border: `1px solid ${G.rule}` }}>
                             <p className="leading-[1.3]" style={{ fontFamily: display, fontSize: 20 }}>{c.name}</p>
@@ -1398,7 +1398,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
               eventId={eventId}
               theme={WISHES_THEME}
               title="Notes for the couple"
-              intro={`Leave a few words for ${bride} and ${groom} — they will appear here for every guest.`}
+              intro={`Leave a few words for ${bride} and ${groom}. They will appear here for every guest.`}
               noun="note"
             />
           )}

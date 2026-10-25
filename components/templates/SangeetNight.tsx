@@ -493,7 +493,7 @@ export default function SangeetNight({ data, eventId, isPreview = false }: Invit
   const photos = useMemo(() => galleryImages(data.galleryImages, 7), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`Sangeet — ${couple}`, data.date, data.time, place || undefined, 5)
+  const calendar = calendarHref(`Sangeet: ${couple}`, data.date, data.time, place || undefined, 5)
   const hashtag = data.hashtag?.trim() ? (data.hashtag.trim().startsWith('#') ? data.hashtag.trim() : `#${data.hashtag.trim()}`) : ''
 
   const [lead, ...rest] = photos

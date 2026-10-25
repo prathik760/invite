@@ -19,7 +19,7 @@ export default function Step4Enrich({
     <StepShell
       step={4}
       title="Make it beautiful"
-      sub="Photos, music and a personal note — all optional."
+      sub="Photos, music and a personal note, all optional."
       badge="Optional"
       onBack={onBack}
       onContinue={onContinue}

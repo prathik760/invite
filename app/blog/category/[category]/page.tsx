@@ -46,7 +46,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const title = CATEGORY_TITLES[category] ?? `${category} Invitation Ideas`
   const description =
     BLOG_CATEGORY_INTRO[category]?.slice(0, 155) ??
-    `Tips, ideas, and guides for ${category.toLowerCase()} invitations — WhatsApp sharing, wording samples, RSVP, and digital invitation inspiration for Indian families.`
+    `Tips, ideas, and guides for ${category.toLowerCase()} invitations: WhatsApp sharing, wording samples, RSVP, and digital invitation inspiration for Indian families.`
 
   return {
     title: { absolute: brandTitle(title) },
@@ -91,7 +91,7 @@ export default function BlogCategoryPage({ params }: Props) {
         title={<>{category} <em className="font-medium text-burnished">Invitation Ideas</em></>}
         lede={
           BLOG_CATEGORY_INTRO[category] ??
-          `Ideas, wording samples, and practical guides for ${category.toLowerCase()} invitations — from what to write to how to share on WhatsApp.`
+          `Ideas, wording samples, and practical guides for ${category.toLowerCase()} invitations, from what to write to how to share on WhatsApp.`
         }
       />
       <Section aria-label={`${category} guides`}>

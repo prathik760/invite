@@ -26,14 +26,14 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'WhatsApp Invitation Templates For Birthdays', category: 'Birthday', keyword: 'WhatsApp birthday invitation templates', image: '/blog/whatsapp-invitation-templates-for-birthdays.jpg' },
   { title: 'How To Make A Digital Griha Pravesh Invitation', category: 'Housewarming', keyword: 'digital Griha Pravesh invitation', image: '/blog/how-to-make-a-digital-griha-pravesh-invitation.jpg' },
   // Also the home of the retired /baby-shower-invitation-wording page (301).
-  { title: 'Baby Shower Invitation Wording Ideas For India', slug: 'baby-shower-invitation-wording-ideas-for-india', category: 'Baby Shower', keyword: 'baby shower invitation wording India', metaTitle: 'Baby Shower Invitation Message & Wording: 20+ Indian Ideas', description: 'Baby shower invitation messages for WhatsApp — Godh Bharai, Seemantham, Valaikappu & modern wording in English, Hindi & Tamil, plus captions to copy.', image: '/blog/baby-shower-invitation-wording-ideas-for-india.jpg' },
+  { title: 'Baby Shower Invitation Wording Ideas For India', slug: 'baby-shower-invitation-wording-ideas-for-india', category: 'Baby Shower', keyword: 'baby shower invitation wording India', metaTitle: 'Baby Shower Invitation Message & Wording: 20+ Indian Ideas', description: 'Baby shower invitation messages for WhatsApp: Godh Bharai, Seemantham, Valaikappu & modern wording in English, Hindi & Tamil, plus captions to copy.', image: '/blog/baby-shower-invitation-wording-ideas-for-india.jpg' },
   // Also the home of the retired /namakaran-invitation-wording page (301) — Google ranks this URL.
-  { title: 'Naming Ceremony Invitation Message Samples', slug: 'naming-ceremony-invitation-message-samples', category: 'Invitation Ideas', keyword: 'naming ceremony invitation message', metaTitle: 'Naming Ceremony Invitation Message for WhatsApp: 30+ Ideas', description: 'Copy a naming ceremony invitation message for WhatsApp — Namakaran, Barsa & cradle ceremony wording for a baby boy or girl, in English, Hindi & Marathi.', image: '/blog/naming-ceremony-invitation-message-samples.jpg' },
+  { title: 'Naming Ceremony Invitation Message Samples', slug: 'naming-ceremony-invitation-message-samples', category: 'Invitation Ideas', keyword: 'naming ceremony invitation message', metaTitle: 'Naming Ceremony Invitation Message for WhatsApp: 30+ Ideas', description: 'Copy a naming ceremony invitation message for WhatsApp: Namakaran, Barsa & cradle ceremony wording for a baby boy or girl, in English, Hindi & Marathi.', image: '/blog/naming-ceremony-invitation-message-samples.jpg' },
   { title: 'Indian Wedding Invitation Wording For WhatsApp', category: 'Wedding', keyword: 'Indian wedding invitation wording WhatsApp', image: '/blog/indian-wedding-invitation-wording-for-whatsapp.jpg' },
   { title: 'Online RSVP Guide For Indian Weddings', category: 'Wedding', keyword: 'online RSVP Indian weddings', image: '/blog/online-rsvp-guide-for-indian-weddings.jpg' },
   { title: 'Best Wedding Website Features For Guests', category: 'Digital Invitations', keyword: 'wedding website features', image: '/blog/best-wedding-website-features-for-guests.jpg' },
   { title: 'Engagement Invitation Wording For Ring Ceremony', metaTitle: 'Ring Ceremony Invitation Wording: 7 Samples | ShareInvite', category: 'Engagement', keyword: 'ring ceremony invitation wording', image: '/blog/engagement-invitation-wording-for-ring-ceremony.jpg' },
-  { title: 'Birthday Invitation Text For WhatsApp Groups', category: 'Birthday', keyword: 'birthday invitation text WhatsApp', metaTitle: 'Birthday Invitation Text for WhatsApp Groups: Samples', description: '50+ birthday invitation text messages for WhatsApp groups to copy and paste — short and simple samples in English for family and friends groups.', image: '/blog/birthday-invitation-text-for-whatsapp-groups.jpg' },
+  { title: 'Birthday Invitation Text For WhatsApp Groups', category: 'Birthday', keyword: 'birthday invitation text WhatsApp', metaTitle: 'Birthday Invitation Text for WhatsApp Groups: Samples', description: '50+ birthday invitation text messages for WhatsApp groups to copy and paste: short and simple samples in English for family and friends groups.', image: '/blog/birthday-invitation-text-for-whatsapp-groups.jpg' },
   { title: 'Minimal Wedding Invitation Design Ideas', category: 'Wedding Trends', keyword: 'minimal wedding invitation design', image: '/blog/minimal-wedding-invitation-design-ideas.jpg' },
   { title: 'Royal Wedding Invitation Design Ideas', category: 'Wedding Trends', keyword: 'royal wedding invitation design', image: '/blog/royal-wedding-invitation-design-ideas.jpg' },
   { title: 'How To Share Event Invitations On WhatsApp', category: 'Digital Invitations', keyword: 'share event invitations on WhatsApp', image: '/blog/how-to-share-event-invitations-on-whatsapp.jpg' },
@@ -69,13 +69,13 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   { title: 'Engagement Invitation Checklist For Families', category: 'Engagement', keyword: 'engagement invitation checklist', image: '/blog/engagement-invitation-checklist-for-families.jpg' },
   { title: 'Digital Invitation Trends For Indian Events', category: 'Wedding Trends', keyword: 'digital invitation trends India', image: '/blog/digital-invitation-trends-for-indian-events.jpg' },
   {
-    title: 'My College Friend Got Engaged — His WhatsApp Digital Invitation Left Everyone Speechless',
+    title: 'My College Friend Got Engaged: His WhatsApp Digital Invitation Left Everyone Speechless',
     metaTitle: 'His WhatsApp Engagement Invitation Left Everyone Speechless',
     category: 'Engagement',
     keyword: 'digital engagement invitation WhatsApp India',
     date: '2026-02-14',
     image: '/blog/my-college-friend-got-engaged-his-whatsapp-digital-invitation-left-everyone-speechless.jpg',
-    description: 'A real story about a college friend\'s surprise engagement — and how a digital WhatsApp invitation on ShareInvite impressed the entire friend group and both families at a fraction of what anyone expected to pay.',
+    description: 'A real story about a college friend\'s surprise engagement, and how a digital WhatsApp invitation on ShareInvite impressed the entire friend group and both families at a fraction of what anyone expected to pay.',
   },
 
   // ─── 3D & animated greeting templates ──────────────────────────────────────
@@ -86,28 +86,28 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     keyword: '3d digital invitation gift online',
     date: '2026-07-01',
     image: '/blog/3d-surprise-journey-the-interactive-digital-gift-you-send-online.jpg',
-    description: 'Send a 3D digital gift they actually unlock — a secret PIN, photo memories, balloon pops, a scratch card and a handwritten letter. The ShareInvite 3D Surprise Journey turns a birthday or anniversary wish into an interactive experience they open on any phone, no app needed.',
+    description: 'Send a 3D digital gift they actually unlock: a secret PIN, photo memories, balloon pops, a scratch card and a handwritten letter. The ShareInvite 3D Surprise Journey turns a birthday or anniversary wish into an interactive experience they open on any phone, no app needed.',
   },
   {
-    title: '3D Love Card Online — Send a Romantic Animated Card in Minutes',
+    title: '3D Love Card Online: Send a Romantic Animated Card in Minutes',
     metaTitle: '3D Love Card Online: Send a Romantic Animated Card',
     category: 'Invitation Ideas',
     keyword: 'love card online',
     date: '2026-07-03',
     image: '/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes.jpg',
-    description: 'Create a 3D animated love card online and share it on WhatsApp in minutes. Floating hearts, your photos, little reasons you love them and a heartfelt message — a romantic digital card that feels far more personal than a text.',
+    description: 'Create a 3D animated love card online and share it on WhatsApp in minutes. Floating hearts, your photos, little reasons you love them and a heartfelt message: a romantic digital card that feels far more personal than a text.',
   },
   {
-    title: 'Valentines Day Card Online — Send a 3D Animated Valentine on WhatsApp',
+    title: 'Valentines Day Card Online: Send a 3D Animated Valentine on WhatsApp',
     metaTitle: 'Valentine’s Day Card Online: 3D Animated, on WhatsApp',
     category: 'Invitation Ideas',
     keyword: 'valentines day card online',
     date: '2026-07-05',
     image: '/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp.jpg',
-    description: 'Make a Valentine\'s Day card online in minutes and send a 3D animated valentine on WhatsApp — floating hearts, your photos and a love note. The most romantic (and easiest) way to say I love you this Valentine\'s Day, no app required.',
+    description: 'Make a Valentine\'s Day card online in minutes and send a 3D animated valentine on WhatsApp: floating hearts, your photos and a love note. The most romantic (and easiest) way to say I love you this Valentine\'s Day, no app required.',
   },
   {
-    title: 'Anniversary Card Online — Create a 3D Animated Anniversary Card',
+    title: 'Anniversary Card Online: Create a 3D Animated Anniversary Card',
     metaTitle: 'Anniversary Card Online: 3D Animated, With Your Photos',
     category: 'Invitation Ideas',
     keyword: 'anniversary card online',
@@ -116,16 +116,16 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     description: 'Create an anniversary card online with a 3D animated design, your photos, a countdown of years together and a personal message. A beautiful marriage-anniversary wish for your wife, husband or parents you can share on WhatsApp in minutes.',
   },
   {
-    title: 'Digital Proposal Card — A 3D Will You Marry Me Card That Says Yes',
+    title: 'Digital Proposal Card: A 3D Will You Marry Me Card That Says Yes',
     metaTitle: 'Digital Proposal Card: A 3D Will You Marry Me Card',
     category: 'Invitation Ideas',
     keyword: 'digital proposal card',
     date: '2026-07-09',
     image: '/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes.jpg',
-    description: 'Plan the perfect proposal with a 3D digital proposal card — an interactive "Will You Marry Me?" moment with rings, your photo memories and a Say Yes button. A unique online proposal idea you can create and share in minutes.',
+    description: 'Plan the perfect proposal with a 3D digital proposal card, an interactive "Will You Marry Me?" moment with rings, your photo memories and a Say Yes button. A unique online proposal idea you can create and share in minutes.',
   },
   {
-    title: 'Promise Day Card Online — Send a Heartfelt 3D Promise',
+    title: 'Promise Day Card Online: Send a Heartfelt 3D Promise',
     metaTitle: 'Promise Day Card Online: Send a Heartfelt 3D Promise',
     category: 'Invitation Ideas',
     keyword: 'promise day card online',
@@ -134,68 +134,68 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     description: 'Send a Promise Day card online with a serene 3D animated design, your photos and the promises you want to make. A heartfelt Valentine-week greeting you can personalise and share on WhatsApp in minutes.',
   },
   {
-    title: 'Sorry Card Online — Say Sorry With a Heartfelt Animated Card',
+    title: 'Sorry Card Online: Say Sorry With a Heartfelt Animated Card',
     metaTitle: 'Sorry Card Online: A Heartfelt Animated Apology',
     category: 'Invitation Ideas',
     keyword: 'sorry card online',
     date: '2026-07-13',
     image: '/blog/sorry-card-online-say-sorry-with-a-heartfelt-animated-card.jpg',
-    description: 'Say sorry the right way with a gentle 3D animated apology card — soft petals, your photos and a sincere message. A thoughtful way to apologise to someone you love and share it privately on WhatsApp.',
+    description: 'Say sorry the right way with a gentle 3D animated apology card: soft petals, your photos and a sincere message. A thoughtful way to apologise to someone you love and share it privately on WhatsApp.',
   },
   {
-    title: 'Congratulations Card Online — Send an Animated Congrats Card',
+    title: 'Congratulations Card Online: Send an Animated Congrats Card',
     metaTitle: 'Congratulations Card Online: Animated Congrats Card',
     category: 'Invitation Ideas',
     keyword: 'congratulations card online',
     date: '2026-07-15',
     image: '/blog/congratulations-card-online-send-an-animated-congrats-card.jpg',
-    description: 'Send a congratulations card online with a celebratory 3D confetti animation, photos and a personal message. Perfect for a new job, promotion, exam success, new baby or any big win — create and share it on WhatsApp in minutes.',
+    description: 'Send a congratulations card online with a celebratory 3D confetti animation, photos and a personal message. Perfect for a new job, promotion, exam success, new baby or any big win. Create and share it on WhatsApp in minutes.',
   },
   {
-    title: 'Festival Wishes Card Online — Diwali and Festival Greetings',
+    title: 'Festival Wishes Card Online: Diwali and Festival Greetings',
     metaTitle: 'Festival Wishes Card Online: Animated Diwali Greetings',
     category: 'Invitation Ideas',
     keyword: 'festival wishes card online',
     date: '2026-07-16',
     image: '/blog/festival-wishes-card-online-diwali-and-festival-greetings.jpg',
-    description: 'Send animated festival wishes online — glowing 3D diyas for Diwali and warm greetings for every festival. Add your photos and a personal message, then share your digital festival greeting card with family and friends on WhatsApp.',
+    description: 'Send animated festival wishes online: glowing 3D diyas for Diwali and warm greetings for every festival. Add your photos and a personal message, then share your digital festival greeting card with family and friends on WhatsApp.',
   },
   {
-    title: 'Family Wishes Card Online — A Heartfelt Digital Card for Family',
+    title: 'Family Wishes Card Online: A Heartfelt Digital Card for Family',
     metaTitle: 'Family Wishes Card Online: A Heartfelt Digital Card',
     category: 'Invitation Ideas',
     keyword: 'family wishes card online',
     date: '2026-07-17',
     image: '/blog/family-wishes-card-online-a-heartfelt-digital-card-for-family.jpg',
-    description: 'Create a heartfelt digital card for your family — a 3D animated design with photo memories and a message for your parents, siblings or the people who raised you. A meaningful way to say thank you and I love you, sharable on WhatsApp.',
+    description: 'Create a heartfelt digital card for your family: a 3D animated design with photo memories and a message for your parents, siblings or the people who raised you. A meaningful way to say thank you and I love you, sharable on WhatsApp.',
   },
   {
-    title: 'Friendship Day Card Online — Send a 3D Card to Your Best Friends',
+    title: 'Friendship Day Card Online: Send a 3D Card to Your Best Friends',
     metaTitle: 'Friendship Day Card Online: Send a 3D Card to Friends',
     category: 'Invitation Ideas',
     keyword: 'friendship day card online',
     date: '2026-07-18',
     image: '/blog/friendship-day-card-online-send-a-3d-card-to-your-best-friends.jpg',
-    description: 'Send a Friendship Day card online with a playful 3D star-filled animation, your favourite photos together and an inside-joke message. The perfect Happy Friendship Day greeting for your best friends — create and share on WhatsApp in minutes.',
+    description: 'Send a Friendship Day card online with a playful 3D star-filled animation, your favourite photos together and an inside-joke message. The perfect Happy Friendship Day greeting for your best friends. Create and share on WhatsApp in minutes.',
   },
 
   // ─── Ganesh Chaturthi (premium template) ────────────────────────────────────
   {
-    title: 'Ganesh Chaturthi Invitation Card Online — Make a Digital Ganpati Invite in 5 Minutes',
+    title: 'Ganesh Chaturthi Invitation Card Online: Make a Digital Ganpati Invite in 5 Minutes',
     category: 'Festivals',
     keyword: 'ganesh chaturthi invitation card online',
     date: '2026-09-04',
     // Slug pinned rather than generated: the generated one would carry the
     // whole H1, and this is the phrasing the head term is actually searched in.
     slug: 'ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template',
-    metaTitle: 'Ganesh Chaturthi Invitation Card Online — Ganpati Invite ₹99',
+    metaTitle: 'Ganesh Chaturthi Invitation Card Online: Ganpati Invite ₹99',
     image: '/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template.jpg',
-    description: 'Create a Ganesh Chaturthi invitation card online in minutes — a premium digital Ganpati invite with the Vakratunda shloka, sthapana countdown, daily aarti timings, visarjan day, Google Maps and a wishes wall. Just ₹99 one-time, shared on WhatsApp. Includes copy-paste Ganesh Chaturthi invitation messages in English, Hindi and Marathi.',
+    description: 'Create a Ganesh Chaturthi invitation card online in minutes: a premium digital Ganpati invite with the Vakratunda shloka, sthapana countdown, daily aarti timings, visarjan day, Google Maps and a wishes wall. Just ₹99 one-time, shared on WhatsApp. Includes copy-paste Ganesh Chaturthi invitation messages in English, Hindi and Marathi.',
   },
 
   // ─── Raksha Bandhan (premium template) ──────────────────────────────────────
   {
-    title: 'Raksha Bandhan Invitation Card Online — Premium Digital Rakhi Template',
+    title: 'Raksha Bandhan Invitation Card Online: Premium Digital Rakhi Template',
     category: 'Festivals',
     keyword: 'raksha bandhan invitation card online',
     date: '2026-08-08',
@@ -203,11 +203,11 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     slug: 'raksha-bandhan-invitation-card-online-free-digital-rakhi-template',
     metaTitle: 'Raksha Bandhan Invitation Card Online: Digital Rakhi Invite',
     image: '/blog/raksha-bandhan-invitation-card-online-free-digital-rakhi-template.jpg',
-    description: 'Create a stunning Raksha Bandhan invitation card online in minutes — a premium digital Rakhi invite and greeting with photos, a live countdown, event timeline, guest wishes, RSVP and one-tap WhatsApp sharing. Just ₹199 for the whole celebration. Perfect for brothers and sisters, including NRIs celebrating from abroad.',
+    description: 'Create a stunning Raksha Bandhan invitation card online in minutes: a premium digital Rakhi invite and greeting with photos, a live countdown, event timeline, guest wishes, RSVP and one-tap WhatsApp sharing. Just ₹199 for the whole celebration. Perfect for brothers and sisters, including NRIs celebrating from abroad.',
   },
   // ─── Dasara, Christmas and New Year (animated festival designs) ─────────────
   {
-    title: 'Dasara Invitation Card Online 2026 — Mysuru Dasara, Bombe Habba & Ayudha Pooja Messages',
+    title: 'Dasara Invitation Card Online 2026: Mysuru Dasara, Bombe Habba & Ayudha Pooja Messages',
     category: 'Festivals',
     keyword: 'dasara invitation card',
     date: '2026-10-03',
@@ -224,7 +224,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     slug: 'christmas-party-invitation-wording-digital-christmas-invitation',
     metaTitle: 'Christmas Party Invitation Wording: 40+ Messages (2026)',
     image: '/blog/christmas-party-invitation-wording-digital-christmas-invitation.jpg',
-    description: 'Christmas party invitation wording for friends, family dinners, Christmas Eve, Secret Santa and work — plus a digital invitation that opens like a front door.',
+    description: 'Christmas party invitation wording for friends, family dinners, Christmas Eve, Secret Santa and work, plus a digital invitation that opens like a front door.',
   },
   {
     title: 'New Year Party Invitation Messages & New Year’s Eve Wording for 2027',
@@ -234,7 +234,7 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     slug: 'new-year-party-invitation-message-new-years-eve-invitation-wording',
     metaTitle: 'New Year Party Invitation Message & NYE Wording (2027)',
     image: '/blog/new-year-party-invitation-message-new-years-eve-invitation-wording.jpg',
-    description: '40+ New Year party invitation messages and New Year’s Eve wording for friends, family and work — funny, short and Hindi — plus an invitation with fireworks.',
+    description: '40+ New Year party invitation messages and New Year’s Eve wording for friends, family and work (funny, short and Hindi), plus an invitation with fireworks.',
   },
 ]
 
@@ -272,7 +272,7 @@ function buildDescription(title: string, keyword: string, category: BlogCategory
     case 'Birthday':
       return `Everything you need to know about ${keyword}. Themes, schedule, wording ideas, WhatsApp sharing, and how to create a digital birthday invitation in under 5 minutes.`
     case 'Housewarming':
-      return `Step-by-step guide to ${keyword}. Learn what to include — muhurat time, pooja schedule, Google Maps — and how to share your Griha Pravesh invite on WhatsApp.`
+      return `Step-by-step guide to ${keyword}. Learn what to include (muhurat time, pooja schedule, Google Maps) and how to share your Griha Pravesh invite on WhatsApp.`
     case 'Baby Shower':
       return `Complete guide to ${keyword}. Covers what to write, how to personalise for Godh Bharai or Seemantham, and how to share it with family on WhatsApp.`
     case 'Invitation Ideas':
@@ -280,9 +280,9 @@ function buildDescription(title: string, keyword: string, category: BlogCategory
     case 'Wedding Trends':
       return `Latest trends in ${keyword}. Explore what modern Indian couples are choosing for design, typography, music, and digital sharing in the current wedding season.`
     case 'Digital Invitations':
-      return `In-depth look at ${keyword}. Covers best practices for Indian events — mobile design, WhatsApp sharing, RSVP, Google Maps, and what to include for any occasion.`
+      return `In-depth look at ${keyword}. Covers best practices for Indian events: mobile design, WhatsApp sharing, RSVP, Google Maps, and what to include for any occasion.`
     default:
-      return `A practical ShareInvite guide to ${keyword} for Indian families — covering design, wording, WhatsApp sharing, and RSVP for any occasion.`
+      return `A practical ShareInvite guide to ${keyword} for Indian families, covering design, wording, WhatsApp sharing, and RSVP for any occasion.`
   }
 }
 

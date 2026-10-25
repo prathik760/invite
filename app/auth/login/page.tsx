@@ -55,7 +55,7 @@ function LoginForm() {
         <h1 className="t-h2 mt-2">Sign in</h1>
         <p className="mt-2 text-[0.95rem] leading-7 text-charcoal/70">
           {fromBuilder
-            ? 'Sign in to publish your invitation — your design and details are saved.'
+            ? 'Sign in to publish your invitation. Your design and details are saved.'
             : 'Manage your invitations and see the wishes your guests leave.'}
         </p>
 

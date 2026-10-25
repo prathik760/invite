@@ -665,7 +665,7 @@ export default function BirthdayMirrorball({ data, eventId, isPreview = false }:
                 <dt><Label>When</Label></dt>
                 <dd className="mt-1.5" style={{ fontFamily: serif, fontSize: 'clamp(28px, 8.4cqi, 36px)', lineHeight: 1.08 }}>
                   {date ? `${date.weekday} ${date.day} ${date.month}` : 'Date to come'}
-                  {time && <span className="mt-1 block" style={{ fontFamily: sans, fontSize: 16, color: P.soft }}>From {time} — till late</span>}
+                  {time && <span className="mt-1 block" style={{ fontFamily: sans, fontSize: 16, color: P.soft }}>From {time} till late</span>}
                 </dd>
               </div>
               {(venue || address) && (
@@ -755,7 +755,7 @@ export default function BirthdayMirrorball({ data, eventId, isPreview = false }:
                 </p>
               ))}
               <p className="mt-5" style={{ fontFamily: display, fontSize: 12, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: P.amber }}>
-                — {signer}
+                {signer}
               </p>
               {data.giftNote?.trim() && (
                 <p className="mt-8" style={{ fontSize: 15.5, color: P.soft, borderTop: `1px solid ${P.rule}`, paddingTop: 16 }}>
@@ -775,7 +775,7 @@ export default function BirthdayMirrorball({ data, eventId, isPreview = false }:
             eventId={eventId}
             theme={WISHES_THEME}
             title={`Notes for ${name}`}
-            intro={`A birthday message, a memory, a song request — leave a few words for ${name}. Everyone who opens this page can read them.`}
+            intro={`A birthday message, a memory, a song request: leave a few words for ${name}. Everyone who opens this page can read them.`}
             noun="note"
             previewWishes={SAMPLE_WISHES}
             namePlaceholder="e.g. Priya & Dan"

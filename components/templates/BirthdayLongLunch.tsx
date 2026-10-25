@@ -571,7 +571,7 @@ export default function BirthdayLongLunch({ data, eventId, isPreview = false }: 
                 {line}
               </p>
             ))}
-            <p className="mt-5" style={{ fontFamily: hand, fontSize: 32, color: P.aperol }}>— {signer}</p>
+            <p className="mt-5" style={{ fontFamily: hand, fontSize: 32, color: P.aperol }}>{signer}</p>
             {data.giftNote?.trim() && <p className="mt-8 pt-5" style={{ borderTop: `1px solid ${P.rule}`, fontSize: 15.5, color: P.soft }}>{data.giftNote.trim()}</p>}
           </Reveal>
         </section>
@@ -601,7 +601,7 @@ export default function BirthdayLongLunch({ data, eventId, isPreview = false }: 
           eventId={eventId}
           theme={WISHES_THEME}
           title={`Notes for ${name}`}
-          intro={`A birthday wish, a memory, a toast for later — leave ${name} a few words. Everyone who opens this page can read them.`}
+          intro={`A birthday wish, a memory, a toast for later: leave ${name} a few words. Everyone who opens this page can read them.`}
           noun="note"
           previewWishes={SAMPLE_WISHES}
           namePlaceholder="e.g. Marco & Bea"

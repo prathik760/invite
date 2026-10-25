@@ -33,7 +33,7 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
   const template = TEMPLATES.find((t) => t.id === params.id)
   if (!template) return { robots: { index: false, follow: false } }
   const name = displayName(template.name)
-  const title = `${name} invitation — live demo | ShareInvite`
+  const title = `${name} invitation: live demo | ShareInvite`
   const description = `See the ${name} invitation exactly as your guests will. ${formatTemplatePrice(template.id)} one-time · preview with your own details before you pay.`
   const url = `${SITE_URL}/demo/${template.id}`
   const image = templateImageUrl(template.id)

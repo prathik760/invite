@@ -11,7 +11,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 export const metadata: Metadata = {
   title: { absolute: 'ShareInvite Partner Programme | Earn 20% Per Referral' },
   description:
-    'Earn 20% per referral on ShareInvite — India\'s digital invitation platform. Built for Indian wedding planners, photographers, venue managers, and event professionals.',
+    'Earn 20% per referral on ShareInvite, India\'s digital invitation platform. Built for Indian wedding planners, photographers, venue managers, and event professionals.',
   keywords: [
     'ShareInvite partner programme',
     'wedding planner referral programme India',
@@ -151,8 +151,8 @@ export default function PartnersPage() {
               { icon: <BarChartIcon />, title: 'Partner dashboard', desc: 'Track clicks, conversions, and earnings in real time from your personalised partner dashboard.' },
               { icon: <PaletteIcon />, title: 'Marketing materials', desc: 'Get branded graphics, copy, and email templates to share ShareInvite with your clients professionally.' },
               { icon: <ZapIcon />, title: 'Early access', desc: 'Partners get early access to new features and templates before they are released to the public.' },
-              { icon: <PhoneIcon />, title: 'Priority support', desc: 'A dedicated partner support channel — WhatsApp and email — with a faster response SLA.' },
-              { icon: <AwardIcon />, title: 'Co-promotion', desc: 'Active partners are featured in ShareInvite\'s social channels and blog — additional exposure for your business.' },
+              { icon: <PhoneIcon />, title: 'Priority support', desc: 'A dedicated partner support channel (WhatsApp and email) with a faster response SLA.' },
+              { icon: <AwardIcon />, title: 'Co-promotion', desc: 'Active partners are featured in ShareInvite\'s social channels and blog: additional exposure for your business.' },
             ].map(f => (
               <div key={f.title} className="rounded-2xl border border-line bg-paper p-6 shadow-sm">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#0B4A34]/10 text-[#0B4A34]">{f.icon}</div>

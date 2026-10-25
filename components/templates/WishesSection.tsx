@@ -23,7 +23,7 @@ const MAX_MESSAGE = 320
 const COLLAPSED = 6
 
 const PREVIEW_WISHES: WishRecord[] = [
-  { id: '1', eventId: '__preview__', name: 'Anjali & Vikram', message: 'So happy for you both. Counting the days — see you there!', isApproved: true, createdAt: new Date().toISOString() },
+  { id: '1', eventId: '__preview__', name: 'Anjali & Vikram', message: 'So happy for you both. Counting the days. See you there!', isApproved: true, createdAt: new Date().toISOString() },
   { id: '2', eventId: '__preview__', name: 'The Mehta family', message: 'Wishing you a lifetime of love and laughter. Blessings from all of us.', isApproved: true, createdAt: new Date().toISOString() },
 ]
 
@@ -112,7 +112,7 @@ export default function WishesSection({
             <div className="py-6 text-center" role="status">
               <p className="text-[22px]" style={{ fontFamily: t.heading, color: t.ink, ...t.headingStyle }}>Thank you</p>
               <p className="mt-2 text-[14px] leading-[1.6]" style={{ color: t.muted }}>
-                Your {noun} is on the invitation now — everyone who opens the link will see it.
+                Your {noun} is on the invitation now. Everyone who opens the link will see it.
               </p>
               <button
                 type="button"
@@ -174,7 +174,7 @@ export default function WishesSection({
               {visible.map((wish) => (
                 <li key={wish.id} className="rounded-[14px] px-5 py-4" style={{ background: t.surface, border: `1px solid ${t.line}` }}>
                   <p className="whitespace-pre-line text-[15px] leading-[1.6]" style={{ color: t.ink }}>{wish.message}</p>
-                  <p className="mt-2.5 text-[13px] font-semibold" style={{ color: t.accent }}>— {wish.name}</p>
+                  <p className="mt-2.5 text-[13px] font-semibold" style={{ color: t.accent }}>{wish.name}</p>
                 </li>
               ))}
             </ul>

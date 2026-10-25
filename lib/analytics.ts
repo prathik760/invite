@@ -47,6 +47,10 @@ export const seoEvents = {
   previewOpen: 'preview_open',
   publishClick: 'publish_click',
   inviteCreation: 'invite_creation',
+  /** A published invitation opened in the builder to change it (/create?edit=). */
+  inviteEditStart: 'invite_edit_start',
+  /** Changes to a published invitation saved: same link, new details. */
+  inviteEdit: 'invite_edit',
 
   // ─── Account ─────────────────────────────────────────────────────────────
   signupStart: 'signup_start',

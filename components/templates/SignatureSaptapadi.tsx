@@ -60,7 +60,7 @@ const WISHES_THEME: InviteTheme = {
 
 /** The seven steps, with the line of the Saptapadi mantra each is taken to. */
 const VOWS = [
-  { sa: 'इषे एकपदी भव', title: 'For nourishment', text: 'May we never want for food — and always share it with others.' },
+  { sa: 'इषे एकपदी भव', title: 'For nourishment', text: 'May we never want for food, and always share it with others.' },
   { sa: 'ऊर्जे द्विपदी भव', title: 'For strength', text: 'May we grow strong in body, mind and spirit, together.' },
   { sa: 'रायस्पोषाय त्रिपदी भव', title: 'For prosperity', text: 'May we earn honestly, spend wisely and prosper side by side.' },
   { sa: 'मायोभव्याय चतुष्पदी भव', title: 'For happiness', text: 'May we find joy and harmony in each other, every day.' },
@@ -73,12 +73,12 @@ const VOWS = [
 const RITUALS = [
   { hi: 'गणेश पूजा', en: 'Ganesh Puja', text: 'Every Hindu ceremony begins with Lord Ganesha, the remover of obstacles, who is asked to bless the day ahead.' },
   { hi: 'बारात', en: 'Baraat & Dwar Puja', text: 'The groom arrives in a procession of music and dancing, and is welcomed at the entrance by the bride’s family.' },
-  { hi: 'जयमाला', en: 'Jaimala', text: 'Bride and groom exchange garlands of flowers — their first act together, a sign of acceptance and respect.' },
-  { hi: 'कन्यादान', en: 'Kanyadaan', text: 'The bride’s father places her hand in the groom’s and pours sacred water over their joined hands — called the greatest of all gifts.' },
+  { hi: 'जयमाला', en: 'Jaimala', text: 'Bride and groom exchange garlands of flowers: their first act together, a sign of acceptance and respect.' },
+  { hi: 'कन्यादान', en: 'Kanyadaan', text: 'The bride’s father places her hand in the groom’s and pours sacred water over their joined hands. It is called the greatest of all gifts.' },
   { hi: 'विवाह होम', en: 'Vivah Homa', text: 'The sacred fire is lit. Agni is the witness to the marriage as the couple offer ghee and samagri while the priest chants the Vedic mantras.' },
   { hi: 'मंगलसूत्र और सिंदूर', en: 'Mangalsutra & Sindoor', text: 'The groom ties the mangalsutra of black and gold beads, and places sindoor in the parting of the bride’s hair.' },
   { hi: 'सप्तपदी', en: 'Saptapadi', text: 'Seven steps around the fire, a vow with each. After the seventh, the marriage is complete.' },
-  { hi: 'आशीर्वाद', en: 'Ashirvad', text: 'The elders bless the couple, showering them with flower petals and akshata — rice, for abundance.' },
+  { hi: 'आशीर्वाद', en: 'Ashirvad', text: 'The elders bless the couple, showering them with flower petals and akshata (rice, for abundance).' },
 ]
 
 /* Falling petals in the hero, and the burst when the antarpat is lowered.
@@ -329,7 +329,7 @@ function Saptapadi({ isPreview }: { isPreview: boolean }) {
           </div>
         ) : (
           <p className="text-balance leading-[1.55]" style={{ fontFamily: text, fontSize: 16, color: S.ivorySoft }}>
-            Seven steps around the sacred fire, with Agni as witness — a vow with every step.
+            Seven steps around the sacred fire, with Agni as witness: a vow with every step.
           </p>
         )}
       </div>
@@ -788,7 +788,7 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
           <section className="px-6 pb-16 pt-14" style={cream}>
             <div className="mx-auto max-w-[32rem]">
               <Reveal disabled={isPreview}>
-                <Heading sub="For guests who are new to a Hindu wedding — what happens, and why.">The Rituals of the Day</Heading>
+                <Heading sub="For guests who are new to a Hindu wedding: what happens, and why.">The Rituals of the Day</Heading>
               </Reveal>
               <Reveal disabled={isPreview} className="mt-8 border-t" style={{ borderColor: S.rule }}>
                 {RITUALS.map((r, i) => (
@@ -958,14 +958,14 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
                     </h3>
                     <ul className="mt-4 border-t" style={{ borderColor: S.rule }}>
                       {contacts.map((c, i) => {
-                        const [who, ...role] = c.name.split(/\s+[—–-]\s+/)
+                        const [who, ...role] = c.name.split(/\s+[—–-]\s+|\s*,\s+/)
                         const tel = telHref(c.phone)
-                        const wa = whatsappHref(c.phone, `Namaste ${who.split(' ')[0]}, I'm a guest at ${couple}'s wedding — `)
+                        const wa = whatsappHref(c.phone, `Namaste ${who.split(' ')[0]}, I'm a guest at ${couple}'s wedding. `)
                         return (
                           <li key={`${c.name}-${i}`} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b py-4" style={{ borderColor: S.rule }}>
                             <div className="min-w-0">
                               <p style={{ fontFamily: engraved, fontSize: 20, color: S.ink }}>{who}</p>
-                              {role.length > 0 && <p style={{ fontFamily: text, fontSize: 15, color: S.soft }}>{cap(role.join(' — '))}</p>}
+                              {role.length > 0 && <p style={{ fontFamily: text, fontSize: 15, color: S.soft }}>{cap(role.join(', '))}</p>}
                             </div>
                             {(tel || wa) && (
                               <div className="flex gap-2">
@@ -1094,7 +1094,7 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
                 </p>
               )}
               <p className="mx-auto mt-4 max-w-[22rem] text-balance leading-[1.55]" style={{ fontFamily: text, fontSize: 15, color: S.ivoryFaint }}>
-                Steadfast as Dhruva, devoted as Arundhati beside Vasishtha — the stars a new couple is shown on their wedding night.
+                Steadfast as Dhruva, devoted as Arundhati beside Vasishtha: the stars a new couple is shown on their wedding night.
               </p>
               <div className="mt-8">
                 <Credit isPreview={isPreview} color="rgba(255,244,223,0.45)" linkColor={S.ivorySoft} />

@@ -125,7 +125,7 @@ export const PROMO: Promo = {
   copy: {
     eyebrow: 'Wedding season offer',
     headline: 'Open the palace gates for your guests',
-    body: 'Our royal palace wedding suite: the gates open onto every function of the week, both families, travel and stay for guests and a WhatsApp RSVP — all on one link.',
+    body: 'Our royal palace wedding suite: the gates open onto every function of the week, both families, travel and stay for guests and a WhatsApp RSVP, all on one link.',
     features: ['Palace gates opening', 'A card for every function', 'Travel, stay & FAQs', 'WhatsApp RSVP'],
     cta: 'See the palace gates open →',
     imageAlt: 'Rajwada royal palace wedding invitation design',

@@ -13,12 +13,12 @@ const SIGNATURE = TEMPLATES.filter((t) => t.id.startsWith('signature-'))
 
 /** What a Signature suite adds over an everyday design — all real, per the field set. */
 const ADDS = [
-  'Every function on its own card — date, time, venue, dress code, map and calendar',
+  'Every function on its own card: date, time, venue, dress code, map and calendar',
   'Both families and the elders whose blessings you carry',
   'Your story, told as a timeline',
   'Travel & stay, the people to call, and answers to guests’ questions',
   'RSVP on WhatsApp, a livestream link for family abroad, your hashtag',
-  'A signature opening — palace doors, a lattice window, a postcard, a sheet of vellum',
+  'A signature opening: palace doors, a lattice window, a postcard, a sheet of vellum',
 ]
 
 /** A line under each name that says what the suite is (its style tag for Nikah would just repeat the name). */
@@ -44,7 +44,7 @@ export default function SignatureShowcase({ id = 'signature' }: { id?: string })
         tone="emerald"
         eyebrow="The Signature collection"
         title="For the wedding of the year"
-        sub="Complete wedding suites for celebrations that run across days and cities — everything your guests need, in one link that feels like it was made by hand."
+        sub="Complete wedding suites for celebrations that run across days and cities: everything your guests need, in one link that feels like it was made by hand."
         action={{ href: '/templates/category/signature', label: 'See the collection' }}
       />
       {/* The suites in one row on a laptop, two by two on a phone — an odd last one centred under the pairs, the width of the others. */}
@@ -84,7 +84,7 @@ export default function SignatureShowcase({ id = 'signature' }: { id?: string })
         </ul>
         <div className="mt-8 flex flex-col gap-5 border-t border-gold-soft/15 pt-7 max-sm:mt-6 max-sm:gap-4 max-sm:pt-5 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <p className="max-w-2xl text-[0.9rem] leading-7 text-paper/60">
-            Plus everything in every design: countdown, photo gallery, music, the guest wishes wall and one private link. Build and preview the whole suite before you pay — pay once when you publish.
+            Plus everything in every design: countdown, photo gallery, music, the guest wishes wall and one private link. Build and preview the whole suite before you pay. Pay once when you publish.
           </p>
           <Link href="/templates/category/signature" className="btn-gold inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
             Explore the Signature collection <ArrowRightIcon className="h-4 w-4" />

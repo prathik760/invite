@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!info) return {}
 
   const ogTitle = `Digital Griha Pravesh Invitation in ${info.display} | ShareInvite`
-  const description = `Digital Griha Pravesh invitation for ${info.display} — muhurat time, pooja schedule, Google Maps & WhatsApp-ready link. Preview before you pay.`
+  const description = `Digital Griha Pravesh invitation for ${info.display}: muhurat time, pooja schedule, Google Maps & WhatsApp-ready link. Preview before you pay.`
 
   return {
     title: { absolute: ogTitle },
@@ -81,7 +81,7 @@ export default async function CityGrihaPraveshPage({ params }: { params: Promise
         title={<>Digital Griha Pravesh Invitation <em className="font-medium text-burnished">in {info.display}</em></>}
         lede={info.localDetail}
         local={{ title: `Built for ${info.display} Griha Pravesh ceremonies`, paras: [info.localDetail, info.localDetail2], chips: [{ label: 'Ceremonies we support', items: info.traditions }] }}
-        faqTitle={`${info.display} Griha Pravesh invitation — FAQs`}
+        faqTitle={`${info.display} Griha Pravesh invitation: FAQs`}
         faqs={info.faqs}
         links={[{ href: '/griha-pravesh-invitation', label: 'Griha Pravesh invitations' }, { href: '/griha-pravesh-invitation-wording', label: 'Griha Pravesh wording' }, { href: `/wedding-invitation/${city}`, label: `Wedding invitations in ${info.display}` }, { href: '/digital-invitation', label: 'All digital invitations' }]}
         closing={{ title: `Create your ${info.display} Griha Pravesh invitation`, sub: info.ctaTagline }}

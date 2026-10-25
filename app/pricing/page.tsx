@@ -26,7 +26,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
-  title: { absolute: 'Pricing — One Design, One Price | ShareInvite' },
+  title: { absolute: 'Pricing: One Design, One Price | ShareInvite' },
   description:
     `Pay once per design. ${priceRangeSentence()} Preview before you pay. No subscription.`,
   keywords: [
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     'digital invitation maker price',
   ],
   openGraph: {
-    title: 'ShareInvite Pricing — One Design, One Price, Everything Included',
+    title: 'ShareInvite Pricing: One Design, One Price, All Included',
     description:
       `Build and preview before you pay, then pay once for the design you publish. ${priceRangeSentence()} No plans, bundles or subscription.`,
     type: 'website',
@@ -110,11 +110,11 @@ const PRICING_FAQS = [
   },
   {
     question: 'What does "one design, one price" mean?',
-    answer: 'You pay for the single design you publish — nothing else. That one payment covers everything in that design: your invitation on its own link, every feature the design has, and sharing with as many guests as you like. There are no plans, bundles, add-ons or upgrades to choose between.',
+    answer: 'You pay for the single design you publish, nothing else. That one payment covers everything in that design: your invitation on its own link, every feature the design has, and sharing with as many guests as you like. There are no plans, bundles, add-ons or upgrades to choose between.',
   },
   {
     question: 'Is it a one-time payment or a subscription?',
-    answer: 'A one-time payment. You pay once for your design — there are no monthly subscriptions, renewals or recurring charges.',
+    answer: 'A one-time payment. You pay once for your design. There are no monthly subscriptions, renewals or recurring charges.',
   },
   {
     question: 'Can I see my invitation before I pay?',
@@ -122,7 +122,7 @@ const PRICING_FAQS = [
   },
   {
     question: 'Can I get a refund?',
-    answer: 'Yes, in genuine cases. Refund requests can be raised within 7 days of the transaction at no cost to you — for example if you were charged twice or the design did not work as described. Approved refunds are returned to your original payment method via Razorpay. Full details are on our Refund & Cancellation Policy page.',
+    answer: 'Yes, in genuine cases. Refund requests can be raised within 7 days of the transaction at no cost to you, for example if you were charged twice or the design did not work as described. Approved refunds are returned to your original payment method via Razorpay. Full details are on our Refund & Cancellation Policy page.',
   },
   {
     question: 'Is the payment secure?',
@@ -174,7 +174,7 @@ export default function PricingPage() {
         crumbs={[{ name: 'Home', href: '/' }, { name: 'Pricing' }]}
         eyebrow="Pricing"
         title={<>One design. One price.<br /><em className="font-medium text-burnished">Everything included.</em></>}
-        lede={`Build and preview any design before you pay. When it's ready, pay once for that design — from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')} — and it's yours. No plans, no bundles, no subscription.`}
+        lede={`Build and preview any design before you pay. When it's ready, pay once for that design, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')}, and it's yours. No plans, no bundles, no subscription.`}
         actions={
           <>
             <Link href="/create" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
@@ -196,7 +196,7 @@ export default function PricingPage() {
         <ol className="mt-12 grid gap-4 md:grid-cols-3" data-reveal-group>
           {[
             { Icon: EyeIcon, title: 'Build & preview first', copy: 'Choose any design, add your real details and photos, and see the finished invitation. No card needed.' },
-            { Icon: ShieldIcon, title: 'Pay once for your design', copy: <>The price is on the design. One secure payment by <PayMethods /> — no renewal, ever.</> },
+            { Icon: ShieldIcon, title: 'Pay once for your design', copy: <>The price is on the design. One secure payment by <PayMethods />. No renewal, ever.</> },
             { Icon: LinkIcon, title: 'Your invitation, handed over', copy: 'Get your link and share it on WhatsApp, Instagram, email or text with as many guests as you like.' },
           ].map(({ Icon, title, copy }, i) => (
             <li key={title} className="card p-7">
@@ -218,7 +218,7 @@ export default function PricingPage() {
         <SectionHeading
           eyebrow="Transparent prices"
           title="Every design, with its price"
-          sub="What you see is what you pay — once. Tap a design to preview it live."
+          sub="What you see is what you pay, once. Tap a design to preview it live."
           action={{ href: '/templates', label: 'Browse with previews' }}
         />
         <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2" data-reveal-group>
@@ -254,13 +254,13 @@ export default function PricingPage() {
           align="center"
           eyebrow="What you get"
           title="What's included"
-          sub="The price reflects the design — its artwork, animation and craft. Here is what comes with it."
+          sub="The price reflects the design: its artwork, animation and craft. Here is what comes with it."
         />
         <div className="mt-12 grid gap-4 md:grid-cols-2" data-reveal-group>
           <div className="card p-7 sm:p-9">
             <h3 className="t-h3">With every design</h3>
             <ul className="mt-6 space-y-3">
-              {['A private link you can share anywhere', 'Every feature in the design — nothing locked', 'Opens on any phone — no app for guests', 'Rich preview card in WhatsApp chats', 'No ShareInvite banner or ads', 'Live through your event, and three days after', 'Secure one-time checkout'].map((f) => (
+              {['A private link you can share anywhere', 'Every feature in the design, nothing locked', 'Opens on any phone, no app for guests', 'Rich preview card in WhatsApp chats', 'No ShareInvite banner or ads', 'Live through your event, and three days after', 'Secure one-time checkout'].map((f) => (
                 <li key={f} className="flex items-start gap-2.5 text-[0.98rem]">
                   <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-soft" />
                   {f}

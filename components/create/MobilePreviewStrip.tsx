@@ -90,7 +90,7 @@ export default function MobilePreviewStrip({ templateId, data, isDark = false, c
           className="mb-3 text-center text-[9px] font-bold uppercase tracking-[.24em]"
           style={{ color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(44,32,28,0.38)' }}
         >
-          Live preview — updates as you type
+          Live preview: updates as you type
         </p>
       )}
 

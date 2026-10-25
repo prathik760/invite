@@ -7,7 +7,7 @@ const LAST_UPDATED = '17 July 2026'
 export const metadata: Metadata = {
   title: { absolute: 'Refund & Cancellation Policy | ShareInvite' },
   description:
-    'ShareInvite\'s refund and cancellation policy for one-time digital invitation purchases — when refunds apply, how to request one, and how cancellations work. Preview every template before you pay.',
+    'ShareInvite\'s refund and cancellation policy for one-time digital invitation purchases: when refunds apply, how to request one, and how cancellations work. Preview every template before you pay.',
   keywords: ['ShareInvite refund policy', 'ShareInvite cancellation policy', 'digital invitation refund', 'Razorpay refund policy'],
   alternates: { canonical: `${APP_URL}/refund-policy` },
   openGraph: {
@@ -32,7 +32,7 @@ const sections: LegalSection[] = [
         </Para>
         <Para>
           We want you to buy with confidence. That is why <strong className="text-foreground">every template can be
-          previewed</strong> through its live demo before you pay — so you know exactly what you are getting.
+          previewed</strong> through its live demo before you pay, so you know exactly what you are getting.
         </Para>
       </>
     ),
@@ -42,7 +42,7 @@ const sections: LegalSection[] = [
     title: 'Nature of the Product',
     body: (
       <Para>
-        ShareInvite sells digital products and services — access to premium invitation templates and features. When your
+        ShareInvite sells digital products and services: access to premium invitation templates and features. When your
         payment is confirmed, access is delivered to your account <strong className="text-foreground">instantly and
         electronically</strong>. Because the product is digital and consumed immediately, refunds are treated differently
         from physical goods, as explained below.
@@ -67,7 +67,7 @@ const sections: LegalSection[] = [
       <Para>
         Paid plans on ShareInvite are a <strong className="text-foreground">one-time purchase</strong>, not a subscription.
         We do not store your payment method for recurring billing, and you will never be charged automatically. This means
-        there is no recurring plan to &ldquo;cancel&rdquo; — once you have paid once, that is the only charge for that
+        there is no recurring plan to &ldquo;cancel&rdquo;: once you have paid once, that is the only charge for that
         purchase.
       </Para>
     ),
@@ -97,10 +97,10 @@ const sections: LegalSection[] = [
         <Para>We will gladly issue a refund in genuine cases, including:</Para>
         <Bullets
           items={[
-            <><strong className="text-foreground">Duplicate or accidental payment</strong> — you were charged more than once for the same purchase.</>,
-            <><strong className="text-foreground">Payment succeeded but access was not delivered</strong> — money was deducted but the template or feature did not unlock, and we are unable to resolve it for you.</>,
-            <><strong className="text-foreground">Unauthorised transaction</strong> — a charge was made without your authorisation (subject to verification).</>,
-            <><strong className="text-foreground">Technical defect on our side</strong> — a persistent, reproducible technical problem prevents you from using what you paid for, and our team cannot fix it within a reasonable time.</>,
+            <><strong className="text-foreground">Duplicate or accidental payment</strong>: you were charged more than once for the same purchase.</>,
+            <><strong className="text-foreground">Payment succeeded but access was not delivered</strong>: money was deducted but the template or feature did not unlock, and we are unable to resolve it for you.</>,
+            <><strong className="text-foreground">Unauthorised transaction</strong>: a charge was made without your authorisation (subject to verification).</>,
+            <><strong className="text-foreground">Technical defect on our side</strong>: a persistent, reproducible technical problem prevents you from using what you paid for, and our team cannot fix it within a reasonable time.</>,
           ]}
         />
         <Para>
@@ -168,7 +168,7 @@ const sections: LegalSection[] = [
     title: 'Chargebacks',
     body: (
       <Para>
-        If you believe a charge is incorrect, please contact us first — we can usually resolve issues faster than a bank
+        If you believe a charge is incorrect, please contact us first. We can usually resolve issues faster than a bank
         dispute. Raising a chargeback without contacting us may result in temporary suspension of your account while the
         dispute is investigated.
       </Para>
@@ -196,7 +196,7 @@ export default function RefundPolicyPage() {
     <LegalPage
       eyebrow="Legal"
       title="Refund & Cancellation Policy"
-      subtitle="ShareInvite plans are one-time digital purchases. This policy explains how cancellations work, when refunds apply, and how to request one — plus why you can always preview a template before you pay."
+      subtitle="ShareInvite plans are one-time digital purchases. This policy explains how cancellations work, when refunds apply, and how to request one, plus why you can always preview a template before you pay."
       lastUpdated={LAST_UPDATED}
       sections={sections}
     />

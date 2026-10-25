@@ -222,7 +222,7 @@ export default function EidMilan({ data, eventId, isPreview = false }: InvitePro
   const photos = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`${title} — ${hosts}`, data.date, data.time, place || undefined, 4)
+  const calendar = calendarHref(`${title}: ${hosts}`, data.date, data.time, place || undefined, 4)
   const plural = /&| and |,/i.test(hosts) || /^the /i.test(hosts)
 
   // Glass centre of each lantern, in the lantern layer's own container units:
@@ -313,7 +313,7 @@ export default function EidMilan({ data, eventId, isPreview = false }: InvitePro
           <p className="mt-4 leading-[1.4]" style={{ fontFamily: display, fontSize: 'clamp(22px, 6.6cqi, 27px)' }}>
             {data.message}
           </p>
-          <p className="mt-4 text-[15px]" style={{ color: C.inkSoft }}>— {hosts}</p>
+          <p className="mt-4 text-[15px]" style={{ color: C.inkSoft }}>{hosts}</p>
         </Reveal>
       )}
 

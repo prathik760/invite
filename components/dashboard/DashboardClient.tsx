@@ -10,7 +10,7 @@ import { templateImage } from '@/lib/templateMedia'
 import Logo from '@/components/brand/Logo'
 import { deletionDate, isEnded as isExpired, DELETE_AFTER_DAYS } from '@/lib/retention'
 import { coupleLine } from '@/lib/inviteCardText'
-import { ArrowRightIcon, CheckIcon, EyeIcon, HeartIcon } from '@/components/ui/Icons'
+import { ArrowRightIcon, CheckIcon, EyeIcon, HeartIcon, PenIcon } from '@/components/ui/Icons'
 
 const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const POLL_INTERVAL = 30_000
@@ -87,10 +87,10 @@ function CopyButton({ text }: { text: string }) {
 function getEventTitle(data: Record<string, string>, templateId: string): string {
   if (data.brideName && data.groomName) return coupleLine(data, templateId)
   if (data.partner1Name && data.partner2Name) return `${data.partner1Name} & ${data.partner2Name}`
-  if (data.celebrantName) return data.age ? `${data.celebrantName} — ${data.age}th Birthday` : `${data.celebrantName}'s Birthday`
+  if (data.celebrantName) return data.age ? `${data.celebrantName}: ${data.age}th Birthday` : `${data.celebrantName}'s Birthday`
   if (data.hostNames) return data.hostNames
-  if (data.babyName) return `Namakaran — ${data.babyName}`
-  if (data.coupleNames) return data.years ? `${data.coupleNames} — ${data.years} Years` : data.coupleNames
+  if (data.babyName) return `Namakaran: ${data.babyName}`
+  if (data.coupleNames) return data.years ? `${data.coupleNames}: ${data.years} Years` : data.coupleNames
   if (data.recipientName) return `For ${data.recipientName}`
   return 'Untitled invitation'
 }
@@ -280,7 +280,7 @@ export default function DashboardClient({ user }: Props) {
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-gold-soft" />
                 </span>
                 <p className="text-[0.9rem] font-semibold">
-                  {totalNew} new wish{totalNew !== 1 ? 'es' : ''} — already live on your invitation
+                  {totalNew} new wish{totalNew !== 1 ? 'es' : ''}, already live on your invitation
                 </p>
                 <span className="hidden text-[0.8rem] text-paper/60 sm:block">· Last checked {formatRelativeDate(lastChecked.toISOString())}</span>
               </div>
@@ -404,7 +404,7 @@ export default function DashboardClient({ user }: Props) {
                         </p>
                         {expired && (
                           <p className="mt-1 text-[0.8rem] text-burnished-deep">
-                            Deleted with its photos and wishes on {deletionDate(d, event.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} — {DELETE_AFTER_DAYS} days after the celebration. Save any wishes you want to keep before then.
+                            Deleted with its photos and wishes on {deletionDate(d, event.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}, {DELETE_AFTER_DAYS} days after the celebration. Save any wishes you want to keep before then.
                           </p>
                         )}
                         <div className="mt-3 flex min-w-0 items-center gap-2">
@@ -418,6 +418,12 @@ export default function DashboardClient({ user }: Props) {
                         <Link href={`/e/${event.slug}`} target="_blank" className="btn-outline inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[0.82rem] font-semibold">
                           <EyeIcon className="h-3.5 w-3.5" /> View
                         </Link>
+                        {/* Change the details while it is live; the link stays the same. */}
+                        {!expired && (
+                          <a href={`/create?edit=${encodeURIComponent(event.slug)}`} className="btn-outline inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[0.82rem] font-semibold">
+                            <PenIcon className="h-3.5 w-3.5" /> Edit
+                          </a>
+                        )}
                         <a href={waUrl} target="_blank" rel="noopener noreferrer"
                           className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#128C4B] px-4 py-2 text-[0.82rem] font-semibold text-white transition-opacity hover:opacity-90">
                           Share on WhatsApp
@@ -479,7 +485,7 @@ export default function DashboardClient({ user }: Props) {
                     {event.wishes.length === 0 && (
                       <div className="flex items-center gap-2 border-t border-line px-5 py-3.5 text-[0.82rem] text-muted sm:px-6">
                         <CheckIcon className="h-3.5 w-3.5 text-emerald-soft" />
-                        No wishes yet — share your invitation to start collecting them.
+                        No wishes yet. Share your invitation to start collecting them.
                       </div>
                     )}
                   </motion.article>

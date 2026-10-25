@@ -65,13 +65,13 @@ export async function POST(req: NextRequest) {
   const maxBytes = isImage ? MAX_IMAGE_BYTES : isVideo ? MAX_VIDEO_BYTES : MAX_AUDIO_BYTES
   if (size > maxBytes) {
     const mb = Math.round(maxBytes / 1024 / 1024)
-    return NextResponse.json({ error: `File too large — max ${mb} MB` }, { status: 413 })
+    return NextResponse.json({ error: `File too large (max ${mb} MB)` }, { status: 413 })
   }
 
   // Counted only for a request that would get an upload URL.
   const session = await getServerSession(authOptions).catch(() => null)
   if (!session?.user && !(await takeGuestUpload(clientIp(req)))) {
-    return NextResponse.json({ error: 'Too many uploads for now — please try again in a little while.' }, { status: 429 })
+    return NextResponse.json({ error: 'Too many uploads for now. Please try again in a little while.' }, { status: 429 })
   }
 
   try {

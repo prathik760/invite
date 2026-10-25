@@ -312,7 +312,7 @@ export default function DiwaliParty({ data, eventId, isPreview = false }: Invite
   const photos = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`${title} — ${hosts}`, data.date, data.time, place || undefined, 4)
+  const calendar = calendarHref(`${title}: ${hosts}`, data.date, data.time, place || undefined, 4)
   const plural = /&| and |,/i.test(hosts) || /^the /i.test(hosts)
 
   return (
@@ -389,7 +389,7 @@ export default function DiwaliParty({ data, eventId, isPreview = false }: Invite
           <p className="leading-[1.35]" style={{ fontFamily: display, fontSize: 'clamp(23px, 6.8cqi, 28px)' }}>
             {data.message}
           </p>
-          <p className="mt-4 text-[15px]" style={{ color: C.goldSoft }}>— {hosts}</p>
+          <p className="mt-4 text-[15px]" style={{ color: C.goldSoft }}>{hosts}</p>
         </Reveal>
       )}
 

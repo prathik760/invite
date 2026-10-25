@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth'
 import DashboardClient from '@/components/dashboard/DashboardClient'
 
 export const metadata = {
-  title: 'Dashboard — ShareInvite',
+  title: 'Dashboard',
   robots: { index: false, follow: false },
   alternates: { canonical: `${process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'}/dashboard` },
 }

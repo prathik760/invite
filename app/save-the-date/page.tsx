@@ -53,7 +53,7 @@ const FAQS = [
   {
     question: 'Who should get a save the date?',
     answer:
-      'Only people you are certain to invite to the wedding itself. A save the date is a promise that an invitation is coming, so keep the list to guests you have already settled on — it is much harder to take one back.',
+      'Only people you are certain to invite to the wedding itself. A save the date is a promise that an invitation is coming, so keep the list to guests you have already settled on. It is much harder to take one back.',
   },
   {
     question: 'What goes on a save the date?',
@@ -63,12 +63,12 @@ const FAQS = [
   {
     question: 'Is a digital save the date okay to send?',
     answer:
-      'Yes — most guests now get their save the dates by text or email, and a link is easier to keep than a card on the fridge. If a grandparent would rather have paper, send them a printed card as well.',
+      'Yes, most guests now get their save the dates by text or email, and a link is easier to keep than a card on the fridge. If a grandparent would rather have paper, send them a printed card as well.',
   },
   {
     question: 'How do guests get it?',
     answer:
-      'You get one link. Paste it into a text, iMessage, WhatsApp, an email or an Instagram message. It opens in the phone’s browser — guests don’t need an app or an account.',
+      'You get one link. Paste it into a text, iMessage, WhatsApp, an email or an Instagram message. It opens in the phone’s browser. Guests don’t need an app or an account.',
   },
   {
     question: 'Can guests add the date to their calendar?',
@@ -78,12 +78,12 @@ const FAQS = [
   {
     question: 'Does it work for every couple?',
     answer:
-      'Yes. The form asks for Partner 1 and Partner 2 — two names, in whichever order you like — and the card reads “are getting married”.',
+      'Yes. The form asks for Partner 1 and Partner 2 (two names, in whichever order you like) and the card reads “are getting married”.',
   },
   {
     question: 'Can guests RSVP on it?',
     answer:
-      'Not on a save the date — replies come with the formal invitation. Guests can leave you a note on the page instead, and every guest can read them.',
+      'Not on a save the date. Replies come with the formal invitation. Guests can leave you a note on the page instead, and every guest can read them.',
   },
   {
     question: 'How long does the link stay live?',
@@ -92,21 +92,21 @@ const FAQS = [
   {
     question: 'How much does it cost?',
     answer:
-      'One payment when you publish — the price is shown on this page, and there is no subscription or charge per guest. You can fill everything in and preview it before you pay.',
+      'One payment when you publish. The price is shown on this page, and there is no subscription or charge per guest. You can fill everything in and preview it before you pay.',
   },
 ]
 
 const WORDING = [
   { name: 'Classic', tag: 'Formal', desc: '“Please save the date for the wedding of Hattie Moore and Sam Okafor. Saturday, 19 June 2027 · Hudson Valley, New York. Formal invitation to follow.”' },
-  { name: 'Relaxed', desc: '“We’re getting married! Hold Saturday, 19 June 2027 for us — somewhere with an orchard, a long table and good cider. Invitation to follow.”' },
+  { name: 'Relaxed', desc: '“We’re getting married! Hold Saturday, 19 June 2027 for us. Somewhere with an orchard, a long table and good cider. Invitation to follow.”' },
   { name: 'Hosted by parents', tag: 'Traditional', desc: '“Mr and Mrs David Wells ask you to save the date for the marriage of their daughter Imogen to William Hart. Saturday, 4 September 2027, Chipping Campden.”' },
   { name: 'Destination', desc: '“Pack something warm for the evenings: we’re getting married in Sintra, Portugal, on Friday, 8 October 2027. Travel details are on our website.”' },
   { name: 'A little wry', desc: '“After eleven years and two flat-pack wardrobes, we’re making it official. Saturday, 19 June 2027 · Hudson Valley, NY.”' },
-  { name: 'Short enough to text', desc: '“Save the date! Hattie & Sam, 19 June 2027, Hudson Valley. Invitation to follow — everything else is at the link.”' },
+  { name: 'Short enough to text', desc: '“Save the date! Hattie & Sam, 19 June 2027, Hudson Valley. Invitation to follow. Everything else is at the link.”' },
 ]
 
 const FEATURES = [
-  { icon: <CalendarIcon />, title: 'The day, circled', desc: 'A little month calendar with your day looped in red pencil — and the date spelled out, so nobody reads 06/07 the wrong way round.' },
+  { icon: <CalendarIcon />, title: 'The day, circled', desc: 'A little month calendar with your day looped in red pencil, and the date spelled out, so nobody reads 06/07 the wrong way round.' },
   { icon: <ClockIcon />, title: 'Add to calendar', desc: 'One tap opens Google Calendar with the day filled in as an all-day event.' },
   { icon: <GlobeIcon />, title: 'Your wedding website', desc: 'Link your Zola, The Knot, Joy or your own site, for travel and stay as plans firm up.' },
   { icon: <CameraIcon />, title: 'A snapshot of you two', desc: 'Add a photo and it is taped to the corner of the card, like an old deckle-edged print.' },
@@ -143,7 +143,7 @@ export default function Page() {
         crumb="Save the date"
         eyebrow="Digital save the dates"
         title={<>Digital save the date <em className="font-medium text-burnished">with the day circled</em></>}
-        lede="A letterpress-style save the date for the phone: your names, the day looped in red pencil on a little calendar, an add-to-calendar button and a link to your wedding website. Send it by text, email or WhatsApp — and preview it before you pay."
+        lede="A letterpress-style save the date for the phone: your names, the day looped in red pencil on a little calendar, an add-to-calendar button and a link to your wedding website. Send it by text, email or WhatsApp, and preview it before you pay."
         ctaLabel="Start my save the date"
         types={{
           eyebrow: 'Wording',

@@ -47,7 +47,7 @@ const SECTION_TEMPLATES: Record<string, string> = {
 const DESIGN_IDS = ['birthday-gala', 'birthday-mirrorball', 'birthday-champagne', 'birthday-martini', 'birthday-long-lunch', 'first-birthday', 'indian-birthday', 'surprise-journey']
 const TITLE = 'Birthday Invitation Message for WhatsApp: 120+ Simple Ideas'
 const DESCRIPTION =
-  'Copy a simple birthday invitation message for WhatsApp — for son, daughter, 1st, 50th & 60th birthdays, kids, friends, cake cutting, dinner & Hindi.'
+  'Copy a simple birthday invitation message for WhatsApp: for son, daughter, 1st, 50th & 60th birthdays, kids, friends, cake cutting, dinner & Hindi.'
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -71,7 +71,7 @@ const faqSchema = {
       name: 'What is a simple birthday invitation message for WhatsApp?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Keep it to three or four lines with the date, time and venue up front — for example: "You\'re invited to [Name]\'s birthday! 🎉 [Date] · [Time] · [Venue]. Please come and make the day special!" If you are sending it one-to-one, add the guest\'s name or one warm line of your own, and paste a digital invite link underneath if you have one.',
+        text: 'Keep it to three or four lines with the date, time and venue up front. For example: "You\'re invited to [Name]\'s birthday! 🎉 [Date] · [Time] · [Venue]. Please come and make the day special!" If you are sending it one-to-one, add the guest\'s name or one warm line of your own, and paste a digital invite link underneath if you have one.',
       },
     },
     {
@@ -79,7 +79,7 @@ const faqSchema = {
       name: 'What should I write in a birthday invitation message on WhatsApp?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'A good WhatsApp birthday invitation should include: the celebrant\'s name and age (or milestone), the date and time, the venue address, and a warm personal line. Keep it under 8 lines for WhatsApp — long messages get cut off on preview. End with a line asking guests to confirm attendance or RSVP. For groups, a short 4–5 line message works best; save the details for the digital invite link.',
+        text: 'A good WhatsApp birthday invitation should include: the celebrant\'s name and age (or milestone), the date and time, the venue address, and a warm personal line. Keep it under 8 lines for WhatsApp, because long messages get cut off on preview. End with a line asking guests to confirm attendance or RSVP. For groups, a short 4–5 line message works best; save the details for the digital invite link.',
       },
     },
     {
@@ -87,7 +87,7 @@ const faqSchema = {
       name: 'How do I write a birthday invitation message in Hindi?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Open with the invitation itself — "[Name] के जन्मदिन पर आप सादर आमंत्रित हैं" — then give दिनांक (date), समय (time) and स्थान (venue) on separate lines, and close with a warm line such as "आपके आने से हमारी खुशी दोगुनी हो जाएगी". For elders, begin with "सादर प्रणाम" and ask for their आशीर्वाद.',
+        text: 'Open with the invitation itself ("[Name] के जन्मदिन पर आप सादर आमंत्रित हैं"), then give दिनांक (date), समय (time) and स्थान (venue) on separate lines, and close with a warm line such as "आपके आने से हमारी खुशी दोगुनी हो जाएगी". For elders, begin with "सादर प्रणाम" and ask for their आशीर्वाद.',
       },
     },
     {
@@ -103,7 +103,7 @@ const faqSchema = {
       name: 'Can I send the same message to all my groups?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'You can, but a small tweak per group feels more personal. The core details (date, time, venue) stay the same. Adjust the opening line — "Dear family" for family groups, a more casual tone for friends. For a shared digital invite link, the same link works across all groups and everyone sees the same beautiful page.',
+        text: 'You can, but a small tweak per group feels more personal. The core details (date, time, venue) stay the same. Adjust the opening line: "Dear family" for family groups, a more casual tone for friends. For a shared digital invite link, the same link works across all groups and everyone sees the same beautiful page.',
       },
     },
     {
@@ -111,7 +111,7 @@ const faqSchema = {
       name: 'What is the best birthday invitation format for a first birthday?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'For a first birthday, start with the baby\'s name and the milestone ("Baby [Name] is turning 1!"), include both parents\' names, give date, time and venue clearly, mention the theme if any, and close with a warm invitation for the family\'s blessings. If you have a digital invite link, paste it right after the text — it shows photos and the countdown timer which parents love.',
+        text: 'For a first birthday, start with the baby\'s name and the milestone ("Baby [Name] is turning 1!"), include both parents\' names, give date, time and venue clearly, mention the theme if any, and close with a warm invitation for the family\'s blessings. If you have a digital invite link, paste it right after the text. It shows photos and the countdown timer which parents love.',
       },
     },
   ],
@@ -134,7 +134,7 @@ export default function BirthdayInvitationWordingPage() {
         eyebrow="120+ messages · WhatsApp-ready · Copy in one tap"
         title={<>Birthday Invitation Messages &amp;<br />
             <em className="font-medium text-burnished">Wording for WhatsApp</em></>}
-        lede={<>120+ ready-to-copy birthday invitation messages for WhatsApp — simple and short samples, wording for son,
+        lede={<>120+ ready-to-copy birthday invitation messages for WhatsApp: simple and short samples, wording for son,
             daughter and kids, first, 50th and 60th birthdays, cake cutting, lunch and dinner, and messages in Hindi.</>}
         actions={<><Link href="#birthday-designs" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
               See the birthday designs</Link></>}
@@ -152,7 +152,7 @@ export default function BirthdayInvitationWordingPage() {
               <SectionHeading
                 eyebrow="Send these words as an invitation"
                 title="Birthday designs"
-                sub="Paste your message into any of these and guests get the date, the place, a countdown and a way to reply — from one link. Tap a design for a live preview."
+                sub="Paste your message into any of these and guests get the date, the place, a countdown and a way to reply, all from one link. Tap a design for a live preview."
                 action={{ href: '/birthday-invitation', label: 'All birthday designs' }}
               />
               <div className="mt-9 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3" data-reveal-group>
@@ -168,7 +168,7 @@ export default function BirthdayInvitationWordingPage() {
               <div className="mx-auto max-w-3xl">
                 <MidPageCTA
                   headline="Your guests deserve more than a WhatsApp text"
-                  body="A plain message tells them the date. A digital invite shows them the venue on a map, counts down the days, plays a song, and lets them leave a birthday wish — all from a single link you paste into any group."
+                  body="A plain message tells them the date. A digital invite shows them the venue on a map, counts down the days, plays a song, and lets them leave a birthday wish, all from a single link you paste into any group."
                   features={[
                     'Live countdown to the birthday',
                     'Photo gallery & background music',
@@ -187,7 +187,7 @@ export default function BirthdayInvitationWordingPage() {
               <div className="mx-auto max-w-3xl">
                 <MidPageCTA
                   headline="Those [Digital Invite Link] placeholders? Create yours in 5 minutes."
-                  body="Every short message above is designed to pair with a digital invite link. Paste the link and your guests get the venue on a map, a countdown, photos, and a place to leave wishes — all without installing anything."
+                  body="Every short message above is designed to pair with a digital invite link. Paste the link and your guests get the venue on a map, a countdown, photos, and a place to leave wishes, all without installing anything."
                   features={[
                     'One link works on every phone',
                     'Re-send the same link as a reminder',
@@ -215,43 +215,43 @@ export default function BirthdayInvitationWordingPage() {
             <div>
               <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Birthday invitation quotes</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
-                <li>&ldquo;Grow old with me — but first, come celebrate!&rdquo;</li>
+                <li>&ldquo;Grow old with me, but first, come celebrate!&rdquo;</li>
                 <li>&ldquo;Another year wiser, and the party&apos;s just getting started.&rdquo;</li>
-                <li>&ldquo;Life is a party — and you&apos;re on the guest list.&rdquo;</li>
-                <li>&ldquo;Cake, candles and you — that&apos;s all we need.&rdquo;</li>
+                <li>&ldquo;Life is a party, and you&apos;re on the guest list.&rdquo;</li>
+                <li>&ldquo;Cake, candles and you: that&apos;s all we need.&rdquo;</li>
                 <li>&ldquo;Every birthday is a gift; your presence is ours.&rdquo;</li>
                 <li>&ldquo;Let&apos;s make a wish and make some memories.&rdquo;</li>
                 <li>&ldquo;Older, bolder, and ready to celebrate.&rdquo;</li>
-                <li>&ldquo;Good friends, good cake, great memories — join us.&rdquo;</li>
+                <li>&ldquo;Good friends, good cake, great memories. Join us.&rdquo;</li>
                 <li>&ldquo;A candle for every year, a smile for every guest.&rdquo;</li>
                 <li>&ldquo;Come for the cake, stay for the memories.&rdquo;</li>
-                <li>&ldquo;Birthdays are better with the people we love — so please come.&rdquo;</li>
+                <li>&ldquo;Birthdays are better with the people we love, so please come.&rdquo;</li>
                 <li>&ldquo;Another lap around the sun calls for a celebration.&rdquo;</li>
-                <li>&ldquo;Count your age by friends, not years — bring yours along!&rdquo;</li>
+                <li>&ldquo;Count your age by friends, not years. Bring yours along!&rdquo;</li>
                 <li>&ldquo;Let&apos;s eat cake and act our shoe size, not our age.&rdquo;</li>
-                <li>&ldquo;The more, the merrier — and you&apos;re the &lsquo;more&rsquo; we want.&rdquo;</li>
-                <li>&ldquo;Here&apos;s to another year of being fabulous — join the celebration!&rdquo;</li>
+                <li>&ldquo;The more, the merrier, and you&apos;re the &lsquo;more&rsquo; we want.&rdquo;</li>
+                <li>&ldquo;Here&apos;s to another year of being fabulous. Join the celebration!&rdquo;</li>
               </ul>
             </div>
             <div>
               <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Short invitation lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
-                <li>You&apos;re invited to [Name]&apos;s birthday — [Date] at [Venue]!</li>
+                <li>You&apos;re invited to [Name]&apos;s birthday: [Date] at [Venue]!</li>
                 <li>Come celebrate [Name] turning [Age] with us! 🎂</li>
                 <li>Join us for cake, laughter and love on [Date].</li>
-                <li>It wouldn&apos;t be a party without you — please come!</li>
+                <li>It wouldn&apos;t be a party without you. Please come!</li>
                 <li>Save the date: [Name]&apos;s birthday, [Date] · [Time].</li>
                 <li>Let&apos;s celebrate another trip around the sun! ☀️</li>
-                <li>Bring your smile — the rest is on us. [Date], [Venue].</li>
-                <li>Big day, big fun — [Name]&apos;s birthday, [Date]!</li>
+                <li>Bring your smile. The rest is on us. [Date], [Venue].</li>
+                <li>Big day, big fun: [Name]&apos;s birthday, [Date]!</li>
                 <li>Please join us to make [Name]&apos;s day unforgettable.</li>
                 <li>Your presence is the only present we need. [Date], [Venue].</li>
-                <li>We&apos;re celebrating — and we&apos;d love you to be there!</li>
+                <li>We&apos;re celebrating, and we&apos;d love you to be there!</li>
                 <li>Mark your calendar: it&apos;s [Name]&apos;s big day!</li>
-                <li>Cake, candles and good company — see you on [Date].</li>
-                <li>Come one, come all — [Name] is turning [Age]!</li>
+                <li>Cake, candles and good company. See you on [Date].</li>
+                <li>Come one, come all: [Name] is turning [Age]!</li>
                 <li>Let&apos;s raise a toast to [Name] on [Date] at [Venue].</li>
-                <li>The celebration begins at [Time] — don&apos;t miss it!</li>
+                <li>The celebration begins at [Time]. Don&apos;t miss it!</li>
               </ul>
             </div>
             <div>
@@ -261,15 +261,15 @@ export default function BirthdayInvitationWordingPage() {
                 <li>It&apos;s my day and I want you there ❤️ [Date] · [Venue]</li>
                 <li>Cake o&apos;clock! 🎂 Come celebrate [Name] on [Date].</li>
                 <li>Party mode: ON. 🥳 See you [Date] at [Venue].</li>
-                <li>One year cuter — [Child&apos;s Name] turns [Age]! 🎈</li>
-                <li>Let&apos;s get this party started — [Date], [Time]!</li>
+                <li>One year cuter: [Child&apos;s Name] turns [Age]! 🎈</li>
+                <li>Let&apos;s get this party started: [Date], [Time]!</li>
                 <li>Tap the link, save the date, don&apos;t be late. 👇</li>
-                <li>New age, same me — come celebrate! 🎂 [Date]</li>
+                <li>New age, same me. Come celebrate! 🎂 [Date]</li>
                 <li>Warning: birthday in progress. Cake ahead! 🍰 [Venue]</li>
-                <li>Officially [Age] — let&apos;s celebrate together! 🥳</li>
-                <li>Gather round, friends — it&apos;s party time! [Date]</li>
+                <li>Officially [Age]. Let&apos;s celebrate together! 🥳</li>
+                <li>Gather round, friends. It&apos;s party time! [Date]</li>
                 <li>Making [Age] look good. Join the fun! ✨</li>
-                <li>Best day of the year is here — you&apos;re invited! 🎉</li>
+                <li>Best day of the year is here. You&apos;re invited! 🎉</li>
                 <li>Come hungry, leave happy. 🎂 [Date] · [Venue]</li>
                 <li>Blow out the candles with us! 🕯️ [Date] at [Time]</li>
               </ul>
@@ -277,18 +277,18 @@ export default function BirthdayInvitationWordingPage() {
             <div>
               <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">First birthday &amp; milestone lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
-                <li>Our little one is turning ONE — come bless [Baby&apos;s Name]! 🎂</li>
-                <li>Baby&apos;s first birthday — your blessings make it complete. [Date]</li>
-                <li>[Name] is turning [Age] — a milestone worth celebrating together!</li>
-                <li>Half a century of [Parent&apos;s Name] — join the golden celebration! ✨</li>
-                <li>60 years young — come honour [Parent&apos;s Name] with us. [Date]</li>
-                <li>A big day for a big milestone — please join the celebration!</li>
+                <li>Our little one is turning ONE. Come bless [Baby&apos;s Name]! 🎂</li>
+                <li>Baby&apos;s first birthday. Your blessings make it complete. [Date]</li>
+                <li>[Name] is turning [Age], a milestone worth celebrating together!</li>
+                <li>Half a century of [Parent&apos;s Name]. Join the golden celebration! ✨</li>
+                <li>60 years young. Come honour [Parent&apos;s Name] with us. [Date]</li>
+                <li>A big day for a big milestone. Please join the celebration!</li>
               </ul>
             </div>
             <p className="text-xs text-muted leading-6 pt-1">
               Tip: paste any of these as the opening line, then drop your{' '}
               <Link href="/birthday-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital invite link</Link>{' '}
-              below it — guests get the venue map, countdown and a place to leave wishes in one tap.
+              below it. Guests get the venue map, countdown and a place to leave wishes in one tap.
             </p>
           </div>
         </div>
@@ -300,13 +300,13 @@ export default function BirthdayInvitationWordingPage() {
           <h2 className="t-h2 mb-6">What Makes a Birthday Invitation Message Work</h2>
           <div className="rounded-2xl border border-line bg-champagne p-8 shadow-sm">
             <p className="text-sm text-muted leading-7">
-              A birthday invitation message does one job: it tells guests everything they need to show up. The warmth comes from how you say it; the usefulness comes from what you include. The single most common reason guests arrive late or go to the wrong place is that the date, time, and venue were buried in the third or fourth line. Put those three details in the first three lines — always. The rest of the message can carry the emotion.
+              A birthday invitation message does one job: it tells guests everything they need to show up. The warmth comes from how you say it; the usefulness comes from what you include. The single most common reason guests arrive late or go to the wrong place is that the date, time, and venue were buried in the third or fourth line. Put those three details in the first three lines, always. The rest of the message can carry the emotion.
             </p>
             <p className="text-sm text-muted leading-7 mt-4">
-              Tone matters more than most people think. A message for a grandmother&apos;s 60th birthday celebration reads nothing like a message for a 25-year-old&apos;s rooftop party — and guests notice when the tone feels off. Match the message to the person being celebrated and to the kind of gathering it is.
+              Tone matters more than most people think. A message for a grandmother&apos;s 60th birthday celebration reads nothing like a message for a 25-year-old&apos;s rooftop party, and guests notice when the tone feels off. Match the message to the person being celebrated and to the kind of gathering it is.
             </p>
             <p className="text-sm text-muted leading-7 mt-4">
-              For WhatsApp groups, a text message alone is rarely enough. Links get far higher engagement than plain text because guests can see the venue on a map, view a photo, and check the time without having to scroll back up. A digital invite link at the end of even a short message does more work than a long paragraph of directions. It also means you can send reminders without rewriting anything — just re-share the same link.
+              For WhatsApp groups, a text message alone is rarely enough. Links get far higher engagement than plain text because guests can see the venue on a map, view a photo, and check the time without having to scroll back up. A digital invite link at the end of even a short message does more work than a long paragraph of directions. It also means you can send reminders without rewriting anything: just re-share the same link.
             </p>
           </div>
         </div>
@@ -338,7 +338,7 @@ export default function BirthdayInvitationWordingPage() {
 
       {/* FAQ */}
       <Section tone="paper" id="faq" aria-label="Questions">
-        <SectionHeading align="center" eyebrow="Questions" title={'Birthday Invitation Wording — FAQ'} />
+        <SectionHeading align="center" eyebrow="Questions" title={'Birthday Invitation Wording: FAQ'} />
         <div className="mt-10">
           <FAQAccordion faqs={faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))} />
         </div>

@@ -83,7 +83,7 @@ export function generateMetadata({ params }: Props): Metadata {
 const VALUES = [
   { Icon: LinkIcon, title: 'One link, shared anywhere', desc: 'A rich preview in WhatsApp chats shows your names and design before guests even open it.' },
   { Icon: PhoneIcon, title: 'Made for phones', desc: 'Maps, countdown, gallery and schedule are laid out for the screen guests actually use.' },
-  { Icon: GlobeIcon, title: 'Guests anywhere', desc: 'Opens in any browser, in any country — no app, no account, no sign-up.' },
+  { Icon: GlobeIcon, title: 'Guests anywhere', desc: 'Opens in any browser, in any country: no app, no account, no sign-up.' },
 ]
 
 function LandingPage({ page }: { page: SeoPage }) {
@@ -159,7 +159,7 @@ function LandingPage({ page }: { page: SeoPage }) {
             <p>
               For {page.audience}, the hard part is coordination. Printed cards and static images are easy to forward but
               hide details inside a compressed picture. One invitation page keeps the map link, timings, photos and
-              message together — readable, tappable and easy to reopen before the event.
+              message together: readable, tappable and easy to reopen before the event.
             </p>
             <p>
               The experience is calm for guests: one link opens the invitation, one tap opens Google Maps, and on event
@@ -262,8 +262,8 @@ function LocationLandingPage({ page }: { page: LocationPage }) {
               they leave for the venue. There is no printing, courier or round of image edits to wait for.
             </p>
             <p>
-              The designs carry the details Indian celebrations need — muhurat, pooja timing, ceremony schedule, dress
-              code, reception and family notes — for local guests, relatives in other cities and family abroad alike.
+              The designs carry the details Indian celebrations need (muhurat, pooja timing, ceremony schedule, dress
+              code, reception and family notes) for local guests, relatives in other cities and family abroad alike.
             </p>
           </div>
         </div>

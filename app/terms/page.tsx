@@ -7,7 +7,7 @@ const LAST_UPDATED = '17 July 2026'
 export const metadata: Metadata = {
   title: { absolute: 'Terms of Service | ShareInvite' },
   description:
-    'The Terms of Service governing your use of ShareInvite — India\'s digital invitation website builder. Read our terms on accounts, plans, payments, content, and acceptable use.',
+    'The Terms of Service governing your use of ShareInvite, India\'s digital invitation website builder. Read our terms on accounts, plans, payments, content, and acceptable use.',
   keywords: ['ShareInvite terms of service', 'ShareInvite terms and conditions', 'digital invitation terms of use'],
   alternates: { canonical: `${APP_URL}/terms` },
   openGraph: {
@@ -46,10 +46,10 @@ const sections: LegalSection[] = [
     body: (
       <Bullets
         items={[
-          <><strong className="text-foreground">&ldquo;User&rdquo;, &ldquo;you&rdquo;</strong> — any person who accesses or uses the Service, including hosts who create invitations and guests who view them.</>,
-          <><strong className="text-foreground">&ldquo;Invitation&rdquo;</strong> — the digital invitation website you create, personalise, and publish using our templates.</>,
-          <><strong className="text-foreground">&ldquo;Content&rdquo;</strong> — text, names, dates, venue details, photos, music links, messages, guest wishes/RSVPs, and any other material added to an Invitation.</>,
-          <><strong className="text-foreground">&ldquo;Plan&rdquo;</strong> — a one-time paid tier that unlocks specific templates and features.</>,
+          <><strong className="text-foreground">&ldquo;User&rdquo;, &ldquo;you&rdquo;</strong>: any person who accesses or uses the Service, including hosts who create invitations and guests who view them.</>,
+          <><strong className="text-foreground">&ldquo;Invitation&rdquo;</strong>: the digital invitation website you create, personalise, and publish using our templates.</>,
+          <><strong className="text-foreground">&ldquo;Content&rdquo;</strong>: text, names, dates, venue details, photos, music links, messages, guest wishes/RSVPs, and any other material added to an Invitation.</>,
+          <><strong className="text-foreground">&ldquo;Plan&rdquo;</strong>: a one-time paid tier that unlocks specific templates and features.</>,
         ]}
       />
     ),
@@ -98,8 +98,8 @@ const sections: LegalSection[] = [
       <>
         <Para>
           Building and previewing an invitation on ShareInvite does not require payment. Publishing requires a one-time paid plan, which
-          unlocks the template you choose. Paid plans are a <strong className="text-foreground">one-time purchase</strong>
-          {' '}— they are not a subscription and do not renew automatically, so you will not be charged on a recurring
+          unlocks the template you choose. Paid plans are a <strong className="text-foreground">one-time purchase</strong>.
+          {' '}They are not a subscription and do not renew automatically, so you will not be charged on a recurring
           basis.
         </Para>
         <Bullets
@@ -125,7 +125,7 @@ const sections: LegalSection[] = [
         <Para>
           You retain all ownership of the Content you add to your Invitations. To operate the Service, you grant ShareInvite
           a limited, non-exclusive, worldwide, royalty-free licence to host, store, reproduce, and display your Content
-          solely for the purpose of providing and improving the Service — for example, rendering and publishing your
+          solely for the purpose of providing and improving the Service, for example, rendering and publishing your
           Invitation at its shareable link.
         </Para>
         <Para>
@@ -238,8 +238,8 @@ const sections: LegalSection[] = [
         </Para>
         <Para>
           On termination, your right to use the Service ends and published Invitations may be taken offline. Sections of
-          these Terms that by their nature should survive termination — including intellectual property, disclaimers,
-          limitation of liability, and indemnity — will continue to apply.
+          these Terms that by their nature should survive termination (including intellectual property, disclaimers,
+          limitation of liability, and indemnity) will continue to apply.
         </Para>
       </>
     ),
@@ -290,7 +290,7 @@ export default function TermsPage() {
     <LegalPage
       eyebrow="Legal"
       title="Terms of Service"
-      subtitle="These terms explain the rules for using ShareInvite — how accounts, plans, payments, and content work, and the responsibilities we each have. Please read them carefully."
+      subtitle="These terms explain the rules for using ShareInvite: how accounts, plans, payments, and content work, and the responsibilities we each have. Please read them carefully."
       lastUpdated={LAST_UPDATED}
       sections={sections}
     />

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TEMPLATES } from '@/modules/templates/data'
 import { getRequiredPlan } from '@/lib/plans'
+import { displayName } from '@/lib/catalog'
 import { TEMPLATE_VISUALS, DARK_TEMPLATES } from './templateVisuals'
 import LiveDemoScreen from './LiveDemoScreen'
 import ShareDesignButton from '@/components/catalog/ShareDesignButton'
@@ -81,7 +82,7 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
   const tv = TEMPLATE_VISUALS[templateId] ?? TEMPLATE_VISUALS['elegant-wedding']
   const plan = getRequiredPlan(templateId)
   const isFree = plan.price === 0
-  const name = tpl.name.split('—')[0].trim()
+  const name = displayName(tpl.name)
   const barBg = isDark ? '#111118' : '#FFFCF8'
   const barLine = isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(44,32,28,0.09)'
 
@@ -171,7 +172,7 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
           transition={{ duration: 0.18 }}
           role="dialog"
           aria-modal="true"
-          aria-label={`${name} — live preview`}
+          aria-label={`${name}: live preview`}
           className="fixed inset-0 flex items-center justify-center"
           style={{ zIndex: 'var(--z-overlay)' as unknown as number, background: 'rgba(22,16,13,0.76)', backdropFilter: isPhone ? undefined : 'blur(18px)' }}
           onClick={e => { if (e.target === e.currentTarget) onClose() }}

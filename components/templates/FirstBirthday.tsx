@@ -512,7 +512,7 @@ export default function FirstBirthday({ data, eventId, isPreview = false }: Invi
           </p>
           {parents && (
             <p className="mt-3" style={{ fontFamily: hand, fontWeight: 700, fontSize: 24, color: C.coralDeep }}>
-              — {parents}
+              {parents}
             </p>
           )}
         </Reveal>
@@ -592,7 +592,7 @@ export default function FirstBirthday({ data, eventId, isPreview = false }: Invi
           eventId={eventId}
           theme={WISHES_THEME}
           title={`Wishes for ${first}`}
-          intro={`Write a birthday wish for ${first} — the family will keep them all for later.`}
+          intro={`Write a birthday wish for ${first}. The family will keep them all for later.`}
           noun="wish"
         />
       )}

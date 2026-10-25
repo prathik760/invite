@@ -36,8 +36,8 @@ function featuresFor(occasion: Occasion, city: string) {
   switch (occasion) {
     case 'wedding':
       return [
-        { icon: <MapPinIcon />, title: `${city} venue map`, desc: `Your ${city} venue with a one-tap Google Maps link — no confused calls on the day.` },
-        { icon: <ClipboardIcon />, title: 'Every ceremony', desc: 'Mehendi, Haldi, Sangeet, wedding and reception — with dates, times and venues.' },
+        { icon: <MapPinIcon />, title: `${city} venue map`, desc: `Your ${city} venue with a one-tap Google Maps link. No confused calls on the day.` },
+        { icon: <ClipboardIcon />, title: 'Every ceremony', desc: 'Mehendi, Haldi, Sangeet, wedding and reception, with dates, times and venues.' },
         { icon: <MusicIcon />, title: 'Background music', desc: 'Your wedding song plays softly as guests open the invite.' },
         ...common,
       ]
@@ -51,13 +51,13 @@ function featuresFor(occasion: Occasion, city: string) {
     case 'birthday':
       return [
         { icon: <MapPinIcon />, title: `${city} party venue`, desc: `The address and a one-tap map for your ${city} venue.` },
-        { icon: <CalendarIcon />, title: 'Party schedule', desc: 'Arrival, cake cutting, dinner and games — a clear timeline.' },
+        { icon: <CalendarIcon />, title: 'Party schedule', desc: 'Arrival, cake cutting, dinner and games: a clear timeline.' },
         { icon: <MusicIcon />, title: 'Favourite song', desc: 'Their favourite track plays when guests open the invite.' },
         ...common,
       ]
     case 'home':
       return [
-        { icon: <ClockIcon />, title: 'Muhurat time', desc: 'The auspicious time shown prominently — the detail guests need most.' },
+        { icon: <ClockIcon />, title: 'Muhurat time', desc: 'The auspicious time shown prominently, the detail guests need most.' },
         { icon: <HomeIcon />, title: 'Your new address', desc: `Your new ${city} home with a one-tap Google Maps link.` },
         { icon: <ClipboardIcon />, title: 'Pooja schedule', desc: 'Ganesh pooja, vastu pooja, griha pravesh and lunch, in order.' },
         common[1],
@@ -182,7 +182,7 @@ export default function CityLanding({
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-[0.85rem] text-muted">Features vary by design — the live preview shows exactly what each one includes.</p>
+        <p className="mt-6 text-[0.85rem] text-muted">Features vary by design. The live preview shows exactly what each one includes.</p>
       </Section>
 
       <Section tone="peach" aria-label="How it works">

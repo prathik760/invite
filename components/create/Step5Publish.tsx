@@ -38,16 +38,18 @@ interface Step5PublishProps {
   /** Required fields still empty, and the step each is on. Checked before payment. */
   missing?: { label: string; step: number }[]
   onFix?: (step: number) => void
+  /** Changing a published invitation: nothing to pay, and the button saves to the same link. */
+  editing?: boolean
 }
 
 export default function Step5Publish({
-  selectedTemplate, data, userPlan, session, loading, error, onBack, onPublish, missing = [], onFix,
+  selectedTemplate, data, userPlan, session, loading, error, onBack, onPublish, missing = [], onFix, editing = false,
 }: Step5PublishProps) {
   const isDark = DARK_TEMPLATES.has(selectedTemplate.id)
   const tv = TEMPLATE_VISUALS[selectedTemplate.id] ?? TEMPLATE_VISUALS['elegant-wedding']
   const requiredPlan = getRequiredPlan(selectedTemplate.id)
   const userHasAccess = canAccess(selectedTemplate.id, userPlan)
-  const mustPay = !userHasAccess
+  const mustPay = !editing && !userHasAccess
   const name = displayName(selectedTemplate.name)
   const listPrice = useLocalPrice(requiredPlan.price)
   // After the visitor's discount code, when it covers this design (lib/coupons.ts).
@@ -69,7 +71,7 @@ export default function Step5Publish({
           <div className="mb-5 flex w-full max-w-sm items-center justify-between gap-3">
             <div>
               <p className="eyebrow">Step 5 of 5</p>
-              <h1 className="t-h3 mt-1">Your invitation is ready</h1>
+              <h1 className="t-h3 mt-1">{editing ? 'Check your changes' : 'Your invitation is ready'}</h1>
             </div>
             <button type="button" onClick={onBack} className="btn-outline shrink-0 rounded-full px-4 py-2 text-[0.85rem] font-semibold">
               Edit details
@@ -129,9 +131,9 @@ export default function Step5Publish({
               <p className="mt-0.5 truncate font-editorial text-[1.5rem] font-semibold leading-tight">{name}</p>
             </div>
             <div className="text-right">
-              <p className="font-editorial text-[2rem] font-semibold leading-none">{mustPay ? price : 'Owned'}</p>
+              <p className="font-editorial text-[2rem] font-semibold leading-none">{editing ? 'Live' : mustPay ? price : 'Owned'}</p>
               <p className="mt-1 text-[0.72rem] text-muted">
-                {!mustPay ? 'already yours' : coupon ? <><s>{listPrice.label}</s> · {coupon.code}</> : 'one-time'}
+                {editing ? 'same link' : !mustPay ? 'already yours' : coupon ? <><s>{listPrice.label}</s> · {coupon.code}</> : 'one-time'}
               </p>
             </div>
           </div>
@@ -153,7 +155,7 @@ export default function Step5Publish({
 
             {missing.length > 0 && (
               <div className="mt-5 rounded-xl border border-burnished/30 bg-peach/70 px-4 py-3.5">
-                <p className="text-[0.88rem] font-semibold text-charcoal">Before you publish, add:</p>
+                <p className="text-[0.88rem] font-semibold text-charcoal">{editing ? 'Before you save, add:' : 'Before you publish, add:'}</p>
                 <ul className="mt-2 space-y-1.5">
                   {missing.map((m) => (
                     <li key={m.label} className="flex items-center justify-between gap-3 text-[0.86rem] text-charcoal/85">
@@ -185,10 +187,10 @@ export default function Step5Publish({
               className="btn-primary mt-6 hidden w-full items-center justify-center gap-2.5 rounded-full py-4 text-[1rem] font-semibold disabled:opacity-50 md:flex"
             >
               {loading ? (
-                <><Spinner />Creating your invitation…</>
+                <><Spinner />{editing ? 'Saving your changes…' : 'Creating your invitation…'}</>
               ) : (
                 <>
-                  {mustPay ? `Pay ${price} & publish` : 'Publish & get my link'}
+                  {editing ? 'Save changes' : mustPay ? `Pay ${price} & publish` : 'Publish & get my link'}
                   <ArrowRightIcon />
                 </>
               )}
@@ -200,11 +202,13 @@ export default function Step5Publish({
                 "You'll sign in first" after sign-in stopped being needed, right
                 above the payment window's own "No account needed". */}
             <p className="mt-3 text-center text-[0.8rem] leading-5 text-muted">
-              {mustPay
+              {editing
+                ? 'Your link stays the same. Guests see the changes the next time they open it.'
+                : mustPay
                 ? !session
                   ? 'No account needed: pay securely with Razorpay and your invitation publishes right after.'
-                  : 'Secure one-time payment via Razorpay — your invitation publishes right after.'
-                : 'Publishes instantly — share the link on WhatsApp.'}
+                  : 'Secure one-time payment via Razorpay. Your invitation publishes right after.'
+                : 'Publishes instantly. Share the link on WhatsApp.'}
             </p>
           </div>
 

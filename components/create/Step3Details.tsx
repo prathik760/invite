@@ -17,7 +17,7 @@ export default function Step3Details({ selectedTemplate, data, onChange, onBack,
     <StepShell
       step={3}
       title="When & where?"
-      sub="Date, time and venue — the essentials your guests need."
+      sub="Date, time and venue: the essentials your guests need."
       onBack={onBack}
       onContinue={onContinue}
     >

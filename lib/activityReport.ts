@@ -238,6 +238,10 @@ export function describe(r: ActivityRow, isLast = false, gallery = false): Line 
       return { icon: '🎟️', text: `Got the discount code ${str(d.coupon)}`, detail: d.source === 'link' ? 'from a campaign link' : 'typed at checkout', tone: 'good' }
     case 'coupon_rejected':
       return { icon: '🎟️', text: `Tried a discount code that did not work${d.coupon ? ` (${str(d.coupon)})` : ''}`, detail: str(d.reason) || undefined, tone: 'warn' }
+    case 'invite_edit_start':
+      return { icon: '✏️', text: 'Opened their published invitation to change it', detail: tpl || undefined, tone: 'neutral' }
+    case 'invite_edit':
+      return { icon: '✏️', text: 'Saved changes to their published invitation', detail: tpl || undefined, tone: 'good' }
     case 'invite_creation':
       return { icon: '🎉', text: `Published an invitation with ${tpl}`, tone: 'good' }
     case 'wording_copy':

@@ -494,7 +494,7 @@ export default function IndianBirthday({ data, eventId, isPreview = false }: Inv
             {data.message}
           </p>
           <p className="mt-5" style={{ ...display(800), fontSize: 19, color: C.pinkDeep }}>
-            &mdash; {name}
+            {name}
           </p>
         </Reveal>
       )}

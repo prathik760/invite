@@ -18,7 +18,7 @@ import { absoluteUrl, breadcrumbJsonLd, collectionPageJsonLd, DEFAULT_OG_IMAGE, 
 // The count was hard-coded as "11" while the catalogue held 24 designs.
 const COUNT = TEMPLATES.length
 const TITLE = 'Digital Invitation Templates for Every Event | ShareInvite'
-const DESCRIPTION = `${COUNT} digital invitation templates for weddings, birthdays, engagements, anniversaries, festivals, housewarmings and naming ceremonies — plus animated 3D greetings. Preview before you pay, share on WhatsApp.`
+const DESCRIPTION = `${COUNT} digital invitation templates for weddings, birthdays, engagements, anniversaries, festivals, housewarmings and naming ceremonies, plus animated 3D greetings. Preview before you pay, share on WhatsApp.`
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -65,7 +65,7 @@ export default function TemplatesIndexPage() {
         lede="Animated invitations and 3D greetings for weddings, birthdays, festivals and every celebration. Open any design in a live preview, try it with your own details before you pay, and pay once for the one you publish."
         aside={<TemplateFanHero />}
         asideClassName="hidden lg:block"
-        footnote={<TrustList items={['Preview before you pay', `One price per design, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}`, 'Switch designs any time — details carry over', 'One link guests open on any phone']} />}
+        footnote={<TrustList items={['Preview before you pay', `One price per design, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}`, 'Switch designs any time: details carry over', 'One link guests open on any phone']} />}
       />
 
       <Section aria-label="All designs">
@@ -102,7 +102,7 @@ export default function TemplatesIndexPage() {
       <CtaBand
         eyebrow="Something else in mind?"
         title="Can't find the right design? We'll create it."
-        sub="Baby showers, corporate events, reunions and more — tell us about your event and our designers will make one for you."
+        sub="Baby showers, corporate events, reunions and more. Tell us about your event and our designers will make one for you."
         primary={{ href: '/#custom-template', label: 'Request a custom design' }}
         secondary={{ href: '/create', label: 'Start with a design' }}
         location="templates_closing"

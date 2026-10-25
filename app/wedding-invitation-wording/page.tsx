@@ -54,7 +54,7 @@ const DESIGN_IDS = ['signature-rajwada', 'signature-saptapadi', 'signature-aquar
 const MESSAGE_COUNT = WEDDING_SECTIONS.reduce((n, s) => n + s.messages.length, 0)
 const TITLE = 'Wedding Invitation Message for WhatsApp: 100+ Marriage Ideas'
 const DESCRIPTION =
-  'Copy a wedding or marriage invitation message for WhatsApp — for son, daughter, sister, brother, friends & colleagues, Hindu, Nikah & Christian, in Hindi too.'
+  'Copy a wedding or marriage invitation message for WhatsApp: for son, daughter, sister, brother, friends & colleagues, Hindu, Nikah & Christian, in Hindi too.'
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -79,7 +79,7 @@ const faqSchema = {
       name: 'What is a simple wedding invitation message for WhatsApp?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Keep it to four or five lines with the couple, the date and the venue first — for example: "You\'re invited to the wedding of [Bride] & [Groom]! [Date] · [Time] · [Venue]. Your blessings mean the world to us." Then paste your digital invitation link underneath, so the full schedule, the venue map and the timings travel with the message.',
+        text: 'Keep it to four or five lines with the couple, the date and the venue first. For example: "You\'re invited to the wedding of [Bride] & [Groom]! [Date] · [Time] · [Venue]. Your blessings mean the world to us." Then paste your digital invitation link underneath, so the full schedule, the venue map and the timings travel with the message.',
       },
     },
     {
@@ -87,7 +87,7 @@ const faqSchema = {
       name: 'How do I invite someone to my marriage on WhatsApp?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Send a short personal message — the couple\'s names, the date and the city — and paste your invitation link below it. Address elders by name and ask for their blessings; for friends, one casual line is enough. Send it one-to-one to anyone you would have invited in person, and use groups only for the wider circle.',
+        text: 'Send a short personal message (the couple\'s names, the date and the city) and paste your invitation link below it. Address elders by name and ask for their blessings; for friends, one casual line is enough. Send it one-to-one to anyone you would have invited in person, and use groups only for the wider circle.',
       },
     },
     {
@@ -95,7 +95,7 @@ const faqSchema = {
       name: 'What should I write in my sister\'s or brother\'s marriage invitation message?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Start with the relationship ("My sister [Name] is getting married"), give the date and the venue, and end with a line about why you want that person there. Say which functions they are invited to — friends and colleagues are often invited to the sangeet or the reception only.',
+        text: 'Start with the relationship ("My sister [Name] is getting married"), give the date and the venue, and end with a line about why you want that person there. Say which functions they are invited to, because friends and colleagues are often invited to the sangeet or the reception only.',
       },
     },
     {
@@ -103,7 +103,7 @@ const faqSchema = {
       name: 'Should wedding invitations be formal or informal in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'It depends on the guest list and family tradition. For elders and community-wide invitations, formal wording with the family names is expected. For friends, colleagues and younger relatives, a warm and casual tone feels more genuine. Many families use two versions — a formal message for elders and a short WhatsApp message for friends — with the same invitation link.',
+        text: 'It depends on the guest list and family tradition. For elders and community-wide invitations, formal wording with the family names is expected. For friends, colleagues and younger relatives, a warm and casual tone feels more genuine. Many families use two versions, a formal message for elders and a short WhatsApp message for friends, with the same invitation link.',
       },
     },
     {
@@ -111,7 +111,7 @@ const faqSchema = {
       name: 'How do I write a marriage invitation in Hindi?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Traditional Hindi wording opens with "॥ श्री गणेशाय नमः ॥", names the couple with "का शुभ विवाह … के साथ", gives the date (दिनांक) and venue (स्थान), and invites guests with "आप सपरिवार सादर आमंत्रित हैं". The inviting family signs off with "दर्शनाभिलाषी" or "विनीत". For WhatsApp, a shorter version — "शुभ विवाह", the names, the date and the venue — works best.',
+        text: 'Traditional Hindi wording opens with "॥ श्री गणेशाय नमः ॥", names the couple with "का शुभ विवाह … के साथ", gives the date (दिनांक) and venue (स्थान), and invites guests with "आप सपरिवार सादर आमंत्रित हैं". The inviting family signs off with "दर्शनाभिलाषी" or "विनीत". For WhatsApp, a shorter version ("शुभ विवाह", the names, the date and the venue) works best.',
       },
     },
     {
@@ -165,7 +165,7 @@ export default function WeddingInvitationWordingPage() {
         eyebrow={`${MESSAGE_COUNT} messages · WhatsApp-ready · Copy in one tap`}
         title={<>Wedding Invitation Messages &amp;<br />
             <em className="font-medium text-burnished">Marriage Wording for WhatsApp</em></>}
-        lede={<>{MESSAGE_COUNT} ready-to-copy wedding invitation messages for WhatsApp — simple and formal samples, wording for
+        lede={<>{MESSAGE_COUNT} ready-to-copy wedding invitation messages for WhatsApp: simple and formal samples, wording for
             your son&apos;s, daughter&apos;s, sister&apos;s or brother&apos;s marriage, messages for friends and colleagues, Hindu,
             South Indian, Nikah and Christian wording, and invitations in Hindi.</>}
         actions={<><Link href="#wedding-designs" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
@@ -184,7 +184,7 @@ export default function WeddingInvitationWordingPage() {
               <SectionHeading
                 eyebrow="Send these words as an invitation"
                 title="Wedding designs"
-                sub="Paste your message into any of these and guests get every function, the venue map, a countdown and a way to send blessings — from one link. Tap a design for a live preview."
+                sub="Paste your message into any of these and guests get every function, the venue map, a countdown and a way to send blessings, all from one link. Tap a design for a live preview."
                 action={{ href: '/templates/category/wedding', label: 'All wedding designs' }}
               />
               <div className="mt-9 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3" data-reveal-group>
@@ -200,7 +200,7 @@ export default function WeddingInvitationWordingPage() {
               <div className="mx-auto max-w-3xl">
                 <MidPageCTA
                   headline="Your wedding invitation sets the tone for the big day"
-                  body="A plain text message tells guests the date. A digital wedding invitation shows them the venue on a map, counts down to the wedding, and lets them leave their blessings — all from one link shared on WhatsApp."
+                  body="A plain text message tells guests the date. A digital wedding invitation shows them the venue on a map, counts down to the wedding, and lets them leave their blessings, all from one link shared on WhatsApp."
                   features={[
                     'Live wedding countdown',
                     'Every function, with timings',
@@ -219,7 +219,7 @@ export default function WeddingInvitationWordingPage() {
               <div className="mx-auto max-w-3xl">
                 <MidPageCTA
                   headline="Those [Invitation Link] placeholders? Create yours in minutes."
-                  body="Every short message above is written to pair with an invitation link. Share the same link in every WhatsApp group — outstation family sees the travel details, local guests see the venue map, and everyone can send their blessings."
+                  body="Every short message above is written to pair with an invitation link. Share the same link in every WhatsApp group: outstation family sees the travel details, local guests see the venue map, and everyone can send their blessings."
                   features={[
                     'Haldi, mehendi, sangeet & reception schedule',
                     'Venue address with Google Maps',
@@ -246,26 +246,26 @@ export default function WeddingInvitationWordingPage() {
             <div>
               <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Wedding invitation quotes</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
-                <li>&ldquo;Two souls, one journey — and it begins with your blessings.&rdquo;</li>
+                <li>&ldquo;Two souls, one journey, and it begins with your blessings.&rdquo;</li>
                 <li>&ldquo;Come witness the start of our happily ever after.&rdquo;</li>
                 <li>&ldquo;A love written in the stars, celebrated with you.&rdquo;</li>
                 <li>&ldquo;Together forever, and it starts with you by our side.&rdquo;</li>
                 <li>&ldquo;With our families&apos; blessings, we begin as one.&rdquo;</li>
                 <li>&ldquo;Every love story is beautiful; ours begins on [Date].&rdquo;</li>
                 <li>&ldquo;Join us where forever begins.&rdquo;</li>
-                <li>&ldquo;Two hearts becoming one — please share the moment.&rdquo;</li>
+                <li>&ldquo;Two hearts becoming one. Please share the moment.&rdquo;</li>
               </ul>
             </div>
             <div>
               <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Short invitation lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
-                <li>[Name] &amp; [Name] are getting married — join us on [Date]! 💍</li>
-                <li>You&apos;re invited to our wedding — [Date] at [Venue].</li>
+                <li>[Name] &amp; [Name] are getting married. Join us on [Date]! 💍</li>
+                <li>You&apos;re invited to our wedding: [Date] at [Venue].</li>
                 <li>Save the date: our wedding, [Date] · [City].</li>
                 <li>With joy, we invite you to bless our union. [Date]</li>
                 <li>Come celebrate love, laughter and forever with us!</li>
-                <li>Our big day needs your blessings — [Date] · [Venue].</li>
-                <li>Two families unite — please join the celebration!</li>
+                <li>Our big day needs your blessings: [Date] · [Venue].</li>
+                <li>Two families unite. Please join the celebration!</li>
                 <li>The wedding of [Name] &amp; [Name] awaits your presence.</li>
               </ul>
             </div>
@@ -275,16 +275,16 @@ export default function WeddingInvitationWordingPage() {
                 <li>Forever starts on [Date] 💍 You&apos;re invited!</li>
                 <li>She said yes, now the wedding&apos;s a date! 💛 [Date]</li>
                 <li>#Shaadi loading… join us [Date] at [Venue]! 🎉</li>
-                <li>From two hearts to one home — come celebrate! 🏡</li>
+                <li>From two hearts to one home. Come celebrate! 🏡</li>
                 <li>Wedding bells are ringing 🔔 Details 👉 [Invitation Link]</li>
-                <li>Our forever begins — save the date! ✨ [Date]</li>
+                <li>Our forever begins. Save the date! ✨ [Date]</li>
                 <li>Tying the knot &amp; can&apos;t wait to see you there! 💍</li>
               </ul>
             </div>
             <p className="text-xs text-muted leading-6 pt-1">
               Tip: open with any line, then paste your{' '}
               <Link href="/wedding-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital wedding invitation link</Link>{' '}
-              below it — guests get the venue map, countdown, schedule and a place to leave wishes in one tap.
+              below it. Guests get the venue map, countdown, schedule and a place to leave wishes in one tap.
             </p>
           </div>
         </div>
@@ -305,15 +305,15 @@ export default function WeddingInvitationWordingPage() {
               },
               {
                 item: 'Date and muhurat time',
-                detail: "The exact date and the muhurat set by the pandit. 'Evening' is not enough — outstation guests plan their travel around the muhurat.",
+                detail: "The exact date and the muhurat set by the pandit. 'Evening' is not enough, because outstation guests plan their travel around the muhurat.",
               },
               {
                 item: 'Venue, full address and a map link',
-                detail: 'The venue name alone is not enough. Give the street, a landmark, the city and the pin code — and a one-tap Google Maps link.',
+                detail: 'The venue name alone is not enough. Give the street, a landmark, the city and the pin code, and a one-tap Google Maps link.',
               },
               {
                 item: 'Every function',
-                detail: 'List each event — haldi, mehendi, sangeet, baraat, pheras, reception — with its time. Guests with children or travel plans need the full schedule.',
+                detail: 'List each event (haldi, mehendi, sangeet, baraat, pheras, reception) with its time. Guests with children or travel plans need the full schedule.',
               },
               {
                 item: 'Dress code',
@@ -325,7 +325,7 @@ export default function WeddingInvitationWordingPage() {
               },
               {
                 item: 'A personal line',
-                detail: "One heartfelt line — 'your presence would mean the world to us' — makes the invitation feel personal, not printed.",
+                detail: "One heartfelt line, 'your presence would mean the world to us', makes the invitation feel personal, not printed.",
               },
             ].map((c) => (
               <div key={c.item} className="rounded-2xl border border-line bg-champagne p-6 shadow-sm">
@@ -342,14 +342,14 @@ export default function WeddingInvitationWordingPage() {
         <div className="mx-auto max-w-4xl">
           <h2 className="t-h2 mb-3">Common Wedding Invitation Wording Mistakes</h2>
           <p className="text-sm text-muted leading-7 mb-10">
-            Real, recurring mistakes in Indian wedding invitations — most take two minutes to fix.
+            Real, recurring mistakes in Indian wedding invitations. Most take two minutes to fix.
           </p>
           <div className="space-y-4">
             {[
               {
                 n: '1',
                 mistake: 'Putting the venue address only inside an image',
-                fix: 'An address in a JPEG cannot be copied into Google Maps. Always include it as text — in your WhatsApp message, or in a digital invitation where guests tap to navigate.',
+                fix: 'An address in a JPEG cannot be copied into Google Maps. Always include it as text: in your WhatsApp message, or in a digital invitation where guests tap to navigate.',
               },
               {
                 n: '2',
@@ -359,7 +359,7 @@ export default function WeddingInvitationWordingPage() {
               {
                 n: '3',
                 mistake: 'Sending the whole card as one long WhatsApp message',
-                fix: 'A forty-line message gets scrolled past. Send four lines and let your invitation link carry the details — guests are far more likely to read it.',
+                fix: 'A forty-line message gets scrolled past. Send four lines and let your invitation link carry the details. Guests are far more likely to read it.',
               },
               {
                 n: '4',
@@ -408,7 +408,7 @@ export default function WeddingInvitationWordingPage() {
 
       {/* FAQ */}
       <Section id="faq" aria-label="Questions">
-        <SectionHeading align="center" eyebrow="Questions" title={'Wedding Invitation Messages — FAQ'} />
+        <SectionHeading align="center" eyebrow="Questions" title={'Wedding Invitation Messages: FAQ'} />
         <div className="mt-10">
           <FAQAccordion faqs={faqSchema.mainEntity.map((q) => ({ question: q.name, answer: q.acceptedAnswer.text }))} />
         </div>

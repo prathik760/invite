@@ -440,7 +440,7 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
 
       {!showSuite ? (
         <div className="sr-only">
-          <h1>{bride} &amp; {groom} — wedding invitation</h1>
+          <h1>{bride} &amp; {groom}: wedding invitation</h1>
           {date && <p>{date.long}{data.time ? `, ${timeLabel(data.time)}` : ''}</p>}
           <p>{venue}{data.venueAddress ? `, ${data.venueAddress}` : ''}</p>
           {data.message && <p>{data.message}</p>}
@@ -549,7 +549,7 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
                   <Reveal key={fn.key} disabled={isPreview} delay={i * 60}>
                     <PlaceCard
                       fn={fn}
-                      calendarTitle={fn.main ? `Wedding of ${bride} & ${groom}` : `${fn.name} — ${bride} & ${groom}`}
+                      calendarTitle={fn.main ? `Wedding of ${bride} & ${groom}` : `${fn.name}: ${bride} & ${groom}`}
                       directions={fn.main ? directions : null}
                       isPreview={isPreview}
                     />

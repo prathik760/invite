@@ -93,7 +93,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: I
   const stills = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`${bride} & ${groom} — Wedding`, data.date, data.time, place)
+  const calendar = calendarHref(`${bride} & ${groom}: Wedding`, data.date, data.time, place)
   const cast = [
     { src: data.bridePhoto, name: bride },
     { src: data.groomPhoto, name: groom },

@@ -185,7 +185,7 @@ export function is3D(templateId: string): boolean {
 
 /** "Shaadi — Indian Wedding" → "Shaadi". Card titles use the short name. */
 export function displayName(name: string): string {
-  return name.split('—')[0].trim()
+  return name.split(/\s[·—]\s/)[0].trim()
 }
 
 /** Order used when a gallery shows every template: occasion by occasion. */

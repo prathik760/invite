@@ -23,9 +23,9 @@ const CREATE_HREF = `/create?template=${TEMPLATE_ID}`
 const DIWALI_YEAR = 2026
 const DIWALI_DATE = 'Sunday, 8 November 2026'
 
-const TITLE = `Diwali Party Invitation Message for WhatsApp — ${DIWALI_YEAR} Ideas`
+const TITLE = `Diwali Party Invitation Message for WhatsApp: ${DIWALI_YEAR} Ideas`
 const DESCRIPTION =
-  'Copy a Diwali party invitation message for WhatsApp — for a party at home, Lakshmi Puja, office, society or card party, in English & Hindi.'
+  'Copy a Diwali party invitation message for WhatsApp: for a party at home, Lakshmi Puja, office, society or card party, in English & Hindi.'
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     question: `When is Diwali ${DIWALI_YEAR}?`,
-    answer: `Diwali — the night of the Lakshmi Puja — falls on ${DIWALI_DATE}. Because it is a Sunday, many families will hold their Diwali party on the evening itself or on the Saturday before, and plenty of friends' and office parties will happen on the weekend of 31 October–1 November. Check your local panchang or family priest for the exact puja muhurat.`,
+    answer: `Diwali, the night of the Lakshmi Puja, falls on ${DIWALI_DATE}. Because it is a Sunday, many families will hold their Diwali party on the evening itself or on the Saturday before, and plenty of friends' and office parties will happen on the weekend of 31 October–1 November. Check your local panchang or family priest for the exact puja muhurat.`,
   },
   {
     question: 'When should I send a Diwali party invitation?',
@@ -61,11 +61,11 @@ const FAQS = [
   },
   {
     question: 'What should a Diwali invitation message include?',
-    answer: 'Who is hosting, the date and time, the full address with a landmark, and what kind of evening it is — a puja, a dinner, a card party or all three. If there is a Lakshmi Puja, give the puja time on its own line. Add a dress code if you have one, whether children are welcome, and an RSVP number if you need a headcount for food.',
+    answer: 'Who is hosting, the date and time, the full address with a landmark, and what kind of evening it is: a puja, a dinner, a card party or all three. If there is a Lakshmi Puja, give the puja time on its own line. Add a dress code if you have one, whether children are welcome, and an RSVP number if you need a headcount for food.',
   },
   {
     question: 'Can I send the same Diwali invitation to all my WhatsApp groups?',
-    answer: 'Yes — keep the details identical and change only the opening line: "Dear family" for relatives, something lighter for friends, a more formal line for colleagues. If you paste an invitation link under the message, every group sees the same page with the map and the plan for the evening.',
+    answer: 'Yes. Keep the details identical and change only the opening line: "Dear family" for relatives, something lighter for friends, a more formal line for colleagues. If you paste an invitation link under the message, every group sees the same page with the map and the plan for the evening.',
   },
 ]
 
@@ -92,7 +92,7 @@ export default function DiwaliInvitationWordingPage() {
         title={<>Diwali Party Invitation Messages<br />
             <em className="font-medium text-burnished">for WhatsApp</em></>}
         lede={<>Diwali falls on {DIWALI_DATE}. Ready-to-copy Diwali invitation messages for a party at home, the Lakshmi Puja,
-            the office, your society and your card-party friends — in English and Hindi.</>}
+            the office, your society and your card-party friends, in English and Hindi.</>}
         actions={<><Link href={CREATE_HREF} className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
               Start My Diwali Invite</Link></>}
         footnote={<TrustList />}
@@ -108,7 +108,7 @@ export default function DiwaliInvitationWordingPage() {
               <div className="mx-auto max-w-3xl">
                 <MidPageCTA
                   headline="Send it as an invitation that glows"
-                  body="The Diwali Milan design puts your words on a page of lamplight and rangoli, with the evening's plan, the dress code, your photos and a one-tap map — one link for every WhatsApp group."
+                  body="The Diwali Milan design puts your words on a page of lamplight and rangoli, with the evening's plan, the dress code, your photos and a one-tap map. One link for every WhatsApp group."
                   features={['Lamplight & rangoli design', "The evening's plan, hour by hour", 'Tap-to-open Google Maps', 'Guest wishes on the page']}
                   ctaHref={CREATE_HREF}
                   ctaText="Start My Diwali Invite →"
@@ -130,15 +130,15 @@ export default function DiwaliInvitationWordingPage() {
             <div>
               <h3 className="font-editorial text-[1.25rem] font-semibold leading-snug text-charcoal mb-3">Short invitation lines</h3>
               <ul className="space-y-2 text-sm text-muted leading-7 list-disc pl-5">
-                <li>Light a diya with us this Diwali — [Date], [Time]. 🪔</li>
+                <li>Light a diya with us this Diwali: [Date], [Time]. 🪔</li>
                 <li>Our home is ready for Diwali. All it needs is you.</li>
-                <li>Diyas lit, mithai ready, doors open — see you on [Date]!</li>
+                <li>Diyas lit, mithai ready, doors open. See you on [Date]!</li>
                 <li>Come celebrate the festival of lights with us. ✨</li>
-                <li>Diwali is brighter with family — please join us on [Date].</li>
-                <li>Puja at [Time], dinner after — do come! 🙏</li>
+                <li>Diwali is brighter with family. Please join us on [Date].</li>
+                <li>Puja at [Time], dinner after. Do come! 🙏</li>
                 <li>One evening, many lamps, all our favourite people. [Date]</li>
                 <li>Join us for Lakshmi Puja and a festive dinner on [Date].</li>
-                <li>Rangoli, rasmalai and you — that&apos;s our Diwali plan.</li>
+                <li>Rangoli, rasmalai and you: that&apos;s our Diwali plan.</li>
                 <li>The card table is set. Diwali party on [Date]! 🃏</li>
               </ul>
             </div>
@@ -150,9 +150,9 @@ export default function DiwaliInvitationWordingPage() {
                 <li>Festival of lights, festival of us. 💛 [Date]</li>
                 <li>Shubh Deepavali! Come light up our home. 🪔</li>
                 <li>Rangoli done, now we just need the guests. 😄</li>
-                <li>Phuljhadis on the terrace at [Time] — don&apos;t miss it! ✨</li>
+                <li>Phuljhadis on the terrace at [Time]. Don&apos;t miss it! ✨</li>
                 <li>शुभ दीपावली 🪔 आपका इंतज़ार रहेगा!</li>
-                <li>दीयों की रोशनी, मिठाई की मिठास — आइए, साथ मनाएँ।</li>
+                <li>दीयों की रोशनी, मिठाई की मिठास। आइए, साथ मनाएँ।</li>
                 <li>Invite 👇 tap for the map and the plan.</li>
                 <li>Happy Diwali from our home to yours. 🪔</li>
               </ul>
@@ -160,7 +160,7 @@ export default function DiwaliInvitationWordingPage() {
             <p className="text-xs text-muted leading-6 pt-1">
               Tip: open with any line, then paste your{' '}
               <Link href={`/templates/${templateSeoSlug(TEMPLATE_ID)}`} className="text-accent-strong underline-offset-2 hover:underline">Diwali invitation link</Link>{' '}
-              below it — guests get the address, the map and the plan for the evening in one tap.
+              below it. Guests get the address, the map and the plan for the evening in one tap.
             </p>
           </div>
         </div>
@@ -175,7 +175,7 @@ export default function DiwaliInvitationWordingPage() {
               Diwali invitations compete with a dozen others in the same week, so the first line has to do the work: whose party it is, which day, and what time. The festive wishes can come after.
             </p>
             <p className="text-sm text-muted leading-7">
-              Say what kind of evening it is. A guest who knows there is a Lakshmi Puja at seven will arrive at a quarter to; a guest who thinks it is a dinner may walk in after the aarti. A card party, a potluck or a puja each set different expectations — name yours.
+              Say what kind of evening it is. A guest who knows there is a Lakshmi Puja at seven will arrive at a quarter to; a guest who thinks it is a dinner may walk in after the aarti. A card party, a potluck or a puja each set different expectations, so name yours.
             </p>
             <p className="text-sm text-muted leading-7">
               Send it early, and send it once. Ten to fourteen days ahead is right for most parties; a reminder two days before, with the same link, catches everyone who meant to reply.
@@ -206,7 +206,7 @@ export default function DiwaliInvitationWordingPage() {
       </section>
 
       <Section tone="paper" id="faq" aria-label="Questions">
-        <SectionHeading align="center" eyebrow="Questions" title="Diwali Invitation Messages — FAQ" />
+        <SectionHeading align="center" eyebrow="Questions" title="Diwali Invitation Messages: FAQ" />
         <div className="mt-10">
           <FAQAccordion faqs={FAQS} />
         </div>

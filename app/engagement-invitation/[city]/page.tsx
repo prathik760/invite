@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
   if (!info) return {}
 
   const ogTitle = `Digital Engagement Invitation in ${info.display} | ShareInvite`
-  const description = `Create a digital engagement invitation for your ${info.display} ${info.localCeremonyName} — WhatsApp link, Google Maps & ceremony schedule. Preview before you pay.`
+  const description = `Create a digital engagement invitation for your ${info.display} ${info.localCeremonyName}: WhatsApp link, Google Maps & ceremony schedule. Preview before you pay.`
 
   return {
     title: { absolute: ogTitle },
@@ -70,7 +70,7 @@ export default async function CityEngagementPage({ params }: { params: Promise<{
         title={<>Digital Engagement Invitation <em className="font-medium text-burnished">in {info.display}</em></>}
         lede={info.heroIntro}
         local={{ title: `Built for ${info.display} engagement ceremonies`, paras: [info.builtForPara], chips: [{ label: `Popular ${info.display} venues`, items: info.venues }] }}
-        faqTitle={`${info.display} engagement invitation — FAQs`}
+        faqTitle={`${info.display} engagement invitation: FAQs`}
         faqs={info.faqs}
         links={[{ href: '/engagement-invitation', label: 'Engagement invitations' }, { href: `/wedding-invitation/${city}`, label: `Wedding invitations in ${info.display}` }, { href: `/birthday-invitation/${city}`, label: `Birthday invitations in ${info.display}` }, { href: '/engagement-invitation-wording', label: 'Engagement invitation wording' }, { href: '/templates', label: 'All designs' }]}
         closing={{ title: `Create your ${info.display} engagement invitation`, sub: info.ctaTagline }}

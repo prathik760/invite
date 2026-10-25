@@ -1,26 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isDeliverable, sendLater, sendMail } from '@/lib/mail'
 import { invitationLiveEmail } from '@/lib/emails'
-import { eventTitle } from '@/lib/inviteCardText'
+import { eventTitle, groomFirst } from '@/lib/inviteCardText'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/db'
-import { generateSlug } from '@/lib/utils'
+import { generateSlug, getAppUrl } from '@/lib/utils'
 import { getTemplateData } from '@/modules/templates/data'
 import { createLocalEvent, shouldUseLocalStore } from '@/lib/local-store'
 import { canAccess, templatePrice, type PlanId } from '@/lib/plans'
 import { readPass } from '@/lib/purchasePass'
-
-// Strip HTML tags from a string value to prevent stored XSS.
-// Safe for all text fields — URLs (mapsUrl, musicUrl) are left intact since they pass URL validation.
-function stripHtml(value: unknown): unknown {
-  if (typeof value !== 'string') return value
-  return value.replace(/<[^>]*>/g, '').trim()
-}
-
-function sanitizeData(data: Record<string, unknown>): Record<string, unknown> {
-  return Object.fromEntries(Object.entries(data).map(([k, v]) => [k, stripHtml(v)]))
-}
+import { sanitizeData } from '@/lib/eventData'
+import { editKey, editUrl } from '@/lib/editKey'
 
 /** The first word of the link for designs that name only their hosts. */
 const OCCASION_SLUG: Record<string, string> = {
@@ -106,7 +97,7 @@ export async function POST(req: NextRequest) {
 
     const d = sanitizedData as Record<string, string>
     const prefix =
-      d.brideName && d.groomName ? `${d.brideName}-${d.groomName}` :
+      d.brideName && d.groomName ? (groomFirst(templateId) ? `${d.groomName}-${d.brideName}` : `${d.brideName}-${d.groomName}`) :
       d.partner1Name && d.partner2Name ? `${d.partner1Name}-${d.partner2Name}` :
       d.celebrantName ? d.celebrantName :
       // Designs that name only their hosts say what the occasion is; they all
@@ -145,18 +136,20 @@ export async function POST(req: NextRequest) {
             dateLabel: d.date || undefined,
             personalLinks: templateId in PERSONAL_LINK_EXAMPLE,
             example: PERSONAL_LINK_EXAMPLE[templateId],
+            editUrl: editUrl(getAppUrl().replace(/\/$/, ''), event.slug, event.id),
           }),
         )
       })
     }
 
-    return NextResponse.json({ slug: event.slug, id: event.id }, { status: 201 })
+    // The publishing device keeps this key, so the host can change the invitation later without signing in.
+    return NextResponse.json({ slug: event.slug, id: event.id, editKey: editKey(event.id) }, { status: 201 })
   } catch (err) {
     if (shouldUseLocalStore(err)) {
       const event = await createLocalEvent(templateId, sanitizedData as Record<string, string>)
       console.warn('[POST /api/events] Database unreachable, created local dev event instead.')
       return NextResponse.json(
-        { slug: event.slug, id: event.id, storage: 'local-dev' },
+        { slug: event.slug, id: event.id, editKey: editKey(event.id), storage: 'local-dev' },
         { status: 201 },
       )
     }

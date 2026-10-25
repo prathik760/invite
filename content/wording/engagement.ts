@@ -10,7 +10,7 @@ export const ENGAGEMENT_SECTIONS: WordingSectionData[] = [
     id: 'simple',
     toc: 'Simple & short',
     title: 'Simple & Short Engagement Invitation Messages for WhatsApp',
-    intro: 'Short, ready-to-send engagement messages for WhatsApp groups — clear date, time and venue, warm tone. Copy, add your details and share.',
+    intro: 'Short, ready-to-send engagement messages for WhatsApp groups: clear date, time and venue, warm tone. Copy, add your details and share.',
     messages: [
       { title: '1. Simplest one-liner', text: `We're engaged! 💍 Join us to celebrate [Name] & [Name]'s engagement.
 📅 [Date] · 🕖 [Time] · 📍 [Venue, City]
@@ -25,7 +25,7 @@ Come bless the couple as they begin their journey together.` },
       { title: '3. Short WhatsApp group message', text: `[Name] & [Name] are getting engaged! 🎉
 [Date] · [Time] · [Venue]
 Full details 👉 [Digital Invite Link]` },
-      { title: '4. Casual & modern', text: `He asked, she said yes! 💍 (or she asked — either way, it's happening!)
+      { title: '4. Casual & modern', text: `He asked, she said yes! 💍 (or she asked. Either way, it's happening!)
 
 Join us for [Name] & [Name]'s ring ceremony
 [Date] at [Time], [Venue].
@@ -47,7 +47,7 @@ Join us to celebrate [Name] & [Name]'s engagement!` },
     id: 'whatsapp',
     toc: 'For WhatsApp',
     title: 'Engagement Invitation Message for WhatsApp (Indian Families)',
-    intro: 'Most engagement invitations in India travel on WhatsApp — to the family group first, then to friends. These are written to be read on a phone: names, date and venue first, then the warmth.',
+    intro: 'Most engagement invitations in India travel on WhatsApp, to the family group first, then to friends. These are written to be read on a phone: names, date and venue first, then the warmth.',
     messages: [
       { title: '1. For the family WhatsApp group', text: `Namaste, everyone! 🙏
 
@@ -57,7 +57,7 @@ With the blessings of our elders, we are happy to share that [Name]'s engagement
 📍 [Venue, City]
 
 Please come with your family and bless the couple.
-— [Father's Name] & [Mother's Name]` },
+[Father's Name] & [Mother's Name]` },
       { title: "2. From the groom's family", text: `With great joy, the [Family Name] family invites you to the engagement of our son
 
 [Groom's Name] with [Bride's Name]
@@ -72,16 +72,16 @@ Your blessings will make the day complete. 🙏` },
 We warmly invite you to the ring ceremony of [Bride's Name] and [Groom's Name] on [Date] at [Time], at [Venue].
 
 Lunch will be served. Do come and bless them.
-— [Bride's Parents' Names]` },
+[Bride's Parents' Names]` },
       { title: '4. For friends and colleagues', text: `Hi all! 😊 [Name] and [Partner's Name] are getting engaged on [Date].
 We'd love to see you at [Venue] from [Time].
-Dinner and dancing after the rings — please come!
+Dinner and dancing after the rings. Please come!
 Details & map 👉 [Digital Invite Link]` },
       { title: '5. For relatives abroad', text: `We know you can't fly down for [Name]'s engagement on [Date], but we didn't want you to miss it.
 
-The invitation, venue and schedule are all on this link — open it whenever it's morning where you are, and leave your blessings for the couple on the page. 🙏
+The invitation, venue and schedule are all on this link. Open it whenever it's morning where you are, and leave your blessings for the couple on the page. 🙏
 [Digital Invite Link]` },
-      { title: '6. In Hindi — for the family group', text: `सादर निमंत्रण 🙏
+      { title: '6. In Hindi, for the family group', text: `सादर निमंत्रण 🙏
 
 ईश्वर की कृपा से हमारे [पुत्र / पुत्री] [Name] की सगाई [Partner's Name] के साथ तय हुई है।
 
@@ -89,9 +89,9 @@ The invitation, venue and schedule are all on this link — open it whenever it'
 स्थान: [Venue, City]
 
 आप सपरिवार पधारकर नवयुगल को अपना आशीर्वाद दें।
-— [Parents' Names]` },
+[Parents' Names]` },
       { title: '7. Reminder, the day before', text: `Just a reminder 😊 [Name] & [Partner's Name]'s engagement is tomorrow, [Date], at [Time].
-📍 [Venue] — map in the link: [Digital Invite Link]
+📍 [Venue], map in the link: [Digital Invite Link]
 See you there!` },
     ],
   },
@@ -99,9 +99,9 @@ See you there!` },
     id: 'ring-ceremony',
     toc: 'Ring ceremony',
     title: 'Ring Ceremony / Mangni Invitation Message (Formal)',
-    intro: 'Formal wording for the main invitation — shared with family, extended family and every guest at the ceremony.',
+    intro: 'Formal wording for the main invitation, shared with family, extended family and every guest at the ceremony.',
     messages: [
-      { title: '1. North Indian Mangni — both families hosting', text: `॥ श्री गणेशाय नमः ॥
+      { title: '1. North Indian Mangni, both families hosting', text: `॥ श्री गणेशाय नमः ॥
 With immense joy and God's blessings,
 [Bride's Father's Name] & [Mother's Name]
 along with
@@ -164,7 +164,7 @@ Please join us and bless the couple!` },
       { title: '2. With the ring exchange time', text: `Ring ceremony of [Name] & [Partner's Name] 💍
 
 Guests arrive: [Time]
-Ring exchange: [Time] — please be seated by then!
+Ring exchange: [Time]. Please be seated by then!
 Dinner: [Time] onwards
 
 📍 [Venue, Address]` },
@@ -188,7 +188,7 @@ RSVP: [Phone]` },
     id: 'roka',
     toc: 'Roka',
     title: 'Roka Ceremony Invitation Wording',
-    intro: 'Roka is an intimate, family-only ceremony that formally marks the beginning of the alliance — usually before the engagement, with only the immediate families. Keep the invitation short and warm, and send it to that close circle only.',
+    intro: 'Roka is an intimate, family-only ceremony that formally marks the beginning of the alliance, usually before the engagement, with only the immediate families. Keep the invitation short and warm, and send it to that close circle only.',
     messages: [
       { title: '1. Short Roka WhatsApp message (close family only)', text: `With God's blessings, we are happy to share that [Name]'s Roka is on [Date] at [Time].
 Venue: [Home / Hall Name, Address]
@@ -234,9 +234,9 @@ Sagai Ceremony of [Bride's Name] & [Groom's Name]
 [Day], [Date] at [Venue Name], [City]
 
 Ceremony schedule:
-11:00 AM — Tilak / Sagan ritual
-12:00 PM — Ring exchange
-1:00 PM — Family lunch
+11:00 AM: Tilak / Sagan ritual
+12:00 PM: Ring exchange
+1:00 PM: Family lunch
 
 Kindly confirm your attendance at [WhatsApp Number].` },
     ],
@@ -245,9 +245,9 @@ Kindly confirm your attendance at [WhatsApp Number].` },
     id: 'daughter',
     toc: 'For daughter',
     title: 'Engagement Invitation Message for Daughter',
-    intro: "For parents announcing their daughter's engagement — warm, proud and ready to share with family and friends.",
+    intro: "For parents announcing their daughter's engagement: warm, proud and ready to share with family and friends.",
     messages: [
-      { title: '1. Proud parents — warm', text: `With hearts full of joy, we invite you to the engagement of our beloved daughter
+      { title: '1. Proud parents (warm)', text: `With hearts full of joy, we invite you to the engagement of our beloved daughter
 
 [Daughter's Name] with [Groom's Name]
 
@@ -255,7 +255,7 @@ Date: [Date] · Time: [Time]
 Venue: [Venue & Address]
 
 Your blessings will make this milestone truly special.
-— [Parents' Names]` },
+[Parents' Names]` },
       { title: '2. Simple in English', text: `Our daughter [Name] is getting engaged to [Name]! 💍
 Join us on [Date] at [Time], [Venue].
 Come shower the couple with your love and blessings.` },
@@ -274,16 +274,16 @@ We would love to have you with us as we bless her.
       { title: '5. Bilingual (Hindi + English)', text: `हमारी बिटिया [Name] की सगाई [Groom's Name] के साथ तय हुई है! 💍
 [Date] · [Time] · [Venue]
 We warmly invite you and your family to bless the couple.
-— [Parents' Names]` },
+[Parents' Names]` },
     ],
   },
   {
     id: 'son',
     toc: 'For son',
     title: 'Engagement Invitation Message for Son',
-    intro: "For parents announcing their son's engagement — dignified and warm wording for every family group.",
+    intro: "For parents announcing their son's engagement, dignified and warm wording for every family group.",
     messages: [
-      { title: '1. Proud parents — warm', text: `With great happiness, we invite you to the engagement of our beloved son
+      { title: '1. Proud parents (warm)', text: `With great happiness, we invite you to the engagement of our beloved son
 
 [Son's Name] with [Bride's Name]
 
@@ -291,7 +291,7 @@ Date: [Date] · Time: [Time]
 Venue: [Venue & Address]
 
 Please join us to bless the couple.
-— [Parents' Names]` },
+[Parents' Names]` },
       { title: '2. Simple in English', text: `Our son [Name] is getting engaged to [Name]! 💍
 Join us on [Date] at [Time], [Venue].
 Your presence will make the day complete.` },
@@ -309,26 +309,26 @@ Please join us with your family and bless the couple.
       { title: "5. To the father's friends & colleagues", text: `Dear [Name],
 It gives me great pleasure to invite you and your family to the engagement of my son [Son's Name] with [Bride's Name] on [Date] at [Venue], [City].
 We would be honoured by your presence.
-— [Your Name]` },
+[Your Name]` },
     ],
   },
   {
     id: 'my-engagement',
     toc: 'Your own engagement',
     title: 'My Engagement Invitation Message (From the Bride or Groom)',
-    intro: 'When it is your own engagement, the invitation can sound like you — written in the first person, for friends, relatives and everyone in between.',
+    intro: 'When it is your own engagement, the invitation can sound like you, written in the first person, for friends, relatives and everyone in between.',
     messages: [
       { title: '1. Simple', text: `I'm getting engaged! 💍
 [Your Name] & [Partner's Name] · [Date] · [Venue], [City]
 I'd love for you to be there when we exchange rings.
 [Invitation Link]` },
-      { title: '2. To the friends group', text: `Guys, it's official — I'm getting engaged! 🥳
+      { title: '2. To the friends group', text: `Guys, it's official: I'm getting engaged! 🥳
 [Date] at [Venue], [City].
 Come for the rings, stay for the party!
 Details: [Invitation Link]` },
       { title: '3. Heartfelt, one-to-one', text: `Dear [Name],
 I'm getting engaged to [Partner's Name] on [Date], and you were one of the first people I wanted to tell. ❤️
-It would mean a lot to have you there — [Venue], [Time].` },
+It would mean a lot to have you there: [Venue], [Time].` },
       { title: '4. To relatives, respectfully', text: `Namaste [Mama ji / Aunty ji],
 With the blessings of the family, my engagement with [Partner's Name] is on [Date] at [Venue], [City].
 I would be grateful for your blessings in person.` },
@@ -341,7 +341,7 @@ Save the date!` },
     id: 'sister',
     toc: "Sister's engagement",
     title: "Sister's Engagement Invitation Message",
-    intro: 'For brothers and sisters inviting their own friends and colleagues — proud, warm and easy to forward.',
+    intro: 'For brothers and sisters inviting their own friends and colleagues: proud, warm and easy to forward.',
     messages: [
       { title: '1. Simple', text: `My sister is getting engaged! 💍
 [Sister's Name] & [Groom's Name]
@@ -350,22 +350,22 @@ You have to be there! [Invitation Link]` },
       { title: '2. Formal, on behalf of the family', text: `Dear [Name],
 I am delighted to invite you and your family to the engagement of my sister [Sister's Name] with [Groom's Name] on [Day], [Date] at [Venue], [City].
 Your presence would mean a lot to our family.
-— [Your Name]` },
+[Your Name]` },
       { title: '3. Elder sister (didi), to friends', text: `Big news in the family! 🎉 My didi [Sister's Name] is getting engaged on [Date].
-Ring ceremony at [Venue], [Time] onwards — come celebrate with us!
+Ring ceremony at [Venue], [Time] onwards. Come celebrate with us!
 [Invitation Link]` },
       { title: '4. Younger sister', text: `My little sister is getting engaged and I'm not ready! 🥹
 [Sister's Name] & [Groom's Name] · [Date] · [City]
 Please come and bless her.` },
       { title: '5. To colleagues', text: `Hi team, my sister [Sister's Name]'s engagement is on [Date] at [Venue], [City].
-I'd be really happy to see you there — [Time] onwards.` },
+I'd be really happy to see you there, [Time] onwards.` },
     ],
   },
   {
     id: 'brother',
     toc: "Brother's engagement",
     title: "Brother's Engagement Invitation Message",
-    intro: "For inviting your friends and colleagues to your brother's engagement — from a respectful note to a message your friends won't ignore.",
+    intro: "For inviting your friends and colleagues to your brother's engagement, from a respectful note to a message your friends won't ignore.",
     messages: [
       { title: '1. Simple', text: `My brother is getting engaged! 🎊
 [Brother's Name] & [Bride's Name]
@@ -374,10 +374,10 @@ Come celebrate with us! [Invitation Link]` },
       { title: '2. Formal', text: `Dear [Name],
 It is my pleasure to invite you and your family to the engagement of my brother [Brother's Name] with [Bride's Name] on [Day], [Date] at [Venue], [City].
 We look forward to your presence and blessings.
-— [Your Name]` },
+[Your Name]` },
       { title: '3. Bhai ki sagai, to friends', text: `Bhai ki sagai hai! 💍
 [Brother's Name] & [Bride's Name] · [Date] · [Venue]
-Dhol, dinner and dancing — you have to come! 🥁
+Dhol, dinner and dancing. You have to come! 🥁
 [Invitation Link]` },
       { title: '4. Elder brother (bhaiya)', text: `Our [Bhaiya] [Brother's Name] is finally getting engaged! 💍
 [Date] · [Venue], [City]
@@ -390,23 +390,23 @@ The ring ceremony is at [Venue], [City] from [Time], and I'd love for you to joi
     id: 'friends',
     toc: 'For friends',
     title: 'Engagement Invitation Messages for Friends',
-    intro: "Relaxed and personal — for the school group, the college gang and the friend who has heard every chapter of the story.",
+    intro: "Relaxed and personal, for the school group, the college gang and the friend who has heard every chapter of the story.",
     messages: [
-      { title: '1. You are family', text: `It's official — we're getting engaged! 💍
+      { title: '1. You are family', text: `It's official: we're getting engaged! 💍
 [Name] & [Partner's Name] · [Date] · [City]
 You're not a guest, you're family. See you there!
 [Invitation Link]` },
       { title: '2. For the college group', text: `Calling the whole gang! 🎉
 [Name] is getting engaged on [Date] in [City].
 Ring ceremony at [Time], party after. Be there!` },
-      { title: '3. To a best friend', text: `[Friend's Name], you've heard every chapter of this story — now come and see the best one. ❤️
+      { title: '3. To a best friend', text: `[Friend's Name], you've heard every chapter of this story. Now come and see the best one. ❤️
 Our engagement is on [Date] at [Venue], [City].
 Please come early!` },
       { title: "4. Inviting a friend's family", text: `Dear [Friend's Name],
 We're getting engaged on [Date] at [Venue], [City], and we'd love for you to come with your family.
 It wouldn't be the same without you.` },
       { title: '5. Short', text: `Ring ceremony alert! 💍
-[Name] & [Partner's Name] — [Date], [Venue].
+[Name] & [Partner's Name]: [Date], [Venue].
 Don't miss it!` },
     ],
   },
@@ -414,13 +414,13 @@ Don't miss it!` },
     id: 'colleagues',
     toc: 'For colleagues',
     title: 'Engagement Invitation Message for Colleagues & Office',
-    intro: 'Polite, short and easy to say yes to — with the time and the venue up front.',
+    intro: 'Polite, short and easy to say yes to, with the time and the venue up front.',
     messages: [
       { title: '1. Office WhatsApp group', text: `Dear all,
 I am happy to share that I am getting engaged on [Date].
 I would be delighted if you could join us at [Venue], [City], from [Time] onwards.
 Invitation with the map: [Invitation Link]` },
-      { title: '2. Email to your team', text: `Subject: Engagement invitation — [Your Name] & [Partner's Name]
+      { title: '2. Email to your team', text: `Subject: Engagement invitation from [Your Name] & [Partner's Name]
 
 Dear team,
 I'm getting engaged on [Date], and I would love to celebrate with you. The ring ceremony is at [Venue], [Address], from [Time].
@@ -441,8 +441,8 @@ Would love to see you there.` },
   {
     id: 'we-cordially-invite',
     toc: '“We cordially invite”',
-    title: '“We Cordially Invite You” — Formal Engagement Wording',
-    intro: 'Classic formal phrasing for the engagement ceremony invitation — for printed cards and formal digital invitations alike.',
+    title: '“We Cordially Invite You”: Formal Engagement Wording',
+    intro: 'Classic formal phrasing for the engagement ceremony invitation, for printed cards and formal digital invitations alike.',
     messages: [
       { title: '1. Classic formal', text: `We cordially invite you to the engagement ceremony of
 
@@ -452,7 +452,7 @@ Would love to see you there.` },
 [Venue Name], [Address], [City]
 
 Your gracious presence is requested. RSVP: [Phone]` },
-      { title: '2. Formal — hosted by both families', text: `[Bride's Family Name] & [Groom's Family Name]
+      { title: '2. Formal, hosted by both families', text: `[Bride's Family Name] & [Groom's Family Name]
 request the honour of your presence
 at the engagement ceremony of
 
@@ -477,7 +477,7 @@ Your blessings will make this occasion truly memorable.` },
     id: 'hindi',
     toc: 'In Hindi',
     title: 'Engagement Invitation Message in Hindi (सगाई का निमंत्रण)',
-    intro: 'Hindi wording for the family group and for elders — a short WhatsApp message, the traditional card text, and versions for a daughter, son, brother or sister.',
+    intro: 'Hindi wording for the family group and for elders: a short WhatsApp message, the traditional card text, and versions for a daughter, son, brother or sister.',
     messages: [
       { title: '1. Short WhatsApp message', text: `सगाई का निमंत्रण 💍
 [लड़के का नाम] संग [लड़की का नाम]
@@ -494,8 +494,8 @@ Your blessings will make this occasion truly memorable.` },
 इस शुभ अवसर पर आप सपरिवार सादर आमंत्रित हैं।
 दर्शनाभिलाषी: [परिवार के नाम]` },
       { title: "3. Daughter's engagement (बेटी की सगाई)", text: `हमारी लाडली बिटिया [नाम] की सगाई [नाम] के साथ [तारीख] को है। 💐
-आप सभी सपरिवार आमंत्रित हैं — आपका आशीर्वाद हमारे लिए सबसे अनमोल है।
-— [माता-पिता के नाम]` },
+आप सभी सपरिवार आमंत्रित हैं। आपका आशीर्वाद हमारे लिए सबसे अनमोल है।
+[माता-पिता के नाम]` },
       { title: "4. Son's engagement (बेटे की सगाई)", text: `हमारे बेटे [नाम] की सगाई [नाम] के साथ तय हुई है! 🎉
 सगाई समारोह: [तारीख], [समय] बजे
 स्थान: [स्थान]
@@ -512,7 +512,7 @@ Aap sab parivaar sahit zaroor aaiye aur unhe aashirwad dijiye. 🙏` },
     id: 'mangni-nisbat',
     toc: 'Muslim Mangni / Nisbat',
     title: 'Muslim Engagement Invitation Message (Mangni / Nisbat)',
-    intro: "Wording for a Mangni or Nisbat in Muslim families — opening with Bismillah, with the families' names as they appear on the printed card.",
+    intro: "Wording for a Mangni or Nisbat in Muslim families, opening with Bismillah, with the families' names as they appear on the printed card.",
     messages: [
       { title: '1. Formal', text: `Bismillahir Rahmanir Raheem
 
@@ -535,14 +535,14 @@ Please join us and make dua for the couple.` },
 Please join us with your family.` },
       { title: '4. With a dinner', text: `Alhamdulillah, [Name]'s nisbat has been fixed with [Name].
 We invite you to a dinner to celebrate on [Date] at [Time], [Venue], [City].
-— [Family Name]` },
+[Family Name]` },
     ],
   },
   {
     id: 'christian',
     toc: 'Christian engagement',
     title: 'Christian Engagement Invitation Wording',
-    intro: 'For a church betrothal or an engagement party — with both venues, if the celebration moves after the blessing.',
+    intro: 'For a church betrothal or an engagement party, with both venues, if the celebration moves after the blessing.',
     messages: [
       { title: '1. Couple-hosted', text: `Together with their families,
 [Name] & [Name]
@@ -555,7 +555,7 @@ invite you to the betrothal of
 [Name] & [Name]
 at [Church Name], [City], on [Date] at [Time],
 followed by a reception at [Venue].` },
-      { title: '3. With a Bible verse', text: `"Love is patient, love is kind." — 1 Corinthians 13:4
+      { title: '3. With a Bible verse', text: `"Love is patient, love is kind." (1 Corinthians 13:4)
 
 [Name] & [Name] are engaged!
 Please join us to celebrate on [Date] at [Venue], [City].` },
@@ -568,7 +568,7 @@ Come celebrate with us!` },
     id: 'modern',
     toc: 'Modern & unique',
     title: 'Modern & Unique Engagement Invitation Wording',
-    intro: 'For couples who want something a little different — playful, heartfelt and unmistakably yours.',
+    intro: 'For couples who want something a little different: playful, heartfelt and unmistakably yours.',
     messages: [
       { title: '1. Playful & unique', text: `Plot twist: we're getting engaged! 💍
 
@@ -601,7 +601,7 @@ Please join us to celebrate.
     id: 'reminders',
     toc: 'Reminders & thank-yous',
     title: 'Engagement Reminder & Thank-You Messages',
-    intro: 'A reminder a week before and a thank-you after the ceremony — re-send the same invitation link, the timings and the map are already in it.',
+    intro: 'A reminder a week before and a thank-you after the ceremony. Re-send the same invitation link: the timings and the map are already in it.',
     messages: [
       { title: '1. A week before', text: `Just one week to go! 💍
 [Name] & [Partner's Name]'s engagement is on [Date] at [Venue].
@@ -613,7 +613,7 @@ Directions: [Map Link]` },
 Could you confirm by [RSVP Date] so we can plan the arrangements? 🙏` },
       { title: '4. Thank you, after the engagement', text: `Thank you for being part of our engagement! 💛
 Your blessings and your presence made the day so special.
-— [Name] & [Partner's Name]` },
+[Name] & [Partner's Name]` },
     ],
   },
 ]

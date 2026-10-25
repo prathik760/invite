@@ -104,7 +104,7 @@ export default function PaymentProblem({
           {isVerification && (
             <p className="mt-2 text-[11px] font-semibold leading-5" style={{ color: '#0B4A34' }}>
               Your money is safe. If your account was charged, we will either unlock your
-              template or refund you in full — send us the reference below and we will sort
+              template or refund you in full. Send us the reference below and we will sort
               it out today.
             </p>
           )}
@@ -121,7 +121,7 @@ export default function PaymentProblem({
           className="rounded-lg px-3 py-1.5 text-[11px] font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
           style={{ background: '#052E20' }}
         >
-          {retrying ? 'Opening…' : isCancelled ? `Try again — ${label}` : 'Retry payment'}
+          {retrying ? 'Opening…' : isCancelled ? `Try again: ${label}` : 'Retry payment'}
         </button>
         <a
           href={supportWhatsAppUrl(supportMessage)}

@@ -13,6 +13,7 @@ import { CREATE_STEPS, seoEvents, trackEvent } from '@/lib/analytics'
 import BottomDock from '@/components/ui/BottomDock'
 import PaymentProblem, { type PayError } from '@/components/create/PaymentProblem'
 import { supportWhatsAppUrl } from '@/lib/support'
+import { displayName } from '@/lib/catalog'
 import { carryOverDetails } from '@/lib/carryOver'
 import { usePreviewFollow } from '@/lib/usePreviewFollow'
 import { coupleLine } from '@/lib/inviteCardText'
@@ -43,6 +44,22 @@ const DRAFT_KEY = 'invitely-draft'
 const PASS_KEY = 'si_purchase_pass'
 /** Invitations published from this device, so a buyer without an account can find them again. */
 const MINE_KEY = 'si_my_invitations'
+
+/** The edit key this device kept for one of its invitations (lib/editKey.ts). */
+function savedEditKey(slug: string): string | null {
+  try {
+    const mine = JSON.parse(localStorage.getItem(MINE_KEY) || '[]') as { slug?: string; key?: string }[]
+    return mine.find((m) => m.slug === slug)?.key ?? null
+  } catch { return null }
+}
+
+/** Keeps an invitation and its edit key on this device: on publishing it, or on opening its email's Edit link. */
+function rememberInvitation(entry: { slug: string; templateId: string; names?: string; key?: string }) {
+  try {
+    const mine = (JSON.parse(localStorage.getItem(MINE_KEY) || '[]') as { slug?: string }[]).filter((m) => m.slug !== entry.slug)
+    localStorage.setItem(MINE_KEY, JSON.stringify([{ ...entry, at: Date.now() }, ...mine].slice(0, 20)))
+  } catch { /* private mode */ }
+}
 
 type TemplateDef = (typeof TEMPLATES)[number]
 const hasText = (v: unknown): v is string => typeof v === 'string' && v.trim() !== ''
@@ -161,7 +178,7 @@ function UpgradeModal({
           <Image src={visual.image} alt="" fill sizes="64px" className="object-cover" />
         </span>
         <div className="min-w-0 flex-1">
-          <h2 className="t-h3 truncate">{templateName.split('—')[0].trim()}</h2>
+          <h2 className="t-h3 truncate">{displayName(templateName)}</h2>
           <p className="mt-1 flex items-baseline gap-1.5">
             <span className="font-editorial text-[2.2rem] font-semibold leading-none">{price}</span>
             {coupon.applied && <s className="text-[0.95rem] text-muted">{full.label}</s>}
@@ -355,10 +372,48 @@ export default function CreatePage() {
   // Blocks the autosave effect until the stored draft has been read back, so
   // the default form values cannot clobber it on first paint.
   const [draftLoaded, setDraftLoaded] = useState(false)
+  // Changing a published invitation (/create?edit=<slug>): its link and the key that allows it
+  // (none for its owner, signed in). The design stays the same; nothing is paid again.
+  const [editing, setEditing] = useState<{ slug: string; key: string | null } | null>(null)
+  const [editProblem, setEditProblem] = useState<{ slug: string; status: number; message: string } | null>(null)
+  const [edited, setEdited] = useState(false)
 
   // Pre-select template from URL param, skip straight to Step 2
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
+    const editSlug = params.get('edit')
+    if (editSlug) {
+      // The key arrives after # from the email's Edit link (then leaves the address bar),
+      // or was kept by the device that published the invitation.
+      // It is held for this tab before the address bar is cleaned, so a second run of this effect
+      // (React runs it twice in development) still has it.
+      let fromLink = new URLSearchParams(window.location.hash.slice(1)).get('key')
+      try {
+        if (fromLink) sessionStorage.setItem(`si-edit-key:${editSlug}`, fromLink)
+        else fromLink = sessionStorage.getItem(`si-edit-key:${editSlug}`)
+      } catch { /* private mode */ }
+      if (window.location.hash) window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search)
+      const key = fromLink ?? savedEditKey(editSlug)
+      let cancelled = false
+      fetch(`/api/events/${encodeURIComponent(editSlug)}/edit`, { headers: key ? { 'x-edit-key': key } : {} })
+        .then(async (res) => {
+          const body = await res.json().catch(() => ({})) as { templateId?: string; data?: Record<string, string>; error?: string }
+          if (cancelled) return
+          const tpl = TEMPLATES.find((t) => t.id === body.templateId)
+          if (!res.ok || !tpl) {
+            setEditProblem({ slug: editSlug, status: res.status, message: body.error || 'This invitation could not be opened.' })
+            return
+          }
+          if (fromLink && key) rememberInvitation({ slug: editSlug, templateId: tpl.id, key })
+          setSelectedId(tpl.id)
+          setData(body.data ?? {})
+          setCurrentStep(2)
+          setEditing({ slug: editSlug, key })
+          trackEvent(seoEvents.inviteEditStart, { template_id: tpl.id, template_name: tpl.name, invite_slug: editSlug })
+        })
+        .catch(() => { if (!cancelled) setEditProblem({ slug: editSlug, status: 0, message: 'Check your connection and try again.' }) })
+      return () => { cancelled = true }
+    }
     const tplParam = params.get('template')
     const tpl = tplParam ? TEMPLATES.find(t => t.id === tplParam) : undefined
     if (tpl) {
@@ -405,6 +460,9 @@ export default function CreatePage() {
   useEffect(() => {
     // A ?template= deep link is an explicit request for that design, so it wins
     // over whatever was left in storage.
+    // Changing a published invitation leaves any unfinished new one's draft as it is: draftLoaded
+    // stays false, so nothing is autosaved over it.
+    if (new URLSearchParams(window.location.search).get('edit')) return
     if (new URLSearchParams(window.location.search).get('template')) { setDraftLoaded(true); return }
     try {
       const raw = localStorage.getItem(DRAFT_KEY)
@@ -538,6 +596,8 @@ export default function CreatePage() {
   useBackToClose(previewOpen, () => setPreviewOpen(false))
 
   const goToStep = (step: number) => {
+    // The design of a published invitation is fixed: it is what was paid for.
+    if (editing && step === 1) return
     // Only a forward move completes the step you were on. Going Back must not
     // record a completion, or the funnel inflates every time someone edits.
     if (step < currentStep) {
@@ -606,14 +666,13 @@ export default function CreatePage() {
         }
         throw new Error(body.error || 'Failed to create invitation')
       }
-      const { slug } = await res.json() as { slug: string }
+      const { slug, editKey } = await res.json() as { slug: string; editKey?: string }
       // Published — drop the draft so the next visit starts clean instead of
       // reopening an invitation that already exists.
       try {
         localStorage.removeItem(DRAFT_KEY)
-        const mine = JSON.parse(localStorage.getItem(MINE_KEY) || '[]') as unknown[]
-        localStorage.setItem(MINE_KEY, JSON.stringify([{ slug, templateId: selectedTemplate.id, names: names ?? '', at: Date.now() }, ...mine].slice(0, 20)))
       } catch { }
+      rememberInvitation({ slug, templateId: selectedTemplate.id, names: names ?? '', key: editKey })
       draftsRef.current = {}
       setCreatedSlug(slug)
       trackEvent(seoEvents.inviteCreation, {
@@ -654,7 +713,7 @@ export default function CreatePage() {
   const selectedCoupon = useCoupon(requiredPlanForSelected.id, selectedId).applied
   // What the visitor pays: after their discount code when it covers this design.
   const selectedPrice = selectedCoupon ? discountedPrice(listPrice, selectedCoupon.percentOff) : listPrice
-  const needsPayment = !canAccess(selectedId, userPlan)
+  const needsPayment = !editing && !canAccess(selectedId, userPlan)
 
   // "Our team fills it in for you" (components/create/DoneForYou): offered once per design per visit,
   // when the builder opens on a design with nothing typed yet.
@@ -685,7 +744,28 @@ export default function CreatePage() {
     setUpgradeTarget({ templateId: selectedId, templateName: selectedTemplate.name })
   }
 
+  const saveChanges = async () => {
+    if (!editing) return
+    if (missingRequired.length > 0) { setError(`Please fill in: ${missingRequired.map(f => f.label).join(', ')}`); return }
+    setLoading(true); setError('')
+    try {
+      const res = await fetch(`/api/events/${encodeURIComponent(editing.slug)}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: publishData, ...(editing.key ? { key: editing.key } : {}) }),
+      })
+      const body = await res.json().catch(() => ({})) as { error?: string }
+      if (!res.ok) throw new Error(body.error || 'Your changes could not be saved.')
+      setEdited(true)
+      setCreatedSlug(editing.slug)
+      trackEvent(seoEvents.inviteEdit, { template_id: selectedTemplate.id, template_name: selectedTemplate.name, invite_slug: editing.slug })
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong.')
+    } finally { setLoading(false) }
+  }
+
   const handleCreate = () => {
+    if (editing) { void saveChanges(); return }
     trackEvent(seoEvents.publishClick, {
       template_id: selectedId,
       template_name: selectedTemplate.name,
@@ -754,7 +834,7 @@ export default function CreatePage() {
         // Shown inside the Razorpay sheet. Naming the template the customer
         // actually chose beats a tier name they never asked for and would not
         // recognise on their bank statement.
-        description: `${upgradeTarget?.templateName ?? 'Invitation template'} — one-time`,
+        description: `${upgradeTarget?.templateName ?? 'Invitation template'} (one-time)`,
         order_id: order.orderId as string,
         prefill: { email: session?.user?.email ?? undefined, name: session?.user?.name ?? undefined },
         theme: { color: '#0B4A34' },
@@ -808,7 +888,7 @@ export default function CreatePage() {
             // Closing the sheet is not an error — no scary message, just an
             // honest note that nothing was charged, plus a way back in.
             trackEvent(seoEvents.checkoutAbandon, ctx)
-            setPayError({ kind: 'cancelled', message: 'Payment was cancelled — you have not been charged.' })
+            setPayError({ kind: 'cancelled', message: 'Payment was cancelled. You have not been charged.' })
             setPaying(false); payRef.current = false
           },
         },
@@ -840,7 +920,7 @@ export default function CreatePage() {
   const tv = TEMPLATE_VISUALS[selectedId] ?? TEMPLATE_VISUALS['elegant-wedding']
   const teamDesign: DoneForYouDesign = {
     id: selectedId,
-    name: selectedTemplate.name.split('—')[0].trim(),
+    name: displayName(selectedTemplate.name),
     image: tv.image,
     priceLabel: needsPayment ? selectedPrice.label : 'already bought',
     price: requiredPlanForSelected.price,
@@ -926,20 +1006,24 @@ export default function CreatePage() {
               </span>
               <div className="min-w-0 flex-1">
                 <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-soft">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-soft" /> Editing live
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-soft" /> {editing ? 'Editing your published invitation' : 'Editing live'}
                 </p>
-                <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{selectedTemplate.name.split('—')[0].trim()}</p>
+                <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{displayName(selectedTemplate.name)}</p>
                 <p className="truncate text-[0.72rem] text-muted">
-                  {needsPayment ? <><span className="font-semibold text-charcoal">{selectedPrice.label}</span> · pay only when you publish</> : 'Already yours'}
+                  {editing
+                    ? 'Same link · guests see your changes once you save'
+                    : needsPayment ? <><span className="font-semibold text-charcoal">{selectedPrice.label}</span> · pay only when you publish</> : 'Already yours'}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => goToStep(1)}
-                className="btn-outline shrink-0 rounded-full px-3.5 py-2 text-[0.78rem] font-semibold"
-              >
-                Change design
-              </button>
+              {!editing && (
+                <button
+                  type="button"
+                  onClick={() => goToStep(1)}
+                  className="btn-outline shrink-0 rounded-full px-3.5 py-2 text-[0.78rem] font-semibold"
+                >
+                  Change design
+                </button>
+              )}
             </div>
 
             {/* Mobile: the invitation itself, pinned above the form as it
@@ -1012,7 +1096,7 @@ export default function CreatePage() {
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="w-2 h-2 rounded-full shrink-0" style={{ background: tv.color }} />
                 <p className="text-xs font-semibold truncate" style={{ color: isDark ? 'rgba(255,255,255,0.80)' : '#1E2726' }}>
-                  {selectedTemplate.name.split('—')[0].trim()}
+                  {displayName(selectedTemplate.name)}
                 </p>
                 <span className="hidden sm:inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0"
                   style={{
@@ -1099,7 +1183,7 @@ export default function CreatePage() {
             <div className="flex items-center gap-2 min-w-0">
               <span className="h-2 w-2 shrink-0 rounded-full animate-pulse" style={{ background: '#0B4A34' }} />
               <p className="truncate text-sm font-semibold text-charcoal">
-                Preview · {selectedTemplate.name.split('—')[0].trim()}
+                Preview · {displayName(selectedTemplate.name)}
               </p>
             </div>
             <button
@@ -1154,6 +1238,7 @@ export default function CreatePage() {
           error={error}
           onBack={() => goToStep(4)}
           onPublish={handleCreate}
+          editing={Boolean(editing)}
         />
       )}
 
@@ -1182,7 +1267,7 @@ export default function CreatePage() {
               onClick={() => goToStep(currentStep + 1)}
               className="btn-primary flex-[2] rounded-full py-3.5 text-sm font-semibold"
             >
-              {currentStep === 4 ? 'Preview & Publish →' : 'Continue →'}
+              {currentStep === 4 ? (editing ? 'Review & save →' : 'Preview & Publish →') : 'Continue →'}
             </button>
           </div>
         </BottomDock>
@@ -1214,9 +1299,11 @@ export default function CreatePage() {
             className="btn-primary flex w-full items-center justify-center gap-2 rounded-full py-4 text-[15px] font-semibold disabled:opacity-50"
           >
             {loading && <Spinner />}
-            {loading ? 'Creating your invitation…' : (
+            {loading ? (editing ? 'Saving your changes…' : 'Creating your invitation…') : (
               <>
-                {needsPayment
+                {editing
+                  ? 'Save changes'
+                  : needsPayment
                   ? `Pay ${selectedPrice.label} & publish`
                   : 'Get my invitation link'}
                 <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -1278,7 +1365,7 @@ export default function CreatePage() {
             style={{ bottom: 'calc(var(--bottom-dock-h, 0px) + 14px)', zIndex: 'var(--z-overlay)' as unknown as number }}
           >
             <span className="truncate text-[0.85rem]">
-              Switched to {(TEMPLATES.find(t => t.id === switched.to)?.name ?? '').split('—')[0].trim()}
+              Switched to {displayName((TEMPLATES.find(t => t.id === switched.to)?.name ?? ''))}
             </span>
             <button
               type="button"
@@ -1288,6 +1375,46 @@ export default function CreatePage() {
               Undo
             </button>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* A published invitation that could not be opened for editing, and what to do about it. */}
+      <AnimatePresence>
+        {editProblem && (
+          <ModalFrame
+            label="This invitation could not be opened for editing"
+            onClose={() => {
+              setEditProblem(null)
+              window.history.replaceState(window.history.state, '', '/create')
+            }}
+          >
+            <p className="eyebrow">Edit your invitation</p>
+            <h2 className="t-h3 mt-1 pr-8">We couldn’t open it for editing</h2>
+            <p className="mt-3 text-[0.92rem] leading-6 text-charcoal/80">{editProblem.message}</p>
+            <div className="mt-6 space-y-2.5">
+              {(editProblem.status === 401 || editProblem.status === 403) && (
+                <a
+                  href={`/auth/login?callbackUrl=${encodeURIComponent(`/create?edit=${editProblem.slug}`)}`}
+                  className="btn-primary flex w-full items-center justify-center rounded-full py-3.5 text-[0.95rem] font-semibold"
+                >
+                  {editProblem.status === 403 ? 'Sign in with another account' : 'Sign in'}
+                </a>
+              )}
+              {editProblem.status === 0 && (
+                <button type="button" onClick={() => window.location.reload()} className="btn-primary flex w-full items-center justify-center rounded-full py-3.5 text-[0.95rem] font-semibold">
+                  Try again
+                </button>
+              )}
+              <a
+                href={supportWhatsAppUrl(`Hi, I need to change my invitation shareinvite.in/e/${editProblem.slug}`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline flex w-full items-center justify-center rounded-full py-3.5 text-[0.95rem] font-semibold"
+              >
+                Ask us on WhatsApp
+              </a>
+            </div>
+          </ModalFrame>
         )}
       </AnimatePresence>
 
@@ -1320,7 +1447,7 @@ export default function CreatePage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 flex items-end justify-center px-3 sm:items-center sm:px-4"
             style={{ background: 'rgba(3,25,15,0.66)', backdropFilter: 'blur(16px)', zIndex: 'var(--z-overlay)' as unknown as number }}
-            role="dialog" aria-modal="true" aria-label="Your invitation is live">
+            role="dialog" aria-modal="true" aria-label={edited ? 'Your changes are live' : 'Your invitation is live'}>
             <motion.div initial={{ y: 40, opacity: 0, scale: 0.97 }} animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 40, opacity: 0 }} transition={{ duration: 0.5, ease: BEZIER }}
               className="card w-full max-w-md overflow-hidden rounded-b-none sm:rounded-3xl"
@@ -1350,8 +1477,9 @@ export default function CreatePage() {
                     <LogoMark className="h-16 w-16 drop-shadow-[0_10px_20px_rgba(3,25,15,0.5)]" />
                   </motion.div>
                 </div>
-                <p className="relative mt-5 text-[0.78rem] font-bold uppercase tracking-[0.22em] text-gold-soft">It&apos;s live</p>
-                <h2 className="t-h2 relative mt-2">Your invitation is ready to share</h2>
+                <p className="relative mt-5 text-[0.78rem] font-bold uppercase tracking-[0.22em] text-gold-soft">{edited ? 'Saved' : 'It’s live'}</p>
+                <h2 className="t-h2 relative mt-2">{edited ? 'Your changes are live' : 'Your invitation is ready to share'}</h2>
+                {edited && <p className="relative mt-2 text-[0.9rem] text-paper/80">Same link as before. Guests see the new details the next time they open it.</p>}
                 {names && <p className="relative mt-2 font-editorial text-[1.3rem] italic text-paper/80">{names}</p>}
               </div>
 
@@ -1370,6 +1498,11 @@ export default function CreatePage() {
                     className="btn-outline flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[0.95rem] font-semibold">
                     View your invitation
                   </Link>
+                  {/* A full page load: the builder reopens with the invitation's saved details. */}
+                  <a href={`/create?edit=${encodeURIComponent(createdSlug)}`}
+                    className="flex w-full items-center justify-center gap-2 py-1.5 text-[0.85rem] font-semibold text-emerald-soft underline-offset-4 hover:underline">
+                    {edited ? 'Change something else' : 'Spotted a mistake? Edit your invitation'}
+                  </a>
 
                   {session ? (
                     <Link href="/dashboard"
@@ -1380,7 +1513,7 @@ export default function CreatePage() {
                     <div className="rounded-2xl border border-line bg-peach/60 px-4 py-4">
                       <p className="text-[0.88rem] font-semibold text-charcoal">Keep your link safe</p>
                       <p className="mt-0.5 text-[0.8rem] leading-5 text-charcoal/70">
-                        It&apos;s saved on this phone. Send it to yourself too, and to see it in a dashboard later, sign in with Google using the email you paid with — optional.
+                        It&apos;s saved on this phone. Send it to yourself too, and to see it in a dashboard later, sign in with Google using the email you paid with (optional).
                       </p>
                       <div className="mt-3 grid grid-cols-2 gap-2">
                         <a

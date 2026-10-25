@@ -13,38 +13,38 @@ export const GRIHA_SECTIONS: WordingSectionData[] = [
     title: 'Formal Griha Pravesh Invitation Message',
     intro: 'Formal invitations work best for printed cards and for sending to elders and extended family. They carry a respectful, warm tone and include all ceremony details.',
     messages: [
-      { title: '1. Traditional — Vastu Puja, Ganesh Puja, family blessings', text: `With the blessings of our elders and the grace of the Almighty, we joyfully invite you to the Griha Pravesh ceremony of our new home.
+      { title: '1. Traditional: Vastu Puja, Ganesh Puja, family blessings', text: `With the blessings of our elders and the grace of the Almighty, we joyfully invite you to the Griha Pravesh ceremony of our new home.
 Vastu Puja & Ganesh Puja: [Muhurat Time]
 Grah Shanti: [Time]
 Lunch: [Time] onwards
 Date: [Date]
 New Address: [Full Address, City]
 We seek your blessings and heartfelt presence on this auspicious occasion.
-— [Host Family Names]
+[Host Family Names]
 Contact: [Phone Number]` },
       { title: '2. Apartment / flat move-in (urban setting)', text: `We are delighted to invite you to the Griha Pravesh of our new home.
 [Flat/Apartment Name & Number]
 [Society Name, Wing, Floor]
-[Area, City — PIN]
+[Area, City, PIN]
 Muhurat: [Time] on [Date]
 Ganesh Puja → Lakshmi Puja → Grah Shanti → Lunch
-Parking: [Parking instructions — visitor parking at Gate No. / basement level]
+Parking: [Parking instructions, visitor parking at Gate No. / basement level]
 Entry: [Building entry instructions if applicable]
 Please grace us with your blessings on this memorable day.
-— [Father's Name], [Mother's Name] & Family` },
-      { title: '3. South Indian — Gruhapravesham style', text: `With the blessings of Sri [Family Deity / God] and our elders,
+[Father's Name], [Mother's Name] & Family` },
+      { title: '3. South Indian (Gruhapravesham style)', text: `With the blessings of Sri [Family Deity / God] and our elders,
 [Father's Name] and [Mother's Name]
 cordially invite you to the
 Gruhapravesham
 of our new residence
 Muhurtam: [Time] on [Day], [Date]
 Address: [Full Address, City]
-Ganapathi Puja — [Time]
-Gruhapravesham Muhurtam — [Time]
-Lunch — [Time] onwards
+Ganapathi Puja: [Time]
+Gruhapravesham Muhurtam: [Time]
+Lunch: [Time] onwards
 Your presence and blessings would be the greatest gift.
 RSVP: [Phone Number]` },
-      { title: '4. North Indian — with Lakshmi Puja', text: `We request the pleasure of your company at the
+      { title: '4. North Indian, with Lakshmi Puja', text: `We request the pleasure of your company at the
 Griha Pravesh & Lakshmi Puja
 of our new home.
 [Host Name(s)]
@@ -62,14 +62,14 @@ Contact: [Phone Number]` },
     id: 'whatsapp',
     toc: 'Short WhatsApp',
     title: 'Short WhatsApp Griha Pravesh Message',
-    intro: 'For WhatsApp, shorter messages work better — paste the digital invite link right after so guests can tap it for the full details, map, and schedule.',
+    intro: 'For WhatsApp, shorter messages work better. Paste the digital invite link right after so guests can tap it for the full details, map, and schedule.',
     messages: [
       { title: '1. Simple casual', text: `We are moving into our new home and would love your blessings!
 Griha Pravesh: [Date] at [Muhurat Time]
 Address: [New Address, City]
 Please do join us. Lunch follows the ceremony.
 Details & map: [Digital Invite Link]` },
-      { title: '2. Muhurat time prominent', text: `Griha Pravesh — [Date]
+      { title: '2. Muhurat time prominent', text: `Griha Pravesh: [Date]
 Shubh Muhurat: [Time] SHARP
 Please arrive by [15 mins before time] so the puja begins on time.
 Venue: [Address, City]
@@ -87,7 +87,7 @@ Map & full schedule: [Digital Invite Link]` },
 दिनांक: [Date] | मुहूर्त: [Time]
 पता: [Address, City]
 आपके आशीर्वाद और उपस्थिति के बिना यह शुभ कार्य अधूरा है।
-Our Griha Pravesh ceremony — do join us!
+Our Griha Pravesh ceremony: do join us!
 Map & details: [Digital Invite Link]` },
     ],
   },
@@ -95,15 +95,15 @@ Map & details: [Digital Invite Link]` },
     id: 'housewarming-english',
     toc: 'Housewarming (English)',
     title: 'New Home & Housewarming Invitation Messages (English)',
-    intro: 'Clean English wording for a housewarming or new-home celebration — perfect when guests span friends, colleagues and family. Copy, add your details and share on WhatsApp.',
+    intro: 'Clean English wording for a housewarming or new-home celebration, perfect when guests span friends, colleagues and family. Copy, add your details and share on WhatsApp.',
     messages: [
-      { title: '1. Warm new-home invite', text: `We've found our new home — and we'd love you in it! 🏡
+      { title: '1. Warm new-home invite', text: `We've found our new home, and we'd love you in it! 🏡
 
 Join us for our housewarming on [Date] at [Time].
 Venue: [New Address, City]
 
 Come bless our new beginning with your presence.
-— [Host Family Names]` },
+[Host Family Names]` },
       { title: '2. Simple & short', text: `🏡 Housewarming time! Join us to celebrate our new home.
 📅 [Date] · 🕖 [Time] · 📍 [New Address]
 Your blessings mean everything to us!` },
@@ -114,7 +114,7 @@ Gathering from: [Time]
 Address: [Full New Address + Landmark]
 
 Please arrive before the muhurat for the auspicious entry. Lunch to follow.` },
-      { title: '4. Formal — both hosts named', text: `[Host 1 Name] & [Host 2 Name]
+      { title: '4. Formal, both hosts named', text: `[Host 1 Name] & [Host 2 Name]
 request the pleasure of your company at the
 Housewarming (Griha Pravesh) of their new home
 
@@ -123,7 +123,7 @@ Housewarming (Griha Pravesh) of their new home
 
 Your presence and blessings are eagerly awaited.
 RSVP: [Phone]` },
-      { title: '5. Evening housewarming party', text: `We're warming up the new place — come join the fun! 🏡🎉
+      { title: '5. Evening housewarming party', text: `We're warming up the new place. Come join the fun! 🏡🎉
 
 Housewarming get-together
 [Date] · [Time] onwards
@@ -132,26 +132,26 @@ Housewarming get-together
 Good food, good company, and a home full of love. RSVP: [Phone]` },
       { title: '6. With a Google Maps note', text: `You're invited to our housewarming! 🏡
 🕉️ Muhurat: [Muhurat Time] · [Date]
-📍 [New Address] — map & full details 👉 [Digital Invite Link]
+📍 [New Address] · map & full details 👉 [Digital Invite Link]
 
-The new place is easy to find with the map — see you there!` },
+The new place is easy to find with the map. See you there!` },
     ],
   },
   {
     id: 'friends',
     toc: 'For friends',
     title: 'Housewarming Invitation Messages for Friends',
-    intro: 'Relaxed messages for the friends group — say whether it is the pooja, the party or both, so nobody turns up in party clothes for the havan.',
+    intro: 'Relaxed messages for the friends group. Say whether it is the pooja, the party or both, so nobody turns up in party clothes for the havan.',
     messages: [
       { title: '1. We finally moved', text: `We finally moved! 🏡
 Come see the new place and celebrate with us on [Date] at [Time].
 📍 [New Address, City]
-Food's on us — just bring yourselves! [Invitation Link]` },
+Food's on us, so just bring yourselves! [Invitation Link]` },
       { title: '2. For the friends group', text: `Housewarming at ours! 🎉
 [Date] · [Time] onwards · [New Address]
 Pooja in the morning for family, party in the evening for you lot. 😄` },
       { title: '3. One-to-one', text: `Hey [Friend's Name]! We've moved into our new home and the housewarming is on [Date].
-It won't feel like home until you've been over — please come! 💛
+It won't feel like home until you've been over, so please come! 💛
 📍 [Address] · [Time]` },
       { title: "4. Inviting a friend's family", text: `Dear [Friend's Name], we're doing the Griha Pravesh of our new home on [Date] at [Muhurat Time], with lunch after.
 We'd love for you to come with the family. 🙏
@@ -162,14 +162,14 @@ We'd love for you to come with the family. 🙏
     id: 'colleagues',
     toc: 'For colleagues',
     title: 'Housewarming Invitation Message for Colleagues & Office',
-    intro: 'Polite and short — colleagues usually come for the lunch or the evening, not the morning pooja, so give that time.',
+    intro: 'Polite and short. Colleagues usually come for the lunch or the evening, not the morning pooja, so give that time.',
     messages: [
       { title: '1. Office WhatsApp group', text: `Dear all,
 We've moved into our new home and are having a small housewarming on [Date] from [Time].
-I'd be happy if you could drop by — [New Address, City].
+I'd be happy if you could drop by: [New Address, City].
 Map: [Invitation Link]
-— [Your Name]` },
-      { title: '2. Email to your team', text: `Subject: Housewarming — you're invited!
+[Your Name]` },
+      { title: '2. Email to your team', text: `Subject: You're invited to our housewarming!
 
 Dear team,
 We're celebrating the Griha Pravesh of our new home on [Date]. The pooja is in the morning, and we'd love to have you for lunch from [Time].
@@ -187,7 +187,7 @@ Would love to see you there! 📍 [Area, City]` },
     title: 'Modern & Casual Housewarming Messages',
     intro: 'For friends and a relaxed crowd, keep it light and fun. These match a casual house party more than a formal pooja.',
     messages: [
-      { title: '1. Fun & casual', text: `New keys, new address, same us — and a party to prove it! 🎉🏡
+      { title: '1. Fun & casual', text: `New keys, new address, same us, and a party to prove it! 🎉🏡
 
 Housewarming at our place:
 📅 [Date] · 🕖 [Time] · 📍 [New Address]
@@ -202,7 +202,7 @@ Join us to warm up our new place over good food.
 [Date] · [Time] · [New Address]
 
 Come hungry, leave happy!` },
-      { title: '4. Blessings + party combined', text: `Pooja in the morning, party in the evening — you're invited to both! 🙏🎉
+      { title: '4. Blessings + party combined', text: `Pooja in the morning, party in the evening: you're invited to both! 🙏🎉
 
 🕉️ Griha Pravesh muhurat: [Muhurat Time]
 🎉 Get-together: [Evening Time]
@@ -215,7 +215,7 @@ Come for the blessings, stay for the fun!` },
     id: 'hindi',
     toc: 'In Hindi',
     title: 'Griha Pravesh Invitation Messages in Hindi (गृह प्रवेश निमंत्रण)',
-    intro: 'Hindi and bilingual wording for family groups and elders — from the traditional card text to a short WhatsApp message and a Hinglish version.',
+    intro: 'Hindi and bilingual wording for family groups and elders, from the traditional card text to a short WhatsApp message and a Hinglish version.',
     messages: [
       { title: '1. पारंपरिक (Traditional Hindi)', text: `॥ श्री गणेशाय नमः ॥
 
@@ -225,7 +225,7 @@ Come for the blessings, stay for the fun!` },
 स्थान: [नया पता, शहर]
 
 आपकी उपस्थिति एवं आशीर्वाद हमारे लिए अनमोल होंगे। 🙏
-— [परिवार का नाम]` },
+[परिवार का नाम]` },
       { title: '2. छोटा संदेश (Short Hindi)', text: `🏡 हमारे नए घर के गृह प्रवेश पर आप सादर आमंत्रित हैं।
 मुहूर्त: [Muhurat Time] · दिनांक: [Date]
 पता: [नया पता]
@@ -236,7 +236,7 @@ Come for the blessings, stay for the fun!` },
 
 Join us for our Griha Pravesh at [New Address].
 Map & details 👉 [Digital Invite Link]` },
-      { title: '4. आधुनिक (Modern Hindi)', text: `नया घर, नई शुरुआत — और आपके बिना अधूरी! 🏡
+      { title: '4. आधुनिक (Modern Hindi)', text: `नया घर, नई शुरुआत, और आपके बिना अधूरी! 🏡
 
 गृह प्रवेश: [Date] · मुहूर्त [Muhurat Time]
 [नया पता, शहर]
@@ -253,7 +253,7 @@ Map & details 👉 [Digital Invite Link]` },
 पता: [नया पता, शहर]
 दर्शनाभिलाषी: [परिवार के नाम]` },
       { title: '6. Hinglish', text: `Humare naye ghar ka Griha Pravesh hai! 🏡
-[Date] ko muhurat [Time] baje hai — pooja ke baad lunch bhi.
+[Date] ko muhurat [Time] baje hai, pooja ke baad lunch bhi.
 Aap sab parivaar sahit zaroor aaiye. 🙏
 📍 [New Address]` },
     ],
@@ -264,7 +264,7 @@ Aap sab parivaar sahit zaroor aaiye. 🙏
     title: 'Griha Pravesh Invitation for Different Regional Traditions',
     intro: 'The ceremony name changes by region, but the invitation needs are similar. Adjust the ceremony name and deity references to match your tradition.',
     messages: [
-      { title: 'Griha Pravesh — North & Central India', text: `[Father's Name] & [Mother's Name]
+      { title: 'Griha Pravesh: North & Central India', text: `[Father's Name] & [Mother's Name]
 request your presence at the
 Griha Pravesh
 of their new home
@@ -274,24 +274,24 @@ Ganesh Puja | Grah Shanti | Lakshmi Puja | Lunch
 [Full schedule on digital invite]
 Your blessings make our new home complete.
 Contact: [Phone]` },
-      { title: 'Gruhapravesham — South India (Tamil / Telugu families)', text: `Sri [Family Deity] Thiruvadigale Saranam
+      { title: 'Gruhapravesham: South India (Tamil / Telugu families)', text: `Sri [Family Deity] Thiruvadigale Saranam
 [Father's Name] & [Mother's Name]
 invite you to the
 Gruhapravesham
 of their new residence
 Muhurtam: [Day], [Date] at [Time]
 [Full Address, City]
-Ganapathi Homam — [Time]
-Gruhapravesham — [Muhurtam Time]
-Lunch — [Time]
+Ganapathi Homam: [Time]
+Gruhapravesham: [Muhurtam Time]
+Lunch: [Time]
 Kindly bless us with your presence.
 RSVP: [Phone]` },
-      { title: 'Ghar Pravesh / Naye Ghar ki Khushi — informal Hindi', text: `🏠 नए घर में आपका स्वागत है!
+      { title: 'Ghar Pravesh / Naye Ghar ki Khushi: informal Hindi', text: `🏠 नए घर में आपका स्वागत है!
 हम बड़ी खुशी से आपको अपने नए घर के गृह प्रवेश में आमंत्रित करते हैं।
 तारीख: [Date]
 मुहूर्त: [Time]
 पता: [Address, City]
-पूजा, प्रसाद और भोजन — सब कुछ है।
+पूजा, प्रसाद और भोजन, सब कुछ है।
 बस आपके आशीर्वाद चाहिए! 🙏
 संपर्क: [Phone Number]` },
       { title: 'Vastu Puja + housewarming combined', text: `[Family Name] Family
@@ -311,7 +311,7 @@ Your presence and blessings would make this occasion truly auspicious.` },
     id: 'vastu-shanti',
     toc: 'Vastu Shanti',
     title: 'Vastu Shanti Pooja Invitation Message',
-    intro: 'Vastu Shanti is the name many Marathi and Gujarati families use for the pooja that blesses a new home — often held together with the Griha Pravesh. Give the pooja time and the meal time separately.',
+    intro: 'Vastu Shanti is the name many Marathi and Gujarati families use for the pooja that blesses a new home, often held together with the Griha Pravesh. Give the pooja time and the meal time separately.',
     messages: [
       { title: '1. Formal', text: `With the blessings of Shri Ganesha, we invite you to the Vastu Shanti pooja of our new home.
 
@@ -321,7 +321,7 @@ Mahaprasad: [Time] onwards
 Address: [New Address, City]
 
 Your presence and blessings are requested.
-— [Family Name]` },
+[Family Name]` },
       { title: '2. With the Griha Pravesh', text: `Shri Ganeshay Namah 🙏
 We are happy to invite you and your family to the Vastu Shanti and Griha Pravesh of our new home on [Date].
 Pooja: [Time] · Lunch: [Time]
@@ -340,7 +340,7 @@ Do come with family! [Invitation Link]` },
     id: 'satyanarayan-pooja',
     toc: 'With Satyanarayan pooja',
     title: 'Griha Pravesh with Satyanarayan Katha',
-    intro: 'Many families hold a Satyanarayan pooja and katha on the day they move in. Mention it by name — guests who know the katha will want to arrive in time for it.',
+    intro: 'Many families hold a Satyanarayan pooja and katha on the day they move in. Mention it by name: guests who know the katha will want to arrive in time for it.',
     messages: [
       { title: '1. Griha Pravesh & Satyanarayan pooja', text: `With the blessings of our elders, we invite you to the Griha Pravesh of our new home, followed by the Satyanarayan Katha.
 
@@ -352,7 +352,7 @@ Aarti & prasad lunch: [Time] onwards
 Address: [New Address, City]
 
 Please come with your family and bless our new home. 🙏
-— [Host Family Names]` },
+[Host Family Names]` },
       { title: '2. In Hindi', text: `॥ श्री गणेशाय नमः ॥
 
 हमारे नए घर के गृह प्रवेश एवं श्री सत्यनारायण कथा के शुभ अवसर पर आप सपरिवार सादर आमंत्रित हैं।
@@ -363,18 +363,18 @@ Please come with your family and bless our new home. 🙏
 आरती एवं प्रसाद: [Time]
 
 पता: [नया पता, शहर]
-— [परिवार का नाम]` },
+[परिवार का नाम]` },
       { title: '3. Short WhatsApp message', text: `🏡 Griha Pravesh & Satyanarayan pooja at our new home
 [Date] · muhurat [Time] · katha [Time]
 📍 [New Address]
-Prasad lunch to follow — do come! Map 👉 [Digital Invite Link]` },
+Prasad lunch to follow. Do come! Map 👉 [Digital Invite Link]` },
     ],
   },
   {
     id: 'office-shop',
     toc: 'New office or shop',
     title: 'New Office & Shop Opening Pooja Invitation',
-    intro: 'The same blessing for a new workplace — an office, a shop or a clinic. Say what is being opened and who is inviting, and keep the tone a little more formal for clients.',
+    intro: 'The same blessing for a new workplace: an office, a shop or a clinic. Say what is being opened and who is inviting, and keep the tone a little more formal for clients.',
     messages: [
       { title: '1. New office', text: `With the blessings of the Almighty, we invite you to the opening pooja of our new office.
 [Company Name]
@@ -398,12 +398,12 @@ Do join us!` },
     id: 'situations',
     toc: 'Rented home, renovation…',
     title: 'Griha Pravesh Messages for Different Situations',
-    intro: 'Not every move is a newly built home — wording for a rented flat, a small family pooja, a renovated home, and relatives who can only join from afar.',
+    intro: 'Not every move is a newly built home. Wording for a rented flat, a small family pooja, a renovated home, and relatives who can only join from afar.',
     messages: [
       { title: '1. Rented home', text: `We've moved into a new home on rent and are doing a small pooja to begin well. 🙏
 [Date] · [Time] · [Address]
 It would be lovely to see you there.` },
-      { title: '2. Small family pooja', text: `Just a small family pooja for our new home — and we'd love you to be part of it. 🏡
+      { title: '2. Small family pooja', text: `Just a small family pooja for our new home, and we'd love you to be part of it. 🏡
 [Date] · muhurat [Time] · [Address]
 Prasad & lunch to follow.` },
       { title: '3. After a renovation', text: `Our home has a fresh new look! 🏡
@@ -418,9 +418,9 @@ Photos of the new home, the pooja schedule and a place to leave your blessings a
     id: 'reminders',
     toc: 'Reminders & thank-yous',
     title: 'Griha Pravesh Reminder & Thank-You Messages',
-    intro: 'A reminder the day before — with the muhurat and the parking — saves a dozen phone calls. Re-send the same invitation link; the map is already in it.',
+    intro: 'A reminder the day before, with the muhurat and the parking, saves a dozen phone calls. Re-send the same invitation link; the map is already in it.',
     messages: [
-      { title: '1. Reminder', text: `Just a reminder 😊 Our Griha Pravesh is on [Date] — muhurat at [Time] sharp.
+      { title: '1. Reminder', text: `Just a reminder 😊 Our Griha Pravesh is on [Date], muhurat at [Time] sharp.
 📍 [New Address] · map: [Invitation Link]
 See you there!` },
       { title: '2. The day before, with parking', text: `See you tomorrow! 🏡
@@ -431,7 +431,7 @@ Call [Phone] if you can't find us.` },
 Could you let us know by [RSVP Date] so we can plan the lunch? 🙏` },
       { title: '4. Thank you, after the Griha Pravesh', text: `Thank you for coming to our Griha Pravesh! 🙏
 Your blessings have made our new house a home.
-— [Family Name]` },
+[Family Name]` },
     ],
   },
 ]

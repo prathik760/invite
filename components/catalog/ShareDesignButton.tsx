@@ -36,7 +36,7 @@ export default function ShareDesignButton({
     trackEvent(seoEvents.linkCopy, { share_url: url, template_id: templateId, source })
     if (navigator.share) {
       try {
-        await navigator.share({ title: `${name} — ShareInvite`, text: `See the ${name} invitation design:`, url })
+        await navigator.share({ title: `${name} | ShareInvite`, text: `See the ${name} invitation design:`, url })
         return
       } catch (e) {
         // Dismissing the sheet is not an error; anything else falls back to copying.

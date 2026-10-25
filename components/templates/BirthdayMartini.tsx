@@ -476,7 +476,7 @@ export default function BirthdayMartini({ data, eventId, isPreview = false }: In
                     {line}
                   </p>
                 ))}
-                <p className="mt-4" style={{ fontFamily: hand, fontSize: 28, color: '#2C3C6B' }}>— {signer} x</p>
+                <p className="mt-4" style={{ fontFamily: hand, fontSize: 28, color: '#2C3C6B' }}>{signer} x</p>
               </div>
             </Napkin>
           </Reveal>
@@ -512,7 +512,7 @@ export default function BirthdayMartini({ data, eventId, isPreview = false }: In
           eventId={eventId}
           theme={WISHES_THEME}
           title={`A toast to ${name}`}
-          intro={`Raise a glass from wherever you are — leave ${name} a birthday message. Everyone who opens this page can read them.`}
+          intro={`Raise a glass from wherever you are and leave ${name} a birthday message. Everyone who opens this page can read them.`}
           noun="toast"
           previewWishes={SAMPLE_WISHES}
           namePlaceholder="e.g. Rosa & Kit"

@@ -75,7 +75,7 @@ const WISHES_THEME: InviteTheme = {
 }
 
 const SAMPLE_WISHES = [
-  { name: 'The Thompsons', message: 'We wouldn’t miss it. Freddie has already written his list — and he says Biscuit needs a stocking too.' },
+  { name: 'The Thompsons', message: 'We wouldn’t miss it. Freddie has already written his list, and he says Biscuit needs a stocking too.' },
   { name: 'Granny Pat', message: 'Sprouts are sorted. Save me the seat by the fire.' },
 ]
 
@@ -730,9 +730,9 @@ function ChristmasRsvp({ anchor, hosts, what, phone, email, rsvpBy, guest, isPre
   const name = who.trim()
   const text =
     answer === 'no'
-      ? `Dear ${hosts || 'all'}, ${name ? `it’s ${name} — ` : ''}we can’t make ${what} this year, and we’re so sorry to miss it. Have the loveliest Christmas — save us a cracker!`
-      : `Hello ${hosts || 'there'}! ${name ? `It’s ${name} — ` : ''}we’ll be there for ${what}. ${count === 1 ? 'Just me.' : `${count} of us.`}${bring.trim() ? ` I’ll bring ${bring.trim()}.` : ''}${diet.trim() ? ` A note for the kitchen: ${diet.trim()}.` : ''} Merry Christmas!`
-  const channels = rsvpChannels({ phone, email, text, subject: answer === 'no' ? `Can’t make ${what}` : `RSVP — ${what}` })
+      ? `Dear ${hosts || 'all'}, ${name ? `it’s ${name}. We` : 'we'} can’t make ${what} this year, and we’re so sorry to miss it. Have the loveliest Christmas, and save us a cracker!`
+      : `Hello ${hosts || 'there'}! ${name ? `It’s ${name}. ` : ''}We’ll be there for ${what}. ${count === 1 ? 'Just me.' : `${count} of us.`}${bring.trim() ? ` I’ll bring ${bring.trim()}.` : ''}${diet.trim() ? ` A note for the kitchen: ${diet.trim()}.` : ''} Merry Christmas!`
+  const channels = rsvpChannels({ phone, email, text, subject: answer === 'no' ? `Can’t make ${what}` : `RSVP: ${what}` })
   const by = dateParts(rsvpBy)
   const field: CSSProperties = { fontFamily: sans, background: 'rgba(251,243,228,0.08)', border: `1px solid ${P.creamRule}`, color: P.cream }
   const chip = (on: boolean): CSSProperties => ({ background: on ? P.cream : 'transparent', color: on ? P.holly : P.cream, border: `1px solid ${on ? P.cream : P.creamRule}` })
@@ -1012,7 +1012,7 @@ export default function ChristmasEvergreen({ data, eventId, isPreview = false }:
             <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 26px)' }} />
             <div className="relative mx-auto w-[min(100%,30rem)] px-6 pt-[9cqi] text-center" style={{ containerType: 'inline-size' }}>
               <div className="xm-rise" style={{ animationDelay: '300ms' }}>
-                <Caps color={P.goldLight} size={11.5}>{guest ? `${guest} — ` : ''}{hosts ? `${hosts} invite you to` : 'You’re invited to'}</Caps>
+                <Caps color={P.goldLight} size={11.5}>{guest ? `${guest}, ` : ''}{hosts ? `${hosts} invite you to` : 'You’re invited to'}</Caps>
               </div>
               <h1 className="xm-rise mt-3" style={{ ...goldText({ fontFamily: display, fontStyle: 'italic', fontWeight: 400, fontSize: `clamp(36px, ${titleCqi.toFixed(1)}cqi, 78px)`, lineHeight: 1.02, textWrap: 'balance', filter: 'drop-shadow(0 2px 14px rgba(255,190,90,0.3))' }), animationDelay: '450ms' }}>
                 {title}
@@ -1054,7 +1054,7 @@ export default function ChristmasEvergreen({ data, eventId, isPreview = false }:
                 <div className="relative mx-auto px-6 pb-6 pt-8" style={{ background: P.paper, color: P.ink, clipPath: 'polygon(18% 0, 82% 0, 100% 16%, 100% 100%, 0 100%, 0 16%)' }}>
                   <span className="absolute left-1/2 top-3 block h-2.5 w-2.5 -translate-x-1/2 rounded-full" style={{ background: P.pine }} />
                   <p style={{ fontFamily: display, fontSize: 64, lineHeight: 1, color: P.holly }}>{sleeps === 0 ? '0' : sleeps}</p>
-                  <p className="mt-1" style={{ fontFamily: hand, fontSize: 24, lineHeight: 1.1 }}>{sleeps === 1 ? 'more sleep' : sleeps === 0 ? 'sleeps — it’s today!' : 'more sleeps'}</p>
+                  <p className="mt-1" style={{ fontFamily: hand, fontSize: 24, lineHeight: 1.1 }}>{sleeps === 1 ? 'more sleep' : sleeps === 0 ? 'sleeps, it’s today!' : 'more sleeps'}</p>
                 </div>
               </div>
               <p className="mt-5 text-[15px]" style={{ color: P.creamSoft }}>
@@ -1175,7 +1175,7 @@ export default function ChristmasEvergreen({ data, eventId, isPreview = false }:
                 )}
                 <div className="mt-6 flex flex-wrap justify-center gap-2.5">
                   <Btn href={mapsHref(data.mapsUrl, venue, address)} isPreview={isPreview} tone="red">Directions</Btn>
-                  <Btn href={calendarHref(`${title}${hosts ? ` — ${hosts}` : ''}`, data.date, data.time, where, 5)} isPreview={isPreview}>Add to calendar</Btn>
+                  <Btn href={calendarHref(`${title}${hosts ? `: ${hosts}` : ''}`, data.date, data.time, where, 5)} isPreview={isPreview}>Add to calendar</Btn>
                 </div>
               </Reveal>
             </section>
@@ -1188,7 +1188,7 @@ export default function ChristmasEvergreen({ data, eventId, isPreview = false }:
               eventId={eventId}
               theme={WISHES_THEME}
               title="Christmas cards"
-              intro={`Leave a Christmas card for ${hosts || 'the family'} — everyone who opens this invitation can read it.`}
+              intro={`Leave a Christmas card for ${hosts || 'the family'}. Everyone who opens this invitation can read it.`}
               noun="card"
               previewWishes={SAMPLE_WISHES}
               namePlaceholder="e.g. The Thompsons"

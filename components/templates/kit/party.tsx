@@ -60,12 +60,12 @@ export function useRsvp({ phone, email, what, date, formal = false }: { phone?: 
   const text = formal
     ? answer === 'no'
       ? `With regret, I’m unable to join you for ${what}${on}. Wishing you all a wonderful evening.`
-      : `Joyfully accepting — I’d be delighted to celebrate ${what}${on}.`
+      : `Joyfully accepting. I’d be delighted to celebrate ${what}${on}.`
     : answer === 'no'
-      ? `So sorry — I can’t make ${what}${on}. Have the best time, and save me some cake.`
+      ? `So sorry, I can’t make ${what}${on}. Have the best time, and save me some cake.`
       : `Count me in for ${what}${on}! See you there.`
 
-  const subject = answer === 'no' ? `Can’t make ${what}` : `RSVP — ${what}`
+  const subject = answer === 'no' ? `Can’t make ${what}` : `RSVP: ${what}`
   const channels = rsvpChannels({ phone: digits, email: mail, text, subject })
   return { answer, setAnswer, channels, available: channels.length > 0 }
 }

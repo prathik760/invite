@@ -38,7 +38,7 @@ export default function InvitationNotFound() {
           <p className="t-h3">Planning something yourself?</p>
           <p className="mt-2 text-[0.92rem] leading-6 text-charcoal/70">
             Create a digital invitation with a live countdown, photo gallery, Google Maps
-            directions and guest wishes — one link you can share on WhatsApp.
+            directions and guest wishes. One link you can share on WhatsApp.
           </p>
           <Link href="/create?src=invite_not_found" className="btn-primary mt-5 inline-flex rounded-full px-7 py-3 text-[0.9rem] font-semibold">
             Create an invitation

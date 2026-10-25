@@ -5,7 +5,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
   title: { absolute: 'Create a Digital Invitation | ShareInvite' },
-  description: 'Build your digital invitation in minutes and preview it before you pay — venue maps, photo gallery, music and guest wishes, shared as one WhatsApp link. Pay once when you publish.',
+  description: 'Build your digital invitation in minutes and preview it before you pay. Venue maps, photo gallery, music and guest wishes, shared as one WhatsApp link. Pay once when you publish.',
   alternates: { canonical: `${APP_URL}/create` },
   robots: { index: true, follow: true },
 }

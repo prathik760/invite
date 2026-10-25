@@ -1131,7 +1131,7 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
                   const t = timeLabel(fn.time)
                   const main = /nikah|nikaah|aqd/i.test(fn.name)
                   const fnPlace = [fn.venue || data.venue, data.venueAddress].filter(Boolean).join(', ')
-                  const cal = calendarHref(`${fn.name} — ${couple}`, fn.date, fn.time, fnPlace || undefined, 3)
+                  const cal = calendarHref(`${fn.name}: ${couple}`, fn.date, fn.time, fnPlace || undefined, 3)
                   const dir = fn.venue ? mapsHref(undefined, fn.venue, data.venueAddress) : directions
                   return (
                     <Reveal key={`${fn.name}-${i}`} disabled={isPreview} delay={i * 60}>

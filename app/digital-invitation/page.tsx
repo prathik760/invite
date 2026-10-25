@@ -20,9 +20,9 @@ import { priceRangeSentence } from '@/lib/priceCopy'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
 export const metadata: Metadata = {
-  title: { absolute: `Digital Invitation Maker India — from ₹${LOWEST_PAID_PRICE} | ShareInvite` },
+  title: { absolute: `Digital Invitation Maker India: from ₹${LOWEST_PAID_PRICE} | ShareInvite` },
   description:
-    `Make a digital invitation for a wedding, birthday, Griha Pravesh, Namakaran & more — one WhatsApp link. Preview before you pay; from ₹${LOWEST_PAID_PRICE} one-time.`,
+    `Make a digital invitation for a wedding, birthday, Griha Pravesh, Namakaran & more. One WhatsApp link. Preview before you pay; from ₹${LOWEST_PAID_PRICE} one-time.`,
   keywords: [
     'digital invitation website India',
     'digital invitation card India',
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${APP_URL}/digital-invitation` },
   openGraph: {
-    title: `Digital Invitation Maker India — from ₹${LOWEST_PAID_PRICE} | ShareInvite`,
-    description: `Make a digital invitation for a wedding, birthday, Griha Pravesh, Namakaran & more — one WhatsApp link. Preview before you pay; from ₹${LOWEST_PAID_PRICE} one-time.`,
+    title: `Digital Invitation Maker India: from ₹${LOWEST_PAID_PRICE} | ShareInvite`,
+    description: `Make a digital invitation for a wedding, birthday, Griha Pravesh, Namakaran & more. One WhatsApp link. Preview before you pay; from ₹${LOWEST_PAID_PRICE} one-time.`,
     type: 'website',
     locale: 'en_IN',
     images: [{ url: `${APP_URL}/opengraph-image`, width: 1200, height: 630, alt: 'Digital Invitation Website India' }],
@@ -54,7 +54,7 @@ const faqSchema = {
       name: 'What is a digital invitation website?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'A digital invitation website is a mobile-optimised web page containing all event details — date, time, venue, schedule, photos, music, and countdown — accessible from a single shareable link. Guests open it from WhatsApp without installing any app.',
+        text: 'A digital invitation website is a mobile-optimised web page containing all event details (date, time, venue, schedule, photos, music, and countdown), accessible from a single shareable link. Guests open it from WhatsApp without installing any app.',
       },
     },
     {
@@ -62,7 +62,7 @@ const faqSchema = {
       name: 'Is a digital invitation better than a PDF or image invite on WhatsApp?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. A digital invitation website is interactive — it has a live countdown, one-tap Google Maps, a photo gallery, background music, and a guest wishes section. It opens faster than a PDF and works on all phones without any downloads.',
+        text: 'Yes. A digital invitation website is interactive: it has a live countdown, one-tap Google Maps, a photo gallery, background music, and a guest wishes section. It opens faster than a PDF and works on all phones without any downloads.',
       },
     },
     {
@@ -78,7 +78,7 @@ const faqSchema = {
       name: 'How much does a digital invitation cost in India?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: `There is no payment until you publish — you can build and preview any design first. Publishing is a one-time payment for the design you choose, and each design has its own price: ${priceRangeSentence()} No monthly fees, no hidden charges.`,
+        text: `There is no payment until you publish: you can build and preview any design first. Publishing is a one-time payment for the design you choose, and each design has its own price: ${priceRangeSentence()} No monthly fees, no hidden charges.`,
       },
     },
   ],
@@ -98,7 +98,7 @@ export default function DigitalInvitationPage() {
         crumbs={[{ name: 'Home', href: '/' }, { name: 'Digital invitations' }]}
         eyebrow="Online invitation maker"
         title={<>Digital Invitation Website <em className="font-medium text-burnished">for Every Occasion</em></>}
-        lede="A beautiful invitation page for your wedding, birthday, housewarming, naming ceremony or festival — shared as one WhatsApp link that opens on any phone, anywhere."
+        lede="A beautiful invitation page for your wedding, birthday, housewarming, naming ceremony or festival, shared as one WhatsApp link that opens on any phone, anywhere."
         actions={
           <>
             <Link href="/create" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
@@ -150,7 +150,7 @@ export default function DigitalInvitationPage() {
       </Section>
 
       <Section tone="paper" id="faq" aria-label="Questions">
-        <SectionHeading align="center" eyebrow="Questions" title="Digital invitation maker — questions" />
+        <SectionHeading align="center" eyebrow="Questions" title="Digital invitation maker: questions" />
         <div className="mt-10"><FAQAccordion faqs={faqs} /></div>
       </Section>
 

@@ -558,7 +558,7 @@ export default function SaveTheDate({ data, eventId, isPreview = false }: Invite
                     ))}
                   </div>
                   <p className="mt-5" style={{ fontFamily: hand, fontSize: 'clamp(28px, 9cqi, 34px)', lineHeight: 1, color: P.clay, transform: 'rotate(-2deg)', transformOrigin: 'left', textShadow: 'none' }}>
-                    — {a} &amp; {b}
+                    {a} &amp; {b}
                   </p>
                 </div>
               )}
@@ -611,7 +611,7 @@ export default function SaveTheDate({ data, eventId, isPreview = false }: Invite
           eventId={eventId}
           theme={WISHES_THEME}
           title={`Notes for ${a} & ${b}`}
-          intro={`Congratulations, a memory, a promise to dance — leave a few words for ${a} and ${b}. Everyone who opens this page can read them.`}
+          intro={`Congratulations, a memory, a promise to dance: leave a few words for ${a} and ${b}. Everyone who opens this page can read them.`}
           noun="note"
           previewWishes={SAMPLE_WISHES}
           namePlaceholder="e.g. Maggie & Tom"

@@ -5,12 +5,12 @@ const DEFAULT_STEPS = [
   {
     Icon: EyeIcon,
     title: 'Choose a design',
-    copy: 'Browse by occasion and open any design in a live preview — exactly what your guests will see.',
+    copy: 'Browse by occasion and open any design in a live preview: exactly what your guests will see.',
   },
   {
     Icon: PenIcon,
     title: 'Make it yours',
-    copy: 'Add names, date, venue, photos and music. Switch designs any time — your details come with you.',
+    copy: 'Add names, date, venue, photos and music. Switch designs any time: your details come with you.',
   },
   {
     Icon: LinkIcon,

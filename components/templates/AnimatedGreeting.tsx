@@ -418,7 +418,7 @@ function LetterBeat({ theme, recipient, sender, message, onNext }: {
           {!done && <span className="ml-0.5 inline-block h-5 w-px animate-pulse bg-[#2d2a33] align-middle" />}
         </p>
         {done && sender && (
-          <p className="mt-[34px] text-right" style={{ fontFamily: hand, color: '#2d2a33', fontSize: 28, lineHeight: '34px' }}>— {sender}</p>
+          <p className="mt-[34px] text-right" style={{ fontFamily: hand, color: '#2d2a33', fontSize: 28, lineHeight: '34px' }}>{sender}</p>
         )}
       </motion.div>
       {done && <Button onClick={onNext} theme={theme}>One last thing</Button>}

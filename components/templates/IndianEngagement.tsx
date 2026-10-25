@@ -164,7 +164,7 @@ export default function IndianEngagement({ data, eventId, isPreview = false }: I
   const photos = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`${p1} & ${p2} — Engagement`, data.date, data.time, place || undefined, 4)
+  const calendar = calendarHref(`${p1} & ${p2}: Engagement`, data.date, data.time, place || undefined, 4)
   const portraits = [
     { src: data.partner1Photo, alt: p1 },
     { src: data.partner2Photo, alt: p2 },
@@ -253,7 +253,7 @@ export default function IndianEngagement({ data, eventId, isPreview = false }: I
 
         {data.dressCode && (
           <p className="ie-in mt-5 text-[15px]" style={{ color: C.soft, animationDelay: '1350ms' }}>
-            Dress code <span className="mx-1" style={{ color: C.rose }}>—</span> {data.dressCode}
+            Dress code<span style={{ color: C.rose }}>:</span> {data.dressCode}
           </p>
         )}
       </section>

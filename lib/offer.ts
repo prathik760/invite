@@ -18,19 +18,20 @@ import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'
  */
 export const OFFER = {
   headline: 'One design. One price. Everything included.',
-  short: 'Pay once for the design you love — every feature in it is yours.',
+  short: 'Pay once for the design you love, and every feature in it is yours.',
   from: LOWEST_PAID_PRICE,
   to: HIGHEST_PAID_PRICE,
 } as const
 
 export const OFFER_INCLUDES = [
   'Your invitation on its own private link',
-  'Every feature in the design — nothing locked',
+  'Every feature in the design, nothing locked',
   'Share on WhatsApp, Instagram, email or text',
-  'Opens on any phone — no app for guests',
+  'Opens on any phone, no app for guests',
   'No banner or ads on your invitation',
+  'Change the details until your event, same link',
   'Live through your event, and three days after',
-  'Secure one-time payment — no subscription',
+  'Secure one-time payment, no subscription',
 ] as const
 
 export const OFFER_PROMISES = [

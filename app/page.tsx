@@ -43,7 +43,7 @@ const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').re
 export const metadata: Metadata = {
   title: { absolute: 'Digital Invitation Maker for Weddings & Events | ShareInvite' },
   description:
-    `Create digital invitations & animated 3D greetings for weddings, birthdays & every occasion. Share one link on WhatsApp — preview before you pay, from ₹${LOWEST_PAID_PRICE}.`,
+    `Create digital invitations & animated 3D greetings for weddings, birthdays & every occasion. Share one link on WhatsApp. Preview before you pay, from ₹${LOWEST_PAID_PRICE}.`,
   keywords: [
     'digital invitation maker',
     'online invitation maker',
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     'namakaran invitation online',
   ],
   openGraph: {
-    title: 'ShareInvite — Digital Invitation Maker for Weddings, Birthdays & Every Occasion',
+    title: 'ShareInvite: Digital Invitation Maker for Every Occasion',
     description: `Create digital invitations and animated 3D greetings for every occasion and share them with one link. Build and preview before you pay; publish from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} one-time.`,
     type: 'website',
     locale: 'en_IN',
@@ -96,11 +96,11 @@ export const metadata: Metadata = {
 const HOME_FAQS: Faq[] = [
   {
     question: 'What is a digital invitation?',
-    answer: 'A digital invitation is a beautifully designed page your guests open from a link — no app to download. Depending on the design it can hold your event details, a live countdown, photos, music, Google Maps directions and a wall where guests leave wishes.',
+    answer: 'A digital invitation is a beautifully designed page your guests open from a link: no app to download. Depending on the design it can hold your event details, a live countdown, photos, music, Google Maps directions and a wall where guests leave wishes.',
   },
   {
     question: 'Can guests open it on WhatsApp without installing anything?',
-    answer: 'Yes. You get one link that works on WhatsApp, Instagram, Messenger, email, SMS and any phone or computer browser. Guests tap it and the invitation opens straight away — no app, no account, no sign-up.',
+    answer: 'Yes. You get one link that works on WhatsApp, Instagram, Messenger, email, SMS and any phone or computer browser. Guests tap it and the invitation opens straight away: no app, no account, no sign-up.',
   },
   {
     question: 'Does it work for guests in other countries?',
@@ -112,15 +112,15 @@ const HOME_FAQS: Faq[] = [
   },
   {
     question: 'Do I have to pay before I can see my invitation?',
-    answer: `No. There is no payment until you publish — pick a design, add every detail and see the finished invitation without entering a card. Publishing is a one-time payment for the design you choose. ${priceRangeSentence()} There are no monthly fees.`,
+    answer: `No. There is no payment until you publish: pick a design, add every detail and see the finished invitation without entering a card. Publishing is a one-time payment for the design you choose. ${priceRangeSentence()} There are no monthly fees.`,
   },
   {
     question: 'What exactly am I paying for?',
-    answer: `One design. Each design shows its price up front, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')}. You pay once when you publish, and that covers everything in the design — your invitation on its own link, every feature it has, and sharing with as many guests as you like. No plans, bundles or subscription.`,
+    answer: `One design. Each design shows its price up front, from ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')} to ₹${HIGHEST_PAID_PRICE.toLocaleString('en-IN')}. You pay once when you publish, and that covers everything in the design: your invitation on its own link, every feature it has, and sharing with as many guests as you like. No plans, bundles or subscription.`,
   },
   {
     question: 'Can I write my invitation in my own language?',
-    answer: 'Yes. Every word on the invitation is yours to write, so you can use any language your keyboard supports — or mix two, as many families do.',
+    answer: 'Yes. Every word on the invitation is yours to write, so you can use any language your keyboard supports, or mix two, as many families do.',
   },
   {
     question: 'Can I change the design after I have started?',
@@ -263,7 +263,7 @@ export default function LandingPage() {
               Digital invitations, <em className="font-medium text-burnished">beautifully</em> made for every celebration
             </h1>
             <p className="t-lede enter-1 mt-5 max-w-[34rem] max-sm:mt-4 max-sm:text-[1rem] max-sm:leading-[1.65] sm:mt-6">
-              Choose a design you love, make it yours in minutes, and send one link your guests open anywhere —
+              Choose a design you love, make it yours in minutes, and send one link your guests open anywhere:
               WhatsApp, Instagram, email or text. You only pay when it&apos;s ready to share.
             </p>
 
@@ -317,7 +317,7 @@ export default function LandingPage() {
         <SectionHeading
           eyebrow="Start with your occasion"
           title="For every celebration, big or small"
-          sub="Weddings and birthdays, festivals and first names, proposals and thank-yous — begin with what you're celebrating."
+          sub="Weddings and birthdays, festivals and first names, proposals and thank-yous. Begin with what you're celebrating."
           action={{ href: '/templates', label: 'All designs' }}
         />
         <ul className="phone-rail mt-10 grid grid-cols-2 gap-3 max-sm:mt-7 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5" style={{ ['--rail' as string]: '46%' }} data-reveal-group>
@@ -372,7 +372,7 @@ export default function LandingPage() {
             <p className="eyebrow">Simple, honest pricing</p>
             <h2 id="offer-heading" className="t-h2 mt-3">{OFFER.headline}</h2>
             <p className="t-lede mt-5 max-w-xl">
-              Every design shows its price up front — from <Price inr={LOWEST_PAID_PRICE} /> to <Price inr={HIGHEST_PAID_PRICE} />. Build it,
+              Every design shows its price up front, from <Price inr={LOWEST_PAID_PRICE} /> to <Price inr={HIGHEST_PAID_PRICE} />. Build it,
               preview it, and share it with family first if you like. When you&apos;re happy, pay once and it&apos;s
               yours. No plans. No bundles. No subscription.
             </p>
@@ -415,7 +415,7 @@ export default function LandingPage() {
             <ArrowRightIcon />
           </TrackedLink>
           <p className="inline-flex items-center gap-2 text-[0.88rem] text-charcoal/70">
-            <SwapIcon className="h-4 w-4 text-emerald-soft" /> Switch designs any time — your details come with you
+            <SwapIcon className="h-4 w-4 text-emerald-soft" /> Switch designs any time: your details come with you
           </p>
         </div>
       </Section>
@@ -447,7 +447,7 @@ export default function LandingPage() {
           </ul>
         </div>
         <p className="mt-10 text-center text-[0.85rem] text-muted max-sm:mt-6">
-          Features vary by design — the live preview shows exactly what each one includes.
+          Features vary by design. The live preview shows exactly what each one includes.
         </p>
       </Section>
 
@@ -459,7 +459,7 @@ export default function LandingPage() {
             <h2 id="global-heading" className="t-h2 mt-3">Celebrate with people wherever they call home</h2>
             <p className="mt-5 max-w-lg text-[1.02rem] leading-8 text-paper/75">
               Your guests don&apos;t need an app, an account or a particular phone. The invitation opens in any
-              browser, in any country — and every word on it is yours, in whichever language your family speaks.
+              browser, in any country, and every word on it is yours, in whichever language your family speaks.
             </p>
             <ul className="mt-7 space-y-2.5 text-[0.95rem] text-paper/85">
               {['Works on every phone and computer', 'Share on WhatsApp, Instagram, email or text', 'A rich preview card in every chat'].map((t) => (
@@ -494,12 +494,12 @@ export default function LandingPage() {
             <p className="eyebrow">Guest wishes</p>
             <h2 className="t-h2 mt-3">An invitation that fills up with love</h2>
             <p className="t-lede mt-5 max-w-lg">
-              On every event design, guests leave a message right on the invitation — even those who can&apos;t make
+              On every event design, guests leave a message right on the invitation, even those who can&apos;t make
               it in person. Each one appears straight away for everyone who opens the link, and you can remove any
               from your dashboard.
             </p>
             <ul className="mt-7 space-y-3 text-[0.95rem]">
-              {['Takes a guest about twenty seconds', 'No approval queue — wishes go live instantly', 'Stays on the invitation as a keepsake'].map((t) => (
+              {['Takes a guest about twenty seconds', 'No approval queue: wishes go live instantly', 'Stays on the invitation as a keepsake'].map((t) => (
                 <li key={t} className="flex items-start gap-2.5"><CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-soft" />{t}</li>
               ))}
             </ul>
@@ -549,7 +549,7 @@ export default function LandingPage() {
           <div className="phone-more-body prose-brand mt-5 text-[0.95rem]">
             <p>
               <strong>ShareInvite</strong> is an online invitation maker for creating beautiful digital
-              invitations and animated 3D greeting cards in minutes — no design skills and no app needed for your guests.
+              invitations and animated 3D greeting cards in minutes: no design skills and no app needed for your guests.
               Choose a template, add your names, date, venue and photos, and share a single link on WhatsApp that opens
               instantly in any phone browser, anywhere in the world.
             </p>
@@ -575,7 +575,7 @@ export default function LandingPage() {
               {' '}<Link prefetch={false} href="/birthday-invitation-wording">birthday invitation message</Link>.
             </p>
             <p>
-              Build and preview before you pay — one-time payment, from <Price inr={LOWEST_PAID_PRICE} />, only when you publish. See every design on the
+              Build and preview before you pay. One-time payment, from <Price inr={LOWEST_PAID_PRICE} />, only when you publish. See every design on the
               {' '}<Link prefetch={false} href="/templates">templates page</Link>, see how pricing works on
               {' '}<Link prefetch={false} href="/pricing">pricing</Link>, or read guides on the <Link prefetch={false} href="/blog">ShareInvite blog</Link>.
             </p>

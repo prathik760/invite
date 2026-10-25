@@ -1488,7 +1488,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                     ))}
                     {loveStory.length > 1 && (
                       <p className="mt-7 text-right -rotate-1" style={{ fontFamily: hand, fontSize: 'clamp(24px, 6.4cqi, 30px)', color: C.goldLight }}>
-                        — {groom} &amp; {bride}
+                        {groom} &amp; {bride}
                       </p>
                     )}
                   </Reveal>
