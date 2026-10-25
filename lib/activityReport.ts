@@ -250,6 +250,8 @@ export function describe(r: ActivityRow, isLast = false, gallery = false): Line 
       return { icon: '💬', text: 'Tapped WhatsApp support', detail: str(d.source) || undefined, tone: 'neutral' }
     case 'enquiry_submit':
       return { icon: '📨', text: 'Sent a custom design request', tone: 'good' }
+    case 'generate_lead':
+      return { icon: '🙌', text: 'Asked your team to fill in their invitation, on WhatsApp', detail: tpl || undefined, tone: 'good' }
     case 'promo_view':
       return { icon: '🎁', text: 'Saw the promo popup', tone: 'neutral' }
     case 'promo_click':
@@ -322,6 +324,7 @@ export const EXIT_GROUPS: Record<string, string> = {
   paid: 'Paid and published',
   paid_unpublished: 'Paid, did not publish',
   published: 'Published (no payment needed)',
+  done_for_you: 'Asked your team to fill it in (WhatsApp lead)',
   error: 'Hit a page error',
   payment_failed: 'Payment not confirmed',
   checkout_error: 'Payment window did not open',
@@ -348,6 +351,8 @@ export function exitReason(rows: ActivityRow[]): Exit {
   const has = (n: string) => rows.some((r) => r.name === n)
   if (has('purchase')) return has('invite_creation') ? exit('paid', undefined, 'good') : exit('paid_unpublished', 'Paid, but left before publishing', 'warn')
   if (has('invite_creation')) return exit('published', 'Published an invitation', 'good')
+  // A lead: they handed the form to your team on WhatsApp, so leaving the builder after is expected.
+  if (has('generate_lead')) return exit('done_for_you', undefined, 'good')
 
   // Trouble in the last minute is the strongest explanation for leaving.
   const end = rows.length ? rows[rows.length - 1].createdAt.getTime() : 0

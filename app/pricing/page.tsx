@@ -1,5 +1,5 @@
 import Script from 'next/script'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'

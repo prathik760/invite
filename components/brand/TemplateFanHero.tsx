@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { EyeIcon, SparklesIcon } from '@/components/ui/Icons'
 import { TEMPLATES } from '@/modules/templates/data'

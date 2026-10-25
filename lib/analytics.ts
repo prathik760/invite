@@ -82,6 +82,11 @@ export const seoEvents = {
   supportContact: 'support_contact',
   /** Custom-template enquiry form submitted successfully. */
   enquirySubmit: 'enquiry_submit',
+  /**
+   * A customer asked the team to fill in their invitation for them, on
+   * WhatsApp (components/create/DoneForYou.tsx). GA4's recommended lead event.
+   */
+  lead: 'generate_lead',
 
   // ─── Sharing ─────────────────────────────────────────────────────────────
   whatsappShare: 'whatsapp_share',
@@ -157,9 +162,10 @@ const META_EVENTS: Record<string, string> = {
   [seoEvents.purchase]: 'Purchase',
   [seoEvents.signupComplete]: 'CompleteRegistration',
   [seoEvents.supportContact]: 'Contact',
+  [seoEvents.lead]: 'Lead',
   [seoEvents.wordingCopy]: 'WordingCopy',
 }
-const META_STANDARD = new Set(['ViewContent', 'AddToCart', 'InitiateCheckout', 'Purchase', 'CompleteRegistration', 'Contact'])
+const META_STANDARD = new Set(['ViewContent', 'AddToCart', 'InitiateCheckout', 'Purchase', 'CompleteRegistration', 'Contact', 'Lead'])
 
 function trackMeta(eventName: string, params: AnalyticsParams) {
   const metaName = META_EVENTS[eventName]

@@ -176,6 +176,39 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
   if (field.columns?.length) return <div data-field={field.key}><RowsEditor field={field} initial={value} onChange={onChange} /></div>
   // A photo inside a titled group (most photos sit together in the first step instead).
   if (field.type === 'image') return <div data-field={field.key} className="flex justify-center"><SingleImageUploader label={field.label} value={value} onChange={onChange} /></div>
+  if (field.type === 'choice' && field.options?.length) {
+    const picked = field.options.some(o => o.value === value) ? value : field.options[0].value
+    return (
+      <fieldset data-field={field.key}>
+        <legend className="field-label">{field.label}</legend>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {field.options.map(o => {
+            const on = o.value === picked
+            return (
+              <label
+                key={o.value}
+                className={`flex cursor-pointer items-start gap-3 rounded-2xl border bg-white p-3.5 transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-emerald ${on ? 'border-emerald ring-1 ring-emerald' : 'border-line hover:border-charcoal/30'}`}
+              >
+                <input type="radio" name={field.key} value={o.value} checked={on} onChange={() => onChange(o.value)} className="sr-only" />
+                {o.swatch && <span aria-hidden className="h-14 w-10 shrink-0 rounded-lg shadow-sm" style={{ background: o.swatch }} />}
+                <span className="min-w-0">
+                  <span className="flex items-center gap-2 text-[0.95rem] font-semibold leading-snug text-charcoal">
+                    {o.label}
+                    {on && (
+                      <svg aria-hidden className="h-4 w-4 shrink-0 text-emerald" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </span>
+                  {o.hint && <span className="mt-1 block text-[0.8rem] leading-5 text-muted">{o.hint}</span>}
+                </span>
+              </label>
+            )
+          })}
+        </div>
+      </fieldset>
+    )
+  }
 
   return (
     <div data-field={field.key}>
@@ -838,15 +871,21 @@ export default function FormEditor({ config, data, onChange, compact = false, se
   const input = (field: TemplateField) => (
     <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
   )
-  const groupBlock = (g: ReturnType<typeof groupFields>['groups'][number]): Block => ({
-    rank: first(g.fields),
-    key: `group-${g.title}`,
-    render: (n) => (
-      <Section key={g.title} number={n} label={g.title} hint={g.hint}>
-        <div className="space-y-4">{[...g.fields].sort(byRank).map(input)}</div>
-      </Section>
-    ),
-  })
+  // A field the host's own choice makes moot (Ganesha's words, once another opening is picked) leaves the form.
+  const shown = (f: TemplateField) => !f.hideWhen || (data[f.hideWhen.key] ?? '') !== f.hideWhen.is
+  const groupBlock = (g: ReturnType<typeof groupFields>['groups'][number]): Block[] => {
+    const fields = g.fields.filter(shown)
+    if (!fields.length) return []
+    return [{
+      rank: first(fields),
+      key: `group-${g.title}`,
+      render: (n) => (
+        <Section key={g.title} number={n} label={g.title} hint={g.hint}>
+          <div className="space-y-4">{[...fields].sort(byRank).map(input)}</div>
+        </Section>
+      ),
+    }]
+  }
 
   // ── Step 2: who it is for ─────────────────────────────────────────────────
   const people: Block[] = []
@@ -889,7 +928,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       ),
     })
   }
-  people.push(...grouped.groups.filter(g => g.section === 'people').map(groupBlock))
+  people.push(...grouped.groups.filter(g => g.section === 'people').flatMap(groupBlock))
 
   // ── Step 3: when and where ────────────────────────────────────────────────
   const details: Block[] = []
@@ -946,7 +985,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       ),
     })
   }
-  details.push(...grouped.groups.filter(g => g.section === 'details').map(groupBlock))
+  details.push(...grouped.groups.filter(g => g.section === 'details').flatMap(groupBlock))
 
   // ── Step 4: photos, music and the personal touches ────────────────────────
   const enrich: Block[] = []
@@ -1026,7 +1065,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       ),
     })
   }
-  enrich.push(...grouped.groups.filter(g => g.section === 'enrich').map(groupBlock))
+  enrich.push(...grouped.groups.filter(g => g.section === 'enrich').flatMap(groupBlock))
   for (const field of grouped.greetingExtras) {
     enrich.push({
       rank: rank(field.key),

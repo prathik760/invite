@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { Section, SectionHeading } from '@/components/brand/Section'
 import { ArrowRightIcon, CheckIcon } from '@/components/ui/Icons'

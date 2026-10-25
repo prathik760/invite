@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { eventTitle } from '@/lib/inviteCardText'
+import { coupleLine, eventTitle } from '@/lib/inviteCardText'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { prisma } from '@/lib/db'
@@ -17,9 +17,9 @@ interface PageProps {
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
 
-function getEventNames(data: Record<string, string>): string | undefined {
+function getEventNames(data: Record<string, string>, templateId: string): string | undefined {
   return data.brideName && data.groomName
-    ? `${data.brideName} & ${data.groomName}`
+    ? coupleLine(data, templateId)
     : data.partner1Name && data.partner2Name
     ? `${data.partner1Name} & ${data.partner2Name}`
     : data.coupleNames || data.celebrantName || data.hostNames || undefined
@@ -99,7 +99,7 @@ export default async function EventPage({ params }: PageProps) {
   }
 
   const shareUrl = `${APP_URL}/e/${event.slug}`
-  const names = getEventNames(data)
+  const names = getEventNames(data, event.templateId)
 
   const startDate = data.date && data.time
     ? `${data.date}T${data.time}:00+05:30`

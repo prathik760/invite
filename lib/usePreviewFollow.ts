@@ -42,6 +42,8 @@ export function usePreviewFollow(
         if (y === null) {
           const f = FIELD_POSITION[templateId]?.[fieldKey]
           if (f !== undefined) y = f * box.scrollHeight
+          // How the invitation opens is shown at its very top.
+          else if (fieldKey === 'introStyle') y = 0
         }
         if (y !== null) box.scrollTo({ top: Math.max(0, y - box.clientHeight * 0.28), behavior: 'smooth' })
       }

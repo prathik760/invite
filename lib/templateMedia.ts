@@ -52,6 +52,26 @@ export function templateImage(templateId: string): string {
   return TEMPLATE_IMAGES[templateId] ?? TEMPLATE_IMAGES['elegant-wedding']
 }
 
+/** Widths of the ready-made copies in public/templates/sized (scripts/template-sizes.mjs). */
+const SIZED_WIDTHS = [128, 384, 640, 960]
+const IDS = new Set<string>(TEMPLATE_IDS)
+
+/**
+ * The ready-made copy of a design picture for a next/image width: the
+ * narrowest at least that wide, or the widest. Null for any other image.
+ *
+ * Design pictures skip Vercel's image optimiser. In October 2026 the Hobby
+ * plan's monthly allowance ran out, and every picture it had not already
+ * made came back "402 Payment required": a blank card. components/ui/Image
+ * uses this for every design picture on the site.
+ */
+export function sizedTemplateImage(src: string, width: number): string | null {
+  const m = /^\/templates\/([a-z0-9-]+)\.jpg(\?v=\d+)?$/.exec(src)
+  if (!m || !IDS.has(m[1])) return null
+  const w = SIZED_WIDTHS.find((s) => s >= width) ?? SIZED_WIDTHS[SIZED_WIDTHS.length - 1]
+  return `/templates/sized/${m[1]}-${w}.webp${m[2] ?? ''}`
+}
+
 /** Absolute, crawlable URL — required by Product/Offer structured data and OG tags. */
 export function templateImageUrl(templateId: string): string {
   const src = templateImage(templateId)

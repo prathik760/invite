@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import { LogoMark } from '@/components/brand/Logo'
 import { CheckIcon, HeartIcon, MapPinIcon } from '@/components/ui/Icons'
 import { templateImage } from '@/lib/templateMedia'

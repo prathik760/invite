@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { Price } from '@/components/price/Price'

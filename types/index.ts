@@ -5,11 +5,26 @@ export interface TemplateFieldColumn {
   placeholder?: string
 }
 
+/** One choice of a 'choice' field. The first one is what an empty value means. */
+export interface TemplateFieldOption {
+  value: string
+  label: string
+  hint?: string
+  /** A CSS background for the little colour chip beside it. */
+  swatch?: string
+}
+
 export interface TemplateField {
   key: string
   label: string
-  /** 'gallery' is a second set of uploaded photos (one URL per line), beside the design's `galleryImages`. */
-  type: 'text' | 'date' | 'time' | 'url' | 'textarea' | 'image' | 'video' | 'gallery'
+  /**
+   * 'gallery' is a second set of uploaded photos (one URL per line), beside the design's `galleryImages`.
+   * 'choice' is one of `options`, picked from cards.
+   */
+  type: 'text' | 'date' | 'time' | 'url' | 'textarea' | 'image' | 'video' | 'gallery' | 'choice'
+  options?: TemplateFieldOption[]
+  /** Left out of the form while the field `key` holds `is` (a choice that makes this one moot). */
+  hideWhen?: { key: string; is: string }
   required?: boolean
   placeholder?: string
   /**

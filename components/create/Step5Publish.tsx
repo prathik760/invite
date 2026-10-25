@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import type { Session } from 'next-auth'
 import type { TemplateData } from '@/modules/templates/data'

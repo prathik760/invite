@@ -11,7 +11,7 @@ import { blogDrafts, categorySlug, findBlogPost, type BlogCategory } from '@/con
 import { absoluteUrl, breadcrumbJsonLd, DEFAULT_OG_IMAGE, SITE_NAME, slugify, templateSeoSlug } from '@/lib/seo'
 import { TEMPLATES } from '@/modules/templates/data'
 import { blogArticles, hasFullArticle } from '@/content/blog-articles'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import PreviewButton from '@/components/catalog/PreviewButton'
 import FAQAccordion from '@/components/landing/FAQAccordion'
 import WordingCopyCard from '@/components/wording/WordingCopyCard'

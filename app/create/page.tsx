@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
@@ -15,6 +15,8 @@ import PaymentProblem, { type PayError } from '@/components/create/PaymentProble
 import { supportWhatsAppUrl } from '@/lib/support'
 import { carryOverDetails } from '@/lib/carryOver'
 import { usePreviewFollow } from '@/lib/usePreviewFollow'
+import { coupleLine } from '@/lib/inviteCardText'
+import { DoneForYouChoice, DoneForYouStrip, type DoneForYouDesign } from '@/components/create/DoneForYou'
 
 import StepProgress from '@/components/create/StepProgress'
 import Step1Templates from '@/components/create/Step1Templates'
@@ -654,6 +656,24 @@ export default function CreatePage() {
   const selectedPrice = selectedCoupon ? discountedPrice(listPrice, selectedCoupon.percentOff) : listPrice
   const needsPayment = !canAccess(selectedId, userPlan)
 
+  // "Our team fills it in for you" (components/create/DoneForYou): offered once per design per visit,
+  // when the builder opens on a design with nothing typed yet.
+  const [teamOffer, setTeamOffer] = useState(false)
+  useEffect(() => {
+    if (currentStep !== 2 || !draftLoaded) return
+    if (Object.values(data).some((v) => typeof v === 'string' && v.trim())) return
+    const key = `si-team-offer-${selectedId}`
+    try {
+      if (sessionStorage.getItem(key)) return
+      sessionStorage.setItem(key, '1')
+    } catch { /* private mode: offer it anyway */ }
+    const t = window.setTimeout(() => setTeamOffer(true), 350)
+    return () => window.clearTimeout(t)
+    // Offered on arriving at a design, not again as the form changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStep, selectedId, draftLoaded])
+  useBackToClose(teamOffer, () => setTeamOffer(false))
+
   const openPaywall = () => {
     setPayError(null)
     setUpgradeTarget({ templateId: selectedId, templateName: selectedTemplate.name })
@@ -806,12 +826,20 @@ export default function CreatePage() {
   const shareUrl = createdSlug ? `${appUrl}/e/${createdSlug}` : ''
   const d = data
   const names =
-    d.brideName && d.groomName ? `${d.brideName} & ${d.groomName}` :
+    d.brideName && d.groomName ? coupleLine(d, selectedId) :
       d.partner1Name && d.partner2Name ? `${d.partner1Name} & ${d.partner2Name}` :
         d.coupleNames || d.celebrantName || d.hostNames || d.babyName || undefined
 
   const isDark = DARK_TEMPLATES.has(selectedId)
   const tv = TEMPLATE_VISUALS[selectedId] ?? TEMPLATE_VISUALS['elegant-wedding']
+  const teamDesign: DoneForYouDesign = {
+    id: selectedId,
+    name: selectedTemplate.name.split('—')[0].trim(),
+    image: tv.image,
+    priceLabel: needsPayment ? selectedPrice.label : 'already bought',
+    price: requiredPlanForSelected.price,
+    names,
+  }
   const upgradeRequiredPlan = upgradeTarget ? getRequiredPlan(upgradeTarget.templateId) : null
 
   const isSplitStep = currentStep === 2 || currentStep === 3 || currentStep === 4
@@ -924,6 +952,8 @@ export default function CreatePage() {
                 <MobilePreviewStrip templateId={selectedId} data={previewData} isDark={isDark} color={tv.color} compact screenRef={stripScreenRef} />
               )}
             </div>
+
+            <DoneForYouStrip design={teamDesign} />
 
             {/* Step content */}
             {currentStep === 2 && (
@@ -1252,6 +1282,14 @@ export default function CreatePage() {
               Undo
             </button>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {teamOffer && (
+          <ModalFrame onClose={() => setTeamOffer(false)} label="How would you like to make your invitation?">
+            <DoneForYouChoice design={teamDesign} onSelf={() => setTeamOffer(false)} onTeam={() => setTeamOffer(false)} />
+          </ModalFrame>
         )}
       </AnimatePresence>
 

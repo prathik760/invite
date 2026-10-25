@@ -12,6 +12,16 @@ function ordinal(n: number): string {
   return `${n}${({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th'}`
 }
 
+/** Designs that name the groom first, then the bride (Two Worlds, at its first couple's request). */
+const GROOM_FIRST = new Set(['signature-two-worlds'])
+
+/** The couple's names, "Bride & Groom", or "Groom & Bride" for a design that puts him first. */
+export function coupleLine(d: Record<string, string>, templateId?: string): string {
+  const bride = (d.brideName || '').trim()
+  const groom = (d.groomName || '').trim()
+  return templateId && GROOM_FIRST.has(templateId) ? `${groom} & ${bride}` : `${bride} & ${groom}`
+}
+
 export interface Card {
   label: string
   names: [string] | [string, string]
@@ -36,7 +46,7 @@ export function cardFor(templateId: string, d: Record<string, string>): Card {
       : templateId === 'signature-nikah' ? 'Nikah'
       : templateId === 'save-the-date' ? 'Save the date'
       : 'Wedding invitation'
-    return { label, names: [t(d.brideName), t(d.groomName)] }
+    return { label, names: GROOM_FIRST.has(templateId) ? [t(d.groomName), t(d.brideName)] : [t(d.brideName), t(d.groomName)] }
   }
   if (t(d.motherName)) return { label: 'Baby shower', names: [t(d.motherName)], sub: t(d.hostNames) ? `hosted by ${t(d.hostNames)}` : undefined }
   if (t(d.honoreeName)) return { label: 'Retirement celebration', names: [t(d.honoreeName)], sub: t(d.milestone) || undefined }
@@ -67,7 +77,7 @@ export function eventTitle(data: Record<string, string>, templateId?: string): s
   if (templateId === 'save-the-date' && data.brideName && data.groomName) return `${data.brideName} & ${data.groomName} — Save the Date`
   if (data.headline && data.recipientName) return `${data.headline} — for ${data.recipientName}`
   if (data.recipientName) return `${data.occasion || 'A Surprise'} for ${data.recipientName} 🎁`
-  if (data.brideName && data.groomName) return `${data.brideName} & ${data.groomName} — Wedding Invitation`
+  if (data.brideName && data.groomName) return `${coupleLine(data, templateId)} — Wedding Invitation`
   if (data.partner1Name && data.partner2Name) return `${data.partner1Name} & ${data.partner2Name} — Engagement Invitation`
   if (data.celebrantName) {
     const age = Number((data.age || '').match(/^\s*(\d{1,3})/)?.[1])

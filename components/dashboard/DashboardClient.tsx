@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import Link from 'next/link'
 import { signOut } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -9,6 +9,7 @@ import { getAppUrl, formatRelativeDate } from '@/lib/utils'
 import { templateImage } from '@/lib/templateMedia'
 import Logo from '@/components/brand/Logo'
 import { deletionDate, isEnded as isExpired, DELETE_AFTER_DAYS } from '@/lib/retention'
+import { coupleLine } from '@/lib/inviteCardText'
 import { ArrowRightIcon, CheckIcon, EyeIcon, HeartIcon } from '@/components/ui/Icons'
 
 const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number]
@@ -83,8 +84,8 @@ function CopyButton({ text }: { text: string }) {
   )
 }
 
-function getEventTitle(data: Record<string, string>): string {
-  if (data.brideName && data.groomName) return `${data.brideName} & ${data.groomName}`
+function getEventTitle(data: Record<string, string>, templateId: string): string {
+  if (data.brideName && data.groomName) return coupleLine(data, templateId)
   if (data.partner1Name && data.partner2Name) return `${data.partner1Name} & ${data.partner2Name}`
   if (data.celebrantName) return data.age ? `${data.celebrantName} — ${data.age}th Birthday` : `${data.celebrantName}'s Birthday`
   if (data.hostNames) return data.hostNames
@@ -363,7 +364,7 @@ export default function DashboardClient({ user }: Props) {
             <div className="space-y-5" data-clarity-mask="true">
               {events.map((event, idx) => {
                 const d = event.data
-                const title = getEventTitle(d)
+                const title = getEventTitle(d, event.templateId)
                 const eventUrl = `${baseUrl}/e/${event.slug}`
                 const waUrl = `https://wa.me/?text=${encodeURIComponent(`You're invited ❤️\n\n${title}\n\n${eventUrl}`)}`
                 // No pending/approved split any more — every wish is live. The

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import { GLOBAL_TEMPLATE_IDS, getLocale } from '@/lib/i18n'
 import { t } from '@/content/translations'
 import { templateSeoSlug } from '@/lib/seo'

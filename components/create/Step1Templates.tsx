@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import Image from '@/components/ui/Image'
 import dynamic from 'next/dynamic'
 import { TEMPLATES } from '@/modules/templates/data'
 import { getRequiredPlan } from '@/lib/plans'

@@ -52,6 +52,7 @@ import {
 import { GaneshaArt } from './twoworlds/ganesha'
 import { PalaceScene } from './twoworlds/palace'
 import { KnotStage } from './twoworlds/knot'
+import { DiamondRule, HORIZON_AT, HORIZON_TIMES, HorizonArch, HorizonSky, Rings, RINGS_AT, splitPlace, useBoxSize } from './twoworlds/horizon'
 
 /*
  * Two Worlds — a wedding told as the couple's love story, in both their colours.
@@ -62,10 +63,14 @@ import { KnotStage } from './twoworlds/knot'
  * Petrykivka painting on black, kalyna berries, sunflowers and the ribbons of
  * a vinok. They hang side by side from the first screen to the last.
  *
- * It plays like a short film. It opens, as a Hindu wedding does, with Lord
- * Ganesha: sun rays turn behind an ivory medallion where he is painted stroke
- * by stroke, a mala drops round it, the diyas light and the Vakratunda shloka
- * comes in line by line. Then their names come up over their photo or video, the night
+ * It plays like a short film, and the couple choose how it opens. As a Hindu
+ * wedding does, with Lord Ganesha: sun rays turn behind an ivory medallion
+ * where he is painted stroke by stroke, a mala drops round it, the diyas light
+ * and the Vakratunda shloka comes in line by line. Or, for guests from every
+ * country, at dusk over the curve of the Earth: his city and hers light up on
+ * the horizon and their lines of gold meet in an arch where two rings draw
+ * themselves (twoworlds/horizon). The groom is named first throughout, then
+ * the bride. Then their names come up over their photo or video, the night
  * sky joins their three cities, a candlelit table in the city where they met,
  * their years pegged on a line like prints left to dry, their own film on a
  * little cinema screen, the two worlds side by side with a varmala and a vinok
@@ -464,6 +469,27 @@ function Lamp({ at }: { at: number }) {
   )
 }
 
+/** The first screen's button, in either opening: a gilt pill with a light running across it. */
+function OpenButton({ onClick, disabled, label, delay, icon }: { onClick: () => void; disabled: boolean; label: string; delay: number; icon: ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      className="tw-i tw-open pointer-events-auto relative mb-1 inline-flex items-center gap-2.5 overflow-hidden rounded-full px-6 py-3 text-[16px] font-medium"
+      style={{ ['--d' as string]: `${delay}ms`, background: 'linear-gradient(180deg, #FFEBB0 0%, #F6C75E 48%, #E3A33C 100%)', color: '#3A1604', boxShadow: '0 12px 28px -12px rgba(30,0,10,0.8), inset 0 1px 0 rgba(255,255,255,0.75), inset 0 -2px 0 rgba(150,90,10,0.35)' }}
+    >
+      {icon}
+      Open the invitation
+      <span aria-hidden className="tw-shine absolute inset-y-0 w-1/3" />
+    </button>
+  )
+}
+
+/** The width of the rings on the international first screen. */
+const INTL_RINGS = 'min(clamp(78px, 24cqw, 140px), 15cqh)'
+
 /** A small flag beside a home city, for the two countries this design was first written for. */
 function HomeFlag({ place }: { place: string }) {
   const ua = /ukrain|україн/i.test(place)
@@ -600,8 +626,10 @@ function Cinema({ src, poster, title, isPreview }: { src: string; poster: string
 
 /* ─── The flip countdown ────────────────────────────────────────────────────── */
 
-function Countdown({ date, time, enabled }: { date?: string; time?: string; enabled: boolean }) {
-  const cd = useCountdown(date, time, enabled)
+// Ticks in the builder preview too, so the host sees it working: only these four
+// boxes redraw each second, not the design around them.
+function Countdown({ date, time }: { date?: string; time?: string }) {
+  const cd = useCountdown(date, time)
   const parts: [string, string][] = cd
     ? [[String(cd.days), cd.days === 1 ? 'day' : 'days'], [pad2(cd.hours), 'hours'], [pad2(cd.minutes), 'minutes'], [pad2(cd.seconds), 'seconds']]
     : [['–', 'days'], ['–', 'hours'], ['–', 'minutes'], ['–', 'seconds']]
@@ -615,7 +643,7 @@ function Countdown({ date, time, enabled }: { date?: string; time?: string; enab
             <span aria-hidden className="absolute left-0 top-1/2 h-2 w-1 -translate-y-1/2 rounded-r-full" style={{ background: C.ivory }} />
             <span aria-hidden className="absolute right-0 top-1/2 h-2 w-1 -translate-y-1/2 rounded-l-full" style={{ background: C.ivory }} />
           </div>
-          <p className="mt-2.5 uppercase" style={{ fontSize: 11, letterSpacing: '0.2em', color: [C.saffron, C.rani, C.peacock, C.leaf][i] }}>{label}</p>
+          <p className="mt-2.5 uppercase" style={{ fontSize: 'clamp(9.5px, 2.9cqi, 11px)', letterSpacing: 'clamp(0.1em, 0.5cqi, 0.2em)', color: [C.saffron, C.rani, C.peacock, C.leaf][i] }}>{label}</p>
         </div>
       ))}
     </div>
@@ -664,7 +692,8 @@ function Record({ playing, label, onToggle, title, hint, isPreview }: { playing:
 export default function SignatureTwoWorlds({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Olena'
   const groom = data.groomName?.trim() || 'Aarav'
-  const couple = `${bride} & ${groom}`
+  // The groom is named first everywhere, then the bride; his family before hers.
+  const couple = `${groom} & ${bride}`
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const venue = data.venue?.trim() || ''
@@ -710,16 +739,19 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
   const traditions = useMemo(() => parseRows(data.traditions, ['theme', 'hindu', 'hinduText', 'ukrainian', 'ukrainianText'] as const), [data.traditions])
   const albumLine = data.albumLine?.trim() || ''
 
-  // The first screen is Lord Ganesha's blessing. The couple may write their own words, or "none" to open without it.
+  // The first screen is Lord Ganesha's blessing, or the international opening if the couple choose it.
+  // With the blessing they may write their own words, or "none" to open without it.
+  const intl = data.introStyle === 'international'
   const invocationText = data.invocation?.trim() || ''
-  const blessed = !/^(none|no|off|-)$/i.test(invocationText)
+  const blessed = !intl && !/^(none|no|off|-)$/i.test(invocationText)
   const ownShloka = useMemo(() => parseLines(data.shloka), [data.shloka])
   const invocation = blessed ? invocationText || INVOCATION : ''
   const shloka = blessed ? (ownShloka.length ? ownShloka : SHLOKA) : []
   const meaning = blessed ? data.shlokaMeaning?.trim() || (ownShloka.length ? '' : SHLOKA_MEANING) : ''
   const ownPicture = media(data.deityPhoto)
   const half = Math.ceil(shloka.length / 2)
-  const after = VERSE_AT + shloka.length * VERSE_STEP
+  // When the opening has been read and the button arrives.
+  const after = intl ? HORIZON_TIMES.words + 1300 : VERSE_AT + shloka.length * VERSE_STEP
 
   // "Four years of us": from the year they met to the year they marry.
   const since = Number(data.togetherSince?.match(/\d{4}/)?.[0] ?? 0)
@@ -753,11 +785,11 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
     return out
   }, [photos, moments])
 
-  /* Their constellation: her home to the north-west, the city that introduced them, his home to the south-east. */
+  /* Their constellation: his home to the north-west, the city that introduced them, her home to the south-east. */
   const stars = [
-    homes.bride ? { x: 64, y: 56, city: homes.bride, who: `${bride}’s home`, tone: '#FF7A86', align: 'left' } : null,
+    homes.groom ? { x: 64, y: 56, city: homes.groom, who: `${groom}’s home`, tone: C.marigold, align: 'left' } : null,
     metCity ? { x: 214, y: 140, city: metCity, who: 'where we met', tone: C.goldLight, align: 'center', main: true } : null,
-    homes.groom ? { x: 340, y: 222, city: homes.groom, who: `${groom}’s home`, tone: C.marigold, align: 'right' } : null,
+    homes.bride ? { x: 340, y: 222, city: homes.bride, who: `${bride}’s home`, tone: '#FF7A86', align: 'right' } : null,
   ].filter(Boolean) as Star[]
 
   const hasStars = loveStory.length > 0 || stars.length > 1
@@ -810,9 +842,18 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
       setReady(true)
       return
     }
+    setReady(false)
     const t = window.setTimeout(() => setReady(true), after + 600)
     return () => window.clearTimeout(t)
   }, [after])
+  // In the builder, picking the other opening shows it from the start.
+  const shownIntro = useRef(intl)
+  useEffect(() => {
+    if (!isPreview || shownIntro.current === intl) return
+    shownIntro.current = intl
+    timers.current.forEach((t) => window.clearTimeout(t))
+    setPhase('closed')
+  }, [intl, isPreview])
   // Everything below the names is built once the guest taps, as a low-priority render while the light
   // blooms (it plays on the compositor), so the page never freezes at the moment it opens.
   const [rest, setRest] = useState(false)
@@ -872,6 +913,10 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
     return () => io.disconnect()
   }, [rest])
 
+  // The international opening's arch is drawn to the first screen's own size.
+  const heroRef = useRef<HTMLElement | null>(null)
+  const heroBox = useBoxSize(heroRef)
+
   const lb = useLightbox(photos.length)
   const alb = useLightbox(album.length)
   const heroH = isPreview ? 'clamp(620px, 205cqi, 900px)' : '100svh'
@@ -907,6 +952,17 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
         .tw .tw-intro.is-opening .tw-i-toran { animation: tw-up 1s cubic-bezier(.5,0,.2,1) .1s forwards; }
         .tw .tw-intro.is-opening .tw-bell { animation: tw-ring .7s ease-in-out; }
         .tw .tw-bell { transform-origin: 50% 8%; }
+        .tw .tw-comet { stroke-dasharray: .07 2; stroke-dashoffset: .07; animation: tw-comet var(--dur, 2000ms) cubic-bezier(.45,.05,.35,1) var(--d, 0ms) both, tw-comet-fade var(--dur, 2000ms) linear var(--d, 0ms) both; }
+        .tw .tw-dot { transform-box: fill-box; transform-origin: center; animation: tw-dot .8s cubic-bezier(.3,1.6,.5,1) var(--d, 0ms) both; }
+        .tw .tw-shoot { transform-origin: 100% 50%; opacity: 0; animation: tw-shoot 9s ease-in 2.4s infinite; }
+        .tw .tw-ring-glow { translate: -50% -50%; animation: tw-i-fade 1.4s ease var(--d, 0ms) both, tw-breath 3.8s ease-in-out calc(var(--d, 0ms) + 1.4s) infinite alternate; }
+        .tw .tw-intl-words { justify-content: center; }
+        .tw .tw-intl-names { font-size: var(--nm-stack); }
+        .tw .tw-intl-foot { padding-top: clamp(16px, 5cqh, 48px); }
+        @container (orientation: portrait) and (max-width: 640px) { .tw .tw-intl-words { justify-content: flex-end; } }
+        @container (min-width: 760px) { .tw .tw-intl-names { font-size: var(--nm-line); } }
+        @container (max-width: 640px) { .tw .tw-intl-foot { padding-top: clamp(58px, 11cqh, 78px); } }
+        .tw .tw-intl.is-opening .tw-cover-front { transform: scale(1.03) translateY(-2%); }
         .tw .tw-medal { animation: tw-float 6s ease-in-out infinite; }
         .tw .tw-hint { animation: tw-breathe 2.6s ease-in-out infinite; }
         .tw .tw-kb { animation: tw-kb 28s ease-in-out infinite alternate; transform-origin: 50% 35%; }
@@ -1020,6 +1076,10 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
         @keyframes tw-burst { 0% { transform: translate(0, 0) scale(.3) rotate(0deg); opacity: 0; } 12% { opacity: 1; } 100% { transform: translate(var(--bx), var(--by)) scale(1) rotate(var(--br)); opacity: 0; } }
         @keyframes tw-ink { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
         @keyframes tw-ring { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(18deg); } 45% { transform: rotate(-14deg); } 70% { transform: rotate(8deg); } }
+        @keyframes tw-comet { from { stroke-dashoffset: .07; } to { stroke-dashoffset: -.93; } }
+        @keyframes tw-comet-fade { 0% { opacity: 0; } 6%, 86% { opacity: 1; } 100% { opacity: 0; } }
+        @keyframes tw-dot { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: none; } }
+        @keyframes tw-shoot { 0% { opacity: 0; transform: rotate(22deg) translateX(0) scaleX(.3); } 1.5% { opacity: 1; } 8% { opacity: 0; transform: rotate(22deg) translateX(min(62cqw, 520px)) scaleX(1); } 100% { opacity: 0; transform: rotate(22deg) translateX(min(62cqw, 520px)) scaleX(1); } }
         @media (prefers-reduced-motion: reduce) {
           .tw .tw-sway, .tw .tw-hang, .tw .tw-kb, .tw .tw-marquee, .tw .tw-medal, .tw .tw-hint, .tw .tw-halo, .tw .tw-flame, .tw .tw-glow, .tw .tw-twinkle, .tw .tw-ribbon, .tw .tw-bulb, .tw .tw-flip, .tw .tw-vinyl { animation: none; }
           .tw .tw-petals { display: none; }
@@ -1032,6 +1092,8 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
           .tw .tw-burst { display: none; }
           .tw .tw-i, .tw .tw-ink-fade, .tw .tw-i-toran, .tw .tw-i-frame, .tw .tw-rays, .tw .tw-i-glow, .tw .tw-gold, .tw .tw-mala, .tw .tw-lamp .tw-flame, .tw .tw-lamp .tw-glow { animation: none; }
           .tw .tw-sheen, .tw .tw-open .tw-shine { display: none; }
+          .tw .tw-comet, .tw .tw-shoot { display: none; }
+          .tw .tw-dot, .tw .tw-ring-glow { animation: none; }
         }
       ` }} />
       <FolkDefs />
@@ -1044,7 +1106,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
       )}
 
       {/* ── The opening: their names over their photo or video ─────────────── */}
-      <section id="tw-top" className="relative overflow-hidden" style={{ minHeight: heroH, background: C.night }}>
+      <section ref={heroRef} id="tw-top" className="relative overflow-hidden" style={{ minHeight: heroH, background: C.night }}>
         {/* Their names sit at the top, so the photo is shown from its top edge: the couple stand in the lower half.
             On a phone it runs a little past the foot of the screen, which lowers them further. */}
         <div aria-hidden className="absolute inset-0 overflow-hidden">
@@ -1077,6 +1139,14 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
               <p lang="hi" className="mt-1.5" style={{ fontFamily: deva, fontSize: 'clamp(17px, 4.6cqi, 21px)', color: C.goldLight, textShadow: '0 1px 12px rgba(10,6,18,0.9)' }}>॥ शुभ विवाह ॥</p>
             </div>
           )}
+          {/* With the international opening, its two rings head the names instead. */}
+          {intl && (
+            <div className="tw-rise mb-5 flex items-center gap-3" style={{ ['--d' as string]: '0ms' }}>
+              <span aria-hidden className="h-px w-[clamp(28px,9cqi,56px)]" style={{ background: 'linear-gradient(90deg, rgba(244,216,142,0), rgba(244,216,142,0.9))' }} />
+              <Rings className="w-[clamp(66px,17cqi,104px)]" style={{ filter: 'drop-shadow(0 3px 12px rgba(10,6,18,0.8))' }} />
+              <span aria-hidden className="h-px w-[clamp(28px,9cqi,56px)]" style={{ background: 'linear-gradient(90deg, rgba(244,216,142,0.9), rgba(244,216,142,0))' }} />
+            </div>
+          )}
           {greetings.length > 0 && (
             <p className="tw-rise mb-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1" style={{ ['--d' as string]: '150ms' }}>
               {greetings.map((g, i) => (
@@ -1088,9 +1158,9 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
             </p>
           )}
           <h1 className="tw-rise tw-names" style={{ ['--d' as string]: '350ms', fontFamily: display, fontSize: nameSize, lineHeight: 0.98, color: C.cream, textShadow: '0 4px 36px rgba(10,6,18,0.55)' }}>
-            <span>{bride}</span>
-            <span className="px-[0.18em]" style={{ fontFamily: script, fontSize: '0.78em', lineHeight: 1, color: C.goldLight }}>&amp;</span>
             <span>{groom}</span>
+            <span className="px-[0.18em]" style={{ fontFamily: script, fontSize: '0.78em', lineHeight: 1, color: C.goldLight }}>&amp;</span>
+            <span>{bride}</span>
           </h1>
           {tagline && (
             <p className="tw-rise mt-5 max-w-[30rem] text-balance italic" style={{ ['--d' as string]: '550ms', fontSize: 'clamp(19px, 5.2cqi, 25px)', lineHeight: 1.45, color: 'rgba(255,249,238,0.95)', textShadow: '0 1px 14px rgba(10,6,18,0.9)' }}>
@@ -1113,7 +1183,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
         </div>
 
         {/* ── The first screen: Lord Ganesha's blessing, before anything else ── */}
-        {phase !== 'open' && (
+        {phase !== 'open' && !intl && (
           <div className={`tw-intro absolute inset-0 z-30 overflow-hidden ${phase === 'opening' ? 'is-opening' : ''}`}>
             <div aria-hidden className="absolute inset-0" style={{ background: `radial-gradient(ellipse 80% 62% at 50% 44%, #FFC75A 0%, #F68A22 14%, #E2452F 30%, ${C.rani} 44%, #73103F 66%, #2C0A27 86%, ${C.night} 100%)` }} />
             <Petals count={12} />
@@ -1156,9 +1226,9 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                         <div className="tw-medal relative">
                           <WreathMedallion className="relative block w-full" />
                           <span aria-hidden className="absolute left-1/2 top-[42.4%] flex -translate-x-1/2 -translate-y-1/2 items-baseline gap-1" style={{ fontFamily: display, fontSize: 'clamp(28px, 8cqi, 42px)', color: C.cream }}>
-                            {initial(bride)}
-                            <span style={{ fontFamily: script, fontSize: '0.9em', color: C.goldLight }}>&amp;</span>
                             {initial(groom)}
+                            <span style={{ fontFamily: script, fontSize: '0.9em', color: C.goldLight }}>&amp;</span>
+                            {initial(bride)}
                           </span>
                         </div>
                       )}
@@ -1186,23 +1256,20 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
 
               <div className="mt-[2svh] flex items-end gap-3.5">
                 <Lamp at={1200} />
-                <button
-                  type="button"
+                <OpenButton
                   onClick={open}
                   disabled={phase !== 'closed'}
-                  aria-label={`Open ${couple}'s wedding invitation`}
-                  className="tw-i tw-open pointer-events-auto relative mb-1 inline-flex items-center gap-2.5 overflow-hidden rounded-full px-6 py-3 text-[16px] font-medium"
-                  style={{ ['--d' as string]: `${after + 300}ms`, background: 'linear-gradient(180deg, #FFEBB0 0%, #F6C75E 48%, #E3A33C 100%)', color: '#3A1604', boxShadow: '0 12px 28px -12px rgba(30,0,10,0.8), inset 0 1px 0 rgba(255,255,255,0.75), inset 0 -2px 0 rgba(150,90,10,0.35)' }}
-                >
-                  <svg aria-hidden viewBox="0 0 24 24" className="tw-bell h-[18px] w-[18px]">
-                    <path d="M12 2.5V5" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" />
-                    <path d="M6.2 17.2C6.2 11 8.4 6.4 12 6.4S17.8 11 17.8 17.2Z" fill="currentColor" />
-                    <path d="M4.6 17.4H19.4" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" />
-                    <circle cx={12} cy={20.2} r={1.6} fill="currentColor" />
-                  </svg>
-                  Open the invitation
-                  <span aria-hidden className="tw-shine absolute inset-y-0 w-1/3" />
-                </button>
+                  label={`Open ${couple}'s wedding invitation`}
+                  delay={after + 300}
+                  icon={
+                    <svg aria-hidden viewBox="0 0 24 24" className="tw-bell h-[18px] w-[18px]">
+                      <path d="M12 2.5V5" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" />
+                      <path d="M6.2 17.2C6.2 11 8.4 6.4 12 6.4S17.8 11 17.8 17.2Z" fill="currentColor" />
+                      <path d="M4.6 17.4H19.4" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" />
+                      <circle cx={12} cy={20.2} r={1.6} fill="currentColor" />
+                    </svg>
+                  }
+                />
                 <Lamp at={1450} />
               </div>
               <p className="tw-i mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-0.5 uppercase" style={{ ['--d' as string]: `${after + 500}ms`, fontSize: 11.5, letterSpacing: '0.22em', color: 'rgba(255,241,214,0.78)' }}>
@@ -1213,6 +1280,91 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
               </p>
             </div>
             <div aria-hidden className="tw-i-bloom pointer-events-none absolute left-1/2 top-[44%] z-[4] aspect-square w-[34cqi] rounded-full" />
+          </div>
+        )}
+
+        {/* ── Or the international first screen: dusk over the Earth, their two cities, an arch of gold ── */}
+        {phase !== 'open' && intl && (
+          <div className={`tw-intro tw-intl absolute inset-0 z-30 overflow-hidden ${phase === 'opening' ? 'is-opening' : ''}`} style={{ containerType: 'size' }}>
+            <HorizonSky />
+            {heroBox && <HorizonArch w={heroBox.w} h={heroBox.h} his={splitPlace(homes.groom)} hers={splitPlace(homes.bride)} draw />}
+
+            {phase === 'closed' && ready && <button type="button" tabIndex={-1} aria-hidden onClick={open} className="absolute inset-0 z-[1] cursor-pointer" />}
+
+            <div className="tw-cover-front pointer-events-none absolute inset-0 z-[2]">
+              {guest && (
+                <p className="tw-i absolute inset-x-0 text-center" style={{ ['--d' as string]: '300ms', top: 'max(14px, 3.4cqh)', fontFamily: hand, fontSize: 'clamp(20px, min(5.6cqw, 3.4cqh), 28px)', lineHeight: 1.15, color: C.goldLight }}>
+                  For {guest},
+                </p>
+              )}
+              {/* The rings, where the two lines meet. */}
+              <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ top: `${RINGS_AT * 100}%`, width: INTL_RINGS }}>
+                <span aria-hidden className="tw-ring-glow absolute left-1/2 top-1/2 aspect-square w-[230%] rounded-full" style={{ ['--d' as string]: `${HORIZON_TIMES.rings + 400}ms`, background: 'radial-gradient(closest-side, rgba(255,236,190,0.55), rgba(255,200,140,0.18) 55%, rgba(255,200,140,0) 100%)' }} />
+                <Rings draw start={HORIZON_TIMES.rings} className="relative block w-full" style={{ filter: 'drop-shadow(0 2px 10px rgba(20,10,40,0.55))' }} />
+              </div>
+
+              {/* Their names inside the arch. */}
+              <div
+                className="tw-intl-words absolute inset-x-0 flex flex-col items-center text-center"
+                style={{ top: `calc(${RINGS_AT * 100}% + ${INTL_RINGS} * 0.36 + 10px)`, bottom: `calc(${(1 - HORIZON_AT) * 100}% + 16px)`, paddingInline: 'calc(50cqw - min(40cqw, 78cqh) + 16px)' }}
+              >
+                <p className="tw-i uppercase" style={{ ['--d' as string]: `${HORIZON_TIMES.words}ms`, fontSize: 'clamp(10px, min(2.8cqw, 1.6cqh), 13px)', letterSpacing: 'clamp(0.16em, 0.6cqw, 0.32em)', color: '#F3D7A0', textShadow: '0 1px 10px rgba(8,6,30,0.8)' }}>
+                  Together with their families
+                </p>
+                <h2
+                  className="tw-i tw-names tw-intl-names mt-[1.4cqh]"
+                  style={{
+                    ['--d' as string]: `${HORIZON_TIMES.words + 250}ms`,
+                    // Fitted inside the arch (its width less a margin, at about 0.62em a letter): to the longer
+                    // name when they stand one above the other, to both together when they share a line.
+                    ['--nm-stack' as string]: `max(30px, min(14.5cqw, 112px, 10cqh, calc((min(80cqw, 156cqh) - 40px) / ${q(0.62 * longest)})))`,
+                    ['--nm-line' as string]: `max(30px, min(112px, 10cqh, calc((min(80cqw, 156cqh) - 40px) / ${q(0.62 * (Array.from(groom).length + Array.from(bride).length + 2))})))`,
+                    fontFamily: display,
+                    lineHeight: 1.02,
+                    color: C.cream,
+                    textShadow: '0 2px 26px rgba(10,6,30,0.65)',
+                  }}
+                >
+                  <span>{groom}</span>
+                  <span className="tw-gold px-[0.16em]" style={{ fontFamily: script, fontSize: '0.8em', lineHeight: 1.05 }}>&amp;</span>
+                  <span>{bride}</span>
+                </h2>
+                <p className="tw-i mt-[1.6cqh] max-w-[26rem] text-balance italic" style={{ ['--d' as string]: `${HORIZON_TIMES.words + 600}ms`, fontSize: 'clamp(15px, min(4.5cqw, 2.5cqh), 22px)', lineHeight: 1.4, color: 'rgba(255,241,226,0.92)', textShadow: '0 1px 12px rgba(8,6,30,0.8)' }}>
+                  invite you to celebrate their marriage
+                </p>
+                {(date || venue) && <DiamondRule className="tw-i mt-[1.8cqh]" style={{ ['--d' as string]: `${HORIZON_TIMES.words + 800}ms` }} />}
+                {date && (
+                  <p className="tw-i mt-[1.5cqh] text-balance uppercase" style={{ ['--d' as string]: `${HORIZON_TIMES.words + 950}ms`, fontSize: 'clamp(11px, min(3.1cqw, 1.75cqh), 14px)', letterSpacing: '0.24em', lineHeight: 1.6, color: C.goldLight, textShadow: '0 1px 10px rgba(8,6,30,0.8)' }}>
+                    {date.weekday} · {date.day} {date.month} {date.year}
+                  </p>
+                )}
+                {venue && (
+                  <p className="tw-i mt-1 text-balance italic" style={{ ['--d' as string]: `${HORIZON_TIMES.words + 1050}ms`, fontSize: 'clamp(14px, min(4.1cqw, 2.3cqh), 19px)', lineHeight: 1.35, color: 'rgba(255,249,238,0.86)', textShadow: '0 1px 10px rgba(8,6,30,0.8)' }}>
+                    {venue}
+                  </p>
+                )}
+              </div>
+
+              {/* On the dark of the Earth, below the cities. */}
+              <div className="tw-intl-foot absolute inset-x-0 bottom-0 flex flex-col items-center px-5 text-center" style={{ top: `${HORIZON_AT * 100}%` }}>
+                <OpenButton
+                  onClick={open}
+                  disabled={phase !== 'closed'}
+                  label={`Open ${couple}'s wedding invitation`}
+                  delay={after}
+                  icon={
+                    <svg aria-hidden viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinejoin="round">
+                      <rect x={3} y={5.5} width={18} height={13} rx={2} />
+                      <path d="M3.6 7.2L12 13.4L20.4 7.2" strokeLinecap="round" />
+                    </svg>
+                  }
+                />
+                {song && !isPreview && (
+                  <p className="tw-i mt-2.5 uppercase" style={{ ['--d' as string]: `${after + 200}ms`, fontSize: 11, letterSpacing: '0.24em', color: C.goldLight }}>♪ Sound on</p>
+                )}
+              </div>
+            </div>
+            <div aria-hidden className="tw-i-bloom pointer-events-none absolute left-1/2 z-[4] aspect-square w-[34cqi] rounded-full" style={{ top: `${RINGS_AT * 100}%` }} />
           </div>
         )}
       </section>
@@ -1336,7 +1488,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                     ))}
                     {loveStory.length > 1 && (
                       <p className="mt-7 text-right -rotate-1" style={{ fontFamily: hand, fontSize: 'clamp(24px, 6.4cqi, 30px)', color: C.goldLight }}>
-                        — {bride} &amp; {groom}
+                        — {groom} &amp; {bride}
                       </p>
                     )}
                   </Reveal>
@@ -1459,7 +1611,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                 <Reveal disabled={isPreview} className="text-center">
                   <Kicker color={C.marigold}>Now showing</Kicker>
                   <h2 className="mx-auto mt-3 max-w-[20ch] text-balance" style={{ fontFamily: display, fontSize: 'clamp(30px, 9cqi, 50px)', lineHeight: 1.1, color: C.goldLight, textShadow: '0 0 24px rgba(247,168,23,0.45)' }}>{filmTitle}</h2>
-                  <p className="mt-2" style={{ fontFamily: hand, fontSize: 'clamp(20px, 5.4cqi, 24px)', color: '#FF8FA8' }}>starring {bride} &amp; {groom}</p>
+                  <p className="mt-2" style={{ fontFamily: hand, fontSize: 'clamp(20px, 5.4cqi, 24px)', color: '#FF8FA8' }}>starring {groom} &amp; {bride}</p>
                 </Reveal>
                 <Reveal disabled={isPreview} className="mt-10">
                   <Cinema src={film} poster={photos[Math.min(4, photos.length - 1)] || couplePhoto} title={filmTitle} isPreview={isPreview} />
@@ -1677,13 +1829,13 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                 <Chapter n={no('wedding')} title={<>The <span style={{ fontFamily: script, fontSize: '1.3em', color: C.rani }}>wedding</span></>} />
               </Reveal>
 
-              {(data.brideParents?.trim() || data.groomParents?.trim() || blessings.length > 0) && (
+              {(data.groomParents?.trim() || data.brideParents?.trim() || blessings.length > 0) && (
                 <Reveal disabled={isPreview} className="mx-auto mt-10 max-w-[34rem] text-center">
                   <Kicker color={C.goldDeep}>Together with their families</Kicker>
                   <div className="mt-4 space-y-1" style={{ fontFamily: display, fontSize: 'clamp(18px, 5cqi, 22px)', lineHeight: 1.5, color: C.ink }}>
-                    {data.brideParents?.trim() && <p>{data.brideParents}</p>}
-                    {data.brideParents?.trim() && data.groomParents?.trim() && <p style={{ fontFamily: script, fontSize: '1.5em', lineHeight: 1, color: C.rani }}>and</p>}
                     {data.groomParents?.trim() && <p>{data.groomParents}</p>}
+                    {data.groomParents?.trim() && data.brideParents?.trim() && <p style={{ fontFamily: script, fontSize: '1.5em', lineHeight: 1, color: C.rani }}>and</p>}
+                    {data.brideParents?.trim() && <p>{data.brideParents}</p>}
                   </div>
                   {blessings.length > 0 && <p className="mt-4 italic" style={{ fontSize: 17, color: C.soft }}>With the blessings of {blessings.join(', ')}</p>}
                 </Reveal>
@@ -1730,7 +1882,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
 
               {date && (
                 <Reveal disabled={isPreview} className="mt-14">
-                  <Countdown date={data.date} time={data.time} enabled={!isPreview} />
+                  <Countdown date={data.date} time={data.time} />
                   <p className="mt-4 text-center -rotate-1" style={{ fontFamily: hand, fontSize: 'clamp(21px, 5.6cqi, 25px)', color: C.rani }}>until forever begins</p>
                 </Reveal>
               )}
@@ -1885,7 +2037,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                 eventId={eventId}
                 theme={WISHES_THEME}
                 title="Wishes for the two of us"
-                intro={`Leave a few words for ${bride} & ${groom}, in any language. They appear here for every guest.`}
+                intro={`Leave a few words for ${couple}, in any language. They appear here for every guest.`}
                 noun="wish"
                 namePlaceholder="e.g. The Mehra family"
               />
@@ -1902,7 +2054,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                 </p>
               )}
               <p className="mt-5" style={{ fontFamily: display, fontSize: 'clamp(28px, 8cqi, 40px)', color: C.cream }}>
-                {bride} <span style={{ fontFamily: script, color: C.marigold }}>&amp;</span> {groom}
+                {groom} <span style={{ fontFamily: script, color: C.marigold }}>&amp;</span> {bride}
               </p>
               {date && <p className="mt-2 uppercase" style={{ fontSize: 12, letterSpacing: '0.26em', color: 'rgba(255,249,238,0.65)' }}>{date.day} · {date.month} · {date.year}</p>}
               <div className="mt-10">
