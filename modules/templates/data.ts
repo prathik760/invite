@@ -182,6 +182,12 @@ const EVENT_COLUMNS: TemplateFieldColumn[] = [
   { key: 'dress', label: 'Dress code', placeholder: 'Greens and florals' },
 ]
 
+/** Two Worlds' celebrations: the same, plus each one's own Google Maps link. Last, so rows saved before it keep their cells. */
+const TW_EVENT_COLUMNS: TemplateFieldColumn[] = [
+  ...EVENT_COLUMNS,
+  { key: 'map', label: 'Google Maps link (for directions)', type: 'url', placeholder: 'https://maps.app.goo.gl/...' },
+]
+
 function signatureFields(opts: { invocation: string; venue: string; registry?: boolean; destination?: boolean }): TemplateConfig['fields'] {
   return [
     { key: 'brideName', label: "Bride's Name", type: 'text', required: true, placeholder: 'Aditi' },
@@ -897,7 +903,7 @@ export const TEMPLATES: TemplateData[] = [
         { key: 'venueAddress', label: 'Venue Address', type: 'text', placeholder: 'Full address' },
         { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
         { key: 'dressCode', label: 'Dress code', type: 'text', placeholder: 'Traditional dress from either side, or black tie' },
-        { key: 'events', label: 'Celebrations', type: 'textarea', columns: EVENT_COLUMNS, section: 'details', group: 'The celebrations', hint: 'Every part of the wedding, in any order. Each gets a time, a map and a calendar link.' },
+        { key: 'events', label: 'Celebrations', type: 'textarea', columns: TW_EVENT_COLUMNS, section: 'details', group: 'The celebrations', hint: 'Every part of the wedding, in any order. Each gets a time, a calendar link and directions. For directions to the exact spot, paste the venue’s Google Maps link (in Google Maps, tap Share, then Copy link).' },
         { key: 'travel', label: 'Travel & stay', type: 'textarea', section: 'details', group: 'For your guests', hint: 'Hotels, airport pickups, visas: what guests from both countries need.', placeholder: 'Rooms are held at… Airport pickups from…' },
         { key: 'contacts', label: 'People to call', type: 'textarea', columns: [{ key: 'name', label: 'Name & role', placeholder: 'Kabir, Aarav’s brother' }, { key: 'phone', label: 'Phone / WhatsApp', type: 'tel', placeholder: '+971 50 123 4567' }], section: 'details', group: 'For your guests' },
         { key: 'whatsappNumber', label: 'WhatsApp number for RSVPs', type: 'text', section: 'details', group: 'RSVP', hint: 'Guests tap RSVP and a WhatsApp message to this number opens, ready to send.', placeholder: '+971 50 123 4567' },

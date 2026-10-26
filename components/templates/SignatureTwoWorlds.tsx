@@ -99,7 +99,7 @@ const WISHES_THEME: InviteTheme = {
 }
 
 type Phase = 'closed' | 'opening' | 'open'
-type Fn = { name: string; date: string; time: string; venue: string; dress: string }
+type Fn = { name: string; date: string; time: string; venue: string; dress: string; map: string }
 type Star = { x: number; y: number; city: string; who: string; tone: string; align: 'left' | 'center' | 'right'; main?: boolean }
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
@@ -767,7 +767,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
   const yearMarks = since && weddingYear >= since && weddingYear - since <= 8 ? Array.from({ length: weddingYear - since + 1 }, (_, i) => since + i) : []
 
   const functions = useMemo(() => {
-    const list = parseRows(data.events, ['name', 'date', 'time', 'venue', 'dress'] as const) as Fn[]
+    const list = parseRows(data.events, ['name', 'date', 'time', 'venue', 'dress', 'map'] as const) as Fn[]
     const dated = list.length > 0 && list.every((f) => dateParts(f.date))
     if (dated) list.sort((a, b) => `${a.date}T${a.time || '00:00'}`.localeCompare(`${b.date}T${b.time || '00:00'}`))
     return list
@@ -1898,7 +1898,9 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                       const d = dateParts(fn.date)
                       const t = timeLabel(fn.time)
                       const fnPlace = fn.venue?.trim() || venue
-                      const fnDir = fn.venue?.trim() ? mapsHref(undefined, fn.venue) : directions
+                      // Its own Maps link first; at the wedding venue, the wedding's directions; elsewhere, a Maps search for the venue.
+                      const atWeddingVenue = !fn.venue?.trim() || fn.venue.trim().toLowerCase() === venue.toLowerCase()
+                      const fnDir = mapsHref(fn.map) ?? (atWeddingVenue ? directions : mapsHref(undefined, fn.venue))
                       const fnCal = calendarHref(`${fn.name} · ${couple}`, fn.date || data.date, fn.time, fnPlace || undefined, 3)
                       const k = CARDS[i % CARDS.length]
                       return (

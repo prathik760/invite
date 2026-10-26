@@ -407,7 +407,7 @@ const RowsEditor = memo(function RowsEditor({ field, initial, onChange }: { fiel
   const noun = field.label.replace(/s$/, '').toLowerCase()
   // Two cells per line; long fields (and any cell that would sit alone) span both.
   const wide = (() => {
-    const flags = columns.map(c => c.type === 'textarea' || c.key === 'venue' || c.key === 'name' || c.key === 'title' || c.key === 'q')
+    const flags = columns.map(c => c.type === 'textarea' || c.type === 'url' || c.key === 'venue' || c.key === 'name' || c.key === 'title' || c.key === 'q')
     let open = -1
     flags.forEach((w, i) => {
       if (w) { if (open !== -1) flags[open] = true; open = -1 }

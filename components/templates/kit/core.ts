@@ -127,10 +127,12 @@ export function useCountdown(date?: string, time?: string, enabled = true): Coun
 /**
  * Directions link. Hosts often skip the Maps field but type the venue and
  * address, so fall back to a Maps search for those rather than showing no
- * directions at all.
+ * directions at all. A Maps link pasted without its "https://" still works.
  */
 export function mapsHref(mapsUrl?: string, ...place: (string | undefined)[]): string | null {
-  if (mapsUrl && /^https?:\/\//i.test(mapsUrl)) return mapsUrl
+  const url = mapsUrl?.trim()
+  if (url && /^https?:\/\//i.test(url)) return url
+  if (url && /^(maps\.app\.goo\.gl|goo\.gl\/maps|(www\.)?google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)\//i.test(url)) return `https://${url}`
   const q = place.filter(Boolean).join(', ').trim()
   return q ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}` : null
 }

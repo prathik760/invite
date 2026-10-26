@@ -1,7 +1,7 @@
 export interface TemplateFieldColumn {
   key: string
   label: string
-  type?: 'text' | 'date' | 'time' | 'tel' | 'textarea'
+  type?: 'text' | 'date' | 'time' | 'tel' | 'url' | 'textarea'
   placeholder?: string
 }
 
