@@ -16,6 +16,17 @@ interface PageProps {
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
+/**
+ * Rendered when the first guest opens it, then served from the cache for an
+ * hour, instead of a server render for every guest. Saving an edit clears it
+ * at once (PATCH /api/events/[slug]); wishes load in the browser, and an
+ * invitation turns to its "ended" page within the hour.
+ */
+export const revalidate = 3600
+export function generateStaticParams() {
+  return []
+}
+
 
 function getEventNames(data: Record<string, string>, templateId: string): string | undefined {
   return data.brideName && data.groomName

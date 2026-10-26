@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { LOCALE_CODES, LOCALISED_PATHS, getLocale, localeHref, stripLocale } from '@/lib/i18n'

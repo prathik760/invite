@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import type { BlogDraft } from '@/content/blog'
 
 // Every post carries its own photograph (public/blog/<slug>.jpg, set as

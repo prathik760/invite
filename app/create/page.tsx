@@ -2,7 +2,7 @@
 
 import Image from '@/components/ui/Image'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'

@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { Price } from '@/components/price/Price'
 import { HandNote } from '@/components/home/Hand'
 import { displayName } from '@/lib/catalog'

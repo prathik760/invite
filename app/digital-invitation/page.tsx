@@ -1,6 +1,6 @@
 import Image from '@/components/ui/Image'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/landing/SiteFooter'
 import FAQAccordion from '@/components/landing/FAQAccordion'

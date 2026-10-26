@@ -16,8 +16,9 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
   }
 }
 
-// Sample dates are relative to today; rebuild daily so the countdown stays live.
-export const revalidate = 86400
+// Sample dates are relative to today and weeks ahead, so a weekly rebuild keeps
+// every countdown running (daily rebuilt 96 pages a day on a metered host).
+export const revalidate = 604800
 
 export function generateStaticParams() {
   return TEMPLATES.map((t) => ({ id: t.id }))

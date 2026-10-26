@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { Price, PayMethods } from '@/components/price/Price'
 import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'

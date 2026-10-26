@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { LOCALES, localePath } from '@/lib/i18n'
 import { SUPPORT_EMAIL, SUPPORT_WHATSAPP_URL } from '@/lib/support'
 import Logo from '@/components/brand/Logo'

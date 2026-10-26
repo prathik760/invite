@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { displayName } from '@/lib/catalog'
 import { templateImage } from '@/lib/templateMedia'
 import { TEMPLATES } from '@/modules/templates/data'

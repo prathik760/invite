@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'

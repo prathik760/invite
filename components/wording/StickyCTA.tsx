@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { useEffect, useState } from 'react'
 import BottomDock from '@/components/ui/BottomDock'
 import Image from '@/components/ui/Image'

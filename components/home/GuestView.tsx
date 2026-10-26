@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { templateSeoSlug } from '@/lib/seo'
 
 /**

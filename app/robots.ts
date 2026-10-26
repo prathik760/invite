@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { BLOCKED_BOT_AGENTS } from '@/lib/bots'
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
@@ -31,6 +32,9 @@ export default function robots(): MetadataRoute.Robots {
           '/*.json$',
         ],
       },
+      // SEO tools and ByteDance's crawler: no visitors, hundreds of pages a day
+      // (lib/bots.ts). The middleware turns away the ones that ignore this.
+      { userAgent: [...BLOCKED_BOT_AGENTS], disallow: '/' },
     ],
     sitemap: `${APP_URL}/sitemap.xml`,
   }

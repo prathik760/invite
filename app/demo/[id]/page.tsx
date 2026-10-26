@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import TemplateRenderer from '@/components/templates/TemplateRenderer'
 import ShareDesignButton from '@/components/catalog/ShareDesignButton'
 import { TEMPLATES } from '@/modules/templates/data'
@@ -13,8 +13,9 @@ import { Price } from '@/components/price/Price'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
-// Sample dates are relative to today; rebuild daily so the countdown stays live.
-export const revalidate = 86400
+// Sample dates are relative to today and weeks ahead, so a weekly rebuild keeps
+// every countdown running (daily rebuilt 96 pages a day on a metered host).
+export const revalidate = 604800
 
 export function generateStaticParams() {
   return TEMPLATES.map((t) => ({ id: t.id }))

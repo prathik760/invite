@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import BottomDock from '@/components/ui/BottomDock'
 import { LOWEST_PAID_PRICE } from '@/lib/plans'
 import { Price } from '@/components/price/Price'

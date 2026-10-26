@@ -1,5 +1,5 @@
 import SiteHeader from '@/components/layout/SiteHeader'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import SiteFooter from '@/components/landing/SiteFooter'
 import PageHero from '@/components/brand/PageHero'
 

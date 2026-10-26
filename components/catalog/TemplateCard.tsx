@@ -1,7 +1,7 @@
 'use client'
 
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { trackCta } from '@/lib/analytics'
 import type { CatalogItem } from '@/lib/catalogItems'
 import PreviewButton from '@/components/catalog/PreviewButton'

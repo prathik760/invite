@@ -5,6 +5,10 @@ import { INVITE_CARD_SIZE, renderInviteCard } from '@/lib/inviteCard'
 export const runtime = 'nodejs'
 export const size = INVITE_CARD_SIZE
 export const contentType = 'image/png'
+// Drawn on every request, unlike the cached invitation page: revalidatePath does
+// not clear an image route's cache, so a cached card would keep a name the host
+// has since corrected. Only link previews fetch it, so it costs little.
+export const dynamic = 'force-dynamic'
 
 type Props = { params: { slug: string } }
 

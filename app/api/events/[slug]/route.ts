@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { getLocalEventBySlug, shouldUseLocalStore, updateLocalEvent } from '@/lib/local-store'
 import { editableEvent } from '@/lib/eventEdit'
@@ -13,7 +14,7 @@ const MAX_DATA_CHARS = 200_000
  * Saves changes to a published invitation. Its owner, signed in, or whoever
  * holds its edit key (lib/eventEdit.ts) may change its details while it is
  * live; the design, the link and what was paid stay the same. The invitation
- * page is rendered on every visit, so guests see the change at once.
+ * page is cached, so saving clears it and guests see the change at once.
  */
 export async function PATCH(req: NextRequest, { params }: { params: { slug: string } }) {
   const body = await req.json().catch(() => null)
@@ -32,6 +33,8 @@ export async function PATCH(req: NextRequest, { params }: { params: { slug: stri
 
     if (check.event.local) await updateLocalEvent(check.event.slug, clean)
     else await prisma.event.update({ where: { id: check.event.id }, data: { data: clean as object } })
+    // The invitation page is cached (app/e/[slug]); guests see the change now.
+    revalidatePath(`/e/${check.event.slug}`)
 
     return NextResponse.json({ slug: check.event.slug })
   } catch (err) {

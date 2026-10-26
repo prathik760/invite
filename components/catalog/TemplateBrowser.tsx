@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import type { CatalogItem } from '@/lib/catalogItems'
 import TemplateCard from '@/components/catalog/TemplateCard'
 import TieredGrid from '@/components/catalog/TieredGrid'

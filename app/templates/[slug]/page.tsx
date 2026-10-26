@@ -1,6 +1,6 @@
 import Image from '@/components/ui/Image'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import type { ComponentType } from 'react'
 import ShareDesignButton from '@/components/catalog/ShareDesignButton'
 import PreviewButton from '@/components/catalog/PreviewButton'

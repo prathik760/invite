@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { EyeIcon, SparklesIcon } from '@/components/ui/Icons'
 import { TEMPLATES } from '@/modules/templates/data'
 import { templateImage } from '@/lib/templateMedia'

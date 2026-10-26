@@ -114,6 +114,27 @@ export function botOf(userAgent: string | null | undefined): Bot | null {
 }
 
 /**
+ * The bots counted on the Bots tab: the kinds that can bring a customer.
+ * Counting costs a server call per page read, and the free hosting plan meters
+ * every call, so scripts, SEO tools and monitors are no longer counted.
+ */
+export const COUNTED_BOT_KINDS: ReadonlySet<BotKind> = new Set<BotKind>(['search', 'ai', 'preview'])
+
+/**
+ * Turned away before a page is served (middleware.ts) and asked to stay away in
+ * robots.txt: SEO tools and ByteDance's crawler read hundreds of pages a day
+ * and send no visitors. Google, Bing and the AI assistants are never blocked.
+ */
+export const BLOCKED_BOT_AGENTS = [
+  'AhrefsBot', 'AhrefsSiteAudit', 'SemrushBot', 'SiteAuditBot', 'MJ12bot', 'DotBot', 'rogerbot',
+  'Screaming Frog SEO Spider', 'serpstatbot', 'DataForSeoBot', 'BLEXBot', 'Barkrowler', 'Bytespider',
+] as const
+
+export function isBlockedBot(bot: Bot): boolean {
+  return bot.kind === 'seo' || bot.name === 'ByteDance (TikTok) AI'
+}
+
+/**
  * The page a bot fetched, as stored. Guests' invitations collapse to one line
  * (their addresses hold the hosts' names), and query strings are dropped.
  */

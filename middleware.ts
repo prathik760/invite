@@ -1,17 +1,16 @@
 import { NextResponse, type NextFetchEvent, type NextRequest } from 'next/server'
-import { botLogKey, botOf, botPath } from '@/lib/bots'
+import { botLogKey, botOf, botPath, COUNTED_BOT_KINDS, isBlockedBot, type Bot } from '@/lib/bots'
 import { CONSENT_COUNTRIES, REGION_COOKIE } from '@/lib/consent'
 import { COUNTRY_COOKIE, intlPricingEnabled, normaliseCountry } from '@/lib/pricing'
 
 /**
  * Counts a page fetched by a search engine, AI assistant or other bot, for the
  * Bots tab of /admin/activity. Sent after the response (waitUntil), so the
- * bot is never kept waiting, and it can never fail the page.
+ * bot is never kept waiting, and it can never fail the page. Only the kinds
+ * that can bring a customer (COUNTED_BOT_KINDS): each count is a server call.
  */
-function logBot(req: NextRequest, event: NextFetchEvent) {
-  if (process.env.NODE_ENV !== 'production') return
-  const bot = botOf(req.headers.get('user-agent'))
-  if (!bot) return
+function logBot(req: NextRequest, event: NextFetchEvent, bot: Bot) {
+  if (process.env.NODE_ENV !== 'production' || !COUNTED_BOT_KINDS.has(bot.kind)) return
   event.waitUntil(
     botLogKey()
       .then(async (key) => {
@@ -41,7 +40,9 @@ function logBot(req: NextRequest, event: NextFetchEvent) {
  * charged.
  */
 export function middleware(req: NextRequest, event: NextFetchEvent) {
-  logBot(req, event)
+  const bot = botOf(req.headers.get('user-agent'))
+  if (bot && isBlockedBot(bot)) return new NextResponse(null, { status: 403 })
+  if (bot) logBot(req, event, bot)
   const res = NextResponse.next()
 
   // Vercel sets this header on every request. Locally there is none, so in

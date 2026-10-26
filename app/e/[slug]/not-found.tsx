@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import type { Metadata } from 'next'
 import { LogoMark } from '@/components/brand/Logo'
 import { LOWEST_PAID_PRICE } from '@/lib/plans'

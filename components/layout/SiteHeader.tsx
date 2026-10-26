@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { OCCASIONS } from '@/lib/catalog'
 import { DEFAULT_LOCALE, localePath } from '@/lib/i18n'
 import { t } from '@/content/translations'

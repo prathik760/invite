@@ -1,7 +1,7 @@
 'use client'
 
 import type { Session } from 'next-auth'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import FormEditor from '@/components/editor/FormEditor'
 import StepShell from '@/components/create/StepShell'
 import type { TemplateData } from '@/modules/templates/data'

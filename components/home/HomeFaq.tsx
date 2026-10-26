@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import type { Faq } from '@/components/landing/FAQAccordion'
 import { LOCALES, localePath } from '@/lib/i18n'
 import { SUPPORT_WHATSAPP_DISPLAY, supportWhatsAppUrl } from '@/lib/support'

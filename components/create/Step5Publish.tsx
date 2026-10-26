@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import type { Session } from 'next-auth'
 import type { TemplateData } from '@/modules/templates/data'
 import { canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'

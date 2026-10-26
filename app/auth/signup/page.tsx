@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { seoEvents, trackEvent } from '@/lib/analytics'

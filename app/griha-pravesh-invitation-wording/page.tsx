@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import SiteHeader from '@/components/layout/SiteHeader'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import MidPageCTA from '@/components/wording/MidPageCTA'
 import StickyCTA from '@/components/wording/StickyCTA'
 import SiteFooter from '@/components/landing/SiteFooter'

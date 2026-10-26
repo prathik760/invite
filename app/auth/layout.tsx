@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import Logo, { LogoMark } from '@/components/brand/Logo'
 import TrustList from '@/components/brand/TrustList'
 import { PayMethods } from '@/components/price/Price'

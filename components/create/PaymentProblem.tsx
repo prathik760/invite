@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { useState } from 'react'
 import { seoEvents, trackEvent } from '@/lib/analytics'
 import { supportWhatsAppUrl } from '@/lib/support'

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import CopiedPanel, { builderHref, copyText, trackWordingCopy } from '@/components/wording/CopiedPanel'
 import { ArrowRightIcon } from '@/components/ui/Icons'
 import { trackCta } from '@/lib/analytics'

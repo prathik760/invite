@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import { usePathname } from 'next/navigation'
 import { OCCASIONS } from '@/lib/catalog'
 import { LOCALES, localeHref, localePath, stripLocale } from '@/lib/i18n'

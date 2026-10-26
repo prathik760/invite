@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import Image from '@/components/ui/Image'
 import { GLOBAL_TEMPLATE_IDS, getLocale } from '@/lib/i18n'
 import { t } from '@/content/translations'

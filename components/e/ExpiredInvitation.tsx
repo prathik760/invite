@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import Logo, { LogoMark } from '@/components/brand/Logo'
 import { templateImage } from '@/lib/templateMedia'
 import { templatePrice } from '@/lib/plans'

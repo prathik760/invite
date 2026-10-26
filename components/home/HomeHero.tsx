@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from 'next/link'
+import Link from '@/components/ui/Link'
 import TrackedLink from '@/components/ui/TrackedLink'
 import { Price } from '@/components/price/Price'
 import { PenUnderline } from '@/components/home/Hand'
