@@ -1,5 +1,7 @@
 // Content-Security-Policy directives, shared by every page. `frame-src 'self'`
-// lets the live preview show /demo/<id>/embed in its phone screen.
+// lets the live preview show /demo/<id>/embed in its phone screen. Facebook is
+// in frame-src and form-action because the Meta Pixel sends events too long
+// for a URL by posting a hidden form to www.facebook.com/tr into a hidden frame.
 const CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com https://cdn.razorpay.com https://www.googletagmanager.com https://connect.facebook.net https://www.clarity.ms https://*.clarity.ms",
@@ -8,10 +10,10 @@ const CSP = [
   "img-src 'self' data: blob: https:",
   "media-src 'self' https:",
   "connect-src 'self' https://checkout.razorpay.com https://lumberjack.razorpay.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://api.razorpay.com https://*.r2.cloudflarestorage.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net https://*.clarity.ms https://c.bing.com",
-  "frame-src 'self' https://api.razorpay.com https://www.googletagmanager.com https://www.youtube-nocookie.com https://player.vimeo.com",
+  "frame-src 'self' https://api.razorpay.com https://www.googletagmanager.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.facebook.com",
   "object-src 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  "form-action 'self' https://www.facebook.com",
 ]
 
 /** @type {import('next').NextConfig} */
