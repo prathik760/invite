@@ -5,7 +5,6 @@ import Script from 'next/script'
 import dynamic from 'next/dynamic'
 import { Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
-import SessionProvider from '@/components/providers/SessionProvider'
 import AnimateOnScroll from '@/components/AnimateOnScroll'
 // Imported directly, not lazily: it must be listening from hydration, or a
 // visitor who leaves within seconds is never recorded (lib/journal.ts).
@@ -319,7 +318,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             copy={PROMO.bar}
           />
         )}
-        <SessionProvider>{children}</SessionProvider>
+        {children}
         <JournalTracker />
         {/* Keeps a discount code from a campaign link (?code=…) for checkout. */}
         <Suspense fallback={null}><CouponCapture /></Suspense>

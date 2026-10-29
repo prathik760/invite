@@ -1,5 +1,6 @@
 import Script from 'next/script'
 import type { Metadata } from 'next'
+import SessionProvider from '@/components/providers/SessionProvider'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default function CreateLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      {children}
+      <SessionProvider>{children}</SessionProvider>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
     </>
   )
