@@ -7,14 +7,19 @@ import { discountedPrice, minorUnits, priceInList } from '@/lib/pricing'
 import { priceOverride } from '@/lib/priceOverrides'
 import { checkCoupon, couponMessage } from '@/lib/coupons'
 import type { PlanId } from '@/lib/plans'
-import { PLAN_MAP } from '@/lib/plans'
+import { getRequiredPlan, PLAN_MAP } from '@/lib/plans'
+import { ownsDesign } from '@/lib/entitlements'
 import { getTemplateData } from '@/modules/templates/data'
 
 export async function POST(req: NextRequest) {
   // No sign-in needed to pay: /verify records a signed-out buyer's purchase on
   // the account for the email they give Razorpay.
+  // An account is required before checkout (4 Nov 2026): the builder needs one, and so does this.
   const session = await getServerSession(authOptions).catch(() => null)
-  const buyer = session?.user?.id ?? 'guest'
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'Please sign in to continue to payment.', code: 'AUTH_REQUIRED' }, { status: 401 })
+  }
+  const buyer = session.user.id
 
   const body = await req.json().catch(() => null)
   const plan = body?.plan as PlanId | undefined
@@ -22,8 +27,25 @@ export async function POST(req: NextRequest) {
   if (!plan || plan === 'free' || !PLAN_MAP[plan]) {
     return NextResponse.json({ error: 'Invalid plan selected.' }, { status: 400 })
   }
-  // Which design is being bought: kept on the order for the receipt email.
-  const templateId = typeof body?.templateId === 'string' && getTemplateData(body.templateId) ? body.templateId : undefined
+  // The design being bought. Since 13 Nov 2026 it is what the payment buys
+  // (lib/entitlements.ts), so it is required, and its price is the plan's.
+  const templateId = typeof body?.templateId === 'string' && getTemplateData(body.templateId) ? (body.templateId as string) : undefined
+  if (!templateId) {
+    return NextResponse.json({ error: 'Choose a design to buy.' }, { status: 400 })
+  }
+  if (getRequiredPlan(templateId).id !== plan) {
+    // A page open since a price change: stop before charging, not after.
+    return NextResponse.json({ error: 'The price of this design has changed. Please reload the page.', code: 'PRICE_CHANGED' }, { status: 409 })
+  }
+  // Never charge twice for the same design.
+  try {
+    if (await ownsDesign(buyer, templateId)) {
+      return NextResponse.json({ error: 'This design is already yours.', code: 'ALREADY_OWNED' }, { status: 409 })
+    }
+  } catch (err) {
+    console.error('[POST /api/payments/create-order] ownership check', err)
+    return NextResponse.json({ error: 'We could not open the payment just now. Please try again in a moment.' }, { status: 503 })
+  }
 
   // A token price set for this signed-in account and design (lib/priceOverrides.ts) replaces the
   // price, and any discount code, entirely.
@@ -51,8 +73,7 @@ export async function POST(req: NextRequest) {
       currency: price.currency,
       receipt: `inv_${buyer.slice(-8)}_${Date.now()}`,
       notes: {
-        userId: buyer, plan, priceList: price.list,
-        ...(templateId ? { templateId } : {}),
+        userId: buyer, plan, priceList: price.list, templateId,
         // Read back by /verify to expect the discounted amount; also how the
         // Razorpay dashboard shows which sales came through which code.
         ...(coupon?.ok ? { coupon: coupon.coupon.code, percentOff: coupon.coupon.percentOff } : {}),

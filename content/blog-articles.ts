@@ -14,7 +14,7 @@ type ContentBlock = {
 
 export const blogArticles: Record<string, ContentBlock> = {
   'ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template': {
-    intro: `Ganesh Chaturthi is the one festival where the invitation has to work harder than the card, because Ganeshotsav is never a single evening. Bappa arrives, stays for a day or five or ten, and every one of those evenings has an aarti that someone in your family, your building or your mandal will want to attend. A forwarded image cannot carry any of that. A Ganesh Chaturthi invitation card online can: one link that holds the sthapana muhurat, the daily aarti timings, the visarjan day, a map to your mandap, and a wall where relatives leave their blessings. On ShareInvite the Ganesh Chaturthi Premium template is just ₹99 (the lowest-priced premium template on the site, and less than a plate of modaks), and you can build the whole thing, preview it on your own phone, and only pay when you are ready to share. Here is how to make one in five minutes, plus copy-paste Ganpati invitation messages in English, Hindi and Marathi.`,
+    intro: `Ganesh Chaturthi is the one festival where the invitation has to work harder than the card, because Ganeshotsav is never a single evening. Bappa arrives, stays for a day or five or ten, and every one of those evenings has an aarti that someone in your family, your building or your mandal will want to attend. A forwarded image cannot carry any of that. A Ganesh Chaturthi invitation card online can: one link that holds the sthapana muhurat, the daily aarti timings, the visarjan day, a map to your mandap, and a wall where relatives leave their blessings. On ShareInvite the Ganesh Chaturthi template is just ₹99 (the lowest-priced premium template on the site, and less than a plate of modaks), and you can build the whole thing, preview it on your own phone, and only pay when you are ready to share. Here is how to make one in five minutes, plus copy-paste Ganpati invitation messages in English, Hindi and Marathi.`,
     sections: [
       {
         heading: 'Why send a Ganesh Chaturthi invitation online this year',
@@ -89,7 +89,7 @@ This template is a live page instead, and that difference shows up in five speci
 The design is not a generic festival theme either. It is saffron, vermilion and gold on warm cream, with a temple-arch mandap frame for your Bappa photo, a marigold-and-mango-leaf toran strung across the top, floating marigold petals and two diyas glowing at the foot of the mandap. It reads as Ganeshotsav specifically, not as a recoloured wedding card.`,
       },
       {
-        heading: 'Inside the ShareInvite Ganesh Chaturthi Premium template',
+        heading: 'Inside the ShareInvite Ganesh Chaturthi template',
         body: `The page flows the way the festival does, from arrival to farewell:
 
 - **The mandap hero**: your Bappa or mandap photo inside a temple arch, under a marigold toran, with your family name and the sthapana date and time.
@@ -141,7 +141,7 @@ Then send exactly two follow-ups: one the evening before your sthapana with just
       },
       {
         heading: 'Just ₹99: the lowest-priced premium template on ShareInvite',
-        body: `The Ganesh Chaturthi Premium template is ₹99, one-time. No subscription, no per-guest charge, no renewal: you pay once and the link stays live through the whole festival and afterwards.
+        body: `The Ganesh Chaturthi template is ₹99, one-time. No subscription, no per-guest charge, no renewal: you pay once and the link stays live through the whole festival and afterwards.
 
 That makes it the cheapest premium template on ShareInvite, and it is deliberate: Ganeshotsav is a festival where families are already spending on the murti, the decoration, the prasad and the mandap, and the invitation should not be another real cost. ₹99 is less than couriering a handful of printed cards, less than a plate of modaks, and less than the auto fare to the printer.
 
@@ -159,7 +159,7 @@ You can build the entire page, fill in every detail, upload your photos and prev
       'Preview on your own phone, then share one link on WhatsApp',
     ],
     faq: [
-      { q: 'How much does the Ganesh Chaturthi invitation card cost?', a: 'The Ganesh Chaturthi Premium template on ShareInvite is ₹99, a one-time payment with no subscription and no per-guest charge. It is the lowest-priced premium template on the site. You can build the whole invitation, add your photos and preview it on your own phone before you pay, and payment is only requested at the final publish step.' },
+      { q: 'How much does the Ganesh Chaturthi invitation card cost?', a: 'The Ganesh Chaturthi template on ShareInvite is ₹99, a one-time payment with no subscription and no per-guest charge. It is the lowest-priced premium template on the site. You can build the whole invitation, add your photos and preview it on your own phone before you pay, and payment is only requested at the final publish step.' },
       { q: 'How do I make a Ganesh Chaturthi invitation card online?', a: 'Open the Ganesh Chaturthi template on ShareInvite, add your family or mandal name, upload a photo of your Bappa, set the sthapana date and muhurat, fill in the utsav schedule day by day, add the mandap address with a Google Maps link and the visarjan date, then write your message. Preview it and publish for ₹99 to get a WhatsApp-ready link. It takes about five minutes.' },
       { q: 'Can I use it for a housing society or Ganesh mandal invitation?', a: 'Yes, it is one of the best uses. Put the society or mandal name as the host, list your full multi-day programme in the utsav schedule, and share one link into every building group. When the programme changes mid-festival you edit the page once instead of sending corrected notices to every group.' },
       { q: 'Can I add the visarjan date separately?', a: 'Yes. Visarjan has its own card in the darshan section with its own date and time, because it is a separate event that is often confirmed later. If you leave it blank the card reads "date to be announced". Published invitations cannot be edited, so once the date is fixed, publish a corrected version with the same design (it stays unlocked on your account, so there is no second charge) and share the new link.' },
@@ -172,7 +172,7 @@ You can build the entire page, fill in every detail, upload your photos and prev
     links: [
       { label: 'Ganesh Chaturthi template: see the live demo', href: '/demo/ganesh-chaturthi' },
       { label: 'Create your Ganpati invitation: just ₹99', href: '/create?template=ganesh-chaturthi' },
-      { label: 'Ganesh Chaturthi Premium template details', href: '/templates/ganesh-chaturthi-premium-invitation-template' },
+      { label: 'Ganesh Chaturthi template details', href: '/templates/ganesh-chaturthi-premium-invitation-template' },
       { label: 'Festival wishes card online: Diwali and festival greetings', href: '/blog/festival-wishes-card-online-diwali-and-festival-greetings' },
       { label: 'Browse all invitation templates', href: '/templates' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
@@ -225,7 +225,7 @@ On the digital card, this message appears in a beautiful "Our Bond" section, so 
         heading: 'How to create your Raksha Bandhan invitation in 5 minutes',
         body: `You do not need any design skill. Here is the whole process:
 
-**1. Open the Raksha Bandhan template.** Start from the live demo below or head to the create page. The Raksha Bandhan Premium template unlocks for just ₹199.
+**1. Open the Raksha Bandhan template.** Start from the live demo below or head to the create page. The Raksha Bandhan template unlocks for just ₹199.
 
 **2. Add the names and your photos.** Enter the brother's and sister's names and upload a few favourite pictures for the scrapbook and gallery.
 
@@ -239,7 +239,7 @@ The whole thing takes about five minutes, and because you can preview the exact 
       },
       {
         heading: 'Inside the ShareInvite Raksha Bandhan template',
-        body: `The Raksha Bandhan Premium template is built to feel premium and festive without being fussy. It opens with a warm, cream-and-gold hero and a marble-stage illustration, then flows through the parts of the day:
+        body: `The Raksha Bandhan template is built to feel premium and festive without being fussy. It opens with a warm, cream-and-gold hero and a marble-stage illustration, then flows through the parts of the day:
 
 - **"Our Bond"**: a scrapbook of your photos with your personal message.
 - **A live countdown**: "Celebration starts in…" building anticipation.
@@ -256,7 +256,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       },
       {
         heading: 'Just ₹199: a whole celebration for the price of a card',
-        body: `The Raksha Bandhan Premium template on ShareInvite is just ₹199, a one-time price for a card your whole family can open, keep and revisit. You can preview the finished card on your own phone before you pay or share, so you know exactly what your family will see. There is no printing cost, no courier, and no paper wasted, just a warm, personal, interactive Rakhi card that reaches every sibling and relative in seconds. For less than the cost of a single boxed card set, you send the bond itself, not just a message.`,
+        body: `The Raksha Bandhan template on ShareInvite is just ₹199, a one-time price for a card your whole family can open, keep and revisit. You can preview the finished card on your own phone before you pay or share, so you know exactly what your family will see. There is no printing cost, no courier, and no paper wasted, just a warm, personal, interactive Rakhi card that reaches every sibling and relative in seconds. For less than the cost of a single boxed card set, you send the bond itself, not just a message.`,
       },
     ],
     checklist: [
@@ -269,7 +269,7 @@ It is fully responsive, so it looks just as good on your grandmother's phone as 
       'Share the single link on WhatsApp: family group and each sibling',
     ],
     faq: [
-      { q: 'How much does the Raksha Bandhan invitation card cost?', a: 'The Raksha Bandhan Premium template on ShareInvite is just ₹199, a one-time price with no subscription. You can design and preview the finished card on your own phone before you pay, so you know exactly what your family will see, and there is no ShareInvite watermark on the essentials.' },
+      { q: 'How much does the Raksha Bandhan invitation card cost?', a: 'The Raksha Bandhan template on ShareInvite is just ₹199, a one-time price with no subscription. You can design and preview the finished card on your own phone before you pay, so you know exactly what your family will see, and there is no ShareInvite watermark on the essentials.' },
       { q: 'Can I send the Rakhi card to my brother or sister living abroad (NRI)?', a: 'Absolutely. That is one of the best uses. The card is a web link that opens instantly on any phone or laptop, anywhere in the world, in the browser. Your sibling in the US, UK, Dubai, Canada, Australia or Singapore can open it with one tap, no app and no download.' },
       { q: 'Do my family need to install an app to open it?', a: 'No. The invitation opens directly in any web browser from the WhatsApp link. There is nothing to download or install, which is ideal for elders and less tech-savvy relatives.' },
       { q: 'Can I add my own photos and a personal message?', a: 'Yes. You can upload several photos for the scrapbook "Our Bond" section and the "Moments to Cherish" gallery, and write your own heartfelt message that appears beautifully on the card.' },

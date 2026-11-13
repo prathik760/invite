@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, memo, useCallback, useContext, useRef, useState } from 'react'
+import { createContext, memo, useCallback, useContext, useId, useRef, useState } from 'react'
 import type { TemplateConfig, TemplateField } from '@/types'
 import { FIELD_ORDER } from '@/lib/fieldOrder'
 
@@ -31,10 +31,30 @@ const GREETING_EXTRA_KEYS = new Set(['reasons'])
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
+/**
+ * Uploads need a signed-in session, or (a published invitation opened for editing by its owner
+ * without signing in) that invitation's edit key: the one from its email link, held for this tab,
+ * or the one this device kept when it published it (app/create).
+ */
+function editHeaders(): Record<string, string> {
+  try {
+    const slug = new URLSearchParams(window.location.search).get('edit')
+    if (!slug) return {}
+    let key = sessionStorage.getItem(`si-edit-key:${slug}`)
+    if (!key) {
+      const mine = JSON.parse(localStorage.getItem('si_my_invitations') || '[]') as { slug?: string; key?: string }[]
+      key = mine.find((m) => m.slug === slug)?.key ?? null
+    }
+    return key ? { 'x-edit-slug': slug, 'x-edit-key': key } : {}
+  } catch {
+    return {}
+  }
+}
+
 async function uploadToR2(file: File, folder: 'gallery' | 'music' | 'portraits' | 'video'): Promise<string> {
   const res = await fetch('/api/upload', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...editHeaders() },
     body: JSON.stringify({ contentType: file.type, size: file.size, folder }),
   })
   if (!res.ok) {
@@ -179,6 +199,9 @@ export const FlaggedFields = createContext<ReadonlySet<string>>(new Set())
 const FLAG_STYLE = { borderColor: '#C9741F', boxShadow: '0 0 0 3px rgba(201,116,31,0.14)' }
 
 function FieldInput({ field, value, onChange }: { field: TemplateField; value: string; onChange: (v: string) => void }) {
+  // Ties the label to its box (13 Nov 2026): tapping "Venue Name" puts the cursor in the box, and
+  // a screen reader says which box it is. The label used to sit beside the box, linked to nothing.
+  const id = `field-${useId()}`
   const hint = FIELD_HINTS[field.key]
   const isUrl = field.type === 'url' || field.key === 'mapsUrl'
   const flagged = useContext(FlaggedFields).has(field.key) && !value.trim()
@@ -198,7 +221,10 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
             return (
               <label
                 key={o.value}
-                className={`flex cursor-pointer items-start gap-3 rounded-2xl border bg-white p-3.5 transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-emerald ${on ? 'border-emerald ring-1 ring-emerald' : 'border-line hover:border-charcoal/30'}`}
+                // `relative` holds the hidden radio (sr-only, so absolutely placed) inside its card. Without
+                // it the radio was placed against the page and made the builder page taller than the
+                // window, which then scrolled and showed an empty band under the form (13 Nov 2026).
+                className={`relative flex cursor-pointer items-start gap-3 rounded-2xl border bg-white p-3.5 transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-emerald ${on ? 'border-emerald ring-1 ring-emerald' : 'border-line hover:border-charcoal/30'}`}
               >
                 <input type="radio" name={field.key} value={o.value} checked={on} onChange={() => onChange(o.value)} className="sr-only" />
                 {o.swatch && <span aria-hidden className="h-14 w-10 shrink-0 rounded-lg shadow-sm" style={{ background: o.swatch }} />}
@@ -223,13 +249,16 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
 
   return (
     <div data-field={field.key}>
-      <label className="field-label">
+      <label className="field-label" htmlFor={id}>
         {field.label}
         {field.required && <span className="ml-1 text-burnished-deep" aria-hidden>*</span>}
       </label>
 
       {field.type === 'textarea' ? (
         <textarea
+          id={id}
+          aria-required={field.required || undefined}
+          aria-describedby={flagged ? `${id}-flag` : undefined}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={field.placeholder || ''}
@@ -246,7 +275,10 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
             </svg>
           </div>
           <input
+            id={id}
             type="url"
+            aria-required={field.required || undefined}
+            aria-describedby={flagged ? `${id}-flag` : hint ? `${id}-hint` : undefined}
             value={value}
             onChange={e => onChange(e.target.value)}
             placeholder={field.placeholder || 'https://…'}
@@ -257,7 +289,10 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
         </div>
       ) : (
         <input
+          id={id}
           type={field.type}
+          aria-required={field.required || undefined}
+          aria-describedby={flagged ? `${id}-flag` : hint && field.type !== 'date' && field.type !== 'time' ? `${id}-hint` : undefined}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={field.placeholder || ''}
@@ -268,13 +303,13 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
       )}
 
       {flagged && (
-        <p className="mt-1.5 text-[0.8rem] font-medium" style={{ color: '#A35A12' }}>
+        <p id={`${id}-flag`} className="mt-1.5 text-[0.8rem] font-medium" style={{ color: '#A35A12' }}>
           Needed to publish. Add it now, or continue and add it before you pay.
         </p>
       )}
 
       {hint && field.type !== 'textarea' && field.type !== 'date' && field.type !== 'time' && (
-        <p className="field-hint">{hint}</p>
+        <p id={`${id}-hint`} className="field-hint">{hint}</p>
       )}
     </div>
   )

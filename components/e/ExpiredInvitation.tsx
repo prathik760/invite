@@ -40,8 +40,8 @@ const TEMPLATE_CARDS: Record<string, TemplateCard> = {
   'royal-deco':       { id: 'royal-deco',        name: 'Royal Deco',                tagline: 'Art Deco palace edition',      gradient: 'linear-gradient(135deg,#03060F,#060B1E)', accent: '#BFA060', rgb: '191,160,96' },
   'anniversary':      { id: 'anniversary',       name: 'Saalgirah',                 tagline: 'Cinematic anniversary',        gradient: 'linear-gradient(135deg,#0A0008,#180012)', accent: '#CE93D8', rgb: '206,147,216' },
   'luxury-wedding':   { id: 'luxury-wedding',    name: 'Luxury Wedding',            tagline: 'Premium multi-function',       gradient: 'linear-gradient(135deg,#1C1008,#2E1A0A)', accent: '#C9A84C', rgb: '201,168,76' },
-  'ganesh-chaturthi': { id: 'ganesh-chaturthi',  name: 'Ganesh Chaturthi Premium',  tagline: 'Saffron & gold Ganeshotsav',   gradient: 'linear-gradient(135deg,#3A1206,#6E2A08)', accent: '#E4761B', rgb: '228,118,27' },
-  'rakshabandhan':    { id: 'rakshabandhan',     name: 'Raksha Bandhan Premium',    tagline: 'Cream & gold festive',         gradient: 'linear-gradient(135deg,#2E1218,#4E1A28)', accent: '#C24E68', rgb: '194,78,104' },
+  'ganesh-chaturthi': { id: 'ganesh-chaturthi',  name: 'Ganesh Chaturthi',          tagline: 'Saffron & gold Ganeshotsav',   gradient: 'linear-gradient(135deg,#3A1206,#6E2A08)', accent: '#E4761B', rgb: '228,118,27' },
+  'rakshabandhan':    { id: 'rakshabandhan',     name: 'Raksha Bandhan',            tagline: 'Cream & gold festive',         gradient: 'linear-gradient(135deg,#2E1218,#4E1A28)', accent: '#C24E68', rgb: '194,78,104' },
 }
 
 // ─── Category lookup ──────────────────────────────────────────────────────────

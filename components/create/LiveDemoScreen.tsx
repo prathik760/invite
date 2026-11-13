@@ -1,8 +1,9 @@
 'use client'
 
 import Image from '@/components/ui/Image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type MutableRefObject } from 'react'
 import { EMBED_PLAY, EMBED_READY } from '@/lib/embedSignals'
+import { useT } from '@/components/i18n/I18nProvider'
 
 /**
  * A design's real demo page (/demo/<id>/embed) inside a phone screen.
@@ -22,6 +23,10 @@ import { EMBED_PLAY, EMBED_READY } from '@/lib/embedSignals'
  * every image, by when the opening had already played unseen. On reveal the
  * page is told to start the design over, so the opening is always seen.
  * `load` remains the fallback.
+ *
+ * `src` frames another page of the same kind (the homepage's sample,
+ * /demo/<id>/sample); `frameRef` hands the frame to the caller so it can
+ * talk to the page inside.
  */
 export default function LiveDemoScreen({
   templateId,
@@ -29,15 +34,21 @@ export default function LiveDemoScreen({
   poster,
   phoneWidth = 390,
   className,
+  src,
+  frameRef: outerRef,
 }: {
   templateId: string
   title: string
   poster?: string
   phoneWidth?: number
   className?: string
+  src?: string
+  frameRef?: MutableRefObject<HTMLIFrameElement | null>
 }) {
+  const tr = useT()
   const boxRef = useRef<HTMLDivElement>(null)
-  const frameRef = useRef<HTMLIFrameElement>(null)
+  const ownRef = useRef<HTMLIFrameElement | null>(null)
+  const frameRef = outerRef ?? ownRef
   const revealed = useRef(false)
   const [box, setBox] = useState<{ w: number; h: number } | null>(null)
   const [loaded, setLoaded] = useState(false)
@@ -47,7 +58,7 @@ export default function LiveDemoScreen({
     revealed.current = true
     setLoaded(true)
     frameRef.current?.contentWindow?.postMessage(EMBED_PLAY, window.location.origin)
-  }, [])
+  }, [frameRef])
 
   useEffect(() => {
     const onMessage = (e: MessageEvent) => {
@@ -55,7 +66,7 @@ export default function LiveDemoScreen({
     }
     window.addEventListener('message', onMessage)
     return () => window.removeEventListener('message', onMessage)
-  }, [reveal])
+  }, [reveal, frameRef])
 
   useEffect(() => {
     const el = boxRef.current
@@ -82,9 +93,11 @@ export default function LiveDemoScreen({
         <iframe
           key={templateId}
           ref={frameRef}
-          src={`/demo/${templateId}/embed`}
-          title={`${title}: live preview`}
+          src={src ?? `/demo/${templateId}/embed`}
+          title={tr('{name}: live preview', { name: title })}
           onLoad={reveal}
+          // Lets a tap outside the frame (the homepage's "Play the music") start the design's song.
+          allow="autoplay"
           className="absolute left-0 top-0 border-0"
           style={{
             width: frameW,
@@ -102,7 +115,7 @@ export default function LiveDemoScreen({
           <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/45 via-transparent to-transparent pb-8">
             <span className="flex items-center gap-2 rounded-full bg-black/55 px-3.5 py-1.5 text-[12px] font-semibold text-white">
               <span className="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-              Opening the live preview…
+              {tr('Opening the live preview…')}
             </span>
           </div>
         </div>

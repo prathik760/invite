@@ -85,3 +85,16 @@ export function occasionChips(items: CatalogItem[]) {
     .filter((o) => items.some((i) => i.occasions.includes(o.key)))
     .map((o) => ({ key: o.key, label: o.short }))
 }
+
+/**
+ * A catalogue item's words in the reader's language (its design name stays as it is: names are
+ * the designs' own). A style such as "Wedding · Signature · Palace" is translated piece by piece.
+ */
+export function localiseItem(i: CatalogItem, t: (s: string) => string): CatalogItem {
+  return {
+    ...i,
+    description: t(i.description),
+    occasionLabel: t(i.occasionLabel),
+    style: i.style.split(' · ').map((p) => t(p)).join(' · '),
+  }
+}

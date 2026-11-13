@@ -4,12 +4,15 @@ import { SUPPORT_EMAIL, SUPPORT_WHATSAPP_URL } from '@/lib/support'
 import Logo from '@/components/brand/Logo'
 import PaymentLogos from '@/components/price/PaymentLogos'
 import { CookieSettingsLink } from '@/components/providers/CookieConsent'
+import { serverT } from '@/lib/serverLang'
+import { rich } from '@/lib/translate'
 
 /**
  * Site-wide footer. Every link below is a real route, and the footer is the
  * main internal-linking surface for the occasion, city and wording pages — so
  * links are only ever added here, not dropped, without a redirect in place.
  */
+/** Four columns: Invitations, Explore, Wording & ideas, and Support, Company and Legal stacked in the last. */
 const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: 'Invitations',
@@ -25,15 +28,14 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
     ],
   },
   {
-    title: 'Create',
+    title: 'Explore',
     links: [
       { label: 'Browse templates', href: '/templates' },
       { label: 'Create an invitation', href: '/create' },
       { label: 'Pricing', href: '/pricing' },
+      { label: 'How it works', href: '/how-it-works' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
       { label: 'Online RSVP', href: '/online-rsvp' },
-      { label: 'Request a custom design', href: '/#custom-template' },
-      { label: 'My invitations', href: '/dashboard' },
     ],
   },
   {
@@ -51,10 +53,24 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
     ],
   },
   {
+    title: 'Support',
+    links: [
+      { label: 'FAQs', href: '/faq' },
+      { label: 'Contact us', href: '/contact' },
+      { label: 'Request a custom design', href: '/contact#custom-design' },
+      { label: 'My invitations', href: '/dashboard' },
+    ],
+  },
+  {
     title: 'Company',
     links: [
       { label: 'Partner with us', href: '/partners' },
       { label: 'Press & media', href: '/press' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
       { label: 'Terms of service', href: '/terms' },
       { label: 'Privacy policy', href: '/privacy' },
       { label: 'Refund & cancellation', href: '/refund-policy' },
@@ -90,6 +106,7 @@ const SOCIALS = [
 ]
 
 export default function SiteFooter() {
+  const t = serverT()
   return (
     // Pages that end in this footer often dock a CTA bar to the bottom of the
     // viewport; without this the last rows sit underneath it and are unreadable.
@@ -97,17 +114,16 @@ export default function SiteFooter() {
       <div className="mx-auto max-w-7xl px-5 pt-16 max-sm:pt-12 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div className="max-w-sm">
-            <Link href="/" aria-label="ShareInvite home">
+            <Link href="/" aria-label={t('ShareInvite home')}>
               <Logo tone="light" />
             </Link>
-            <p className="mt-3 font-editorial text-[1.35rem] italic text-gold-soft">Beautifully invited.</p>
+            <p className="mt-3 font-editorial text-[1.35rem] italic text-gold-soft">{t('Beautifully invited.')}</p>
             <p className="mt-4 text-[0.95rem] leading-7 text-paper/65">
-              Beautiful digital invitations for every celebration: weddings, birthdays, festivals and the little
-              moments in between. Built once, shared anywhere with a single link.
+              {t('Beautiful digital invitations for every celebration: weddings, birthdays, festivals and the little moments in between. Built once, shared anywhere with a single link.')}
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               <Link href="/create" className="btn-gold inline-flex items-center rounded-full px-5 py-2.5 text-[0.9rem] font-semibold">
-                Start creating
+                {t('Start creating')}
               </Link>
               <a
                 href={SUPPORT_WHATSAPP_URL}
@@ -115,7 +131,7 @@ export default function SiteFooter() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center rounded-full border border-paper/20 px-5 py-2.5 text-[0.9rem] font-semibold text-paper/85 transition-colors hover:bg-paper/10"
               >
-                Chat with us
+                {t('Chat with us')}
               </a>
             </div>
             <p className="mt-4 text-[0.82rem] text-paper/50">
@@ -128,7 +144,7 @@ export default function SiteFooter() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`ShareInvite on ${s.label}`}
+                  aria-label={t('ShareInvite on {site}', { site: s.label })}
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-paper/15 text-paper/70 transition-colors hover:border-gold-soft hover:text-gold-soft"
                 >
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
@@ -139,51 +155,56 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 max-sm:grid-cols-1 max-sm:gap-5 sm:grid-cols-4 lg:col-span-4">
-            {COLUMNS.map((col) => (
-              <nav key={col.title} aria-label={col.title}>
-                <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-gold-soft">{col.title}</p>
-                <ul className="mt-3 space-y-0.5 max-sm:mt-1.5 max-sm:flex max-sm:flex-wrap max-sm:gap-x-4 max-sm:space-y-0">
+          {/* Phones: two columns, one link per line at a size that reads and taps comfortably. */}
+          <div className="grid grid-cols-2 gap-8 max-sm:gap-x-5 max-sm:gap-y-7 sm:grid-cols-4 lg:col-span-4">
+            {[COLUMNS.slice(0, 1), COLUMNS.slice(1, 2), COLUMNS.slice(2, 3), COLUMNS.slice(3)].map((stack) => (
+              <div key={stack[0].title} className="space-y-7 max-sm:space-y-6">
+              {stack.map((col) => (
+              <nav key={col.title} aria-label={t(col.title)}>
+                <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-gold-soft max-sm:text-[11.5px] max-sm:tracking-[0.16em]">{t(col.title)}</p>
+                <ul className="mt-3 space-y-0.5 max-sm:mt-2 max-sm:space-y-0">
                   {col.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} prefetch={false} className="inline-block py-1.5 text-[0.9rem] text-paper/65 transition-colors hover:text-paper max-sm:py-1 max-sm:text-[0.86rem]">
-                        {link.label}
+                      <Link href={link.href} prefetch={false} className="inline-block py-1.5 text-[0.9rem] text-paper/65 transition-colors hover:text-paper max-sm:py-[7px] max-sm:text-[14px] max-sm:leading-snug max-sm:text-paper/75">
+                        {t(link.label)}
                       </Link>
                     </li>
                   ))}
                 </ul>
               </nav>
+              ))}
+              </div>
             ))}
           </div>
         </div>
 
         <div className="mt-12 grid gap-6 border-t border-paper/10 pt-8 max-sm:mt-9 max-sm:gap-5 max-sm:pt-6 md:grid-cols-3">
-          <nav aria-label="Blog topics">
-            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45">From the blog</p>
-            <ul className="mt-2 flex flex-wrap gap-x-4">
+          <nav aria-label={t('Blog topics')}>
+            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45 max-sm:text-[11.5px] max-sm:tracking-[0.16em]">{t('From the blog')}</p>
+            <ul className="mt-2 flex flex-wrap gap-x-4 max-sm:gap-x-5">
               {BLOG_TOPICS.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} prefetch={false} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">{l.label}</Link>
+                  <Link href={l.href} prefetch={false} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper max-sm:py-2 max-sm:text-[13px]">{t(l.label)}</Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <nav aria-label="City pages">
-            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45">Popular cities</p>
-            <ul className="mt-2 flex flex-wrap gap-x-4">
+          <nav aria-label={t('City pages')}>
+            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45 max-sm:text-[11.5px] max-sm:tracking-[0.16em]">{t('Popular cities')}</p>
+            <ul className="mt-2 flex flex-wrap gap-x-4 max-sm:gap-x-5">
               {CITY_PAGES.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} prefetch={false} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">{l.label}</Link>
+                  <Link href={l.href} prefetch={false} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper max-sm:py-2 max-sm:text-[13px]">{t(l.label)}</Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <nav aria-label="Languages">
-            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45">Languages</p>
-            <ul className="mt-2 flex flex-wrap gap-x-4">
+          <nav aria-label={t('Languages')}>
+            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45 max-sm:text-[11.5px] max-sm:tracking-[0.16em]">{t('Languages')}</p>
+            <ul className="mt-2 flex flex-wrap gap-x-4 max-sm:gap-x-5">
               {LOCALES.map((l) => (
                 <li key={l.code}>
-                  <Link href={localePath('/', l.code)} prefetch={false} hrefLang={l.htmlLang} dir={l.dir} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper">
+                  <Link href={localePath('/', l.code)} prefetch={false} hrefLang={l.htmlLang} dir={l.dir} className="inline-block py-1.5 text-[0.82rem] text-paper/60 hover:text-paper max-sm:py-2 max-sm:text-[13px]">
                     {l.label}
                   </Link>
                 </li>
@@ -194,10 +215,10 @@ export default function SiteFooter() {
 
         <div className="mt-10 flex flex-col gap-5 border-t border-paper/10 pt-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45">Pay securely with</p>
+            <p className="text-[0.75rem] font-bold uppercase tracking-[0.2em] text-paper/45">{t('Pay securely with')}</p>
             <PaymentLogos className="mt-3" />
             <p className="mt-3 text-[0.8rem] text-paper/50">
-              One-time payment through Razorpay. ShareInvite never sees or stores your card details.
+              {t('One-time payment through Razorpay. ShareInvite never sees or stores your card details.')}
             </p>
           </div>
           {/* Razorpay's own merchant badge, loaded from Razorpay as their embed code does. */}
@@ -205,7 +226,7 @@ export default function SiteFooter() {
           <img
             src="https://badges.razorpay.com/badge-dark.png"
             referrerPolicy="origin"
-            alt="Payments powered by Razorpay"
+            alt={t('Payments powered by Razorpay')}
             width={113}
             height={45}
             loading="lazy"
@@ -216,8 +237,8 @@ export default function SiteFooter() {
 
         <div className="mt-8 flex flex-col gap-3 border-t border-paper/10 py-7 text-[0.8rem] text-paper/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} ShareInvite · Digital invitations for every celebration ·{' '}
-            Founded by <span className="text-paper/80">Prathik Thelkar</span>
+            © {new Date().getFullYear()} ShareInvite · {t('Digital invitations for every celebration')} ·{' '}
+            {rich(t('Founded by {name}'), { name: <span className="text-paper/80">Prathik Thelkar</span> })}
           </p>
           <p>
             <CookieSettingsLink className="inline-block py-1.5 hover:text-paper" />

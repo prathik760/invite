@@ -52,6 +52,7 @@ export const SIZED_IMAGES: Record<string, readonly number[]> = {
   '/templates/signature-kalyanam.jpg': [128, 384, 640, 960],
   '/templates/signature-nikah.jpg': [128, 384, 640, 960],
   '/templates/signature-rajwada.jpg': [128, 384, 640, 960],
+  '/templates/signature-royal-edit.jpg': [128, 384, 640, 960],
   '/templates/signature-saptapadi.jpg': [128, 384, 640, 960],
   '/templates/signature-two-worlds.jpg': [128, 384, 640, 960],
   '/templates/surprise-journey.jpg': [128, 384, 640, 960],

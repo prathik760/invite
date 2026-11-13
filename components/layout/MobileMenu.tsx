@@ -6,11 +6,12 @@ import Image from '@/components/ui/Image'
 import Link from '@/components/ui/Link'
 import { usePathname } from 'next/navigation'
 import { OCCASIONS } from '@/lib/catalog'
-import { LOCALES, localeHref, localePath, stripLocale } from '@/lib/i18n'
+import { LOCALES, localeHref, localePath, stripLocale, isIndianLocale } from '@/lib/i18n'
 import { t } from '@/content/translations'
 import { ArrowRightIcon, CloseIcon, MenuIcon } from '@/components/ui/Icons'
 import Logo from '@/components/brand/Logo'
 import { useBackToClose } from '@/lib/useBackToClose'
+import { useT } from '@/components/i18n/I18nProvider'
 
 /**
  * Full-screen menu below `lg`. The same destinations are in the desktop nav's
@@ -35,6 +36,9 @@ export default function MobileMenu({
   useEffect(() => setMounted(true), [])
   const pathname = usePathname() || '/'
   const { path } = stripLocale(pathname)
+  const tr = useT()
+  // Indian-language pages translate from their dictionary; the other languages keep content/translations.
+  const nav = (key: Parameters<typeof t>[0], english: string) => (isIndianLocale(locale) ? tr(english) : t(key, locale))
 
   // Close on navigation. Links inside also close it directly, but a route
   // change triggered any other way (back button) must not leave it covering
@@ -68,7 +72,7 @@ export default function MobileMenu({
         type="button"
         onClick={() => setOpen(true)}
         className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-charcoal transition-colors hover:bg-peach lg:hidden"
-        aria-label="Open menu"
+        aria-label={tr('Open menu')}
         aria-expanded={open}
       >
         <MenuIcon />
@@ -78,7 +82,7 @@ export default function MobileMenu({
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Menu"
+          aria-label={tr('Menu')}
           className="fixed inset-0 flex flex-col bg-champagne lg:hidden"
           style={{ zIndex: 'var(--z-overlay)' as unknown as number }}
         >
@@ -90,19 +94,19 @@ export default function MobileMenu({
               type="button"
               onClick={close}
               className="inline-flex h-10 w-10 items-center justify-center rounded-full text-charcoal hover:bg-peach"
-              aria-label="Close menu"
+              aria-label={tr('Close menu')}
             >
               <CloseIcon />
             </button>
           </div>
 
-          <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
+          <nav aria-label={tr('Mobile')} className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
             <ul className="divide-y divide-line border-b border-line">
               {[
-                { href: '/templates', label: t('nav.templates', locale) },
-                { href: '/pricing', label: t('nav.pricing', locale) },
-                { href: '/blog', label: t('nav.blog', locale) },
-                { href: '/dashboard', label: 'My invitations' },
+                { href: '/templates', label: nav('nav.templates', 'Templates') },
+                { href: '/pricing', label: nav('nav.pricing', 'Pricing') },
+                { href: '/blog', label: nav('nav.blog', 'Blog') },
+                { href: '/dashboard', label: tr('My invitations') },
               ].map((item) => (
                 <li key={item.href}>
                   <Link
@@ -118,7 +122,7 @@ export default function MobileMenu({
               ))}
             </ul>
 
-            <p className="eyebrow mt-7">Occasions</p>
+            <p className="eyebrow mt-7">{tr('Occasions')}</p>
             <ul className="mt-3 grid grid-cols-2 gap-2">
               {OCCASIONS.map((o) => (
                 <li key={o.key}>
@@ -129,13 +133,13 @@ export default function MobileMenu({
                     className="flex items-center gap-2.5 rounded-xl border border-line bg-paper p-2"
                   >
                     <Image src={o.image} alt="" width={40} height={36} className="h-9 w-10 shrink-0 rounded-lg object-cover" />
-                    <span className="text-[0.9rem] font-semibold leading-tight text-charcoal">{o.label}</span>
+                    <span className="text-[0.9rem] font-semibold leading-tight text-charcoal">{tr(o.label)}</span>
                   </Link>
                 </li>
               ))}
             </ul>
 
-            <p className="eyebrow mt-7">Language</p>
+            <p className="eyebrow mt-7">{tr('Language')}</p>
             <ul className="mt-3 flex flex-wrap gap-2">
               {LOCALES.map((l) => (
                 <li key={l.code}>
@@ -169,7 +173,7 @@ export default function MobileMenu({
               {createLabel}
               <ArrowRightIcon />
             </Link>
-            <p className="mt-2 text-center text-[0.78rem] text-muted">Preview before you pay · Pay once to publish</p>
+            <p className="mt-2 text-center text-[0.78rem] text-muted">{tr('Preview before you pay · Pay once to publish')}</p>
           </div>
         </div>,
         document.body,

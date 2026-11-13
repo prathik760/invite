@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from '@/components/ui/Image'
 import Link from '@/components/ui/Link'
 import { signOut } from 'next-auth/react'
+import { forgetSignedInDevice } from '@/lib/deviceSession'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getAppUrl, formatRelativeDate } from '@/lib/utils'
 import { templateImage } from '@/lib/templateMedia'
@@ -148,6 +149,9 @@ export default function DashboardClient({ user }: Props) {
         })
 
         setEvents(evs)
+        // For the homepage's "welcome back" line (components/homepage/ContinueDraft): how many
+        // invitations this signed-in host has. A count only, kept on this device.
+        try { localStorage.setItem('si-host', JSON.stringify({ n: evs.length })) } catch { /* storage off */ }
         setLastChecked(new Date())
       })
       .catch((err: unknown) => setFetchError(err instanceof Error ? err.message : 'Failed to load'))
@@ -250,7 +254,7 @@ export default function DashboardClient({ user }: Props) {
                     <Link href="/pricing" className="block px-4 py-2.5 text-[0.88rem] hover:bg-peach">Pricing</Link>
                     <button
                       type="button"
-                      onClick={async () => { setSigningOut(true); await signOut({ callbackUrl: '/' }) }}
+                      onClick={async () => { setSigningOut(true); forgetSignedInDevice(); await signOut({ callbackUrl: '/' }) }}
                       disabled={signingOut}
                       className="block w-full border-t border-line px-4 py-2.5 text-left text-[0.88rem] text-charcoal/75 hover:bg-peach"
                     >

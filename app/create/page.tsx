@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic'
 import { useSession } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TEMPLATES } from '@/modules/templates/data'
-import { PLANS, canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
+import { PLANS, NOTHING_OWNED, getRequiredPlan, owns, ownedFrom, type Owned, type PlanId } from '@/lib/plans'
 import ShareBar from '@/components/ui/ShareBar'
 import { CREATE_STEPS, seoEvents, trackEvent } from '@/lib/analytics'
 import BottomDock from '@/components/ui/BottomDock'
@@ -17,12 +17,14 @@ import { displayName } from '@/lib/catalog'
 import { carryOverDetails } from '@/lib/carryOver'
 import { usePreviewFollow } from '@/lib/usePreviewFollow'
 import { coupleLine } from '@/lib/inviteCardText'
-import { DoneForYouChoice, DoneForYouStrip, type DoneForYouDesign } from '@/components/create/DoneForYou'
+import { DoneForYouStrip, type DoneForYouDesign } from '@/components/create/DoneForYou'
 import { FlaggedFields } from '@/components/editor/FormEditor'
 
 import StepProgress from '@/components/create/StepProgress'
 import Step1Templates from '@/components/create/Step1Templates'
 import Step2Names from '@/components/create/Step2Names'
+import { SavedFlash } from '@/components/create/StepShell'
+import { PreviewEditing } from '@/components/templates/kit/ui'
 import Step3Details from '@/components/create/Step3Details'
 import Step4Enrich from '@/components/create/Step4Enrich'
 import Step5Publish from '@/components/create/Step5Publish'
@@ -42,6 +44,23 @@ const DRAFT_KEY = 'invitely-draft'
 const PASS_KEY = 'si_purchase_pass'
 /** Invitations published from this device, so a buyer without an account can find them again. */
 const MINE_KEY = 'si_my_invitations'
+
+/**
+ * To sign-in, and back to the publish step with everything typed (13 Nov 2026). An account is
+ * asked for only to publish: building and previewing are open to everyone. `resume` tells the
+ * builder to reopen the draft kept on this device instead of starting the design afresh, which
+ * a bare ?template= link does. `template` lets the sign-in page show which design is waiting.
+ */
+function signInToPublishHref(templateId: string): string {
+  return `/auth/login?callbackUrl=${encodeURIComponent(`/create?template=${templateId}&resume=publish`)}&from=customize`
+}
+
+/** A box the keyboard opens for (not a tick box, a choice or a photo button). */
+function isTextEntry(el: EventTarget | null): boolean {
+  if (!(el instanceof HTMLElement)) return false
+  if (el.tagName === 'TEXTAREA' || el.isContentEditable) return true
+  return el.tagName === 'INPUT' && !['checkbox', 'radio', 'file', 'button', 'submit', 'range', 'color'].includes((el as HTMLInputElement).type)
+}
 
 /** The edit key this device kept for one of its invitations (lib/editKey.ts). */
 function savedEditKey(slug: string): string | null {
@@ -154,7 +173,7 @@ function SuccessLink({ url }: { url: string }) {
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function CreatePage() {
-  const { data: session } = useSession()
+  const { data: session, status: sessionStatus } = useSession()
   const [currentStep, setCurrentStep] = useState(1)
   const [previewOpen, setPreviewOpen] = useState(false)  // mobile full-screen live preview
   // Which preview is on screen. Each layout's preview used to stay mounted but
@@ -192,7 +211,8 @@ export default function CreatePage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [createdSlug, setCreatedSlug] = useState<string | null>(null)
-  const [userPlan, setUserPlan] = useState<PlanId>('free')
+  // The designs this account owns (lib/plans.ts `Owned`): an owned design publishes without paying again.
+  const [owned, setOwned] = useState<Owned>(NOTHING_OWNED)
   const [paying, setPaying] = useState(false)
   // Payment problems used to surface as browser alert() dialogs — including
   // after the customer's money had already left their account. This holds a
@@ -200,6 +220,8 @@ export default function CreatePage() {
   // route to a human instead.
   const [payError, setPayError] = useState<PayError | null>(null)
   const [savedToast, setSavedToast] = useState(false)
+  // A box in the form is being typed in: the phone's pinned preview steps aside meanwhile.
+  const [typing, setTyping] = useState(false)
   // Blocks the autosave effect until the stored draft has been read back, so
   // the default form values cannot clobber it on first paint.
   const [draftLoaded, setDraftLoaded] = useState(false)
@@ -252,7 +274,8 @@ export default function CreatePage() {
     }
     const tplParam = params.get('template')
     const tpl = tplParam ? TEMPLATES.find(t => t.id === tplParam) : undefined
-    if (tpl) {
+    // Back from signing in to publish: the draft effect below reopens what was typed.
+    if (tpl && !params.get('resume')) {
       setSelectedId(tpl.id)
       // `message` arrives from the wording pages ("send these words as an
       // invitation"): the copied words become the design's personal message.
@@ -273,14 +296,26 @@ export default function CreatePage() {
       entry_point: tpl ? 'deep_link' : 'gallery',
       source: params.get('src') ?? undefined,
     })
+    // Arrived straight from signing in (an account is needed to customize; middleware.ts sends
+    // signed-out visitors to /auth/login, which returns here with `auth`). Reported once: the
+    // marker is removed from the address, so a refresh or Back does not count it again.
+    const auth = params.get('auth')
+    if (auth) {
+      trackEvent('builder_open', { after_auth: 'yes', method: auth, template_id: tpl?.id ?? 'none', source: params.get('src') ?? undefined })
+      // Google sign-in returns through Google, so its completion is only known here.
+      if (auth === 'google') trackEvent('login', { method: 'google', context: tpl ? 'customize' : 'create' })
+      params.delete('auth')
+      const q = params.toString()
+      window.history.replaceState(window.history.state, '', `${window.location.pathname}${q ? `?${q}` : ''}${window.location.hash}`)
+    }
   }, [])
 
-  // Fetch real user plan once signed in
+  // What the account owns, once signed in
   useEffect(() => {
     if (!session) return
     fetch('/api/user/subscription')
       .then(r => r.json())
-      .then((body: { plan: PlanId }) => { if (body.plan) setUserPlan(body.plan) })
+      .then((body: unknown) => setOwned(ownedFrom(body)))
       .catch(() => { })
   }, [session])
 
@@ -298,8 +333,12 @@ export default function CreatePage() {
     // over whatever was left in storage.
     // Changing a published invitation leaves any unfinished new one's draft as it is: draftLoaded
     // stays false, so nothing is autosaved over it.
-    if (new URLSearchParams(window.location.search).get('edit')) return
-    if (new URLSearchParams(window.location.search).get('template')) { setDraftLoaded(true); return }
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('edit')) return
+    // Back from signing in to publish (signInToPublishHref): reopen the draft, at the publish step.
+    const resume = params.get('resume')
+    if (params.get('template') && !resume) { setDraftLoaded(true); return }
+    let restored = false
     try {
       const raw = localStorage.getItem(DRAFT_KEY)
       if (raw) {
@@ -309,10 +348,25 @@ export default function CreatePage() {
           draftsRef.current = draft.others ?? {}
           setSelectedId(draft.templateId)
           setData(draft.data)
-          setCurrentStep(Math.min(Math.max(draft.step ?? 2, 1), 4))
+          setCurrentStep(resume === 'publish' ? 5 : Math.min(Math.max(draft.step ?? 2, 1), 4))
+          restored = true
         }
       }
     } catch { /* private mode or corrupt payload — start clean */ }
+    if (resume) {
+      // Signed in on another device or in a private window, where no draft was kept: open the
+      // design they chose, ready for their details, rather than an empty builder.
+      const tpl = TEMPLATES.find(t => t.id === params.get('template'))
+      if (!restored && tpl) {
+        setSelectedId(tpl.id)
+        setCurrentStep(2)
+      }
+      // Off the address, so a refresh reopens the draft where it is rather than resuming again.
+      params.delete('resume')
+      params.delete('template')
+      const q = params.toString()
+      window.history.replaceState(window.history.state, '', `${window.location.pathname}${q ? `?${q}` : ''}${window.location.hash}`)
+    }
     setDraftLoaded(true)
   }, [])
 
@@ -323,7 +377,7 @@ export default function CreatePage() {
   useEffect(() => {
     if (!draftLoaded || createdSlug) return
     try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data, step: currentStep, others: draftsRef.current }))
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ templateId: selectedId, data, step: currentStep, others: draftsRef.current, at: Date.now() }))
     } catch { /* quota or private mode — autosave is best-effort */ }
   }, [draftLoaded, selectedId, data, currentStep, createdSlug])
 
@@ -493,6 +547,13 @@ export default function CreatePage() {
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({})) as { error?: string; code?: string }
+        // Not signed in, or the session ran out (an account is required to publish): sign in and
+        // come straight back to the publish step. The draft is kept on this device meanwhile.
+        if (res.status === 401) {
+          setLoading(false)
+          window.location.href = signInToPublishHref(selectedTemplate.id)
+          return
+        }
         // Server-side entitlement check rejected this — open the paywall rather
         // than showing a dead-end error message.
         if (res.status === 402 || body.code === 'PAYMENT_REQUIRED') {
@@ -542,38 +603,19 @@ export default function CreatePage() {
     })
     return () => cancelAnimationFrame(id)
   }, [currentStep, selectedId])
-  usePreviewFollow([desktopPreviewRef, mobilePreviewRef, stripScreenRef], selectedId, focusKey, previewData, previewOpen)
+  usePreviewFollow([desktopPreviewRef, mobilePreviewRef, stripScreenRef], selectedId, focusKey, previewData, `${previewOpen}|${typing}`)
 
   const requiredPlanForSelected = getRequiredPlan(selectedId)
   const listPrice = useLocalPrice(requiredPlanForSelected.price)
   const selectedCoupon = useCoupon(requiredPlanForSelected.id, selectedId).applied
   // What the visitor pays: after their discount code when it covers this design.
   const selectedPrice = selectedCoupon ? discountedPrice(listPrice, selectedCoupon.percentOff) : listPrice
-  const needsPayment = !editing && !canAccess(selectedId, userPlan)
+  const needsPayment = !editing && !owns(selectedId, owned)
 
-  // "Our team fills it in for you" (components/create/DoneForYou): offered once per design per visit,
-  // when the builder opens on a design with nothing typed yet.
-  const [teamOffer, setTeamOffer] = useState(false)
-  useEffect(() => {
-    if (currentStep !== 2 || !draftLoaded) return
-    if (Object.values(data).some((v) => typeof v === 'string' && v.trim())) return
-    const key = `si-team-offer-${selectedId}`
-    try {
-      if (sessionStorage.getItem(key)) return
-      sessionStorage.setItem(key, '1')
-    } catch { /* private mode: offer it anyway */ }
-    // Waits while another dialog is open (the full-screen preview, an offer), so two never stack.
-    let t = 0
-    const offer = () => {
-      if (document.querySelector('[aria-modal="true"]')) t = window.setTimeout(offer, 1000)
-      else setTeamOffer(true)
-    }
-    t = window.setTimeout(offer, 350)
-    return () => window.clearTimeout(t)
-    // Offered on arriving at a design, not again as the form changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStep, selectedId, draftLoaded])
-  useBackToClose(teamOffer, () => setTeamOffer(false))
+  // "Our team fills it in for you" (components/create/DoneForYou) is offered by the strip above the
+  // form, not by a pop-up (13 Nov 2026). The pop-up opened a moment after every arrival at a design,
+  // over the form and over whatever the customer had started typing, and again for each design they
+  // tried; the strip offers the same thing without standing in the way.
 
   // Pay opens Razorpay straight from the review page. There used to be a second window
   // ("One design · one price") with its own Pay button between the two, and most people who
@@ -658,8 +700,14 @@ export default function CreatePage() {
       goToMissing()
       return
     }
-    // Signing in is optional. A signed-out buyer pays first; the purchase is
-    // kept on the account for the email they give Razorpay.
+    // An account is asked for here, once the invitation is finished, and not before building it
+    // (13 Nov 2026). It keeps the invitation, its edits and its guests' wishes together, and the
+    // checkout and publishing both need it. The draft waits on this device while they sign in.
+    if (sessionStatus === 'unauthenticated') {
+      trackEvent('publish_auth_required', { template_id: selectedId, template_name: selectedTemplate.name, price: requiredPlanForSelected.price })
+      window.location.href = signInToPublishHref(selectedId)
+      return
+    }
     // Was `getRequiredPlan(selectedId).price > 0`, which ignored what the user
     // had already bought — a paying customer was shown the upgrade modal again
     // on every publish and could never use the template they owned.
@@ -676,6 +724,16 @@ export default function CreatePage() {
   // swapped the fields but left the panel where it was, dropping the user into
   // the middle of the next step with no idea which step they were on.
   const formPanelRef = useRef<HTMLElement>(null)
+  // Phones: the editing window above the form is taller than the thumbnail it replaces, so the box
+  // being typed in is brought back out from under it (the form keeps that much room at its top).
+  useEffect(() => {
+    if (!typing || isDesktop !== false) return
+    const id = window.requestAnimationFrame(() => {
+      const el = document.activeElement
+      if (el instanceof HTMLElement && formPanelRef.current?.contains(el)) el.scrollIntoView({ block: 'nearest' })
+    })
+    return () => window.cancelAnimationFrame(id)
+  }, [typing, focusKey, isDesktop])
 
   const payRef = useRef<boolean>(false)
   const handleUpgradePayment = async (planId: PlanId) => {
@@ -701,7 +759,20 @@ export default function CreatePage() {
         body: JSON.stringify({ plan: planId, code, templateId: selectedId }),
       })
       // `price` is in whole units of `currency` — the visitor's own price (lib/pricing.ts).
-      const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; price?: number; keyId?: string; error?: string; test?: boolean }
+      const order = await orderRes.json() as { orderId?: string; amount?: number; currency?: string; price?: number; keyId?: string; error?: string; code?: string; test?: boolean }
+      if (orderRes.status === 401) {
+        payRef.current = false; setPaying(false)
+        window.location.href = signInToPublishHref(selectedId)
+        return
+      }
+      if (orderRes.status === 409 && order.code === 'ALREADY_OWNED') {
+        // Already theirs (bought on another device, or the page did not know
+        // yet): publish it, and never charge a second time.
+        payRef.current = false; setPaying(false)
+        setOwned((o) => ({ ...o, designs: Array.from(new Set([...o.designs, selectedId])) }))
+        doCreate()
+        return
+      }
       if (!orderRes.ok || !order.orderId) throw new Error(order.error ?? 'Could not start the payment. Please try again.')
       const options: RazorpayOptions = {
         key: (order.keyId ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) as string,
@@ -714,14 +785,14 @@ export default function CreatePage() {
         description: `${displayName(selectedTemplate.name)} (one-time)`,
         order_id: order.orderId as string,
         prefill: { email: session?.user?.email ?? undefined, name: session?.user?.name ?? undefined },
-        theme: { color: '#0B4A34' },
+        theme: { color: '#123D2E' },
         handler: async (response: RazorpayResponse) => {
           try {
             const verRes = await fetch('/api/payments/verify', {
               method: 'POST', headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ ...response, plan: planId }),
             })
-            const verBody = await verRes.json() as { success?: boolean; error?: string; plan?: PlanId; pass?: string }
+            const verBody = await verRes.json() as { success?: boolean; error?: string; plan?: PlanId; designs?: string[]; pass?: string }
             if (verRes.ok && verBody.success) {
               // Fires only after the server verified the Razorpay signature and
               // amount — never on opening or dismissing the checkout sheet.
@@ -732,7 +803,8 @@ export default function CreatePage() {
               if (!order.test) trackEvent(seoEvents.purchase, { ...ctx, transaction_id: response.razorpay_payment_id, price: order.price ?? plan?.price, value: order.price ?? plan?.price, currency: order.currency ?? 'INR' })
               // Reflect the new entitlement immediately so the publish path does
               // not bounce the user back to the paywall they just paid at.
-              setUserPlan(verBody.plan ?? planId)
+              const now = ownedFrom(verBody)
+              setOwned({ plan: now.plan, designs: Array.from(new Set([...now.designs, selectedId])) })
               if (verBody.pass) {
                 setPass(verBody.pass)
                 try { localStorage.setItem(PASS_KEY, verBody.pass) } catch { /* private mode */ }
@@ -834,7 +906,8 @@ export default function CreatePage() {
               Dashboard
             </Link>
           ) : (
-            <Link href="/auth/login"
+            // Back to the builder afterwards: the draft on this device reopens where it was.
+            <Link href={`/auth/login?callbackUrl=${encodeURIComponent('/create')}`}
               className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-muted border border-line hover:border-[#A47945]/40 transition-colors">
               Sign in
             </Link>
@@ -859,9 +932,10 @@ export default function CreatePage() {
               (the "See the full design" button) clears the fixed bottom nav bar. */}
           <aside
             ref={formPanelRef}
-            onFocusCapture={trackField}
+            onFocusCapture={(e) => { trackField(e); if (isTextEntry(e.target)) setTyping(true) }}
+            onBlurCapture={(e) => { if (!isTextEntry(e.relatedTarget)) setTyping(false) }}
             onPointerDownCapture={trackField}
-            className="w-full md:w-[380px] lg:w-[440px] xl:w-[480px] shrink-0 md:border-r border-line overflow-y-auto scrollbar-hide md:pb-0 scroll-pt-[230px] md:scroll-pt-0"
+            className={`relative w-full md:w-[380px] lg:w-[440px] xl:w-[480px] shrink-0 md:border-r border-line overflow-y-auto scrollbar-hide md:pb-0 ${typing ? 'scroll-pt-44' : 'scroll-pt-24'} md:scroll-pt-0`}
             style={{
               background: '#FFFAF4',
               // dvh, not vh: on mobile Safari `100vh` is the *expanded* viewport,
@@ -873,8 +947,9 @@ export default function CreatePage() {
             }}
           >
             {/* Now editing — with one-tap access back to the design picker, so
-                trying another design (details carry over) is always one step away. */}
-            <div className="mx-4 mt-4 flex items-center gap-3 rounded-2xl border border-line bg-paper px-3 py-2.5 shadow-soft sm:mx-5 md:mx-0 md:mt-0 md:rounded-none md:border-x-0 md:border-t-0 md:px-5 md:py-3 md:shadow-none">
+                trying another design (details carry over) is always one step away.
+                Computer and tablet; phones have the slim bar below instead. */}
+            <div className="hidden items-center gap-3 border-b border-line bg-paper px-5 py-3 md:flex">
               <span className="relative h-11 w-9 shrink-0 overflow-hidden rounded-lg border border-line bg-peach">
                 <Image src={tv.image} alt="" fill sizes="36px" className="object-cover" />
               </span>
@@ -900,26 +975,70 @@ export default function CreatePage() {
               )}
             </div>
 
-            {/* Mobile: the invitation itself, pinned above the form as it
-                scrolls — the phone's version of the side-by-side preview. It
-                follows the box in use; tap it for full screen. */}
+            {/* Phones: one slim bar pinned above the form, in place of a design
+                card and a preview card (13 Nov 2026): the live invitation in
+                small, which design and its price, Change design and Preview.
+                Those two cards took half the screen before the first box, and
+                the preview stayed pinned at 191px while typing. The thumbnail
+                follows the box in use. While a box is being typed in, the bar
+                becomes a wide window on the part of the invitation being edited,
+                updating as they type; the name and buttons step aside for it. */}
             <div
-              role="button"
-              tabIndex={0}
-              onClick={() => openMobilePreview()}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMobilePreview() } }}
-              className="sticky top-0 z-20 block w-full cursor-pointer pb-1 md:hidden"
+              className="sticky top-0 z-20 md:hidden"
               style={{ background: '#FFFAF4', boxShadow: '0 8px 12px -10px rgba(44,32,28,0.25)' }}
-              aria-label="Open full-screen preview of your invitation"
             >
-              {isDesktop === false && !previewOpen && (
-                <MobilePreviewStrip templateId={selectedId} data={previewData} isDark={isDark} color={tv.color} compact screenRef={stripScreenRef} />
-              )}
+              <div className="flex items-center gap-3 px-4 py-2">
+                {/* The same preview as thumbnail and as editing window, so it never loads twice. */}
+                {isDesktop === false && !previewOpen && (
+                  <button
+                    type="button"
+                    onClick={() => openMobilePreview()}
+                    aria-label="Open the full-screen preview of your invitation"
+                    className={typing ? 'relative min-w-0 flex-1' : 'shrink-0'}
+                  >
+                    <PreviewEditing.Provider value={typing}>
+                      <MobilePreviewStrip templateId={selectedId} data={previewData} isDark={isDark} thumbWidth={34} lens={typing} screenRef={stripScreenRef} />
+                    </PreviewEditing.Provider>
+                    {typing && (
+                      <span className="pointer-events-none absolute left-2 top-2 flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[0.66rem] font-semibold text-white" style={{ background: 'rgba(5,46,32,0.82)' }}>
+                        <span aria-hidden className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" /> Live: the part you&apos;re editing
+                      </span>
+                    )}
+                  </button>
+                )}
+                <div className={typing ? 'hidden' : 'min-w-0 flex-1'}>
+                  <p className="flex items-center gap-1.5 font-editorial text-[1.08rem] font-semibold leading-tight text-charcoal">
+                    <span aria-hidden className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-emerald-soft" />
+                    <span className="truncate">{displayName(selectedTemplate.name)}</span>
+                  </p>
+                  <p className="mt-0.5 flex items-center gap-1.5 text-[0.76rem] text-muted">
+                    <span className="truncate">
+                      {editing ? 'Your published invitation' : needsPayment ? <span className="font-semibold text-charcoal">{selectedPrice.label}</span> : 'Already yours'}
+                    </span>
+                    {!editing && (
+                      <>
+                        <span aria-hidden>·</span>
+                        <button type="button" onClick={() => goToStep(1)} className="shrink-0 font-semibold text-emerald-soft underline underline-offset-2">
+                          Change design
+                        </button>
+                      </>
+                    )}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => openMobilePreview()}
+                  className={typing ? 'hidden' : 'btn-primary shrink-0 rounded-full px-4 py-2 text-[0.8rem] font-semibold'}
+                >
+                  Preview
+                </button>
+              </div>
             </div>
 
             {!editing && <DoneForYouStrip design={teamDesign} step={currentStep} />}
 
             <FlaggedFields.Provider value={flaggedSet}>
+            <SavedFlash.Provider value={savedToast}>
             {/* Step content */}
             {currentStep === 2 && (
               <Step2Names
@@ -950,12 +1069,14 @@ export default function CreatePage() {
               />
             )}
 
+            </SavedFlash.Provider>
             </FlaggedFields.Provider>
           </aside>
 
-          {/* RIGHT: Live preview — desktop only */}
+          {/* RIGHT: Live preview — desktop only. Both panels are positioned (`relative`), so nothing
+              absolutely placed inside them can reach past them and stretch the page. */}
           <section
-            className="hidden md:flex md:flex-col flex-1 overflow-y-auto scrollbar-hide"
+            className="relative hidden md:flex md:flex-col flex-1 overflow-y-auto scrollbar-hide"
             style={{
               maxHeight: 'calc(100dvh - 67px)',
               background: isDark
@@ -1016,7 +1137,13 @@ export default function CreatePage() {
                     <div className="overflow-hidden relative bg-paper"
                       style={{ borderRadius: 'clamp(22px, 10%, 36px)', height: 'min(590px, max(360px, calc(100dvh - 290px)))' }}>
                       <div ref={desktopPreviewRef} className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
-                        {isDesktop === true && <PreviewPane templateId={selectedId} data={previewData} />}
+                        {/* Once a box has been used, a design's opening (doors, envelope) is passed, so this
+                            preview can follow the part being edited (kit/ui useOpenWhileEditing). */}
+                        {isDesktop === true && (
+                          <PreviewEditing.Provider value={focusKey !== null}>
+                            <PreviewPane templateId={selectedId} data={previewData} />
+                          </PreviewEditing.Provider>
+                        )}
                       </div>
                       {!is3DTemplate(selectedId) && (
                         <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none z-10"
@@ -1111,7 +1238,7 @@ export default function CreatePage() {
           paying={paying}
           payError={payError}
           onRetry={() => void handleUpgradePayment(requiredPlanForSelected.id)}
-          userPlan={userPlan}
+          owned={owned}
           session={session}
           loading={loading}
           error={error}
@@ -1200,7 +1327,7 @@ export default function CreatePage() {
           </button>
           {needsPayment && (
             <p className="mt-1.5 text-center text-[10px] leading-4 text-muted">
-              No account needed · Edit until your event ·{' '}
+              {session ? 'Secure payment' : 'Sign in, then pay'} · Edit until your event ·{' '}
               <Link href="/refund-policy" target="_blank" className="font-semibold underline-offset-2 hover:underline text-emerald-soft">
                 7-day refunds
               </Link>
@@ -1208,32 +1335,6 @@ export default function CreatePage() {
           )}
         </BottomDock>
       )}
-
-      {/* ─── "Progress saved" toast ─────────────────────────────────────── */}
-      <AnimatePresence>
-        {savedToast && (
-          <motion.div
-            // x is animated rather than applied via `-translate-x-1/2`: Framer
-            // writes the whole `transform` property, so a Tailwind translate
-            // class on the same element is silently overwritten by the y
-            // animation — which is why the toast sat half its width off-centre.
-            initial={{ opacity: 0, y: 16, x: '-50%' }}
-            animate={{ opacity: 1, y: 0, x: '-50%' }}
-            exit={{ opacity: 0, y: 16, x: '-50%' }}
-            transition={{ duration: 0.25, ease: BEZIER }}
-            className="fixed left-1/2 flex max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full px-4 py-2.5 shadow-lg"
-            style={{
-              background: '#052E20',
-              color: '#fff',
-              zIndex: 'var(--z-toast)' as unknown as number,
-              bottom: 'calc(var(--bottom-dock-h, 0px) + 1.25rem)',
-            }}
-          >
-            <span className="text-[10px]" style={{ color: '#0B4A34' }}>✓</span>
-            <span className="text-xs font-semibold whitespace-nowrap">Progress saved</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* ─── Modals ──────────────────────────────────────────────────────── */}
       {tapShield && <div aria-hidden className="fixed inset-0" style={{ zIndex: 2147483000 }} />}
@@ -1300,14 +1401,6 @@ export default function CreatePage() {
                 Ask us on WhatsApp
               </a>
             </div>
-          </ModalFrame>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {teamOffer && (
-          <ModalFrame onClose={() => setTeamOffer(false)} label="How would you like to make your invitation?">
-            <DoneForYouChoice design={teamDesign} onSelf={() => setTeamOffer(false)} onTeam={() => setTeamOffer(false)} />
           </ModalFrame>
         )}
       </AnimatePresence>

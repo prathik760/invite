@@ -2,6 +2,7 @@
 
 import { Fragment, useSyncExternalStore } from 'react'
 import { COUNTRY_COOKIE, currencyOf, discountedPrice, localPrice, normaliseCountry, priceListFor, splitRupees, type LocalPrice } from '@/lib/pricing'
+import { useT } from '@/components/i18n/I18nProvider'
 
 /**
  * Prices in the visitor's currency (see lib/pricing.ts).
@@ -77,6 +78,8 @@ export function ChargeCurrency() {
  */
 export function PayMethods({ capitalise = false }: { capitalise?: boolean }) {
   const country = useVisitorCountry()
-  const text = currencyOf(priceListFor(country)) === 'INR' ? 'UPI, card or net banking' : 'credit or debit card'
-  return <span data-price={country ? 'local' : 'inr'}>{capitalise ? text[0].toUpperCase() + text.slice(1) : text}</span>
+  const tr = useT()
+  const english = currencyOf(priceListFor(country)) === 'INR' ? 'UPI, card or net banking' : 'credit or debit card'
+  const text = tr(capitalise ? english[0].toUpperCase() + english.slice(1) : english)
+  return <span data-price={country ? 'local' : 'inr'}>{text}</span>
 }

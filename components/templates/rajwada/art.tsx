@@ -143,7 +143,7 @@ function Marigold({ x, y, r, seed }: { x: number; y: number; r: number; seed: nu
     <g>
       <path d={ruffle(x, y, r, seed)} fill={c} stroke="rgba(110,50,10,0.5)" strokeWidth={0.5} />
       <path d={ruffle(x, y, r * 0.58, seed + 7, 9)} fill="rgba(170,70,10,0.28)" />
-      <circle cx={x} cy={y} r={r * 0.18} fill="#9A4A10" opacity={0.55} />
+      <circle cx={r1(x)} cy={r1(y)} r={r1(r * 0.18)} fill="#9A4A10" opacity={0.55} />
     </g>
   )
 }
@@ -178,7 +178,7 @@ function Swag({ a, b, sag, r, seed }: { a: Pt; b: Pt; sag: number; r: number; se
   const count = Math.max(3, Math.round(len / (r * 1.55)))
   const heads = Array.from({ length: count + 1 }, (_, i) => at(i / count))
   return (
-    <g>
+    <g className="rw-swag" style={{ transformOrigin: `${r1((a[0] + b[0]) / 2)}px ${r1(Math.min(a[1], b[1]))}px` }}>
       {heads.map((p, i) =>
         i % 4 === 2 ? (
           <g key={`l${i}`}>
@@ -198,8 +198,8 @@ function Drop({ x, y, n, r, seed }: { x: number; y: number; n: number; r: number
   const step = r * 1.6
   const end = y + n * step
   return (
-    <g>
-      <path d={`M${x} ${y}V${r1(end)}`} stroke="#8A6526" strokeWidth={0.7} />
+    <g className="rw-drop" style={{ transformOrigin: `${r1(x)}px ${r1(y)}px` }}>
+      <path d={`M${r1(x)} ${r1(y)}V${r1(end)}`} stroke="#8A6526" strokeWidth={0.7} />
       {Array.from({ length: n }, (_, i) => (
         <Marigold key={i} x={x} y={y + i * step} r={r * (1 - i * 0.06)} seed={seed + i * 5} />
       ))}
@@ -218,7 +218,7 @@ function Drop({ x, y, n, r, seed }: { x: number; y: number; n: number; r: number
 function Lantern({ x, y, chain, s = 1 }: { x: number; y: number; chain: number; s?: number }) {
   const t = `translate(${r1(x)} ${r1(y + chain)}) scale(${s})`
   return (
-    <g>
+    <g className="rw-lantern" style={{ transformOrigin: `${r1(x)}px ${r1(y)}px`, animationDelay: `-${r1((x % 9) * 0.4)}s` }}>
       <path d={`M${r1(x)} ${r1(y)}V${r1(y + chain)}`} stroke={R.goldDark} strokeWidth={1.1} strokeDasharray="2.2 1.6" />
       <g transform={t}>
         <circle cx={0} cy={-1} r={1.8} fill="none" stroke={R.goldDark} strokeWidth={0.9} />
@@ -339,7 +339,14 @@ function Palace({ fill, line, window: win }: { fill: string; line: string; windo
 }
 
 /** viewBox 0 0 360 120: hills, the Lake Palace on the water, its reflection. */
-export function LakeView({ uid, className, style }: { uid: string; className?: string; style?: React.CSSProperties }) {
+/** The lake by day, and at dusk with the palace lit (for the evening courtyard). */
+const LAKE = {
+  day: { glow: ['#F1D2AE', '#EAB98E'], hill: ['#C99C8F', '#B7897D'], water: ['#B6C4B6', '#7C9C94'], ripple: '#EEF2EA', palace: ['#FBF3E6', '#A88B68', '#C29C72'], mirror: ['#FFF8EC', '#6F5A45', '#8A6E52'] },
+  dusk: { glow: ['#F7C88C', '#F0A066'], hill: ['#7D3A55', '#5B2743'], water: ['#6E4466', '#3A2448'], ripple: '#FFD9A0', palace: ['#F6E2C6', '#7A5642', '#FFD27A'], mirror: ['#F6E2C6', '#5A3A3A', '#FFC861'] },
+}
+
+export function LakeView({ uid, className, style, children, tone = 'day' }: { uid: string; className?: string; style?: React.CSSProperties; children?: React.ReactNode; tone?: 'day' | 'dusk' }) {
+  const t = LAKE[tone]
   const rand = rng(17)
   const ripples = Array.from({ length: 22 }, () => {
     const y = 82 + rand() * 36
@@ -351,25 +358,28 @@ export function LakeView({ uid, className, style }: { uid: string; className?: s
     <svg viewBox="0 0 360 120" className={className} style={style} aria-hidden>
       <defs>
         <linearGradient id={`${uid}-glow`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#F1D2AE" stopOpacity={0} />
-          <stop offset="1" stopColor="#EAB98E" />
+          <stop offset="0" stopColor={t.glow[0]} stopOpacity={0} />
+          <stop offset="1" stopColor={t.glow[1]} />
         </linearGradient>
         <linearGradient id={`${uid}-water`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#B6C4B6" />
-          <stop offset="1" stopColor="#7C9C94" />
+          <stop offset="0" stopColor={t.water[0]} />
+          <stop offset="1" stopColor={t.water[1]} />
         </linearGradient>
       </defs>
       <rect x={0} y={20} width={360} height={58} fill={`url(#${uid}-glow)`} />
-      <path d="M0 62C24 50 50 44 78 54C98 40 128 34 156 50C186 38 220 40 248 52C274 40 318 38 360 54V78H0Z" fill="#C99C8F" opacity={0.5} />
-      <path d="M0 70C34 60 66 60 96 68C130 58 168 60 196 68C232 58 280 58 360 66V78H0Z" fill="#B7897D" opacity={0.5} />
+      <path d="M0 62C24 50 50 44 78 54C98 40 128 34 156 50C186 38 220 40 248 52C274 40 318 38 360 54V78H0Z" fill={t.hill[0]} opacity={tone === 'dusk' ? 0.85 : 0.5} />
+      <path d="M0 70C34 60 66 60 96 68C130 58 168 60 196 68C232 58 280 58 360 66V78H0Z" fill={t.hill[1]} opacity={tone === 'dusk' ? 0.9 : 0.5} />
       <rect x={0} y={77} width={360} height={43} fill={`url(#${uid}-water)`} />
-      <g transform="translate(0 155) scale(1 -1)" opacity={0.26}>
-        <Palace fill="#FFF8EC" line="#6F5A45" window="#8A6E52" />
+      <g transform="translate(0 155) scale(1 -1)" opacity={tone === 'dusk' ? 0.34 : 0.26}>
+        <Palace fill={t.mirror[0]} line={t.mirror[1]} window={t.mirror[2]} />
       </g>
-      <path d={ripples} stroke="#EEF2EA" strokeWidth={0.8} strokeLinecap="round" opacity={0.55} />
-      <Palace fill="#FBF3E6" line="#A88B68" window="#C29C72" />
-      <path d="M58 94q6 3 14 0l-1.6 2.4h-10.8Z" fill="#5E4636" opacity={0.7} />
-      <path d="M65 94V88" stroke="#5E4636" strokeWidth={0.6} opacity={0.7} />
+      <path className="rw-ripples" d={ripples} stroke={t.ripple} strokeWidth={0.8} strokeLinecap="round" opacity={0.55} />
+      <Palace fill={t.palace[0]} line={t.palace[1]} window={t.palace[2]} />
+      <g className="rw-boat">
+        <path d="M58 94q6 3 14 0l-1.6 2.4h-10.8Z" fill="#5E4636" opacity={0.7} />
+        <path d="M65 94V88" stroke="#5E4636" strokeWidth={0.6} opacity={0.7} />
+      </g>
+      {children}
     </svg>
   )
 }
@@ -681,11 +691,11 @@ export function DoorLeaf({ side, letter }: { side: 'l' | 'r'; letter: string }) 
 }
 
 /** The carved sandstone surround, and the wall around it: one path with the doorway cut out. */
-export function DoorFrame({ className }: { className?: string }) {
+export function DoorFrame({ className, sky = false }: { className?: string; sky?: boolean }) {
   const ashlar = `rw-ashlar-${useId().replace(/:/g, '')}`
   const doorway = `M60 760L60 290${DW.left}${DW.right}L460 760Z`
   const outer = `M35 760L35 290${FO.left}${FO.right}L485 760Z`
-  const merlons = Array.from({ length: 11 }, (_, i) => 10 + i * 46.4)
+  const merlons = sky ? Array.from({ length: 33 }, (_, i) => r1(-454 + i * 46.4)) : Array.from({ length: 11 }, (_, i) => 10 + i * 46.4)
   const rays = Array.from({ length: 16 }, (_, i) => (i / 16) * Math.PI * 2)
   return (
     <svg viewBox="0 0 520 800" className={className} style={{ overflow: 'visible' }} aria-hidden>
@@ -702,12 +712,12 @@ export function DoorFrame({ className }: { className?: string }) {
         </pattern>
       </defs>
       {/* The wall, with the doorway cut out of it. */}
-      <path d={`M-2600 -2600H3120V3400H-2600Z${doorway}`} fillRule="evenodd" fill={`url(#${ashlar})`} />
+      <path d={`M-2600 ${sky ? 30 : -2600}H3120V3400H-2600Z${doorway}`} fillRule="evenodd" fill={`url(#${ashlar})`} />
       {/* Kangura battlements and the eave. */}
       {merlons.map((x) => (
         <path key={x} d={`M${x} 34V20Q${x} 17 ${x + 3} 17H${x + 8}Q${x + 8} 8 ${x + 16} 5Q${x + 24} 8 ${x + 24} 17H${x + 29}Q${x + 32} 17 ${x + 32} 20V34Z`} fill={R.sandLight} stroke={R.sandShadow} strokeWidth={1} />
       ))}
-      <path d="M-6 34H526V46H-6Z" fill={R.sandLight} stroke={R.sandShadow} strokeWidth={1} />
+      <path d={sky ? 'M-470 34H990V46H-470Z' : 'M-6 34H526V46H-6Z'} fill={R.sandLight} stroke={R.sandShadow} strokeWidth={1} />
       <path d="M-6 46H526L516 56H4Z" fill={R.sandDeep} stroke={R.sandShadow} strokeWidth={1} />
       {Array.from({ length: 13 }, (_, i) => 18 + i * 40.3).map((x) => (
         <path key={x} d={`M${x} 56h8v6q-4 6-8 0Z`} fill={R.sandDeep} stroke={R.sandShadow} strokeWidth={0.8} />

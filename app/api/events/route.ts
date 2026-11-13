@@ -8,8 +8,8 @@ import { prisma } from '@/lib/db'
 import { generateSlug, getAppUrl } from '@/lib/utils'
 import { getTemplateData } from '@/modules/templates/data'
 import { createLocalEvent, shouldUseLocalStore } from '@/lib/local-store'
-import { canAccess, templatePrice, type PlanId } from '@/lib/plans'
-import { readPass } from '@/lib/purchasePass'
+import { owns, templatePrice, type Owned } from '@/lib/plans'
+import { ownedBy } from '@/lib/entitlements'
 import { sanitizeData } from '@/lib/eventData'
 import { editKey, editUrl } from '@/lib/editKey'
 
@@ -24,6 +24,7 @@ const OCCASION_SLUG: Record<string, string> = {
 const PERSONAL_LINK_EXAMPLE: Record<string, string> = {
   'birthday-gala': 'Sarah+and+Tom', 'dasara-ambari': 'Shalini+and+family', 'christmas-evergreen': 'The+Thompsons', 'newyear-midnight': 'Jules+and+Sam', 'signature-saptapadi': 'Sharma+family',
   'signature-two-worlds': 'Mehra+family',
+  'signature-royal-edit': 'Mehra+family',
 }
 
 export async function POST(req: NextRequest) {
@@ -43,27 +44,31 @@ export async function POST(req: NextRequest) {
 
   const sanitizedData = sanitizeData(data as Record<string, unknown>)
 
-  // Attach userId if authenticated, and resolve the plan actually purchased.
-  // A signed-out buyer who has just paid sends the purchase pass from
-  // /api/payments/verify instead; it names the account the purchase is on.
+  // An account is required to create an invitation (4 Nov 2026), checked here on the server and
+  // not only by the builder's sign-in gate (middleware.ts). The guest "purchase pass" from
+  // /api/payments/verify is no longer accepted on its own: whoever publishes must be signed in.
   const session = await getServerSession(authOptions).catch(() => null)
-  const userId = session?.user?.id ?? readPass(body?.pass) ?? undefined
+  const userId = session?.user?.id
+  if (!userId) {
+    return NextResponse.json({ error: 'Please sign in to publish your invitation.', code: 'AUTH_REQUIRED' }, { status: 401 })
+  }
 
-  let userPlan: PlanId = 'free'
-  if (userId) {
-    const sub = await prisma.subscription.findFirst({
-      where: { userId, status: 'active', NOT: { plan: 'free' } },
-      select: { plan: true },
-      orderBy: { createdAt: 'desc' },
-    }).catch(() => null)
-    if (sub?.plan) userPlan = sub.plan as PlanId
+  // The designs this account owns (lib/entitlements.ts): each one bought, plus
+  // an earlier customer's plan. A database error is not "owns nothing": that
+  // would ask someone who has paid to pay again.
+  let owned: Owned
+  try {
+    owned = await ownedBy(userId)
+  } catch (err) {
+    console.error('[POST /api/events] ownership check', err)
+    return NextResponse.json({ error: 'We could not publish just now. Please try again in a moment.' }, { status: 503 })
   }
 
   // Entitlement is enforced here, not only in the UI. Previously the client
   // could reach this endpoint without paying — signing out, or choosing
   // "Continue without account" in the login prompt, skipped the upgrade modal
   // entirely and published a paid template for free.
-  if (!canAccess(templateId, userPlan)) {
+  if (!owns(templateId, owned)) {
     return NextResponse.json(
       {
         error: 'This template requires a one-time purchase before publishing.',
@@ -77,11 +82,11 @@ export async function POST(req: NextRequest) {
 
   // `isPaid` drives the "Made with ShareInvite" banner on the published page.
   // Every template is now a purchase, so reaching this line already means the
-  // author holds a plan covering it — the check is kept explicit rather than
+  // author owns the design — the check is kept explicit rather than
   // hard-coded to `true` so the banner logic stays honest if a free tier ever
   // returns. Legacy events published under the old free tier keep isPaid=false
   // and continue to show the banner.
-  const isPaid = userPlan !== 'free'
+  const isPaid = owns(templateId, owned)
 
   try {
     await prisma.template.upsert({

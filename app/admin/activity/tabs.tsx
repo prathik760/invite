@@ -434,7 +434,9 @@ export async function BotsTab({ period, p }: { period: Period; p: Params }) {
         Bots do not search — they read pages. Search engines read your pages to rank them; AI assistants read them to
         answer people&apos;s questions. The searches people make are on the Keywords tab. Since 26 October only search
         engines, AI assistants and link previews are counted (each count costs a server call on the free hosting plan),
-        and SEO tools and ByteDance&apos;s crawler are turned away.
+        and SEO tools and ByteDance&apos;s crawler are turned away. Since 13 November crawlers are counted one read in
+        ten, each standing for ten, so their numbers are estimates; link previews and assistants answering a person are
+        still counted one by one.
       </p>
 
       {missing && (

@@ -51,6 +51,7 @@ const sections: LegalSection[] = [
             <><strong className="text-foreground">Account information</strong>: such as your name and email address when you sign up or sign in.</>,
             <><strong className="text-foreground">Invitation content</strong>: the details you add to your invitations, such as names, event dates and times, venue and address, a maps link, photos, background music links, and personal messages.</>,
             <><strong className="text-foreground">Guest information</strong>: RSVPs, wishes, or blessings that your guests choose to submit on an invitation you publish.</>,
+            <><strong className="text-foreground">Reviews</strong>: after your celebration we may ask, by email or WhatsApp, how your invitation went. If you answer, we keep your rating, your words, and the name and city you sign it with. It is shown on our website only if you tick that it may be, and we can take it down whenever you ask.</>,
             <><strong className="text-foreground">Payment information</strong>: when you buy a paid plan, payment is processed by Razorpay. We receive confirmation of the transaction and limited details (such as an order/payment reference), but we do not collect or store your full card or bank account numbers.</>,
             <><strong className="text-foreground">Usage &amp; device data</strong>: technical information collected automatically, such as your IP address, approximate location (city and country), browser and device type, the site that referred you, the pages you view, the designs you open, the buttons you press and how far you get in the builder and checkout, gathered through cookies and similar technologies. Once you sign in, this record is linked to your account.</>,
           ]}
@@ -157,7 +158,7 @@ const sections: LegalSection[] = [
         {' '}{DELETE_AFTER_DAYS} days after the celebration&apos;s last day (invitations without a date, such as greetings,
         {' '}{UNDATED_DELETE_AFTER_DAYS} days after they were created). Photos and music uploaded but never used in a
         published invitation are deleted after {ORPHAN_UPLOAD_DAYS} days. Our own record of how the site was used is deleted
-        after {ACTIVITY_DAYS} days. Your account details and payment records are
+        after {ACTIVITY_DAYS} days. A review you send is kept until you ask us to remove it. Your account details and payment records are
         kept for as long as your account exists and as long as the law requires for tax and accounting. You may ask us to
         delete your account or an invitation sooner at any time.
       </Para>

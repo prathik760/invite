@@ -1,7 +1,14 @@
 'use client'
 
-import type { ReactNode } from 'react'
+import { createContext, useContext, type ReactNode } from 'react'
 import { ArrowRightIcon } from '@/components/ui/Icons'
+
+/**
+ * True for a moment after the draft is saved on reaching a step (app/create),
+ * shown as "Saved" beside the step's label. It used to be a toast floating
+ * above the docked buttons, where on phones it covered the box being filled in.
+ */
+export const SavedFlash = createContext(false)
 
 /**
  * The frame shared by builder steps 2–4: step label, title and subtitle, the
@@ -27,11 +34,21 @@ export default function StepShell({
   continueLabel?: string
   children: ReactNode
 }) {
+  const saved = useContext(SavedFlash)
   return (
     <div>
       <div className="flex items-start justify-between gap-3 border-b border-line px-5 pb-5 pt-6">
         <div>
-          <p className="eyebrow">Step {step} of 5</p>
+          <p className="flex items-center gap-2.5">
+            <span className="eyebrow">Step {step} of 5</span>
+            {/* Always in place, faded in and out, so nothing moves when it appears. */}
+            <span
+              role="status"
+              className={`text-[0.72rem] font-semibold text-emerald-soft transition-opacity duration-300 ${saved ? 'opacity-100' : 'opacity-0'}`}
+            >
+              {saved ? '✓ Saved on this device' : ''}
+            </span>
+          </p>
           <h2 className="t-h3 mt-1.5">{title}</h2>
           <p className="mt-1 text-[0.88rem] leading-6 text-charcoal/70">{sub}</p>
         </div>

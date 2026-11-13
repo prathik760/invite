@@ -6,8 +6,16 @@
  * people most want to see.
  */
 
+/**
+ * "Today" for the helpers below: the real today, or, for a fixed showcase
+ * (lib/homeSample.ts), the day its dates are counted from. Set only for the
+ * duration of one withSampleDates call.
+ */
+let clock: number | null = null
+const today = () => (clock === null ? new Date() : new Date(clock))
+
 function isoInDays(days: number): string {
-  const d = new Date()
+  const d = today()
   d.setHours(12, 0, 0, 0)
   d.setDate(d.getDate() + days)
   const m = String(d.getMonth() + 1).padStart(2, '0')
@@ -17,7 +25,7 @@ function isoInDays(days: number): string {
 
 /** A Saturday about eight and a half months out — when a save-the-date is usually sent. */
 function saturdayInMonths(): string {
-  const d = new Date()
+  const d = today()
   d.setHours(12, 0, 0, 0)
   d.setDate(d.getDate() + 260 + ((6 - ((d.getDay() + 260) % 7)) + 7) % 7)
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
@@ -25,7 +33,7 @@ function saturdayInMonths(): string {
 
 /** The first Saturday at least `days` from today. */
 function saturdayInDays(days: number): string {
-  const d = new Date()
+  const d = today()
   d.setHours(12, 0, 0, 0)
   d.setDate(d.getDate() + days)
   d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7))
@@ -52,7 +60,20 @@ function addDays(iso: string, n: number): string {
   return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`
 }
 
-export function withSampleDates(templateId: string, data: Record<string, string>): Record<string, string> {
+/**
+ * `from`: count the sample dates from this day instead of today, so a
+ * showcase whose screenshots carry its dates keeps them (lib/homeSample.ts).
+ */
+export function withSampleDates(templateId: string, data: Record<string, string>, from?: Date): Record<string, string> {
+  clock = from ? from.getTime() : null
+  try {
+    return sampleDates(templateId, data)
+  } finally {
+    clock = null
+  }
+}
+
+function sampleDates(templateId: string, data: Record<string, string>): Record<string, string> {
   const out = { ...data }
   if (templateId === 'save-the-date') {
     if (!out.date) out.date = saturdayInMonths()
@@ -102,14 +123,14 @@ export function withSampleDates(templateId: string, data: Record<string, string>
   }
   if (templateId === 'christmas-evergreen') {
     // Christmas Eve, this year's while it is ahead.
-    const t = new Date()
+    const t = today()
     const year = t.getMonth() === 11 && t.getDate() > 24 ? t.getFullYear() + 1 : t.getFullYear()
     if (!out.date) out.date = `${year}-12-24`
     if (!out.rsvpBy) out.rsvpBy = `${year}-12-10` < isoInDays(0) ? '' : `${year}-12-10`
     if (!out.rsvpPhone && !out.rsvpEmail) out.rsvpPhone = '+44 7700 900634'
   }
   if (templateId === 'newyear-midnight') {
-    const year = new Date().getFullYear()
+    const year = today().getFullYear()
     if (!out.date) out.date = `${year}-12-31`
     if (!out.rsvpBy) out.rsvpBy = `${year}-12-20` < isoInDays(0) ? '' : `${year}-12-20`
     if (!out.rsvpPhone && !out.rsvpEmail) out.rsvpPhone = '+1 212 555 0186'
@@ -139,6 +160,9 @@ export function withSampleDates(templateId: string, data: Record<string, string>
       .join('\n')
     // Aquarelle's RSVP card is part of the show; a number reserved for fiction keeps it on view.
     if (templateId === 'signature-aquarelle' && !out.whatsappNumber) out.whatsappNumber = '+44 7700 900372'
+    if (templateId === 'signature-royal-edit' && !out.whatsappNumber) out.whatsappNumber = '+44 7700 900463'
+    if (templateId === 'signature-rajwada' && !out.whatsappNumber) out.whatsappNumber = '+44 7700 900471'
+    if (templateId === 'signature-kalyanam' && !out.whatsappNumber) out.whatsappNumber = '+44 7700 900482'
     if (templateId === 'signature-two-worlds') {
       if (!out.whatsappNumber) out.whatsappNumber = '+44 7700 900518'
       // The sample story is four years long; keep it four years to the sample wedding date.

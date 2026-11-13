@@ -28,8 +28,8 @@ export default function Step2Names({ selectedTemplate, data, onChange, session, 
           browser either way; an account keeps the invitation and its wishes. */}
       {!session && (
         <p className="mx-4 mt-3 text-[0.8rem] leading-5 text-charcoal/70 sm:mx-5">
-          <span className="font-semibold text-charcoal">No account needed</span>. Your progress is saved on this device.{' '}
-          <Link href="/auth/login?callbackUrl=/create" className="link">Sign in</Link> if you have one.
+          <span className="font-semibold text-charcoal">No account needed to build it</span>: it&apos;s saved on this device until you publish.{' '}
+          Have one? <Link href="/auth/login?callbackUrl=/create" className="link">Sign in</Link>
         </p>
       )}
 

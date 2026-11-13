@@ -1,6 +1,7 @@
 import { CheckIcon } from '@/components/ui/Icons'
 import { OFFER_PROMISES } from '@/lib/offer'
 import { withLocalPrices } from '@/components/price/localised'
+import { serverT } from '@/lib/serverLang'
 
 /** A row of short, true reassurances with check marks. */
 export default function TrustList({
@@ -12,12 +13,13 @@ export default function TrustList({
   tone?: 'light' | 'dark'
   className?: string
 }) {
+  const t = serverT()
   return (
     <ul className={`flex flex-wrap gap-x-5 gap-y-2 text-[0.9rem] ${tone === 'dark' ? 'text-paper/80' : 'text-charcoal/80'} ${className}`}>
-      {items.map((t) => (
-        <li key={t} className="inline-flex items-center gap-1.5">
+      {items.map((item) => (
+        <li key={item} className="inline-flex items-center gap-1.5">
           <CheckIcon className={`h-4 w-4 ${tone === 'dark' ? 'text-gold-soft' : 'text-emerald-soft'}`} />
-          {withLocalPrices(t)}
+          {withLocalPrices(t(item))}
         </li>
       ))}
     </ul>

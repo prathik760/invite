@@ -240,6 +240,7 @@ export function Gopuram({ className, style }: { className?: string; style?: CSSP
           <path d={`M${x - 1.6} 18.5Q${x} 15 ${x + 1.6} 18.5`} fill={K.brass} stroke={K.brassDark} strokeWidth={0.4} />
           <path d={`M${x} 16V9`} stroke={K.brassDark} strokeWidth={0.9} />
           <circle cx={x} cy={8.6} r={1.1} fill={K.brassLight} />
+          <circle className="kl-glint" cx={x} cy={21} r={2.4} fill="#FFF6D0" style={{ animationDelay: `${(x - 92) * 0.04}s` }} />
         </g>
       ))}
     </svg>
@@ -264,6 +265,7 @@ export function BananaPlant({ flip = false, className, style }: { flip?: boolean
       <path d="M44 420C45 330 47 250 49 176H57C58 250 60 330 62 420Z" fill="#6E8F3A" stroke="#3E5A22" strokeWidth={0.9} />
       <path d="M50 410C50 330 51 260 52 182M56 410C56 330 55 260 55 182" fill="none" stroke="#9CB860" strokeWidth={1} opacity={0.7} />
       <path d="M44 420C46 350 47 300 48 260C40 300 38 360 36 420Z" fill="#587A2E" stroke="#3E5A22" strokeWidth={0.7} />
+      <g className="kl-crown" style={{ transformOrigin: `${top[0]}px ${top[1] + 6}px` }}>
       {leaves.map((l, i) => (
         <g key={i} transform={`translate(${top[0]} ${top[1]}) rotate(${l.a})`}>
           <path d={leafPath(l.len, l.w, l.bend)} fill={i % 2 ? K.leafLight : K.leaf} stroke="#2F4D1C" strokeWidth={0.8} />
@@ -276,6 +278,7 @@ export function BananaPlant({ flip = false, className, style }: { flip?: boolean
           })}
         </g>
       ))}
+      </g>
       {/* the bunch, and the flower on its drooping stalk */}
       <path d="M56 184C68 196 76 214 78 238" fill="none" stroke="#586F2A" strokeWidth={2.4} />
       {Array.from({ length: 4 }, (_, row) =>
@@ -310,7 +313,8 @@ export function Kuthuvilakku({ className, style }: { className?: string; style?:
         <path d="M12 106C14 104 16 102 19 101" fill="none" stroke={K.brassLight} strokeWidth={1} />
       </g>
       {[7, 22, 37].map((x) => (
-        <g key={x}>
+        <g key={x} className="kl-flame" style={{ animationDelay: `-${x * 0.03}s` }}>
+          <circle className="kl-lglow" cx={x} cy={25} r={9} fill="#FFC85A" opacity={0.28} />
           <path d={`M${x} 32C${x + 3} 28 ${x + 2.4} 23 ${x} 19C${x - 2.4} 23 ${x - 3} 28 ${x} 32Z`} fill="#F08A24" />
           <path d={`M${x} 31C${x + 1.4} 29 ${x + 1.2} 26 ${x} 24C${x - 1.2} 26 ${x - 1.4} 29 ${x} 31Z`} fill="#FBD35A" />
         </g>
@@ -332,9 +336,11 @@ export function Thoranam({ className, style, count = 17 }: { className?: string;
         const tilt = (rand() - 0.5) * 12
         const fill = i % 2 ? K.leaf : K.leafLight
         return (
-          <g key={i} transform={`translate(${r1(x)} ${r1(y)}) rotate(${r1(tilt)})`}>
-            <path d={`M0 0C6 ${r1(len * 0.3)} 5 ${r1(len * 0.75)} 0 ${r1(len)}C-5 ${r1(len * 0.75)} -6 ${r1(len * 0.3)} 0 0Z`} fill={fill} stroke="#2F4D1C" strokeWidth={0.6} />
-            <path d={`M0 1V${r1(len - 2)}`} stroke={K.leafPale} strokeWidth={0.6} />
+          <g key={i} className="kl-sway" style={{ transformOrigin: `${r1(x)}px ${r1(y)}px`, animationDelay: `-${r1(i * 0.37)}s` }}>
+            <g transform={`translate(${r1(x)} ${r1(y)}) rotate(${r1(tilt)})`}>
+              <path d={`M0 0C6 ${r1(len * 0.3)} 5 ${r1(len * 0.75)} 0 ${r1(len)}C-5 ${r1(len * 0.75)} -6 ${r1(len * 0.3)} 0 0Z`} fill={fill} stroke="#2F4D1C" strokeWidth={0.6} />
+              <path d={`M0 1V${r1(len - 2)}`} stroke={K.leafPale} strokeWidth={0.6} />
+            </g>
           </g>
         )
       })}

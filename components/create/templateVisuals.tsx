@@ -177,6 +177,12 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#5B1A26', rgb: '91,26,38',
     image: templateImage('signature-two-worlds'),
   },
+  'signature-royal-edit': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M5 2.5h10a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1zM6.5 5.5h7M6.5 8h3.5M6.5 13.5h4M6.5 15.5h2.5M12.5 11.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #C7A66A 0%, #6A2438 55%, #240B13 100%)',
+    color: '#6A2438', rgb: '106,36,56',
+    image: templateImage('signature-royal-edit'),
+  },
   'signature-aquarelle': {
     icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM10 5c1 .6 1.4 1.6 1 2.6-.4 1-1.6 1.3-2.4.7M7.6 10.8 6 17l2.2-1.2L9.4 18l.6-6.5M12.4 10.8 14 17l-2.2-1.2L10.6 18" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
     gradient: 'linear-gradient(135deg, #1B2537 0%, #86384C 58%, #E9B9BE 100%)',

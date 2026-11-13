@@ -4,8 +4,9 @@ import type { Mail } from '@/lib/mail'
 import { templateImage } from '@/lib/templateMedia'
 
 /*
- * The two emails a buyer gets: the receipt when the payment clears, and the
- * congratulations when their invitation goes live. Ivory paper, an emerald
+ * The emails a buyer gets: the receipt when the payment clears, the
+ * congratulations when their invitation goes live, and the morning after their
+ * celebration, a request for a review (lib/reviews.ts). Ivory paper, an emerald
  * band, gold rules and a serif, like the site. Tables and inline styles only,
  * because that is what Gmail, Outlook and Apple Mail all agree on.
  */
@@ -217,6 +218,104 @@ ${para(`With love,<br><span style="font-style:italic;color:${C.ink};">the ShareI
     to: l.to,
     subject: `Congratulations! Your invitation is live`,
     html: layout({ title: 'Your invitation is live', preheader: `${l.title}. Your link is ready to share`, body }),
+    text,
+  }
+}
+
+/* ── Asking for a review ───────────────────────────────────────────── */
+
+export interface ReviewAskDetails {
+  to: string
+  name?: string | null
+  /** The invitation's title, e.g. "Priya & Arjun: Wedding Invitation". */
+  title: string
+  designName: string
+  /** The review page with a star already chosen (lib/reviews.ts). */
+  starUrl: (rating: number) => string
+  url: string
+}
+
+/**
+ * The morning after the celebration (lib/reviews.ts): how did it go? Five
+ * stars to tap, each opening the review page with that rating chosen. Sent to
+ * every host, whatever they might say.
+ */
+export function reviewRequestEmail(r: ReviewAskDetails): Mail {
+  const who = firstName(r.name)
+  const stars = [1, 2, 3, 4, 5]
+    .map((n) => `<td style="padding:0 4px;"><a href="${esc(r.starUrl(n))}" target="_blank" title="${n} of 5" style="font-family:${SERIF};font-size:34px;line-height:40px;color:${C.gold};text-decoration:none;">&#9733;</a></td>`)
+    .join('')
+  const body = `${kicker('A small favour')}
+${heading(who ? `How did it go, ${who}?` : 'How did it go?')}
+${para(`We hope <em style="color:${C.ink};">${esc(r.title)}</em> was everything you hoped for. How did your guests find the ${esc(r.designName)} invitation?`)}
+${para('Tap a star. It takes a minute, and it helps other families choose.')}
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:20px auto 0;"><tr>${stars}</tr></table>
+<div style="height:22px;line-height:22px;font-size:0;">&nbsp;</div>
+${button(r.url, 'Write a short review')}
+<div style="height:26px;line-height:26px;font-size:0;">&nbsp;</div>
+${rule}
+${para('Something that did not work for you or your guests? Reply to this email. It comes straight to us, and we read every one.')}
+${para(`Thank you for celebrating with us,<br><span style="font-style:italic;color:${C.ink};">the ShareInvite team</span>`)}`
+
+  const text = [
+    who ? `How did it go, ${who}?` : 'How did it go?',
+    '',
+    `We hope ${r.title} was everything you hoped for. How did your guests find the ${r.designName} invitation?`,
+    '',
+    `Write a short review (it takes a minute): ${r.url}`,
+    '',
+    'Something that did not work for you or your guests? Reply to this email. It comes straight to us.',
+    '',
+    'Thank you for celebrating with us,',
+    'the ShareInvite team',
+  ].join('\n')
+
+  return {
+    to: r.to,
+    subject: who ? `${who}, how did your invitation go?` : 'How did your invitation go?',
+    html: layout({ title: 'How did your invitation go?', preheader: 'Tap a star: it takes a minute, and helps other families choose', body }),
+    text,
+  }
+}
+
+/* ── Password reset ────────────────────────────────────────────────── */
+
+export interface ResetDetails {
+  to: string
+  name?: string | null
+  /** The full reset address (app/auth/reset?token=…). */
+  url: string
+  /** How long the link works, in minutes. */
+  minutes: number
+}
+
+/** "Reset your password": the link, how long it works, and what to do if it was not you. */
+export function passwordResetEmail(r: ResetDetails): Mail {
+  const who = firstName(r.name)
+  const body = `${kicker('Your ShareInvite account')}
+${heading('Reset your password')}
+${para(`${who ? `Hi ${esc(who)}, someone` : 'Someone'} asked to reset the password for ${esc(r.to)}. Choose a new one with the button below.`)}
+<div style="height:26px;line-height:26px;font-size:0;">&nbsp;</div>
+${button(r.url, 'Choose a new password')}
+${para(`The link works once and for ${r.minutes} minutes. If it has run out, ask for a new one from the sign-in page.`)}
+${para(`If you did not ask for this, you can ignore this email. Your password stays as it is.`)}
+${para(`With love,<br><span style="font-style:italic;color:${C.ink};">the ShareInvite team</span>`)}`
+  const text = [
+    who ? `Hi ${who},` : 'Hello,',
+    '',
+    `Someone asked to reset the password for ${r.to}. Choose a new one here:`,
+    r.url,
+    '',
+    `The link works once and for ${r.minutes} minutes. If it has run out, ask for a new one from the sign-in page.`,
+    'If you did not ask for this, you can ignore this email. Your password stays as it is.',
+    '',
+    'With love,',
+    'the ShareInvite team',
+  ].join('\n')
+  return {
+    to: r.to,
+    subject: 'Reset your ShareInvite password',
+    html: layout({ title: 'Reset your password', preheader: `Choose a new password. The link works for ${r.minutes} minutes.`, body }),
     text,
   }
 }

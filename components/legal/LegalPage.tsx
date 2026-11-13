@@ -18,7 +18,7 @@ export function Bullets({ items }: { items: React.ReactNode[] }) {
     <ul className="space-y-2.5">
       {items.map((item, i) => (
         <li key={i} className="flex gap-3 text-[15px] leading-7 text-muted">
-          <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#A47945]" />
+          <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-burnished" />
           <span>{item}</span>
         </li>
       ))}
@@ -86,7 +86,7 @@ export default function LegalPage({ eyebrow, title, subtitle, lastUpdated, intro
           {/* Content */}
           <div className="min-w-0 max-w-3xl">
             {intro && (
-              <div className="mb-10 rounded-2xl border border-[#EADFD2] bg-[#FFFAF4] p-6 text-[15px] leading-8 text-muted">
+              <div className="mb-10 rounded-2xl border border-line bg-champagne p-6 text-[15px] leading-8 text-muted">
                 {intro}
               </div>
             )}

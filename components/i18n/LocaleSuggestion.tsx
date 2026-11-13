@@ -3,7 +3,7 @@
 import Link from '@/components/ui/Link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { LOCALE_CODES, LOCALISED_PATHS, getLocale, localeHref, stripLocale } from '@/lib/i18n'
+import { LOCALE_CODES, getLocale, hasLocalePath, localeHref, stripLocale } from '@/lib/i18n'
 import { trackEvent } from '@/lib/analytics'
 import { CONSENT_EVENT, consentState } from '@/lib/consent'
 
@@ -56,10 +56,11 @@ export default function LocaleSuggestion() {
     // "View this page in Español?" is only a true offer where a Spanish
     // version of this page exists. Elsewhere it would drop the visitor on a
     // different page (or, before localeHref, a 404).
-    if (!LOCALISED_PATHS.includes(basePath)) return
     const browser = (navigator.language || '').slice(0, 2).toLowerCase()
     if (!browser || browser === current) return
     if (!LOCALE_CODES.includes(browser)) return
+    // English readers on a translated page are offered English, which every page has.
+    if (browser !== 'en' && !hasLocalePath(basePath, browser)) return
     setSuggest(browser)
     trackEvent('locale_suggestion_view', { suggested: browser, current })
   }, [pathname])

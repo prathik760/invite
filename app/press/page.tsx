@@ -106,7 +106,7 @@ export default function PressPage() {
           <ul className="space-y-3">
             {coverageTopics.map((topic, i) => (
               <li key={i} className="flex items-start gap-3 text-sm leading-7 text-muted">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#A47945]" />
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-burnished" />
                 {topic}
               </li>
             ))}
@@ -139,10 +139,10 @@ export default function PressPage() {
           </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-4">
             {[
-              ['Emerald', '#052E20'],
-              ['Burnished gold', '#A47945'],
-              ['Soft gold', '#E8C866'],
-              ['Champagne', '#FFFAF4'],
+              ['Forest green', '#123D2E'],
+              ['Gold', '#C7A45B'],
+              ['Gold ink', '#8C6B2C'],
+              ['Ivory', '#FAF8F2'],
             ].map(([name, hex]) => (
               <div key={hex} className="overflow-hidden rounded-2xl border border-line bg-paper">
                 <div className="h-16" style={{ background: hex }} />

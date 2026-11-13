@@ -6,7 +6,7 @@ import { pinyon } from './kit/fonts/pinyon'
 import { cinzel } from './kit/fonts/cinzel'
 import { ebGaramond } from './kit/fonts/ebGaramond'
 import { calendarHref, dateParts, fitCqi, galleryImages, mapsHref, parseLines, parseRows, telHref, timeLabel, useCountdown, whatsappHref, type InviteProps } from './kit/core'
-import { Credit, Reveal } from './kit/ui'
+import { Credit, Reveal, useOpenWhileEditing } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
 
 /*
@@ -987,6 +987,8 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
 
   /* closed → the seal breaks, the ribbon slips off and the card opens → open */
   const [phase, setPhase] = useState<Phase>('closed')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'closed', 'open')
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), [])
   const audio = useRef<HTMLAudioElement | null>(null)

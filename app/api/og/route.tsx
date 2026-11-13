@@ -43,6 +43,9 @@ export async function GET(request: Request) {
       width: 1200,
       height: 630,
       fonts: await ogFonts(),
+      // The same title always draws the same card: keep it at the CDN rather
+      // than drawing it again for every request (each one is metered CPU).
+      headers: { 'Vercel-CDN-Cache-Control': 'max-age=31536000' },
     },
   )
 }

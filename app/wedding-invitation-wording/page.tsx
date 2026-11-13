@@ -49,7 +49,7 @@ const SECTION_TEMPLATES: Record<string, string> = {
 }
 
 /** Shown after the first set of messages: what those words look like as an invitation. */
-const DESIGN_IDS = ['signature-rajwada', 'signature-saptapadi', 'signature-aquarelle', 'signature-kalyanam', 'signature-nikah', 'luxury-wedding', 'indian-wedding', 'elegant-wedding', 'signature-garden']
+const DESIGN_IDS = ['signature-royal-edit', 'signature-rajwada', 'signature-saptapadi', 'signature-aquarelle', 'signature-kalyanam', 'signature-nikah', 'luxury-wedding', 'indian-wedding', 'elegant-wedding', 'signature-garden']
 
 const MESSAGE_COUNT = WEDDING_SECTIONS.reduce((n, s) => n + s.messages.length, 0)
 const TITLE = 'Wedding Invitation Message for WhatsApp: 100+ Marriage Ideas'

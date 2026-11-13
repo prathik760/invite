@@ -1,44 +1,11 @@
-import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'
-import { TEMPLATES } from '@/modules/templates/data'
-
 // WebsiteSchema used to live here as a second, conflicting WebSite entity — the
 // root layout already emits one with a proper @id and publisher link. It was
 // imported by nothing, and carried the SearchAction that Google retired in
 // November 2024, so it has been removed rather than reconciled.
-
-export function SoftwareAppSchema() {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'SoftwareApplication',
-          name: 'ShareInvite',
-          applicationCategory: 'UtilitiesApplication',
-          operatingSystem: 'Web',
-          description: 'Digital invitation maker for weddings, birthdays, engagements, festivals and every celebration. Build and preview before you pay; one-time payment per design to publish.',
-          url: 'https://shareinvite.in',
-          // Advertised as a real price range, not ₹0 — Google treats an Offer
-          // price of 0 as "this product is free", which is no longer true and
-          // would be flagged as a price mismatch against the template pages.
-          offers: {
-            '@type': 'AggregateOffer',
-            priceCurrency: 'INR',
-            lowPrice: String(LOWEST_PAID_PRICE),
-            highPrice: String(HIGHEST_PAID_PRICE),
-            offerCount: TEMPLATES.length,
-            description: 'One price per design, paid once when you publish. Preview before you pay.',
-          },
-          author: {
-            '@type': 'Person',
-            name: 'Prathik Thelkar',
-          },
-        }),
-      }}
-    />
-  )
-}
+//
+// SoftwareAppSchema went the same way: the homepage, its only user, also
+// emitted its own SoftwareApplication, so Google saw the product twice. The
+// homepage's one (app/page.tsx) is the one kept.
 
 export function BlogPostSchema({
   title,

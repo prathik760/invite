@@ -1,7 +1,5 @@
 import Link from '@/components/ui/Link'
 import type { Metadata } from 'next'
-import SiteHeader from '@/components/layout/SiteHeader'
-import SiteFooter from '@/components/landing/SiteFooter'
 import { LogoMark } from '@/components/brand/Logo'
 import { ArrowRightIcon } from '@/components/ui/Icons'
 
@@ -14,12 +12,17 @@ export const metadata: Metadata = {
  * Site-wide 404. The app had no not-found.tsx at any level, so every missing
  * URL rendered Next's unstyled default — no header, no navigation, no way back
  * into the site. Still a genuine 404 status; only the page body changes.
+ *
+ * No site header or footer here, on purpose (13 Nov 2026). Next.js sends this
+ * page inside the data of every page on the site, in case one turns out to be
+ * missing: with the header and footer it added about 44 KB to each of them,
+ * two thirds of a guest's invitation page, read from storage and metered on
+ * every cache miss. The links below are the way back into the site.
  */
 export default function NotFound() {
   return (
     <>
-      <SiteHeader />
-      <main className="relative overflow-hidden bg-champagne px-5 py-20 text-charcoal sm:py-28">
+      <main className="relative flex min-h-screen items-center overflow-hidden bg-champagne px-5 py-20 text-charcoal sm:py-28">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(45%_55%_at_50%_0%,rgba(232,200,102,0.22),transparent_70%)]" />
         <div className="relative mx-auto w-full max-w-2xl text-center">
           <LogoMark className="enter-0 mx-auto h-16 w-16" />
@@ -53,7 +56,6 @@ export default function NotFound() {
           </Link>
         </div>
       </main>
-      <SiteFooter />
     </>
   )
 }

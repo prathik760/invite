@@ -4,6 +4,7 @@ import TrackedLink from '@/components/ui/TrackedLink'
 import { LogoMark } from '@/components/brand/Logo'
 import { ArrowRightIcon } from '@/components/ui/Icons'
 import { withLocalPrices } from '@/components/price/localised'
+import { serverT } from '@/lib/serverLang'
 
 /**
  * The closing statement on a page: emerald band, the brand mark, one headline
@@ -26,6 +27,8 @@ export default function CtaBand({
   /** Analytics placement id. */
   location?: string
 }) {
+  const t = serverT()
+  const tr = (n: ReactNode) => (typeof n === 'string' ? t(n) : n)
   return (
     <section className="relative overflow-hidden bg-emerald text-paper">
       <div
@@ -34,16 +37,16 @@ export default function CtaBand({
       />
       <div className="shell relative py-16 text-center sm:py-24" data-reveal>
         <LogoMark className="mx-auto h-14 w-14" />
-        <p className="mt-6 text-[0.8rem] font-bold uppercase tracking-[0.22em] text-gold-soft">{withLocalPrices(eyebrow)}</p>
-        <h2 className="t-h2 mx-auto mt-3 max-w-3xl">{withLocalPrices(title)}</h2>
-        {sub && <p className="mx-auto mt-4 max-w-lg text-[1rem] leading-7 text-paper/70">{withLocalPrices(sub)}</p>}
+        <p className="mt-6 text-[0.8rem] font-bold uppercase tracking-[0.22em] text-gold-soft">{withLocalPrices(tr(eyebrow))}</p>
+        <h2 className="t-h2 mx-auto mt-3 max-w-3xl">{withLocalPrices(tr(title))}</h2>
+        {sub && <p className="mx-auto mt-4 max-w-lg text-[1rem] leading-7 text-paper/70">{withLocalPrices(tr(sub))}</p>}
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <TrackedLink
             href={primary.href}
             location={location}
             className="btn-gold inline-flex items-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold"
           >
-            {primary.label}
+            {t(primary.label)}
             <ArrowRightIcon />
           </TrackedLink>
           {secondary && (
@@ -51,7 +54,7 @@ export default function CtaBand({
               href={secondary.href}
               className="inline-flex items-center rounded-full border border-paper/25 px-8 py-4 text-[1rem] font-semibold text-paper/90 transition-colors hover:bg-paper/10"
             >
-              {secondary.label}
+              {t(secondary.label)}
             </Link>
           )}
         </div>

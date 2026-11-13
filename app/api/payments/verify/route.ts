@@ -5,7 +5,8 @@ import { getRazorpayClient, verifyPaymentSignature, planPriceIn } from '@/lib/ra
 import { discountedPrice, isPriceList, minorUnits, priceInList } from '@/lib/pricing'
 import { prisma } from '@/lib/db'
 import type { PlanId } from '@/lib/plans'
-import { mergePlans, PLAN_MAP } from '@/lib/plans'
+import { getRequiredPlan, PLAN_MAP } from '@/lib/plans'
+import { alreadyRecorded, ownedBy, recordPayment } from '@/lib/entitlements'
 import { issuePass } from '@/lib/purchasePass'
 import { getTemplateData } from '@/modules/templates/data'
 import { isDeliverable, sendLater, sendMail } from '@/lib/mail'
@@ -107,51 +108,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Payment amount does not match plan price.' }, { status: 400 })
     }
 
-    // Idempotency — if this payment_id already activated a subscription, return success
-    const existing = await prisma.subscription.findFirst({
-      where: { razorpayPaymentId: razorpay_payment_id },
-    })
-    if (existing) {
-      return NextResponse.json({ success: true, plan: existing.plan, ...(sessionUserId ? {} : { pass: issuePass(existing.userId) }) })
-    }
+    // The design bought, from the order our server wrote. Only when its price is
+    // the plan that was paid; anything else is recorded the old way, as a plan.
+    const template = typeof notes.templateId === 'string' ? getTemplateData(notes.templateId) : undefined
+    const designId = template && getRequiredPlan(template.id).id === plan ? template.id : null
 
     const payer = sessionUserId ? null : await payerAccount(razorpay_payment_id)
     const userId = sessionUserId ?? payer!.id
 
-    // Never revoke templates on a later purchase. A customer on All Access who
-    // then buys the standalone Raksha Bandhan plan must keep All Access — a
-    // plain upsert would overwrite it and take away templates they paid for.
-    // mergePlans also covers the same-price case (Basic and Raksha Bandhan are
-    // both ₹199 and neither contains the other), where a level comparison alone
-    // would drop whichever was bought first.
-    const current = await prisma.subscription.findUnique({
-      where: { userId },
-      select: { plan: true, status: true },
-    })
-    const effectivePlan =
-      current?.status === 'active'
-        ? mergePlans(current.plan as PlanId, plan as PlanId)
-        : (plan as PlanId)
+    // A retried verify (a double tap, a network retry) records nothing twice
+    // and sends no second receipt.
+    if (await alreadyRecorded(razorpay_payment_id)) {
+      return NextResponse.json({ success: true, ...(await ownedBy(userId)), ...(sessionUserId ? {} : { pass: issuePass(userId) }) })
+    }
 
-    await prisma.subscription.upsert({
-      where: { userId },
-      update: {
-        plan: effectivePlan,
-        status: 'active',
-        razorpayPaymentId: razorpay_payment_id,
-        razorpayOrderId: razorpay_order_id,
-      },
-      create: {
-        userId,
-        plan: effectivePlan,
-        status: 'active',
-        razorpayPaymentId: razorpay_payment_id,
-        razorpayOrderId: razorpay_order_id,
-      },
+    // The design becomes the buyer's (lib/entitlements.ts). Nothing the account
+    // already owned, including an earlier customer's plan, is touched.
+    await recordPayment({
+      userId,
+      plan: plan as PlanId,
+      templateId: designId,
+      paymentId: razorpay_payment_id,
+      orderId: razorpay_order_id,
+      amount: Number(order.amount),
+      currency: String(order.currency),
     })
 
     // The receipt, after the response: the buyer is not kept waiting on it.
-    const template = typeof notes.templateId === 'string' ? getTemplateData(notes.templateId) : undefined
     sendLater(async () => {
       const account = sessionUserId ? await prisma.user.findUnique({ where: { id: sessionUserId }, select: { email: true, name: true } }) : null
       const to = account?.email ?? payer?.email
@@ -170,7 +153,8 @@ export async function POST(req: NextRequest) {
       )
     })
 
-    return NextResponse.json({ success: true, plan: effectivePlan, ...(sessionUserId ? {} : { pass: issuePass(userId) }) })
+    // `plan` and `designs`: what the account owns now (lib/plans.ts `Owned`).
+    return NextResponse.json({ success: true, ...(await ownedBy(userId)), ...(sessionUserId ? {} : { pass: issuePass(userId) }) })
   } catch (err) {
     console.error('[POST /api/payments/verify]', err)
     return NextResponse.json({ error: 'Could not activate subscription. Contact support with payment ID.' }, { status: 500 })

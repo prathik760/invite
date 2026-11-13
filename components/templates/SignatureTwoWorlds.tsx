@@ -22,7 +22,7 @@ import {
   whatsappHref,
   type InviteProps,
 } from './kit/core'
-import { Credit, Reveal } from './kit/ui'
+import { Credit, Reveal, useOpenWhileEditing } from './kit/ui'
 import { numberWords } from './kit/words'
 import type { InviteTheme } from './kit/theme'
 import { Act, Icon, Lightbox, SectionNav, useLightbox, type NavItem } from './rajwada/parts'
@@ -833,6 +833,8 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
 
   /* The opening: closed (the blessing plays) → opening (a bloom of light) → open. */
   const [phase, setPhase] = useState<Phase>('closed')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'closed', 'open')
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), [])
   // A tap anywhere opens the invitation, but only once the blessing has been read; the button works from the start.

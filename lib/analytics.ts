@@ -2,7 +2,9 @@
 
 import { journal } from './journal'
 
-type AnalyticsParams = Record<string, string | number | boolean | null | undefined>
+/** One product in a GA4 ecommerce list (`items` on view_item_list): item_id, item_name, price… */
+type AnalyticsItem = Record<string, string | number>
+type AnalyticsParams = Record<string, string | number | boolean | null | undefined | AnalyticsItem[]>
 
 declare global {
   interface Window {
@@ -127,7 +129,8 @@ export function trackEvent(eventName: string, params: AnalyticsParams = {}) {
   window.dataLayer.push({ event: eventName, ...enriched })
   window.gtag?.('event', eventName, enriched)
   trackMeta(eventName, params)
-  journal(eventName, params)
+  // The journal keeps single values only (and only its listed keys); GA4 lists like `items` stay in GA4.
+  journal(eventName, Object.fromEntries(Object.entries(params).filter(([, v]) => !Array.isArray(v))) as Record<string, string | number | boolean | null | undefined>)
   trackClarity(eventName, params)
 }
 

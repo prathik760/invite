@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import { coupleLine, eventTitle } from '@/lib/inviteCardText'
 import type { Metadata } from 'next'
@@ -9,6 +10,7 @@ import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
 import ExpiredInvitation from '@/components/e/ExpiredInvitation'
 import FreePlanBanner from '@/components/e/FreePlanBanner'
 import { deletionDate, isEnded } from '@/lib/retention'
+import { templateSeoSlug } from '@/lib/seo'
 
 interface PageProps {
   params: { slug: string }
@@ -17,16 +19,37 @@ interface PageProps {
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
 /**
- * Rendered when the first guest opens it, then served from the cache for an
- * hour, instead of a server render for every guest. Saving an edit clears it
- * at once (PATCH /api/events/[slug]); wishes load in the browser, and an
- * invitation turns to its "ended" page within the hour.
+ * Rendered when the first guest opens it, then served from the cache for a
+ * day, instead of a server render for every guest. Saving an edit clears it
+ * at once (PATCH /api/events/[slug]), and so does the daily cleanup when it
+ * deletes an invitation; wishes load in the browser. An invitation turns to
+ * its "ended" page within the day, which is days before it is deleted.
  */
-export const revalidate = 3600
+export const revalidate = 86400
 export function generateStaticParams() {
   return []
 }
 
+/** One database read per render, shared by the metadata and the page. */
+const loadEvent = cache((slug: string) =>
+  prisma.event.findUnique({ where: { slug } }).catch(async (err: unknown) => {
+    if (shouldUseLocalStore(err)) return getLocalEventBySlug(slug)
+    throw err
+  }),
+)
+
+/**
+ * The share card's address carries a fingerprint of what is printed on it.
+ * The card is cached by the CDN (./opengraph-image.tsx), so an edit has to
+ * change the address for WhatsApp to be given the new card; this page is
+ * re-rendered on every edit, so it always links the current one.
+ */
+function cardUrl(pageUrl: string, templateId: string, data: unknown): string {
+  const text = `${templateId}|${JSON.stringify(data ?? {})}`
+  let h = 0x811c9dc5
+  for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 0x01000193)
+  return `${pageUrl}/opengraph-image?v=${(h >>> 0).toString(36)}`
+}
 
 function getEventNames(data: Record<string, string>, templateId: string): string | undefined {
   return data.brideName && data.groomName
@@ -43,17 +66,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { robots: { index: false, follow: false } }
   }
 
-  // Count only APPROVED wishes — raw submission count is not a quality signal because
-  // anyone can submit wishes without host review. This must match the sitemap query.
-  const event = await prisma.event
-    .findUnique({
-      where: { slug: params.slug },
-      include: { _count: { select: { wishes: { where: { isApproved: true } } } } },
-    })
-    .catch(async (err: unknown) => {
-      if (shouldUseLocalStore(err)) return getLocalEventBySlug(params.slug)
-      throw err
-    })
+  const event = await loadEvent(params.slug)
 
   if (!event) return { title: 'Invitation Not Found' }
 
@@ -62,6 +75,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = data.message
     ?? `${title}${data.venue ? ` at ${data.venue}` : ''}${data.date ? ` on ${data.date}` : ''}. RSVP and view details on ShareInvite.`
   const url = `${APP_URL}/e/${params.slug}`
+  const image = cardUrl(url, event.templateId, event.data)
 
   return {
     title,
@@ -74,13 +88,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'website',
       url,
       siteName: 'ShareInvite',
-      images: [{ url: `${url}/opengraph-image`, width: 1200, height: 630, alt: title }],
+      images: [{ url: image, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${url}/opengraph-image`],
+      images: [image],
     },
   }
 }
@@ -90,10 +104,7 @@ export default async function EventPage({ params }: PageProps) {
   // Block the internal sentinel slug used for custom template requests
   if (params.slug === '__custom-requests__') notFound()
 
-  const event = await prisma.event.findUnique({ where: { slug: params.slug } }).catch(async (err: unknown) => {
-    if (shouldUseLocalStore(err)) return getLocalEventBySlug(params.slug)
-    throw err
-  })
+  const event = await loadEvent(params.slug)
 
   if (!event) notFound()
 
@@ -139,7 +150,7 @@ export default async function EventPage({ params }: PageProps) {
       '@type': 'Person',
       name: hostName,
     },
-    image: [`${shareUrl}/opengraph-image`],
+    image: [cardUrl(shareUrl, event.templateId, event.data)],
     url: shareUrl,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
@@ -159,7 +170,12 @@ export default async function EventPage({ params }: PageProps) {
           opens their invitation from the dashboard carries one in; keep the
           invitation's details out of it. */}
       <div data-clarity-mask="true" style={{ display: 'contents' }}>
-        <TemplateRenderer templateId={event.templateId} data={data} eventId={event.id} />
+        <TemplateRenderer
+          templateId={event.templateId}
+          data={data}
+          eventId={event.id}
+          designHref={`${APP_URL}/templates/${templateSeoSlug(event.templateId)}?src=invite_footer`}
+        />
       </div>
     </>
   )

@@ -12,6 +12,9 @@ import LiveDemoScreen from './LiveDemoScreen'
 import ShareDesignButton from '@/components/catalog/ShareDesignButton'
 import { useBackToClose } from '@/lib/useBackToClose'
 import { Price, useLocalPrice } from '@/components/price/Price'
+import { trackEvent } from '@/lib/analytics'
+import { useT } from '@/components/i18n/I18nProvider'
+import { rich } from '@/lib/translate'
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 
@@ -19,20 +22,21 @@ function PlanBadge({ templateId }: { templateId: string }) {
   const plan = getRequiredPlan(templateId)
   const isFree = plan.price === 0
   const price = useLocalPrice(plan.price)
+  const tr = useT()
   return (
     <span
       className="inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-[.1em] shrink-0"
       style={
         isFree
-          ? { background: 'rgba(11,74,52,0.12)', color: '#0B4A34', border: '1px solid rgba(11,74,52,0.22)' }
+          ? { background: 'rgba(18,61,46,0.12)', color: '#123D2E', border: '1px solid rgba(18,61,46,0.22)' }
           : plan.id === 'standard'
-          ? { background: 'rgba(164,121,69,0.12)', color: '#0B4A34', border: '1px solid rgba(164,121,69,0.25)' }
+          ? { background: 'rgba(140,107,44,0.12)', color: '#123D2E', border: '1px solid rgba(140,107,44,0.25)' }
           : plan.id === 'premium'
-          ? { background: 'rgba(11,74,52,0.1)', color: '#0B4A34', border: '1px solid rgba(11,74,52,0.2)' }
-          : { background: 'rgba(164,121,69,0.14)', color: '#A47945', border: '1px solid rgba(164,121,69,0.3)' }
+          ? { background: 'rgba(18,61,46,0.1)', color: '#123D2E', border: '1px solid rgba(18,61,46,0.2)' }
+          : { background: 'rgba(140,107,44,0.14)', color: '#7A5C24', border: '1px solid rgba(140,107,44,0.3)' }
       }
     >
-      {isFree ? 'Free' : `${price.label} one-time`}
+      {isFree ? tr('Free') : tr('{price} one-time', { price: price.label })}
     </span>
   )
 }
@@ -59,6 +63,7 @@ function useIsPhone() {
 }
 
 export default function TemplatePreviewModal({ templateId, open, onClose, onUse }: Props) {
+  const tr = useT()
   const isPhone = useIsPhone()
   // The phone's Back button closes the preview instead of leaving the site.
   const releaseBack = useBackToClose(open, onClose)
@@ -85,6 +90,16 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
   const name = displayName(tpl.name)
   const barBg = isDark ? '#111118' : '#FFFCF8'
   const barLine = isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(44,32,28,0.09)'
+  // What this design holds, read from the fields its builder asks for (the same rules as lib/catalogItems).
+  const keys = new Set(tpl.config.fields.map((f) => f.key))
+  const types = new Set(tpl.config.fields.map((f) => f.type))
+  const includes = [
+    keys.has('whatsappNumber') && 'WhatsApp RSVP',
+    keys.has('musicUrl') && 'Music',
+    (keys.has('galleryImages') || types.has('gallery')) && 'Photo gallery',
+    keys.has('mapsUrl') && 'Map & directions',
+    keys.has('events') && 'Every function',
+  ].filter(Boolean) as string[]
 
   const topBar = (
     <div
@@ -96,7 +111,7 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
           <Image src={tv.image} alt="" width={32} height={32} className="h-full w-full object-cover object-top" />
         </div>
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold" style={{ color: isDark ? 'rgba(255,255,255,0.9)' : '#1E2726' }}>
+          <p className="truncate text-sm font-semibold" style={{ color: isDark ? 'rgba(255,255,255,0.9)' : '#25251F' }}>
             {name}
           </p>
           <PlanBadge templateId={templateId} />
@@ -108,13 +123,13 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
           name={name}
           source="preview_modal"
           className="inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-[12.5px] font-semibold transition-colors"
-          style={{ background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(44,32,28,0.07)', color: isDark ? 'rgba(255,255,255,0.85)' : '#1E2726' }}
+          style={{ background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(44,32,28,0.07)', color: isDark ? 'rgba(255,255,255,0.85)' : '#25251F' }}
         />
         <button
           onClick={onClose}
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors"
           style={{ background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(44,32,28,0.07)', color: isDark ? 'rgba(255,255,255,0.7)' : '#706861' }}
-          aria-label="Close preview"
+          aria-label={tr('Close preview')}
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -129,14 +144,19 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
       className="flex shrink-0 flex-col gap-2 px-5 py-4 sm:rounded-b-3xl"
       style={{ background: barBg, borderTop: barLine, paddingBottom: 'max(16px, env(safe-area-inset-bottom, 0px))' }}
     >
+      {includes.length > 0 && (
+        <p className="text-center text-[11.5px] font-medium" style={{ color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(44,32,28,0.72)' }}>
+          {tr('Includes {list}', { list: includes.map((x) => tr(x)).join(' · ') })}
+        </p>
+      )}
       {!isFree && (
         <p className="text-center text-[11px]" style={{ color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(44,32,28,0.5)' }}>
-          One-time <Price inr={plan.price} /> · No subscription · Preview before you pay
+          {rich(tr('One-time {price} · No subscription · Preview before you pay'), { price: <Price inr={plan.price} /> })}
         </p>
       )}
       {onUse ? (
         <button type="button" onClick={onUse} className="btn-primary flex w-full items-center justify-center gap-2 rounded-2xl py-3.5 font-bold" style={{ fontSize: '14px' }}>
-          Use this design
+          {tr('Use this design')}
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
@@ -147,13 +167,14 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
           // Replaces the preview's history entry, so Back from the builder returns to this page.
           replace
           onClick={() => {
+            trackEvent('customize_click', { template_id: templateId, template_name: name, price: plan.price, source_section: 'preview_modal' })
             releaseBack()
             onClose()
           }}
           className="btn-primary flex w-full items-center justify-center gap-2 rounded-2xl py-3.5 font-bold"
           style={{ fontSize: '14px' }}
         >
-          Use this design
+          {tr('Customize this invitation')}
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
@@ -172,7 +193,7 @@ export default function TemplatePreviewModal({ templateId, open, onClose, onUse 
           transition={{ duration: 0.18 }}
           role="dialog"
           aria-modal="true"
-          aria-label={`${name}: live preview`}
+          aria-label={tr('{name}: live preview', { name })}
           className="fixed inset-0 flex items-center justify-center"
           style={{ zIndex: 'var(--z-overlay)' as unknown as number, background: 'rgba(22,16,13,0.76)', backdropFilter: isPhone ? undefined : 'blur(18px)' }}
           onClick={e => { if (e.target === e.currentTarget) onClose() }}

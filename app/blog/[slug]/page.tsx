@@ -30,6 +30,11 @@ type Props = { params: { slug: string } }
 // Related cards sit three across from md up, inside the 1088px shell.
 const RELATED_CARD_SIZES = '(min-width: 1088px) 340px, (min-width: 768px) 33vw, 100vw'
 
+// Every real page is built ahead (generateStaticParams). Any other address is a
+// 404 straight away, instead of a server render to find that out: bots probe
+// hundreds of made-up addresses, and each render is metered.
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return blogDrafts.map((post) => ({ slug: post.slug }))
 }
@@ -749,7 +754,7 @@ export default function BlogPostPage({ params }: Props) {
                   <EyeIcon className="h-4 w-4" /> Live preview
                 </PreviewButton>
                 <Link href={createHref} className="btn-primary inline-flex items-center justify-center rounded-full px-5 py-3 text-[0.9rem] font-semibold">
-                  Use this design
+                  Customize this design
                 </Link>
               </div>
             </div>
@@ -856,7 +861,7 @@ export default function BlogPostPage({ params }: Props) {
                 <p className="font-editorial text-[1.35rem] font-semibold leading-tight">{ctaName}</p>
                 <p className="mt-1 text-[0.85rem] text-muted"><Price inr={ctaPrice} /> one-time · everything included</p>
                 <Link href={createHref} className="btn-primary mt-4 flex items-center justify-center rounded-full py-3 text-[0.9rem] font-semibold">
-                  Use this design
+                  Customize this design
                 </Link>
               </div>
             </div>

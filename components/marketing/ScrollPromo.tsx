@@ -15,6 +15,8 @@ import {
 import { templateImage } from '@/lib/templateMedia'
 import { Price } from '@/components/price/Price'
 import ConfettiBurst from '@/components/marketing/ConfettiBurst'
+import Image from '@/components/ui/Image'
+import { useT } from '@/components/i18n/I18nProvider'
 
 /**
  * Scroll-triggered seasonal promotion.
@@ -41,6 +43,7 @@ import ConfettiBurst from '@/components/marketing/ConfettiBurst'
  */
 
 function useCountdown(endsAt: string | null) {
+  const tr = useT()
   const [label, setLabel] = useState<string | null>(null)
   useEffect(() => {
     if (!endsAt) return
@@ -50,13 +53,13 @@ function useCountdown(endsAt: string | null) {
       const d = Math.floor(ms / 86400000)
       const h = Math.floor((ms % 86400000) / 3600000)
       // Weeks away, a date reads better than "61 days left".
-      if (d > 14) return setLabel(`Offer ends ${new Date(endsAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'Asia/Kolkata' })}`)
-      setLabel(d > 0 ? `${d} day${d === 1 ? '' : 's'} left` : `${h} hour${h === 1 ? '' : 's'} left`)
+      if (d > 14) return setLabel(tr('Offer ends {date}', { date: new Date(endsAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'Asia/Kolkata' }) }))
+      setLabel(d > 0 ? (d === 1 ? tr('1 day left') : tr('{n} days left', { n: d })) : h === 1 ? tr('1 hour left') : tr('{n} hours left', { n: h }))
     }
     tick()
     const id = setInterval(tick, 60000)
     return () => clearInterval(id)
-  }, [endsAt])
+  }, [endsAt, tr])
   return label
 }
 
@@ -65,6 +68,7 @@ function useCountdown(endsAt: string | null) {
  * visitor, otherwise on scroll.
  */
 export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigger?: 'arrival' | 'scroll'; designHref: string }) {
+  const tr = useT()
   const [open, setOpen] = useState(true)
   const [copied, setCopied] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -179,7 +183,7 @@ export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigge
           <button
             ref={closeRef}
             onClick={() => close('close_button')}
-            aria-label="Close offer"
+            aria-label={tr('Close offer')}
             className="absolute right-4 top-4 z-[3] flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-white/15"
             style={{ background: 'rgba(255,255,255,0.08)', border: `1px solid ${gold}40`, color: cream }}
           >
@@ -194,21 +198,23 @@ export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigge
               className="mx-auto w-[62px] rounded-t-full p-[3px]"
               style={{ background: `linear-gradient(180deg, ${goldLight}, ${goldDeep})`, boxShadow: `0 12px 30px -10px ${gold}88` }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              {/* The design's ready-made WebP sizes (3 KB at this size), not its 149 KB full picture. */}
+              <Image
                 src={templateImage(PROMO.templateId)}
-                alt={copy.imageAlt}
+                alt={tr(copy.imageAlt)}
                 width={56}
                 height={74}
+                sizes="56px"
+                loading="eager"
                 className="block h-[74px] w-full rounded-t-full object-cover object-top"
               />
             </div>
 
             <p className="mt-3 text-[10.5px] font-bold uppercase tracking-[0.32em]" style={{ color: gold }}>
-              ✦ {copy.eyebrow} ✦
+              ✦ {tr(copy.eyebrow)} ✦
             </p>
             <p id="si-promo-title" className="mx-auto mt-1.5 max-w-[17ch] font-editorial text-[1.75rem] font-semibold leading-[1.08] text-[#FFF7EA]">
-              {copy.headline}
+              {tr(copy.headline)}
             </p>
 
             <div aria-hidden className="mx-auto mt-3 flex w-40 items-center gap-2">
@@ -218,7 +224,7 @@ export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigge
             </div>
 
             <p id="si-promo-desc" className="mx-auto mt-3 max-w-[36ch] text-[0.86rem] leading-[1.45rem]" style={{ color: `${cream}c0` }}>
-              {copy.body}
+              {tr(copy.body)}
             </p>
 
             {/* Price. Strike-through appears only for a real discount: a
@@ -234,7 +240,7 @@ export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigge
                     className="rounded-full px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-[0.12em]"
                     style={{ background: `linear-gradient(135deg, ${goldLight}, ${gold})`, color: '#3E0B15' }}
                   >
-                    {coupon.percentOff}% off
+                    {tr('{n}% off', { n: coupon.percentOff })}
                   </span>
                   <s className="text-[0.85rem]" style={{ color: `${cream}80` }}><Price inr={price} /></s>
                 </span>
@@ -245,10 +251,10 @@ export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigge
                 {hasRealDiscount() && (
                   <>
                     <span className="text-base line-through" style={{ color: `${cream}80` }}><Price inr={PROMO.originalPrice as number} /></span>
-                    <span className="rounded-full px-2 py-0.5 text-[11px] font-bold" style={{ background: gold, color: '#3E0B15' }}>{percent}% off</span>
+                    <span className="rounded-full px-2 py-0.5 text-[11px] font-bold" style={{ background: gold, color: '#3E0B15' }}>{tr('{n}% off', { n: percent ?? 0 })}</span>
                   </>
                 )}
-                <span className="text-xs" style={{ color: `${cream}99` }}>one-time · no subscription</span>
+                <span className="text-xs" style={{ color: `${cream}99` }}>{tr('one-time · no subscription')}</span>
               </div>
             )}
 
@@ -258,20 +264,20 @@ export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigge
               <button
                 type="button"
                 onClick={copyCode}
-                aria-label={`Copy the code ${coupon.code}`}
+                aria-label={tr('Copy the code {code}', { code: coupon.code })}
                 className="mx-auto mt-3.5 flex items-center gap-3 rounded-xl border border-dashed px-4 py-1.5 transition-transform active:scale-[0.97]"
                 style={{ borderColor: `${gold}b0`, background: 'rgba(255,255,255,0.05)' }}
               >
                 <span className="font-editorial text-[1.3rem] font-bold leading-none tracking-[0.2em]" style={{ color: goldLight }}>{coupon.code}</span>
                 <span aria-hidden className="h-6 w-px" style={{ background: `${gold}60` }} />
                 <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: `${cream}b0` }}>
-                  {copied ? 'Copied ✓' : 'Tap to copy'}
+                  {copied ? tr('Copied ✓') : tr('Tap to copy')}
                 </span>
               </button>
             )}
 
             {isLowestPricedPaid() && !coupon && (
-              <p className="mt-2 text-xs font-medium" style={{ color: gold }}>Our lowest-priced premium template</p>
+              <p className="mt-2 text-xs font-medium" style={{ color: gold }}>{tr('Our lowest-priced premium template')}</p>
             )}
             {countdown && (
               <p className="mt-2.5 text-[11px] font-semibold uppercase tracking-[0.22em]" style={{ color: gold }}>{countdown}</p>
@@ -280,7 +286,7 @@ export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigge
             <ul className="mx-auto mt-4 grid max-w-sm grid-cols-2 gap-x-4 gap-y-1.5 text-left text-[0.8rem]" style={{ color: `${cream}cc` }}>
               {copy.features.map((f) => (
                 <li key={f} className="flex items-start gap-1.5">
-                  <span aria-hidden style={{ color: gold }}>✦</span>{f}
+                  <span aria-hidden style={{ color: gold }}>✦</span>{tr(f)}
                 </li>
               ))}
             </ul>
@@ -306,18 +312,18 @@ export default function ScrollPromo({ trigger = 'scroll', designHref }: { trigge
               }}
             >
               <span aria-hidden className="si-shine" />
-              <span className="relative">{copy.cta}</span>
+              <span className="relative">{tr(copy.cta)}</span>
             </Link>
 
             <p className="mt-2.5 text-[11px]" style={{ color: `${cream}8c` }}>
-              Build it and preview the whole thing · Pay only to publish
+              {tr('Build it and preview the whole thing · Pay only to publish')}
             </p>
             <button
               onClick={() => close('maybe_later')}
               className="mt-0.5 w-full py-1.5 text-xs transition-colors hover:text-white"
               style={{ color: `${cream}8c` }}
             >
-              Maybe later
+              {tr('Maybe later')}
             </button>
           </div>
         </div>

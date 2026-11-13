@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { seoEvents, trackEvent } from '@/lib/analytics'
 import { SUPPORT_WHATSAPP_URL } from '@/lib/support'
+import { useT } from '@/components/i18n/I18nProvider'
 
 /**
  * Floating support button.
@@ -21,24 +22,26 @@ import { SUPPORT_WHATSAPP_URL } from '@/lib/support'
  *     --bottom-dock-h published by <BottomDock>.
  */
 export default function WhatsAppButton() {
+  const tr = useT()
   const pathname = usePathname()
 
   // Hidden on published invitations (the guest's view, never the host's) and in
   // the builder, where the checkout already offers a contextual support link
   // and a second floating button only competes with the pay button.
   // Invitations (and their demos) belong to the host; the builder has its own help.
-  if (pathname?.startsWith('/e/') || pathname?.startsWith('/demo/') || pathname?.startsWith('/create') || pathname?.startsWith('/admin')) return null
+  // Not over forms where it would cover a field (the builder, and sign-in since 4 Nov 2026), nor on guests' invitations.
+  if (pathname?.startsWith('/e/') || pathname?.startsWith('/demo/') || pathname?.startsWith('/create') || pathname?.startsWith('/auth') || pathname?.startsWith('/admin')) return null
 
   return (
     <a
       href={SUPPORT_WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
+      aria-label={tr('Chat on WhatsApp')}
       // Untracked until now, so the number of enquiries this button generates —
       // the top of the entire WhatsApp sales motion — was unmeasurable.
       onClick={() => trackEvent(seoEvents.supportContact, { channel: 'whatsapp', source: 'floating_button', path: pathname ?? '' })}
-      className="group fixed right-4 sm:right-5"
+      className="si-floating group fixed right-4 sm:right-5"
       style={{
         zIndex: 'var(--z-float)' as unknown as number,
         bottom: 'calc(var(--bottom-dock-h, 0px) + 1rem + env(safe-area-inset-bottom, 0px))',
@@ -83,7 +86,7 @@ export default function WhatsAppButton() {
             boxShadow: '0 2px 8px rgba(0,0,0,0.22)',
           }}
         >
-          Chat on WhatsApp
+          {tr('Chat on WhatsApp')}
           {/* Arrow */}
           <span
             className="absolute right-[-5px] top-1/2 -translate-y-1/2 border-y-4 border-l-[5px] border-y-transparent"

@@ -125,9 +125,9 @@ export default function ShareBar({ url, names, templateId, source = 'unknown' }:
         onClick={handleCopy}
         className="flex-1 flex items-center justify-center gap-2.5 py-3.5 rounded-full text-sm font-semibold transition-all active:scale-95 relative overflow-hidden"
         style={{
-          background: copied ? 'rgba(11,74,52,0.08)' : '#FFFDF9',
-          border: copied ? '1px solid rgba(11,74,52,0.3)' : '1px solid #EADFD2',
-          color: copied ? '#0B4A34' : '#1E2726',
+          background: copied ? 'rgba(18,61,46,0.08)' : '#FFFFFF',
+          border: copied ? '1px solid rgba(18,61,46,0.3)' : '1px solid #E8E2D7',
+          color: copied ? '#123D2E' : '#25251F',
                   }}
       >
         <AnimatePresence mode="wait">

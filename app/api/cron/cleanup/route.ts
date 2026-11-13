@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
+import { askForReviews } from '@/lib/reviews'
 import { prisma } from '@/lib/db'
 import { deleteR2Objects, isR2Configured, listR2UploadsOlderThan, r2KeysIn } from '@/lib/r2'
 import { ACTIVITY_DAYS, deletionDate, isInternalSlug, ORPHAN_UPLOAD_DAYS } from '@/lib/retention'
@@ -12,6 +14,7 @@ import { ACTIVITY_DAYS, deletionDate, isInternalSlug, ORPHAN_UPLOAD_DAYS } from 
  *    are ORPHAN_UPLOAD_DAYS old.
  * 3. Visitor activity (/admin/activity) older than ACTIVITY_DAYS is deleted.
  * 4. Guest upload counts (lib/uploadQuota.ts) are deleted once their hour is over.
+ * 5. Hosts whose celebration ended yesterday are asked for a review (lib/reviews.ts).
  *
  * Vercel sends `Authorization: Bearer $CRON_SECRET`; without CRON_SECRET set,
  * the job refuses to run. `?dry=1` reports what would be deleted and deletes
@@ -81,6 +84,19 @@ export async function GET(request: Request) {
   // Kept apart from the rest: until the Activity table exists this throws, and
   // that must not stop invitations from being cleaned up.
   const activityBefore = new Date(now.getTime() - ACTIVITY_DAYS * DAY)
+
+  // ── 5. Review requests (lib/reviews.ts) ────────────────────────────────────
+  // The morning after each paid invitation's celebration, its host is asked how it went. Kept
+  // apart like the activity rows: a review problem (or the table not created yet) must not fail
+  // the cleanup, and the cleanup must not be held up by it.
+  const reviewAsks = async (dryRun: boolean) => {
+    try {
+      return await askForReviews({ now, dry: dryRun })
+    } catch (err) {
+      console.error('[cleanup] review requests', err instanceof Error ? err.message : err)
+      return { asked: 0, emailed: 0, error: true }
+    }
+  }
   const activityRows = async (del: boolean) => {
     try {
       const where = { createdAt: { lt: activityBefore } }
@@ -98,6 +114,7 @@ export async function GET(request: Request) {
       files: expiredKeys.length,
       orphanFiles: orphanKeys.length,
       activityRows: await activityRows(false),
+      reviewRequests: await reviewAsks(true),
       r2Configured: r2,
     })
   }
@@ -111,6 +128,9 @@ export async function GET(request: Request) {
     const res = await prisma.event.deleteMany({ where: { id: { in: ids } } })
     invitationsDeleted += res.count
   }
+  // The invitation pages are cached for a day (app/e/[slug]); a deleted one
+  // must stop being shown now, not when its copy runs out.
+  for (const e of expired) revalidatePath(`/e/${e.slug}`)
 
   const activityDeleted = await activityRows(true)
 
@@ -129,6 +149,8 @@ export async function GET(request: Request) {
     .then((r) => r.count)
     .catch(() => 0)
 
-  console.log(`[cleanup] deleted ${invitationsDeleted} invitations, ${filesDeleted} files (${orphanKeys.length} unused uploads), ${activityDeleted} activity rows, ${botRowsDeleted} bot rows, ${quotaDeleted} upload counts`)
-  return NextResponse.json({ invitationsDeleted, filesDeleted, orphanFiles: orphanKeys.length, activityDeleted, botRowsDeleted, quotaDeleted, r2Configured: r2 })
+  const reviewRequests = await reviewAsks(false)
+
+  console.log(`[cleanup] deleted ${invitationsDeleted} invitations, ${filesDeleted} files (${orphanKeys.length} unused uploads), ${activityDeleted} activity rows, ${botRowsDeleted} bot rows, ${quotaDeleted} upload counts; asked ${reviewRequests.asked} hosts for a review (${reviewRequests.emailed} emailed)`)
+  return NextResponse.json({ invitationsDeleted, filesDeleted, orphanFiles: orphanKeys.length, activityDeleted, botRowsDeleted, quotaDeleted, reviewRequests, r2Configured: r2 })
 }

@@ -7,7 +7,7 @@ import { pinyon } from './kit/fonts/pinyon'
 import { baloo } from './kit/fonts/baloo'
 import { jost } from './kit/fonts/jost'
 import { calendarHref, dateParts, galleryImages, grain, mapsHref, pad2, parseLines, parseRows, telHref, timeLabel, useCountdown, whatsappHref, type DateParts, type InviteProps, fitCqi } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, Reveal, useOpenWhileEditing } from './kit/ui'
 import { numberWords, ordinalWords } from './kit/words'
 import { ChannelIcon, ageOf, canReply, partyName, rsvpChannels } from './kit/party'
 import type { InviteTheme } from './kit/theme'
@@ -644,6 +644,8 @@ export default function BirthdayGala({ data, eventId, isPreview = false }: Invit
 
   /* closed → seal breaks → flap lifts → card rises → the stage fades → open */
   const [phase, setPhase] = useState<Phase>('closed')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'closed', 'open')
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), [])
   const audio = useRef<HTMLAudioElement | null>(null)

@@ -121,6 +121,20 @@ export function botOf(userAgent: string | null | undefined): Bot | null {
 export const COUNTED_BOT_KINDS: ReadonlySet<BotKind> = new Set<BotKind>(['search', 'ai', 'preview'])
 
 /**
+ * Crawlers (Googlebot, Bingbot, GPTBot…) read thousands of pages a month, and
+ * counting every read was the largest share of the plan's metered server calls.
+ * They are counted 1 time in BOT_SAMPLE, each count standing for BOT_SAMPLE
+ * reads, so the Bots tab keeps the same totals at a tenth of the cost. Link
+ * previews and assistants opening a page for a person are rare and each one
+ * means something, so they are always counted.
+ */
+export const BOT_SAMPLE = 10
+
+export function botSampleRate(bot: Bot): number {
+  return bot.kind === 'preview' || /for a user/.test(bot.name) ? 1 : BOT_SAMPLE
+}
+
+/**
  * Turned away before a page is served (middleware.ts) and asked to stay away in
  * robots.txt: SEO tools and ByteDance's crawler read hundreds of pages a day
  * and send no visitors. Google, Bing and the AI assistants are never blocked.

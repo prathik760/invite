@@ -51,7 +51,14 @@ export default function WishesSection({
 
   useEffect(() => {
     if (isPreviewMode) return
-    fetch(`/api/wishes?eventId=${eventId}`)
+    // The list is cached for a minute (app/api/wishes). A guest who has just
+    // sent a wish asks past the cache, so it is there when they reload.
+    let fresh = ''
+    try {
+      const sent = Number(sessionStorage.getItem(`si_wish_sent_${eventId}`))
+      if (sent && Date.now() - sent < 2 * 60 * 1000) fresh = `&fresh=${sent}`
+    } catch {}
+    fetch(`/api/wishes?eventId=${eventId}${fresh}`)
       .then((r) => r.json())
       .then((data) => setWishes(Array.isArray(data) ? data : []))
       .catch(() => {})
@@ -73,6 +80,9 @@ export default function WishesSection({
       // Wishes are published on arrival, so show it straight away.
       const created: WishRecord = await res.json()
       setWishes((prev) => [created, ...prev.filter((w) => w.id !== created.id)])
+      try {
+        sessionStorage.setItem(`si_wish_sent_${eventId}`, String(Date.now()))
+      } catch {}
       setSubmitted(true)
       trackEvent(seoEvents.rsvpSubmission, { event_id: eventId, response_type: 'wish' })
       setName('')

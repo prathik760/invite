@@ -18,7 +18,7 @@ import {
   fitCqi,
   type InviteProps,
 } from './kit/core'
-import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal, useOpenWhileEditing } from './kit/ui'
 import { timeWords } from './kit/words'
 import type { InviteTheme } from './kit/theme'
 
@@ -379,6 +379,8 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
 
   /* The envelope: sealed → opening (seal lifts, flap turns, card rises) → leaving (it fades off the emerald) → done (the suite rises in on the same emerald). */
   const [phase, setPhase] = useState<Phase>('sealed')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'sealed', 'done')
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((id) => window.clearTimeout(id)), [])
   const openEnvelope = useCallback(() => {

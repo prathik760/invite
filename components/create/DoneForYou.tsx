@@ -133,21 +133,23 @@ export function DoneForYouChoice({ design, onSelf, onTeam }: { design: DoneForYo
 
 /** A slim reminder above the form, for anyone who starts typing and would rather not finish. */
 export function DoneForYouStrip({ design, step }: { design: DoneForYouDesign; step: number }) {
-  // The names step, where most people leave: both ways out of filling it in now.
+  // The names step, where most people leave: both ways out of filling it in now. Side by side at
+  // every width (13 Nov 2026): stacked on phones, the card was 300px tall and pushed the first box
+  // of the form to the bottom of the screen.
   if (step === 2) {
     return (
-      <div className="mx-4 mt-3 rounded-2xl border px-3.5 py-3 sm:mx-5 md:mx-5" style={{ borderColor: 'rgba(31,168,85,0.35)', background: 'rgba(31,168,85,0.05)' }}>
-        <p className="text-[0.82rem] font-semibold text-charcoal">Not ready to fill it in now?</p>
-        <div className="mt-2 grid grid-cols-1 gap-2 min-[420px]:grid-cols-2">
+      <div className="mx-4 mt-3 rounded-2xl border px-3 py-2.5 sm:mx-5 md:mx-5" style={{ borderColor: 'rgba(31,168,85,0.35)', background: 'rgba(31,168,85,0.05)' }}>
+        <p className="text-[0.8rem] font-semibold text-charcoal">Not ready to fill it in now?</p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
           <a
             href={saveForLaterLink(design)}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => track(design, 'builder_save_for_later', 'save_for_later')}
-            className="flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-[0.8rem] font-semibold text-white transition-[filter] hover:brightness-105"
+            className="flex items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-center text-[0.76rem] font-semibold leading-tight text-white transition-[filter] hover:brightness-105"
             style={{ background: WHATSAPP_GREEN }}
           >
-            <WhatsAppIcon className="h-4 w-4" />
+            <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
             Send me this design
           </a>
           <a
@@ -155,13 +157,13 @@ export function DoneForYouStrip({ design, step }: { design: DoneForYouDesign; st
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => track(design, 'builder_strip')}
-            className="flex items-center justify-center gap-2 rounded-xl border bg-white px-3 py-2.5 text-[0.8rem] font-semibold transition-colors hover:bg-white/70"
+            className="flex items-center justify-center rounded-xl border bg-white px-2 py-2 text-center text-[0.76rem] font-semibold leading-tight transition-colors hover:bg-white/70"
             style={{ borderColor: 'rgba(31,168,85,0.45)', color: '#137A3E' }}
           >
             Our team fills it in
           </a>
         </div>
-        <p className="mt-1.5 text-[0.72rem] leading-4 text-charcoal/60">On WhatsApp. We send you the link to finish later, or make it for you within 24 hours.</p>
+        <p className="mt-1.5 text-[0.7rem] leading-4 text-charcoal/60">On WhatsApp: the link to finish later, or we make it for you in 24 hours.</p>
       </div>
     )
   }

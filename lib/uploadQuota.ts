@@ -19,15 +19,24 @@ const HOUR = 60 * 60 * 1000
 const memory = new Map<string, number>()
 let warned = false
 
-function keyFor(ip: string, hour: number): string {
+function keyFor(scope: string, id: string, hour: number): string {
   const secret = process.env.NEXTAUTH_SECRET || 'upload-quota'
-  return crypto.createHmac('sha256', secret).update(`upload.${ip}.${hour}`).digest('base64url').slice(0, 32)
+  return crypto.createHmac('sha256', secret).update(`${scope}.${id}.${hour}`).digest('base64url').slice(0, 32)
 }
 
 /** Counts one upload from `ip`. False once this hour's allowance is used up. */
-export async function takeGuestUpload(ip: string, now = Date.now()): Promise<boolean> {
+export function takeGuestUpload(ip: string, now = Date.now()): Promise<boolean> {
+  return takeQuota('upload', ip, GUEST_UPLOADS_PER_HOUR, now)
+}
+
+/**
+ * Counts one use of `scope` by `id` (an address, an email) in this clock hour, in the same table:
+ * false once `limit` is used up. Also used for password-reset requests (app/api/auth/forgot).
+ * The id is stored only as a keyed hash mixed with the hour.
+ */
+export async function takeQuota(scope: string, id: string, limit: number, now = Date.now()): Promise<boolean> {
   const hour = Math.floor(now / HOUR)
-  const key = keyFor(ip, hour)
+  const key = keyFor(scope, id, hour)
   try {
     // A single-field upsert like this one runs as one INSERT … ON CONFLICT, so
     // simultaneous uploads cannot both read the same count.
@@ -37,15 +46,15 @@ export async function takeGuestUpload(ip: string, now = Date.now()): Promise<boo
       update: { count: { increment: 1 } },
       select: { count: true },
     })
-    return row.count <= GUEST_UPLOADS_PER_HOUR
+    return row.count <= limit
   } catch (err) {
     if (!warned) {
       warned = true
-      console.error('[upload] UploadQuota unavailable, counting in memory:', err instanceof Error ? err.message : err)
+      console.error('[quota] UploadQuota unavailable, counting in memory:', err instanceof Error ? err.message : err)
     }
     if (memory.size > 5000) memory.clear()
     const count = (memory.get(key) ?? 0) + 1
     memory.set(key, count)
-    return count <= GUEST_UPLOADS_PER_HOUR
+    return count <= limit
   }
 }

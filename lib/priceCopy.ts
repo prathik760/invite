@@ -15,7 +15,7 @@ function list(names: string[]): string {
   return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`
 }
 
-/** "₹99 for Ganesh Chaturthi Premium; ₹199 for Elegant Wedding and Pooja; …" */
+/** "₹99 for Ganesh Chaturthi; ₹199 for Elegant Wedding and Pooja; …" */
 export function priceByDesignSentence(): string {
   const byPrice = new Map<number, string[]>()
   for (const t of TEMPLATES) {

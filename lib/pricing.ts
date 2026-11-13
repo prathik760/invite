@@ -42,6 +42,7 @@ type ForeignList = Exclude<PriceListId, 'inr'>
  */
 const LADDER: Record<number, Record<ForeignList, number>> = {
   99:   { usd: 4,  'usd-world': 2,  gbp: 3,  eur: 4,  cad: 5,  aud: 6,  aed: 15,  sgd: 5 },
+  149:  { usd: 5,  'usd-world': 2,  gbp: 4,  eur: 5,  cad: 7,  aud: 8,  aed: 19,  sgd: 7 },
   199:  { usd: 7,  'usd-world': 3,  gbp: 5,  eur: 6,  cad: 9,  aud: 10, aed: 25,  sgd: 9 },
   299:  { usd: 9,  'usd-world': 4,  gbp: 7,  eur: 8,  cad: 12, aud: 14, aed: 35,  sgd: 12 },
   399:  { usd: 12, 'usd-world': 5,  gbp: 9,  eur: 11, cad: 16, aud: 18, aed: 45,  sgd: 16 },
@@ -49,6 +50,7 @@ const LADDER: Record<number, Record<ForeignList, number>> = {
   1299: { usd: 35, 'usd-world': 15, gbp: 27, eur: 32, cad: 45, aud: 52, aed: 129, sgd: 45 },
   1499: { usd: 39, 'usd-world': 17, gbp: 29, eur: 35, cad: 49, aud: 59, aed: 145, sgd: 49 },
   1999: { usd: 49, 'usd-world': 22, gbp: 39, eur: 45, cad: 65, aud: 75, aed: 185, sgd: 65 },
+  2999: { usd: 69, 'usd-world': 34, gbp: 55, eur: 65, cad: 95, aud: 109, aed: 255, sgd: 95 },
   3999: { usd: 89, 'usd-world': 45, gbp: 69, eur: 79, cad: 119, aud: 135, aed: 329, sgd: 119 },
 }
 
@@ -151,7 +153,8 @@ export function localPrice(inr: number, country: string | null | undefined): Loc
   return price
 }
 
-const RUPEES = /₹\s?(\d[\d,]*)/g
+// A price ends on a digit, so the comma in "₹299, ₹399" stays in the sentence.
+const RUPEES = /₹\s?(\d(?:[\d,]*\d)?)/g
 
 /**
  * Rewrites every catalogue price written as "₹1,499" inside a sentence into

@@ -5,8 +5,11 @@ import Link from '@/components/ui/Link'
 import BottomDock from '@/components/ui/BottomDock'
 import { LOWEST_PAID_PRICE } from '@/lib/plans'
 import { Price } from '@/components/price/Price'
+import { useT } from '@/components/i18n/I18nProvider'
+import { rich } from '@/lib/translate'
 
 export default function StickyMobileCTA() {
+  const tr = useT()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -18,7 +21,7 @@ export default function StickyMobileCTA() {
   if (!visible) return null
 
   return (
-    <BottomDock className="sm:hidden">
+    <BottomDock className="si-floating sm:hidden">
       <div
         className="border-t border-[#A47945]/30 px-4 pt-3"
         style={{
@@ -33,9 +36,9 @@ export default function StickyMobileCTA() {
           href="/create"
           className="btn-primary flex w-full items-center justify-center rounded-xl py-3.5 text-sm font-semibold"
         >
-          Create your invitation
+          {tr('Create your invitation')}
         </Link>
-        <p className="mt-1.5 text-center text-[10px] text-muted">Preview before you pay · From <Price inr={LOWEST_PAID_PRICE} />, one-time</p>
+        <p className="mt-1.5 text-center text-[10px] text-muted">{rich(tr('Preview before you pay · From {price}, one-time'), { price: <Price inr={LOWEST_PAID_PRICE} /> })}</p>
       </div>
     </BottomDock>
   )

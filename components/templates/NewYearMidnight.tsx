@@ -7,7 +7,7 @@ import { italiana } from './kit/fonts/italiana'
 import { pinyon } from './kit/fonts/pinyon'
 import { jost } from './kit/fonts/jost'
 import { calendarHref, dateParts, galleryImages, mapsHref, pad2, parseLines, parseSchedule, timeLabel, type InviteProps } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, Reveal, useOpenWhileEditing } from './kit/ui'
 import { ChannelIcon, rsvpChannels } from './kit/party'
 import type { InviteTheme } from './kit/theme'
 
@@ -661,6 +661,8 @@ export default function NewYearMidnight({ data, eventId, isPreview = false }: In
 
   /* waiting → ten to one → midnight → open */
   const [phase, setPhase] = useState<Phase>('waiting')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'waiting', 'open')
   const [count, setCount] = useState(10)
   const [reduced, setReduced] = useState(false)
   useEffect(() => setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches), [])

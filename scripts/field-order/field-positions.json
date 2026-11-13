@@ -1043,31 +1043,31 @@
   ]
  },
  "signature-rajwada": {
-  "height": 6482,
+  "height": 7287,
   "fields": [
    {
     "key": "brideName",
-    "y": -99869,
+    "y": -99866,
     "via": "cover"
    },
    {
     "key": "groomName",
-    "y": -99756,
+    "y": -99765,
     "via": "cover"
    },
    {
     "key": "couplePhoto",
-    "y": 763,
+    "y": 757,
     "via": "attr"
    },
    {
     "key": "bridePhoto",
-    "y": 1082,
+    "y": 1078,
     "via": "attr"
    },
    {
     "key": "groomPhoto",
-    "y": 1389,
+    "y": 1385,
     "via": "attr"
    },
    {
@@ -1082,7 +1082,7 @@
    },
    {
     "key": "invocation",
-    "y": -99971,
+    "y": -99950,
     "via": "cover"
    },
    {
@@ -1092,22 +1092,22 @@
    },
    {
     "key": "date",
-    "y": -99670,
+    "y": -99690,
     "via": "cover"
    },
    {
     "key": "time",
-    "y": -99612,
+    "y": -99632,
     "via": "cover"
    },
    {
     "key": "venue",
-    "y": -99569,
+    "y": -99589,
     "via": "cover"
    },
    {
     "key": "venueAddress",
-    "y": 3557,
+    "y": 4136,
     "via": "text"
    },
    {
@@ -1116,22 +1116,22 @@
    },
    {
     "key": "dressCode",
-    "y": 3629,
+    "y": 4208,
     "via": "text"
    },
    {
     "key": "events",
-    "y": 2125,
+    "y": 2664,
     "via": "text"
    },
    {
     "key": "travel",
-    "y": 3917,
+    "y": 4496,
     "via": "text"
    },
    {
     "key": "contacts",
-    "y": 4211,
+    "y": 4804,
     "via": "text"
    },
    {
@@ -1140,22 +1140,22 @@
    },
    {
     "key": "rsvpBy",
-    "y": 4668,
+    "y": 5326,
     "via": "text"
    },
    {
     "key": "story",
-    "y": 2527,
+    "y": 3079,
     "via": "text"
    },
    {
     "key": "faq",
-    "y": 4432,
+    "y": 5025,
     "via": "text"
    },
    {
     "key": "hashtag",
-    "y": 5242,
+    "y": 5923,
     "via": "text"
    },
    {
@@ -1164,7 +1164,7 @@
    },
    {
     "key": "galleryImages",
-    "y": 2776,
+    "y": 3336,
     "via": "attr"
    },
    {
@@ -1179,71 +1179,71 @@
   ]
  },
  "signature-kalyanam": {
-  "height": 6161,
+  "height": 6710,
   "fields": [
    {
     "key": "brideName",
-    "y": -99794,
+    "y": -99792,
     "via": "cover"
    },
    {
     "key": "groomName",
-    "y": -99718,
+    "y": -99720,
     "via": "cover"
    },
    {
     "key": "couplePhoto",
-    "y": 735,
+    "y": 720,
     "via": "attr"
    },
    {
     "key": "bridePhoto",
-    "y": 1078,
+    "y": 1066,
     "via": "attr"
    },
    {
     "key": "groomPhoto",
-    "y": 1318,
+    "y": 1307,
     "via": "attr"
    },
    {
     "key": "brideParents",
-    "y": 1251,
+    "y": 1242,
     "via": "text"
    },
    {
     "key": "groomParents",
-    "y": 1491,
+    "y": 1483,
     "via": "text"
    },
    {
     "key": "invocation",
-    "y": -99829,
+    "y": -99827,
     "via": "cover"
    },
    {
     "key": "blessings",
-    "y": 1631,
+    "y": 1623,
     "via": "text"
    },
    {
     "key": "date",
-    "y": -99643,
+    "y": -99644,
     "via": "cover"
    },
    {
     "key": "time",
-    "y": -99596,
+    "y": -99602,
     "via": "cover"
    },
    {
     "key": "venue",
-    "y": -99539,
+    "y": -99546,
     "via": "cover"
    },
    {
     "key": "venueAddress",
-    "y": -99515,
+    "y": -99521,
     "via": "cover"
    },
    {
@@ -1252,22 +1252,22 @@
    },
    {
     "key": "dressCode",
-    "y": 3382,
+    "y": 3890,
     "via": "text"
    },
    {
     "key": "events",
-    "y": 1921,
+    "y": 2429,
     "via": "text"
    },
    {
     "key": "travel",
-    "y": 3646,
+    "y": 4154,
     "via": "text"
    },
    {
     "key": "contacts",
-    "y": 3851,
+    "y": 4359,
     "via": "text"
    },
    {
@@ -1276,22 +1276,22 @@
    },
    {
     "key": "rsvpBy",
-    "y": 4313,
+    "y": 4855,
     "via": "text"
    },
    {
     "key": "story",
-    "y": 2380,
+    "y": 2888,
     "via": "text"
    },
    {
     "key": "faq",
-    "y": 4032,
+    "y": 4540,
     "via": "text"
    },
    {
     "key": "hashtag",
-    "y": 4908,
+    "y": 5450,
     "via": "text"
    },
    {
@@ -1300,7 +1300,7 @@
    },
    {
     "key": "galleryImages",
-    "y": 2644,
+    "y": 3148,
     "via": "attr"
    },
    {
@@ -1309,7 +1309,7 @@
    },
    {
     "key": "message",
-    "y": 665,
+    "y": 657,
     "via": "text"
    }
   ]
@@ -3301,6 +3301,166 @@
     "key": "message",
     "y": 698,
     "via": "text"
+   }
+  ]
+ },
+ "signature-royal-edit": {
+  "height": 10657,
+  "fields": [
+   {
+    "key": "brideName",
+    "y": -1,
+    "via": "text"
+   },
+   {
+    "key": "groomName",
+    "y": -1,
+    "via": "text"
+   },
+   {
+    "key": "palette",
+    "y": null
+   },
+   {
+    "key": "blessingLine",
+    "y": 2186,
+    "via": "text"
+   },
+   {
+    "key": "tagline",
+    "y": 486,
+    "via": "text"
+   },
+   {
+    "key": "requestLine",
+    "y": 2391,
+    "via": "text"
+   },
+   {
+    "key": "celebrationLine",
+    "y": 2960,
+    "via": "text"
+   },
+   {
+    "key": "hosts",
+    "y": 996,
+    "via": "text"
+   },
+   {
+    "key": "brideParents",
+    "y": 3127,
+    "via": "text"
+   },
+   {
+    "key": "groomParents",
+    "y": 3180,
+    "via": "text"
+   },
+   {
+    "key": "blessings",
+    "y": 3263,
+    "via": "text"
+   },
+   {
+    "key": "date",
+    "y": -1,
+    "via": "text"
+   },
+   {
+    "key": "time",
+    "y": 2597,
+    "via": "text"
+   },
+   {
+    "key": "venue",
+    "y": 1815,
+    "via": "text"
+   },
+   {
+    "key": "venueAddress",
+    "y": 557,
+    "via": "text"
+   },
+   {
+    "key": "mapsUrl",
+    "y": null
+   },
+   {
+    "key": "dressCode",
+    "y": 6574,
+    "via": "text"
+   },
+   {
+    "key": "events",
+    "y": 513,
+    "via": "text"
+   },
+   {
+    "key": "travel",
+    "y": 6734,
+    "via": "text"
+   },
+   {
+    "key": "contacts",
+    "y": 6976,
+    "via": "text"
+   },
+   {
+    "key": "whatsappNumber",
+    "y": null
+   },
+   {
+    "key": "rsvpBy",
+    "y": 1596,
+    "via": "text"
+   },
+   {
+    "key": "couplePhoto",
+    "y": -5,
+    "via": "attr"
+   },
+   {
+    "key": "storyPhoto",
+    "y": 3561,
+    "via": "attr"
+   },
+   {
+    "key": "storyQuote",
+    "y": 1081,
+    "via": "text"
+   },
+   {
+    "key": "ourStory",
+    "y": 4168,
+    "via": "text"
+   },
+   {
+    "key": "galleryImages",
+    "y": 5354,
+    "via": "attr"
+   },
+   {
+    "key": "faq",
+    "y": 7117,
+    "via": "text"
+   },
+   {
+    "key": "hashtag",
+    "y": 3397,
+    "via": "text"
+   },
+   {
+    "key": "livestreamUrl",
+    "y": null
+   },
+   {
+    "key": "message",
+    "y": 10236,
+    "via": "text"
+   },
+   {
+    "key": "musicUrl",
+    "y": null
    }
   ]
  }

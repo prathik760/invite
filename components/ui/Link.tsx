@@ -3,6 +3,7 @@
 import { forwardRef, type ComponentProps } from 'react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useLocalHref } from '@/components/i18n/I18nProvider'
 
 type LinkProps = Omit<ComponentProps<typeof NextLink>, 'ref'>
 
@@ -14,8 +15,11 @@ type LinkProps = Omit<ComponentProps<typeof NextLink>, 'ref'>
  * from the server); fetching on intent keeps a click quick for a fraction of that.
  * An explicit `prefetch` is passed through untouched.
  */
-const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link({ prefetch, onMouseEnter, onTouchStart, ...props }, ref) {
+const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link({ prefetch, onMouseEnter, onTouchStart, href: rawHref, ...rest }, ref) {
   const router = useRouter()
+  // On a translated page, links to pages that exist in its language stay in it (lib/i18n localiseHref).
+  const local = useLocalHref()
+  const props = { ...rest, href: typeof rawHref === 'string' ? local(rawHref) : rawHref }
   const intent = () => {
     const href = typeof props.href === 'string' ? props.href : null
     if (prefetch === undefined && href?.startsWith('/') && !href.startsWith('//')) router.prefetch(href)

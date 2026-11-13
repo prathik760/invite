@@ -14,6 +14,7 @@ model User {
   createdAt    DateTime      @default(now())
   events       Event[]
   subscription Subscription?
+  purchases    Purchase[]
 }
 
 model Template {
@@ -48,6 +49,56 @@ model Wish {
   // /api/wishes/[id]); it is no longer a gate on first appearance.
   isApproved Boolean  @default(true)
   createdAt  DateTime @default(now())
+}
+
+// One row per design a customer has bought, since 13 Nov 2026. Buying a design
+// makes that design theirs: as many invitations with it as they need, and
+// nothing else. Accounts that bought one of the old cumulative plans before
+// then keep it in Subscription (lib/entitlements.ts reads both).
+model Purchase {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id])
+  templateId        String
+  // The price point paid (lib/plans.ts), for the record.
+  plan              String
+  razorpayPaymentId String   @unique
+  razorpayOrderId   String
+  // What was charged, in the currency's smallest unit (paise, cents).
+  amount            Int
+  currency          String
+  createdAt         DateTime @default(now())
+
+  @@unique([userId, templateId])
+}
+
+// A host's review of their invitation (13 Nov 2026). Asked for by email the
+// day after the celebration (the daily job, lib/reviews.ts) and by WhatsApp
+// from /admin/reviews. Shown on the site only when the host allowed it and the
+// owner approved it. Deliberately not linked to Event: an invitation is deleted
+// 30 days after its event, and its review stays.
+model Review {
+  id          String    @id @default(cuid())
+  eventId     String    @unique
+  userId      String?
+  templateId  String
+  // How the host signs it, e.g. "Priya & Arjun".
+  name        String
+  city        String?
+  // 1 to 5; empty until the host answers.
+  rating      Int?
+  text        String?
+  // The host allowed it to be shown on the site.
+  publish     Boolean   @default(false)
+  // asked, then submitted, then approved or hidden.
+  status      String    @default("asked")
+  // When the request email went out; empty when there was no inbox to send to.
+  emailedAt   DateTime?
+  submittedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([status])
+  @@index([userId])
 }
 
 model Subscription {

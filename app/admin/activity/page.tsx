@@ -196,6 +196,10 @@ async function VisitorDetail({ id, p }: { id: string; p: Params }) {
         },
       })
     : null
+  // Designs bought since 13 Nov 2026 (lib/entitlements.ts); none before the Purchase table exists.
+  const bought = v.userId
+    ? await prisma.purchase.findMany({ where: { userId: v.userId }, select: { templateId: true }, orderBy: { createdAt: 'asc' } }).catch(() => [])
+    : []
   const users: Users = new Map(user && v.userId ? [[v.userId, { email: user.email, name: user.name }]] : [])
   const first = sourceInfo(v.context)
   const gsc = gscStatus().connected
@@ -245,6 +249,7 @@ async function VisitorDetail({ id, p }: { id: string; p: Params }) {
           <p className="aa-small">
             Signed up {when(user.createdAt)} · plan <strong>{user.subscription?.plan ?? 'none'}</strong>
             {user.subscription?.status && user.subscription.status !== 'active' ? ` (${user.subscription.status})` : ''}
+            {bought.length ? <> · bought <strong>{bought.map((b) => templateName(b.templateId)).join(', ')}</strong></> : null}
           </p>
           {user.events.length ? (
             <ul className="aa-list">
@@ -435,7 +440,7 @@ async function Overview({ p }: { p: Params }) {
       {shown.length === 0 ? (
         <div className="aa-card aa-empty">
           <p>No visitors here yet.</p>
-          <p className="aa-small aa-muted">Activity appears within a few seconds of someone using the site.</p>
+          <p className="aa-small aa-muted">Activity appears within a minute of someone using the site, or as soon as they leave it.</p>
         </div>
       ) : (
         <div className="aa-grid">
@@ -472,6 +477,7 @@ function Shell({ children, token }: { children: React.ReactNode; token?: string 
             <span className="aa-top-links">
               <a href={`/admin/checkouts?token=${encodeURIComponent(token)}`}>Unpaid checkouts →</a>
               <a href={`/admin/requests?token=${encodeURIComponent(token)}`}>Custom requests →</a>
+              <a href={`/admin/reviews?token=${encodeURIComponent(token)}`}>Reviews →</a>
             </span>
           )}
         </div>

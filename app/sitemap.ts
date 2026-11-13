@@ -4,7 +4,7 @@ import { hasFullArticle } from '@/content/blog-articles'
 import { landingPages, locationPages } from '@/content/seo-pages'
 import { TEMPLATES } from '@/modules/templates/data'
 import { MIN_TEMPLATES_TO_INDEX, SITE_URL, templateCategorySlug, templateCountFor, templateSeoSlug } from '@/lib/seo'
-import { PREFIXED_LOCALES } from '@/lib/i18n'
+import { INDIAN_LOCALES, PREFIXED_LOCALES } from '@/lib/i18n'
 
 const now = new Date()
 
@@ -75,9 +75,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     // ─── Tier 1: Core product pages ───────────────────────────────────────────
     entry('', 1.0, 'weekly'),
-    entry('/create', 0.95, 'weekly'),
+    // /create is left out: it is the builder, a tool with nothing to rank, and every design page links to it.
     entry('/pricing', 0.90, 'weekly'),
     entry('/templates', 0.90, 'weekly'),
+    entry('/how-it-works', 0.70, 'monthly'),
+    entry('/faq', 0.70, 'monthly'),
+    entry('/contact', 0.50, 'monthly'),
     entry('/blog', 0.85, 'weekly'),
 
     // ─── Tier 2: Main category landing pages ──────────────────────────────────
@@ -166,6 +169,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // discoverable: there is deliberately no geo-redirect, so Googlebot only
     // reaches these through the sitemap, the switcher links and hreflang.
     ...PREFIXED_LOCALES.map((l) => entry(`/${l.code}`, 0.80, 'weekly')),
+    // The Indian languages also have the selling pages and every design's page (app/l/[lang]).
+    ...INDIAN_LOCALES.flatMap((l) => [
+      ...['/templates', '/pricing', '/how-it-works', '/faq', '/contact'].map((p) => entry(`/${l}${p}`, 0.6)),
+      ...TEMPLATES.map((t) => entry(`/${l}/templates/${templateSeoSlug(t.id)}`, 0.5)),
+    ]),
 
     // ─── Tier 10: Template category pages ─────────────────────────────────────
     // Single-template categories duplicate the template's own page, so they are

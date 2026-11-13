@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ComponentType } from 'react'
 import { createPortal } from 'react-dom'
 import dynamic from 'next/dynamic'
 import { seoEvents, trackEvent } from '@/lib/analytics'
+import { rememberDesign } from '@/lib/recentDesigns'
 
 type PreviewModal = typeof import('@/components/create/TemplatePreviewModal').default
 
@@ -57,12 +58,22 @@ export default function PreviewButton({
   children,
   source,
   ariaLabel,
+  href,
+  onOpen,
 }: {
   templateId: string
   className?: string
   children: React.ReactNode
   source: string
   ariaLabel?: string
+  /**
+   * Render a real link to this address instead of a button (a price list, where every entry
+   * should be a crawlable link to the design's page). A plain click still opens the live
+   * preview; a click with a modifier key, or with no JavaScript, follows the link.
+   */
+  href?: string
+  /** Called as the preview opens, for the caller's own analytics. */
+  onOpen?: () => void
 }) {
   const [armed, setArmed] = useState(false)
   const [open, setOpen] = useState(false)
@@ -86,24 +97,46 @@ export default function PreviewButton({
     prefetchDemo(templateId)
   }
 
+  const openPreview = () => {
+    trackEvent(seoEvents.previewOpen, { template_id: templateId, source })
+    onOpen?.()
+    rememberDesign(templateId)
+    if (!modal.current) modal.current = LoadedModal ?? TemplatePreviewModal
+    setArmed(true)
+    setOpen(true)
+  }
+
   return (
     <>
-      <button
-        type="button"
-        aria-label={ariaLabel}
-        className={className}
-        onPointerEnter={intent}
-        onFocus={intent}
-        onTouchStart={intent}
-        onClick={() => {
-          trackEvent(seoEvents.previewOpen, { template_id: templateId, source })
-          if (!modal.current) modal.current = LoadedModal ?? TemplatePreviewModal
-          setArmed(true)
-          setOpen(true)
-        }}
-      >
-        {children}
-      </button>
+      {href ? (
+        <a
+          href={href}
+          aria-label={ariaLabel}
+          className={className}
+          onPointerEnter={intent}
+          onFocus={intent}
+          onTouchStart={intent}
+          onClick={(e) => {
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
+            e.preventDefault()
+            openPreview()
+          }}
+        >
+          {children}
+        </a>
+      ) : (
+        <button
+          type="button"
+          aria-label={ariaLabel}
+          className={className}
+          onPointerEnter={intent}
+          onFocus={intent}
+          onTouchStart={intent}
+          onClick={openPreview}
+        >
+          {children}
+        </button>
+      )}
       {armed && modal.current &&
         createPortal(
           <modal.current templateId={templateId} open={open} onClose={() => setOpen(false)} />,

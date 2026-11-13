@@ -28,6 +28,8 @@ export default function robots(): MetadataRoute.Robots {
           // there is no indexing risk to solve by allowing the crawl.
           '/api/',
           '/admin/',
+          // Hosts' private review links (lib/reviews.ts): noindex as well, and linked from nowhere public.
+          '/review/',
           '/e/__custom-requests__/',
           '/*.json$',
         ],

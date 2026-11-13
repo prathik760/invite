@@ -7,7 +7,7 @@ import { greatVibes } from './kit/fonts/greatVibes'
 import { caveat } from './kit/fonts/caveat'
 import { jost } from './kit/fonts/jost'
 import { calendarHref, dateParts, galleryImages, mapsHref, parseLines, parseRows, parseSchedule, timeLabel, useCountdown, type InviteProps } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, Reveal, useOpenWhileEditing } from './kit/ui'
 import { ChannelIcon, rsvpChannels } from './kit/party'
 import type { InviteTheme } from './kit/theme'
 
@@ -835,6 +835,8 @@ export default function ChristmasEvergreen({ data, eventId, isPreview = false }:
 
   /* closed → a knock → the door swings in → through it → the living room */
   const [phase, setPhase] = useState<Phase>('closed')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'closed', 'open')
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), [])
   const audio = useRef<HTMLAudioElement | null>(null)

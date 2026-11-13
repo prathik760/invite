@@ -1,5 +1,27 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * The ShareInvite palette, the single source of every brand colour (the homepage's green, cream
+ * and gold, adopted site-wide on 4 Nov 2026). Contrast on ivory / linen:
+ *   forest on ivory 11.4:1 · ink 14.5:1 · goldText 5.8 / 5.3:1 · mutedText 5.4 / 4.9:1.
+ *   goldInk (4.7:1 on ivory) is for large or decorative gold; small gold text uses goldText.
+ */
+export const SI = {
+  forest: "#123D2E",
+  forestSoft: "#1B4A39",
+  deep: "#0C2B22",
+  ivory: "#FAF8F2",
+  linen: "#F1EDE3",
+  white: "#FFFFFF",
+  gold: "#C7A45B",
+  goldInk: "#8C6B2C",
+  goldText: "#7A5C24",
+  ink: "#25251F",
+  muted: "#6F6E67",
+  mutedText: "#68675F",
+  line: "#E8E2D7",
+} as const;
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,44 +31,51 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // One ShareInvite palette: the homepage's green, cream and gold (4 Nov 2026). Every colour
+      // name below points at it, so pages built with the older names (emerald, champagne,
+      // burnished...) and the homepage's hv-* names render the same colours. Small text uses the
+      // *Text shades, which keep WCAG AA (4.5:1) on both creams; see SI below.
       colors: {
-        background: "#F8F5F0",
-        // `surface`, `muted`, `foreground` and `ink` are read inside the
-        // invitation templates themselves (ElegantWedding, the /e not-found
-        // page). Keep them stable — changing one repaints live invitations.
-        surface: "#FFFFFF",
-        "surface-warm": "#FFF9F2",
-        ink: "#1F1A17",
-        foreground: "#2A2420",
-        // Brand accents. Only marketing and product chrome uses these, so they
-        // carry the redesign's emerald + burnished-gold identity site-wide.
-        accent: "#A47945",
-        "accent-strong": "#0B4A34",
-        "accent-hover": "#052E20",
+        background: SI.ivory,
+        surface: SI.white,
+        "surface-warm": SI.ivory,
+        ink: SI.ink,
+        foreground: SI.ink,
+        accent: SI.goldInk,
+        "accent-strong": SI.forest,
+        "accent-hover": SI.deep,
         rose: "#A65763",
         jade: "#2E6F64",
-        muted: "#706861",
-        border: "#E1D8CC",
+        muted: SI.mutedText,
+        border: SI.line,
 
-        // ─── Editorial palette (redesign) ───────────────────────────────────
-        champagne: "#FFFAF4",
-        paper: "#FFFDF9",
-        peach: "#FBEFE3",
-        charcoal: "#1E2726",
+        champagne: SI.ivory,
+        paper: SI.white,
+        peach: SI.linen,
+        charcoal: SI.ink,
         emerald: {
-          DEFAULT: "#052E20",
-          soft: "#0B4A34",
-          deep: "#03190F",
+          DEFAULT: SI.forest,
+          soft: SI.forestSoft,
+          deep: SI.deep,
         },
-        // `burnished` is decorative (icons, rules, large type). Small text uses
-        // `burnished-deep`, which clears WCAG AA on champagne (≈6:1).
         burnished: {
-          DEFAULT: "#A47945",
-          deep: "#7E5A2E",
+          DEFAULT: SI.goldInk,
+          deep: SI.goldText,
         },
-        "gold-soft": "#E8C866",
+        "gold-soft": SI.gold,
         olive: "#526344",
-        line: "#EADFD2",
+        line: SI.line,
+        hv: {
+          ivory: SI.ivory,
+          linen: SI.linen,
+          forest: SI.forest,
+          deep: SI.deep,
+          gold: SI.gold,
+          "gold-ink": SI.goldInk,
+          ink: SI.ink,
+          muted: SI.muted,
+          line: SI.line,
+        },
       },
       fontFamily: {
         sans: ["var(--font-body)"],

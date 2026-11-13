@@ -25,9 +25,10 @@ export const ACTIVITY_KEYS = [
 /** Page-address query parameters kept on a page view; the rest (wording text, tokens) are not. */
 export const ACTIVITY_QUERY_KEYS = ['template', 'occasion', 'category', 'plan', 'code'] as const
 
-/** Paths the journal never records: guests' invitations, the live-preview frame, and the admin. */
+/** Paths the journal never records (and never asks cookie consent on): guests' invitations, the
+ *  live-preview frame, the homepage's sample-invitation frame, and the admin. */
 export function isUntrackedPath(path: string): boolean {
-  return /^\/(e|admin)(\/|$)/.test(path) || /^\/demo\/[^/]+\/embed/.test(path)
+  return /^\/(e|admin)(\/|$)/.test(path) || /^\/demo\/[^/]+\/(embed|sample)/.test(path)
 }
 
 /** Set by /admin/activity in the owner's own browsers; the journal records nothing there. */

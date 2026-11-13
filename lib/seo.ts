@@ -47,7 +47,19 @@ export function slugify(value: string) {
     .replace(/^-+|-+$/g, '')
 }
 
+/**
+ * Addresses kept after a design was renamed (13 Nov 2026: "Ganesh Chaturthi
+ * Premium" and "Raksha Bandhan Premium" lost "Premium", as they sit in the
+ * Classic level). The address is what Google has indexed and other pages link
+ * to, so it stays as it was.
+ */
+const KEPT_SLUGS: Record<string, string> = {
+  'ganesh-chaturthi': 'ganesh-chaturthi-premium-invitation-template',
+  rakshabandhan: 'raksha-bandhan-premium-invitation-template',
+}
+
 export function templateSeoSlug(templateId: string) {
+  if (KEPT_SLUGS[templateId]) return KEPT_SLUGS[templateId]
   const template = TEMPLATES.find((item) => item.id === templateId)
   if (!template) return `${templateId}-invitation-template`
   const base = slugify(template.name.replace(/[·—]/g, ' '))

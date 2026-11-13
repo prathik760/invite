@@ -22,7 +22,7 @@ import {
   whatsappHref,
   type InviteProps,
 } from './kit/core'
-import { Credit, MusicToggle, Reveal } from './kit/ui'
+import { Credit, MusicToggle, Reveal, useOpenWhileEditing } from './kit/ui'
 import { numberWords, ordinalWords } from './kit/words'
 import type { InviteTheme } from './kit/theme'
 import { Butti, Diya, FloralMark, Footprint, HavanFire, Kalash, Motif, NightSky, S, Toran, bandhani, motifFor } from './saptapadi/art'
@@ -418,6 +418,8 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
 
   /* The antarpat: veiled → lowering (the cloth drops, petals burst) → done. */
   const [phase, setPhase] = useState<Phase>('veiled')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'veiled', 'done')
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), [])
   const lower = useCallback(() => {

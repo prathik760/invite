@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import type { ComponentType } from 'react'
+import { DesignLinkContext } from './kit/ui'
 
 export type TemplateProps = {
   data: Record<string, string>
@@ -55,6 +56,7 @@ const TEMPLATE_COMPONENTS: Record<string, TemplateComponent> = {
   'signature-kalyanam': dynamic(() => import('./SignatureKalyanam')),
   'signature-saptapadi': dynamic(() => import('./SignatureSaptapadi')),
   'signature-two-worlds': dynamic(() => import('./SignatureTwoWorlds')),
+  'signature-royal-edit': dynamic(() => import('./SignatureRoyalEdit')),
   'signature-nikah': dynamic(() => import('./SignatureNikah')),
   'signature-garden': dynamic(() => import('./SignatureGarden')),
   'signature-aquarelle': dynamic(() => import('./SignatureAquarelle')),
@@ -89,9 +91,19 @@ const TEMPLATE_COMPONENTS: Record<string, TemplateComponent> = {
 
 export default function TemplateRenderer({
   templateId,
+  designHref,
   ...props
-}: TemplateProps & { templateId: string }) {
+}: TemplateProps & {
+  templateId: string
+  /** This design's page: the invitation's credit then reads "Make an invitation like this" (kit/ui.tsx Credit). */
+  designHref?: string
+}) {
   const Component = TEMPLATE_COMPONENTS[templateId]
   if (!Component) return null
-  return <Component {...props} />
+  if (!designHref) return <Component {...props} />
+  return (
+    <DesignLinkContext.Provider value={designHref}>
+      <Component {...props} />
+    </DesignLinkContext.Provider>
+  )
 }

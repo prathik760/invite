@@ -168,6 +168,15 @@ const nextConfig = {
           { key: 'Content-Security-Policy', value: [...CSP, "frame-ancestors 'self'"].join('; ') },
         ],
       },
+      {
+        // The homepage's sample invitation ("Open a real invitation") is
+        // framed the same way, and likewise only by the site itself.
+        source: '/demo/:id/sample',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Content-Security-Policy', value: [...CSP, "frame-ancestors 'self'"].join('; ') },
+        ],
+      },
     ]
   },
 }

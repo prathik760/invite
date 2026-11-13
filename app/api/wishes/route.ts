@@ -21,7 +21,11 @@ export async function GET(req: NextRequest) {
       orderBy: { createdAt: 'desc' },
       select: { id: true, name: true, message: true, createdAt: true, eventId: true, isApproved: true },
     })
-    return NextResponse.json(wishes)
+    // Every guest who opens the invitation asks for this, and guests tend to
+    // open a shared link within minutes of each other: one server call a
+    // minute per invitation instead of one per guest. A new wish reaches other
+    // guests within the minute; its sender sees it at once (WishesSection).
+    return NextResponse.json(wishes, { headers: { 'Vercel-CDN-Cache-Control': 'max-age=60' } })
   } catch (err) {
     if (shouldUseLocalStore(err)) {
       console.warn('[GET /api/wishes] Database unreachable, using local dev wishes.')

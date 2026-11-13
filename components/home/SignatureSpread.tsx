@@ -11,10 +11,11 @@ import { TEMPLATES } from '@/modules/templates/data'
 /** What each suite is, in a few words. */
 const SUITES: { id: string; note: string }[] = [
   { id: 'signature-two-worlds', note: 'Your love story, two cultures' },
-  { id: 'signature-rajwada', note: 'Palace doors, Rajasthani' },
+  { id: 'signature-royal-edit', note: 'A luxury magazine, with you on the cover' },
+  { id: 'signature-rajwada', note: 'Palace doors at dusk, fireworks' },
   { id: 'signature-saptapadi', note: 'The antarpat and the seven vows' },
   { id: 'signature-aquarelle', note: 'Watercolour roses, a wax seal' },
-  { id: 'signature-kalyanam', note: 'A South Indian temple' },
+  { id: 'signature-kalyanam', note: 'A temple at dawn, jasmine curtain' },
   { id: 'signature-nikah', note: 'Lattice and lanterns' },
   { id: 'signature-garden', note: 'A postcard from the destination' },
 ]

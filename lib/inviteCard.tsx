@@ -48,6 +48,7 @@ const THEMES: Record<string, Theme> = {
   'signature-garden': LIGHT('#FBF8F1', '#2E3531', '#56684F', '#E9BDB2'),
   'signature-aquarelle': LIGHT('#FBF7EF', '#1E2738', '#86384C', '#D8BF86'),
   'signature-two-worlds': LIGHT('#F7F0E4', '#2A2023', '#5B1A26', '#E3C995'),
+  'signature-royal-edit': DARK('#421522', '#F8F2E8', '#C7A66A'),
   'baby-shower': LIGHT('#F7DED7', '#4A2744', '#A3405F', '#F1BDB6'),
   'first-birthday': LIGHT('#FFF6E6', '#23305A', '#C8543F', '#86C3E3'),
   'haldi-mehendi': LIGHT('#FBF2DC', '#3A2511', '#3E5A28', '#F2B226'),
@@ -141,9 +142,15 @@ function Flourish({ rotate, color }: { rotate: number; color: string }) {
   )
 }
 
+/** The Royal Edit's other palettes, so the card matches the colours the host chose. */
+const ROYAL_EDIT: Record<string, Theme> = {
+  emerald: DARK('#103229', '#F7F3EA', '#C9A96E'),
+  midnight: DARK('#161E38', '#F6F2E9', '#CDB07A'),
+}
+
 /** The share card for one invitation, from its template id and the host's data. */
 export async function renderInviteCard(templateId: string, data: Record<string, string>) {
-  const theme = templateId.startsWith('greeting-') ? GREETING : THEMES[templateId] ?? THEMES['elegant-wedding']
+  const theme = templateId.startsWith('greeting-') ? GREETING : (templateId === 'signature-royal-edit' && ROYAL_EDIT[data.palette]) || (THEMES[templateId] ?? THEMES['elegant-wedding'])
   const card = cardFor(templateId, data)
 
   // The velvet is the design's deepest colour: its background when that is

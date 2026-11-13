@@ -22,7 +22,7 @@ const TEMPLATE_IDS = [
   'surprise-journey', 'rakshabandhan', 'ganesh-chaturthi',
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
-  'signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-aquarelle', 'signature-saptapadi', 'signature-two-worlds',
+  'signature-rajwada', 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-aquarelle', 'signature-saptapadi', 'signature-two-worlds', 'signature-royal-edit',
   'baby-shower', 'first-birthday', 'haldi-mehendi', 'sangeet-night', 'pooja-invite', 'diwali-party', 'eid-milan', 'retirement',
   'save-the-date',
   'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch', 'birthday-gala',
@@ -42,6 +42,8 @@ const IMAGE_VERSION = 2
  */
 const RESHOT: Partial<Record<(typeof TEMPLATE_IDS)[number], number>> = {
   'signature-two-worlds': 4,
+  'signature-rajwada': 3,
+  'signature-kalyanam': 3,
 }
 
 const TEMPLATE_IMAGES: Record<string, string> = Object.fromEntries(

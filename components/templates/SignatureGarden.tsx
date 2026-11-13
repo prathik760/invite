@@ -21,7 +21,7 @@ import {
   type InviteProps,
   fitCqi,
 } from './kit/core'
-import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal, useOpenWhileEditing } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
 
 /*
@@ -833,6 +833,8 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
 
   /* The postcard: closed (face down) → opening (turns over, lifts, unfolds) → open. */
   const [phase, setPhase] = useState<Phase>('closed')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'closed', 'open')
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), [])
   const turnOver = useCallback(() => {

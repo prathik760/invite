@@ -4,6 +4,7 @@ import TemplateRenderer from '@/components/templates/TemplateRenderer'
 import EmbedStage from '@/components/templates/EmbedStage'
 import { TEMPLATES } from '@/modules/templates/data'
 import { withSampleDates } from '@/lib/sampleData'
+import { withShowcase } from '@/lib/showcaseData'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
@@ -38,7 +39,8 @@ export default function DemoEmbedPage({ params }: { params: { id: string } }) {
   const template = TEMPLATES.find((t) => t.id === params.id)
   if (!template) notFound()
   const usePreview = PREVIEW_CATEGORIES.has(template.category ?? '')
-  const data = withSampleDates(template.id, template.config.defaultData)
+  // Every feature on show (lib/showcaseData): photos, music, map, RSVP, links, as well as sample dates.
+  const data = withShowcase(template.id, withSampleDates(template.id, template.config.defaultData))
 
   return (
     <>
@@ -51,7 +53,9 @@ export default function DemoEmbedPage({ params }: { params: { id: string } }) {
           <EmbedStage><TemplateRenderer templateId={params.id} data={data} isPreview /></EmbedStage>
         </div>
       ) : (
-        <div className="overflow-x-hidden">
+        // clip, not hidden: hidden makes this box a scroll container and breaks
+        // every sticky element inside a design. Browsers without clip keep hidden.
+        <div className="overflow-x-hidden" style={{ overflowX: 'clip' }}>
           <EmbedStage><TemplateRenderer templateId={params.id} data={data} isPreview={false} /></EmbedStage>
         </div>
       )}

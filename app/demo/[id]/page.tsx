@@ -5,6 +5,7 @@ import TemplateRenderer from '@/components/templates/TemplateRenderer'
 import ShareDesignButton from '@/components/catalog/ShareDesignButton'
 import { TEMPLATES } from '@/modules/templates/data'
 import { withSampleDates } from '@/lib/sampleData'
+import { withShowcase } from '@/lib/showcaseData'
 import { formatTemplatePrice, templatePrice } from '@/lib/plans'
 import { templateSeoSlug } from '@/lib/seo'
 import { templateImageUrl } from '@/lib/templateMedia'
@@ -68,7 +69,7 @@ export default function DemoPage({ params }: { params: { id: string } }) {
       {/* ── Demo banner (fully responsive) ── */}
       <div
         className={`z-50 flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 ${usePreview ? 'shrink-0' : 'sticky top-0'}`}
-        style={{ background: '#1E2726', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
+        style={{ background: '#0C2B22', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
       >
         <Link
           href={`/templates/${templateSeoSlug(template.id)}`}
@@ -84,7 +85,7 @@ export default function DemoPage({ params }: { params: { id: string } }) {
         <div className="flex min-w-0 flex-1 items-center gap-2">
           <span
             className="hidden shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.18em] sm:inline"
-            style={{ background: 'rgba(164,121,69,0.20)', color: '#A47945', border: '1px solid rgba(164,121,69,0.35)' }}
+            style={{ background: 'rgba(199,164,91,0.20)', color: '#C7A45B', border: '1px solid rgba(199,164,91,0.35)' }}
           >
             Live Demo
           </span>
@@ -102,9 +103,9 @@ export default function DemoPage({ params }: { params: { id: string } }) {
         <Link
           href={`/create?template=${params.id}`}
           className="shrink-0 flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-[11px] font-semibold transition-opacity hover:opacity-90 sm:px-4 sm:text-xs"
-          style={{ background: '#052E20', color: '#fff' }}
+          style={{ background: '#123D2E', color: '#fff' }}
         >
-          Use this design
+          Customize this design
           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
@@ -113,8 +114,15 @@ export default function DemoPage({ params }: { params: { id: string } }) {
 
       {/* Invitation rendered with sample data — the real, full experience (2D
           templates) or the auto-opened WebGL experience (greeting / journey). */}
-      <div className={usePreview ? 'relative min-h-0 flex-1 overflow-hidden' : 'overflow-x-hidden'}>
-        <TemplateRenderer templateId={params.id} data={withSampleDates(template.id, template.config.defaultData)} isPreview={usePreview} />
+      {/* overflow-x clip, not hidden: hidden makes this box a scroll container and
+          breaks every sticky element inside a design (browsers without clip keep hidden). */}
+      <div className={usePreview ? 'relative min-h-0 flex-1 overflow-hidden' : 'overflow-x-hidden'} style={usePreview ? undefined : { overflowX: 'clip' }}>
+        <TemplateRenderer
+          templateId={params.id}
+          data={withShowcase(template.id, withSampleDates(template.id, template.config.defaultData))}
+          isPreview={usePreview}
+          designHref={`${SITE_URL}/templates/${templateSeoSlug(template.id)}?src=demo_footer`}
+        />
       </div>
     </div>
   )

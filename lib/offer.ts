@@ -5,12 +5,15 @@ import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'
  *
  * The public offer is one design, one price: pay once for the design you
  * publish and every feature in it is yours. No plans, no bundles, no
- * subscription. (lib/plans.ts still grants cumulative tiers internally so that
- * earlier customers who bought "Starter"/"Pro"/"All Access" keep what they paid
- * for — that is a courtesy of the backend, never advertised.)
+ * subscription. Since 13 Nov 2026 that is also what the backend records: a
+ * purchase is one design (lib/entitlements.ts). Earlier customers who bought
+ * "Starter"/"Pro"/"All Access" keep the cumulative plan they paid for; that is
+ * a courtesy of the backend, never advertised.
  *
  * Every line here must stay true of the product:
  *  - nothing is feature-gated after purchase (no plan checks outside lib/plans)
+ *  - a design bought is the buyer's for as many invitations as they need
+ *    (lib/entitlements.ts): publishing it again never asks for payment
  *  - published invitations expire 3 days after the event date (app/e/[slug])
  *  - a published invitation can be edited until its celebration ends (app/create
  *    edit mode, lib/eventEdit.ts), on the same link
@@ -30,6 +33,7 @@ export const OFFER_EDIT = 'Change the details until your event, same link'
 export const OFFER_INCLUDES = [
   'Your invitation on its own private link',
   'Every feature in the design, nothing locked',
+  'The design stays yours: make another invitation with it at no extra cost',
   'Share on WhatsApp, Instagram, email or text',
   'Opens on any phone, no app for guests',
   'No banner or ads on your invitation',

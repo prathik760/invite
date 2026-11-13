@@ -23,6 +23,7 @@ export const TEMPLATE_TITLES: Record<string, string> = {
   'signature-garden': 'Destination Wedding Invitation Template: Garden Vows, {price}',
   'signature-aquarelle': 'Watercolour Wedding Invitation Template: Aquarelle, {price}',
   'signature-two-worlds': 'Love Story Wedding Invitation Template: Two Worlds, {price}',
+  'signature-royal-edit': 'Magazine Wedding Invitation Template: The Royal Edit, {price}',
   'haldi-mehendi': 'Haldi & Mehendi Invitation Template, {price}',
   'sangeet-night': 'Sangeet Night Invitation Template, {price}',
   'save-the-date': 'Save the Date Card Template: Letterpress, {price}',

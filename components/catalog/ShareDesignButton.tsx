@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { trackEvent, seoEvents } from '@/lib/analytics'
+import { useT } from '@/components/i18n/I18nProvider'
 
 const SITE_URL = (process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in').replace(/\/$/, '')
 
@@ -29,6 +30,7 @@ export default function ShareDesignButton({
   label?: string
   style?: React.CSSProperties
 }) {
+  const tr = useT()
   const [copied, setCopied] = useState(false)
 
   async function share() {
@@ -36,7 +38,7 @@ export default function ShareDesignButton({
     trackEvent(seoEvents.linkCopy, { share_url: url, template_id: templateId, source })
     if (navigator.share) {
       try {
-        await navigator.share({ title: `${name} | ShareInvite`, text: `See the ${name} invitation design:`, url })
+        await navigator.share({ title: `${name} | ShareInvite`, text: tr('See the {name} invitation design:', { name }), url })
         return
       } catch (e) {
         // Dismissing the sheet is not an error; anything else falls back to copying.
@@ -46,7 +48,7 @@ export default function ShareDesignButton({
     try {
       await navigator.clipboard.writeText(url)
     } catch {
-      window.prompt('Copy this link', url)
+      window.prompt(tr('Copy this link'), url)
       return
     }
     setCopied(true)
@@ -58,7 +60,7 @@ export default function ShareDesignButton({
       <svg aria-hidden className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M8.7 10.7l6.6-3.4M8.7 13.3l6.6 3.4M18 5.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM8 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm10 6.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
       </svg>
-      <span>{copied ? 'Link copied' : label}</span>
+      <span>{copied ? tr('Link copied') : tr(label)}</span>
     </button>
   )
 }

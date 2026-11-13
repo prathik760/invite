@@ -38,13 +38,39 @@ interface MobilePreviewStripProps {
   compact?: boolean
   /** The phone's screen, for scrolling the preview to the field being edited. */
   screenRef?: React.Ref<HTMLDivElement>
+  /**
+   * Only a small phone this many pixels wide, with nothing around it: the
+   * thumbnail in the slim bar above the builder's form on phones (app/create).
+   */
+  thumbWidth?: number
+  /**
+   * With `thumbWidth`: the small phone opens into a wide, readable window on the
+   * part of the invitation being edited, while a box is being typed in (app/create).
+   * The same preview is reused, so nothing reloads when it opens or closes.
+   */
+  lens?: boolean
 }
+
+/** Height of the editing window: room for a few lines of the invitation, and for the box below it. */
+const LENS_H = 128
 
 /** Screen width of the compact card's phone — small enough to leave the form in view. */
 const COMPACT_SCREEN_W = 84
 
-export default function MobilePreviewStrip({ templateId, data, isDark = false, compact = false, screenRef }: MobilePreviewStripProps) {
+export default function MobilePreviewStrip({ templateId, data, isDark = false, compact = false, screenRef, thumbWidth, lens = false }: MobilePreviewStripProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
+  // The editing window's width, which sets how large the invitation is drawn in it.
+  const lensRef = useRef<HTMLDivElement>(null)
+  const [lensW, setLensW] = useState(358)
+  useEffect(() => {
+    const el = lensRef.current
+    if (!lens || !el) return
+    const measure = () => setLensW(Math.max(200, el.clientWidth))
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [lens])
   // Seeded with the midpoint rather than 0 so the first paint is already close
   // to final and the card does not visibly jump once measured.
   const [screenW, setScreenW] = useState(168)
@@ -68,13 +94,40 @@ export default function MobilePreviewStrip({ templateId, data, isDark = false, c
     return () => ro.disconnect()
   }, [])
 
-  const w = compact ? COMPACT_SCREEN_W : screenW
+  const w = thumbWidth ?? (compact ? COMPACT_SCREEN_W : screenW)
   const screenH = Math.round(w * (DESIGN_H / DESIGN_W))
   const scale = w / DESIGN_W
   // Corner radii tracked to the shell size, otherwise a larger phone looks
   // square-ish and a smaller one looks like a pill.
   const screenRadius = Math.round(w * 0.118)
   const shellRadius = screenRadius + SHELL_PADDING
+
+  if (thumbWidth) {
+    // A thin bezel and no island or home bar: at this size they would only take height. As the
+    // editing window, no bezel: the invitation itself, as wide as the screen. The same three
+    // elements either way, so the preview inside is kept, not drawn again.
+    const bezel = lens ? 0 : 3
+    const sw = lens ? lensW : w
+    return (
+      <div
+        ref={lensRef}
+        style={{
+          background: lens ? 'transparent' : '#1C1C1E',
+          borderRadius: lens ? 14 : screenRadius + bezel,
+          padding: bezel,
+          boxShadow: lens ? 'none' : '0 6px 14px rgba(0,0,0,0.22)',
+          border: lens ? `1px solid ${isDark ? 'rgba(255,255,255,0.12)' : 'rgba(164,121,69,0.28)'}` : undefined,
+          width: lens ? '100%' : undefined,
+        }}
+      >
+        <div ref={screenRef} style={{ width: lens ? '100%' : sw, height: lens ? LENS_H : screenH, borderRadius: lens ? 13 : screenRadius, overflow: 'hidden', background: '#fff', position: 'relative' }}>
+          <div style={{ width: DESIGN_W, height: DESIGN_H, transformOrigin: 'top left', transform: `scale(${sw / DESIGN_W})`, pointerEvents: 'none' }}>
+            <PreviewPane templateId={templateId} data={data} />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div

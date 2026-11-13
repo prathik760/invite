@@ -8,8 +8,10 @@ import { CONSENT_EVENT, consentState } from './consent'
  * per visitor at /admin/activity. GA4 answers "how many"; this answers "what
  * did this person do, and where did they stop".
  *
- * Events queue in memory and leave in small batches — after a short pause, or
- * at once when the tab is hidden or closed (sendBeacon survives the unload).
+ * Events queue in memory and leave in batches — after half a minute's pause
+ * (at most a minute apart), or at once when the tab is hidden or closed
+ * (sendBeacon survives the unload). Each batch is a metered server call, so a
+ * short visit is sent once, as it ends, rather than every few seconds.
  * A visitor is a random id in localStorage; a session ends after 30 minutes
  * without activity. Nothing typed into a form is ever read.
  *
@@ -23,8 +25,8 @@ interface Entry { n: string; p: string; t: number; d?: Record<string, string | n
 
 const STORE_KEY = 'si_journal'
 const SESSION_IDLE = 30 * 60 * 1000
-const FLUSH_AFTER = 4000
-const FLUSH_MAX_WAIT = 15000
+const FLUSH_AFTER = 30000
+const FLUSH_MAX_WAIT = 60000
 /** Events kept while waiting for consent; the oldest go first beyond this. */
 const MAX_HELD = 300
 

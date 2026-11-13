@@ -19,7 +19,7 @@ import {
   type InviteProps,
   fitCqi,
 } from './kit/core'
-import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal, useOpenWhileEditing } from './kit/ui'
 import { ordinalWords, timeWords } from './kit/words'
 import type { InviteTheme } from './kit/theme'
 
@@ -843,6 +843,8 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
 
   /* The screens: closed → opening (panels slide, lanterns swing) → open. */
   const [phase, setPhase] = useState<Phase>('closed')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'closed', 'open')
   const [swing, setSwing] = useState(false)
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), [])

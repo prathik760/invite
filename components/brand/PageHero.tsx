@@ -1,6 +1,7 @@
 import Link from '@/components/ui/Link'
 import type { ReactNode } from 'react'
 import { withLocalPrices } from '@/components/price/localised'
+import { serverT } from '@/lib/serverLang'
 
 export interface Crumb {
   name: string
@@ -10,7 +11,7 @@ export interface Crumb {
 /** Visual breadcrumb. Pages keep emitting their own BreadcrumbList JSON-LD. */
 export function Breadcrumbs({ items, className = '' }: { items: Crumb[]; className?: string }) {
   return (
-    <nav aria-label="Breadcrumb" className={`text-[0.85rem] text-muted ${className}`}>
+    <nav aria-label={serverT()('Breadcrumb')} className={`text-[0.85rem] text-muted ${className}`}>
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
         {items.map((c, i) => (
           <li key={`${c.name}-${i}`} className="inline-flex items-center gap-2">

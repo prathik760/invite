@@ -5,7 +5,7 @@ import Image from '@/components/ui/Image'
 import Link from '@/components/ui/Link'
 import type { Session } from 'next-auth'
 import type { TemplateData } from '@/modules/templates/data'
-import { canAccess, getRequiredPlan, type PlanId } from '@/lib/plans'
+import { getRequiredPlan, owns, type Owned } from '@/lib/plans'
 import { supportWhatsAppUrl } from '@/lib/support'
 import { OFFER_EDIT, OFFER_INCLUDES } from '@/lib/offer'
 import { displayName } from '@/lib/catalog'
@@ -31,7 +31,8 @@ function Spinner() {
 interface Step5PublishProps {
   selectedTemplate: TemplateData
   data: Record<string, string>
-  userPlan: PlanId
+  /** The designs the account owns (lib/plans.ts): an owned design publishes without paying again. */
+  owned: Owned
   session: Session | null
   loading: boolean
   error: string
@@ -50,13 +51,13 @@ interface Step5PublishProps {
 }
 
 export default function Step5Publish({
-  selectedTemplate, data, userPlan, session, loading, error, onBack, onPublish, missing = [], onFix, editing = false,
+  selectedTemplate, data, owned, session, loading, error, onBack, onPublish, missing = [], onFix, editing = false,
   paying = false, payError = null, onRetry,
 }: Step5PublishProps) {
   const isDark = DARK_TEMPLATES.has(selectedTemplate.id)
   const tv = TEMPLATE_VISUALS[selectedTemplate.id] ?? TEMPLATE_VISUALS['elegant-wedding']
   const requiredPlan = getRequiredPlan(selectedTemplate.id)
-  const userHasAccess = canAccess(selectedTemplate.id, userPlan)
+  const userHasAccess = owns(selectedTemplate.id, owned)
   const mustPay = !editing && !userHasAccess
   const name = displayName(selectedTemplate.name)
   const listPrice = useLocalPrice(requiredPlan.price)
@@ -228,18 +229,16 @@ export default function Step5Publish({
               )}
             </button>
 
-            {/* Tell the user exactly what the next tap does: it opens the payment
-                window, signed in or not (a signed-out buyer's purchase is kept on
-                the account for the email they give Razorpay). This used to say
-                "You'll sign in first" after sign-in stopped being needed, right
-                above the payment window's own "No account needed". */}
+            {/* Tell the user exactly what the next tap does. Signed out, it opens sign-in first
+                (an account is needed to publish, 13 Nov 2026), and they come straight back here
+                with everything they typed; signed in, it opens the payment window. */}
             <p className="mt-3 text-center text-[0.8rem] leading-5 text-muted">
               {editing
                 ? 'Your link stays the same. Guests see the changes the next time they open it.'
+                : !session
+                ? 'First, sign in with Google or your email, so the invitation is saved to your account. You come straight back here, with everything you typed.'
                 : mustPay
-                ? !session
-                  ? 'No account needed: pay securely with Razorpay and your invitation publishes right after.'
-                  : 'Secure one-time payment via Razorpay. Your invitation publishes right after.'
+                ? 'Secure one-time payment via Razorpay. Your invitation publishes right after.'
                 : 'Publishes instantly. Share the link on WhatsApp.'}
             </p>
 

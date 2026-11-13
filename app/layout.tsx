@@ -259,7 +259,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           />
         )}
-        <meta name="theme-color" content="#052E20" />
+        <meta name="theme-color" content="#123D2E" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="format-detection" content="telephone=no" />

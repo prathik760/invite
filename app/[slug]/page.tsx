@@ -38,6 +38,11 @@ import {
 
 type Props = { params: { slug: string } }
 
+// Every real page is built ahead (generateStaticParams). Any other address is a
+// 404 straight away, instead of a server render to find that out: bots probe
+// hundreds of made-up addresses, and each render is metered.
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return [...landingPages, ...locationPages].map((page) => ({ slug: page.slug }))
 }

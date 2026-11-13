@@ -7,7 +7,7 @@ import { kalam } from './kit/fonts/kalam'
 import { mukta } from './kit/fonts/mukta'
 import { balooTamma } from './kit/fonts/balooTamma'
 import { calendarHref, dateParts, galleryImages, mapsHref, parseLines, parseRows, timeLabel, useCountdown, type InviteProps } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, Reveal, useOpenWhileEditing } from './kit/ui'
 import { ChannelIcon, rsvpChannels } from './kit/party'
 import type { InviteTheme } from './kit/theme'
 
@@ -900,6 +900,8 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
 
   /* dark → the bulbs come on → the elephant walks in → open */
   const [phase, setPhase] = useState<Phase>('dark')
+  // In the builder, while its details are edited, the opening is passed (kit/ui useOpenWhileEditing).
+  useOpenWhileEditing(phase, setPhase, 'dark', 'open')
   const timers = useRef<number[]>([])
   useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), [])
   const audio = useRef<HTMLAudioElement | null>(null)

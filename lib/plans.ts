@@ -14,7 +14,7 @@ import { hasLocalPrice } from './pricing'
  * PLANS is ordered by ascending price and must stay that way — `getRequiredPlan`
  * and `mergePlans` both take the first match as the cheapest one.
  */
-export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'standard' | 'premium' | 'gold' | 'gala' | 'signature' | 'couture' | 'heirloom'
+export type PlanId = 'free' | 'basic' | 'rakhi' | 'ganesh' | 'greeting' | 'standard' | 'premium' | 'gold' | 'gala' | 'signature' | 'couture' | 'regal' | 'heirloom'
 
 export interface Plan {
   id: PlanId
@@ -49,8 +49,10 @@ const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'roy
 const GALA_TEMPLATES = [...GOLD_TEMPLATES, 'birthday-gala']
 const SIGNATURE_TEMPLATES = [...GALA_TEMPLATES, 'signature-kalyanam', 'signature-nikah', 'signature-garden', 'signature-saptapadi']
 const COUTURE_TEMPLATES = [...SIGNATURE_TEMPLATES, 'signature-rajwada', 'signature-aquarelle']
+// Royal: The Royal Edit, the palace wedding in eight scenes.
+const REGAL_TEMPLATES = [...COUTURE_TEMPLATES, 'signature-royal-edit']
 // Heirloom: story-led suites built around the couple's own photos, film and love story.
-const HEIRLOOM_TEMPLATES = [...COUTURE_TEMPLATES, 'signature-two-worlds']
+const HEIRLOOM_TEMPLATES = [...REGAL_TEMPLATES, 'signature-two-worlds']
 
 export const PLANS: Plan[] = [
   {
@@ -60,7 +62,19 @@ export const PLANS: Plan[] = [
     badge: 'Lowest price',
     description: 'Unlock the premium Ganesh Chaturthi invitation for ₹99. Invite family home for darshan, aarti and prasad.',
     templateIds: GANESH_TEMPLATES,
-    features: ['Ganesh Chaturthi Premium template', 'Sthapana countdown & utsav schedule', 'Visarjan day & Google Maps', 'Guest wishes & blessings wall'],
+    features: ['Ganesh Chaturthi template', 'Sthapana countdown & utsav schedule', 'Visarjan day & Google Maps', 'Guest wishes & blessings wall'],
+  },
+  {
+    // The animated 3D greetings (13 Nov 2026): a message, a photo and a song,
+    // not an event, so they are priced as the small, spur-of-the-moment thing
+    // they are. They were ₹399, more than a full birthday invitation.
+    id: 'greeting',
+    name: 'Animated greeting',
+    price: 149,
+    badge: 'Greetings',
+    description: 'An animated 3D greeting with your message, your photo and your song, on one link.',
+    templateIds: GREETING_TEMPLATES,
+    features: ['Animated 3D greeting', 'Your message and photo', 'Your song', 'One link for WhatsApp'],
   },
   {
     id: 'basic',
@@ -78,7 +92,7 @@ export const PLANS: Plan[] = [
     badge: 'Festive special',
     description: 'Unlock the premium Raksha Bandhan invitation and celebrate the bond of a lifetime.',
     templateIds: RAKHI_TEMPLATES,
-    features: ['Raksha Bandhan Premium template', 'Countdown, timeline & photo memories', 'Guest wishes & RSVP', 'Optional gift / shagun link'],
+    features: ['Raksha Bandhan template','Countdown, timeline & photo memories', 'Guest wishes & RSVP', 'Optional gift / shagun link'],
   },
   {
     id: 'standard',
@@ -136,6 +150,15 @@ export const PLANS: Plan[] = [
     features: ['Rajwada palace or Aquarelle watercolour suite', 'Every function on its own card', 'Travel, stay, FAQs & contacts for guests', 'Everything in the designs below'],
   },
   {
+    id: 'regal',
+    name: 'Signature Royal',
+    price: 2999,
+    badge: 'Signature collection',
+    description: 'The Royal Edit, a palace wedding in eight scenes: a cinematic opening, the invitation in a gilded arch, your story, every celebration, your photographs, a countdown and a reply card, in burgundy, emerald or midnight.',
+    templateIds: REGAL_TEMPLATES,
+    features: ['A cinematic palace opening', 'Your story, photographs and every celebration', 'Directions, countdown and a reply card', 'Everything in the designs below'],
+  },
+  {
     id: 'heirloom',
     name: 'Signature Heirloom',
     price: 3999,
@@ -162,12 +185,38 @@ export function getRequiredPlan(templateId: string): Plan {
   return PLANS.find(p => p.templateIds.includes(templateId)) ?? PLANS[PLANS.length - 1]
 }
 
+/**
+ * What an account owns. Since 13 Nov 2026 a purchase is one design, and that
+ * design is the buyer's for as many invitations as they need (`designs`).
+ * Before then a purchase was a plan that also unlocked every cheaper design;
+ * those customers keep it (`plan`), and it is never taken away.
+ */
+export interface Owned {
+  plan: PlanId
+  designs: string[]
+}
+
+export const NOTHING_OWNED: Owned = { plan: 'free', designs: [] }
+
+/** True when the account may publish this design without paying again. */
+export function owns(templateId: string, owned: Owned): boolean {
+  return owned.designs.includes(templateId) || canAccess(templateId, owned.plan)
+}
+
+/** Reads `{ plan, designs }` as /api/user/subscription and /api/payments/verify send it. */
+export function ownedFrom(body: unknown): Owned {
+  const b = (body ?? {}) as { plan?: unknown; designs?: unknown }
+  const plan = typeof b.plan === 'string' && (b.plan === 'free' || PLAN_MAP[b.plan as PlanId]) ? (b.plan as PlanId) : 'free'
+  const designs = Array.isArray(b.designs) ? b.designs.filter((d): d is string => typeof d === 'string') : []
+  return { plan, designs }
+}
+
 export function canAccess(templateId: string, userPlan: PlanId): boolean {
   // No blanket exemption any more: with no free tier, access is granted only by
-  // the plan the user actually bought. Basic, Raksha Bandhan and Ganesh
-  // Chaturthi are parallel single-template tiers — buying one does not grant
-  // the others. Standard and above include all of them, so an upgrade never
-  // takes a template away.
+  // the plan the user actually bought. Basic, Raksha Bandhan, Ganesh
+  // Chaturthi and the greetings are parallel tiers — buying one does not grant
+  // the others. (Since 13 Nov 2026 a purchase is one design, lib/entitlements.ts;
+  // these plans are what earlier customers hold.)
   const plan = PLAN_MAP[userPlan]
   return plan?.templateIds.includes(templateId) ?? false
 }
@@ -202,9 +251,15 @@ export function formatTemplatePrice(templateId: string): string {
   return price === 0 ? 'Free' : `₹${price.toLocaleString('en-IN')}`
 }
 
-/** Cheapest paid template price — used in "from ₹X" copy. */
+/**
+ * The "from ₹X" price: the cheapest invitation on sale all year (13 Nov 2026).
+ * Left out: the festival specials (Ganesh Chaturthi is ₹99 for one festival a
+ * year) and the greetings, which are messages, not invitations. A visitor who
+ * reads "from ₹X" and goes looking for an invitation must find one at ₹X.
+ */
+const NOT_FROM_PRICE = new Set<string>(['ganesh-chaturthi', ...GREETING_TEMPLATES])
 export const LOWEST_PAID_PRICE = Math.min(
-  ...PLANS.filter((p) => p.price > 0).map((p) => p.price),
+  ...PLANS.flatMap((p) => p.templateIds.filter((id) => !NOT_FROM_PRICE.has(id)).map((id) => getRequiredPlan(id).price)).filter((price) => price > 0),
 )
 
 /** Dearest template price — used in "₹X – ₹Y" range copy and JSON-LD. */
@@ -240,7 +295,7 @@ export function mergePlans(current: PlanId, purchased: PlanId): PlanId {
 }
 
 export function planLevel(plan: PlanId): number {
-  return { free: 0, ganesh: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3, gala: 3.5, signature: 4, couture: 5, heirloom: 6 }[plan] ?? 0
+  return { free: 0, ganesh: 0.5, greeting: 0.5, basic: 0.5, rakhi: 0.5, standard: 1, premium: 2, gold: 3, gala: 3.5, signature: 4, couture: 5, regal: 5.5, heirloom: 6 }[plan] ?? 0
 }
 
 // Every INR price needs a row in lib/pricing.ts's LADDER, or visitors abroad

@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { createPresignedUploadUrl, isR2Configured } from '@/lib/r2'
 import { takeGuestUpload } from '@/lib/uploadQuota'
+import { editableEvent } from '@/lib/eventEdit'
 
 const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
 const ALLOWED_AUDIO_TYPES = new Set(['audio/mpeg', 'audio/mp3', 'audio/mp4', 'audio/aac', 'audio/wav', 'audio/ogg'])
@@ -26,6 +27,20 @@ function clientIp(req: NextRequest): string {
 }
 
 export async function POST(req: NextRequest) {
+  // Uploads belong to an invitation someone owns (4 Nov 2026), checked first: a signed-in session,
+  // or, for a published invitation opened for editing without one, its signed edit link (the same
+  // check as the edit API, lib/eventEdit). Those keep the per-network quota below.
+  const session = await getServerSession(authOptions).catch(() => null)
+  const signedIn = Boolean(session?.user)
+  if (!signedIn) {
+    const slug = req.headers.get('x-edit-slug')
+    const key = req.headers.get('x-edit-key')
+    const allowed = slug && key ? (await editableEvent(slug, key).catch(() => null))?.ok === true : false
+    if (!allowed) {
+      return NextResponse.json({ error: 'Please sign in to upload photos and music.', code: 'AUTH_REQUIRED' }, { status: 401 })
+    }
+  }
+
   if (!isR2Configured()) {
     return NextResponse.json({ error: 'File storage not configured' }, { status: 503 })
   }
@@ -68,9 +83,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `File too large (max ${mb} MB)` }, { status: 413 })
   }
 
-  // Counted only for a request that would get an upload URL.
-  const session = await getServerSession(authOptions).catch(() => null)
-  if (!session?.user && !(await takeGuestUpload(clientIp(req)))) {
+  // Counted only for a request that would get an upload URL (edit-link uploads, no session).
+  if (!signedIn && !(await takeGuestUpload(clientIp(req)))) {
     return NextResponse.json({ error: 'Too many uploads for now. Please try again in a little while.' }, { status: 429 })
   }
 

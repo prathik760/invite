@@ -4,6 +4,7 @@ import TrackedLink from '@/components/ui/TrackedLink'
 import { LogoMark } from '@/components/brand/Logo'
 import { LOWEST_PAID_PRICE } from '@/lib/plans'
 import { withLocalPrices } from '@/components/price/localised'
+import { serverT } from '@/lib/serverLang'
 
 /**
  * Site-wide sticky bar shown on SEO landing, template and blog pages.
@@ -28,6 +29,8 @@ export default function StickyCTA({
   href?: string
   label?: string
 }) {
+  const t = serverT()
+  const tr = (n: ReactNode) => (typeof n === 'string' ? t(n) : n)
   return (
     <BottomDock
       className="border-t border-line bg-paper/95 px-4 pt-3 shadow-[0_-12px_30px_-12px_rgba(3,25,15,0.18)] backdrop-blur-xl"
@@ -39,20 +42,20 @@ export default function StickyCTA({
         <div className="flex min-w-0 items-center gap-3">
           <LogoMark className="hidden h-9 w-9 shrink-0 sm:block" />
           <div className="min-w-0">
-            <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{withLocalPrices(title)}</p>
-            <p className="truncate text-[0.78rem] text-muted">{withLocalPrices(sub)}</p>
+            <p className="truncate font-editorial text-[1.15rem] font-semibold leading-tight text-charcoal">{withLocalPrices(tr(title))}</p>
+            <p className="truncate text-[0.78rem] text-muted">{withLocalPrices(tr(sub))}</p>
           </div>
         </div>
         <div className="flex shrink-0 gap-2">
           {/* Relabelled: this links to the product overview page, not a live
               demo, and the old "Live Demo" label set the wrong expectation. */}
           <TrackedLink
-            href="/digital-invitation"
+            href="/how-it-works"
             location="sticky_bar_secondary"
             meta={{ page_type: pageType }}
             className="btn-outline hidden rounded-full px-4 py-2 text-[0.8rem] font-semibold sm:inline-flex"
           >
-            How it works
+            {t('How it works')}
           </TrackedLink>
           <TrackedLink
             href={href}
@@ -60,7 +63,7 @@ export default function StickyCTA({
             meta={{ page_type: pageType }}
             className="btn-primary rounded-full px-5 py-2.5 text-[0.85rem] font-semibold"
           >
-            {label}
+            {t(label)}
           </TrackedLink>
         </div>
       </div>

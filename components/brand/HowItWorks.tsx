@@ -1,5 +1,6 @@
 import type { Tone } from '@/components/brand/Section'
 import { EyeIcon, LinkIcon, PenIcon } from '@/components/ui/Icons'
+import { serverT } from '@/lib/serverLang'
 
 const DEFAULT_STEPS = [
   {
@@ -34,6 +35,7 @@ export default function HowItWorks({
   phoneRail?: boolean
 }) {
   const dark = tone === 'emerald' || tone === 'charcoal'
+  const t = serverT()
   return (
     <ol className={`relative grid gap-4 md:grid-cols-3 md:gap-5 ${phoneRail ? 'phone-rail' : ''}`} style={phoneRail ? { ['--rail' as string]: '80%' } : undefined} data-reveal-group>
       {steps.map((step, i) => {
@@ -51,8 +53,8 @@ export default function HowItWorks({
                 {String(i + 1).padStart(2, '0')}
               </span>
             </div>
-            <h3 className="t-h3 mt-6">{step.title}</h3>
-            <p className={`mt-2 text-[0.98rem] leading-7 ${dark ? 'text-paper/70' : 'text-charcoal/75'}`}>{step.copy}</p>
+            <h3 className="t-h3 mt-6">{t(step.title)}</h3>
+            <p className={`mt-2 text-[0.98rem] leading-7 ${dark ? 'text-paper/70' : 'text-charcoal/75'}`}>{t(step.copy)}</p>
           </li>
         )
       })}

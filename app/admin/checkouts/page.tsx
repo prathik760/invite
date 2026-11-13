@@ -351,6 +351,7 @@ function Shell({ children, token }: { children: React.ReactNode; token?: string 
             <span className="aa-top-links">
               <a href={`/admin/activity${q}`}>Visitor activity →</a>
               <a href={`/admin/requests${q}`}>Custom requests →</a>
+              <a href={`/admin/reviews${q}`}>Reviews →</a>
             </span>
           )}
         </div>

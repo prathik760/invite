@@ -18,7 +18,7 @@ const en: Dict = {
   'nav.templates': 'Templates',
   'nav.pricing': 'Pricing',
   'nav.blog': 'Blog',
-  'nav.create': 'Create Invitation',
+  'nav.create': 'Create invitation',
   'cta.start': 'Start creating',
   'cta.createInvitation': 'Create Invitation',
   'cta.browseTemplates': 'Browse templates',

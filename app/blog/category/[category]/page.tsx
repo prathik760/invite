@@ -22,6 +22,11 @@ type Props = { params: { category: string } }
 // index. The rule lives in content/blog.ts so the sitemap shares it exactly.
 const indexable = (category: string) => indexablePostCount(category, hasFullArticle)
 
+// Every real page is built ahead (generateStaticParams). Any other address is a
+// 404 straight away, instead of a server render to find that out: bots probe
+// hundreds of made-up addresses, and each render is metered.
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return blogCategories.map((category) => ({ category: categorySlug(category) }))
 }
