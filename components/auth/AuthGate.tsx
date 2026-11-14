@@ -18,7 +18,7 @@ import { useT } from '@/components/i18n/I18nProvider'
  *    so switching between login and signup or refreshing does not count it again);
  *  - auth_view: the login or signup page was shown for that reason.
  */
-export type AuthFrom = 'customize' | 'create' | null
+export type AuthFrom = 'customize' | 'create' | 'publish' | null
 
 export default function AuthGate({
   page,
@@ -62,7 +62,7 @@ export default function AuthGate({
         <div className="flex items-center gap-3.5 rounded-2xl border border-line bg-champagne p-3">
           <Image src={design.image} alt="" width={96} height={120} sizes="48px" className="h-[60px] w-12 shrink-0 rounded-md object-cover object-top shadow-sm" />
           <div className="min-w-0">
-            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-burnished-deep">{tr('You’re customizing')}</p>
+            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-burnished-deep">{from === 'publish' ? tr('Ready to publish') : tr('You’re customizing')}</p>
             <p className="truncate font-editorial text-[1.3rem] font-semibold leading-tight text-charcoal">{design.name}</p>
             <p className="text-[0.85rem] text-muted">
               {tr(design.occasion)} · {tr(design.level)} · {rich(tr('{price} once, when you publish'), { price: <Price inr={design.price} /> })}

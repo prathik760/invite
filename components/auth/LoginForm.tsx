@@ -44,7 +44,9 @@ export default function LoginForm({ callbackUrl, from, design }: { callbackUrl: 
     }
   }
 
-  // Arriving from the builder means a design is waiting — say so.
+  // Arriving from the builder means a design is waiting — say so. Since 13 Nov 2026 an account is
+  // asked for only to publish (app/create), so the page no longer says one is needed to customize.
+  const publishing = from === 'publish'
   const fromBuilder = !!from || callbackUrl.startsWith('/create')
 
   return (
@@ -55,12 +57,14 @@ export default function LoginForm({ callbackUrl, from, design }: { callbackUrl: 
       className="w-full max-w-[34rem]"
     >
       <div className="card p-6 sm:p-10">
-        <p className="eyebrow">{fromBuilder ? tr('One step before you customize') : tr('Welcome back')}</p>
-        <h1 className="t-h2 mt-2">{fromBuilder ? tr('Sign in to customize') : tr('Sign in')}</h1>
+        <p className="eyebrow">{publishing ? tr('Your invitation is ready') : fromBuilder ? tr('Your invitations, kept together') : tr('Welcome back')}</p>
+        <h1 className="t-h2 mt-2">{publishing ? tr('Sign in to publish') : tr('Sign in')}</h1>
         <p className="mt-2 text-[0.95rem] leading-7 text-charcoal/70">
-          {fromBuilder
-            ? tr('You need a free account to personalize and save an invitation. Browsing and previews never need one.')
-            : tr('Manage your invitations and see the wishes your guests leave.')}
+          {publishing
+            ? tr('It’s saved on this device: sign in and you come straight back to publish it, with everything you typed.')
+            : fromBuilder
+              ? tr('Building and previewing never need an account. Sign in to keep your invitations together, publish them and read your guests’ wishes.')
+              : tr('Manage your invitations and see the wishes your guests leave.')}
         </p>
 
         <div className="mt-6">

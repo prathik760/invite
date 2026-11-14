@@ -1,5 +1,5 @@
 import LoginForm from '@/components/auth/LoginForm'
-import { safeCallback, templateFromCallback } from '@/lib/authRedirect'
+import { authOrigin, safeCallback, templateFromCallback } from '@/lib/authRedirect'
 import { designSummary } from '@/lib/designSummary'
 
 /**
@@ -8,6 +8,6 @@ import { designSummary } from '@/lib/designSummary'
  */
 export default function LoginPage({ searchParams }: { searchParams: { callbackUrl?: string; from?: string } }) {
   const callbackUrl = safeCallback(searchParams.callbackUrl)
-  const from = searchParams.from === 'customize' || searchParams.from === 'create' ? searchParams.from : callbackUrl.startsWith('/create') ? 'create' : null
+  const from = authOrigin(searchParams.from, callbackUrl)
   return <LoginForm callbackUrl={callbackUrl} from={from} design={designSummary(templateFromCallback(callbackUrl))} />
 }

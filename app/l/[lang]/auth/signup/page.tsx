@@ -1,5 +1,5 @@
 import SignupForm from '@/components/auth/SignupForm'
-import { safeCallback, templateFromCallback } from '@/lib/authRedirect'
+import { authOrigin, safeCallback, templateFromCallback } from '@/lib/authRedirect'
 import { designSummary } from '@/lib/designSummary'
 import { setServerLang, tFor } from '@/lib/serverLang'
 
@@ -10,7 +10,7 @@ import { setServerLang, tFor } from '@/lib/serverLang'
 export default function SignupPage({ params, searchParams }: { params: { lang: string }; searchParams: { callbackUrl?: string; from?: string } }) {
   setServerLang(params.lang)
   const callbackUrl = safeCallback(searchParams.callbackUrl)
-  const from = searchParams.from === 'customize' || searchParams.from === 'create' ? searchParams.from : callbackUrl.startsWith('/create') ? 'create' : null
+  const from = authOrigin(searchParams.from, callbackUrl)
   return <SignupForm callbackUrl={callbackUrl} from={from} design={designSummary(templateFromCallback(callbackUrl))} />
 }
 

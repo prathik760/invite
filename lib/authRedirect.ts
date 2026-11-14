@@ -61,3 +61,16 @@ export function authHref(page: '/auth/login' | '/auth/signup', callbackUrl: stri
   const s = q.toString()
   return s ? `${page}?${s}` : page
 }
+
+/**
+ * Where someone came to sign in from, for what the sign-in and sign-up pages say
+ * (components/auth). `publish`: they finished an invitation and pressed Publish
+ * (app/create sends them with `resume=publish`), so the page says their work is
+ * saved and they come straight back to publish it. `customize` / `create`: they
+ * came from the builder some other way.
+ */
+export function authOrigin(from: string | undefined, callbackUrl: string): 'publish' | 'customize' | 'create' | null {
+  if (from === 'publish' || /[?&]resume=publish(&|$)/.test(callbackUrl)) return 'publish'
+  if (from === 'customize' || from === 'create') return from
+  return callbackUrl.startsWith('/create') ? 'create' : null
+}

@@ -65,6 +65,7 @@ export default function SignupForm({ callbackUrl, from, design }: { callbackUrl:
     }
   }
 
+  const publishing = from === 'publish'
   const fromBuilder = !!from || callbackUrl.startsWith('/create')
 
   return (
@@ -75,12 +76,14 @@ export default function SignupForm({ callbackUrl, from, design }: { callbackUrl:
       className="w-full max-w-[34rem]"
     >
       <div className="card p-6 sm:p-10">
-        <p className="eyebrow">{fromBuilder ? tr('One step before you customize') : tr('Welcome to ShareInvite')}</p>
-        <h1 className="t-h2 mt-2">{tr('Create your account')}</h1>
+        <p className="eyebrow">{publishing ? tr('Your invitation is ready') : fromBuilder ? tr('Your invitations, kept together') : tr('Welcome to ShareInvite')}</p>
+        <h1 className="t-h2 mt-2">{publishing ? tr('Create your account to publish') : tr('Create your account')}</h1>
         <p className="mt-2 text-[0.95rem] leading-7 text-charcoal/70">
-          {fromBuilder
-            ? tr('A free account lets you personalize and save your invitation. You only pay when you publish.')
-            : tr('Build and preview any design before you pay. You only pay when you publish.')}
+          {publishing
+            ? tr('It’s saved on this device: create a free account and you come straight back to publish it, with everything you typed.')
+            : fromBuilder
+              ? tr('A free account keeps your invitations together. Building and previewing never need one; you only pay when you publish.')
+              : tr('Build and preview any design before you pay. You only pay when you publish.')}
         </p>
 
         <div className="mt-6">

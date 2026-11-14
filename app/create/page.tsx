@@ -52,7 +52,7 @@ const MINE_KEY = 'si_my_invitations'
  * a bare ?template= link does. `template` lets the sign-in page show which design is waiting.
  */
 function signInToPublishHref(templateId: string): string {
-  return `/auth/login?callbackUrl=${encodeURIComponent(`/create?template=${templateId}&resume=publish`)}&from=customize`
+  return `/auth/login?callbackUrl=${encodeURIComponent(`/create?template=${templateId}&resume=publish`)}&from=publish`
 }
 
 /** A box the keyboard opens for (not a tick box, a choice or a photo button). */
