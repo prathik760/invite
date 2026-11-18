@@ -54,7 +54,7 @@ export const OCCASIONS: Occasion[] = [
     blurb: 'Milestones, parties, dinners and first birthdays',
     href: '/birthday-invitation',
     image: '/occasions/photo-birthday.jpg',
-    templateIds: ['birthday-gala', 'birthday-mirrorball', 'birthday-champagne', 'birthday-martini', 'birthday-long-lunch', 'indian-birthday', 'first-birthday', 'surprise-journey'],
+    templateIds: ['birthday-gala', 'birthday-mirrorball', 'birthday-champagne', 'birthday-martini', 'birthday-long-lunch', 'indian-birthday', 'first-birthday', 'kids-dinosaur', 'kids-superhero', 'kids-unicorn', 'kids-space', 'kids-jungle', 'kids-cars', 'surprise-journey'],
   },
   {
     key: 'anniversary',
@@ -99,7 +99,7 @@ export const OCCASIONS: Occasion[] = [
     blurb: 'Valentines, promises and apologies',
     href: '/templates?occasion=love',
     image: '/occasions/photo-love.jpg',
-    templateIds: ['greeting-love', 'greeting-valentine', 'greeting-propose', 'greeting-promise', 'greeting-sorry', 'surprise-journey'],
+    templateIds: ['confession-for-her', 'confession-for-him', 'greeting-love', 'greeting-valentine', 'greeting-propose', 'greeting-promise', 'greeting-sorry', 'surprise-journey'],
   },
   {
     key: 'friends',
@@ -157,6 +157,12 @@ const STYLE_TAGS: Record<string, string> = {
   'signature-aquarelle': 'Signature · Hand-painted florals',
   'baby-shower': 'Soft & playful',
   'first-birthday': 'Storybook',
+  'kids-dinosaur': 'Kids · Dinosaur',
+  'kids-space': 'Kids · Space',
+  'kids-superhero': 'Kids · Superhero',
+  'kids-unicorn': 'Kids · Unicorn & rainbow',
+  'kids-jungle': 'Kids · Jungle safari',
+  'kids-cars': 'Kids · Race cars',
   'haldi-mehendi': 'Pre-wedding',
   'sangeet-night': 'Pre-wedding',
   'pooja-invite': 'Devotional',
@@ -172,6 +178,8 @@ const STYLE_TAGS: Record<string, string> = {
   'dasara-ambari': 'Mysuru Dasara · Animated',
   'christmas-evergreen': 'Christmas · Animated',
   'newyear-midnight': 'New Year’s Eve · Fireworks',
+  'confession-for-her': 'Love letter · From him',
+  'confession-for-him': 'Love letter · From her',
 }
 
 export function styleTag(templateId: string): string {

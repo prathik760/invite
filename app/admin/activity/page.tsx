@@ -477,6 +477,7 @@ function Shell({ children, token }: { children: React.ReactNode; token?: string 
             <span className="aa-top-links">
               <a href={`/admin/checkouts?token=${encodeURIComponent(token)}`}>Unpaid checkouts →</a>
               <a href={`/admin/requests?token=${encodeURIComponent(token)}`}>Custom requests →</a>
+              <a href={`/admin/done-for-you?token=${encodeURIComponent(token)}`}>Done for you →</a>
               <a href={`/admin/reviews?token=${encodeURIComponent(token)}`}>Reviews →</a>
             </span>
           )}

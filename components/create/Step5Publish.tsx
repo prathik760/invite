@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Image from '@/components/ui/Image'
 import Link from '@/components/ui/Link'
@@ -14,6 +15,14 @@ import { TEMPLATE_VISUALS, DARK_TEMPLATES, is3DTemplate } from './templateVisual
 import { useLocalPrice } from '@/components/price/Price'
 import { discountedPrice, paymentMethods } from '@/lib/pricing'
 import { useCoupon } from '@/lib/useCoupon'
+import { budgetPicks } from '@/lib/budgetPicks'
+import { templateImage } from '@/lib/templateMedia'
+import { trackCta } from '@/lib/analytics'
+import { getTemplateData } from '@/modules/templates/data'
+import { Price } from '@/components/price/Price'
+import { useBuilderReviews } from './BuilderReviews'
+import FreeBranding from '@/components/e/FreeBranding'
+import FreePlanBanner from '@/components/e/FreePlanBanner'
 import CouponField from './CouponField'
 import PaymentProblem, { type PayError } from './PaymentProblem'
 
@@ -48,11 +57,15 @@ interface Step5PublishProps {
   onRetry?: () => void
   /** Changing a published invitation: nothing to pay, and the button saves to the same link. */
   editing?: boolean
+  /** Switches to another design, carrying over what was typed (the builder's design change). */
+  onSwitchDesign?: (templateId: string) => void
+  /** Publishes free, with ShareInvite branding (lib/freeInvites.ts). */
+  onPublishFree?: () => void
 }
 
 export default function Step5Publish({
   selectedTemplate, data, owned, session, loading, error, onBack, onPublish, missing = [], onFix, editing = false,
-  paying = false, payError = null, onRetry,
+  paying = false, payError = null, onRetry, onSwitchDesign, onPublishFree,
 }: Step5PublishProps) {
   const isDark = DARK_TEMPLATES.has(selectedTemplate.id)
   const tv = TEMPLATE_VISUALS[selectedTemplate.id] ?? TEMPLATE_VISUALS['elegant-wedding']
@@ -65,6 +78,14 @@ export default function Step5Publish({
   const coupon = useCoupon(requiredPlan.id, selectedTemplate.id).applied
   const local = coupon ? discountedPrice(listPrice, coupon.percentOff) : listPrice
   const price = local.label
+  const reviews = useBuilderReviews(selectedTemplate.id)
+  // The free choice, and the preview of what it looks like (FreeBranding drawn over the phone).
+  const freeOffered = mustPay && Boolean(onPublishFree)
+  const [showFree, setShowFree] = useState(false)
+  // "Over your budget?": the same invitation in a lower-priced design (lib/budgetPicks.ts).
+  const cheaper = mustPay && onSwitchDesign
+    ? budgetPicks(selectedTemplate.id, selectedTemplate.category ?? '').map((id) => getTemplateData(id)).filter((t): t is TemplateData => Boolean(t))
+    : []
 
   return (
     // overflow-x-clip: the preview's glow (-inset-12) reaches ~48px past a
@@ -102,6 +123,12 @@ export default function Step5Publish({
                   className="relative overflow-hidden rounded-[2.1rem] bg-white"
                   style={{ height: 'min(590px, max(360px, calc(100dvh - 300px)))' }}
                 >
+                  {freeOffered && showFree && (
+                    <>
+                      <div className="pointer-events-none absolute inset-x-0 top-0" style={{ zIndex: 1001 }}><FreePlanBanner /></div>
+                      <FreeBranding contained />
+                    </>
+                  )}
                   <div className="h-full overflow-y-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
                     <PreviewPane templateId={selectedTemplate.id} data={data} />
                   </div>
@@ -126,7 +153,32 @@ export default function Step5Publish({
               </div>
             </div>
           </div>
-          <p className="mt-5 text-center text-[0.85rem] text-muted">This is exactly what your guests will see.</p>
+          {freeOffered ? (
+            <div className="mt-5 flex flex-col items-center gap-2">
+              <div role="radiogroup" aria-label="Which version to preview" className="inline-flex rounded-full border border-line bg-paper p-1 text-[0.8rem] font-semibold">
+                {[
+                  { free: false, label: `Paid · ${price}` },
+                  { free: true, label: 'Free · with branding' },
+                ].map((o) => (
+                  <button
+                    key={o.label}
+                    type="button"
+                    role="radio"
+                    aria-checked={showFree === o.free}
+                    onClick={() => setShowFree(o.free)}
+                    className={`rounded-full px-3.5 py-1.5 transition-colors ${showFree === o.free ? 'bg-emerald text-paper' : 'text-charcoal/70 hover:text-charcoal'}`}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-center text-[0.85rem] text-muted">
+                {showFree ? 'This is what guests see on a free invitation.' : 'This is exactly what your guests will see.'}
+              </p>
+            </div>
+          ) : (
+            <p className="mt-5 text-center text-[0.85rem] text-muted">This is exactly what your guests will see.</p>
+          )}
         </div>
 
         {/* ── Summary ── */}
@@ -164,6 +216,29 @@ export default function Step5Publish({
                 </li>
               ))}
             </ul>
+
+            {/* What hosts said, at the moment of paying. Only real, approved reviews (lib/reviews.ts):
+                with none yet, nothing is shown. */}
+            {mustPay && reviews.list.length > 0 && (
+              <div className="mt-5 rounded-2xl border border-line bg-paper px-4 py-3.5">
+                <p className="flex items-center gap-2 text-[0.84rem] font-semibold text-charcoal">
+                  <span className="text-burnished" aria-hidden>★</span>
+                  {reviews.average.toFixed(1)} out of 5 · {reviews.count} {reviews.count === 1 ? 'review' : 'reviews'} from hosts
+                </p>
+                <ul className="mt-2.5 space-y-3">
+                  {reviews.list.map((r) => (
+                    <li key={r.id}>
+                      <p className="line-clamp-3 text-[0.86rem] leading-6 text-charcoal/85">&ldquo;{r.text}&rdquo;</p>
+                      <p className="mt-1 text-[0.76rem] text-muted">
+                        <span aria-label={`${r.rating} out of 5`}>{'★'.repeat(r.rating)}</span> · {r.name}
+                        {r.city && <>, {r.city}</>}
+                        {r.templateId !== selectedTemplate.id && <> · {displayName(getTemplateData(r.templateId)?.name ?? '')}</>}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* No plan badge. Pricing is per design, not per tier, so there is
                 no "plan" to report and nothing to upgrade to — the price of the
@@ -268,6 +343,58 @@ export default function Step5Publish({
                   </a>
                 </li>
               </ul>
+            )}
+
+            {cheaper.length > 0 && (
+              <div className="mt-4 rounded-2xl border border-dashed border-line px-4 py-3.5">
+                <p className="text-[0.86rem] font-semibold text-charcoal">Over your budget?</p>
+                <p className="mt-0.5 text-[0.78rem] leading-5 text-muted">
+                  Switch design and keep everything you typed. You can switch back.
+                </p>
+                <div className="mt-3 grid grid-cols-2 gap-2.5">
+                  {cheaper.map((t) => (
+                    <button
+                      key={t.id}
+                      type="button"
+                      onClick={() => {
+                        trackCta(`Switch to ${displayName(t.name)}`, 'publish_budget_pick', { from_template: selectedTemplate.id, template_id: t.id })
+                        onSwitchDesign?.(t.id)
+                      }}
+                      className="flex min-w-0 items-center gap-2.5 rounded-xl border border-line bg-paper p-2 text-left transition-colors hover:border-burnished"
+                    >
+                      <span className="relative h-12 w-9 shrink-0 overflow-hidden rounded-md border border-line bg-peach">
+                        <Image src={templateImage(t.id)} alt="" fill sizes="36px" className="object-cover object-top" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="line-clamp-2 text-[0.82rem] font-semibold leading-[1.15rem] text-charcoal">{displayName(t.name)}</span>
+                        <span className="block text-[0.78rem] leading-5 text-muted"><Price inr={getRequiredPlan(t.id).price} /></span>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {freeOffered && (
+              <div className="mt-4 rounded-2xl border border-line bg-champagne/70 px-4 py-3.5">
+                <p className="text-[0.86rem] font-semibold text-charcoal">Or publish free</p>
+                <p className="mt-0.5 text-[0.78rem] leading-5 text-muted">
+                  Your invitation goes live free, with ShareInvite written across the design. Remove it later for {price}, on the same link.
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <button
+                    type="button"
+                    onClick={onPublishFree}
+                    disabled={loading || paying || missing.length > 0}
+                    className="btn-outline rounded-full px-5 py-2.5 text-[0.85rem] font-semibold disabled:opacity-50"
+                  >
+                    Publish free
+                  </button>
+                  <button type="button" onClick={() => setShowFree((v) => !v)} className="text-[0.8rem] font-semibold text-emerald-soft underline-offset-4 hover:underline">
+                    {showFree ? 'Show the paid version' : 'See the free version'}
+                  </button>
+                </div>
+              </div>
             )}
           </div>
 

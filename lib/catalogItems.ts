@@ -44,7 +44,7 @@ function featuresOf(t: (typeof TEMPLATES)[number]): FeatureKey[] {
     programme: keys.has('schedule'),
     map: keys.has('mapsUrl'),
     // Every event design has the wishes wall; the 3D greetings and Surprise Journey are messages, not events.
-    wishes: !t.id.startsWith('greeting-') && t.id !== 'surprise-journey',
+    wishes: !t.id.startsWith('greeting-') && !t.id.startsWith('confession-') && t.id !== 'surprise-journey',
   }
   return (Object.keys(has) as FeatureKey[]).filter((k) => has[k])
 }

@@ -1,4 +1,6 @@
 import type { TemplateConfig } from '@/types'
+import { HIDE_KEY, WISHES, hiddenSet } from '@/lib/hiddenParts'
+import { NAME_ORDER_KEY } from '@/lib/nameOrder'
 
 type TemplateLike = { config: TemplateConfig }
 
@@ -49,9 +51,14 @@ export function carryOverDetails(
   }
 
   const nextKeys = new Set(next.config.fields.map((f) => f.key))
+  // A choice carries only to a design that offers the same option (a pink dinosaur's "pink" to the
+  // pink galaxy, never to a design with no pink).
+  const choices = new Map(next.config.fields.filter((f) => f.type === 'choice').map((f) => [f.key, new Set((f.options ?? []).map((o) => o.value))]))
   nextKeys.forEach((key) => {
     const source = [key, ...aliasesOf(key)].find(typed)
-    if (source) out[key] = prevData[source]
+    if (!source) return
+    if (choices.has(key) && !choices.get(key)!.has(prevData[source])) return
+    out[key] = prevData[source]
   })
 
   // Wedding and engagement designs store two names; the anniversary design
@@ -61,6 +68,12 @@ export function carryOverDetails(
     const b = ['groomName', 'partner2Name'].find(typed)
     if (a && b) out.coupleNames = `${prevData[a]} & ${prevData[b]}`
   }
+
+  // What the host removed stays removed in the new design, where it has the same part.
+  const removed = Array.from(hiddenSet(prevData)).filter((k) => k === WISHES || nextKeys.has(k))
+  if (removed.length) out[HIDE_KEY] = removed.sort().join(',')
+  // Whose name comes first stays the host's choice in any design with both names.
+  if (prevData[NAME_ORDER_KEY] && nextKeys.has('brideName') && nextKeys.has('groomName')) out[NAME_ORDER_KEY] = prevData[NAME_ORDER_KEY]
 
   return out
 }

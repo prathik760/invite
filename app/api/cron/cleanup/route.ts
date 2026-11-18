@@ -4,6 +4,8 @@ import { askForReviews } from '@/lib/reviews'
 import { prisma } from '@/lib/db'
 import { deleteR2Objects, isR2Configured, listR2UploadsOlderThan, r2KeysIn } from '@/lib/r2'
 import { ACTIVITY_DAYS, deletionDate, isInternalSlug, ORPHAN_UPLOAD_DAYS } from '@/lib/retention'
+import { REQUEST_DAYS } from '@/lib/doneForYou'
+import { DFY_PREFIX } from '@/lib/doneForYouShared'
 
 /**
  * Daily data cleanup, run by Vercel Cron (vercel.json).
@@ -60,7 +62,9 @@ export async function GET(request: Request) {
     for (const ev of page) {
       const keys = r2KeysIn(ev.data)
       const data = (ev.data ?? {}) as Record<string, string>
-      if (!isInternalSlug(ev.slug) && deletionDate(data, ev.createdAt) <= now) {
+      // Invitations after their deletion date; done-for-you requests REQUEST_DAYS after they were sent.
+      const expiredRequest = ev.slug.startsWith(DFY_PREFIX) && now.getTime() - ev.createdAt.getTime() > REQUEST_DAYS * DAY
+      if ((!isInternalSlug(ev.slug) && deletionDate(data, ev.createdAt) <= now) || expiredRequest) {
         expired.push({ id: ev.id, slug: ev.slug, keys })
       } else {
         keys.forEach((k) => stillUsed.add(k))

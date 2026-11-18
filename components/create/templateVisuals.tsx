@@ -81,6 +81,18 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#E4577B', rgb: '228,87,123',
     image: templateImage('greeting-valentine'),
   },
+  'confession-for-her': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M3 6h14v9H3z" stroke="currentColor" strokeWidth={1.4} strokeLinejoin="round" /><path d="M3 6l7 5 7-5" stroke="currentColor" strokeWidth={1.4} strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #F6E2DE 0%, #C2334E 100%)',
+    color: '#C2334E', rgb: '194,51,78',
+    image: templateImage('confession-for-her'),
+  },
+  'confession-for-him': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M3 6h14v9H3z" stroke="currentColor" strokeWidth={1.4} strokeLinejoin="round" /><path d="M3 6l7 5 7-5" stroke="currentColor" strokeWidth={1.4} strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #121A38 0%, #C9A24A 100%)',
+    color: '#C9A24A', rgb: '201,162,74',
+    image: templateImage('confession-for-him'),
+  },
   'greeting-anniversary': {
     icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 16C10 16 3 12 3 7.5C3 5.5 4.7 4 6.8 4C8.2 4 9.4 4.8 10 6C10.6 4.8 11.8 4 13.2 4C15.3 4 17 5.5 17 7.5C17 12 10 16 10 16Z" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round" /></svg>,
     gradient: 'linear-gradient(135deg, #8B0030 0%, #D9A441 100%)',
@@ -201,6 +213,42 @@ export const TEMPLATE_VISUALS: Record<string, {
     color: '#E07A2B', rgb: '224,122,43',
     image: templateImage('first-birthday'),
   },
+  'kids-dinosaur': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M3 15c0-3 2.5-5 6-5h3l2-4c1-1.5 3.5-1.5 4 .5.3 1.2-.4 2.2-1.5 2.5L15 10v3c0 2-1.5 3-3.5 3H7M6 16v2M11 16v2" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #F2762E 0%, #47B39D 100%)',
+    color: '#D9621F', rgb: '217,98,31',
+    image: templateImage('kids-dinosaur'),
+  },
+  'kids-space': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 2.5c2.5 2 3.5 5 3 8.5l-1.5 2h-3L7 11c-.5-3.5.5-6.5 3-8.5zM8.5 13.5L7 17l3-1.5 3 1.5-1.5-3.5M10 7.5v.5" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #0E1238 0%, #7C5CFF 100%)',
+    color: '#7C5CFF', rgb: '124,92,255',
+    image: templateImage('kids-space'),
+  },
+  'kids-superhero': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M11 2.5L5 11h4.5L8 17.5l7-9h-4.5L12 2.5z" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #1F5BD8 0%, #E8322E 100%)',
+    color: '#E8322E', rgb: '232,50,46',
+    image: templateImage('kids-superhero'),
+  },
+  'kids-unicorn': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M3 17a7 7 0 0114 0M6 17a4 4 0 018 0M13 3l1 3.5L17.5 7 14 8l-1 3.5L12 8 8.5 7 12 6z" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #F06BAA 0%, #9B7BF0 100%)',
+    color: '#E0518F', rgb: '224,81,143',
+    image: templateImage('kids-unicorn'),
+  },
+  'kids-jungle': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M4 16c0-6 4.5-11 12-12 0 7.5-5 12-12 12zM4 16l7-7" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #2F7A45 0%, #F6C445 100%)',
+    color: '#2F7A45', rgb: '47,122,69',
+    image: templateImage('kids-jungle'),
+  },
+  'kids-cars': {
+    icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M2.5 13.5V12l2-1 2-3.5h6l2.5 3.5 2.5.5v2M5 13.5a1.5 1.5 0 103 0 1.5 1.5 0 00-3 0zm7 0a1.5 1.5 0 103 0 1.5 1.5 0 00-3 0zM8 13.5h4" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
+    gradient: 'linear-gradient(135deg, #E3262F 0%, #1A1D24 100%)',
+    color: '#E3262F', rgb: '227,38,47',
+    image: templateImage('kids-cars'),
+  },
   'haldi-mehendi': {
     icon: <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5"><path d="M10 3c2 2.5 4 5 4 7.5a4 4 0 01-8 0C6 8 8 5.5 10 3zM10 9v5" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" /></svg>,
     gradient: 'linear-gradient(135deg, #F2C230 0%, #4E7B2C 100%)',
@@ -299,7 +347,7 @@ export const DARK_TEMPLATES = new Set([
   'birthday-mirrorball', 'birthday-martini', 'birthday-gala', 'dasara-ambari', 'christmas-evergreen', 'newyear-midnight',
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose',
   'greeting-promise', 'greeting-congratulations', 'greeting-festival', 'greeting-family',
-  'greeting-friendship',
+  'greeting-friendship', 'confession-for-him', 'kids-space',
 ])
 
 // The 3D experiences (greeting + interactive journey) are stage-based, full-viewport

@@ -165,6 +165,240 @@ function buildGreetings(): TemplateData[] {
 }
 
 
+// ─── Confession — a Valentine love letter that asks the question (components/templates/Confession.tsx) ──
+// Two cards in the catalogue, one per voice: "for her" written by him, "for him" written by her.
+const CONFESSION_FIELDS: TemplateConfig['fields'] = [
+  { key: 'recipientName', label: 'Their name', type: 'text', required: true, placeholder: 'Isha' },
+  { key: 'senderName', label: 'Your name', type: 'text', required: true, placeholder: 'Neel' },
+  {
+    key: 'message', label: 'Your letter', type: 'textarea', section: 'details', group: 'Your confession',
+    hint: 'Say it in your own words. Each line appears on its own as they read, in handwriting.',
+    placeholder: 'I have started this letter a hundred times…',
+  },
+  { key: 'question', label: 'The question', type: 'text', section: 'details', group: 'Your confession', placeholder: 'Will you be my Valentine?' },
+  {
+    key: 'plan', label: 'Your date, revealed after they say yes (optional)', type: 'text', section: 'details', group: 'When they say yes',
+    hint: 'Their yes comes straight to your WhatsApp, and they see your plan for the day.',
+    placeholder: 'Dinner on 14 February, 8 pm. I’ll pick you up.',
+  },
+  { key: 'replyNumber', label: 'Your WhatsApp number, for their answer (optional)', type: 'text', section: 'details', group: 'When they say yes', placeholder: '+91 98765 43210' },
+  { key: 'galleryImages', label: 'Photos of you two (optional, up to three)', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+  { key: 'musicUrl', label: 'A song that plays as the letter opens', type: 'url', placeholder: 'https://example.com/music.mp3' },
+]
+
+function buildConfessions(): TemplateData[] {
+  return [
+    {
+      id: 'confession-for-her',
+      name: 'Confession for Her · From Him',
+      description: 'A love letter from him in a sealed envelope: it unfolds line by line, then asks the question, with a Yes that grows and a No that runs away.',
+      category: 'confession',
+      config: {
+        fields: CONFESSION_FIELDS,
+        defaultData: {
+          recipientName: 'Isha', senderName: 'Neel',
+          message: 'I have started this letter a hundred times.\nEvery time I see you, I forget what I wanted to say, so this time I am writing it down.\nYou make ordinary days feel like the best ones. Your laugh is my favourite sound, and talking to you is the easiest thing in the world.\nSo here it is, finally, in words: I like you. More than a little. More than I have ever said.',
+          question: 'Will you be my Valentine?',
+          plan: 'Dinner on 14 February, 8 pm. I’ll pick you up.',
+          replyNumber: '', galleryImages: '', musicUrl: '',
+        },
+      },
+    },
+    {
+      id: 'confession-for-him',
+      name: 'Confession for Him · From Her',
+      description: 'A love letter from her, in midnight blue and gold: sealed, unfolded line by line, then the question, with a No that will not stay still.',
+      category: 'confession',
+      config: {
+        fields: CONFESSION_FIELDS,
+        defaultData: {
+          recipientName: 'Neel', senderName: 'Isha',
+          message: 'You probably have no idea how long I have wanted to say this.\nYou are the first person I want to tell when something good happens, and the one I think of when something goes wrong.\nYou make me laugh when I am trying to be serious, and you make me feel safe when I am not.\nSo I am going first: I like you. Really, really like you.',
+          question: 'Will you be my Valentine?',
+          plan: 'Coffee on 14 February, 6 pm? My treat.',
+          replyNumber: '', galleryImages: '', musicUrl: '',
+        },
+      },
+    },
+  ]
+}
+
+// ─── Kids' party themes (components/templates/KidsParty.tsx) ─────────────────
+// Six cards, one field set, so a parent can switch theme without retyping. Original artwork only:
+// generic dinosaurs, rockets, superheroes, unicorns, safari animals and race cars, never a cartoon
+// or film character. RSVP replies say how many children and grown-ups are coming.
+type KidsColour = { value: string; label: string; hint: string; swatch: string }
+
+/** The kids' fields, with the design's own colourways first: every theme in a girl's and a boy's colours. */
+function kidsFields(colours: KidsColour[]): TemplateConfig['fields'] {
+  return [
+    {
+      key: 'palette', label: 'Colours', type: 'choice', section: 'people', group: 'Colours',
+      hint: 'The whole invitation changes colour, the opening scene too. Switch any time before you publish.',
+      options: colours,
+    },
+    ...KIDS_FIELDS,
+  ]
+}
+
+const KIDS_FIELDS: TemplateConfig['fields'] = [
+  { key: 'celebrantName', label: "Child's name", type: 'text', required: true, placeholder: 'Aarav' },
+  { key: 'age', label: 'Turning', type: 'text', placeholder: '5' },
+  { key: 'celebrantPhoto', label: "Child's photo (recommended: it becomes the star of the invitation)", type: 'image', placeholder: '' },
+  { key: 'parentNames', label: "Parents' names", type: 'text', placeholder: 'Priya & Karan' },
+  { key: 'date', label: 'Party date', type: 'date', required: true },
+  { key: 'time', label: 'Start time', type: 'time', required: true },
+  { key: 'endTime', label: 'Party ends at (optional, for pick-up)', type: 'time' },
+  { key: 'venue', label: 'Venue', type: 'text', required: true, placeholder: 'Little Explorers Play Arena' },
+  { key: 'venueAddress', label: 'Address', type: 'text', placeholder: 'Whitefield, Bengaluru' },
+  { key: 'mapsUrl', label: 'Google Maps Link', type: 'url', placeholder: 'https://maps.google.com/...' },
+  { key: 'theme', label: 'The party, in a few words', type: 'text', placeholder: 'A roar-some party' },
+  { key: 'dressCode', label: 'Dress-up (optional)', type: 'text', placeholder: 'Come as your favourite dinosaur' },
+  { key: 'schedule', label: 'Party plan', type: 'textarea', placeholder: 'Games - 4:00 PM\nCake cutting - 5:45 PM\nDinner - 6:15 PM' },
+  { key: 'guestNote', label: 'A note for parents (optional)', type: 'text', section: 'details', group: 'For parents', hint: 'Food and allergies, drop-off and pick-up, siblings, gifts: what every parent should read.', placeholder: 'Little ones under 3 with a grown-up, please. All food is nut-free.' },
+  { key: 'giftNote', label: 'Gifts (optional)', type: 'text', section: 'details', group: 'For parents', placeholder: 'Your blessings are the best gift.' },
+  { key: 'rsvpPhone', label: 'Your mobile, for replies by WhatsApp or text', type: 'text', section: 'details', group: 'RSVP', hint: 'Guests tap “We’ll be there”, choose how many children and grown-ups are coming, and a message to you opens, ready to send. Add your country code.', placeholder: '+91 98765 43210' },
+  { key: 'rsvpEmail', label: 'Or your email', type: 'text', section: 'details', group: 'RSVP', placeholder: 'you@example.com' },
+  { key: 'rsvpBy', label: 'Reply by (optional)', type: 'date', section: 'details', group: 'RSVP' },
+  { key: 'galleryImages', label: 'Photos (optional)', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
+  { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
+  { key: 'message', label: 'A note from the family', type: 'textarea', placeholder: 'Our little one is turning five! Come for games, cake and lots of fun.' },
+]
+
+const KIDS_GALLERY = [
+  'photo-1631397831385-b6023fd545ac', 'photo-1504196606672-aef5c9cefc92', 'photo-1630845253085-71dbb7d9762e', 'photo-1504437484202-613bb51ce359',
+].map((id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1000&q=75`).join('\n')
+
+interface KidsSeed { id: string; name: string; description: string; colours: KidsColour[]; data: Record<string, string> }
+
+const KIDS_SEEDS: KidsSeed[] = [
+  {
+    id: 'kids-dinosaur',
+    name: 'Dino Roar · Dinosaur Birthday',
+    description: 'Tap the egg and it hatches: a baby dinosaur pops out, ROAR!, and the birthday tune plays. Then your child’s photo with a dinosaur peeking over it, a countdown in sleeps, the party plan and an RSVP that counts the children. In green, pink or blue.',
+    colours: [
+      { value: '', label: 'Jungle green', hint: 'A teal dinosaur, an orange volcano and green ferns.', swatch: 'linear-gradient(135deg, #47B39D 0%, #6DB33F 45%, #F2762E 80%, #FFF7E8 100%)' },
+      { value: 'pink', label: 'Pink & lilac', hint: 'A lilac dinosaur under pink skies: lovely for a girl.', swatch: 'linear-gradient(135deg, #B79CFF 0%, #FF8FB1 45%, #FFD166 80%, #FFF4F8 100%)' },
+      { value: 'blue', label: 'Ocean blue', hint: 'A blue dinosaur, sunny yellow and orange.', swatch: 'linear-gradient(135deg, #4FA3E0 0%, #2F80C9 45%, #FF8A3C 80%, #F0F7FF 100%)' },
+    ],
+    data: {
+      celebrantName: 'Aarav', age: '5', parentNames: 'Priya & Karan', time: '16:00', endTime: '19:00',
+      venue: 'Little Explorers Play Arena', venueAddress: 'ITPL Main Road, Whitefield, Bengaluru 560066',
+      theme: 'A roar-some party', dressCode: 'Come as a dino explorer: safari hats and khaki welcome',
+      schedule: 'Dino egg hunt - 4:00 PM\nFossil dig & games - 4:45 PM\nCake cutting - 5:45 PM\nDinner - 6:15 PM',
+      guestNote: 'Little ones under 3 with a grown-up, please.', giftNote: '',
+      message: 'Our little dinosaur is turning five! Stomp over for games, cake and a great deal of roaring.',
+    },
+  },
+  {
+    id: 'kids-space',
+    name: 'Blast Off · Space Birthday',
+    description: 'Press launch: 3, 2, 1, lift-off, to the birthday tune. Your child appears as an astronaut, their photo in the helmet, then mission-control details, a T-minus countdown and an RSVP for the crew. In midnight blue, pink galaxy or aqua.',
+    colours: [
+      { value: '', label: 'Midnight blue', hint: 'Navy sky, a purple planet and gold.', swatch: 'linear-gradient(135deg, #0E1238 0%, #7C5CFF 50%, #FFC93C 90%)' },
+      { value: 'pink', label: 'Pink galaxy', hint: 'Plum skies, a pink planet and gold stars: lovely for a girl.', swatch: 'linear-gradient(135deg, #22093A 0%, #FF6FB5 50%, #FFD166 90%)' },
+      { value: 'teal', label: 'Aqua nebula', hint: 'Deep teal, a mint planet and orange.', swatch: 'linear-gradient(135deg, #03263A 0%, #2EE6C5 50%, #FF9F43 90%)' },
+    ],
+    data: {
+      celebrantName: 'Kabir', age: '7', parentNames: 'Ananya & Rohit', time: '17:00', endTime: '20:00',
+      venue: 'Starlight Banquet Hall', venueAddress: 'Lokhandwala Complex, Andheri West, Mumbai 400053',
+      theme: 'A party that’s out of this world', dressCode: 'Astronaut, alien or anything that glows',
+      schedule: 'Countdown & welcome - 5:00 PM\nRocket-building workshop - 5:30 PM\nCake cutting - 6:30 PM\nDinner - 7:00 PM',
+      guestNote: '', giftNote: 'Your presence is the best present.',
+      message: 'Ten, nine, eight… Kabir is turning seven! Join the crew for games, cake and a trip around the galaxy.',
+    },
+  },
+  {
+    id: 'kids-superhero',
+    name: 'Super Squad · Superhero Birthday',
+    description: 'A comic book with your child on the cover opens with POW! and BAM! to a hero poster of their photo, then comic-panel details, a hero training plan and an RSVP for heroes and sidekicks. In red and blue, pink or green.',
+    colours: [
+      { value: '', label: 'Classic red & blue', hint: 'Bold red, blue and yellow.', swatch: 'linear-gradient(135deg, #1F5BD8 0%, #E8322E 50%, #FFD23F 90%)' },
+      { value: 'pink', label: 'Pink power', hint: 'Purple, hot pink and yellow: a superhero for a girl.', swatch: 'linear-gradient(135deg, #7B3FE4 0%, #FF3E9A 50%, #FFD23F 90%)' },
+      { value: 'green', label: 'Green guardian', hint: 'Emerald, black and yellow.', swatch: 'linear-gradient(135deg, #0F7A4A 0%, #1FA463 50%, #FFD23F 90%)' },
+    ],
+    data: {
+      celebrantName: 'Vivaan', age: '6', parentNames: 'Sneha & Aditya', time: '16:30', endTime: '19:30',
+      venue: 'Funcity Party Hall', venueAddress: 'Sector 29, Gurugram, Haryana 122001',
+      theme: 'Calling all superheroes!', dressCode: 'Capes and masks: come as the hero you’d like to be',
+      schedule: 'Hero training obstacle course - 4:30 PM\nMagic show - 5:30 PM\nCake cutting - 6:15 PM\nDinner - 6:45 PM',
+      guestNote: '', giftNote: '',
+      message: 'Vivaan is turning six and needs a superhero squad! Come for games, cake and a little saving of the day.',
+    },
+  },
+  {
+    id: 'kids-unicorn',
+    name: 'Rainbow Dream · Unicorn Birthday',
+    description: 'Tap the star: sparkles burst, a rainbow draws itself and a unicorn bounces in to the birthday tune. Your child’s photo gets a golden horn and a flower crown, with dreamy cloud details and an RSVP. In pink, lavender or mint.',
+    colours: [
+      { value: '', label: 'Pink rainbow', hint: 'Pastel pink, lilac and a full rainbow.', swatch: 'linear-gradient(135deg, #FF8FB1 0%, #FFE27A 35%, #8EE0B5 65%, #B79CFF 100%)' },
+      { value: 'lavender', label: 'Lavender dream', hint: 'Soft lavender, blush and sky blue.', swatch: 'linear-gradient(135deg, #8E6BE8 0%, #E8A6D9 45%, #A9C8FF 100%)' },
+      { value: 'mint', label: 'Mint & gold', hint: 'Fresh mint, peach and gold.', swatch: 'linear-gradient(135deg, #2BA88C 0%, #A8E6CF 45%, #F7C59F 75%, #E6B84A 100%)' },
+    ],
+    data: {
+      celebrantName: 'Myra', age: '4', parentNames: 'Riya & Varun', time: '16:00', endTime: '19:00',
+      venue: 'The Little Garden Café', venueAddress: 'Road No. 12, Banjara Hills, Hyderabad 500034',
+      theme: 'A magical rainbow party', dressCode: 'Something sparkly, glittery or rainbow',
+      schedule: 'Unicorn craft corner - 4:00 PM\nMagic show - 5:00 PM\nCake cutting - 5:45 PM\nDinner - 6:15 PM',
+      guestNote: 'Little ones under 3 with a grown-up, please.', giftNote: '',
+      message: 'Myra is turning four! Come for a sprinkle of magic, a rainbow of games and a lot of cake.',
+    },
+  },
+  {
+    id: 'kids-jungle',
+    name: 'Wild One · Jungle Safari Birthday',
+    description: 'The jungle leaves part, a monkey swings past and a lion roars. Your child’s photo sits in a lion’s mane, with safari signposts for the details, a countdown and an RSVP. For a first birthday or a tenth, in leafy green, boho pastel or sunset.',
+    colours: [
+      { value: '', label: 'Leafy green', hint: 'Jungle greens, a golden sun and orange.', swatch: 'linear-gradient(135deg, #2F7A45 0%, #F6C445 55%, #E8902A 100%)' },
+      { value: 'pastel', label: 'Boho pastel', hint: 'Sage, blush and terracotta: soft and pretty for a girl.', swatch: 'linear-gradient(135deg, #8FA98A 0%, #F1B9A0 50%, #C77D6B 100%)' },
+      { value: 'sunset', label: 'Safari sunset', hint: 'Teal leaves under an orange sunset.', swatch: 'linear-gradient(135deg, #1E6B5C 0%, #FF7A45 55%, #FFC145 100%)' },
+    ],
+    data: {
+      celebrantName: 'Advik', age: '3', parentNames: 'Pooja & Nikhil', time: '16:00', endTime: '19:00',
+      venue: 'Green Leaf Farmhouse', venueAddress: 'Baner–Pashan Link Road, Pune 411045',
+      theme: 'Let’s go wild!', dressCode: 'Animal prints, safari hats or your favourite animal',
+      schedule: 'Animal face painting - 4:00 PM\nJungle treasure hunt - 4:45 PM\nCake cutting - 5:45 PM\nDinner - 6:15 PM',
+      guestNote: '', giftNote: 'Your blessings are the best gift.',
+      message: 'Advik is turning three! Join the safari for games, animal fun and a very wild cake.',
+    },
+  },
+  {
+    id: 'kids-cars',
+    name: 'Race Day · Car Birthday',
+    description: 'Five red lights, lights out and the car zooms off to the birthday tune. Your child gets a racing licence with their photo, then race-track details, a lights-out countdown and an RSVP for racers and the pit crew. In red, pink or blue.',
+    colours: [
+      { value: '', label: 'Racing red', hint: 'Red, black and chequered flags.', swatch: 'linear-gradient(135deg, #E3262F 0%, #1A1D24 55%, #FFC21A 100%)' },
+      { value: 'pink', label: 'Pink racer', hint: 'A pink race car with purple and yellow: a racer for a girl.', swatch: 'linear-gradient(135deg, #F0479B 0%, #6C3FD1 55%, #FFD23F 100%)' },
+      { value: 'blue', label: 'Blue speed', hint: 'Electric blue and orange.', swatch: 'linear-gradient(135deg, #1F6FE5 0%, #0F2240 55%, #FF8A1F 100%)' },
+    ],
+    data: {
+      celebrantName: 'Reyansh', age: '8', parentNames: 'Kavya & Arjun', time: '17:00', endTime: '20:00',
+      venue: 'Speedway Party Lounge', venueAddress: '2nd Avenue, Anna Nagar, Chennai 600040',
+      theme: 'Ready, set, party!', dressCode: 'Racing colours, caps and chequered flags',
+      schedule: 'Ride-on races - 5:00 PM\nPit-stop snacks - 5:45 PM\nCake cutting - 6:30 PM\nDinner - 7:00 PM',
+      guestNote: '', giftNote: '',
+      message: 'Reyansh is turning eight! Start your engines and race over for games, cake and a chequered-flag finish.',
+    },
+  },
+]
+
+function buildKids(): TemplateData[] {
+  return KIDS_SEEDS.map((s) => ({
+    id: s.id,
+    name: s.name,
+    description: s.description,
+    category: 'birthday',
+    config: {
+      fields: kidsFields(s.colours),
+      defaultData: {
+        palette: '', date: '', celebrantPhoto: '', mapsUrl: '', rsvpPhone: '', rsvpEmail: '', rsvpBy: '', musicUrl: '',
+        galleryImages: KIDS_GALLERY,
+        ...s.data,
+      },
+    },
+  }))
+}
+
 // ─── Ambari — Mysuru Dasara: the days of the festival ─────────────────────────
 const DASARA_DAY_COLUMNS: TemplateFieldColumn[] = [
   { key: 'name', label: 'What', placeholder: 'Ayudha Puja' },
@@ -307,6 +541,7 @@ export const TEMPLATES: TemplateData[] = [
         { key: 'schedule', label: 'Event Schedule', type: 'textarea', placeholder: 'Welcome Drinks - 5:00 PM\nRing Exchange - 6:30 PM\nDinner - 8:00 PM' },
         { key: 'galleryImages', label: 'Gallery Image URLs', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
         { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'Two hearts, one promise. Join us as we begin our journey.' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
       ],
       defaultData: {
         partner1Name: 'Meera', partner2Name: 'Rohan', date: '', time: '17:00',
@@ -367,6 +602,7 @@ export const TEMPLATES: TemplateData[] = [
         { key: 'schedule', label: 'Program Schedule', type: 'textarea', placeholder: 'Ganesh Pooja - 9:00 AM\nGriha Pravesh - 10:30 AM\nLunch Prasad - 1:00 PM' },
         { key: 'galleryImages', label: 'Gallery Image URLs', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
         { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'With divine blessings, we warmly invite you to our new abode.' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
       ],
       defaultData: {
         hostNames: 'The Sharma Family', date: '', time: '09:00',
@@ -397,6 +633,7 @@ export const TEMPLATES: TemplateData[] = [
         { key: 'schedule', label: 'Program Schedule', type: 'textarea', placeholder: 'Satyanarayan Pooja - 10:00 AM\nNamakaran Ceremony - 11:30 AM\nLunch - 1:00 PM' },
         { key: 'galleryImages', label: 'Photos (optional)', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
         { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'With joy in our hearts, we invite you to bless our little one.' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
       ],
       defaultData: {
         babyName: 'Aarav', babyGender: 'Boy', parentNames: 'Anjali & Suresh Kapoor',
@@ -410,8 +647,8 @@ export const TEMPLATES: TemplateData[] = [
   },
   {
     id: 'kgf-wedding',
-    name: 'KGF · Royal Empire Wedding',
-    description: 'Dark gold cinematic luxury: a legendary South Indian wedding invite inspired by the KGF universe.',
+    name: 'Gold Saga · Epic Wedding',
+    description: 'Coal black and antique gold with an ember-lit mountain ridge: your wedding told chapter by chapter, like the poster for an epic.',
     category: 'movie',
     config: {
       fields: [
@@ -421,8 +658,8 @@ export const TEMPLATES: TemplateData[] = [
         { key: 'brideFamilyDetails', label: "Bride's Family Details", type: 'text', placeholder: "D/o Rajmohan & Lakshmi Devi · Chennai" },
       ],
       defaultData: {
-        groomName: 'Rocky', brideName: 'Reena', date: '', time: '19:00',
-        venue: 'Kolar Gold Palace', venueAddress: 'KGF Nagar, Kolar District, Karnataka',
+        groomName: 'Vikram', brideName: 'Meera', date: '', time: '19:00',
+        venue: 'The Golden Palace', venueAddress: 'Palace Road, Mysuru, Karnataka',
         mapsUrl: '', dressCode: 'Royal Indian Ethnic',
         schedule: 'Baraat Procession - 6:00 PM\nVarmala Ceremony - 7:30 PM\nSaat Pheras - 8:30 PM\nRoyal Dinner & Celebrations - 10:00 PM',
         galleryImages: 'https://images.unsplash.com/photo-1722952934708-749c22eb2e58?auto=format&fit=crop&w=1000&q=75\nhttps://images.unsplash.com/photo-1722952934531-8e6b39c6f928?auto=format&fit=crop&w=1000&q=75\nhttps://images.unsplash.com/photo-1610276347233-2ab70fc71da8?auto=format&fit=crop&w=1000&q=75\nhttps://images.unsplash.com/photo-1722952908667-f4883b8e6df6?auto=format&fit=crop&w=1000&q=75',
@@ -1187,6 +1424,7 @@ export const TEMPLATES: TemplateData[] = [
         { key: 'schedule', label: 'Programme', type: 'textarea', placeholder: 'Pooja - 10:00 AM\nAarti - 12:00 PM\nPrasad - 12:30 PM' },
         { key: 'galleryImages', label: 'Photos', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
         { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'We would be blessed to have you with us.' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
       ],
       defaultData: {
         poojaName: 'Satyanarayan Pooja', hostNames: 'The Iyer Family', date: '', time: '10:00',
@@ -1373,6 +1611,7 @@ export const TEMPLATES: TemplateData[] = [
         { key: 'schedule', label: 'The evening', type: 'textarea', placeholder: 'Iftar - 6:40 PM\nDinner - 8:00 PM' },
         { key: 'galleryImages', label: 'Photos', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
         { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'Eid Mubarak! Join us for dinner.' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
       ],
       defaultData: {
         hostNames: 'The Qureshi Family', title: 'Eid Milan', date: '', time: '19:00',
@@ -1403,6 +1642,7 @@ export const TEMPLATES: TemplateData[] = [
         { key: 'schedule', label: 'The evening', type: 'textarea', placeholder: 'Welcome - 7:00 PM\nSpeeches - 8:00 PM\nDinner - 8:45 PM' },
         { key: 'galleryImages', label: 'Photos', type: 'textarea', placeholder: 'Paste image URLs, one per line' },
         { key: 'message', label: 'Personal Message', type: 'textarea', placeholder: 'Join us to thank him for a lifetime of work.' },
+        { key: 'musicUrl', label: 'Background Music URL', type: 'url', placeholder: 'https://example.com/music.mp3' },
       ],
       defaultData: {
         honoreeName: 'Mr. Suresh Nair', milestone: 'After 34 years with Indian Railways', hostNames: 'Anita, Rahul & Meera',
@@ -1574,6 +1814,8 @@ export const TEMPLATES: TemplateData[] = [
     },
   },
   ...buildGreetings(),
+  ...buildConfessions(),
+  ...buildKids(),
 ]
 
 export function getTemplateData(id: string): TemplateData | undefined {

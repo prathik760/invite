@@ -51,7 +51,7 @@ export function homeFaqs({ total, rsvp, music, photos }: { total: number; rsvp: 
     },
     {
       question: t('How do I create an invitation?'),
-      answer: t('Choose a design and sign in or create a free account. Then type your names, date, venue and message, and add your photos. The preview updates as you type. When you are happy, pay once to publish and you get your own link to send. Browsing and previews need no account.'),
+      answer: t('Choose a design and start typing: no account needed. Add your names, date, venue and message, and your photos. The preview updates as you type. When you are happy, sign in, pay once to publish and you get your own link to send.'),
       group: 'make',
     },
     {

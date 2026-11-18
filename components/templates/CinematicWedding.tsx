@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, type CSSProperties } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { bodoni } from './kit/fonts/bodoni'
 import { oswald } from './kit/fonts/oswald'
@@ -86,6 +87,8 @@ function Caps({ children, className = '', style }: { children: React.ReactNode; 
 export default function CinematicWedding({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Emily'
   const groom = data.groomName?.trim() || 'James'
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'cinematic-night', bride, groom)
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const countdown = useCountdown(data.date, data.time, !isPreview)
@@ -93,16 +96,13 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: I
   const stills = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`${bride} & ${groom}: Wedding`, data.date, data.time, place)
-  const cast = [
-    { src: data.bridePhoto, name: bride },
-    { src: data.groomPhoto, name: groom },
-  ].filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; name: string }[]
+  const calendar = calendarHref(`${nameA} & ${nameB}: Wedding`, data.date, data.time, place)
+  const cast = inOrder(data, 'cinematic-night', { src: data.bridePhoto, name: bride }, { src: data.groomPhoto, name: groom }).filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; name: string }[]
 
   const hour = Number((data.time || '').split(':')[0])
   const billing = !Number.isNaN(hour) && hour >= 17 ? 'One night only' : 'The premiere'
   const serial = date ? `${date.dayPadded}${pad2(new Date(`${data.date}T00:00:00`).getMonth() + 1)}${String(date.year).slice(2)}` : '0001'
-  const titleFont = titleSize(bride, groom)
+  const titleFont = titleSize(nameA, nameB)
   const venue = data.venue?.trim() || 'The venue'
 
   return (
@@ -140,7 +140,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: I
 
           <h1 className="mt-8" style={{ fontFamily: serif, fontWeight: 400, overflowWrap: 'break-word' }}>
             <span className="cn-in block italic" style={{ fontSize: titleFont, lineHeight: 0.98, animationDelay: '800ms' }}>
-              {bride}
+              {nameA}
             </span>
             <span
               className="cn-in block italic"
@@ -149,7 +149,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: I
               &amp;
             </span>
             <span className="cn-in block italic" style={{ fontSize: titleFont, lineHeight: 0.98, animationDelay: '1300ms' }}>
-              {groom}
+              {nameB}
             </span>
           </h1>
 
@@ -184,7 +184,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: I
             {data.message}
           </p>
           <Caps className="mt-6" style={{ color: C.amber }}>
-            {bride} &amp; {groom}
+            {nameA} &amp; {nameB}
           </Caps>
         </Reveal>
       )}
@@ -256,7 +256,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: I
             </div>
 
             <p className="mt-5 italic leading-[1.05]" style={{ fontFamily: serif, fontSize: 'clamp(26px, 8.4cqi, 31px)', overflowWrap: 'break-word' }}>
-              {bride} <span style={{ color: '#A8672A' }}>&amp;</span> {groom}
+              {nameA} <span style={{ color: '#A8672A' }}>&amp;</span> {nameB}
             </p>
 
             <dl className="mt-6 grid grid-cols-2 gap-x-5 gap-y-5">
@@ -408,7 +408,7 @@ export default function CinematicWedding({ data, eventId, isPreview = false }: I
         <div className="px-6 pb-14 pt-16">
           <span aria-hidden className="mx-auto block h-px w-10" style={{ background: C.amber }} />
           <p className="mt-6 italic leading-[1.1]" style={{ fontFamily: serif, fontSize: 30 }}>
-            {bride} <span style={{ color: C.amber }}>&amp;</span> {groom}
+            {nameA} <span style={{ color: C.amber }}>&amp;</span> {nameB}
           </p>
           {date && (
             <Caps className="mt-3 tabular-nums" style={{ letterSpacing: '0.3em' }}>

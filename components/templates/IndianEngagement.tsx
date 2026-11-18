@@ -17,7 +17,7 @@ import {
   type InviteProps,
   fitCqi,
 } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
 
 /*
@@ -176,6 +176,7 @@ export default function IndianEngagement({ data, eventId, isPreview = false }: I
       className="ie relative overflow-x-hidden"
       style={{ background: C.paper, color: C.plum, fontFamily: sans, containerType: 'inline-size', ...grain(0.05) }}
     >
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.plum} background="rgba(251,243,239,0.92)" border="rgba(61,27,56,0.18)" />
       <style>{`
         .ie .ie-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ie-draw 1.5s cubic-bezier(.45,.05,.3,1) forwards; }
         .ie .ie-fade { opacity: 0; animation: ie-fade 600ms ease forwards; }

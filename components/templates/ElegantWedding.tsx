@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { cormorant } from './kit/fonts/cormorant'
 import { jost } from './kit/fonts/jost'
@@ -68,15 +69,18 @@ function Rule({ width = 56 }: { width?: number }) {
 export default function ElegantWedding({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Emily'
   const groom = data.groomName?.trim() || 'James'
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'elegant-wedding', bride, groom)
   const date = dateParts(data.date)
   const countdown = useCountdown(data.date, data.time, !isPreview)
   const schedule = useMemo(() => parseSchedule(data.schedule), [data.schedule])
   const photos = useMemo(() => galleryImages(data.galleryImages, 7), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
-  const portraits = [data.bridePhoto, data.groomPhoto].filter((u) => u && /^(https?:)?\//.test(u)) as string[]
+  const portraits = inOrder(data, 'elegant-wedding', { src: data.bridePhoto, alt: bride }, { src: data.groomPhoto, alt: groom })
+    .filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; alt: string }[]
 
   const spelledTime = timeWords(data.time)
-  const monogram = `${bride.charAt(0)}${groom.charAt(0)}`
+  const monogram = `${nameA.charAt(0)}${nameB.charAt(0)}`
 
   return (
     <div
@@ -118,12 +122,12 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Inv
 
             {portraits.length > 0 && (
               <div className="ew-in mt-6 flex justify-center gap-3" style={{ animationDelay: '300ms' }}>
-                {portraits.map((src, i) => (
+                {portraits.map((p, i) => (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     key={i}
-                    src={src}
-                    alt={i === 0 ? bride : groom}
+                    src={p.src}
+                    alt={p.alt}
                     className="h-[92px] w-[72px] object-cover"
                     style={{ borderRadius: '50%', border: `1px solid ${C.rule}`, padding: 3, background: C.card }}
                   />
@@ -139,9 +143,9 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Inv
             <h1 className="mt-6" style={{ fontWeight: 300, containerType: 'inline-size', width: '100%' }}>
               <span
                 className="ew-in block italic leading-[0.95]"
-                style={{ fontSize: `clamp(20px, ${fitCqi(bride, { em: 0.48, max: 24 })}cqi, 78px)`, animationDelay: '500ms' }}
+                style={{ fontSize: `clamp(20px, ${fitCqi(nameA, { em: 0.48, max: 24 })}cqi, 78px)`, animationDelay: '500ms' }}
               >
-                {bride}
+                {nameA}
               </span>
               <span
                 className="ew-in my-2 block italic"
@@ -151,9 +155,9 @@ export default function ElegantWedding({ data, eventId, isPreview = false }: Inv
               </span>
               <span
                 className="ew-in block italic leading-[0.95]"
-                style={{ fontSize: `clamp(20px, ${fitCqi(groom, { em: 0.48, max: 24 })}cqi, 78px)`, animationDelay: '800ms' }}
+                style={{ fontSize: `clamp(20px, ${fitCqi(nameB, { em: 0.48, max: 24 })}cqi, 78px)`, animationDelay: '800ms' }}
               >
-                {groom}
+                {nameB}
               </span>
             </h1>
 

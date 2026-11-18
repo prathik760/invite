@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { marcellus } from './kit/fonts/marcellus'
 import { cormorant } from './kit/fonts/cormorant'
@@ -338,17 +339,16 @@ type Phase = 'sealed' | 'opening' | 'leaving' | 'done'
 export default function LuxuryWedding({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Priya'
   const groom = data.groomName?.trim() || 'Arjun'
-  const letters: [string, string] = [bride.charAt(0).toUpperCase(), groom.charAt(0).toUpperCase()]
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'luxury-wedding', bride, groom)
+  const letters: [string, string] = [nameA.charAt(0).toUpperCase(), nameB.charAt(0).toUpperCase()]
   const date = dateParts(data.date)
   const spelledTime = timeWords(data.time)
   const countdown = useCountdown(data.date, data.time, !isPreview)
   const photos = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const venue = data.venue?.trim() || 'The venue'
-  const portraits = [
-    { src: data.bridePhoto, alt: bride },
-    { src: data.groomPhoto, alt: groom },
-  ].filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; alt: string }[]
+  const portraits = inOrder(data, 'luxury-wedding', { src: data.bridePhoto, alt: bride }, { src: data.groomPhoto, alt: groom }).filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; alt: string }[]
 
   const functions = useMemo(() => {
     const list: Fn[] = [
@@ -366,16 +366,18 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
   }, [data])
   const hasFunctions = functions.some((f) => !f.main)
 
-  const families = [
+  const families = inOrder(
+    data,
+    'luxury-wedding',
     { title: data.brideFamilyTitle?.trim() || `${bride}'s family`, names: parseLines(data.brideFamily) },
     { title: data.groomFamilyTitle?.trim() || `${groom}'s family`, names: parseLines(data.groomFamily) },
-  ].filter((f) => f.names.length > 0)
+  ).filter((f) => f.names.length > 0)
 
   /** Anything between the main card and the reply card? If not, the two emerald bands join. */
   const hasMiddle = Boolean(data.message?.trim()) || hasFunctions || photos.length > 0 || families.length > 0
-  const reply = whatsappHref(data.whatsappNumber, `Hi! I'm confirming my attendance for ${bride} & ${groom}'s wedding.`)
+  const reply = whatsappHref(data.whatsappNumber, `Hi! I'm confirming my attendance for ${nameA} & ${nameB}'s wedding.`)
   const weddingPlace = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const weddingCal = calendarHref(`Wedding of ${bride} & ${groom}`, data.date, data.time, weddingPlace || undefined, 5)
+  const weddingCal = calendarHref(`Wedding of ${nameA} & ${nameB}`, data.date, data.time, weddingPlace || undefined, 5)
 
   /* The envelope: sealed → opening (seal lifts, flap turns, card rises) → leaving (it fades off the emerald) → done (the suite rises in on the same emerald). */
   const [phase, setPhase] = useState<Phase>('sealed')
@@ -434,7 +436,7 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
           phase={phase}
           onOpen={openEnvelope}
           letters={letters}
-          names={`${bride} & ${groom}`}
+          names={`${nameA} & ${nameB}`}
           dateLine={date ? `${date.day} ${date.month} ${date.year}` : ''}
           isPreview={isPreview}
         />
@@ -442,7 +444,7 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
 
       {!showSuite ? (
         <div className="sr-only">
-          <h1>{bride} &amp; {groom}: wedding invitation</h1>
+          <h1>{nameA} &amp; {nameB}: wedding invitation</h1>
           {date && <p>{date.long}{data.time ? `, ${timeLabel(data.time)}` : ''}</p>}
           <p>{venue}{data.venueAddress ? `, ${data.venueAddress}` : ''}</p>
           {data.message && <p>{data.message}</p>}
@@ -479,9 +481,9 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
 
                 {/* Its own container, so the spaced capitals are sized to the card and a long name never runs past it. */}
                 <h1 className="mt-6 uppercase" style={{ fontFamily: caps, fontWeight: 400, color: C.ink, containerType: 'inline-size', width: '100%' }}>
-                  <span className="block leading-[1.05]" style={{ fontSize: `clamp(18px, ${fitCqi(bride, { em: 0.76, max: 15 })}cqi, 54px)`, letterSpacing: '0.08em' }}>{bride}</span>
+                  <span className="block leading-[1.05]" style={{ fontSize: `clamp(18px, ${fitCqi(nameA, { em: 0.76, max: 15 })}cqi, 54px)`, letterSpacing: '0.08em' }}>{nameA}</span>
                   <span className="my-1 block normal-case italic leading-none" style={{ fontFamily: serif, fontSize: 'clamp(28px, 8cqi, 36px)', color: C.gold }}>&amp;</span>
-                  <span className="block leading-[1.05]" style={{ fontSize: `clamp(18px, ${fitCqi(groom, { em: 0.76, max: 15 })}cqi, 54px)`, letterSpacing: '0.08em' }}>{groom}</span>
+                  <span className="block leading-[1.05]" style={{ fontSize: `clamp(18px, ${fitCqi(nameB, { em: 0.76, max: 15 })}cqi, 54px)`, letterSpacing: '0.08em' }}>{nameB}</span>
                 </h1>
 
                 <p className="mx-auto mt-6 max-w-[17rem] text-balance italic leading-[1.4]" style={{ fontSize: 20, color: C.soft }}>
@@ -551,7 +553,7 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
                   <Reveal key={fn.key} disabled={isPreview} delay={i * 60}>
                     <PlaceCard
                       fn={fn}
-                      calendarTitle={fn.main ? `Wedding of ${bride} & ${groom}` : `${fn.name}: ${bride} & ${groom}`}
+                      calendarTitle={fn.main ? `Wedding of ${nameA} & ${nameB}` : `${fn.name}: ${nameA} & ${nameB}`}
                       directions={fn.main ? directions : null}
                       isPreview={isPreview}
                     />
@@ -657,7 +659,7 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
               eventId={eventId}
               theme={WISHES_THEME}
               title="Blessings"
-              intro={`Leave a few words for ${bride} and ${groom}. Your blessing appears here for every guest.`}
+              intro={`Leave a few words for ${nameA} and ${nameB}. Your blessing appears here for every guest.`}
               noun="blessing"
             />
           )}
@@ -666,7 +668,7 @@ export default function LuxuryWedding({ data, eventId, isPreview = false }: Invi
           <footer className="px-6 pb-10 pt-12 text-center">
             <Seal letters={letters} className="mx-auto block w-[60px]" />
             <p className="mt-4 uppercase" style={{ fontFamily: caps, fontSize: 17, letterSpacing: '0.18em' }}>
-              {bride} <span className="normal-case italic" style={{ fontFamily: serif, color: C.gold }}>&amp;</span> {groom}
+              {nameA} <span className="normal-case italic" style={{ fontFamily: serif, color: C.gold }}>&amp;</span> {nameB}
             </p>
             {date && (
               <p className="mt-2 uppercase" style={{ fontFamily: caps, fontSize: 13, letterSpacing: '0.3em', color: C.gold }}>

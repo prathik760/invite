@@ -6,6 +6,14 @@
  */
 
 const PLACEHOLDERS: Record<string, string> = {
+  'confession-for-her': 'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACwAQCdASoMAA8AAsBMJQBOgCHe1W1AAP738F1uz4YMttjxPPudftJA8nzesnHcOBFV8fUejqG4E3056AAAAA==',
+  'confession-for-him': 'data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABwAgCdASoMAA8AAsBMJYgCdAYstuKlPI4lSqYAAP74Ua9X+B5r5kyxvRnxc012aSAFE7FrzZfrOa7rMpnOzGGbdRz6jF7hTlqxLWjWT4AAAA==',
+  'kids-dinosaur': 'data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAQCdASoMAA8AAsBMJaACdADdBxgKAAAA/vfwzjjKbxED9yZxPXRAxIGVb5Gi1MmtFGLAI/2Vj0M0bZrF6uql6v+H1v9fTlpaKAi1ArAAAA==',
+  'kids-space': 'data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAQCdASoMAA8AAsBMJaACdADcmUGTvAAA/vXu6akxF2o+uNK821fde+eRi9gebZHFmHYta+9/I/E1ZNRYbba/XSEW6vV1/GVbITenlfPOvQFcOaOPhCO5PmfdEed+p/myDi2AAAA=',
+  'kids-superhero': 'data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADwAQCdASoMAA8AAsBMJbACdLoAAmJd/mAA/quyvbcPVVH+F/xRkbn156ionldS7Gd/PMm/7D6Mugr8KIJWR9Xn3DUx8JtiE0r56+j+CBg+H+8KZtdPlvdEfkvdRteuvkqkX3MANoeX/nl2AfkRxIkhZV0AAA==',
+  'kids-unicorn': 'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoMAA8AAsBMJYwCdAD0i4ticDAA/vfxbfaBXSsUpJJ7ahqHNVSs+7JST/q/Zb6k2RICQEdyfMS5nEaioAA=',
+  'kids-jungle': 'data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAAAwAgCdASoMAA8AAsBMJbACdAYvrt2Fj2buAAD+9Vhx0g28FIaxWn+xvLX+KB0PKnwiPvjPfE0Rl84mlssfYSKCkg7XOv88sZcap7JnGeNUH5UsLszDqwJgj3QBp7DQAAA=',
+  'kids-cars': 'data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoMAA8AAsBMJZQCdAERH0QN4SMEAAD+9BGw0I0qw7GW0OP2T2/xfP7HdlV+fFnV4qXYSXncFiOB49HvXhnnI8h1zhNmsTmrLxzAAA==',
   'anniversary': 'data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAQCdASoMAA8AAsBMJaACdAEPhmdQAAD+9doxFbHi6FJB7Mg1VUFlulGzQxiMVaXN+yv8vIVd2uEAIU3CX6KtpTxd2I4y6AAAAA==',
   'baby-shower': 'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoMAA8AAsBMJQBOgCPqUdhTuAD+9R46dw1jTpcWUmJQE5kuFzM468OkC9ITwnrpZ1DMctFNK0mkSAAA',
   'birthday-champagne': 'data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADwAQCdASoMAA8AAsBMJYwCdAEVVw26vgAA/vfy955qS3rMczIwkOpxHqsiq8n6OesAAA==',
@@ -36,7 +44,7 @@ const PLACEHOLDERS: Record<string, string> = {
   'indian-birthday': 'data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAABwAgCdASoMAA8AAsBMJbACsAYtp28UgCoPw3GgAP7qNZfyH9jsx0HF9Rs59Mijvj/KRt13ndVBG0HI7AIC4nmLAAJetCIPYydQ/GXMsAlsBGJJEum9wQX7s7SaYvA6MgQSMvZIJ4dk4X2MqWmkmNWQAAA=',
   'indian-engagement': 'data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAgCdASoMAA8AAsBMJYwCdAabLAaodBWt0AD+8pBLLN1zY+ucn7A0Y/rH5m+M+Hx6FwQ6/39azkVWWscQRr367GLIRwbYRsyzH6yokAA=',
   'indian-wedding': 'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoMAA8AAsBMJQBOgCKUnVdugCAA/vIWY8nXKyVC25mEjMczrSJZ9nkWrfYgO3BX08+hQ9EAAAA=',
-  'kgf-wedding': 'data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAQCdASoMAA8AAsBMJZQ3FBL96KAA/vUHsHQftLg9Zxon99zSpYg3r5N587BWlYc70D9lG1DqtsFKy8MEoowRdWpeQAAA',
+  'kgf-wedding': 'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoMAA8AAsBMJZQAAud/DRJIPAD+98idFFBUdhbZxINMLZwBOhd8FeBnJeDucLLlOhBUht32lmAAAA==',
   'luxury-wedding': 'data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoMAA8AAsBMJZQCdAEO+CrYAAD+yrmbNqxMjeQBK3cqgvW6xYZn2o1FuvJnqfBoMRP1ZpgA2t950KRwSgwolj9aMgpfdLsN/8gAAA==',
   'namakaran': 'data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoMAA8AAsBMJZQCdAEPDpkM8/AA/vfu11TEuIi/KwsdehqwlerAiQZ7N3/0cAAA',
   'newyear-midnight': 'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACwAQCdASoMAA8AAsBMJQBOgCHe1NwAAP75UDaoDu3iJ8IMKFGuxKgHpVOBVEFTb7Tr6iZKbzZOeyIw9AZwAA==',

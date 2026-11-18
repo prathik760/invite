@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Fragment, type ReactNode } from 'react'
 import Link from '@/components/ui/Link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import { notFound } from 'next/navigation'
@@ -15,6 +16,8 @@ import Image from '@/components/ui/Image'
 import PreviewButton from '@/components/catalog/PreviewButton'
 import FAQAccordion from '@/components/landing/FAQAccordion'
 import WordingCopyCard from '@/components/wording/WordingCopyCard'
+import { WordingDesigns } from '@/components/wording/WordingDesigns'
+import { wordingDesignProps } from '@/lib/wordingDesigns'
 import BlogCard, { blogArt } from '@/components/blog/BlogCard'
 import CtaBand from '@/components/brand/CtaBand'
 import { Breadcrumbs } from '@/components/brand/PageHero'
@@ -65,6 +68,7 @@ export function generateMetadata({ params }: Props): Metadata {
       url,
       images: [{ url: shareImage, ...shareSize, alt: post.title }],
       publishedTime: post.date,
+      ...(post.updated && { modifiedTime: post.updated }),
     },
     twitter: {
       card: 'summary_large_image',
@@ -82,7 +86,7 @@ function articleJsonLd(post: NonNullable<ReturnType<typeof findBlogPost>>) {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated ?? post.date,
     author: {
       '@type': 'Organization',
       name: 'ShareInvite',
@@ -522,7 +526,19 @@ const CATEGORY_TEMPLATE: Record<string, string> = {
 function renderInline(text: string) {
   return text
     .split(/\*\*(.+?)\*\*/g)
-    .map((part, i) => (i % 2 === 1 ? <strong key={i}>{part}</strong> : part))
+    .map((part, i) => (i % 2 === 1 ? <strong key={i}>{withLinks(part)}</strong> : <Fragment key={i}>{withLinks(part)}</Fragment>))
+}
+
+/** "[Dino Roar](/templates/…)" as a link. Only paths on this site: an article never links out unseen. */
+function withLinks(text: string) {
+  const parts = text.split(/\[([^\]]+)\]\((\/[^)\s]*)\)/g)
+  if (parts.length === 1) return text
+  const out: ReactNode[] = []
+  for (let i = 0; i < parts.length; i += 3) {
+    if (parts[i]) out.push(parts[i])
+    if (i + 2 < parts.length) out.push(<Link key={i} href={parts[i + 2]} className="font-semibold underline decoration-burnished/40 underline-offset-2 hover:decoration-burnished">{parts[i + 1]}</Link>)
+  }
+  return out
 }
 
 /**
@@ -623,6 +639,29 @@ const BLOG_TEMPLATE: Record<string, string> = {
   'dasara-invitation-card-online-mysuru-dasara-invitation-template': 'dasara-ambari',
   'christmas-party-invitation-wording-digital-christmas-invitation': 'christmas-evergreen',
   'new-year-party-invitation-message-new-years-eve-invitation-wording': 'newyear-midnight',
+  'marathi-wedding-invitation-message-lagna-patrika-for-whatsapp': 'signature-saptapadi',
+  'tamil-wedding-invitation-message-thirumana-pathirikai-wording': 'signature-kalyanam',
+  'telugu-wedding-invitation-message-pelli-shubhalekha-wording': 'signature-kalyanam',
+  'kids-birthday-party-theme-ideas-with-invitation-messages': 'kids-dinosaur',
+}
+
+// Posts whose sections each suit a different design: a message copied under a heading opens that
+// design (the kids' themes post: the dinosaur message opens Dino Roar). Other sections keep the post's.
+const SECTION_TEMPLATE: Record<string, Record<string, string>> = {
+  'valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp': {
+    'Or write a confession letter that asks the question': 'confession-for-her',
+    'Valentine confession messages for her': 'confession-for-her',
+    'Valentine confession messages for him': 'confession-for-him',
+  },
+  'kids-birthday-party-theme-ideas-with-invitation-messages': {
+    '1. Dinosaur adventure': 'kids-dinosaur',
+    '2. Outer space': 'kids-space',
+    '3. Superhero training camp': 'kids-superhero',
+    '4. Unicorn and rainbow': 'kids-unicorn',
+    '5. Princess and castle': 'kids-unicorn',
+    '6. Jungle safari': 'kids-jungle',
+    '8. Cars and trucks': 'kids-cars',
+  },
 }
 
 export default function BlogPostPage({ params }: Props) {
@@ -730,7 +769,13 @@ export default function BlogPostPage({ params }: Props) {
               <LogoMark className="h-8 w-8" />
               <span className="font-semibold text-charcoal">ShareInvite</span>
               <span aria-hidden>·</span>
-              <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+              {post.updated ? (
+                <span>
+                  Updated <time dateTime={post.updated}>{new Date(post.updated).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                </span>
+              ) : (
+                <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+              )}
             </div>
           </div>
           <div className="enter-4 relative mt-10 aspect-[21/8] overflow-hidden rounded-[2rem] border border-line bg-peach">
@@ -741,6 +786,9 @@ export default function BlogPostPage({ params }: Props) {
 
       {/* ─── BODY + SIDEBAR ─── */}
       <div className="shell grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+        {/* A copied message offers the post's design and two that suit the same words (lib/wordingDesigns.ts),
+            as on the wording guides; a design without companions keeps the one-design panel. */}
+        <WordingDesigns {...wordingDesignProps([ctaTemplateId, ...Object.values(SECTION_TEMPLATE[post.slug] ?? {})])}>
         <article className="min-w-0 max-w-[46rem]">
           {/* Live demo showcase — see the actual template before reading */}
           {demoTemplateId && (
@@ -765,7 +813,10 @@ export default function BlogPostPage({ params }: Props) {
             {sections.map((section) => (
               <section key={section.id} aria-labelledby={section.id}>
                 <h2 id={section.id} className="scroll-mt-28">{section.heading}</h2>
-                <ArticleBody body={section.body} templateId={ctaTemplateId} createHref={createHref} />
+                {(() => {
+                  const id = SECTION_TEMPLATE[post.slug]?.[section.heading] ?? ctaTemplateId
+                  return <ArticleBody body={section.body} templateId={id} createHref={id === ctaTemplateId ? createHref : `/create?template=${id}&src=blog`} />
+                })()}
               </section>
             ))}
           </div>
@@ -837,6 +888,7 @@ export default function BlogPostPage({ params }: Props) {
             </ul>
           </div>
         </article>
+        </WordingDesigns>
 
         {/* Sticky sidebar: contents + the design this article points to. */}
         <aside className="hidden lg:block">

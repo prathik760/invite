@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { cinzel } from './kit/fonts/cinzel'
 import { oswald } from './kit/fonts/oswald'
@@ -21,7 +22,9 @@ import { numberWords } from './kit/words'
 import type { InviteTheme } from './kit/theme'
 
 /*
- * KGF Wedding — the poster for a period epic.
+ * Gold Saga (id kgf-wedding, kept so published invitations keep working) — the
+ * poster for a period epic. Renamed from "KGF" on 14 Nov 2026: a film's name
+ * and its characters' names are not ours to sell under.
  * Coal black, antique gold and a line of ember along a mountain ridge.
  * Monumental stacked names (the only gold foil), then the invitation told in
  * chapters: the families, the story, the wedding. Gritty, heavy, printed.
@@ -147,8 +150,10 @@ interface Person {
 }
 
 export default function KGFWedding({ data, eventId, isPreview = false }: InviteProps) {
-  const groom = data.groomName?.trim() || 'Rocky'
-  const bride = data.brideName?.trim() || 'Reena'
+  const groom = data.groomName?.trim() || 'Vikram'
+  const bride = data.brideName?.trim() || 'Meera'
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'kgf-wedding', bride, groom)
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const countdown = useCountdown(data.date, data.time, !isPreview)
@@ -160,14 +165,16 @@ export default function KGFWedding({ data, eventId, isPreview = false }: InviteP
   )
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`Wedding of ${groom} & ${bride}`, data.date, data.time, place)
+  const calendar = calendarHref(`Wedding of ${nameA} & ${nameB}`, data.date, data.time, place)
   const venue = data.venue?.trim() || 'The venue'
   const isPhoto = (u?: string) => !!u && /^(https?:)?\//.test(u)
 
-  const people: Person[] = [
-    { role: 'The groom', name: groom, family: data.groomFamilyDetails?.trim(), photo: isPhoto(data.groomPhoto) ? data.groomPhoto : undefined },
+  const people: Person[] = inOrder<Person>(
+    data,
+    'kgf-wedding',
     { role: 'The bride', name: bride, family: data.brideFamilyDetails?.trim(), photo: isPhoto(data.bridePhoto) ? data.bridePhoto : undefined },
-  ]
+    { role: 'The groom', name: groom, family: data.groomFamilyDetails?.trim(), photo: isPhoto(data.groomPhoto) ? data.groomPhoto : undefined },
+  )
   const hasFamilies = people.some((p) => p.family || p.photo)
   const hasStory = story.length > 0 || photos.length > 0
 
@@ -232,7 +239,7 @@ export default function KGFWedding({ data, eventId, isPreview = false }: InviteP
         <div className="relative flex flex-1 flex-col items-center justify-center px-5 py-10 text-center">
           <h1 className="uppercase" style={{ fontFamily: display, fontWeight: 800, lineHeight: 0.92, letterSpacing: '0.02em', overflowWrap: 'break-word' }}>
             <span className="kg-name block" style={{ animationDelay: '500ms' }}>
-              <span className="block" style={{ ...foil, fontSize: nameFont }}>{groom}</span>
+              <span className="block" style={{ ...foil, fontSize: nameFont }}>{nameA}</span>
             </span>
             <span className="kg-in my-4 flex items-center justify-center gap-4" style={{ animationDelay: '1200ms' }}>
               <span aria-hidden className="h-px w-12" style={{ background: K.goldDim }} />
@@ -240,7 +247,7 @@ export default function KGFWedding({ data, eventId, isPreview = false }: InviteP
               <span aria-hidden className="h-px w-12" style={{ background: K.goldDim }} />
             </span>
             <span className="kg-name block" style={{ animationDelay: '800ms' }}>
-              <span className="block" style={{ ...foil, fontSize: nameFont }}>{bride}</span>
+              <span className="block" style={{ ...foil, fontSize: nameFont }}>{nameB}</span>
             </span>
           </h1>
         </div>
@@ -481,7 +488,7 @@ export default function KGFWedding({ data, eventId, isPreview = false }: InviteP
             eventId={eventId}
             theme={WISHES_THEME}
             title="Blessings"
-            intro={`Leave a few words for ${groom}, ${bride} and their families. Every guest will see it here.`}
+            intro={`Leave a few words for ${nameA}, ${nameB} and their families. Every guest will see it here.`}
             noun="blessing"
           />
         </div>
@@ -491,7 +498,7 @@ export default function KGFWedding({ data, eventId, isPreview = false }: InviteP
       <footer className="px-6 pb-10 pt-14 text-center" style={{ background: K.deep }}>
         <span aria-hidden className="mx-auto block h-[3px] w-14 border-y" style={{ borderColor: K.goldDim }} />
         <p className="mt-6 uppercase leading-[1.2]" style={{ fontFamily: display, fontSize: 22, fontWeight: 700, color: K.gold, letterSpacing: '0.06em' }}>
-          {groom} <span style={{ fontFamily: sans, fontWeight: 400, fontSize: 13, letterSpacing: '0.36em', color: K.ember }}>weds</span> {bride}
+          {nameA} <span style={{ fontFamily: sans, fontWeight: 400, fontSize: 13, letterSpacing: '0.36em', color: K.ember }}>weds</span> {nameB}
         </p>
         {date && (
           <p className="mt-3" style={{ fontFamily: display, fontSize: 14, letterSpacing: '0.3em', color: K.faint }}>

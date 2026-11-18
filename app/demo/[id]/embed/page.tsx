@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import TemplateRenderer from '@/components/templates/TemplateRenderer'
+import DemoMusic from '@/components/templates/DemoMusic'
 import EmbedStage from '@/components/templates/EmbedStage'
 import { TEMPLATES } from '@/modules/templates/data'
 import { withSampleDates } from '@/lib/sampleData'
@@ -46,6 +47,8 @@ export default function DemoEmbedPage({ params }: { params: { id: string } }) {
     <>
       {/* A phone screen has no scrollbar; a framed page on Windows would show one. */}
       <style>{'html{scrollbar-width:none}html::-webkit-scrollbar{display:none}'}</style>
+      {/* The first tap starts the design's song: music is part of what is on show. */}
+      <DemoMusic />
       {/* EmbedStage tells the live preview when the first screen is ready
           and restarts the design the moment the preview shows it. */}
       {usePreview ? (

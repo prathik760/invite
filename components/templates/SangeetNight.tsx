@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { abril } from './kit/fonts/abril'
 import { josefin } from './kit/fonts/josefin'
@@ -484,7 +485,9 @@ function Heading({ children, className = '' }: { children: ReactNode; className?
 export default function SangeetNight({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Isha'
   const groom = data.groomName?.trim() || 'Dev'
-  const couple = `${bride} & ${groom}`
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'sangeet-night', bride, groom)
+  const couple = `${nameA} & ${nameB}`
   const animate = !isPreview
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
@@ -535,7 +538,7 @@ export default function SangeetNight({ data, eventId, isPreview = false }: Invit
         </p>
 
         <div className="relative mt-5 w-full max-w-[25rem]">
-          <MarqueeBoard top={bride} bottom={groom} animate={animate} />
+          <MarqueeBoard top={nameA} bottom={nameB} animate={animate} />
         </div>
 
         <h1
@@ -765,7 +768,7 @@ export default function SangeetNight({ data, eventId, isPreview = false }: Invit
             eventId={eventId}
             theme={WISHES_THEME}
             title="Cheers for the couple"
-            intro={`Leave a few words for ${bride} and ${groom}. Your wish appears here for every guest.`}
+            intro={`Leave a few words for ${nameA} and ${nameB}. Your wish appears here for every guest.`}
           />
         </div>
       )}

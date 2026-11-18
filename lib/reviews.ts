@@ -199,11 +199,7 @@ function within<T>(work: Promise<T>, ms: number): Promise<T> {
   return Promise.race([work, late]).finally(() => clearTimeout(timer))
 }
 
-// Cached for every page that shows reviews, until one is approved or hidden (REVIEWS_TAG).
-// Only an answer is cached: a failure throws through it, so one bad moment during a build
-// cannot leave every page without its reviews.
-const loadApproved = unstable_cache(
-  async (): Promise<ShownReview[]> => {
+async function queryApproved(): Promise<ShownReview[]> {
     const rows = await within(
       prisma.review.findMany({
         where: { status: 'approved', publish: true, rating: { not: null } },
@@ -222,10 +218,12 @@ const loadApproved = unstable_cache(
       text: r.text ?? '',
       date: (r.submittedAt ?? r.createdAt).toISOString(),
     }))
-  },
-  ['approved-reviews-v1'],
-  { tags: [REVIEWS_TAG] },
-)
+}
+
+// Cached for every page that shows reviews, until one is approved or hidden (REVIEWS_TAG).
+// Only an answer is cached: a failure throws through it, so one bad moment during a build
+// cannot leave every page without its reviews.
+const loadApproved = unstable_cache(queryApproved, ['approved-reviews-v1'], { tags: [REVIEWS_TAG] })
 
 /**
  * The reviews on the site: approved, and allowed by their hosts. Newest first.
@@ -235,6 +233,26 @@ const loadApproved = unstable_cache(
 export async function approvedReviews(): Promise<ShownReview[]> {
   try {
     return await loadApproved()
+  } catch (err) {
+    if (!isMissingReviewTable(err)) console.error('[reviews] could not load reviews', err instanceof Error ? err.message : err)
+    return []
+  }
+}
+
+/**
+ * The same reviews, read from the database when the page is built and not through the shared
+ * cache: for the design pages (app/templates/[slug], app/l/[lang]/templates/[slug]), which show
+ * them and put their stars in search results.
+ *
+ * Those routes are built ahead with dynamicParams = false, and on Next 14.2 such a page answers
+ * 404 for good once it is rebuilt on demand (tested 15 Nov 2026: every design page 404'd after
+ * revalidateTag(REVIEWS_TAG)). Pages that read the cached reviews carry REVIEWS_TAG, so an
+ * approval would have rebuilt, and lost, every design page. Read this way they carry no tag:
+ * an approval leaves them alone and they show new reviews from the next deploy.
+ */
+export async function approvedReviewsAtBuild(): Promise<ShownReview[]> {
+  try {
+    return await queryApproved()
   } catch (err) {
     if (!isMissingReviewTable(err)) console.error('[reviews] could not load reviews', err instanceof Error ? err.message : err)
     return []

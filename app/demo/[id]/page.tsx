@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from '@/components/ui/Link'
 import TemplateRenderer from '@/components/templates/TemplateRenderer'
+import DemoMusic from '@/components/templates/DemoMusic'
 import ShareDesignButton from '@/components/catalog/ShareDesignButton'
 import { TEMPLATES } from '@/modules/templates/data'
 import { withSampleDates } from '@/lib/sampleData'
@@ -65,7 +66,8 @@ export default function DemoPage({ params }: { params: { id: string } }) {
   return (
     // 3D experiences fill the container (height:100%), so give them a fixed-height
     // flex column; 2D templates flow naturally under a sticky banner.
-    <div className={usePreview ? 'relative flex h-[100svh] flex-col overflow-hidden' : 'relative'}>
+    // --invite-top: the sticky banner is 44px tall; a design's top-fixed buttons (music) sit below it, not under it.
+    <div className={usePreview ? 'relative flex h-[100svh] flex-col overflow-hidden' : 'relative [--invite-top:44px]'}>
       {/* ── Demo banner (fully responsive) ── */}
       <div
         className={`z-50 flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 ${usePreview ? 'shrink-0' : 'sticky top-0'}`}
@@ -111,6 +113,9 @@ export default function DemoPage({ params }: { params: { id: string } }) {
           </svg>
         </Link>
       </div>
+
+      {/* The first tap on the design starts its song: music is part of what is on show. */}
+      <DemoMusic />
 
       {/* Invitation rendered with sample data — the real, full experience (2D
           templates) or the auto-opened WebGL experience (greeting / journey). */}

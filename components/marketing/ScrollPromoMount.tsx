@@ -20,7 +20,7 @@ import { PROMO, isFirstVisit, isPromoSnoozed, promoAllowedOn, promoCoupon } from
  */
 const ScrollPromo = dynamic(() => import('./ScrollPromo'), { ssr: false })
 
-export default function ScrollPromoMount({ designHref }: { designHref: string }) {
+export default function ScrollPromoMount({ designHref, pages }: { designHref: string; pages?: readonly string[] }) {
   const pathname = usePathname()
   const [trigger, setTrigger] = useState<'arrival' | 'scroll' | null>(null)
   const triggered = trigger !== null
@@ -28,12 +28,12 @@ export default function ScrollPromoMount({ designHref }: { designHref: string })
   // Into the funnel, the popup goes away: tapping "Use this design" just as it
   // opened carried it into the builder, on top of the builder's own first sheet.
   useEffect(() => {
-    if (!promoAllowedOn(pathname)) setTrigger(null)
-  }, [pathname])
+    if (!promoAllowedOn(pathname, pages)) setTrigger(null)
+  }, [pathname, pages])
 
   useEffect(() => {
     if (!PROMO.enabled || triggered) return
-    if (!promoAllowedOn(pathname)) return
+    if (!promoAllowedOn(pathname, pages)) return
     // A campaign built on a discount code ends when the code does.
     if (PROMO.coupon && !promoCoupon()) return
     const first = isFirstVisit()
@@ -98,7 +98,7 @@ export default function ScrollPromoMount({ designHref }: { designHref: string })
       clearTimeout(shortPageTimer)
       if (frame) cancelAnimationFrame(frame)
     }
-  }, [pathname, triggered])
+  }, [pathname, pages, triggered])
 
   if (!trigger) return null
   return <ScrollPromo trigger={trigger} designHref={designHref} />

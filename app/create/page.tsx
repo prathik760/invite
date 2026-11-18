@@ -1,6 +1,7 @@
 'use client'
 
 import Image from '@/components/ui/Image'
+import RemoveBrandingButton from '@/components/payments/RemoveBrandingButton'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from '@/components/ui/Link'
 import dynamic from 'next/dynamic'
@@ -15,9 +16,13 @@ import type { PayError } from '@/components/create/PaymentProblem'
 import { supportWhatsAppUrl } from '@/lib/support'
 import { displayName } from '@/lib/catalog'
 import { carryOverDetails } from '@/lib/carryOver'
+import { HIDE_KEY, hiddenSet } from '@/lib/hiddenParts'
+import { NAME_ORDER_KEY } from '@/lib/nameOrder'
 import { usePreviewFollow } from '@/lib/usePreviewFollow'
 import { coupleLine } from '@/lib/inviteCardText'
 import { DoneForYouStrip, type DoneForYouDesign } from '@/components/create/DoneForYou'
+import DoneForYouForm from '@/components/create/DoneForYouForm'
+import DoneForYouRequestBar, { type DfyBuilderState } from '@/components/create/DoneForYouRequestBar'
 import { FlaggedFields } from '@/components/editor/FormEditor'
 
 import StepProgress from '@/components/create/StepProgress'
@@ -40,6 +45,16 @@ const PreviewPane = dynamic(() => import('@/components/editor/PreviewPane'), { s
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number]
 const DRAFT_KEY = 'invitely-draft'
+
+/** The done-for-you request this tab opened for this design, if any: publishing it marks the request done. */
+function dfyRequestFor(templateId: string): string | null {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem('si-dfy') || 'null') as { token?: string; templateId?: string } | null
+    return saved?.token && saved.templateId === templateId ? saved.token : null
+  } catch {
+    return null
+  }
+}
 /** A signed-out buyer's purchase pass (lib/purchasePass.ts), kept so a reload can still publish. */
 const PASS_KEY = 'si_purchase_pass'
 /** Invitations published from this device, so a buyer without an account can find them again. */
@@ -90,10 +105,17 @@ function withSample(tpl: TemplateDef, data: Record<string, string>): Record<stri
   return { ...tpl.config.defaultData, ...Object.fromEntries(Object.entries(data).filter(([, v]) => hasText(v))) }
 }
 
-/** Exactly what gets published: only what was typed. Sample text never goes live. */
+/**
+ * Exactly what gets published: only what was typed. Sample text never goes live, and neither does
+ * anything the host removed (lib/hiddenParts.ts): a removed box is published blank, so a phone
+ * number taken off the invitation is not left in the page's data either.
+ */
 function toPublish(tpl: TemplateDef, data: Record<string, string>): Record<string, string> {
   const out: Record<string, string> = { ...tpl.config.defaultData }
-  for (const f of tpl.config.fields) out[f.key] = typeof data[f.key] === 'string' ? data[f.key] : ''
+  const hidden = hiddenSet(data)
+  for (const f of tpl.config.fields) out[f.key] = !hidden.has(f.key) && typeof data[f.key] === 'string' ? data[f.key] : ''
+  if (hidden.size) out[HIDE_KEY] = data[HIDE_KEY]
+  if (data[NAME_ORDER_KEY]) out[NAME_ORDER_KEY] = data[NAME_ORDER_KEY]
   return out
 }
 
@@ -213,6 +235,8 @@ export default function CreatePage() {
   const [createdSlug, setCreatedSlug] = useState<string | null>(null)
   // The designs this account owns (lib/plans.ts `Owned`): an owned design publishes without paying again.
   const [owned, setOwned] = useState<Owned>(NOTHING_OWNED)
+  // The invitation just published went out free, with branding (lib/freeInvites.ts).
+  const [createdFree, setCreatedFree] = useState(false)
   const [paying, setPaying] = useState(false)
   // Payment problems used to surface as browser alert() dialogs — including
   // after the customer's money had already left their account. This holds a
@@ -225,6 +249,12 @@ export default function CreatePage() {
   // Blocks the autosave effect until the stored draft has been read back, so
   // the default form values cannot clobber it on first paint.
   const [draftLoaded, setDraftLoaded] = useState(false)
+  // "Our team fills it in" (components/create/DoneForYouForm), and the builder opened from a
+  // done-for-you request (?request=<token>, lib/doneForYou.ts): by the team to finish it, or by the
+  // customer to check it and publish.
+  const [dfyFormOpen, setDfyFormOpen] = useState(false)
+  const [dfy, setDfy] = useState<DfyBuilderState | null>(null)
+  const [dfyProblem, setDfyProblem] = useState('')
   // Changing a published invitation (/create?edit=<slug>): its link and the key that allows it
   // (none for its owner, signed in). The design stays the same; nothing is paid again.
   const [editing, setEditing] = useState<{ slug: string; key: string | null } | null>(null)
@@ -270,6 +300,51 @@ export default function CreatePage() {
           trackEvent(seoEvents.inviteEditStart, { template_id: tpl.id, template_name: tpl.name, invite_slug: editSlug })
         })
         .catch(() => { if (!cancelled) setEditProblem({ slug: editSlug, status: 0, message: 'Check your connection and try again.' }) })
+      return () => { cancelled = true }
+    }
+    const requestToken = params.get('request')
+    if (requestToken) {
+      // The team's key arrives after # from the admin page and leaves the address bar at once, as
+      // an edit key does; it is kept for this tab only.
+      let teamKey = new URLSearchParams(window.location.hash.slice(1)).get('team')
+      try {
+        if (teamKey) sessionStorage.setItem(`si-dfy-team:${requestToken}`, teamKey)
+        else teamKey = sessionStorage.getItem(`si-dfy-team:${requestToken}`)
+      } catch { /* private mode */ }
+      if (window.location.hash) window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search)
+      let cancelled = false
+      fetch(`/api/done-for-you/${encodeURIComponent(requestToken)}`, { headers: teamKey ? { 'x-team-key': teamKey } : {} })
+        .then(async (res) => {
+          const body = await res.json().catch(() => ({})) as {
+            templateId?: string; fields?: Record<string, string>; ref?: string; status?: DfyBuilderState['status']; firstName?: string; error?: string
+            team?: boolean; contact?: { name: string; phone: string; email?: string }; extras?: Record<string, string>; notes?: string
+          }
+          if (cancelled) return
+          const tpl = TEMPLATES.find((t) => t.id === body.templateId)
+          if (!res.ok || !tpl) {
+            setDfyProblem(body.error || 'This link could not be opened.')
+            setDraftLoaded(true)
+            return
+          }
+          const status = body.status ?? 'new'
+          setSelectedId(tpl.id)
+          setData(body.fields ?? {})
+          // The customer goes straight to the finished invitation; the team, and a customer whose
+          // invitation is not finished yet, to the first boxes.
+          setCurrentStep(!body.team && (status === 'ready' || status === 'published') ? 5 : 2)
+          setDfy({
+            token: requestToken,
+            ref: body.ref ?? '',
+            status,
+            firstName: body.firstName ?? '',
+            team: body.team && teamKey && body.contact ? { key: teamKey, contact: body.contact, extras: body.extras ?? {}, notes: body.notes ?? '' } : null,
+          })
+          // Kept for this tab, so publishing after signing in still tells the request it is done.
+          try { sessionStorage.setItem('si-dfy', JSON.stringify({ token: requestToken, templateId: tpl.id })) } catch { /* private mode */ }
+          setDraftLoaded(true)
+          trackEvent('dfy_open', { as: body.team ? 'team' : 'customer', template_id: tpl.id, status })
+        })
+        .catch(() => { if (!cancelled) { setDfyProblem('Check your connection and try again.'); setDraftLoaded(true) } })
       return () => { cancelled = true }
     }
     const tplParam = params.get('template')
@@ -335,6 +410,8 @@ export default function CreatePage() {
     // stays false, so nothing is autosaved over it.
     const params = new URLSearchParams(window.location.search)
     if (params.get('edit')) return
+    // A done-for-you request loads its own invitation (the effect above) and then turns autosave on.
+    if (params.get('request')) return
     // Back from signing in to publish (signInToPublishHref): reopen the draft, at the publish step.
     const resume = params.get('resume')
     if (params.get('template') && !resume) { setDraftLoaded(true); return }
@@ -535,7 +612,7 @@ export default function CreatePage() {
     }
   }
 
-  const doCreate = async (passOverride?: string) => {
+  const doCreate = async (passOverride?: string, opts: { free?: boolean } = {}) => {
     if (missingRequired.length > 0) { setError(`Please fill in: ${missingRequired.map(f => f.label).join(', ')}`); return }
     setLoading(true); setError('')
     const purchasePass = passOverride ?? pass
@@ -543,7 +620,7 @@ export default function CreatePage() {
       const res = await fetch('/api/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ templateId: selectedTemplate.id, data: publishData, ...(!session && purchasePass ? { pass: purchasePass } : {}) }),
+        body: JSON.stringify({ templateId: selectedTemplate.id, data: publishData, ...(opts.free ? { free: true } : {}), ...(!session && purchasePass ? { pass: purchasePass } : {}), ...(dfyRequestFor(selectedTemplate.id) ? { request: dfyRequestFor(selectedTemplate.id) } : {}) }),
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({})) as { error?: string; code?: string }
@@ -561,9 +638,15 @@ export default function CreatePage() {
           openPaywall()
           return
         }
+        // The free option is capped per account (lib/freeInvites.ts): the server says what to do instead.
+        if (body.code === 'FREE_LIMIT') {
+          trackEvent('free_limit_reached', { template_id: selectedTemplate.id })
+          throw new Error(body.error || 'You have used your free invitations.')
+        }
         throw new Error(body.error || 'Failed to create invitation')
       }
-      const { slug, editKey } = await res.json() as { slug: string; editKey?: string }
+      const { slug, editKey, isPaid } = await res.json() as { slug: string; editKey?: string; isPaid?: boolean }
+      setCreatedFree(isPaid === false)
       // Published — drop the draft so the next visit starts clean instead of
       // reopening an invitation that already exists.
       try {
@@ -579,6 +662,7 @@ export default function CreatePage() {
         price: getRequiredPlan(selectedTemplate.id).price,
         signed_in: !!session,
         invite_slug: slug,
+        free: isPaid === false,
       })
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong.')
@@ -718,6 +802,25 @@ export default function CreatePage() {
     doCreate()
   }
 
+
+  /**
+   * "Publish free, with ShareInvite branding" (lib/freeInvites.ts): the same checks as paying (every
+   * required detail, an account), then published without payment; buying the design later removes
+   * the branding on the same link.
+   */
+  const handleCreateFree = () => {
+    if (editing) return
+    trackEvent('publish_free_click', { template_id: selectedId, template_name: selectedTemplate.name, price: requiredPlanForSelected.price, signed_in: !!session })
+    if (missingRequired.length > 0) {
+      goToMissing()
+      return
+    }
+    if (sessionStatus === 'unauthenticated') {
+      window.location.href = signInToPublishHref(selectedId)
+      return
+    }
+    void doCreate(undefined, { free: true })
+  }
 
   // The steps 2-4 form lives in its own `overflow-y-auto` panel, so
   // `window.scrollTo` never moved it: pressing Continue after scrolling down
@@ -1035,7 +1138,14 @@ export default function CreatePage() {
               </div>
             </div>
 
-            {!editing && <DoneForYouStrip design={teamDesign} step={currentStep} />}
+            {dfy ? (
+              <DoneForYouRequestBar req={dfy} templateId={selectedId} designName={teamDesign.name} data={data} onStatus={(status) => setDfy((d) => (d ? { ...d, status } : d))} />
+            ) : dfyProblem ? (
+              <p role="alert" className="mx-4 mt-3 rounded-2xl border border-[#E8C4C4] bg-[#FDF3F3] px-3.5 py-2.5 text-[0.82rem] text-[#8A2B2B] sm:mx-5">{dfyProblem}</p>
+            ) : (
+              !editing && <DoneForYouStrip design={teamDesign} step={currentStep} onTeam={() => setDfyFormOpen(true)} />
+            )}
+            {dfyFormOpen && <DoneForYouForm design={teamDesign} fields={selectedTemplate.config.fields} typed={data} onClose={() => setDfyFormOpen(false)} />}
 
             <FlaggedFields.Provider value={flaggedSet}>
             <SavedFlash.Provider value={savedToast}>
@@ -1229,6 +1339,11 @@ export default function CreatePage() {
       )}
 
       {/* ─── Step 5: Publish ─────────────────────────────────────────────── */}
+      {currentStep === 5 && dfy && !createdSlug && (
+        <div className="mx-auto w-full max-w-3xl pt-3">
+          <DoneForYouRequestBar req={dfy} templateId={selectedId} designName={teamDesign.name} data={data} onStatus={(status) => setDfy((d) => (d ? { ...d, status } : d))} />
+        </div>
+      )}
       {currentStep === 5 && (
         <Step5Publish
           selectedTemplate={selectedTemplate}
@@ -1244,7 +1359,9 @@ export default function CreatePage() {
           error={error}
           onBack={() => goToStep(4)}
           onPublish={handleCreate}
+          onPublishFree={handleCreateFree}
           editing={Boolean(editing)}
+          onSwitchDesign={handleTemplateChange}
         />
       )}
 
@@ -1325,6 +1442,16 @@ export default function CreatePage() {
               </>
             )}
           </button>
+          {needsPayment && !editing && missingRequired.length === 0 && (
+            <button
+              type="button"
+              onClick={handleCreateFree}
+              disabled={loading || paying}
+              className="mt-1.5 w-full text-center text-[12px] font-semibold text-emerald-soft underline-offset-2 hover:underline disabled:opacity-50"
+            >
+              or publish free, with ShareInvite branding
+            </button>
+          )}
           {needsPayment && (
             <p className="mt-1.5 text-center text-[10px] leading-4 text-muted">
               {session ? 'Secure payment' : 'Sign in, then pay'} · Edit until your event ·{' '}
@@ -1454,8 +1581,18 @@ export default function CreatePage() {
                   <ShareBar url={shareUrl} names={names} templateId={selectedId} source="create_success" />
                 </div>
 
-                {/* No branding notice: every design is a paid publish, so no
-                    newly created invitation carries the free-plan banner. */}
+                {/* Published free: the branding, and how to remove it on the same link (lib/freeInvites.ts). */}
+                {createdFree && !edited && (
+                  <div className="mt-4 rounded-2xl border border-line bg-peach/60 px-4 py-4">
+                    <p className="text-[0.88rem] font-semibold text-charcoal">A free invitation, with ShareInvite branding</p>
+                    <p className="mt-0.5 text-[0.8rem] leading-5 text-charcoal/70">
+                      Remove it any time: pay once for the design and the branding comes off this link. Nothing to send again.
+                    </p>
+                    <div className="mt-3">
+                      <RemoveBrandingButton templateId={selectedId} designName={displayName(selectedTemplate.name)} />
+                    </div>
+                  </div>
+                )}
 
                 <div className="mt-4 space-y-2.5">
                   <Link href={`/e/${createdSlug}`}

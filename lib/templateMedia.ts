@@ -27,6 +27,8 @@ const TEMPLATE_IDS = [
   'save-the-date',
   'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch', 'birthday-gala',
   'dasara-ambari', 'christmas-evergreen', 'newyear-midnight',
+  'confession-for-her', 'confession-for-him',
+  'kids-dinosaur', 'kids-space', 'kids-superhero', 'kids-unicorn', 'kids-jungle', 'kids-cars',
 ] as const
 
 /**
@@ -44,6 +46,8 @@ const RESHOT: Partial<Record<(typeof TEMPLATE_IDS)[number], number>> = {
   'signature-two-worlds': 4,
   'signature-rajwada': 3,
   'signature-kalyanam': 3,
+  // Renamed from KGF to Gold Saga (14 Nov 2026): new sample couple on the cover.
+  'kgf-wedding': 3,
 }
 
 const TEMPLATE_IMAGES: Record<string, string> = Object.fromEntries(

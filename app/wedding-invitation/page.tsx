@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { RingIcon, CalendarIcon, ClockIcon, MusicIcon, CameraIcon, MessageIcon, ClipboardIcon, ShirtIcon, ShareIcon } from '@/components/ui/Icons'
 import OccasionPage, { faqPageJsonLd } from '@/components/landing/OccasionPage'
 import { LOWEST_PAID_PRICE, templatePrice } from '@/lib/plans'
+import { priceAnswer } from '@/lib/occasionPrices'
+import { FREE_LIMIT } from '@/lib/freeOffer'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 
@@ -38,6 +40,20 @@ const FAQS = [
   {
     question: 'How do I create a digital wedding invitation in India?',
     answer: `Choose a wedding design, enter names, date, venue and a personal message, and preview it as you type. There is no payment until you publish; publishing a wedding design is a one-time payment from ₹${templatePrice('elegant-wedding')} (designs for other occasions start at ₹${LOWEST_PAID_PRICE.toLocaleString('en-IN')}). You get your unique link the moment you publish, ready to share on WhatsApp.`,
+  },
+  {
+    // Asked before choosing a design; the answer is worked out from the catalogue's prices.
+    question: 'How much does a digital wedding invitation cost?',
+    answer: priceAnswer('wedding', 'wedding invitation'),
+  },
+  {
+    // Searches for a free digital wedding invitation rank on page 3 (Search Console, Nov 2026); the free option is real.
+    question: 'Can I make a digital wedding invitation for free?',
+    answer: `Yes. You can build and preview any design free, and publish it free too: a free invitation carries ShareInvite branding across the page and a banner at the top, and an account can publish up to ${FREE_LIMIT} free invitations a year. To send it without branding, pay once for the design (from ₹${templatePrice('elegant-wedding')}); the branding comes off on the same link, so guests who already have it see the clean invitation.`,
+  },
+  {
+    question: 'Is it a wedding invitation website?',
+    answer: 'Yes. Each invitation is its own small website at a link like shareinvite.in/e/your-names: guests open it on any phone straight from WhatsApp, with no app, and see your names, the functions with their dates and venues, maps, the countdown, photos and your music. You can change the details until the wedding and the link stays the same.',
   },
   {
     question: 'What should a digital wedding invitation include?',
@@ -99,6 +115,8 @@ export default function WeddingInvitationPage() {
           { title: 'Add your details', copy: 'Names, muhurat, venues, schedule and photos. Switch designs any time and keep your details.' },
           { title: 'Pay once & share', copy: 'Publish your design for a one-time price and send the link to every guest.' },
         ]}
+        compare={{ noun: 'wedding invitation', guests: 300 }}
+        prices={{ noun: 'wedding invitation' }}
         faqTitle="Digital wedding invitation questions"
         faqs={FAQS}
         cities={{ base: '/wedding-invitation', title: 'Wedding invitations by city', list: CITIES }}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import RemoveBrandingButton from '@/components/payments/RemoveBrandingButton'
 import Image from '@/components/ui/Image'
 import Link from '@/components/ui/Link'
 import { signOut } from 'next-auth/react'
@@ -28,7 +29,7 @@ const TEMPLATE_LABEL: Record<string, string> = {
   'griha-pravesh': 'Griha Pravesh',
   'namakaran': 'Namakaran',
   'anniversary': 'Saalgirah',
-  'kgf-wedding': 'KGF Royal Empire',
+  'kgf-wedding': 'Gold Saga',
   'royal-deco': 'Royal Deco',
   'luxury-wedding': 'Luxury Wedding',
   'surprise-journey': '3D Surprise Journey',
@@ -158,10 +159,34 @@ export default function DashboardClient({ user }: Props) {
       .finally(() => setLoading(false))
   }, [])
 
+  // Refreshed every 30 seconds only while the tab is on screen. Each refresh is a metered server
+  // call with a database read, and a dashboard left open in a background tab used to make one
+  // every 30 seconds all day (~2,900 a day) for nobody. Coming back to the tab refreshes at once.
   useEffect(() => {
+    let id: number | undefined
+    const start = () => {
+      if (id !== undefined) return
+      id = window.setInterval(fetchEvents, POLL_INTERVAL)
+    }
+    const stop = () => {
+      if (id !== undefined) window.clearInterval(id)
+      id = undefined
+    }
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        fetchEvents()
+        start()
+      } else {
+        stop()
+      }
+    }
     fetchEvents()
-    const id = setInterval(fetchEvents, POLL_INTERVAL)
-    return () => clearInterval(id)
+    if (document.visibilityState === 'visible') start()
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      stop()
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
   }, [fetchEvents])
 
   // Close the account menu on outside click / Escape.
@@ -396,6 +421,9 @@ export default function DashboardClient({ user }: Props) {
                             {expired ? 'Ended' : 'Live'}
                           </span>
                           <span className="text-[0.78rem] text-muted">{templateLabel(event.templateId)}</span>
+                          {!event.isPaid && (
+                            <span className="rounded-full bg-peach px-2 py-0.5 text-[0.72rem] font-semibold text-burnished-deep">Free · with ShareInvite branding</span>
+                          )}
                           {unreadWishes.length > 0 && (
                             <span className="rounded-full bg-gold-soft/30 px-2 py-0.5 text-[0.72rem] font-semibold text-burnished-deep">
                               {unreadWishes.length} new
@@ -415,6 +443,18 @@ export default function DashboardClient({ user }: Props) {
                           <p className="min-w-0 truncate rounded-full bg-champagne px-3 py-1 text-[0.8rem] text-charcoal/70">{eventUrl}</p>
                           <CopyButton text={eventUrl} />
                         </div>
+                        {/* Published free (lib/freeInvites.ts): buying the design takes the branding off, same link. */}
+                        {!event.isPaid && !expired && event.templateId !== '__custom-requests__' && (
+                          <div className="mt-3 max-w-sm">
+                            <RemoveBrandingButton
+                              templateId={event.templateId}
+                              designName={templateLabel(event.templateId)}
+                              // A moment to read the confirmation before the card refreshes without its branding.
+                              onDone={() => window.setTimeout(() => void fetchEvents(), 4000)}
+                              className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-[0.82rem] font-semibold disabled:opacity-60"
+                            />
+                          </div>
+                        )}
                       </div>
 
                       {/* Action buttons */}

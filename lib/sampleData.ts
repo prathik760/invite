@@ -48,6 +48,12 @@ const SAMPLE_RSVP: Record<string, string> = {
   'birthday-champagne': '+61 491 570 156',
   'birthday-long-lunch': '+1 310 555 0172',
   'birthday-gala': '+44 7700 900218',
+  'kids-dinosaur': '+44 7700 900641',
+  'kids-space': '+44 7700 900652',
+  'kids-superhero': '+44 7700 900663',
+  'kids-unicorn': '+44 7700 900674',
+  'kids-jungle': '+44 7700 900685',
+  'kids-cars': '+44 7700 900696',
 }
 
 /** Navaratri 2026 begins 11 October; Ayudha Puja 19, Vijayadashami 20, Jamboo Savari 21. */
@@ -88,6 +94,12 @@ function sampleDates(templateId: string, data: Record<string, string>): Record<s
     if (!out.date) out.date = saturdayInDays(40)
     if (!out.rsvpBy) out.rsvpBy = isoInDays(26)
     if (!out.rsvpPhone && !out.rsvpEmail) out.rsvpPhone = SAMPLE_RSVP[templateId] ?? '+44 7700 900461'
+  }
+  if (templateId.startsWith('kids-')) {
+    // A kids' party is on a weekend afternoon; the RSVP is on show with a number reserved for fiction.
+    if (!out.date) out.date = saturdayInDays(30)
+    if (!out.rsvpBy) out.rsvpBy = isoInDays(20)
+    if (!out.rsvpPhone && !out.rsvpEmail) out.rsvpPhone = SAMPLE_RSVP[templateId] ?? '+44 7700 900684'
   }
   if (templateId === 'birthday-gala') {
     // The weekend is laid out around the main night: earlier parts the days before, later ones after.

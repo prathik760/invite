@@ -2,10 +2,12 @@ import Image from '@/components/ui/Image'
 import Link from '@/components/ui/Link'
 import { displayName } from '@/lib/catalog'
 import { templateImage } from '@/lib/templateMedia'
+import { seasonAt } from '@/lib/season'
 import { TEMPLATES } from '@/modules/templates/data'
 
 /** A spread of occasions, so the fan shows the range rather than five weddings. */
-const FAN = ['signature-saptapadi', 'birthday-mirrorball', 'griha-pravesh', 'diwali-party', 'signature-nikah']
+// The fourth card is the season's design (lib/season.ts), read while rendering.
+const FAN = ['signature-saptapadi', 'birthday-mirrorball', 'griha-pravesh', null, 'signature-nikah']
 
 /** Where each card sits in the fan: rotation, sideways offset, drop. */
 const POSE = [
@@ -21,7 +23,8 @@ const POSE = [
  * Laptop only: on a phone the closing is just the line and the button.
  */
 export default function ClosingFan() {
-  const ids = FAN.filter((id) => TEMPLATES.some((t) => t.id === id))
+  const seasonal = seasonAt().featured
+  const ids = FAN.map((id) => id ?? seasonal).filter((id) => TEMPLATES.some((t) => t.id === id))
   return (
     <Link
       href="/templates"

@@ -69,6 +69,7 @@ const WESTERN = new Set([
   'elegant-wedding', 'signature-garden', 'save-the-date', 'christmas-evergreen', 'newyear-midnight',
   'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch', 'birthday-gala',
   'greeting-love', 'greeting-valentine', 'greeting-propose', 'greeting-promise', 'greeting-sorry', 'greeting-congratulations', 'greeting-friendship',
+  'retirement', 'confession-for-her', 'confession-for-him',
 ])
 
 /** Numbers reserved for fiction (Ofcom 07700 900xxx), one per design. */
@@ -80,6 +81,8 @@ const RSVP_NUMBER: Record<string, string> = {
 }
 
 const TEXT: Record<string, Record<string, string>> = {
+  'confession-for-her': { replyNumber: '+44 7700 900611' },
+  'confession-for-him': { replyNumber: '+44 7700 900622' },
   'luxury-wedding': { brideFamily: 'Ramesh & Sunita Sharma\nUncle Vijay & Aunt Meera', groomFamily: 'Suresh & Kavita Verma\nUncle Anand & Aunt Rekha' },
   'signature-nikah': { hashtag: '#AyeshaWedsImran' },
   'signature-garden': { invocation: 'Love is patient, love is kind', blessings: 'Margaret & Peter Hale\nElena & Marco Rossi', destination: 'Lake Como' },
@@ -115,7 +118,7 @@ export function withShowcase(templateId: string, data: Record<string, string>): 
   set('couplePhoto', templateId === 'anniversary' ? P.coupleOlder : western || templateId === 'signature-two-worlds' ? P.coupleWestern : nikah ? P.coupleNikah : templateId === 'signature-aquarelle' ? P.coupleIndianFull : P.coupleIndian)
   set('partner1Photo', P.brideIndian)
   set('partner2Photo', P.groomIndian)
-  set('celebrantPhoto', templateId === 'first-birthday' ? P.child : templateId === 'indian-birthday' ? P.womanIndian : P.womanWestern)
+  set('celebrantPhoto', templateId === 'first-birthday' || templateId.startsWith('kids-') ? P.child : templateId === 'indian-birthday' ? P.womanIndian : P.womanWestern)
   set('babyPhoto', P.baby)
   set('motherPhoto', P.motherToBe)
   set('hostPhoto', P.family)
@@ -124,8 +127,9 @@ export function withShowcase(templateId: string, data: Record<string, string>): 
   set('photo', GREETING_PHOTO[templateId])
 
   // Photos, music, directions.
-  set('galleryImages', templateId === 'dasara-ambari' ? DASARA : templateId === 'birthday-gala' ? GALA : templateId.startsWith('birthday-') ? PARTY : undefined)
-  set('musicUrl', WESTERN.has(templateId) ? WALTZ : SANTOOR)
+  set('galleryImages', templateId === 'dasara-ambari' ? DASARA : templateId === 'birthday-gala' ? GALA : templateId.startsWith('birthday-') ? PARTY : templateId.startsWith('confession-') ? [GREETING_PHOTO['greeting-love'], GREETING_PHOTO['greeting-propose']].join('\n') : undefined)
+  // The kids' designs play the birthday tune as a music box when their opening is tapped (KidsParty.tsx).
+  if (!templateId.startsWith('kids-')) set('musicUrl', WESTERN.has(templateId) ? WALTZ : SANTOOR)
   const where = [out.venue, out.venueAddress || out.address, out.city].map((s) => (s || '').trim()).filter(Boolean).join(', ')
   if (where) set('mapsUrl', `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(where)}`)
 

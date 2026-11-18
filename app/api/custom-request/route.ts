@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { sendLater, sendMail } from '@/lib/mail'
+import { SUPPORT_EMAIL } from '@/lib/support'
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null)
@@ -55,6 +57,16 @@ export async function POST(req: NextRequest) {
   } catch {
     // Silently continue — DB might not be available (local store mode)
   }
+
+  // Until 15 Nov 2026 a request was only kept for /admin/requests, which nobody is told to check.
+  const lines = [`Name: ${name.trim()}`, `Email: ${email.trim()}`, `Phone: ${phone?.trim() || '—'}`, `Event: ${eventType.trim()}`, '', description.trim()]
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string)
+  sendLater(() => sendMail({
+    to: SUPPORT_EMAIL,
+    subject: `New custom design request: ${eventType.trim().slice(0, 60)} for ${name.trim().slice(0, 60)}`,
+    text: lines.join('\n'),
+    html: `<div style="font-family:system-ui,sans-serif;font-size:14px;line-height:1.5;white-space:pre-wrap">${esc(lines.join('\n'))}</div>`,
+  }))
 
   return NextResponse.json({ success: true })
 }

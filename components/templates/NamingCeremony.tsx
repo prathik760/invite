@@ -17,7 +17,7 @@ import {
   useCountdown,
   type InviteProps,
 } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
 
 /*
@@ -204,6 +204,7 @@ export default function NamingCeremony({ data, eventId, isPreview = false }: Inv
       className="nc relative overflow-x-hidden"
       style={{ backgroundColor: BASE.paper, color: BASE.ink, fontFamily: sans, containerType: 'inline-size', ...grain(0.045) }}
     >
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={BASE.ink} background="rgba(252,248,241,0.92)" border={BASE.rule} />
       <style>{`
         .nc .nc-swing { animation-name: nc-swing; animation-timing-function: ease-in-out; animation-fill-mode: both; }
         .nc .nc-rock { animation: nc-rock 4.2s ease-in-out 100ms both; }

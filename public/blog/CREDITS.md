@@ -70,3 +70,10 @@ Photos for `/blog` cards, article heroes and share previews. All come from Unspl
 | `dasara-invitation-card-online-mysuru-dasara-invitation-template.jpg` | Screenshot of the ShareInvite Ambari design (`/demo/dasara-ambari`), our own work | ShareInvite |
 | `christmas-party-invitation-wording-digital-christmas-invitation.jpg` | Screenshot of the ShareInvite Evergreen design (`/demo/christmas-evergreen`), our own work | ShareInvite |
 | `new-year-party-invitation-message-new-years-eve-invitation-wording.jpg` | Screenshot of the ShareInvite Midnight design (`/demo/newyear-midnight`), our own work | ShareInvite |
+
+Made by ShareInvite from its own design pictures (no third-party photos), 15 Nov 2026:
+
+- `marathi-wedding-invitation-message-lagna-patrika-for-whatsapp.jpg`
+- `tamil-wedding-invitation-message-thirumana-pathirikai-wording.jpg`
+- `telugu-wedding-invitation-message-pelli-shubhalekha-wording.jpg`
+- `kids-birthday-party-theme-ideas-with-invitation-messages.jpg`

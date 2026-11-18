@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { poiret } from './kit/fonts/poiret'
 import { josefin } from './kit/fonts/josefin'
@@ -183,6 +184,8 @@ function Arch({ src, alt, className = '', eager = false }: { src: string; alt: s
 export default function RoyalDeco({ data, eventId, isPreview = false }: InviteProps) {
   const groom = data.groomName?.trim() || 'Arjun'
   const bride = data.brideName?.trim() || 'Ananya'
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'royal-deco', bride, groom)
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const countdown = useCountdown(data.date, data.time, !isPreview)
@@ -191,14 +194,16 @@ export default function RoyalDeco({ data, eventId, isPreview = false }: InvitePr
   const story = useMemo(() => parseLines(data.coupleStory), [data.coupleStory])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`Wedding of ${groom} & ${bride}`, data.date, data.time, place)
+  const calendar = calendarHref(`Wedding of ${nameA} & ${nameB}`, data.date, data.time, place)
   const venue = data.venue?.trim() || 'The venue'
   const isPhoto = (u?: string) => !!u && /^(https?:)?\//.test(u)
 
-  const houses = [
-    { name: groom, family: data.groomFamilyDetails?.trim(), photo: isPhoto(data.groomPhoto) ? data.groomPhoto : undefined },
+  const houses = inOrder(
+    data,
+    'royal-deco',
     { name: bride, family: data.brideFamilyDetails?.trim(), photo: isPhoto(data.bridePhoto) ? data.bridePhoto : undefined },
-  ]
+    { name: groom, family: data.groomFamilyDetails?.trim(), photo: isPhoto(data.groomPhoto) ? data.groomPhoto : undefined },
+  )
   const portraits = houses.filter((h) => h.photo)
   const hasProclamation = houses.some((h) => h.family || h.photo)
   const spelledTime = timeWords(data.time)
@@ -245,7 +250,7 @@ export default function RoyalDeco({ data, eventId, isPreview = false }: InvitePr
           <Caps className="rd-in mt-6 text-balance" style={{ animationDelay: '900ms' }}>Together with their families</Caps>
 
           <h1 className="mt-7 uppercase" style={{ fontFamily: display, fontWeight: 400, letterSpacing: '0.08em', lineHeight: 1.02, overflowWrap: 'break-word' }}>
-            <span className="rd-in block" style={{ fontSize: nameFont, animationDelay: '1100ms', paddingLeft: '0.08em' }}>{groom}</span>
+            <span className="rd-in block" style={{ fontSize: nameFont, animationDelay: '1100ms', paddingLeft: '0.08em' }}>{nameA}</span>
             <span className="rd-in my-3 block" style={{ animationDelay: '1300ms' }}>
               <span className="flex items-center justify-center gap-3">
                 <span aria-hidden className="h-px w-10" style={{ background: R.goldSoft }} />
@@ -253,7 +258,7 @@ export default function RoyalDeco({ data, eventId, isPreview = false }: InvitePr
                 <span aria-hidden className="h-px w-10" style={{ background: R.goldSoft }} />
               </span>
             </span>
-            <span className="rd-in block" style={{ fontSize: nameFont, animationDelay: '1450ms', paddingLeft: '0.08em' }}>{bride}</span>
+            <span className="rd-in block" style={{ fontSize: nameFont, animationDelay: '1450ms', paddingLeft: '0.08em' }}>{nameB}</span>
           </h1>
 
           <p className="rd-in mx-auto mt-7 max-w-[18rem] leading-[1.55]" style={{ fontSize: 16, fontWeight: 300, color: R.creamSoft, animationDelay: '1650ms' }}>
@@ -463,9 +468,9 @@ export default function RoyalDeco({ data, eventId, isPreview = false }: InvitePr
         <Fan color={R.goldSoft} rays={13} className="mx-auto -mb-px w-[118px]" />
         <Medallion color={R.gold} className="mx-auto mt-2 h-[112px] w-[94px]">
           <span className="uppercase" style={{ fontFamily: display, fontSize: 30, letterSpacing: '0.04em' }}>
-            {groom.charAt(0)}
+            {nameA.charAt(0)}
             <span className="mx-1" style={{ fontSize: 18, color: R.gold }}>&amp;</span>
-            {bride.charAt(0)}
+            {nameB.charAt(0)}
           </span>
         </Medallion>
         {date && (

@@ -51,6 +51,12 @@ const THEMES: Record<string, Theme> = {
   'signature-royal-edit': DARK('#421522', '#F8F2E8', '#C7A66A'),
   'baby-shower': LIGHT('#F7DED7', '#4A2744', '#A3405F', '#F1BDB6'),
   'first-birthday': LIGHT('#FFF6E6', '#23305A', '#C8543F', '#86C3E3'),
+  'kids-dinosaur': LIGHT('#FFF1D6', '#2B3A1F', '#D9621F', '#6DB33F'),
+  'kids-space': DARK('#0E1238', '#F3F1FF', '#FFC93C'),
+  'kids-superhero': DARK('#1F5BD8', '#FFFFFF', '#FFD23F'),
+  'kids-unicorn': LIGHT('#FFF0F8', '#4A2C5E', '#E0518F', '#B79CFF'),
+  'kids-jungle': LIGHT('#FFF3D0', '#1F3A2A', '#2F7A45', '#E8902A'),
+  'kids-cars': LIGHT('#EAF8FF', '#1A1D24', '#E3262F', '#FFC21A'),
   'haldi-mehendi': LIGHT('#FBF2DC', '#3A2511', '#3E5A28', '#F2B226'),
   'sangeet-night': DARK('#130A1F', '#FBEFD8', '#F1C14F'),
   'pooja-invite': LIGHT('#FAF1E1', '#5A1712', '#A8231C', '#E9B535'),
@@ -66,6 +72,8 @@ const THEMES: Record<string, Theme> = {
   'dasara-ambari': DARK('#1A0E45', '#FFF1D6', '#E9B949'),
   'christmas-evergreen': DARK('#0F3324', '#FBF3E4', '#D9A441'),
   'newyear-midnight': DARK('#07070C', '#F4EEDF', '#D8B25A'),
+  'confession-for-her': LIGHT('#F6E2DE', '#3A1420', '#C2334E', '#E58A9C'),
+  'confession-for-him': DARK('#121A38', '#F5EBD6', '#C9A24A'),
 }
 const GREETING = DARK('#2A0E22', '#FFFFFF', '#F0B7C4')
 

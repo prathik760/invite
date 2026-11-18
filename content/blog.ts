@@ -14,7 +14,7 @@ export const blogCategories = [
 
 export type BlogCategory = (typeof blogCategories)[number]
 
-const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; description?: string; metaTitle?: string; slug?: string; image?: string }> = [
+const draftTitles: Array<{ title: string; category: BlogCategory; keyword: string; date?: string; updated?: string; description?: string; metaTitle?: string; slug?: string; image?: string }> = [
   { title: 'Best Digital Wedding Invitation Templates in India', metaTitle: '5 Best Digital Wedding Invitation Templates in India', category: 'Wedding', keyword: 'digital wedding invitation templates India', image: '/blog/best-digital-wedding-invitation-templates-in-india.jpg' },
   { title: 'How To Create A WhatsApp Wedding Invitation', category: 'Wedding', keyword: 'WhatsApp wedding invitation', image: '/blog/how-to-create-a-whatsapp-wedding-invitation.jpg' },
   { title: 'Digital Wedding Invitation Vs Printed Cards', category: 'Digital Invitations', keyword: 'digital wedding invitation vs printed cards', image: '/blog/digital-wedding-invitation-vs-printed-cards.jpg' },
@@ -99,12 +99,14 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
   },
   {
     title: 'Valentines Day Card Online: Send a 3D Animated Valentine on WhatsApp',
-    metaTitle: 'Valentine’s Day Card Online: 3D Animated, on WhatsApp',
+    metaTitle: 'Valentine’s Day Card Online & Confession Letter on WhatsApp',
     category: 'Invitation Ideas',
     keyword: 'valentines day card online',
     date: '2026-07-05',
+    // Confession letters, messages for her and him, Valentine week 2027 and real prices (15 Nov 2026).
+    updated: '2026-11-15',
     image: '/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp.jpg',
-    description: 'Make a Valentine\'s Day card online in minutes and send a 3D animated valentine on WhatsApp: floating hearts, your photos and a love note. The most romantic (and easiest) way to say I love you this Valentine\'s Day, no app required.',
+    description: 'Send a 3D Valentine\'s Day card or a confession letter that asks "Will you be my Valentine?" on WhatsApp, with confession messages for her and him and the Valentine week 2027 dates.',
   },
   {
     title: 'Anniversary Card Online: Create a 3D Animated Anniversary Card',
@@ -231,10 +233,53 @@ const draftTitles: Array<{ title: string; category: BlogCategory; keyword: strin
     category: 'Festivals',
     keyword: 'new year party invitation message',
     date: '2026-10-03',
+    // Revised 15 Nov 2026: society, Hindi and venue messages; the title says "for WhatsApp", as India searches it.
+    updated: '2026-11-15',
     slug: 'new-year-party-invitation-message-new-years-eve-invitation-wording',
-    metaTitle: 'New Year Party Invitation Message & NYE Wording (2027)',
+    metaTitle: 'New Year Party Invitation Message for WhatsApp: 40+ Ideas (2027)',
     image: '/blog/new-year-party-invitation-message-new-years-eve-invitation-wording.jpg',
-    description: '40+ New Year party invitation messages and New Year’s Eve wording for friends, family and work (funny, short and Hindi), plus an invitation with fireworks.',
+    description: '40+ New Year party invitation messages for WhatsApp: friends, family, society, office and venues, funny, short and in Hindi, plus an invitation with fireworks.',
+  },
+  // ─── Regional wedding wording and kids birthday themes (15 Nov 2026) ──────────
+  {
+    title: 'Marathi Wedding Invitation Message: Lagna Patrika Wording for WhatsApp',
+    category: 'Wedding',
+    keyword: 'marathi wedding invitation message',
+    date: '2026-11-15',
+    slug: 'marathi-wedding-invitation-message-lagna-patrika-for-whatsapp',
+    metaTitle: 'Marathi Wedding Invitation Message & Lagna Patrika Wording',
+    image: '/blog/marathi-wedding-invitation-message-lagna-patrika-for-whatsapp.jpg',
+    description: 'Marathi wedding invitation messages to copy: traditional lagna patrika wording, short WhatsApp messages, Haldi, Sakharpuda and reception invitations, and Roman-script versions.',
+  },
+  {
+    title: 'Tamil Wedding Invitation Message: Thirumana Pathirikai Wording for WhatsApp',
+    category: 'Wedding',
+    keyword: 'tamil wedding invitation message',
+    date: '2026-11-15',
+    slug: 'tamil-wedding-invitation-message-thirumana-pathirikai-wording',
+    metaTitle: 'Tamil Wedding Invitation Message & Pathirikai Wording',
+    image: '/blog/tamil-wedding-invitation-message-thirumana-pathirikai-wording.jpg',
+    description: 'Tamil wedding invitation messages to copy: traditional thirumana pathirikai wording, short WhatsApp messages, Nichayathartham and reception invitations, and Tanglish versions.',
+  },
+  {
+    title: 'Telugu Wedding Invitation Message: Pelli Shubhalekha Wording for WhatsApp',
+    category: 'Wedding',
+    keyword: 'telugu wedding invitation message',
+    date: '2026-11-15',
+    slug: 'telugu-wedding-invitation-message-pelli-shubhalekha-wording',
+    metaTitle: 'Telugu Wedding Invitation Message & Shubhalekha Wording',
+    image: '/blog/telugu-wedding-invitation-message-pelli-shubhalekha-wording.jpg',
+    description: 'Telugu wedding invitation messages to copy: traditional pelli shubhalekha wording, short WhatsApp messages, Nischitartham, Pellikuthuru and reception invitations, and English-letter versions.',
+  },
+  {
+    title: 'Kids Birthday Party Theme Ideas: 12 Themes with an Invitation Message for Each',
+    category: 'Birthday',
+    keyword: 'kids birthday party theme ideas',
+    date: '2026-11-15',
+    slug: 'kids-birthday-party-theme-ideas-with-invitation-messages',
+    metaTitle: '12 Kids Birthday Party Theme Ideas + Invitation Messages',
+    image: '/blog/kids-birthday-party-theme-ideas-with-invitation-messages.jpg',
+    description: '12 kids birthday party theme ideas for Indian homes and party halls: dinosaur, space, superhero, unicorn, jungle, cricket and more, with decor, cake, games, return gifts and an invitation message.',
   },
 ]
 
@@ -245,6 +290,8 @@ export type BlogDraft = {
   keyword: string
   description: string
   date: string
+  /** When the article was last revised (YYYY-MM-DD): shown on the page and given to search engines as dateModified. */
+  updated?: string
   status: 'draft'
   metaTitle?: string
   /**
@@ -293,6 +340,7 @@ export const blogDrafts: BlogDraft[] = draftTitles.map((item, index) => ({
   keyword: item.keyword,
   description: item.description ?? buildDescription(item.title, item.keyword, item.category),
   date: item.date ?? `2026-05-${String((index % 28) + 1).padStart(2, '0')}`,
+  updated: item.updated,
   status: 'draft',
   metaTitle: item.metaTitle,
   image: item.image,

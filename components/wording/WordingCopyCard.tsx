@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Link from '@/components/ui/Link'
-import CopiedPanel, { builderHref, copyText, trackWordingCopy } from '@/components/wording/CopiedPanel'
+import CopiedPanel, { builderHref, copyText, selectedMessage, trackWordingCopy } from '@/components/wording/CopiedPanel'
 import { ArrowRightIcon } from '@/components/ui/Icons'
 import { trackCta } from '@/lib/analytics'
 
@@ -29,10 +29,15 @@ export default function WordingCopyCard({ children, templateId, ctaHref }: Wordi
   // Kept after the button resets, so the panel stays put while they decide.
   const [copiedText, setCopiedText] = useState<string | null>(null)
 
+  // Set while the Copy button copies, so its fallback (which selects the text
+  // and copies it) is not counted again as the reader's own copy.
+  const copyingRef = useRef(false)
+
   async function handleCopy() {
     const text = textRef.current?.innerText.trim() ?? ''
     if (!text) return
-    const ok = await copyText(text, textRef.current)
+    copyingRef.current = true
+    const ok = await copyText(text, textRef.current).finally(() => { copyingRef.current = false })
     if (!ok) return
     setCopied(true)
     setCopiedText(text)
@@ -40,9 +45,18 @@ export default function WordingCopyCard({ children, templateId, ctaHref }: Wordi
     setTimeout(() => setCopied(false), 2200)
   }
 
+  /** The reader selected the words and copied them (a long press on a phone): the same panel. */
+  function handleOwnCopy() {
+    if (copyingRef.current) return
+    const text = selectedMessage(textRef.current)
+    if (!text) return
+    setCopiedText(text)
+    trackWordingCopy(templateId, 'select')
+  }
+
   return (
     <div className="my-5">
-      <figure className="relative rounded-3xl border border-line bg-paper p-6 pl-7 shadow-soft sm:p-7 sm:pl-8">
+      <figure onCopy={handleOwnCopy} className="relative rounded-3xl border border-line bg-paper p-6 pl-7 shadow-soft sm:p-7 sm:pl-8">
         <span aria-hidden className="absolute inset-y-6 left-0 w-1 rounded-r-full bg-gradient-to-b from-gold-soft to-burnished" />
         <p ref={textRef} className="whitespace-pre-line font-editorial text-[1.22rem] leading-[1.6] text-charcoal">
           {children}

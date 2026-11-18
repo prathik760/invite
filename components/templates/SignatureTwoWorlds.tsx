@@ -1,6 +1,7 @@
 'use client'
 
-import { startTransition, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { Fragment, startTransition, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { prata } from './kit/fonts/prata'
 import { marckScript } from './kit/fonts/marckScript'
@@ -692,8 +693,10 @@ function Record({ playing, label, onToggle, title, hint, isPreview }: { playing:
 export default function SignatureTwoWorlds({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Olena'
   const groom = data.groomName?.trim() || 'Aarav'
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'signature-two-worlds', bride, groom)
   // The groom is named first everywhere, then the bride; his family before hers.
-  const couple = `${groom} & ${bride}`
+  const couple = `${nameA} & ${nameB}`
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const venue = data.venue?.trim() || ''
@@ -1160,9 +1163,9 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
             </p>
           )}
           <h1 className="tw-rise tw-names" style={{ ['--d' as string]: '350ms', fontFamily: display, fontSize: nameSize, lineHeight: 0.98, color: C.cream, textShadow: '0 4px 36px rgba(10,6,18,0.55)' }}>
-            <span>{groom}</span>
+            <span>{nameA}</span>
             <span className="px-[0.18em]" style={{ fontFamily: script, fontSize: '0.78em', lineHeight: 1, color: C.goldLight }}>&amp;</span>
-            <span>{bride}</span>
+            <span>{nameB}</span>
           </h1>
           {tagline && (
             <p className="tw-rise mt-5 max-w-[30rem] text-balance italic" style={{ ['--d' as string]: '550ms', fontSize: 'clamp(19px, 5.2cqi, 25px)', lineHeight: 1.45, color: 'rgba(255,249,238,0.95)', textShadow: '0 1px 14px rgba(10,6,18,0.9)' }}>
@@ -1228,9 +1231,9 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                         <div className="tw-medal relative">
                           <WreathMedallion className="relative block w-full" />
                           <span aria-hidden className="absolute left-1/2 top-[42.4%] flex -translate-x-1/2 -translate-y-1/2 items-baseline gap-1" style={{ fontFamily: display, fontSize: 'clamp(28px, 8cqi, 42px)', color: C.cream }}>
-                            {initial(groom)}
+                            {initial(nameA)}
                             <span style={{ fontFamily: script, fontSize: '0.9em', color: C.goldLight }}>&amp;</span>
-                            {initial(bride)}
+                            {initial(nameB)}
                           </span>
                         </div>
                       )}
@@ -1327,9 +1330,9 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                     textShadow: '0 2px 26px rgba(10,6,30,0.65)',
                   }}
                 >
-                  <span>{groom}</span>
+                  <span>{nameA}</span>
                   <span className="tw-gold px-[0.16em]" style={{ fontFamily: script, fontSize: '0.8em', lineHeight: 1.05 }}>&amp;</span>
-                  <span>{bride}</span>
+                  <span>{nameB}</span>
                 </h2>
                 <p className="tw-i mt-[1.6cqh] max-w-[26rem] text-balance italic" style={{ ['--d' as string]: `${HORIZON_TIMES.words + 600}ms`, fontSize: 'clamp(15px, min(4.5cqw, 2.5cqh), 22px)', lineHeight: 1.4, color: 'rgba(255,241,226,0.92)', textShadow: '0 1px 12px rgba(8,6,30,0.8)' }}>
                   invite you to celebrate their marriage
@@ -1490,7 +1493,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                     ))}
                     {loveStory.length > 1 && (
                       <p className="mt-7 text-right -rotate-1" style={{ fontFamily: hand, fontSize: 'clamp(24px, 6.4cqi, 30px)', color: C.goldLight }}>
-                        {groom} &amp; {bride}
+                        {nameA} &amp; {nameB}
                       </p>
                     )}
                   </Reveal>
@@ -1613,7 +1616,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                 <Reveal disabled={isPreview} className="text-center">
                   <Kicker color={C.marigold}>Now showing</Kicker>
                   <h2 className="mx-auto mt-3 max-w-[20ch] text-balance" style={{ fontFamily: display, fontSize: 'clamp(30px, 9cqi, 50px)', lineHeight: 1.1, color: C.goldLight, textShadow: '0 0 24px rgba(247,168,23,0.45)' }}>{filmTitle}</h2>
-                  <p className="mt-2" style={{ fontFamily: hand, fontSize: 'clamp(20px, 5.4cqi, 24px)', color: '#FF8FA8' }}>starring {groom} &amp; {bride}</p>
+                  <p className="mt-2" style={{ fontFamily: hand, fontSize: 'clamp(20px, 5.4cqi, 24px)', color: '#FF8FA8' }}>starring {nameA} &amp; {nameB}</p>
                 </Reveal>
                 <Reveal disabled={isPreview} className="mt-10">
                   <Cinema src={film} poster={photos[Math.min(4, photos.length - 1)] || couplePhoto} title={filmTitle} isPreview={isPreview} />
@@ -1835,9 +1838,14 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                 <Reveal disabled={isPreview} className="mx-auto mt-10 max-w-[34rem] text-center">
                   <Kicker color={C.goldDeep}>Together with their families</Kicker>
                   <div className="mt-4 space-y-1" style={{ fontFamily: display, fontSize: 'clamp(18px, 5cqi, 22px)', lineHeight: 1.5, color: C.ink }}>
-                    {data.groomParents?.trim() && <p>{data.groomParents}</p>}
-                    {data.groomParents?.trim() && data.brideParents?.trim() && <p style={{ fontFamily: script, fontSize: '1.5em', lineHeight: 1, color: C.rani }}>and</p>}
-                    {data.brideParents?.trim() && <p>{data.brideParents}</p>}
+                    {inOrder(data, 'signature-two-worlds', data.brideParents?.trim() || '', data.groomParents?.trim() || '')
+                      .filter(Boolean)
+                      .map((parents, i) => (
+                        <Fragment key={i}>
+                          {i === 1 && <p style={{ fontFamily: script, fontSize: '1.5em', lineHeight: 1, color: C.rani }}>and</p>}
+                          <p>{parents}</p>
+                        </Fragment>
+                      ))}
                   </div>
                   {blessings.length > 0 && <p className="mt-4 italic" style={{ fontSize: 17, color: C.soft }}>With the blessings of {blessings.join(', ')}</p>}
                 </Reveal>
@@ -2058,7 +2066,7 @@ export default function SignatureTwoWorlds({ data, eventId, isPreview = false }:
                 </p>
               )}
               <p className="mt-5" style={{ fontFamily: display, fontSize: 'clamp(28px, 8cqi, 40px)', color: C.cream }}>
-                {groom} <span style={{ fontFamily: script, color: C.marigold }}>&amp;</span> {bride}
+                {nameA} <span style={{ fontFamily: script, color: C.marigold }}>&amp;</span> {nameB}
               </p>
               {date && <p className="mt-2 uppercase" style={{ fontSize: 12, letterSpacing: '0.26em', color: 'rgba(255,249,238,0.65)' }}>{date.day} · {date.month} · {date.year}</p>}
               <div className="mt-10">

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { isMissingReviewTable, REVIEW_LIMITS, REVIEWS_TAG, reviewForToken } from '@/lib/reviews'
-import { templateSeoSlug } from '@/lib/seo'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -40,7 +39,8 @@ export async function POST(req: NextRequest) {
     if (wasShown) {
       revalidateTag(REVIEWS_TAG)
       revalidatePath('/')
-      revalidatePath(`/templates/${templateSeoSlug(review.templateId)}`)
+      revalidatePath('/create') // the price step shows reviews too
+      // Not the design page: it is rebuilt only by a deploy (approvedReviewsAtBuild in lib/reviews.ts).
     }
     return NextResponse.json({ ok: true })
   } catch (err) {

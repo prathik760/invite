@@ -1,6 +1,7 @@
 'use client'
 
 import { startTransition, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode, type TouchEvent } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { bodoniDisplay } from './kit/fonts/bodoniDisplay'
 import { jost } from './kit/fonts/jost'
@@ -20,6 +21,7 @@ import {
   useCountdown,
   whatsappHref,
   type InviteProps,
+  musicSrc,
 } from './kit/core'
 import { Credit, MusicToggle } from './kit/ui'
 import { timeWords } from './kit/words'
@@ -141,7 +143,9 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
   const palette = paletteOf(data.palette)
   const bride = data.brideName?.trim() || 'Ananya'
   const groom = data.groomName?.trim() || 'Arjun'
-  const couple = `${bride} & ${groom}`
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'signature-royal-edit', bride, groom)
+  const couple = `${nameA} & ${nameB}`
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const timeSpoken = timeWords(data.time)
@@ -414,7 +418,7 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
                   // eslint-disable-next-line @next/next/no-img-element
                   <img className="re-cover-img" src={coverPhoto} alt="" decoding="async" />
                 ) : (
-                  <Monogram initials={[first(bride), first(groom)]} />
+                  <Monogram initials={[first(nameA), first(nameB)]} />
                 )}
                 <div className="re-cover-shade" aria-hidden />
                 <Dust count={10} seed="cover" className="re-dust-front" />
@@ -447,9 +451,9 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
                 <div className="re-cover-lines">
                   <p className="re-tag">{guest ? `Reserved for ${guest}` : 'Exclusive'}</p>
                   <p className="re-cover-names" style={{ fontSize: `clamp(34px, ${nameSize}cqi, 120px)` }}>
-                    <span>{bride}</span>
+                    <span>{nameA}</span>
                     <span>
-                      <em>&amp;</em> {groom}
+                      <em>&amp;</em> {nameB}
                     </span>
                   </p>
                   <p className="re-cover-deck">{tagline}</p>
@@ -465,7 +469,7 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
                     {dotted && <p className="re-cover-date">{dotted}</p>}
                     {city && <p className="re-cover-city">{city}</p>}
                   </div>
-                  <Barcode seed={couple + data.date} digits={`8 ${dotted.replace(/\./g, '')} ${(first(bride) + first(groom)).charCodeAt(0) % 10}`} />
+                  <Barcode seed={couple + data.date} digits={`8 ${dotted.replace(/\./g, '')} ${(first(nameA) + first(nameB)).charCodeAt(0) % 10}`} />
                 </div>
 
                 <button
@@ -525,7 +529,7 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
 
       {rest && (
         <>
-          <header className="re-run" style={{ background: `${palette.paper}F0`, paddingRight: data.musicUrl && /^https?:/.test(data.musicUrl) ? 104 : 16 }}>
+          <header className="re-run" style={{ background: `${palette.paper}F0`, paddingRight: musicSrc(data.musicUrl) ? 104 : 16 }}>
             <button type="button" className="re-run-mast" onClick={() => go('re-contents')}>
               The Royal Edit
             </button>
@@ -571,7 +575,7 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
               )}
               <p>
                 <b>On the cover</b>
-                {bride} and {groom}, {date ? `who marry on ${date.weekday}, ${date.day} ${date.month}` : 'soon to be married'}
+                {nameA} and {nameB}, {date ? `who marry on ${date.weekday}, ${date.day} ${date.month}` : 'soon to be married'}
                 {venue ? ` at ${venue}` : ''}.
               </p>
             </div>
@@ -584,11 +588,11 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
                 {blessingLine}
               </p>
               <h2 className="re-inv-names" data-rv="">
-                <Words text={bride} className="block" />
+                <Words text={nameA} className="block" />
                 <span className="re-amp" aria-label="and">
                   &amp;
                 </span>
-                <Words text={groom} className="block" start={2} />
+                <Words text={nameB} className="block" start={2} />
               </h2>
               <div className="re-inv-req" data-rv="">
                 {requestLines.map((l) => (
@@ -646,17 +650,13 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
 
               {(data.brideParents?.trim() || data.groomParents?.trim()) && (
                 <div className="re-inv-parents" data-rv="">
-                  {data.brideParents?.trim() && (
-                    <p>
-                      <b>{bride}</b>
-                      {data.brideParents}
-                    </p>
-                  )}
-                  {data.groomParents?.trim() && (
-                    <p>
-                      <b>{groom}</b>
-                      {data.groomParents}
-                    </p>
+                  {inOrder(data, 'signature-royal-edit', { name: bride, parents: data.brideParents?.trim() }, { name: groom, parents: data.groomParents?.trim() }).map((p) =>
+                    p.parents ? (
+                      <p key={p.name}>
+                        <b>{p.name}</b>
+                        {p.parents}
+                      </p>
+                    ) : null,
                   )}
                 </div>
               )}
@@ -685,7 +685,7 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={storyPhoto} alt={couple} loading="lazy" decoding="async" />
                     <figcaption>
-                      {bride} &amp; {groom}
+                      {nameA} &amp; {nameB}
                     </figcaption>
                   </figure>
                 )}
@@ -697,7 +697,7 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
                     </p>
                   )}
                   <p className="re-byline" data-rv="">
-                    By {bride} &amp; {groom}
+                    By {nameA} &amp; {nameB}
                   </p>
                   {storyParas.length > 0 && (
                     <div className="re-body" data-rv="">
@@ -856,7 +856,7 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
           <section id="re-rsvp" className="re-sec re-paper re-rsvp">
             <Head kicker="Kindly reply" title="Your presence matters" />
             {canReply ? (
-              <Reply number={data.whatsappNumber} couple={couple} date={date} rsvpBy={rsvpBy} initials={`${first(bride)}${first(groom)}`} isPreview={isPreview} />
+              <Reply number={data.whatsappNumber} couple={couple} date={date} rsvpBy={rsvpBy} initials={`${first(nameA)}${first(nameB)}`} isPreview={isPreview} />
             ) : (
               <p className="re-sub mx-auto mt-8 max-w-[26rem] text-center" style={{ color: 'var(--re-soft)' }}>
                 We would love to know if you can join us. Please reply to the family directly.
@@ -866,7 +866,7 @@ export default function SignatureRoyalEdit({ data, eventId, isPreview = false }:
 
           {eventId && (
             <div id="re-wishes">
-              <WishesSection eventId={eventId} theme={wishesTheme} title="Letters to the couple" intro={`Leave a few words for ${bride} and ${groom}. Every guest can read them here.`} noun="wish" namePlaceholder="e.g. The Mehra family" />
+              <WishesSection eventId={eventId} theme={wishesTheme} title="Letters to the couple" intro={`Leave a few words for ${nameA} and ${nameB}. Every guest can read them here.`} noun="wish" namePlaceholder="e.g. The Mehra family" />
             </div>
           )}
 

@@ -86,6 +86,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   retro: 'Art Deco',
   interactive: '3D surprise',
   greeting: '3D greetings',
+  confession: 'Love letters',
   rakshabandhan: 'Raksha Bandhan',
   ganeshchaturthi: 'Ganesh Chaturthi',
   signature: 'Signature collection',

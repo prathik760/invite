@@ -24,7 +24,7 @@ import SiteHeader from '@/components/layout/SiteHeader'
 import { notFound } from 'next/navigation'
 import JsonLd from '@/components/seo/JsonLd'
 import ReviewsSection from '@/components/reviews/ReviewsSection'
-import { approvedReviews, type ShownReview } from '@/lib/reviews'
+import { approvedReviewsAtBuild, type ShownReview } from '@/lib/reviews'
 import StickyCTA from '@/components/seo/StickyCTA'
 import { TIER_MAP, tierOf } from '@/lib/tiers'
 import SiteFooter from '@/components/landing/SiteFooter'
@@ -298,7 +298,8 @@ export default async function DesignPage({ slug }: { slug: string }) {
   const t = serverT()
   const english = serverLang() === 'en'
   // Reviews from hosts (lib/reviews.ts), on the English page: they are written in English.
-  const reviews = english ? await approvedReviews() : []
+  // Read at build, not from the cache an approval refreshes: see approvedReviewsAtBuild.
+  const reviews = english ? await approvedReviewsAtBuild() : []
   const url = absoluteUrl(`/templates/${slug}`)
   const categoryHref = `/templates/category/${templateCategorySlug(template.category)}`
   const plan = getRequiredPlan(template.id)
@@ -332,7 +333,15 @@ export default async function DesignPage({ slug }: { slug: string }) {
       label: 'Ganesh Chaturthi invitation guide',
     },
   }
-  const occasion = OCCASION_LINK[template.category ?? ''] ?? {
+  // The December designs share the "festival" category; each has its own guide of messages.
+  const DESIGN_LINK: Record<string, { href: string; label: string }> = {
+    'newyear-midnight': { href: '/blog/new-year-party-invitation-message-new-years-eve-invitation-wording', label: 'New Year party invitation messages' },
+    'christmas-evergreen': { href: '/blog/christmas-party-invitation-wording-digital-christmas-invitation', label: 'Christmas party invitation wording' },
+    'confession-for-her': { href: '/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp', label: 'Valentine’s Day ideas' },
+    'confession-for-him': { href: '/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp', label: 'Valentine’s Day ideas' },
+    ...Object.fromEntries(['kids-dinosaur', 'kids-space', 'kids-superhero', 'kids-unicorn', 'kids-jungle', 'kids-cars'].map((id) => [id, { href: '/kids-birthday-invitation', label: 'Kids birthday invitations' }])),
+  }
+  const occasion = DESIGN_LINK[template.id] ?? OCCASION_LINK[template.category ?? ''] ?? {
     href: '/whatsapp-invitation-maker',
     label: 'WhatsApp invitation maker',
   }
@@ -347,7 +356,7 @@ export default async function DesignPage({ slug }: { slug: string }) {
     },
     {
       question: t('How do I create an invitation with the {name} template?', { name: template.name }),
-      answer: t('Choose "Customize" and sign in or create a free account, then fill in your details (names, date, venue, schedule and photos) and preview the invitation as you type. When you’re happy, pay once and publish to get your link, ready to share on WhatsApp.'),
+      answer: t('Choose "Customize": no account is needed to start. Fill in your details (names, date, venue, schedule and photos) and preview the invitation as you type. When you’re happy, sign in, pay once and publish to get your link, ready to share on WhatsApp.'),
     },
     {
       question: t('Do guests need to download an app to view the invitation?'),

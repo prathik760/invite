@@ -4,6 +4,7 @@
  * for the title shown under the picture. Kept apart from the card so the page
  * does not load the image renderer and its fonts to get one line of text.
  */
+import { groomFirst } from '@/lib/nameOrder'
 
 /** 21 -> "21st", 12 -> "12th" */
 function ordinal(n: number): string {
@@ -12,19 +13,17 @@ function ordinal(n: number): string {
   return `${n}${({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th'}`
 }
 
-/** Designs that name the groom first, then the bride (Two Worlds, at its first couple's request). */
-const GROOM_FIRST = new Set(['signature-two-worlds'])
+/**
+ * Whether an invitation names the groom before the bride, in its titles, its share card and its
+ * link: the host's choice, else the design's own order (lib/nameOrder.ts).
+ */
+export { groomFirst } from '@/lib/nameOrder'
 
-/** Whether a design names the groom before the bride: in its titles, its share card and its link. */
-export function groomFirst(templateId?: string): boolean {
-  return Boolean(templateId && GROOM_FIRST.has(templateId))
-}
-
-/** The couple's names, "Bride & Groom", or "Groom & Bride" for a design that puts him first. */
+/** The couple's names in the invitation's order: "Bride & Groom" or "Groom & Bride". */
 export function coupleLine(d: Record<string, string>, templateId?: string): string {
   const bride = (d.brideName || '').trim()
   const groom = (d.groomName || '').trim()
-  return templateId && GROOM_FIRST.has(templateId) ? `${groom} & ${bride}` : `${bride} & ${groom}`
+  return groomFirst(templateId, d) ? `${groom} & ${bride}` : `${bride} & ${groom}`
 }
 
 export interface Card {
@@ -39,6 +38,9 @@ export function cardFor(templateId: string, d: Record<string, string>): Card {
   const t = (v?: string) => (v || '').trim()
   const age = Number(t(d.age))
   const years = Number(t(d.years))
+  if (templateId.startsWith('confession-')) {
+    return { label: 'A letter for you', names: [`For ${t(d.recipientName) || 'you'}`], sub: t(d.senderName) ? `from ${t(d.senderName)}` : undefined }
+  }
   if (templateId.startsWith('greeting-')) {
     return { label: t(d.headline) || 'A message for you', names: [`For ${t(d.recipientName) || 'you'}`], sub: t(d.senderName) ? `with love, ${t(d.senderName)}` : undefined }
   }
@@ -51,7 +53,7 @@ export function cardFor(templateId: string, d: Record<string, string>): Card {
       : templateId === 'signature-nikah' ? 'Nikah'
       : templateId === 'save-the-date' ? 'Save the date'
       : 'Wedding invitation'
-    return { label, names: GROOM_FIRST.has(templateId) ? [t(d.groomName), t(d.brideName)] : [t(d.brideName), t(d.groomName)] }
+    return { label, names: groomFirst(templateId, d) ? [t(d.groomName), t(d.brideName)] : [t(d.brideName), t(d.groomName)] }
   }
   if (t(d.motherName)) return { label: 'Baby shower', names: [t(d.motherName)], sub: t(d.hostNames) ? `hosted by ${t(d.hostNames)}` : undefined }
   if (t(d.honoreeName)) return { label: 'Retirement celebration', names: [t(d.honoreeName)], sub: t(d.milestone) || undefined }
@@ -79,7 +81,8 @@ export function cardFor(templateId: string, d: Record<string, string>): Card {
 
 /** The title of a published invitation: the browser tab, the bold line under a shared link's picture, the email. */
 export function eventTitle(data: Record<string, string>, templateId?: string): string {
-  if (templateId === 'save-the-date' && data.brideName && data.groomName) return `${data.brideName} & ${data.groomName}: Save the Date`
+  if (templateId === 'save-the-date' && data.brideName && data.groomName) return `${coupleLine(data, templateId)}: Save the Date`
+  if (templateId?.startsWith('confession-') && data.recipientName) return `A letter for ${data.recipientName}${data.senderName ? `, from ${data.senderName}` : ''}`
   if (data.headline && data.recipientName) return `${data.headline} (for ${data.recipientName})`
   if (data.recipientName) return `${data.occasion || 'A Surprise'} for ${data.recipientName} 🎁`
   if (data.brideName && data.groomName) return `${coupleLine(data, templateId)}: Wedding Invitation`

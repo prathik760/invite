@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { unbrandDesign } from '@/lib/freeInvites'
 import { getServerSession } from 'next-auth/next'
 import { getToken } from 'next-auth/jwt'
 import { authOptions } from '@/lib/auth'
@@ -40,6 +41,8 @@ export async function POST(req: NextRequest) {
   // Never charge twice for the same design.
   try {
     if (await ownsDesign(buyer, templateId)) {
+      // An owner never sees branding: a free invitation from before the purchase is unbranded here.
+      await unbrandDesign(buyer, templateId)
       return NextResponse.json({ error: 'This design is already yours.', code: 'ALREADY_OWNED' }, { status: 409 })
     }
   } catch (err) {

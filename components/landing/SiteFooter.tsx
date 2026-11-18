@@ -21,6 +21,7 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
       { label: 'Save the dates', href: '/save-the-date' },
       { label: 'Engagement invitations', href: '/engagement-invitation' },
       { label: 'Birthday invitations', href: '/birthday-invitation' },
+      { label: 'Kids birthday invitations', href: '/kids-birthday-invitation' },
       { label: 'Anniversary invitations', href: '/anniversary-invitation' },
       { label: 'Housewarming invitations', href: '/griha-pravesh-invitation' },
       { label: 'Naming ceremony invitations', href: '/namakaran-invitation' },

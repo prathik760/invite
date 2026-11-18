@@ -2045,16 +2045,16 @@ The families who feel most at peace with their invitation spending, in my experi
         body: `The Cinematic Night template is ShareInvite's most visually striking option: a dark, deep-navy or near-black background with gold and white typography that creates a dramatic, film-poster aesthetic. This is the template for couples who want their wedding to feel like an event, not just a ceremony. It is particularly popular with younger, urban couples in cities like Mumbai, Bengaluru, and Hyderabad who are planning weddings with professional photography, curated decor, and a reception that functions as a party. The dark background makes couple photos pop dramatically, which is why it works best when you have a high-quality pre-wedding or engagement shoot photo to upload. It also works well for evening and night-time receptions. View it at /templates/cinematic-night.`,
       },
       {
-        heading: 'KGF Wedding template: bold, filmy, unapologetically Indian',
-        body: `The KGF Wedding template draws on the cinematic universe of the blockbuster franchise: bold typography, high-contrast gold-on-black or gold-on-dark palettes, and a visual energy that is louder and more assertive than the other templates. This is the template for couples who want their wedding invitation to make a statement. It is most popular for large, high-energy North Indian and South Indian weddings where the celebration is big and the family has a sense of humour about leaning into the filmy aesthetic. It pairs naturally with baraat-heavy Punjabi weddings and grand South Indian reception events. Guests who receive this invitation know immediately what kind of celebration they are in for, and they are usually delighted. View it at /templates/kgf-wedding.`,
+        heading: 'Gold Saga template: an epic poster in black and gold',
+        body: `The Gold Saga template is designed like the poster for a period epic: coal black, antique gold leaf on your names and an ember-lit mountain ridge, with the invitation told in chapters (the families, your story, the wedding). It is louder and more dramatic than the other wedding templates, made for couples who want the invitation itself to make a statement. It suits large, high-energy weddings, from baraat-heavy North Indian celebrations to grand South Indian receptions, and it pairs well with a pre-wedding shoot that has dramatic lighting. Guests know at a glance what kind of celebration they are in for. View it at /templates/gold-saga-epic-wedding-invitation-template.`,
       },
       {
         heading: 'Royal Deco template: art deco elegance, regal and refined',
-        body: `The Royal Deco template uses art deco aesthetics (geometric patterns, gold linework, symmetrical layouts, and a refined typographic hierarchy) to create an invitation that feels aristocratic without being traditional in the Hindu ceremonial sense. This template is ideal for couples planning a palace wedding, a heritage hotel reception, or any event where the setting is grand and the aesthetic is opulent rather than folksy. It is the only ShareInvite template that works equally well for Hindu, Muslim, Christian, and secular weddings because its visual language is architectural rather than religious. For Muslim Nikah ceremonies with a formal reception, the Royal Deco template provides the right formal elegance. View it at /templates/royal-deco.`,
+        body: `The Royal Deco template uses art deco aesthetics (geometric patterns, gold linework, symmetrical layouts, and a refined typographic hierarchy) to create an invitation that feels aristocratic without being traditional in the Hindu ceremonial sense. This template is ideal for couples planning a palace wedding, a heritage hotel reception, or any event where the setting is grand and the aesthetic is opulent rather than folksy. It is the only ShareInvite template that works equally well for Hindu, Muslim, Christian, and secular weddings because its visual language is architectural rather than religious. For Muslim Nikah ceremonies with a formal reception, the Royal Deco template provides the right formal elegance. View it at /templates/royal-deco-palace-edition-invitation-template.`,
       },
       {
         heading: 'How to choose based on your wedding style',
-        body: `The simplest decision framework: if your wedding is traditional and family-led, choose Indian Wedding or Elegant Wedding. If it is modern and couple-led, choose Cinematic Night or Royal Deco. If it is large, energy-filled, and unapologetically filmy, KGF Wedding is your template. The second filter is your couple photo: do you have a striking pre-wedding shoot with dramatic lighting? That photo belongs on Cinematic Night or KGF. Do you have a warm, natural-light portrait? Elegant Wedding or Indian Wedding will showcase it better. The final filter is your family: who is the primary audience of the invitation? If older family members and elders are the majority, a familiar-feeling warm template will land better than a dark cinematic one.`,
+        body: `The simplest decision framework: if your wedding is traditional and family-led, choose Indian Wedding or Elegant Wedding. If it is modern and couple-led, choose Cinematic Night or Royal Deco. If it is large, energy-filled and dramatic, Gold Saga is your template. The second filter is your couple photo: do you have a striking pre-wedding shoot with dramatic lighting? That photo belongs on Cinematic Night or Gold Saga. Do you have a warm, natural-light portrait? Elegant Wedding or Indian Wedding will showcase it better. The final filter is your family: who is the primary audience of the invitation? If older family members and elders are the majority, a familiar-feeling warm template will land better than a dark cinematic one.`,
       },
     ],
     checklist: [
@@ -2162,6 +2162,69 @@ Every field is optional beyond the basics, so you can make it as short or as ela
 That link is all you need. Paste it into WhatsApp and it opens instantly for them: no app, no sign-up. You can schedule the moment by simply sending at midnight, or wait for the morning. Everything is editable afterwards, so you can start now and refine the words later.`,
       },
       {
+        heading: 'Or write a confession letter that asks the question',
+        body: `Not together yet? A card says "Happy Valentine's Day"; a confession says "I like you", and then asks. The confession letters are made for that moment: a sealed envelope that opens with a tap, your letter appearing line by line in handwriting, up to three photos of you two, and then the question, "Will you be my Valentine?", with a Yes that grows every time they try No, and a No that runs away from their finger.
+
+- **[For her, from him](/templates/confession-for-her-from-him-invitation-template)**: blush pink, cream paper and a red wax seal.
+- **[For him, from her](/templates/confession-for-him-from-her-invitation-template)**: midnight blue and gold.
+
+When they tap Yes, hearts burst across the screen, their answer reaches your WhatsApp in one tap, and they see your plan for the day, kept a surprise until then. Each letter is ₹${templatePrice('confession-for-her')}, paid once, and you can read the whole thing as they will before you pay.`,
+      },
+      {
+        heading: 'Valentine confession messages for her',
+        body: `Copy one into the letter and make it yours: a real memory beats any line here. The letter asks "Will you be my Valentine?" for you, so end on the feeling, not the question.
+
+**For a crush you see every day:**
+"I have tried to say this in person a hundred times, and every time you smile I forget my lines.
+So here it is, written down: I like you. Not a little. A lot."
+
+**For your best friend:**
+"We have been friends for years, and somewhere along the way you became my favourite person.
+I don't want to lose what we have, but I can't keep pretending either."
+
+**For a long-distance love:**
+"Every evening I count the hours between your time and mine, and every morning your message is the first thing I look for.
+The distance hasn't changed a thing about how I feel."
+
+**For someone who makes ordinary days better:**
+"You make ordinary days feel like the best ones. Your laugh is my favourite sound.
+I'm going to be brave for once: I like you."`,
+      },
+      {
+        heading: 'Valentine confession messages for him',
+        body: `The same rule: one true detail is worth more than a perfect sentence.
+
+**For a crush:**
+"You probably have no idea how long I've wanted to say this, so I'm going first.
+I like you. Really, really like you."
+
+**For your best friend:**
+"You're the first person I want to tell when something good happens, and the one I think of when something goes wrong.
+Maybe that means something. I think it does."
+
+**For someone you're "just talking" to:**
+"We've been 'just talking' for a while now, and I'd like to stop calling it that.
+I'd like it to be us, officially."
+
+**For a long-distance love:**
+"The calls get longer and the goodbyes get harder.
+I miss you in every city I'm in without you."`,
+      },
+      {
+        heading: 'Valentine week 2027: what to send each day',
+        body: `Valentine week runs from Rose Day to Valentine's Day. In 2027:
+
+- **Rose Day, Sunday 7 February:** a [3D love card](/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes) with your photos.
+- **Propose Day, Monday 8 February:** a confession letter that asks the question, or a [proposal card](/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes) if you are asking for forever.
+- **Chocolate Day, Tuesday 9 February:** chocolates and one sweet line.
+- **Teddy Day, Wednesday 10 February:** a teddy, or a photo of the two of you that says the same thing.
+- **Promise Day, Thursday 11 February:** a [promise card](/blog/promise-day-card-online-send-a-heartfelt-3d-promise).
+- **Hug Day, Friday 12 February** and **Kiss Day, Saturday 13 February:** a message, or a call.
+- **Valentine's Day, Sunday 14 February:** the Valentine's Day card, sent just after midnight.
+
+Make the card days ahead and keep the link ready: it opens the same way whether you send it at 12:01 or at dinner.`,
+      },
+      {
         heading: 'Valentine\'s message ideas for her and for him',
         body: `Stuck on words? Keep them specific. Specific beats poetic every time. **For her:** "You make ordinary Tuesdays feel like something. Happy Valentine's Day to the person I choose, every single day." Or: "Three years in and I still get nervous-excited when your name lights up my phone." **For him:** "You are my calm and my favourite chaos. Thank you for being mine." Or: "Of all my decisions, choosing you is the one I'm proudest of." **For a new relationship or a crush:** keep it light and honest: "I've been trying to find a smooth way to say this, so I made you a card instead. Happy Valentine's Day." The "reasons I love you" lines work best as small, true observations: the way they laugh at their own jokes, how they always text when they get home safe, the fact that they remember the little things.`,
       },
@@ -2175,11 +2238,11 @@ That link is all you need. Paste it into WhatsApp and it opens instantly for the
       },
       {
         heading: 'How much does a digital Valentine\'s card cost?',
-        body: `A ShareInvite Valentine's card is available on an affordable one-time plan, typically less than a single shop-bought card and a fraction of a flower delivery, with no subscription. You pay once, and the link stays live so your partner can revisit the card whenever they want. Compared to a bouquet that wilts in a week, a digital valentine that keeps your photos, your song and your words is remarkable value. When you are ready, pick your plan, personalise your card, and send the most romantic message in their inbox this February.`,
+        body: `The Valentine's Day card and the other 3D love cards are ₹${templatePrice('greeting-valentine')} each, and the confession letters ₹${templatePrice('confession-for-her')}, paid once, with no subscription: less than a shop card and a fraction of a flower delivery. You make and preview the whole card free first and pay only when you send it. The link stays live afterwards, so your person can open it again whenever they want. You can also send it free with ShareInvite branding on it, and remove the branding later on the same link.`,
       },
     ],
     checklist: [
-      'Choose the Valentine\'s Day floating-hearts template.',
+      'Choose the Valentine\'s Day floating-hearts card, or a confession letter if you are asking the question.',
       'Use a real photo of the two of you, not a stock image.',
       'Write 4–5 specific "reasons I love you" lines, one per line.',
       'Pick a background song tied to a shared memory.',
@@ -2193,10 +2256,14 @@ That link is all you need. Paste it into WhatsApp and it opens instantly for the
       { q: 'Is a digital valentine good for a long-distance relationship?', a: 'It is ideal. The card arrives the moment you send it, plays your song and shows your photos together, and many couples open it on a video call so they can watch each other\'s reaction. There is no shipping delay, no customs and no extra cost to send it to another country.' },
       { q: 'What should I write in a Valentine\'s card?', a: 'Be specific rather than poetic. Mention true, small things: the way they laugh, a shared memory, a habit you love. For the reasons section use short honest lines; for the main message write the way you actually talk. Specific and honest always beats generic romantic phrasing.' },
       { q: 'Can I add our photos and a song?', a: 'Yes. You can upload several photos for the memories section and add a background music URL so your song plays while the card animates. Using a real photo of the two of you and a song from a shared memory is what makes the card feel personal.' },
-      { q: 'How much does it cost?', a: 'It is an affordable one-time payment with no recurring charges, usually less than a shop card plus flowers. Your link stays live afterwards so your partner can reopen the card any time. See the pricing page for the current plan.' },
+      { q: 'How much does it cost?', a: `The Valentine's Day card is ₹${templatePrice('greeting-valentine')} and a confession letter ₹${templatePrice('confession-for-her')}, a one-time payment with no subscription. You can build and preview the whole card free before you pay, and the link stays live afterwards.` },
+      { q: 'How do I confess my feelings on Valentine\'s Day?', a: 'Write it down. A confession letter lets you say it in your own words, line by line, and then asks "Will you be my Valentine?" for you, with a Yes button and a No that runs away. Their answer comes back to your WhatsApp, so you are not waiting for a reply in person. Keep the letter short and specific: one real memory and one honest sentence ("I like you") do more than a poem.' },
+      { q: 'What are the Valentine week dates in 2027?', a: 'Rose Day is Sunday 7 February, Propose Day Monday 8, Chocolate Day Tuesday 9, Teddy Day Wednesday 10, Promise Day Thursday 11, Hug Day Friday 12, Kiss Day Saturday 13 and Valentine\'s Day Sunday 14 February 2027.' },
     ],
     links: [
       { label: 'Create your Valentine\'s Day card', href: '/create?template=greeting-valentine' },
+      { label: 'A confession letter for her', href: '/templates/confession-for-her-from-him-invitation-template' },
+      { label: 'A confession letter for him', href: '/templates/confession-for-him-from-her-invitation-template' },
       { label: 'See pricing', href: '/pricing' },
       { label: 'Send a 3D love card', href: '/blog/3d-love-card-online-send-a-romantic-animated-card-in-minutes' },
       { label: 'Digital proposal card', href: '/blog/digital-proposal-card-a-3d-will-you-marry-me-card-that-says-yes' },
@@ -5894,7 +5961,7 @@ Evergreen is a one-time ₹${templatePrice('christmas-evergreen')} to publish, f
     ],
   },
   'new-year-party-invitation-message-new-years-eve-invitation-wording': {
-    intro: `New Year's Eve is the only party where everyone already knows the plan: be together at midnight. Everything your invitation says is about who you want in the room when the clock strikes twelve. This guide gives you more than forty New Year party invitation messages to copy (for friends, family and colleagues, funny ones, short ones for WhatsApp and Instagram, a few in Hindi), plus New Year's Eve invitation wording for a house party, a rooftop, a black-tie dinner and a New Year's Day brunch. It covers what to put on the invitation and when to send it, and shows you a digital New Year invitation that counts down from ten, fills the screen with fireworks and has them spell out 2027.`,
+    intro: `New Year's Eve is the only party where everyone already knows the plan: be together at midnight. Everything your invitation says is about who you want in the room when the clock strikes twelve. This guide gives you more than forty New Year party invitation messages to copy for WhatsApp: for friends, family, your housing society and colleagues, funny ones, short ones for Instagram and a set in Hindi, plus wording for restaurants, cafés and clubs inviting their guests, a house party, a rooftop, a black-tie dinner and a New Year's Day brunch. It covers what to put on the invitation and when to send it, and shows you a digital New Year invitation that counts down from ten, fills the screen with fireworks and has them spell out 2027.`,
     sections: [
       {
         heading: 'What to put on a New Year’s Eve party invitation',
@@ -5945,6 +6012,22 @@ Evergreen is a one-time ₹${templatePrice('christmas-evergreen')} to publish, f
 "Happy New Year in advance! 🥘 Join us for a lazy New Year's Day lunch on Friday, 1 January at [Time]. Come as you are, recover with us. [Address]"`,
       },
       {
+        heading: 'New Year party invitation for society and apartment residents',
+        body: `In most Indian cities the biggest New Year's Eve party is the one in the society clubhouse. One message in the residents' WhatsApp group does the job if it says what is included, what it costs and when to confirm.
+
+**Society clubhouse party:**
+"Dear residents, let's welcome 2027 together! 🎆 [Society Name] New Year's Eve party on Thursday, 31 December from [Time] at the clubhouse. Music, dinner, games for the kids and a countdown on the terrace. Please confirm the number of family members by [Date]."
+
+**Society potluck:**
+"New Year's Eve potluck at [Society Name]! 🍲 Bring one dish from home and let's ring in 2027 together. 31 December, [Time], [Venue in the society]. Reply with what you're bringing so we don't end up with ten biryanis."
+
+**Family evening with a kids' countdown:**
+"A New Year evening for every family in [Society Name]. 🎈 Games and a 9 pm 'midnight' for the little ones, then music, dinner and the real countdown. 31 December from [Time], [Venue]."
+
+**With the contribution:**
+"[Society Name] New Year's Eve 🎉 31 December, [Time], clubhouse lawn. Contribution: ₹[Amount] per family for dinner, DJ and decorations. Please pay [Name] by [Date] and confirm your headcount."`,
+      },
+      {
         heading: 'New Year party invitation messages in Hindi',
         body: `For family groups in India, a message in Hindi feels warmer:
 
@@ -5952,7 +6035,19 @@ Evergreen is a one-time ₹${templatePrice('christmas-evergreen')} to publish, f
 "नए साल का स्वागत साथ मिलकर करें! 🎆 31 दिसंबर की शाम [Time] बजे हमारे घर नए साल की पार्टी है। डिनर, संगीत और आधी रात का काउंटडाउन। आप सपरिवार ज़रूर आइए। पता: [Address]"
 
 **Short Hindi message for WhatsApp:**
-"नया साल, पुराने दोस्त और ढेर सारी खुशियाँ! 🥂 31 दिसंबर, रात [Time] बजे से हमारे यहाँ। ज़रूर आना!"`,
+"नया साल, पुराने दोस्त और ढेर सारी खुशियाँ! 🥂 31 दिसंबर, रात [Time] बजे से हमारे यहाँ। ज़रूर आना!"
+
+**Family dinner (Hindi):**
+"प्रिय परिवारजन, नए साल 2027 का स्वागत हम सब मिलकर करना चाहते हैं। 31 दिसंबर को रात [Time] बजे डिनर पर आपका इंतज़ार रहेगा। पता: [Address]"
+
+**For the society group (Hindi):**
+"सभी निवासियों को सादर आमंत्रण! 🎆 [Society Name] में 31 दिसंबर की शाम [Time] बजे नए साल का जश्न: संगीत, डिनर और बच्चों के खेल। कृपया [Date] तक परिवार के सदस्यों की संख्या बताएँ।"
+
+**Office party (Hindi):**
+"पूरे साल की मेहनत के लिए धन्यवाद! 🎉 [Company] की नए साल की पार्टी [Day, Date] को [Time] बजे, [Venue] में। कृपया [Date] तक बताएँ कि आप आ रहे हैं।"
+
+**For friends (Hinglish):**
+"Saal khatam, party shuru! 🥳 31 December ki raat [Time] baje se humare ghar New Year party hai. Khana, gaana aur midnight countdown. Zaroor aana! Address: [Address]"`,
       },
       {
         heading: 'New Year party invitation message for colleagues and office',
@@ -5964,6 +6059,21 @@ Evergreen is a one-time ₹${templatePrice('christmas-evergreen')} to publish, f
 
 **New Year's Day brunch for the team:**
 "Fresh start, full plates. 🍳 New Year brunch for the team on [Day, Date] at [Time], [Venue]. Resolutions optional."`,
+      },
+      {
+        heading: 'New Year’s Eve event invitation for restaurants, cafés and clubs',
+        body: `Running a New Year's Eve night at a restaurant, café, club or banquet hall? Your guests want the menu, the timings, the price and a quick way to book, and a link carries all four.
+
+**Restaurant gala dinner:**
+"Ring in 2027 with us. ✨ New Year's Eve gala dinner at [Restaurant] on 31 December: a [Number]-course menu from [Time], live music and a toast at midnight. ₹[Price] per person. Reserve your table: [Phone]"
+
+**Rooftop café countdown:**
+"Countdown on the rooftop! 🎆 New Year's Eve at [Café], 31 December from [Time]. DJ, snacks and the best view of the fireworks. Entry ₹[Price], limited spots. Reply to book yours."
+
+**Club night:**
+"The last night of 2026 deserves a big one. 🪩 New Year's Eve at [Club], 31 December from [Time]. [DJ] on the decks, dress code [Dress code]. Couples ₹[Price]. Book on WhatsApp: [Number]"
+
+The Midnight design suits these too: the night's plan appears as gold tickets, and the RSVP tells you how many are coming in one WhatsApp message.`,
       },
       {
         heading: 'Funny New Year party invitation messages',
@@ -5985,7 +6095,13 @@ Evergreen is a one-time ₹${templatePrice('christmas-evergreen')} to publish, f
 - Let's end 2026 the way it deserves: together, and loudly.
 - Countdown starts at our place. Bring your sparkle.
 - Auld acquaintance is not being forgot. See you on the 31st.
-- Last party of the year, first memory of the next.`,
+- Last party of the year, first memory of the next.
+- 2027 is loading. Come watch it arrive with us.
+- One more party before the resolutions kick in. 31st, ours.
+- Bring your best dance moves and your worst resolutions.
+- Clock's ticking. Party's on. See you at 11:59.
+- Same gang, new year. Our place, 31 December.
+- The countdown is better with you in it. Come over on the 31st.`,
       },
       {
         heading: 'When to send New Year’s Eve invitations',
@@ -6066,6 +6182,14 @@ Midnight is a one-time ₹${templatePrice('newyear-midnight')} to publish, for a
         a: 'Yes. Add ?to= and the guest\'s name to the end of your link, and the invitation opens with "For Jules and Sam" on the clock screen and greets them by name in the letter.',
       },
       {
+        q: 'How do I invite society members to a New Year party?',
+        a: 'Post one short message in the residents\' WhatsApp group with the date, time and venue in the society, what is included (dinner, DJ, kids\' games) and the contribution per family, with an invitation link underneath for the details and replies. Ask families to confirm their headcount by about 20 December, so the food and the DJ can be booked in time.',
+      },
+      {
+        q: 'What is a good New Year party invitation message in Hindi?',
+        a: 'For example: "नए साल का स्वागत साथ मिलकर करें! 31 दिसंबर की शाम [Time] बजे हमारे घर नए साल की पार्टी है। आप सपरिवार ज़रूर आइए।" Keep the date, time and address on their own lines, and paste the invitation link underneath so the rest of the details are one tap away.',
+      },
+      {
         q: 'How much does the Midnight New Year invitation cost?',
         a: `It is a one-time ₹${templatePrice('newyear-midnight')} to publish, with no subscription and no per-guest charge. You can add every detail and preview the whole invitation, fireworks included, before you pay.`,
       },
@@ -6077,10 +6201,699 @@ Midnight is a one-time ₹${templatePrice('newyear-midnight')} to publish, for a
     links: [
       { label: 'Midnight: the New Year party invitation', href: '/templates/midnight-new-year-party-invitation-template' },
       { label: 'See the New Year invitation live', href: '/demo/newyear-midnight' },
+      { label: 'Evergreen: the Christmas party invitation', href: '/templates/evergreen-christmas-party-invitation-template' },
       { label: 'Christmas party invitation wording', href: '/blog/christmas-party-invitation-wording-digital-christmas-invitation' },
       { label: 'Festival invitation designs', href: '/templates?occasion=festival' },
       { label: 'Birthday invitation wording', href: '/birthday-invitation-wording' },
       { label: 'WhatsApp invitation maker', href: '/whatsapp-invitation-maker' },
+    ],
+  },
+  'marathi-wedding-invitation-message-lagna-patrika-for-whatsapp': {
+    intro: `A Marathi lagna patrika follows a form every family recognises: ॥ श्री गणेशाय नमः ॥ at the top, the groom as चि., the bride as चि. सौ. कां., the muhurt, the karyalay, and a humble request to come with your whole family and bless the couple. This guide gives you that wording in Marathi, ready to copy, plus short wedding invitation messages for WhatsApp, invitations for the Haldi, Sakharpuda, Sangeet and reception, a reminder for the day before, and versions in English letters for relatives who type Marathi in Roman script. Change the words in brackets and paste your invitation link underneath.`,
+    sections: [
+      {
+        heading: 'How a Marathi lagna patrika is written',
+        body: `Most Marathi wedding cards follow the same order, top to bottom:
+
+- **॥ श्री गणेशाय नमः ॥**, often with your family deity's line, such as ॥ श्री कुलस्वामिनी प्रसन्न ॥
+- **सस्नेह निमंत्रण** (a warm invitation) or **शुभविवाह** as the heading
+- **The groom** as चि. [name], with his parents: श्री. [father] व सौ. [mother] यांचे सुपुत्र
+- **The bride** as चि. सौ. कां. [name], with her parents: यांची सुकन्या
+- **The muhurt**: the day, date and time (शुभमुहूर्त), and the **karyalay** with its address
+- **The request**: आपण सहकुटुंब, सहपरिवार उपस्थित राहून वधू-वरांस शुभाशीर्वाद द्यावेत, ही नम्र विनंती
+- **The inviters**: आपले नम्र or निमंत्रक with the family names, and sometimes a line about **आहेर**
+
+On WhatsApp the same order works in four or five lines: the couple, the muhurt, the karyalay and the request. The rest (every function, the map and the timings) can live on your invitation link.`,
+      },
+      {
+        heading: 'Traditional Marathi wedding invitation wording (lagna patrika)',
+        body: `Copy one of these and change the words in brackets.
+
+**Traditional patrika wording:**
+"॥ श्री गणेशाय नमः ॥
+सस्नेह निमंत्रण
+आमचे येथे श्री कृपेकरून
+चि. [वराचे नाव]
+(श्री. [वडिलांचे नाव] व सौ. [आईचे नाव] यांचे सुपुत्र)
+यांचा शुभविवाह
+चि. सौ. कां. [वधूचे नाव]
+(श्री. [वडिलांचे नाव] व सौ. [आईचे नाव] यांची सुकन्या)
+हिच्याशी [वार], दिनांक [तारीख] रोजी शुभमुहूर्त [वेळ] वाजता [कार्यालयाचे नाव], [गाव] येथे करण्याचे योजिले आहे.
+तरी आपण सहकुटुंब, सहपरिवार उपस्थित राहून वधू-वरांस शुभाशीर्वाद द्यावेत, ही नम्र विनंती.
+आपले नम्र: [कुटुंबाचे नाव]"
+
+**From the bride's family:**
+"॥ श्री गणेशाय नमः ॥
+आमची कन्या चि. सौ. कां. [वधूचे नाव] हिचा शुभविवाह
+चि. [वराचे नाव] (श्री. [वडिलांचे नाव] यांचे सुपुत्र) यांच्याशी
+[तारीख] रोजी [वेळ] वाजता [कार्यालय], [गाव] येथे संपन्न होत आहे.
+या मंगल प्रसंगी आपली उपस्थिती प्रार्थनीय आहे.
+निमंत्रक: श्री. [वडिलांचे नाव] व सौ. [आईचे नाव]"
+
+**With the family deity, and no gifts:**
+"॥ श्री कुलस्वामिनी प्रसन्न ॥
+चि. [वर] आणि चि. सौ. कां. [वधू] यांच्या शुभविवाहाचे सस्नेह निमंत्रण.
+शुभमुहूर्त: [वार], [तारीख], [वेळ]
+स्थळ: [कार्यालय], [पत्ता]
+आपले आशीर्वाद हाच आमचा आहेर. कृपया आहेर आणू नये."`,
+      },
+      {
+        heading: 'Short Marathi wedding invitation messages for WhatsApp',
+        body: `For family groups and one-to-one messages, keep it to a few lines and paste your invitation link underneath.
+
+**Short and warm:**
+"आमच्या घरी लग्नकार्य! 🌼 चि. [वर] आणि चि. सौ. कां. [वधू] यांचा शुभविवाह [तारीख] रोजी [वेळ] वाजता [कार्यालय], [गाव] येथे. आपण सहकुटुंब उपस्थित राहून आशीर्वाद द्यावेत, ही नम्र विनंती. 🙏"
+
+**For relatives:**
+"नमस्कार! 🙏 आमच्या [मुलाच्या / मुलीच्या] लग्नाचे आपल्याला सस्नेह निमंत्रण. चि. [वर] ❤️ चि. सौ. कां. [वधू], [तारीख], [कार्यालय]. आपण नक्की यावे, आपल्या आशीर्वादाशिवाय हा सोहळा अपूर्ण आहे."
+
+**Muhurt first:**
+"शुभमुहूर्त: [तारीख], [वेळ] 🌸 चि. [वर] व चि. सौ. कां. [वधू] यांच्या विवाहासाठी आपण [कार्यालय] येथे अवश्य यावे. सविस्तर माहिती आणि नकाशा खालील लिंकवर. 👇"`,
+      },
+      {
+        heading: 'Marathi wedding invitation message for friends',
+        body: `**For the friends' group:**
+"मित्रांनो, लग्न ठरलं! 💍 [तारीख] ला [कार्यालय], [गाव] येथे. नाचायला, जेवायला आणि फोटोसाठी तुम्ही हवेच, तेव्हा नक्की यायचं! 😄"
+
+**From the bride or groom:**
+"शेवटी माझं लग्न ठरलं! 🎉 [तारीख] ला [वेळ] वाजता [ठिकाण]. हळदीपासून स्वागत समारंभापर्यंत सगळीकडे तुम्ही पाहिजेत. सगळी माहिती या लिंकवर. 👇"`,
+      },
+      {
+        heading: 'Invitations for the Haldi, Sakharpuda, Sangeet and Seemant Pujan',
+        body: `**Haldi (हळदी समारंभ):**
+"चि. [नाव] यांचा हळदी समारंभ [तारीख] रोजी [वेळ] वाजता [ठिकाण] येथे. पिवळे कपडे घालून या आणि हळदीचा आनंद लुटा! 💛"
+
+**Sakharpuda (engagement):**
+"चि. [वर] आणि चि. सौ. कां. [वधू] यांचा साखरपुडा [तारीख] रोजी [वेळ] वाजता [ठिकाण] येथे आयोजित केला आहे. आपण अवश्य उपस्थित राहावे. 💍"
+
+**Mehendi and Sangeet:**
+"मेहंदी आणि संगीत! 🎶 [तारीख], संध्याकाळी [वेळ] पासून [ठिकाण]. गाणी, नाच आणि धमाल, आपण नक्की या!"
+
+**Seemant Pujan:**
+"चि. [वर] यांचे सीमांत पूजन [तारीख] रोजी [वेळ] वाजता [ठिकाण] येथे होईल. आपली उपस्थिती प्रार्थनीय आहे."`,
+      },
+      {
+        heading: 'Reception invitation in Marathi (स्वागत समारंभ)',
+        body: `At the reception the bride is written as सौ., since the wedding has taken place.
+
+**Reception after the wedding:**
+"चि. [वर] व सौ. [वधू] यांच्या शुभविवाहानिमित्त स्वागत समारंभ [तारीख] रोजी सायंकाळी [वेळ] वाजता [ठिकाण] येथे आयोजित केला आहे. नवदांपत्यास शुभेच्छा देण्यासाठी आपण सहकुटुंब अवश्य यावे."
+
+**Short reception message:**
+"स्वागत समारंभ 🌸 [तारीख], सायं. [वेळ], [ठिकाण]. वधू-वरांना भेटायला आणि शुभेच्छा द्यायला नक्की या!"`,
+      },
+      {
+        heading: 'Marathi wedding invitation in English letters',
+        body: `For relatives abroad, or friends who read Marathi but type it in English letters:
+
+**Roman Marathi:**
+"Amchya ghari lagnakarya! 🌼 Chi. [Groom] aani Chi. Sau. Ka. [Bride] yancha shubhvivah [Date] roji [Time] vajta [Venue] yethe. Aapan sahakutumb upasthit rahun ashirvad dyavet, hi namra vinanti. 🙏"
+
+**In English, with a Marathi touch:**
+"With the blessings of Shri Ganesh, we invite you and your family to the wedding of Chi. [Groom] and Chi. Sau. Ka. [Bride] on [Date] at [Time], [Venue]. Your presence and blessings are our greatest aaher."`,
+      },
+      {
+        heading: 'Reminder message for the day before',
+        body: `**Muhurt reminder:**
+"उद्या लग्न! 🙏 अक्षतांचा मुहूर्त [वेळ] वाजता आहे, कृपया वेळेवर यावे. ठिकाण आणि नकाशा: [लिंक]"
+
+**Gentle reminder:**
+"नमस्कार, उद्या चि. [वर] आणि चि. सौ. कां. [वधू] यांचे लग्न आहे. आपली वाट पाहत आहोत! 🌸 [कार्यालय], [वेळ]"`,
+      },
+      {
+        heading: 'Send it as a digital lagna patrika',
+        body: `A WhatsApp message carries the words; a digital invitation carries everything else. On ShareInvite you paste your Marathi wording into a design, and guests get one link with a countdown to the muhurt, the karyalay on Google Maps, every function with its own time, your photos and a place for their blessings.
+
+- **Saptapadi** (₹${templatePrice('signature-saptapadi')}) opens behind an **antarpat**, the cloth held between the bride and groom during the mangalashtak, which is lowered on your names. Of all our designs it is the closest to a Marathi wedding.
+- **Shaadi** (₹${templatePrice('indian-wedding')}) is a crimson and gold invitation for a big family wedding.
+- **Elegant Wedding** (₹${templatePrice('elegant-wedding')}) is simple ivory and gold, quick to make and easy on the budget.
+
+Every design shows any Marathi text you type, in Devanagari or English letters. You build and preview the whole invitation free, and pay once only when you publish.`,
+      },
+    ],
+    checklist: [
+      'Start with ॥ श्री गणेशाय नमः ॥, and your family deity if your family uses one.',
+      'Write the groom as चि. and the bride as चि. सौ. कां., with both sets of parents.',
+      'Give the day, date and muhurt time, and the karyalay with its full address.',
+      'End with the request to come सहकुटुंब and bless the couple, then the inviters’ names.',
+      'Add a line about आहेर if you would rather have no gifts.',
+      'Send the invitation three to four weeks ahead, and a reminder the day before with the muhurt time.',
+    ],
+    faq: [
+      {
+        q: 'How do you write a wedding invitation message in Marathi?',
+        a: 'Start with ॥ श्री गणेशाय नमः ॥, name the groom as चि. and the bride as चि. सौ. कां. with their parents, give the muhurt (day, date and time) and the karyalay, and close with the request: आपण सहकुटुंब उपस्थित राहून वधू-वरांस शुभाशीर्वाद द्यावेत, ही नम्र विनंती. Copy one of the patrika samples above and change the names.',
+      },
+      {
+        q: 'What does चि. सौ. कां. mean on a Marathi wedding card?',
+        a: 'चि. सौ. कां. stands for चिरंजीव सौभाग्यकांक्षिणी, the respectful way to name the bride on a Marathi lagna patrika. The groom is written as चि. (चिरंजीव). At the reception, after the wedding, the bride is written as सौ.',
+      },
+      {
+        q: 'How do I say no gifts on a Marathi wedding invitation?',
+        a: 'The usual line is कृपया आहेर आणू नये (please do not bring gifts), or more warmly, आपले आशीर्वाद हाच आमचा आहेर (your blessings are our gift). Put it at the end, after the inviters’ names.',
+      },
+      {
+        q: 'Can I send a Marathi wedding invitation on WhatsApp?',
+        a: 'Yes. Send a short Marathi message with the couple, the muhurt and the karyalay, and paste a digital invitation link underneath. The link carries the map, the timings of every function and your photos, and opens on any phone without an app.',
+      },
+      {
+        q: 'When should I send a Marathi wedding invitation?',
+        a: 'Three to four weeks before the wedding, and six to eight weeks ahead for relatives who need to travel. Send a reminder the day before with the muhurt time, since the akshata are at the muhurt and guests should be seated before it.',
+      },
+      {
+        q: 'Can a digital invitation show Marathi text?',
+        a: 'Yes. Every ShareInvite design shows whatever you type, in Devanagari or in English letters. You can write the whole invitation in Marathi, preview it free, and pay once only when you publish.',
+      },
+    ],
+    links: [
+      { label: 'Saptapadi: a wedding invitation with the antarpat', href: '/templates/saptapadi-signature-hindu-wedding-invitation-template' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation wording in English and Hindi', href: '/wedding-invitation-wording' },
+      { label: 'Tamil wedding invitation messages', href: '/blog/tamil-wedding-invitation-message-thirumana-pathirikai-wording' },
+      { label: 'Telugu wedding invitation messages', href: '/blog/telugu-wedding-invitation-message-pelli-shubhalekha-wording' },
+      { label: 'Mehendi and Sangeet invitation ideas', href: '/blog/mehendi-and-sangeet-invitation-ideas' },
+    ],
+  },
+  'tamil-wedding-invitation-message-thirumana-pathirikai-wording': {
+    intro: `A Tamil wedding invitation (திருமண அழைப்பிதழ், the thirumana pathirikai) has a form every family knows: the pillaiyar suzhi உ at the top, the groom as சிரஞ்சீவி, the bride as சௌபாக்கியவதி, the muhurtham and its auspicious time, the mandapam, and a warm request to come with your whole family and bless the couple. This guide gives you that wording in Tamil, ready to copy, along with short Tamil wedding invitation messages for WhatsApp, invitations for the Nichayathartham, Mappillai Azhaippu and reception, a reminder for the day before, and versions in English letters for relatives who don't read Tamil script. Change the words in brackets and paste your invitation link underneath.`,
+    sections: [
+      {
+        heading: 'How a Tamil wedding invitation is written',
+        body: `Most Tamil pathirikais follow this order:
+
+- **உ**, the pillaiyar suzhi, at the top, often with **சிவமயம்** or your family deity
+- **The muhurtham**: நிகழும் மங்களகரமான [Tamil year] வருடம் [Tamil month] மாதம் [date] ஆம் தேதி, the day, and the auspicious time (சுபமுகூர்த்தம்)
+- **The groom** as சிரஞ்சீவி [name], son of திரு. [father] – திருமதி. [mother]
+- **The bride** as சௌபாக்கியவதி (or செல்வி) [name], daughter of her parents
+- **The mandapam** and the town
+- **The request**: தாங்கள் தங்கள் சுற்றம் சூழ வருகை தந்து மணமக்களை வாழ்த்தி ஆசீர்வதிக்குமாறு அன்புடன் அழைக்கிறோம்
+- **The inviters**: the parents, and often the elders of both families
+
+On WhatsApp, keep the couple, the muhurtham, the mandapam and the request, and let your invitation link carry the rest: every function, the map and the timings.`,
+      },
+      {
+        heading: 'Traditional Tamil wedding invitation wording (pathirikai)',
+        body: `Copy one of these and change the words in brackets.
+
+**Traditional pathirikai:**
+"உ
+சிவமயம்
+நிகழும் மங்களகரமான [வருடம்] வருடம் [மாதம்] மாதம் [நாள்] ஆம் தேதி ([ஆங்கிலத் தேதி]) [கிழமை] காலை [நேரம்] மணி முதல் [நேரம்] மணிக்குள் நடைபெறும் சுபமுகூர்த்தத்தில்,
+திரு. [மணமகன் தந்தை] – திருமதி. [தாய்] அவர்களின் மகன் சிரஞ்சீவி [மணமகன்] க்கும்,
+திரு. [மணமகள் தந்தை] – திருமதி. [தாய்] அவர்களின் மகள் சௌபாக்கியவதி [மணமகள்] க்கும்
+[மண்டபம்], [ஊர்] இல் திருமணம் நடைபெற உள்ளது.
+தாங்கள் தங்கள் சுற்றம் சூழ வருகை தந்து மணமக்களை வாழ்த்தி ஆசீர்வதிக்குமாறு அன்புடன் அழைக்கிறோம்."
+
+**From the bride's family:**
+"உ
+எங்கள் அன்பு மகள் சௌபாக்கியவதி [மணமகள்] க்கும்,
+திரு. [தந்தை] அவர்களின் மகன் சிரஞ்சீவி [மணமகன்] க்கும்
+[தேதி] அன்று காலை [நேரம்] மணிக்கு [மண்டபம்], [ஊர்] இல் திருமணம் நடைபெறுகிறது.
+தாங்கள் குடும்பத்துடன் வருகை தந்து மணமக்களை ஆசீர்வதிக்க வேண்டுகிறோம்.
+இப்படிக்கு, [பெற்றோர் பெயர்]"
+
+**Short formal:**
+"சுபமுகூர்த்தம்: [தேதி], காலை [நேரம்]
+சிரஞ்சீவி [மணமகன்] – சௌபாக்கியவதி [மணமகள்]
+இடம்: [மண்டபம்], [ஊர்]
+தங்கள் நல்வரவை அன்புடன் எதிர்பார்க்கிறோம். 🙏"`,
+      },
+      {
+        heading: 'Short Tamil wedding invitation messages for WhatsApp',
+        body: `For family groups and one-to-one messages, keep it to a few lines and paste your invitation link underneath.
+
+**Short and warm:**
+"எங்கள் இல்லத் திருமண விழாவிற்கு உங்களை அன்புடன் அழைக்கிறோம்! 💐 [மணமகன்] ❤️ [மணமகள்] | முகூர்த்தம்: [தேதி], காலை [நேரம்] | இடம்: [மண்டபம்], [ஊர்]. குடும்பத்துடன் வந்து வாழ்த்துங்கள் 🙏"
+
+**For relatives:**
+"வணக்கம்! 🙏 எங்கள் [மகன் / மகள்] திருமணத்திற்கு உங்களை அன்புடன் அழைக்கிறோம். [தேதி] அன்று [மண்டபம்] இல். உங்கள் ஆசீர்வாதம் இல்லாமல் இந்த விழா நிறைவடையாது, அவசியம் வாருங்கள்."
+
+**Muhurtham first:**
+"முகூர்த்தம்: [தேதி], [நேரம்] 🌸 சிரஞ்சீவி [மணமகன்] – சௌபாக்கியவதி [மணமகள்] திருமணத்திற்கு அவசியம் வருகை தாருங்கள். முழு விவரமும் வரைபடமும் கீழே உள்ள லிங்கில். 👇"`,
+      },
+      {
+        heading: 'Tamil wedding invitation message for friends',
+        body: `**For the friends' group:**
+"நண்பர்களே, கல்யாணம் fix ஆயிடுச்சு! 🎉 [தேதி] அன்று [மண்டபம்], [ஊர்]-ல. நீங்க இல்லாம கல்யாணம் களை கட்டாது, கட்டாயம் வாங்க! 😄"
+
+**From the bride or groom:**
+"ஒரு வழியா என் கல்யாணம்! 💍 [தேதி] அன்று [நேரம்] மணிக்கு [இடம்]. நிச்சயதார்த்தம் முதல் ரிசெப்ஷன் வரை எல்லாத்துக்கும் நீங்க வேணும். விவரங்கள் இந்த லிங்கில். 👇"`,
+      },
+      {
+        heading: 'Nichayathartham, Mappillai Azhaippu and Mehendi invitations',
+        body: `**Nichayathartham (engagement):**
+"சிரஞ்சீவி [மணமகன்] – செல்வி [மணமகள்] நிச்சயதார்த்தம் [தேதி] அன்று [நேரம்] மணிக்கு [இடம்] இல் நடைபெறுகிறது. தாங்கள் அவசியம் வருகை தர வேண்டுகிறோம். 💍"
+
+**Mappillai Azhaippu (welcoming the groom):**
+"[தேதி] மாலை [நேரம்] மணிக்கு மாப்பிள்ளை அழைப்பு, [இடம்] இல். மணமகனை வரவேற்க நீங்களும் எங்களுடன் இருங்கள்! 🎉"
+
+**Mehendi and Sangeet:**
+"மெஹந்தி & சங்கீத்! 🎶 [தேதி], மாலை [நேரம்] முதல் [இடம்]. பாட்டு, நடனம், கொண்டாட்டம், அவசியம் வாருங்கள்!"`,
+      },
+      {
+        heading: 'Wedding reception invitation in Tamil (வரவேற்பு)',
+        body: `At the reception the bride is written as திருமதி, since the wedding has taken place.
+
+**Reception:**
+"சிரஞ்சீவி [மணமகன்] – திருமதி [மணமகள்] திருமண வரவேற்பு [தேதி] அன்று மாலை [நேரம்] மணிக்கு [இடம்] இல் நடைபெறுகிறது. மணமக்களை வாழ்த்த குடும்பத்துடன் அவசியம் வாருங்கள்."
+
+**Short reception message:**
+"வரவேற்பு 🌸 [தேதி], மாலை [நேரம்], [இடம்]. மணமக்களைச் சந்தித்து வாழ்த்த வாருங்கள்!"`,
+      },
+      {
+        heading: 'Tamil wedding invitation in English letters (Tanglish)',
+        body: `For relatives abroad, or friends who read Tamil but type it in English letters:
+
+**Tanglish:**
+"Engal illa thirumana vizhavirku ungalai anbudan azhaikkirom! 💐 [Groom] ❤️ [Bride] | Muhurtham: [Date], [Time] | Idam: [Mandapam], [Town]. Kudumbathudan vandhu vaazhthungal 🙏"
+
+**In English, with a Tamil touch:**
+"With the blessings of our elders, we invite you and your family to the wedding of Chi. [Groom] and Sow. [Bride] at the muhurtham on [Date], [Time], at [Mandapam], [Town]. Please come and bless the couple."`,
+      },
+      {
+        heading: 'Reminder message for the day before',
+        body: `**Muhurtham reminder:**
+"நாளை திருமணம்! 🙏 முகூர்த்தம் காலை [நேரம்] மணிக்கு, தயவுசெய்து சரியான நேரத்திற்கு வாருங்கள். இடமும் வரைபடமும்: [லிங்க்]"
+
+**Gentle reminder:**
+"வணக்கம், நாளை [மணமகன்] – [மணமகள்] திருமணம். உங்கள் வருகைக்காகக் காத்திருக்கிறோம்! 🌸 [மண்டபம்], [நேரம்]"`,
+      },
+      {
+        heading: 'Send it as a digital pathirikai',
+        body: `A WhatsApp message carries the words; a digital invitation carries everything else. On ShareInvite you paste your Tamil wording into a design, and guests get one link with a countdown to the muhurtham, the mandapam on Google Maps, every function with its own time, your photos and a place for their blessings.
+
+- **Kalyanam** (₹${templatePrice('signature-kalyanam')}) is a South Indian temple wedding at dawn: the sun rises behind the gopuram, a kolam draws itself on the threshold, and a tap showers akshata over the muhurtham. It is made for a Tamil wedding.
+- **Shaadi** (₹${templatePrice('indian-wedding')}) is a crimson and gold invitation for a big family wedding.
+- **Elegant Wedding** (₹${templatePrice('elegant-wedding')}) is simple ivory and gold, quick to make and easy on the budget.
+
+Every design shows any Tamil text you type, in Tamil script or English letters. You build and preview the whole invitation free, and pay once only when you publish.`,
+      },
+    ],
+    checklist: [
+      'Start with உ, and சிவமயம் or your family deity if your family uses one.',
+      'Write the groom as சிரஞ்சீவி and the bride as சௌபாக்கியவதி or செல்வி, with both sets of parents.',
+      'Give the date, the day and the muhurtham time, and the mandapam with its town.',
+      'End with the request to come with your family and bless the couple, then the inviters’ names.',
+      'Send the invitation three to four weeks ahead, and a reminder the day before with the muhurtham time.',
+    ],
+    faq: [
+      {
+        q: 'How do you write a wedding invitation in Tamil?',
+        a: 'Start with உ (the pillaiyar suzhi), give the muhurtham (the Tamil year, month, date, day and auspicious time), name the groom as சிரஞ்சீவி and the bride as சௌபாக்கியவதி with their parents, give the mandapam, and close with: தாங்கள் தங்கள் சுற்றம் சூழ வருகை தந்து மணமக்களை வாழ்த்தி ஆசீர்வதிக்குமாறு அன்புடன் அழைக்கிறோம். Copy one of the samples above and change the names.',
+      },
+      {
+        q: 'What do சிரஞ்சீவி and சௌபாக்கியவதி mean on a Tamil wedding card?',
+        a: 'சிரஞ்சீவி is the respectful way to name the groom, and சௌபாக்கியவதி (or செல்வி) the bride, on a Tamil pathirikai. At the reception, after the wedding, the bride is written as திருமதி.',
+      },
+      {
+        q: 'What is the உ at the top of a Tamil wedding invitation?',
+        a: 'It is the pillaiyar suzhi, a mark for Lord Ganesha written at the start of anything auspicious. Many families add சிவமயம் or the name of their family deity under it.',
+      },
+      {
+        q: 'Can I send a Tamil wedding invitation on WhatsApp?',
+        a: 'Yes. Send a short Tamil message with the couple, the muhurtham and the mandapam, and paste a digital invitation link underneath. The link carries the map, the timings of every function and your photos, and opens on any phone without an app.',
+      },
+      {
+        q: 'When should I send a Tamil wedding invitation?',
+        a: 'Three to four weeks before the wedding, and six to eight weeks ahead for relatives who need to travel. Send a reminder the day before with the muhurtham time, since morning muhurthams start early.',
+      },
+      {
+        q: 'Can a digital invitation show Tamil text?',
+        a: 'Yes. Every ShareInvite design shows whatever you type, in Tamil script or in English letters. You can write the whole invitation in Tamil, preview it free, and pay once only when you publish.',
+      },
+    ],
+    links: [
+      { label: 'Kalyanam: a South Indian wedding invitation', href: '/templates/kalyanam-signature-south-indian-wedding-invitation-template' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation wording in English and Hindi', href: '/wedding-invitation-wording' },
+      { label: 'Telugu wedding invitation messages', href: '/blog/telugu-wedding-invitation-message-pelli-shubhalekha-wording' },
+      { label: 'Marathi wedding invitation messages', href: '/blog/marathi-wedding-invitation-message-lagna-patrika-for-whatsapp' },
+      { label: 'Modern South Indian wedding invitation designs', href: '/blog/modern-south-indian-wedding-invitation-designs' },
+    ],
+  },
+  'telugu-wedding-invitation-message-pelli-shubhalekha-wording': {
+    intro: `A Telugu wedding card (పెళ్లి శుభలేఖ) opens with శ్రీరస్తు, శుభమస్తు, అవిఘ్నమస్తు, names the groom as చి. and the bride as చి.ల.సౌ., gives the sumuhurtham and the kalyana mandapam, and asks you to come with your whole family and bless the couple. This guide gives you that wording in Telugu, ready to copy, along with short Telugu wedding invitation messages for WhatsApp, invitations for the Nischitartham, Pellikuthuru and reception, a reminder for the day before, and versions in English letters for relatives who don't read Telugu script. Change the words in brackets and paste your invitation link underneath.`,
+    sections: [
+      {
+        heading: 'How a Telugu pelli shubhalekha is written',
+        body: `Most Telugu wedding cards follow this order:
+
+- **శ్రీరస్తు ॥ శుభమస్తు ॥ అవిఘ్నమస్తు** at the top, often with your family deity, such as శ్రీ వేంకటేశ్వర స్వామి వారి కృపతో
+- **The groom** as చి. [name]: శ్రీ [father] & శ్రీమతి [mother] గార్ల కుమారుడు
+- **The bride** as చి.ల.సౌ. [name]: శ్రీ [father] & శ్రీమతి [mother] గార్ల కుమార్తె
+- **The sumuhurtham**: the date, day and auspicious time (సుముహూర్తం)
+- **The kalyana mandapam** and the town
+- **The request**: తామెల్లరూ సకుటుంబ సపరివార సమేతంగా విచ్చేసి వధూవరులను ఆశీర్వదించవలసిందిగా ప్రార్థన
+- **The inviters**: ఆహ్వానించువారు, with the family names
+
+On WhatsApp, keep the couple, the muhurtham, the venue and the request, and let your invitation link carry the rest: every function, the map and the timings.`,
+      },
+      {
+        heading: 'Traditional Telugu wedding invitation wording (shubhalekha)',
+        body: `Copy one of these and change the words in brackets.
+
+**Traditional shubhalekha:**
+"శ్రీరస్తు ॥ శుభమస్తు ॥ అవిఘ్నమస్తు
+శ్రీ [వరుని తండ్రి] & శ్రీమతి [తల్లి] గార్ల కుమారుడు
+చి. [వరుడు]
+కు
+శ్రీ [వధువు తండ్రి] & శ్రీమతి [తల్లి] గార్ల కుమార్తె
+చి.ల.సౌ. [వధువు]
+తో వివాహము [తేదీ] [వారము] [సమయము]కు సుముహూర్తమున [కళ్యాణ మండపం], [ఊరు]లో జరుపుటకు పెద్దలు నిశ్చయించినారు.
+కావున తామెల్లరూ సకుటుంబ సపరివార సమేతంగా విచ్చేసి వధూవరులను ఆశీర్వదించవలసిందిగా ప్రార్థన."
+
+**From the bride's family:**
+"శ్రీరస్తు ॥ శుభమస్తు
+మా కుమార్తె చి.ల.సౌ. [వధువు] ను
+శ్రీ [తండ్రి] గారి కుమారుడు చి. [వరుడు] కు ఇచ్చి
+[తేదీ] [సమయము]కు [కళ్యాణ మండపం], [ఊరు]లో వివాహము జరిపించుచున్నాము.
+తాము సకుటుంబంగా విచ్చేసి వధూవరులను ఆశీర్వదించ ప్రార్థన.
+ఆహ్వానించువారు: [తల్లిదండ్రుల పేర్లు]"
+
+**Short formal:**
+"సుముహూర్తం: [తేదీ], [సమయం]
+చి. [వరుడు] – చి.ల.సౌ. [వధువు]
+వేదిక: [కళ్యాణ మండపం], [ఊరు]
+మీ రాక మాకు ఆనందం, మీ ఆశీస్సులు వధూవరులకు బలం. 🙏"`,
+      },
+      {
+        heading: 'Short Telugu wedding invitation messages for WhatsApp',
+        body: `For family groups and one-to-one messages, keep it to a few lines and paste your invitation link underneath.
+
+**Short and warm:**
+"మా ఇంట పెళ్లి సందడి! 💐 చి. [వరుడు] ❤️ చి.ల.సౌ. [వధువు] వివాహ మహోత్సవానికి మిమ్మల్ని సాదరంగా ఆహ్వానిస్తున్నాము. ముహూర్తం: [తేదీ], [సమయం] | వేదిక: [ప్రదేశం]. సకుటుంబంగా విచ్చేసి ఆశీర్వదించండి 🙏"
+
+**For relatives:**
+"నమస్కారం! 🙏 మా [అబ్బాయి / అమ్మాయి] పెళ్లికి మిమ్మల్ని ఆప్యాయంగా ఆహ్వానిస్తున్నాము. [తేదీ] న [కళ్యాణ మండపం]లో. మీ ఆశీస్సులు లేకుండా ఈ వేడుక పూర్తి కాదు, తప్పకుండా రండి."
+
+**Muhurtham first:**
+"ముహూర్తం: [తేదీ], [సమయం] 🌸 చి. [వరుడు] – చి.ల.సౌ. [వధువు] పెళ్లికి తప్పకుండా రండి. పూర్తి వివరాలు, మ్యాప్ కింద ఉన్న లింక్‌లో. 👇"`,
+      },
+      {
+        heading: 'Telugu wedding invitation message for friends',
+        body: `**For the friends' group:**
+"ఫ్రెండ్స్, పెళ్లి ఫిక్స్ అయింది! 🎉 [తేదీ] న [కళ్యాణ మండపం], [ఊరు]లో. మీరు లేకపోతే సందడే ఉండదు, తప్పకుండా రండి! 😄"
+
+**From the bride or groom:**
+"ఎట్టకేలకు నా పెళ్లి! 💍 [తేదీ] న [సమయం]కు [ప్రదేశం]. మెహందీ నుండి రిసెప్షన్ వరకు అన్నింటికీ మీరు ఉండాలి. వివరాలు ఈ లింక్‌లో. 👇"`,
+      },
+      {
+        heading: 'Nischitartham, Pellikuthuru and Sangeet invitations',
+        body: `**Nischitartham (engagement):**
+"చి. [వరుడు] – చి.ల.సౌ. [వధువు] నిశ్చితార్థం [తేదీ] న [సమయం]కు [ప్రదేశం]లో జరుగుతుంది. మీరు తప్పకుండా విచ్చేయాలని కోరుతున్నాము. 💍"
+
+**Pellikuthuru / Pellikoduku:**
+"మా [అమ్మాయిని పెళ్లికూతురు / అబ్బాయిని పెళ్లికొడుకు] చేసే వేడుక [తేదీ] న [సమయం]కు [ప్రదేశం]లో. పసుపు, పూలు, పాటలతో సందడిగా జరుపుకుందాం, మీరు తప్పకుండా రండి! 💛"
+
+**Mehendi and Sangeet:**
+"మెహందీ & సంగీత్! 🎶 [తేదీ], సాయంత్రం [సమయం] నుండి [ప్రదేశం]లో. పాటలు, డ్యాన్స్, సందడి, తప్పకుండా రండి!"`,
+      },
+      {
+        heading: 'Wedding reception invitation in Telugu',
+        body: `At the reception the bride is written as చి.సౌ., since the wedding has taken place.
+
+**Reception:**
+"చి. [వరుడు] – చి.సౌ. [వధువు] వివాహ విందు [తేదీ] న సాయంత్రం [సమయం]కు [ప్రదేశం]లో. నూతన వధూవరులను ఆశీర్వదించడానికి సకుటుంబంగా తప్పకుండా రండి."
+
+**Short reception message:**
+"రిసెప్షన్ 🌸 [తేదీ], సాయంత్రం [సమయం], [ప్రదేశం]. నూతన వధూవరులను కలిసి శుభాకాంక్షలు చెప్పడానికి రండి!"`,
+      },
+      {
+        heading: 'Telugu wedding invitation in English letters',
+        body: `For relatives abroad, or friends who read Telugu but type it in English letters:
+
+**Telugu in English letters:**
+"Maa inta pelli sandadi! 💐 Chi. [Groom] ❤️ Chi. La. Sow. [Bride] vivaha mahotsavaniki mimmalni saadaranga aahvanistunnamu. Muhurtham: [Date], [Time] | Vedika: [Venue]. Sakutumbanga vichesi aaseervadinchandi 🙏"
+
+**In English, with a Telugu touch:**
+"Srirasthu, Subhamasthu. With the blessings of our elders, we invite you and your family to the wedding of Chi. [Groom] and Chi. La. Sow. [Bride] at the sumuhurtham on [Date], [Time], at [Venue]. Please come and bless the couple."`,
+      },
+      {
+        heading: 'Reminder message for the day before',
+        body: `**Muhurtham reminder:**
+"రేపే పెళ్లి! 🙏 ముహూర్తం [సమయం]కు, దయచేసి సమయానికి రండి. జీలకర్ర బెల్లం చూడటం మిస్ అవ్వకండి! ప్రదేశం, మ్యాప్: [లింక్]"
+
+**Gentle reminder:**
+"నమస్కారం, రేపు [వరుడు] – [వధువు] పెళ్లి. మీ కోసం ఎదురుచూస్తున్నాం! 🌸 [కళ్యాణ మండపం], [సమయం]"`,
+      },
+      {
+        heading: 'Send it as a digital shubhalekha',
+        body: `A WhatsApp message carries the words; a digital invitation carries everything else. On ShareInvite you paste your Telugu wording into a design, and guests get one link with a countdown to the muhurtham, the kalyana mandapam on Google Maps, every function with its own time, your photos and a place for their blessings.
+
+- **Kalyanam** (₹${templatePrice('signature-kalyanam')}) is a South Indian temple wedding at dawn: the sun rises behind the gopuram, a kolam draws itself on the threshold, and a tap showers akshata over the muhurtham. Name each function as your family does: Pellikuthuru, Snathakam, the wedding and the reception.
+- **Shaadi** (₹${templatePrice('indian-wedding')}) is a crimson and gold invitation for a big family wedding.
+- **Elegant Wedding** (₹${templatePrice('elegant-wedding')}) is simple ivory and gold, quick to make and easy on the budget.
+
+Every design shows any Telugu text you type, in Telugu script or English letters. You build and preview the whole invitation free, and pay once only when you publish.`,
+      },
+    ],
+    checklist: [
+      'Start with శ్రీరస్తు ॥ శుభమస్తు ॥ అవిఘ్నమస్తు, and your family deity if your family uses one.',
+      'Write the groom as చి. and the bride as చి.ల.సౌ., with both sets of parents.',
+      'Give the date, the day and the muhurtham time, and the kalyana mandapam with its town.',
+      'End with the request to come సకుటుంబ సపరివార సమేతంగా and bless the couple, then the inviters’ names.',
+      'Send the invitation three to four weeks ahead, and a reminder the day before with the muhurtham time.',
+    ],
+    faq: [
+      {
+        q: 'How do you write a wedding invitation in Telugu?',
+        a: 'Start with శ్రీరస్తు ॥ శుభమస్తు ॥ అవిఘ్నమస్తు, name the groom as చి. and the bride as చి.ల.సౌ. with their parents, give the sumuhurtham (date, day and time) and the kalyana mandapam, and close with: తామెల్లరూ సకుటుంబ సపరివార సమేతంగా విచ్చేసి వధూవరులను ఆశీర్వదించవలసిందిగా ప్రార్థన. Copy one of the samples above and change the names.',
+      },
+      {
+        q: 'What does చి.ల.సౌ. mean on a Telugu wedding card?',
+        a: 'చి.ల.సౌ. stands for చిరంజీవి లక్ష్మీ సౌభాగ్యవతి, the respectful way to name the bride on a Telugu shubhalekha. The groom is written as చి. (చిరంజీవి). At the reception, after the wedding, the bride is written as చి.సౌ.',
+      },
+      {
+        q: 'What is written at the top of a Telugu shubhalekha?',
+        a: 'శ్రీరస్తు ॥ శుభమస్తు ॥ అవిఘ్నమస్తు, a blessing for prosperity, auspiciousness and a celebration without obstacles. Many families add their family deity under it, such as శ్రీ వేంకటేశ్వర స్వామి వారి కృపతో.',
+      },
+      {
+        q: 'Can I send a Telugu wedding invitation on WhatsApp?',
+        a: 'Yes. Send a short Telugu message with the couple, the muhurtham and the venue, and paste a digital invitation link underneath. The link carries the map, the timings of every function and your photos, and opens on any phone without an app.',
+      },
+      {
+        q: 'When should I send a Telugu wedding invitation?',
+        a: 'Three to four weeks before the wedding, and six to eight weeks ahead for relatives who need to travel. Send a reminder the day before with the muhurtham time, so nobody misses the jeelakarra bellam.',
+      },
+      {
+        q: 'Can a digital invitation show Telugu text?',
+        a: 'Yes. Every ShareInvite design shows whatever you type, in Telugu script or in English letters. You can write the whole invitation in Telugu, preview it free, and pay once only when you publish.',
+      },
+    ],
+    links: [
+      { label: 'Kalyanam: a South Indian wedding invitation', href: '/templates/kalyanam-signature-south-indian-wedding-invitation-template' },
+      { label: 'Digital wedding invitations', href: '/wedding-invitation' },
+      { label: 'Wedding invitation wording in English and Hindi', href: '/wedding-invitation-wording' },
+      { label: 'Tamil wedding invitation messages', href: '/blog/tamil-wedding-invitation-message-thirumana-pathirikai-wording' },
+      { label: 'Marathi wedding invitation messages', href: '/blog/marathi-wedding-invitation-message-lagna-patrika-for-whatsapp' },
+      { label: 'Modern South Indian wedding invitation designs', href: '/blog/modern-south-indian-wedding-invitation-designs' },
+    ],
+  },
+  'kids-birthday-party-theme-ideas-with-invitation-messages': {
+    intro: `A theme is the fun part of planning a child's birthday, and it makes every other choice easier: the colours, the cake, the games and the return gifts all follow from it. Here are twelve kids birthday party theme ideas that work in an Indian home, a society clubhouse or a party hall, each with simple decor, a cake idea, a game, a return gift and an invitation message you can copy for WhatsApp. They are open themes rather than one particular cartoon, so you can make them your own with things you already have, and your child can help choose.`,
+    sections: [
+      {
+        heading: 'How to choose a birthday theme for your child',
+        body: `Start by asking: from about three or four, most children have a firm opinion. Then match the theme to the age, the place and the budget.
+
+- **Ages 1 to 3:** colours and animals. A rainbow, balloons, a jungle or a farm, and short games, because little ones tire quickly.
+- **Ages 4 to 7:** dinosaurs, space, superheroes, unicorns and castles. This is the age of dressing up.
+- **Ages 8 to 12:** cricket, science, art, a carnival or a movie night. They want to do something, not just watch.
+- **At home:** art, science or a pyjama movie night need little space.
+- **In a clubhouse or hall:** a carnival, a jungle safari or a cricket match fill a big room.
+- **On a budget:** themes built on colour (a rainbow, gold and white, blue and silver) cost the least, because balloons and streamers in those colours are everywhere.`,
+      },
+      {
+        heading: '1. Dinosaur adventure',
+        body: `**Decor:** green and brown, paper leaves on the walls, dinosaur footprints leading to the door and a cardboard volcano for photos.
+**Cake:** a volcano cake with orange icing lava, or cupcakes topped with little dinosaur eggs.
+**Game:** a dino egg hunt with plastic eggs hidden around the house, and a fossil dig in a tray of sand.
+**Return gift:** a small dinosaur figure and a dig-your-own-fossil kit.
+
+**Invitation message:**
+"Roar! 🦖 [Name] is turning [Age]! Join the dinosaur adventure on [Date] at [Time], [Venue]. Explorer hats provided, appetite for cake required."`,
+      },
+      {
+        heading: '2. Outer space',
+        body: `**Decor:** navy and silver, glow-in-the-dark stars on the ceiling, balloon planets and a cardboard rocket at the entrance.
+**Cake:** a galaxy cake in deep blue and purple with silver stars.
+**Game:** a balloon rocket race along a string, and alien ring toss.
+**Return gift:** glow-in-the-dark stars for their bedroom ceiling.
+
+**Invitation message:**
+"3, 2, 1… blast off! 🚀 [Name] is turning [Age]. Join the space party on [Date] at [Time], [Venue]. Astronaut suits optional, fun guaranteed."`,
+      },
+      {
+        heading: '3. Superhero training camp',
+        body: `**Decor:** bold red, blue and yellow, a "Hero HQ" sign on the door, and comic-style speech bubbles that say POW and ZOOM.
+**Cake:** a cake with a city skyline and a cape on top.
+**Game:** a hero obstacle course over cushions and under tables, then each child invents their own superhero name and power.
+**Return gift:** a cape and mask with their hero initial on it.
+
+**Invitation message:**
+"Calling all superheroes! 🦸 [Name] needs your help to celebrate turning [Age]. Report for hero training on [Date] at [Time], [Venue]. Capes provided."`,
+      },
+      {
+        heading: '4. Unicorn and rainbow',
+        body: `**Decor:** pastels, a rainbow balloon arch, clouds of cotton wool and a little glitter (with a mat underneath).
+**Cake:** a white cake with a golden horn, pastel ears and a flower mane.
+**Game:** pin the horn on the unicorn, and a rainbow colouring table.
+**Return gift:** rainbow slime or sparkly hair clips.
+
+**Invitation message:**
+"Rainbows, glitter and a little magic! 🦄 [Name] is turning [Age]. Come to the unicorn party on [Date] at [Time], [Venue]."`,
+      },
+      {
+        heading: '5. Princess and castle',
+        body: `**Decor:** pink and gold or any colours your child loves, a cardboard castle gate, fairy lights and a throne for photos.
+**Cake:** a castle cake with ice-cream-cone towers.
+**Game:** decorate your own crown, then a royal tea party with juice in fancy cups.
+**Return gift:** a crown or tiara they decorated themselves.
+
+**Invitation message:**
+"Your royal invitation 👑 [Name] is turning [Age] and invites you to the castle on [Date] at [Time], [Venue]. Crowns will be served."`,
+      },
+      {
+        heading: '6. Jungle safari',
+        body: `**Decor:** green and gold, paper leaves and vines, stuffed animals peeking out of the plants, and binoculars made from toilet rolls.
+**Cake:** a jungle cake with animal faces, or a lion with a mane of piped icing.
+**Game:** a safari hunt for hidden toy animals, and guess-the-animal-sound.
+**Return gift:** an animal mask or a small soft toy.
+
+**Invitation message:**
+"Into the wild! 🦁 Join [Name]'s jungle safari for their birthday on [Date] at [Time], [Venue]. Animal ears welcome."`,
+      },
+      {
+        heading: '7. Under the sea',
+        body: `**Decor:** blue and turquoise, a fishing-net wall with paper fish, bubbles and paper jellyfish hanging from the ceiling.
+**Cake:** an ocean cake with waves, shells and a little treasure chest.
+**Game:** a magnetic fishing game, and a bubble station outside.
+**Return gift:** a bubble wand or shell-shaped crayons.
+
+**Invitation message:**
+"Dive in! 🐠 [Name] is turning [Age]. Join us under the sea on [Date] at [Time], [Venue]. Bubbles guaranteed."`,
+      },
+      {
+        heading: '8. Cars and trucks',
+        body: `**Decor:** a road made with black tape across the floor, traffic lights from paper plates, and a chequered flag at the finish.
+**Cake:** a race-track cake with toy cars on it.
+**Game:** a toy car race down a ramp, and a construction dig in a tray of sand.
+**Return gift:** a toy car or truck.
+
+**Invitation message:**
+"Start your engines! 🏎️ [Name] is turning [Age]. Race over to [Venue] on [Date] at [Time] for the birthday grand prix."`,
+      },
+      {
+        heading: '9. Cricket match',
+        body: `**Decor:** two team colours, a scoreboard, bunting, and a pitch marked out on the terrace or the society lawn.
+**Cake:** a cricket-pitch cake, or a cake shaped like a ball.
+**Game:** a short match, two teams, a few overs each, with the birthday child as captain.
+**Return gift:** a tennis ball, a mini bat or a medal with their name.
+
+**Invitation message:**
+"Howzat! 🏏 [Name] is turning [Age]. Come for the birthday cricket match on [Date] at [Time], [Venue]. Wear your team colours!"`,
+      },
+      {
+        heading: '10. Carnival',
+        body: `**Decor:** red and white stripes, game stalls made from cardboard boxes, popcorn and a candyfloss corner.
+**Cake:** a striped tent cake, or cupcakes topped with popcorn.
+**Game:** ring toss, knock down the cans and face painting, with tokens to win at every stall.
+**Return gift:** a small bag of prizes won at the stalls.
+
+**Invitation message:**
+"Roll up, roll up! 🎪 [Name]'s birthday carnival on [Date] at [Time], [Venue]: games, popcorn and prizes for everyone."`,
+      },
+      {
+        heading: '11. Little scientist',
+        body: `**Decor:** white and bright green, lab coats made from old shirts, goggles and a "Lab" sign on the door.
+**Cake:** a cake with test-tube candles, or cupcakes that look like bubbling potions.
+**Game:** a baking-soda volcano, homemade slime and a colour-changing experiment.
+**Return gift:** a small science kit or a magnifying glass.
+
+**Invitation message:**
+"Experiment in progress! 🧪 [Name] is turning [Age]. Join the lab on [Date] at [Time], [Venue]. Goggles provided, mess guaranteed."`,
+      },
+      {
+        heading: '12. Art party',
+        body: `**Decor:** paint-splash tablecloths, a washing line of drawings, and aprons for every guest.
+**Cake:** a paint-palette cake with colourful icing blobs.
+**Game:** canvas painting or tie-dye T-shirts, then an exhibition of everyone's work.
+**Return gift:** the painting or T-shirt they made, and a set of crayons.
+
+**Invitation message:**
+"Let's get messy! 🎨 [Name] is turning [Age]. Come paint, create and eat cake on [Date] at [Time], [Venue]. Wear clothes that can get colourful."`,
+      },
+      {
+        heading: 'What to put on a kids birthday invitation',
+        body: `Parents read a kids' invitation for the practical details, so give them all of these:
+
+- **The child's name and age**, and the theme
+- **The date, the start time and the end time**, so parents can plan the pick-up
+- **The venue**, with a map link, and the flat or block number for a society party
+- **Whether parents stay or drop off**, and whether younger siblings are welcome
+- **What to wear**, if there is dressing up
+- **Food**: snacks, lunch or dinner, and a line asking about allergies
+- **How and by when to reply**, with your phone number
+
+Send it one to two weeks ahead for a party at home, two to three weeks for a hall, and a short reminder the day before.`,
+      },
+      {
+        heading: 'Send the invitation as a link',
+        body: `A message in the class WhatsApp group gets lost under fifty replies. A link keeps everything in one place: the date and time, the map, the theme and a way to reply.
+
+Six of the themes above have their own invitation design, at ₹${templatePrice('kids-dinosaur')} each. Each opens like a short video with the Happy Birthday tune, puts your child's photo inside the theme, and comes in three colours, for a girl or a boy. Then the countdown in sleeps, the party plan, dress-up, a note for parents and an RSVP that tells you how many children and grown-ups are coming. All the artwork is original, with no cartoon characters:
+
+- **[Dino Roar](/templates/dino-roar-dinosaur-birthday-invitation-template)**: an egg that hatches with a ROAR, and a dinosaur peeking over your child's photo.
+- **[Blast Off](/templates/blast-off-space-birthday-invitation-template)**: 3, 2, 1, lift-off, and your child as an astronaut.
+- **[Super Squad](/templates/super-squad-superhero-birthday-invitation-template)**: a comic book that bursts open with POW and BAM, and your child on the poster.
+- **[Rainbow Dream](/templates/rainbow-dream-unicorn-birthday-invitation-template)**: a rainbow, a unicorn, and a golden horn and flower crown for your child.
+- **[Wild One](/templates/wild-one-jungle-safari-birthday-invitation-template)**: the jungle leaves part, a monkey swings past, and your child in a lion's mane.
+- **[Race Day](/templates/race-day-car-birthday-invitation-template)**: five start lights, a race car, and your child's own racing licence.
+
+For a first birthday, **Pehla Janamdin** (₹${templatePrice('first-birthday')}) is a storybook invitation with hot-air balloons. Copy any message above and it opens in the matching design: preview the whole invitation free, and pay once only when you publish.`,
+      },
+    ],
+    checklist: [
+      'Choose the theme with your child, then let the colours, cake, games and return gifts follow it.',
+      'Put the child’s name, age and theme at the top of the invitation.',
+      'Give the start and end time, so parents can plan the pick-up.',
+      'Add the venue with a map link, and the flat or block number for a society party.',
+      'Say whether parents stay, what to wear, and ask about food allergies.',
+      'Ask for replies by a date, and send a reminder the day before.',
+    ],
+    faq: [
+      {
+        q: 'What are good birthday party themes for kids in India?',
+        a: 'Dinosaurs, outer space, superheroes, unicorns and rainbows, princesses and castles, a jungle safari, under the sea, cars and trucks, cricket, a carnival, science and art all work well, in a home or a party hall. Pick one your child is excited about, then match the decor, cake and games to it.',
+      },
+      {
+        q: 'How do I choose a birthday theme for my child?',
+        a: 'Ask your child first, then match the theme to their age (colours and animals for toddlers, dressing up for ages 4 to 7, activities for 8 to 12), to the venue and to your budget. Themes built on colour, like a rainbow, are the cheapest to decorate.',
+      },
+      {
+        q: 'What should a kids birthday invitation message say?',
+        a: 'The child’s name and age, the theme, the date with a start and end time, the venue with a map, whether parents should stay, what to wear, the food, and how and by when to reply. Each theme above has a message you can copy.',
+      },
+      {
+        q: 'How early should I send kids birthday invitations?',
+        a: 'One to two weeks ahead for a party at home, two to three weeks for a party hall or a weekend when families travel, and a reminder the day before with the time and the address.',
+      },
+      {
+        q: 'What are good return gifts for a kids birthday party?',
+        a: 'Something that matches the theme and gets used: a book, crayons, slime, a toy car, glow stars, a small science kit or the craft they made at the party. For children under three, avoid small parts they could swallow.',
+      },
+      {
+        q: 'Can I send a kids birthday invitation on WhatsApp?',
+        a: 'Yes. Send a short message in the class or society group, and paste a digital invitation link underneath with the time, the map, the theme and a way to reply, so the details don’t get lost in the chat.',
+      },
+    ],
+    links: [
+      { label: 'Kids birthday invitation designs', href: '/kids-birthday-invitation' },
+      { label: 'Dino Roar: a dinosaur birthday invitation', href: '/templates/dino-roar-dinosaur-birthday-invitation-template' },
+      { label: 'Pehla Janamdin: a storybook birthday invitation', href: '/templates/pehla-janamdin-first-birthday-invitation-template' },
+      { label: 'Kids birthday invitation messages', href: '/birthday-invitation-wording#kids' },
+      { label: 'First birthday invitation ideas', href: '/blog/first-birthday-invitation-ideas-for-indian-families' },
+      { label: 'Birthday party schedule ideas', href: '/blog/birthday-party-schedule-ideas-for-invitations' },
     ],
   },
 }

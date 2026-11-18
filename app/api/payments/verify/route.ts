@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { unbrandDesign } from '@/lib/freeInvites'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/lib/auth'
 import { getRazorpayClient, verifyPaymentSignature, planPriceIn } from '@/lib/razorpay'
@@ -133,6 +134,9 @@ export async function POST(req: NextRequest) {
       amount: Number(order.amount),
       currency: String(order.currency),
     })
+
+    // The design is theirs: any free invitation they published with it loses its branding now.
+    if (designId) await unbrandDesign(userId, designId)
 
     // The receipt, after the response: the buyer is not kept waiting on it.
     sendLater(async () => {

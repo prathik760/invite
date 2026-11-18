@@ -21,7 +21,7 @@ import { useT } from '@/components/i18n/I18nProvider'
  * date or on storage while rendering. The confetti bursts once per visit.
  */
 export default function PromoBar({
-  href, code, percentOff, inr, ends, templateId, copy,
+  href, code, percentOff, inr, ends, templateId, copy, pages,
 }: {
   href: string
   code: string
@@ -32,10 +32,12 @@ export default function PromoBar({
   ends: string
   templateId: string
   copy: PromoBarCopy
+  /** The campaign's pages (lib/promoPages.ts); the bar shows only there. */
+  pages?: readonly string[]
 }) {
   const tr = useT()
   const pathname = usePathname()
-  const allowed = promoBarAllowedOn(pathname)
+  const allowed = promoBarAllowedOn(pathname, pages)
   const [burst, setBurst] = useState(false)
   const bar = useRef<HTMLDivElement>(null)
 

@@ -78,8 +78,9 @@ export default function HeroPhone() {
   return (
     <div className="hv-phone">
       <div className="hv-screen-box">
-        {/* The doors already open: what the turning leaves uncover. */}
-        <RajwadaFrame name="open" priority="low" />
+        {/* The doors already open: what the turning leaves uncover. Always visible, so it is the
+            page's largest picture (LCP): fetched first, with the closed gate, not after the fonts. */}
+        <RajwadaFrame name="open" priority="high" />
         <div className="hv-seq hv-seq-glow">
           <RajwadaFrame name="glow" priority="low" />
         </div>

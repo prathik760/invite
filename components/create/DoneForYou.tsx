@@ -7,11 +7,12 @@ import { SITE_URL, templateSeoSlug } from '@/lib/seo'
 import { SUPPORT_WHATSAPP_DISPLAY, supportWhatsAppUrl } from '@/lib/support'
 
 /*
- * "Our team fills it in for you": for customers who would rather not type out
- * a form. They message the team on WhatsApp, the team asks for what the design
- * needs, fills the builder in for them and sends the finished invitation within
- * a day. Every tap is a lead: the WhatsApp message names the design, and the
- * tap is recorded as `generate_lead` (GA4, Meta "Lead", and /admin/activity).
+ * "Our team fills it in for you": for customers who would rather not use the
+ * builder. Since 15 Nov 2026 the strip opens a short form of the design's own
+ * questions (DoneForYouForm); the team gets the answers by email and in
+ * /admin/done-for-you, finishes the invitation and sends the customer a link to
+ * it. A sent form is the lead (`generate_lead`, lead_type done_for_you_form).
+ * The choice card below still messages the team on WhatsApp; no page shows it now.
  */
 
 export interface DoneForYouDesign {
@@ -62,6 +63,13 @@ function saveForLaterLink(d: DoneForYouDesign): string {
     ].join('\n'),
   )
 }
+
+/**
+ * Pressing a control in the strip leaves the focus in the box being typed in. Otherwise the box
+ * loses it first, the builder leaves typing mode, the live preview above shrinks and the strip moves
+ * up under the finger, so the first tap opened nothing (found 15 Nov 2026 on a phone, for both buttons).
+ */
+const keepFocus = (e: { preventDefault: () => void }) => e.preventDefault()
 
 /** What happens, in three short steps. */
 const STEPS = ['Tap below to message us on WhatsApp', 'Answer the few questions we send you', 'Get your finished invitation within 24 hours']
@@ -132,7 +140,7 @@ export function DoneForYouChoice({ design, onSelf, onTeam }: { design: DoneForYo
 }
 
 /** A slim reminder above the form, for anyone who starts typing and would rather not finish. */
-export function DoneForYouStrip({ design, step }: { design: DoneForYouDesign; step: number }) {
+export function DoneForYouStrip({ design, step, onTeam }: { design: DoneForYouDesign; step: number; /** Opens the done-for-you form. */ onTeam: () => void }) {
   // The names step, where most people leave: both ways out of filling it in now. Side by side at
   // every width (13 Nov 2026): stacked on phones, the card was 300px tall and pushed the first box
   // of the form to the bottom of the screen.
@@ -145,6 +153,7 @@ export function DoneForYouStrip({ design, step }: { design: DoneForYouDesign; st
             href={saveForLaterLink(design)}
             target="_blank"
             rel="noopener noreferrer"
+            onMouseDown={keepFocus}
             onClick={() => track(design, 'builder_save_for_later', 'save_for_later')}
             className="flex items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-center text-[0.76rem] font-semibold leading-tight text-white transition-[filter] hover:brightness-105"
             style={{ background: WHATSAPP_GREEN }}
@@ -152,37 +161,35 @@ export function DoneForYouStrip({ design, step }: { design: DoneForYouDesign; st
             <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
             Send me this design
           </a>
-          <a
-            href={whatsappLink(design)}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => track(design, 'builder_strip')}
+          <button
+            type="button"
+            onMouseDown={keepFocus}
+            onClick={() => { trackEvent('dfy_form_open', { template_id: design.id, source: 'builder_strip' }); onTeam() }}
             className="flex items-center justify-center rounded-xl border bg-white px-2 py-2 text-center text-[0.76rem] font-semibold leading-tight transition-colors hover:bg-white/70"
             style={{ borderColor: 'rgba(31,168,85,0.45)', color: '#137A3E' }}
           >
             Our team fills it in
-          </a>
+          </button>
         </div>
-        <p className="mt-1.5 text-[0.7rem] leading-4 text-charcoal/60">On WhatsApp: the link to finish later, or we make it for you in 24 hours.</p>
+        <p className="mt-1.5 text-[0.7rem] leading-4 text-charcoal/60">The link on WhatsApp to finish later, or answer a few questions and we make it for you in 24 hours.</p>
       </div>
     )
   }
   return (
-    <a
-      href={whatsappLink(design)}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => track(design, 'builder_strip')}
-      className="mx-4 mt-3 flex items-center gap-3 rounded-2xl border px-3.5 py-2.5 transition-colors hover:bg-white sm:mx-5 md:mx-5"
+    <button
+      type="button"
+      onMouseDown={keepFocus}
+            onClick={() => { trackEvent('dfy_form_open', { template_id: design.id, source: 'builder_strip' }); onTeam() }}
+      className="mx-4 mt-3 flex w-[calc(100%-2rem)] items-center gap-3 rounded-2xl border px-3.5 py-2.5 text-left transition-colors hover:bg-white sm:mx-5 sm:w-[calc(100%-2.5rem)] md:mx-5"
       style={{ borderColor: 'rgba(31,168,85,0.35)', background: 'rgba(31,168,85,0.05)' }}
     >
       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white" style={{ background: WHATSAPP_GREEN }}>
         <WhatsAppIcon className="h-4 w-4" />
       </span>
       <span className="min-w-0 flex-1 text-[0.8rem] leading-5 text-charcoal/85">
-        <span className="font-semibold text-charcoal">Rather not fill this in?</span> Our team will do it for you on WhatsApp, ready in 24 hours.
+        <span className="font-semibold text-charcoal">Rather not fill this in?</span> Answer a few questions and our team makes it for you, ready in 24 hours.
       </span>
-      <span aria-hidden className="shrink-0 text-[0.8rem] font-semibold" style={{ color: WHATSAPP_GREEN }}>Chat →</span>
-    </a>
+      <span aria-hidden className="shrink-0 text-[0.8rem] font-semibold" style={{ color: WHATSAPP_GREEN }}>Start →</span>
+    </button>
   )
 }

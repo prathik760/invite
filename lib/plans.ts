@@ -35,10 +35,14 @@ const STANDARD_TEMPLATES = [
   ...BASIC_TEMPLATES, ...RAKHI_TEMPLATES, ...GANESH_TEMPLATES, 'cinematic-night', 'indian-birthday', 'namakaran', 'surprise-journey',
   'first-birthday', 'haldi-mehendi', 'diwali-party', 'eid-milan', 'retirement',
   'birthday-mirrorball', 'birthday-martini', 'birthday-champagne', 'birthday-long-lunch',
+  // Kids' party themes (KidsParty.tsx), priced with Pehla Janamdin.
+  'kids-dinosaur', 'kids-space', 'kids-superhero', 'kids-unicorn', 'kids-jungle', 'kids-cars',
 ]
 const GREETING_TEMPLATES = [
   'greeting-love', 'greeting-valentine', 'greeting-anniversary', 'greeting-propose', 'greeting-promise',
   'greeting-sorry', 'greeting-congratulations', 'greeting-festival', 'greeting-family', 'greeting-friendship',
+  // The Valentine love letters (Confession.tsx), priced with the greetings.
+  'confession-for-her', 'confession-for-him',
 ]
 const PREMIUM_TEMPLATES = [...STANDARD_TEMPLATES, 'indian-wedding', 'indian-engagement', 'griha-pravesh', ...GREETING_TEMPLATES, 'baby-shower', 'sangeet-night', 'dasara-ambari']
 const GOLD_TEMPLATES = [...PREMIUM_TEMPLATES, 'anniversary', 'kgf-wedding', 'royal-deco', 'luxury-wedding', 'christmas-evergreen', 'newyear-midnight']
@@ -118,9 +122,9 @@ export const PLANS: Plan[] = [
     name: 'All Access',
     price: 499,
     badge: 'Complete collection',
-    description: 'Every template unlocked, including KGF Royal Empire, Anniversary and more.',
+    description: 'Every template unlocked, including Gold Saga, Anniversary and more.',
     templateIds: GOLD_TEMPLATES,
-    features: [`All ${GOLD_TEMPLATES.length} templates`, 'KGF Royal Empire + Royal Deco', 'Custom slug support', 'Priority support'],
+    features: [`All ${GOLD_TEMPLATES.length} templates`, 'Gold Saga + Royal Deco', 'Custom slug support', 'Priority support'],
   },
   {
     id: 'gala',

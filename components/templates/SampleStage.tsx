@@ -9,7 +9,8 @@ import { SAMPLE_QUIET, SAMPLE_RSVP, SAMPLE_SHOW, type SampleFeature } from '@/li
  * (/demo/<id>/sample, framed by components/homepage/TryInvitation).
  *
  *  - Sample music: the sample data carries no song, so one is added once the
- *    page has mounted (the music button only takes an absolute address).
+ *    page has mounted, as an absolute address (kit/core musicSrc also takes a
+ *    path on this site now; the absolute form is kept as it was).
  *  - The reply never leaves: a tap on a WhatsApp link is stopped here and
  *    its prefilled text handed to the homepage, which shows it as a sample.
  *    Nothing is sent and nothing is stored.

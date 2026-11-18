@@ -20,6 +20,7 @@ import { couponEndLabel, findCoupon } from '@/lib/coupons'
 import { templateSeoSlug } from '@/lib/seo'
 import { templatePrice } from '@/lib/plans'
 import { CouponCapture } from '@/components/price/CouponPrice'
+import { weddingPromoPages } from '@/lib/promoPages'
 
 // The SocialProofNotification widget was removed here. It synthesised
 // "<Name> from <City> just created a <type> invitation" toasts by picking at
@@ -56,8 +57,11 @@ const LocaleSuggestion = dynamic(
 // at build time, so it adds no third-party request and no layout shift. It is
 // exposed only as --font-editorial: the invitation templates read
 // --font-display, which is deliberately left untouched.
+// `subsets` is what gets preloaded; every subset stays available. Only Latin is preloaded (14 Nov
+// 2026): preloading latin-ext too put a second pair of files ahead of the hero picture on every
+// page, for accented letters and ₹, which load on their own the moment a page uses them.
 const editorial = Cormorant_Garamond({
-  subsets: ['latin', 'latin-ext'],
+  subsets: ['latin'],
   weight: ['500', '600', '700'],
   style: ['normal', 'italic'],
   display: 'swap',
@@ -80,6 +84,8 @@ const OG_IMAGE = `${APP_URL}/opengraph-image`
 // date and the visitor's "closed it" choice are checked by the pre-paint script
 // in <head>, not here, because these pages are built ahead of time.
 const promoBarCoupon = PROMO.enabled && PROMO.bar ? findCoupon(PROMO.coupon) : null
+// The wedding campaign's pages only (lib/promoPages.ts): not the message, blog or other occasions' pages.
+const PROMO_PAGES = weddingPromoPages()
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -153,6 +159,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+    // Claims shareinvite.in for the ShareInvite Pinterest business account (17 Nov 2026), so pins
+    // show the site's name and Pinterest credits the clicks to it.
+    other: { 'p:domain_verify': '67602059f26b7e64af7622e5e89a9cec' },
   },
   icons: {
     icon: [
@@ -316,6 +325,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ends={couponEndLabel(promoBarCoupon)}
             templateId={PROMO.templateId}
             copy={PROMO.bar}
+            pages={PROMO_PAGES}
           />
         )}
         {children}
@@ -324,23 +334,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}><CouponCapture /></Suspense>
         <CookieConsent />
         <WhatsAppButton />
-        <ScrollPromo designHref={`/templates/${templateSeoSlug(PROMO.templateId)}`} />
+        <ScrollPromo designHref={`/templates/${templateSeoSlug(PROMO.templateId)}`} pages={PROMO_PAGES} />
         {/* GTM and GA4 are skipped inside frames, like the pixel and Clarity
             above: the live preview frames /demo/<id>/embed, where they cost
             ~350 KB on the visitor's connection while the design is loading,
-            and counted every preview as a second page view. */}
+            and counted every preview as a second page view. Also on the
+            invitations guests open (/e/…, 15 Nov 2026): guests arriving from
+            WhatsApp were counted as "Direct" visitors and hid the real ones. */}
         {GTM_ID && (
           <Script
             id="gtm"
             strategy="lazyOnload"
             dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){if(w.top!==w)return;w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`,
+              __html: `(function(w,d,s,l,i){if(w.top!==w||/^\\/e\\//.test(location.pathname))return;w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`,
             }}
           />
         )}
         {GA_ID && (
           <Script id="ga4" strategy="lazyOnload">
-            {`(function(w,d,id){if(w.top!==w)return;w.dataLayer=w.dataLayer||[];w.gtag=function(){w.dataLayer.push(arguments)};w.gtag('js',new Date());w.gtag('config',id);var s=d.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+id;d.head.appendChild(s)})(window,document,'${GA_ID}');`}
+            {`(function(w,d,id){if(w.top!==w||/^\\/e\\//.test(location.pathname))return;w.dataLayer=w.dataLayer||[];w.gtag=function(){w.dataLayer.push(arguments)};w.gtag('js',new Date());w.gtag('config',id);var s=d.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+id;d.head.appendChild(s)})(window,document,'${GA_ID}');`}
           </Script>
         )}
       </body>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { tiro } from './kit/fonts/tiro'
 import { mukta } from './kit/fonts/mukta'
@@ -364,6 +365,8 @@ function MehrabPhoto({ src, alt, className, lazy }: { src: string; alt: string; 
 export default function IndianWedding({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Priya'
   const groom = data.groomName?.trim() || 'Arjun'
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'indian-wedding', bride, groom)
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const countdown = useCountdown(data.date, data.time, !isPreview)
@@ -371,11 +374,8 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Invi
   const photos = useMemo(() => galleryImages(data.galleryImages, 7), [data.galleryImages])
   const directions = mapsHref(data.mapsUrl, data.venue, data.venueAddress)
   const place = [data.venue, data.venueAddress].filter(Boolean).join(', ')
-  const calendar = calendarHref(`Wedding of ${bride} & ${groom}`, data.date, data.time, place || undefined, 5)
-  const portraits = [
-    { src: data.bridePhoto, alt: bride },
-    { src: data.groomPhoto, alt: groom },
-  ].filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; alt: string }[]
+  const calendar = calendarHref(`Wedding of ${nameA} & ${nameB}`, data.date, data.time, place || undefined, 5)
+  const portraits = inOrder(data, 'indian-wedding', { src: data.bridePhoto, alt: bride }, { src: data.groomPhoto, alt: groom }).filter((p) => p.src && /^(https?:)?\//.test(p.src)) as { src: string; alt: string }[]
   const venue = data.venue?.trim() || 'The venue'
 
   return (
@@ -447,14 +447,14 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Invi
 
               {/* Its own container, so each name is sized to the card: a long surname shrinks instead of running into the border. */}
               <h1 className="mt-6" style={{ fontFamily: display, fontWeight: 400, containerType: 'inline-size', width: '100%' }}>
-                <span className="iw-in block leading-[1.05]" style={{ fontSize: `clamp(20px, ${fitCqi(bride, { em: 0.58, max: 18 })}cqi, 66px)`, color: C.maroon, animationDelay: '1150ms' }}>
-                  {bride}
+                <span className="iw-in block leading-[1.05]" style={{ fontSize: `clamp(20px, ${fitCqi(nameA, { em: 0.58, max: 18 })}cqi, 66px)`, color: C.maroon, animationDelay: '1150ms' }}>
+                  {nameA}
                 </span>
                 <span className="iw-in my-1.5 block italic" style={{ fontSize: 'clamp(18px, 5cqi, 22px)', color: C.sindoor, animationDelay: '1250ms' }}>
                   with
                 </span>
-                <span className="iw-in block leading-[1.05]" style={{ fontSize: `clamp(20px, ${fitCqi(groom, { em: 0.58, max: 18 })}cqi, 66px)`, color: C.maroon, animationDelay: '1350ms' }}>
-                  {groom}
+                <span className="iw-in block leading-[1.05]" style={{ fontSize: `clamp(20px, ${fitCqi(nameB, { em: 0.58, max: 18 })}cqi, 66px)`, color: C.maroon, animationDelay: '1350ms' }}>
+                  {nameB}
                 </span>
               </h1>
 
@@ -525,7 +525,7 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Invi
             <p className="mx-auto mt-5 max-w-[24rem] leading-[1.55]" style={{ fontFamily: display, fontSize: 21, color: C.maroon }}>
               {data.message}
             </p>
-            <p className="mt-4 text-[15px]" style={{ color: C.soft }}>{bride} &amp; {groom}</p>
+            <p className="mt-4 text-[15px]" style={{ color: C.soft }}>{nameA} &amp; {nameB}</p>
           </Reveal>
         )}
 
@@ -618,7 +618,7 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Invi
             eventId={eventId}
             theme={WISHES_THEME}
             title="Blessings for the couple"
-            intro={`Leave a few words for ${bride} and ${groom}. Your blessing appears here for every guest.`}
+            intro={`Leave a few words for ${nameA} and ${nameB}. Your blessing appears here for every guest.`}
             noun="blessing"
           />
         </div>
@@ -629,7 +629,7 @@ export default function IndianWedding({ data, eventId, isPreview = false }: Invi
         <Lotus className="mx-auto h-[24px] w-[48px]" />
         <p lang="hi" className="mt-3" style={{ fontFamily: display, fontSize: 20, color: C.sindoor }}>शुभ विवाह</p>
         <p className="mt-1" style={{ fontFamily: display, fontSize: 26, color: C.maroon }}>
-          {bride} <span className="italic" style={{ fontSize: 20, color: C.sindoor }}>&amp;</span> {groom}
+          {nameA} <span className="italic" style={{ fontSize: 20, color: C.sindoor }}>&amp;</span> {nameB}
         </p>
         {date && <p className="mt-1.5 text-[14px]" style={{ color: C.faint }}>{date.day} {date.month} {date.year}</p>}
         <div className="mt-8">

@@ -11,6 +11,9 @@ import TrustList from '@/components/brand/TrustList'
 import CtaBand from '@/components/brand/CtaBand'
 import { Section, SectionHeading } from '@/components/brand/Section'
 import TrackedLink from '@/components/ui/TrackedLink'
+import InviteComparison from '@/components/landing/InviteComparison'
+import OccasionPrices from '@/components/landing/OccasionPrices'
+import ReviewsSection from '@/components/reviews/ReviewsSection'
 import { ArrowRightIcon, EyeIcon, LinkIcon, PenIcon } from '@/components/ui/Icons'
 import { OCCASION_MAP } from '@/lib/catalog'
 import { buildCatalogItems } from '@/lib/catalogItems'
@@ -24,14 +27,16 @@ import { templatePrice } from '@/lib/plans'
  * real designs for the occasion, the page's own content, how it works, FAQ,
  * local links and the closing band.
  *
- * Deliberately absent: testimonials and review stars (none are verified), and
- * any tiered price ladder — each design has one price, shown on its card.
+ * Reviews are only real ones from hosts (components/reviews/ReviewsSection,
+ * nothing until the first is approved); never invented testimonials.
  */
 export interface OccasionPageProps {
   /** Key in lib/catalog OCCASIONS — selects the design cards. */
   occasion: string
   /** The design cards to show instead of the occasion's full list, in order. */
   templateIds?: string[]
+  /** The design gallery's heading, when the occasion's own ("Birthday designs") is too broad. */
+  designsTitle?: string
   /** Template the primary CTAs open with. */
   templateId: string
   /** Analytics placement prefix, e.g. "wedding_landing". */
@@ -51,6 +56,13 @@ export interface OccasionPageProps {
   cities?: { base: string; title: string; list: string[] }
   related?: { href: string; label: string }[]
   closing: { title: string; sub?: string }
+  /**
+   * "Printed card, PDF, video or link?" table (wedding, birthday). `noun` is how
+   * the page names its invitation ("wedding invitation"), `guests` a typical list.
+   */
+  compare?: { noun: string; guests: number }
+  /** "How much does a digital {noun} cost?": the designs by level with their prices. */
+  prices?: { noun: string }
   /** Extra page-specific sections, rendered before the FAQ. */
   children?: ReactNode
 }
@@ -95,10 +107,10 @@ export default function OccasionPage(p: OccasionPageProps) {
       />
 
       {items.length > 0 && (
-        <Section id="designs" aria-label={`${occasion?.short ?? 'Invitation'} designs`}>
+        <Section id="designs" aria-label={p.designsTitle ?? `${occasion?.short ?? 'Invitation'} designs`}>
           <SectionHeading
             eyebrow="The designs"
-            title={`${occasion?.short ?? 'Invitation'} designs`}
+            title={p.designsTitle ?? `${occasion?.short ?? 'Invitation'} designs`}
             sub="Tap any design for a live preview. Each has one price, paid once when you publish."
             action={{ href: '/templates', label: 'Every design' }}
           />
@@ -109,6 +121,8 @@ export default function OccasionPage(p: OccasionPageProps) {
           </div>
         </Section>
       )}
+
+      <ReviewsSection tone="paper" limit={3} />
 
       {p.types && (
         <Section tone="paper" aria-label={p.types.title}>
@@ -144,6 +158,16 @@ export default function OccasionPage(p: OccasionPageProps) {
         </ul>
         <p className="mt-6 text-[0.85rem] text-muted">Features vary by design. The live preview shows exactly what each one includes.</p>
       </Section>
+
+      {p.compare && (
+        <InviteComparison
+          noun={p.compare.noun}
+          guests={p.compare.guests}
+          fromPrice={Math.min(...items.map((i) => i.price).filter((x) => x > 0))}
+        />
+      )}
+
+      {p.prices && <OccasionPrices occasion={p.occasion} noun={p.prices.noun} />}
 
       <Section tone="peach" aria-label="How it works">
         <SectionHeading align="center" eyebrow="How it works" title={p.stepsTitle ?? 'Three steps to your invitation'} />

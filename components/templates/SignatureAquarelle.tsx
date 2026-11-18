@@ -1,11 +1,12 @@
 'use client'
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { pinyon } from './kit/fonts/pinyon'
 import { cinzel } from './kit/fonts/cinzel'
 import { ebGaramond } from './kit/fonts/ebGaramond'
-import { calendarHref, dateParts, fitCqi, galleryImages, mapsHref, parseLines, parseRows, telHref, timeLabel, useCountdown, whatsappHref, type InviteProps } from './kit/core'
+import { calendarHref, dateParts, fitCqi, galleryImages, mapsHref, parseLines, parseRows, telHref, timeLabel, useCountdown, whatsappHref, type InviteProps, musicSrc } from './kit/core'
 import { Credit, Reveal, useOpenWhileEditing } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
 
@@ -917,8 +918,10 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '')
   const bride = data.brideName?.trim() || 'Anaya'
   const groom = data.groomName?.trim() || 'Vihaan'
-  const couple = `${bride} & ${groom}`
-  const initials: [string, string] = [bride.charAt(0).toUpperCase(), groom.charAt(0).toUpperCase()]
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'signature-aquarelle', bride, groom)
+  const couple = `${nameA} & ${nameB}`
+  const initials: [string, string] = [nameA.charAt(0).toUpperCase(), nameB.charAt(0).toUpperCase()]
   const date = dateParts(data.date)
   const venue = data.venue?.trim() || ''
   const address = data.venueAddress?.trim() || ''
@@ -932,12 +935,14 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
   const faq = useMemo(() => parseRows(data.faq, ['q', 'a'] as const), [data.faq])
   const contacts = useMemo(() => parseRows(data.contacts, ['name', 'phone'] as const), [data.contacts])
   const photos = useMemo(() => galleryImages(data.galleryImages, 8), [data.galleryImages])
-  const portraits = [
+  const portraits = inOrder(
+    data,
+    'signature-aquarelle',
     { src: data.bridePhoto, alt: bride, name: bride, parents: data.brideParents?.trim() || '' },
     { src: data.groomPhoto, alt: groom, name: groom, parents: data.groomParents?.trim() || '' },
-  ]
+  )
   const cover = isImg(data.couplePhoto) ? data.couplePhoto : ''
-  const music = /^https?:\/\//i.test(data.musicUrl || '') ? data.musicUrl : ''
+  const music = musicSrc(data.musicUrl)
   const live = /^https?:\/\//i.test(data.livestreamUrl || '') ? data.livestreamUrl : ''
   const registry = /^https?:\/\//i.test(data.registryUrl || '') ? data.registryUrl : ''
   const hashtag = data.hashtag?.trim() ? (data.hashtag.trim().startsWith('#') ? data.hashtag.trim() : `#${data.hashtag.trim()}`) : ''
@@ -1109,9 +1114,9 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
               <Caps className="mt-[5cqi]" color={P.soft} size="clamp(9.5px, 2.9cqi, 11px)" track="0.32em">Together with their families</Caps>
               {/* Its own container, so each name is sized by its longest word and a long surname shrinks instead of overflowing. */}
               <h1 className="mt-[2cqi]" style={{ fontWeight: 400, containerType: 'inline-size', width: '100%' }}>
-                <span className="block" style={{ fontFamily: script, fontSize: `clamp(36px, ${fitCqi(bride, { em: 0.44, max: 19 })}cqi, 88px)`, lineHeight: 1.15, color: P.ink }}>{bride}</span>
+                <span className="block" style={{ fontFamily: script, fontSize: `clamp(36px, ${fitCqi(nameA, { em: 0.44, max: 19 })}cqi, 88px)`, lineHeight: 1.15, color: P.ink }}>{nameA}</span>
                 <span className="block" style={{ ...foil({ fontFamily: serif, fontStyle: 'italic', fontSize: 'clamp(24px, 8cqi, 38px)', lineHeight: 0.9 }) }}>&amp;</span>
-                <span className="block" style={{ fontFamily: script, fontSize: `clamp(36px, ${fitCqi(groom, { em: 0.44, max: 19 })}cqi, 88px)`, lineHeight: 1.15, color: P.ink }}>{groom}</span>
+                <span className="block" style={{ fontFamily: script, fontSize: `clamp(36px, ${fitCqi(nameB, { em: 0.44, max: 19 })}cqi, 88px)`, lineHeight: 1.15, color: P.ink }}>{nameB}</span>
               </h1>
               <p className="mx-auto mt-[4cqi] max-w-[24ch] italic" style={{ fontSize: 'clamp(17px, 5.2cqi, 20px)', lineHeight: 1.45, color: P.soft, textWrap: 'balance' }}>
                 request the pleasure of your company at the celebration of their marriage
@@ -1145,7 +1150,7 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
                     <div className="mt-[4cqi]">
                       <Monogram a={initials[0]} b={initials[1]} uid={`${uid}c`} size="clamp(62px, 19cqi, 84px)" />
                     </div>
-                    <p className="mt-[3cqi]" style={{ fontFamily: caps, fontSize: 'clamp(11px, 3.3cqi, 13px)', letterSpacing: '0.24em', color: P.ink }}>{bride} &amp; {groom}</p>
+                    <p className="mt-[3cqi]" style={{ fontFamily: caps, fontSize: 'clamp(11px, 3.3cqi, 13px)', letterSpacing: '0.24em', color: P.ink }}>{nameA} &amp; {nameB}</p>
                     <div className="min-h-[6cqi] flex-1" />
                     <div className="relative w-full" style={{ height: 'clamp(92px, 28cqi, 124px)' }}>
                       {/* a rose slipped under the ribbon */}
@@ -1245,7 +1250,7 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
                           <p key={i} className="mt-3 italic">{line}</p>
                         ))}
                         <p className="mt-6 text-right italic" style={{ fontSize: 17, clear: 'both' }}>with all our love,</p>
-                        <p className="text-right" style={{ fontFamily: script, fontSize: 'clamp(30px, 9cqi, 38px)', lineHeight: 1.2, color: P.ink }}>{bride} &amp; {groom}</p>
+                        <p className="text-right" style={{ fontFamily: script, fontSize: 'clamp(30px, 9cqi, 38px)', lineHeight: 1.2, color: P.ink }}>{nameA} &amp; {nameB}</p>
                       </div>
                     )}
                   </Paper>
@@ -1473,7 +1478,7 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
                 eventId={eventId}
                 theme={WISHES_THEME}
                 title="Wishes for the couple"
-                intro={`Leave a blessing, a memory or a wish for ${bride} and ${groom}. Everyone who opens this invitation can read it.`}
+                intro={`Leave a blessing, a memory or a wish for ${nameA} and ${nameB}. Everyone who opens this invitation can read it.`}
                 noun="wish"
                 previewWishes={SAMPLE_WISHES}
                 namePlaceholder="e.g. Meera & Arjun"
@@ -1490,7 +1495,7 @@ export default function SignatureAquarelle({ data, eventId, isPreview = false }:
               </div>
               <div style={{ containerType: 'inline-size', width: '100%' }}>
                 <p className="mt-6" style={{ fontFamily: script, fontSize: `clamp(38px, ${fitCqi(couple, { em: 0.36, max: 14 })}cqi, 60px)`, lineHeight: 1.2, color: P.ivory }}>
-                  {bride} <span style={foil({ fontFamily: serif, fontStyle: 'italic', fontSize: '0.55em' })}>&amp;</span> {groom}
+                  {nameA} <span style={foil({ fontFamily: serif, fontStyle: 'italic', fontSize: '0.55em' })}>&amp;</span> {nameB}
                 </p>
               </div>
               {date && <Caps className="mt-2" color={P.ivorySoft}>{date.day} {date.month} {date.year}{destination ? ` · ${destination}` : ''}</Caps>}

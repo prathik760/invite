@@ -3,6 +3,9 @@
 import { createContext, memo, useCallback, useContext, useId, useRef, useState } from 'react'
 import type { TemplateConfig, TemplateField } from '@/types'
 import { FIELD_ORDER } from '@/lib/fieldOrder'
+import { WISHES, hiddenSet, withHidden } from '@/lib/hiddenParts'
+import { NAME_ORDER_KEY, groomFirst } from '@/lib/nameOrder'
+import { trackEvent } from '@/lib/analytics'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -21,7 +24,7 @@ interface ScheduleRow { id: string; name: string; time: string }
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const WHEN_WHERE_KEYS = new Set(['date', 'time', 'venue', 'venueAddress', 'destination', 'mapsUrl', 'dressCode', 'theme', 'pooja', 'visarjanDate', 'visarjanTime', 'whatsappNumber'])
+const WHEN_WHERE_KEYS = new Set(['date', 'time', 'endTime', 'venue', 'venueAddress', 'destination', 'mapsUrl', 'dressCode', 'theme', 'pooja', 'visarjanDate', 'visarjanTime', 'whatsappNumber'])
 const EXTRAS_KEYS = new Set(['message'])
 // Interactive "3D Surprise Journey" fields — routed to the right wizard steps.
 const UNLOCK_KEYS = new Set(['pin', 'pinHint'])
@@ -170,20 +173,127 @@ const FIELD_HINTS: Record<string, string> = {
 
 // ─── Section wrapper ──────────────────────────────────────────────────────────
 
-function Section({ number, label, hint, children }: { number: number; label: string; hint?: string; children: React.ReactNode }) {
+function Section({ number, label, hint, children, onRemove, removed, onRestore }: {
+  number: number
+  label: string
+  hint?: string
+  children: React.ReactNode
+  /** An optional section: "Remove section" takes it off the invitation (lib/hiddenParts.ts). */
+  onRemove?: () => void
+  /** Removed: shown as one line with "Add back" instead of its boxes. */
+  removed?: boolean
+  onRestore?: () => void
+}) {
+  if (removed) {
+    return (
+      <section className="flex items-center gap-3.5 rounded-3xl border border-dashed border-line bg-champagne/60 px-5 py-3.5">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line font-editorial text-[1.05rem] font-semibold text-muted">
+          {number}
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-editorial text-[1.2rem] font-semibold leading-tight text-charcoal/60">{label}</p>
+          <p className="text-[0.78rem] text-muted">Not on your invitation</p>
+        </div>
+        <button
+          type="button"
+          onClick={onRestore}
+          aria-label={`Add ${label} back to the invitation`}
+          className="shrink-0 rounded-full border border-line bg-paper px-3.5 py-1.5 text-[0.8rem] font-semibold text-emerald transition-colors hover:border-emerald"
+        >
+          + Add back
+        </button>
+      </section>
+    )
+  }
   return (
     <section className="overflow-hidden rounded-3xl border border-line bg-paper shadow-soft">
       <div className="flex items-start gap-3.5 border-b border-line px-5 py-4">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald font-editorial text-[1.05rem] font-semibold text-paper">
           {number}
         </div>
-        <div>
+        <div className="min-w-0 flex-1">
           <p className="font-editorial text-[1.35rem] font-semibold leading-tight text-charcoal">{label}</p>
           {hint && <p className="mt-0.5 text-[0.82rem] leading-5 text-muted">{hint}</p>}
         </div>
+        {onRemove && <RemoveButton onClick={onRemove} label={label} section />}
       </div>
       <div className="space-y-4 p-5">{children}</div>
     </section>
+  )
+}
+
+/** "Remove" on an optional box or section: it leaves the invitation, and the preview with it. */
+function RemoveButton({ onClick, label, section = false }: { onClick: () => void; label: string; section?: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={`Remove ${label} from the invitation`}
+      className="-mr-1.5 inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-[0.75rem] font-semibold text-muted transition-colors hover:bg-peach hover:text-charcoal"
+    >
+      <svg aria-hidden viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M5 5l10 10M15 5L5 15" strokeLinecap="round" />
+      </svg>
+      {section ? 'Remove section' : 'Remove'}
+    </button>
+  )
+}
+
+/**
+ * Whose name comes first on the invitation (lib/nameOrder.ts). Families differ: the groom's side
+ * often writes the groom first, the bride's side the bride. Each choice shows the real names.
+ */
+function NameOrderChoice({ bride, groom, groomFirst: gf, onChange }: { bride: string; groom: string; groomFirst: boolean; onChange: (groomFirst: boolean) => void }) {
+  const options = [
+    { groom: false, names: `${bride} & ${groom}`, label: 'Bride first' },
+    { groom: true, names: `${groom} & ${bride}`, label: 'Groom first' },
+  ]
+  return (
+    <div>
+      <p className="field-label" id="name-order-label">Whose name comes first?</p>
+      <div role="radiogroup" aria-labelledby="name-order-label" className="grid grid-cols-2 gap-2.5">
+        {options.map((o) => {
+          const on = o.groom === gf
+          return (
+            <button
+              key={o.label}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              onClick={() => onChange(o.groom)}
+              className={`min-w-0 rounded-2xl border px-3.5 py-3 text-left transition-colors ${on ? 'border-emerald bg-emerald/[0.06] ring-1 ring-emerald' : 'border-line bg-white hover:border-charcoal/30'}`}
+            >
+              <span className="block truncate font-editorial text-[1.05rem] font-semibold leading-snug text-charcoal">{o.names}</span>
+              <span className="mt-0.5 block text-[0.78rem] text-muted">{o.label}</span>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+/** The boxes of a section the host removed, each one tap from coming back. */
+function RemovedChips({ fields, onRestore }: { fields: TemplateField[]; onRestore: (key: string) => void }) {
+  if (!fields.length) return null
+  return (
+    <div className="rounded-2xl border border-dashed border-line bg-champagne/60 px-3.5 py-3">
+      <p className="text-[0.78rem] font-semibold text-muted">Not on your invitation · tap to add back</p>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {fields.map((f) => (
+          <button
+            key={f.key}
+            type="button"
+            onClick={() => onRestore(f.key)}
+            aria-label={`Add ${f.label} back to the invitation`}
+            className="inline-flex items-center gap-1.5 rounded-full border border-line bg-paper px-3 py-1.5 text-[0.8rem] font-medium text-charcoal transition-colors hover:border-emerald"
+          >
+            <span aria-hidden className="font-semibold text-emerald">+</span>
+            {f.label}
+          </button>
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -198,7 +308,7 @@ export const FlaggedFields = createContext<ReadonlySet<string>>(new Set())
 
 const FLAG_STYLE = { borderColor: '#C9741F', boxShadow: '0 0 0 3px rgba(201,116,31,0.14)' }
 
-function FieldInput({ field, value, onChange }: { field: TemplateField; value: string; onChange: (v: string) => void }) {
+function FieldInput({ field, value, onChange, onRemove }: { field: TemplateField; value: string; onChange: (v: string) => void; onRemove?: () => void }) {
   // Ties the label to its box (13 Nov 2026): tapping "Venue Name" puts the cursor in the box, and
   // a screen reader says which box it is. The label used to sit beside the box, linked to nothing.
   const id = `field-${useId()}`
@@ -209,7 +319,14 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
 
   if (field.columns?.length) return <div data-field={field.key}><RowsEditor field={field} initial={value} onChange={onChange} /></div>
   // A photo inside a titled group (most photos sit together in the first step instead).
-  if (field.type === 'image') return <div data-field={field.key} className="flex justify-center"><SingleImageUploader label={field.label} value={value} onChange={onChange} /></div>
+  if (field.type === 'image') {
+    return (
+      <div data-field={field.key} className="flex flex-col items-center gap-1">
+        <SingleImageUploader label={field.label} value={value} onChange={onChange} />
+        {onRemove && <RemoveButton onClick={onRemove} label={field.label} />}
+      </div>
+    )
+  }
   if (field.type === 'choice' && field.options?.length) {
     const picked = field.options.some(o => o.value === value) ? value : field.options[0].value
     return (
@@ -249,10 +366,13 @@ function FieldInput({ field, value, onChange }: { field: TemplateField; value: s
 
   return (
     <div data-field={field.key}>
-      <label className="field-label" htmlFor={id}>
-        {field.label}
-        {field.required && <span className="ml-1 text-burnished-deep" aria-hidden>*</span>}
-      </label>
+      <div className="flex items-start justify-between gap-3">
+        <label className="field-label" htmlFor={id}>
+          {field.label}
+          {field.required && <span className="ml-1 text-burnished-deep" aria-hidden>*</span>}
+        </label>
+        {onRemove && <RemoveButton onClick={onRemove} label={field.label} />}
+      </div>
 
       {field.type === 'textarea' ? (
         <textarea
@@ -926,8 +1046,29 @@ export default function FormEditor({ config, data, onChange, compact = false, se
 
   const grouped = groupFields(config.fields)
   const peopleLabel = getPeopleLabel(grouped.people)
-  const input = (field: TemplateField) => (
-    <FieldInput key={field.key} field={field} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
+
+  // What the host removed (lib/hiddenParts.ts). Any box that is not required can go: its section
+  // keeps a chip to add it back, and a section of nothing but optional boxes can go as a whole.
+  const hidden = hiddenSet(data)
+  const setRemoved = useCallback((keys: string[], remove: boolean) => {
+    onChange(withHidden(data, keys, remove))
+    trackEvent(remove ? 'builder_remove' : 'builder_add_back', { template_id: templateId, part: keys.join(',') })
+  }, [data, onChange, templateId])
+  const removable = (f: TemplateField) => !f.required && f.type !== 'choice'
+  const removedOf = (fields: TemplateField[]) => fields.filter((f) => hidden.has(f.key))
+  const chips = (fields: TemplateField[]) => <RemovedChips fields={removedOf(fields)} onRestore={(k) => setRemoved([k], false)} />
+  /** Remove / Add back for a section that is one optional part of the invitation. */
+  const sectionRemoval = (keys: string[], optional = true) =>
+    optional ? { onRemove: () => setRemoved(keys, true), removed: keys.every((k) => hidden.has(k)), onRestore: () => setRemoved(keys, false) } : {}
+
+  const input = (field: TemplateField) => hidden.has(field.key) ? null : (
+    <FieldInput
+      key={field.key}
+      field={field}
+      value={data[field.key] ?? ''}
+      onChange={v => handleChange(field.key, v)}
+      onRemove={removable(field) ? () => setRemoved([field.key], true) : undefined}
+    />
   )
   // A field the host's own choice makes moot (Ganesha's words, once another opening is picked) leaves the form.
   const shown = (f: TemplateField) => !f.hideWhen || (data[f.hideWhen.key] ?? '') !== f.hideWhen.is
@@ -938,8 +1079,9 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: first(fields),
       key: `group-${g.title}`,
       render: (n) => (
-        <Section key={g.title} number={n} label={g.title} hint={g.hint}>
+        <Section key={g.title} number={n} label={g.title} hint={g.hint} {...sectionRemoval(fields.map((f) => f.key), fields.every(removable))}>
           <div className="space-y-4">{[...fields].sort(byRank).map(input)}</div>
+          {chips(fields)}
         </Section>
       ),
     }]
@@ -950,7 +1092,9 @@ export default function FormEditor({ config, data, onChange, compact = false, se
   if (grouped.people.length > 0 || grouped.images.length > 0) {
     // Names and photos in the order the design shows them; photos that sit
     // together on the design sit together here, side by side.
-    const ordered = [...grouped.people, ...grouped.images].sort(byRank)
+    const all = [...grouped.people, ...grouped.images]
+    const hasCouple = all.some((f) => f.key === 'brideName') && all.some((f) => f.key === 'groomName')
+    const ordered = all.filter((f) => !hidden.has(f.key)).sort(byRank)
     const runs: TemplateField[][] = []
     for (const f of ordered) {
       const last = runs[runs.length - 1]
@@ -968,8 +1112,9 @@ export default function FormEditor({ config, data, onChange, compact = false, se
               run[0].type === 'image' ? (
                 <div key={`img-${i}`} className="flex justify-center gap-6">
                   {run.map(field => (
-                    <div key={field.key} data-field={field.key}>
+                    <div key={field.key} data-field={field.key} className="flex flex-col items-center gap-1">
                       <SingleImageUploader label={field.label} value={data[field.key] ?? ''} onChange={v => handleChange(field.key, v)} />
+                      {removable(field) && <RemoveButton onClick={() => setRemoved([field.key], true)} label={field.label} />}
                     </div>
                   ))}
                 </div>
@@ -982,6 +1127,18 @@ export default function FormEditor({ config, data, onChange, compact = false, se
               ),
             )}
           </div>
+          {hasCouple && (
+            <NameOrderChoice
+              bride={data.brideName?.trim() || 'Bride'}
+              groom={data.groomName?.trim() || 'Groom'}
+              groomFirst={groomFirst(templateId, data)}
+              onChange={(g) => {
+                onChange({ ...data, [NAME_ORDER_KEY]: g ? 'groom' : 'bride' })
+                trackEvent('builder_name_order', { template_id: templateId, order: g ? 'groom' : 'bride' })
+              }}
+            />
+          )}
+          {chips(all)}
         </Section>
       ),
     })
@@ -991,7 +1148,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
   // ── Step 3: when and where ────────────────────────────────────────────────
   const details: Block[] = []
   if (grouped.whenWhere.length > 0) {
-    const ordered = [...grouped.whenWhere].sort(byRank)
+    const ordered = [...grouped.whenWhere].filter((f) => !hidden.has(f.key)).sort(byRank)
     details.push({
       rank: first(ordered),
       key: 'when-where',
@@ -1015,6 +1172,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
               return input(field)
             })}
           </div>
+          {chips(grouped.whenWhere)}
         </Section>
       ),
     })
@@ -1035,7 +1193,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: rank('schedule'),
       key: 'schedule',
       render: (n) => (
-        <Section key="schedule" number={n} label="Event Schedule" hint="Build your event timeline: each row is one moment.">
+        <Section key="schedule" number={n} label="Event Schedule" hint="Build your event timeline: each row is one moment." {...sectionRemoval(['schedule'], removable(grouped.scheduleField!))}>
           <div data-field="schedule">
             <ScheduleEditor initial={data['schedule'] ?? ''} onChange={v => handleChange('schedule', v)} />
           </div>
@@ -1053,7 +1211,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       key: 'gallery',
       render: (n) => (
         // A design with two sets of photos names each; the rest share the usual title.
-        <Section key="gallery" number={n} label={grouped.galleryField?.hint ? grouped.galleryField.label : 'Photo Gallery'} hint={grouped.galleryField?.hint ?? 'Add beautiful photos that appear in the invitation slideshow.'}>
+        <Section key="gallery" number={n} label={grouped.galleryField?.hint ? grouped.galleryField.label : 'Photo Gallery'} hint={grouped.galleryField?.hint ?? 'Add beautiful photos that appear in the invitation slideshow.'} {...sectionRemoval(['galleryImages'], removable(grouped.galleryField!))}>
           <div data-field="galleryImages">
             <GalleryUploader initial={data['galleryImages'] ?? ''} onChange={v => handleChange('galleryImages', v)} />
           </div>
@@ -1066,7 +1224,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: rank(gf.key),
       key: `gallery-${gf.key}`,
       render: (n) => (
-        <Section key={`gallery-${gf.key}`} number={n} label={gf.label} hint={gf.hint}>
+        <Section key={`gallery-${gf.key}`} number={n} label={gf.label} hint={gf.hint} {...sectionRemoval([gf.key], removable(gf))}>
           <div data-field={gf.key}>
             <GalleryUploader initial={data[gf.key] ?? ''} onChange={v => handleChange(gf.key, v)} />
           </div>
@@ -1079,7 +1237,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: rank(vf.key),
       key: `video-${vf.key}`,
       render: (n) => (
-        <Section key={`video-${vf.key}`} number={n} label={vf.key === 'videoUrl' ? 'Your film' : vf.label} hint={vf.hint ?? 'A short video of the two of you. It waits for guests to tap play.'}>
+        <Section key={`video-${vf.key}`} number={n} label={vf.key === 'videoUrl' ? 'Your film' : vf.label} hint={vf.hint ?? 'A short video of the two of you. It waits for guests to tap play.'} {...sectionRemoval([vf.key], removable(vf))}>
           <div data-field={vf.key}>
             <VideoUploader initial={data[vf.key] ?? ''} onChange={v => handleChange(vf.key, v)} />
           </div>
@@ -1093,7 +1251,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: 10000,
       key: 'music',
       render: (n) => (
-        <Section key="music" number={n} label="Background Music" hint="A song that plays softly as guests view the invite.">
+        <Section key="music" number={n} label="Background Music" hint="A song that plays softly as guests view the invite." {...sectionRemoval(['musicUrl'], removable(grouped.musicField!))}>
           <div data-field="musicUrl">
             <MusicUploader initial={data['musicUrl'] ?? ''} onChange={v => handleChange('musicUrl', v)} />
           </div>
@@ -1106,7 +1264,7 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       rank: rank(field.key),
       key: `extra-${field.key}`,
       render: (n) => (
-        <Section key={field.key} number={n} label="Personal Note" hint="A heartfelt message from you to your guests.">
+        <Section key={field.key} number={n} label="Personal Note" hint="A heartfelt message from you to your guests." {...sectionRemoval([field.key], removable(field))}>
           <div data-field={field.key}>
             <textarea
               value={data[field.key] ?? ''}
@@ -1151,6 +1309,33 @@ export default function FormEditor({ config, data, onChange, compact = false, se
       render: (n) => (
         <Section key="journey" number={n} label="Personal Touches" hint="Balloon wishes, the scratch-card secret, and your handwritten letter.">
           <div className="space-y-4">{[...grouped.journeyExtras].sort(byRank).map(input)}</div>
+        </Section>
+      ),
+    })
+  }
+
+  const hasWishes = Boolean(templateId) && !templateId!.startsWith('greeting-') && !templateId!.startsWith('confession-') && templateId !== 'surprise-journey'
+  if (hasWishes) {
+    const on = !hidden.has(WISHES)
+    enrich.push({
+      // After the music, at the very end: it is a choice about the invitation, not something to fill in.
+      rank: 10001,
+      key: 'wishes',
+      render: (n) => (
+        <Section key="wishes" number={n} label="Guest wishes" hint="Guests can leave a wish or a blessing on your invitation, for everyone who opens it to read.">
+          <label className="flex cursor-pointer items-center justify-between gap-4">
+            <span className="text-[0.92rem] text-charcoal">{on ? 'Wishes are on your invitation' : 'No wishes on your invitation'}</span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={on}
+              aria-label="Guest wishes on the invitation"
+              onClick={() => setRemoved([WISHES], on)}
+              className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${on ? 'bg-emerald' : 'bg-charcoal/20'}`}
+            >
+              <span className={`absolute top-1 h-5 w-5 rounded-full bg-paper shadow transition-[left] ${on ? 'left-6' : 'left-1'}`} />
+            </button>
+          </label>
         </Section>
       ),
     })

@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { rozha } from './kit/fonts/rozha'
 import { tiro } from './kit/fonts/tiro'
@@ -20,6 +21,7 @@ import {
   useCountdown,
   whatsappHref,
   type InviteProps,
+  musicSrc,
 } from './kit/core'
 import { Credit, MusicToggle, useOpenWhileEditing } from './kit/ui'
 import { numberWords, ordinalWords } from './kit/words'
@@ -237,8 +239,10 @@ type Phase = 'sealed' | 'knock' | 'open' | 'through' | 'done'
 export default function SignatureRajwada({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Aditi'
   const groom = data.groomName?.trim() || 'Kabir'
-  const couple = `${bride} & ${groom}`
-  const letters: [string, string] = [first(bride), first(groom)]
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'signature-rajwada', bride, groom)
+  const couple = `${nameA} & ${nameB}`
+  const letters: [string, string] = [first(nameA), first(nameB)]
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const venue = data.venue?.trim() || ''
@@ -363,7 +367,7 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
   const lb = useLightbox(photos.length)
   // 0.6: Gilda's widest letters; a low floor so a long surname fits a narrow phone.
   const nameSize = fit([bride, groom], 64, 0.6, 20, 70)
-  const music = Boolean(data.musicUrl && /^https?:\/\//i.test(data.musicUrl))
+  const music = Boolean(musicSrc(data.musicUrl))
   const u = (n: number) => `${((n / CROWN.span) * 100).toFixed(3)}cqi`
   const heroMin = isPreview ? 560 : '100svh'
   const stageH = isPreview ? '560px' : '100svh'
@@ -434,7 +438,7 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
 
               <h1 className="mt-[7cqi]" style={{ fontFamily: display, fontWeight: 400 }}>
                 <span className="rw-rise rw-name block text-balance leading-[1]" style={{ fontSize: nameSize, ['--d' as string]: '380ms' }}>
-                  {bride}
+                  {nameA}
                 </span>
                 <span className="rw-rise my-[2.5cqi] flex items-center justify-center gap-3" style={{ ['--d' as string]: '520ms' }}>
                   <span aria-hidden className="rw-wedsline h-px w-[12cqi]" />
@@ -444,7 +448,7 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
                   <span aria-hidden className="rw-wedsline h-px w-[12cqi]" />
                 </span>
                 <span className="rw-rise rw-name block text-balance leading-[1]" style={{ fontSize: nameSize, ['--d' as string]: '660ms' }}>
-                  {groom}
+                  {nameB}
                 </span>
               </h1>
 
@@ -602,10 +606,12 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
                     <path d="M6 20C40 2 70 38 100 20C130 2 160 38 194 20" fill="none" stroke={R.gold} strokeWidth={1.4} strokeDasharray="1 5" strokeLinecap="round" pathLength={1} />
                     <path className="rw-knot-heart" d="M100 27C93 21 92 16 96 14C98 13 100 15 100 17C100 15 102 13 104 14C108 16 107 21 100 27Z" fill={R.vermilion} />
                   </svg>
-                  {[
-                    { name: bride, parents: data.brideParents?.trim(), photo: portraits.bride, letter: letters[0], side: 'l' },
-                    { name: groom, parents: data.groomParents?.trim(), photo: portraits.groom, letter: letters[1], side: 'r' },
-                  ].map((p) => (
+                  {inOrder(
+                    data,
+                    'signature-rajwada',
+                    { name: bride, parents: data.brideParents?.trim(), photo: portraits.bride, letter: first(bride) },
+                    { name: groom, parents: data.groomParents?.trim(), photo: portraits.groom, letter: first(groom) },
+                  ).map((p, i) => ({ ...p, side: i ? 'r' : 'l' })).map((p) => (
                     <div key={p.name} className={`rw-fam-${p.side} text-center`}>
                       <div className="relative mx-auto aspect-[3/4] w-[min(100%,150px)] overflow-hidden border p-[5px]" style={{ borderColor: R.rule, background: R.card }}>
                         <div className="relative h-full w-full overflow-hidden" style={{ background: R.teal }}>
@@ -920,7 +926,7 @@ export default function SignatureRajwada({ data, eventId, isPreview = false }: I
 
           {eventId && (
             <div id="rw-wishes" style={{ scrollMarginTop: 56 }}>
-              <WishesSection eventId={eventId} theme={WISHES_THEME} title="Blessings" intro={`Leave a few words for ${bride} and ${groom}. Your blessing appears here for every guest.`} noun="blessing" />
+              <WishesSection eventId={eventId} theme={WISHES_THEME} title="Blessings" intro={`Leave a few words for ${nameA} and ${nameB}. Your blessing appears here for every guest.`} noun="blessing" />
             </div>
           )}
 

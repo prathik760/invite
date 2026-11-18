@@ -15,6 +15,8 @@ import FAQAccordion from '@/components/landing/FAQAccordion'
 import { BIRTHDAY_SECTIONS } from '@/content/wording/birthday'
 import TemplateCard from '@/components/catalog/TemplateCard'
 import { buildCatalogItems } from '@/lib/catalogItems'
+import { WordingDesigns } from '@/components/wording/WordingDesigns'
+import { wordingDesignProps } from '@/lib/wordingDesigns'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
 const TEMPLATE_ID = 'indian-birthday'
@@ -22,14 +24,14 @@ const TEMPLATE_ID = 'indian-birthday'
 /**
  * The design each section's "Use these words" opens, with the copied message
  * already in it: a night-out message lands in the disco design, a 50th in the
- * milestone dinner, a kids' message in the first-birthday storybook.
+ * milestone dinner, a kids' message in the jungle safari kids' design.
  */
 const SECTION_TEMPLATES: Record<string, string> = {
   simple: 'birthday-mirrorball',
   'first-birthday': 'first-birthday',
   son: 'first-birthday',
   daughter: 'first-birthday',
-  kids: 'first-birthday',
+  kids: 'kids-jungle',
   friends: 'birthday-mirrorball',
   family: 'indian-birthday',
   '50th-birthday': 'birthday-champagne',
@@ -40,6 +42,7 @@ const SECTION_TEMPLATES: Record<string, string> = {
   'lunch-dinner': 'birthday-long-lunch',
   hindi: 'indian-birthday',
   'whatsapp-groups': 'birthday-mirrorball',
+  'card-matter': 'indian-birthday',
   formal: 'birthday-champagne',
 }
 
@@ -47,7 +50,7 @@ const SECTION_TEMPLATES: Record<string, string> = {
 const DESIGN_IDS = ['birthday-gala', 'birthday-mirrorball', 'birthday-champagne', 'birthday-martini', 'birthday-long-lunch', 'first-birthday', 'indian-birthday', 'surprise-journey']
 const TITLE = 'Birthday Invitation Message for WhatsApp: 120+ Simple Ideas'
 const DESCRIPTION =
-  'Copy a simple birthday invitation message for WhatsApp: for son, daughter, 1st, 50th & 60th birthdays, kids, friends, cake cutting, dinner & Hindi.'
+  'Copy a simple birthday invitation message for WhatsApp: for son, daughter, kids, 1st, 50th & 60th birthdays, friends, card matter, quotes & Hindi.'
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },
@@ -108,6 +111,22 @@ const faqSchema = {
     },
     {
       '@type': 'Question',
+      name: 'What do I write on a birthday invitation card?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Card matter follows a set order: the celebrant\'s name and age at the top ("[Name] is turning [Age]!"), a line inviting the guest ("You are cordially invited to the birthday celebration"), the day, date and time, the venue with its address, then the hosts\' names and a phone number to RSVP. For a personal note, write one warm paragraph instead. The card matter section above has both, ready to copy.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I word "please join us to celebrate" on a birthday invitation?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Start with the phrase on its own line, then the name and the occasion: "Please join us to celebrate [Name]\'s [Age]th birthday!" Follow with the day, date and time, the venue and address, and close with an RSVP line or the hosts\' names. For a parent\'s 60th or 75th, add "Your presence and blessings will make the day complete."',
+      },
+    },
+    {
+      '@type': 'Question',
       name: 'What is the best birthday invitation format for a first birthday?',
       acceptedAnswer: {
         '@type': 'Answer',
@@ -121,8 +140,11 @@ const TOC = [...tocFrom(BIRTHDAY_SECTIONS), { id: 'quotes-captions', label: 'Quo
 
 export default function BirthdayInvitationWordingPage() {
   const DESIGNS = buildCatalogItems(DESIGN_IDS, { keepOrder: true }).slice(0, DESIGN_IDS.length)
+  // After a copy, the panel offers each section's design and two that suit the same words.
+  const COPY_DESIGNS = wordingDesignProps([TEMPLATE_ID, ...Object.values(SECTION_TEMPLATES)])
   return (
     <main className="min-h-screen bg-champagne text-foreground">
+      <WordingDesigns {...COPY_DESIGNS}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <SiteHeader createHref={`/create?template=${TEMPLATE_ID}`} />
@@ -135,7 +157,8 @@ export default function BirthdayInvitationWordingPage() {
         title={<>Birthday Invitation Messages &amp;<br />
             <em className="font-medium text-burnished">Wording for WhatsApp</em></>}
         lede={<>120+ ready-to-copy birthday invitation messages for WhatsApp: simple and short samples, wording for son,
-            daughter and kids, first, 50th and 60th birthdays, cake cutting, lunch and dinner, and messages in Hindi.</>}
+            daughter and kids (with party themes), first, 50th and 60th birthdays, cake cutting, lunch and dinner, card matter
+            and “please join us to celebrate” wording, quotes, and messages in Hindi.</>}
         actions={<><Link href="#birthday-designs" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[1rem] font-semibold">
               See the birthday designs</Link></>}
         footnote={<TrustList />}
@@ -287,7 +310,7 @@ export default function BirthdayInvitationWordingPage() {
             </div>
             <p className="text-xs text-muted leading-6 pt-1">
               Tip: paste any of these as the opening line, then drop your{' '}
-              <Link href="/birthday-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital invite link</Link>{' '}
+              <Link href="/birthday-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital birthday invitation</Link> link{' '}
               below it. Guests get the venue map, countdown and a place to leave wishes in one tap.
             </p>
           </div>
@@ -306,7 +329,9 @@ export default function BirthdayInvitationWordingPage() {
               Tone matters more than most people think. A message for a grandmother&apos;s 60th birthday celebration reads nothing like a message for a 25-year-old&apos;s rooftop party, and guests notice when the tone feels off. Match the message to the person being celebrated and to the kind of gathering it is.
             </p>
             <p className="text-sm text-muted leading-7 mt-4">
-              For WhatsApp groups, a text message alone is rarely enough. Links get far higher engagement than plain text because guests can see the venue on a map, view a photo, and check the time without having to scroll back up. A digital invite link at the end of even a short message does more work than a long paragraph of directions. It also means you can send reminders without rewriting anything: just re-share the same link.
+              For WhatsApp groups, a text message alone is rarely enough. Links get far higher engagement than plain text because guests can see the venue on a map, view a photo, and check the time without having to scroll back up. A{' '}
+              <Link href="/birthday-invitation" className="text-accent-strong underline-offset-2 hover:underline">digital birthday invitation</Link>{' '}
+              link at the end of even a short message does more work than a long paragraph of directions. It also means you can send reminders without rewriting anything: just re-share the same link.
             </p>
           </div>
         </div>
@@ -329,8 +354,8 @@ export default function BirthdayInvitationWordingPage() {
             <Link href="/blog/first-birthday-invitation-ideas-for-indian-families" className="rounded-xl border border-line bg-paper p-4 text-sm font-medium text-foreground hover:border-burnished/50 transition-colors">
               First birthday invitation ideas →
             </Link>
-            <Link href="/diwali-invitation-wording" className="rounded-xl border border-line bg-paper p-4 text-sm font-medium text-foreground hover:border-burnished/50 transition-colors">
-              Diwali party invitation messages →
+            <Link href="/blog/kids-birthday-party-theme-ideas-with-invitation-messages" className="rounded-xl border border-line bg-paper p-4 text-sm font-medium text-foreground hover:border-burnished/50 transition-colors">
+              Kids birthday party theme ideas →
             </Link>
           </div>
         </div>
@@ -354,6 +379,7 @@ export default function BirthdayInvitationWordingPage() {
       <StickyCTA templateId={TEMPLATE_ID} afterId={BIRTHDAY_SECTIONS[0].id} />
 
       <SiteFooter />
+      </WordingDesigns>
     </main>
   )
 }

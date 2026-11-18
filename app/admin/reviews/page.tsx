@@ -4,7 +4,6 @@ import { prisma } from '@/lib/db'
 import { ADMIN_CSS } from '../styles'
 import { designNameOf, isMissingReviewTable, REVIEWS_TAG, reviewUrl, whatsappAsk } from '@/lib/reviews'
 import { eventTitle } from '@/lib/inviteCardText'
-import { templateSeoSlug } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: { absolute: 'Admin — Reviews | ShareInvite' },
@@ -53,7 +52,8 @@ async function setStatus(formData: FormData) {
   await prisma.review.update({ where: { id }, data: { status } })
   revalidateTag(REVIEWS_TAG)
   revalidatePath('/')
-  revalidatePath(`/templates/${templateSeoSlug(review.templateId)}`)
+  revalidatePath('/create') // the price step shows reviews too
+  // Not the design page: it is rebuilt only by a deploy (approvedReviewsAtBuild in lib/reviews.ts).
   revalidatePath('/admin/reviews')
 }
 
@@ -69,6 +69,7 @@ function Shell({ children, token }: { children: React.ReactNode; token?: string 
             <span className="aa-top-links">
               <a href={`/admin/activity${q}`}>Visitor activity →</a>
               <a href={`/admin/checkouts${q}`}>Unpaid checkouts →</a>
+              <a href={`/admin/done-for-you${q}`}>Done for you →</a>
             </span>
           )}
         </div>

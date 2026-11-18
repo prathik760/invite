@@ -1,5 +1,6 @@
 import { LOWEST_PAID_PRICE, getRequiredPlan, templatePrice } from '@/lib/plans'
 import { checkCoupon, type Coupon } from '@/lib/coupons'
+import { stripLocale } from '@/lib/i18n'
 
 /**
  * Seasonal promotion config — the single place to turn a campaign on or off.
@@ -208,9 +209,25 @@ export function promoCoupon(): Coupon | null {
   return check.ok ? check.coupon : null
 }
 
-/** Whether the popup belongs on this page. */
-export function promoAllowedOn(pathname: string | null): boolean {
+/**
+ * Whether a page is one of a campaign's pages: an exact path ("/templates"), or
+ * a path and everything under it when it ends in "/*" ("/wedding-invitation/*").
+ * The list comes from the server (lib/promoPages.ts), worked out from the
+ * catalogue, so the catalogue never ships to the browser for this.
+ */
+export function onPromoPage(pathname: string | null, pages: readonly string[] | null | undefined): boolean {
+  if (!pathname) return false
+  if (!pages) return true
+  // A translated page (/hi/templates) counts as its English one.
+  const english = stripLocale(pathname).path
+  const path = english.length > 1 ? english.replace(/\/+$/, '') : english
+  return pages.some((p) => (p.endsWith('/*') ? path.startsWith(p.slice(0, -1)) : path === p))
+}
+
+/** Whether the popup belongs on this page: never in the funnel, and only on the campaign's own pages. */
+export function promoAllowedOn(pathname: string | null, pages?: readonly string[] | null): boolean {
   if (!pathname || PROMO_EXCLUDED_PREFIXES.some((p) => pathname.startsWith(p))) return false
+  if (pages) return onPromoPage(pathname, pages)
   return !PROMO.onlyOn || PROMO.onlyOn.some((p) => (p === '/' ? pathname === '/' : pathname.startsWith(p)))
 }
 
@@ -245,8 +262,8 @@ export const PROMO_BAR_DISMISS_KEY = 'si-promo-bar-dismissed'
 /** Pages that keep the offer bar off: the builder, guests' invitations, account and demo screens. */
 export const PROMO_BAR_EXCLUDED_PREFIXES = ['/create', '/e/', '/admin', '/demo', '/auth', '/dashboard']
 
-export function promoBarAllowedOn(pathname: string | null): boolean {
-  return !!pathname && !PROMO_BAR_EXCLUDED_PREFIXES.some((p) => pathname.startsWith(p))
+export function promoBarAllowedOn(pathname: string | null, pages?: readonly string[] | null): boolean {
+  return !!pathname && !PROMO_BAR_EXCLUDED_PREFIXES.some((p) => pathname.startsWith(p)) && (!pages || onPromoPage(pathname, pages))
 }
 
 export function snoozePromoBar() {

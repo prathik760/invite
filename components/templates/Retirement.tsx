@@ -15,7 +15,7 @@ import {
   useCountdown,
   type InviteProps,
 } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import { numberWords } from './kit/words'
 import type { InviteTheme } from './kit/theme'
 
@@ -344,6 +344,7 @@ export default function Retirement({ data, eventId, isPreview = false }: InviteP
 
   return (
     <div className="rt relative overflow-x-hidden" style={{ backgroundColor: C.paper, color: C.ink, fontFamily: sans, containerType: 'inline-size' }}>
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.navy} background="rgba(251,247,240,0.92)" border={C.goldLine} />
       <style>{`
         .rt .rt-minute { animation: rt-spin 3000ms cubic-bezier(.16,.72,.18,1) 250ms backwards; }
         .rt .rt-hour { animation: rt-spin 3000ms cubic-bezier(.16,.72,.18,1) 250ms backwards; }

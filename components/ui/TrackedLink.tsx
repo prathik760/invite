@@ -13,6 +13,8 @@ interface TrackedLinkProps {
   /** Extra dimensions — template_id, page_type, price, event_type. */
   meta?: Record<string, string | number | boolean | undefined>
   prefetch?: boolean
+  /** e.g. "nofollow" for links into the builder that carry text in the address. */
+  rel?: string
 }
 
 /**
@@ -30,12 +32,14 @@ export default function TrackedLink({
   className,
   meta = {},
   prefetch,
+  rel,
 }: TrackedLinkProps) {
   return (
     <Link
       href={href}
       className={className}
       prefetch={prefetch}
+      rel={rel}
       onClick={(e) => {
         const label = e.currentTarget.textContent?.trim().slice(0, 80) ?? ''
         trackCta(label, location, { destination: href, ...meta })

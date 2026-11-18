@@ -231,7 +231,7 @@ RSVP: [Phone Number]` },
     id: 'kids',
     toc: 'Kids party',
     title: 'Kids Birthday Invitation Messages',
-    intro: 'Fun, playful messages for a children\'s birthday party, the kind that make both kids and parents smile. Short enough for a WhatsApp group, warm enough to feel personal.',
+    intro: 'Fun, playful messages for a children\'s birthday party, the kind that make both kids and parents smile: general ones, one for each favourite party theme (dinosaurs, space, superheroes, unicorns, a jungle safari, race cars), and for a little girl or boy. Give the end time too, so parents can plan the pick-up.',
     messages: [
       { title: '1. Playful group message', text: `🎉 It's party time! [Child's Name] is turning [Age]! 🎂
 
@@ -255,6 +255,62 @@ Come dressed as your favourite [Theme] character!` },
 
 Parents, please RSVP by [Date] so we can plan the cake & games!
 [Parent's Name], [Phone]` },
+      { title: '5. Dinosaur party', text: `Roar! 🦖 [Child's Name] is turning [Age]!
+
+Stomp over for a dinosaur adventure:
+📅 [Date] · 🕓 [Time] to [End Time]
+📍 [Venue & Address]
+
+Dino egg hunt, cake and a lot of roaring. Explorer hats welcome!` },
+      { title: '6. Space party', text: `3, 2, 1… blast off! 🚀
+[Child's Name] is turning [Age] and the crew needs you.
+
+📅 [Date] · 🕓 [Time]
+📍 [Venue & Address]
+
+Astronauts and aliens welcome. Please reply by [Date].` },
+      { title: '7. Superhero party', text: `Calling all superheroes! 🦸
+[Child's Name] is turning [Age] and needs a hero squad.
+
+📅 [Date] · 🕓 [Time]
+📍 [Venue & Address]
+
+Capes and masks encouraged. Hero training, cake and games!` },
+      { title: '8. Unicorn & rainbow party', text: `A sprinkle of magic! 🦄🌈
+[Child's Name] is turning [Age]!
+
+📅 [Date] · 🕓 [Time]
+📍 [Venue & Address]
+
+Come in something sparkly for crafts, a magic show and cake.` },
+      { title: '9. Jungle safari party', text: `Let's go wild! 🦒
+Join the safari for [Child's Name]'s [Age]th birthday.
+
+📅 [Date] · 🕓 [Time]
+📍 [Venue & Address]
+
+Animal prints and safari hats welcome. Face painting, a treasure hunt and cake!` },
+      { title: '10. Race car party', text: `Start your engines! 🏁
+[Child's Name] is turning [Age]!
+
+📅 [Date] · 🕓 [Time] to [End Time]
+📍 [Venue & Address]
+
+Races, pit-stop snacks and a chequered-flag cake. On your marks!` },
+      { title: '11. For a little girl', text: `Our little princess [Child's Name] is turning [Age]! 🎀
+
+Please join us for her birthday party
+📅 [Date] · 🕓 [Time]
+📍 [Venue & Address]
+
+Cake, games and lots of giggles. Your little ones are most welcome!` },
+      { title: '12. For a little boy', text: `Our little champ [Child's Name] is turning [Age]! 🎈
+
+Please join us for his birthday party
+📅 [Date] · 🕓 [Time]
+📍 [Venue & Address]
+
+Cake, games and a lot of fun. Bring the kids along!` },
     ],
   },
   {
@@ -623,6 +679,53 @@ Invite: [Digital Invite Link]` },
 Venue: [Venue, Address].
 Your blessings and presence are requested.
 View full invite: [Digital Invite Link]` },
+    ],
+  },
+  {
+    id: 'card-matter',
+    toc: 'Card matter & paragraph',
+    title: 'Birthday Invitation Card Matter, Paragraph & “Please Join Us” Wording',
+    intro: 'The words for the card itself, printed or digital: classic “please join us to celebrate” openings, card matter laid out line by line, a single paragraph for a personal message, and a plain text message with no emojis.',
+    messages: [
+      { title: '1. “Please join us to celebrate” (any age)', text: `Please join us to celebrate
+[Name]'s birthday!
+
+[Day], [Date] at [Time]
+[Venue], [Address]
+
+Dinner to follow. Kindly RSVP to [Host Name] at [Phone] by [Date].` },
+      { title: '2. “Please join us to celebrate” (a child)', text: `Please join us to celebrate
+[Child's Name]'s [Age]th birthday!
+
+[Day], [Date] · [Time] to [End Time]
+[Venue], [Address]
+
+With love,
+[Parents' Names]` },
+      { title: '3. “Please join us to celebrate” (a parent’s milestone)', text: `Please join us to celebrate
+the [Age]th birthday of our dear [Mother / Father]
+[Full Name]
+
+[Day], [Date] at [Time]
+[Venue], [Address]
+
+Your presence and blessings will make the day complete.
+[Children's Names]` },
+      { title: '4. Birthday invitation card matter', text: `[Name]
+is turning [Age]!
+
+You are cordially invited to the birthday celebration
+on [Day], [Date], at [Time]
+at [Venue], [Address].
+
+With love,
+[Host Names]
+RSVP: [Phone]` },
+      { title: '5. Inside the card (short)', text: `Join us for cake, candles and a lot of laughter as we celebrate [Name]'s [Age]th birthday.
+[Date] · [Time] · [Venue]
+Your presence is the only gift we need.` },
+      { title: '6. Birthday invitation paragraph', text: `Dear [Guest Name], it gives us great joy to invite you to [Name]'s [Age]th birthday celebration on [Day], [Date], at [Time], at [Venue], [Address]. It has been a wonderful year, and celebrating it would not feel complete without you. There will be cake, music, games and dinner, and above all good company. Please let us know by [Date] if you can make it. We look forward to seeing you!` },
+      { title: '7. Plain text message (no emojis)', text: `Hi [Guest Name], you're invited to [Name]'s birthday party on [Date] at [Time], at [Venue]. Hope you can make it! Please reply by [Date]. [Your Name]` },
     ],
   },
   {

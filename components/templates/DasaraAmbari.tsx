@@ -6,7 +6,7 @@ import { rozha } from './kit/fonts/rozha'
 import { kalam } from './kit/fonts/kalam'
 import { mukta } from './kit/fonts/mukta'
 import { balooTamma } from './kit/fonts/balooTamma'
-import { calendarHref, dateParts, galleryImages, mapsHref, parseLines, parseRows, timeLabel, useCountdown, type InviteProps } from './kit/core'
+import { calendarHref, dateParts, galleryImages, mapsHref, parseLines, parseRows, timeLabel, useCountdown, type InviteProps, musicSrc } from './kit/core'
 import { Credit, DirectionsLink, Reveal, useOpenWhileEditing } from './kit/ui'
 import { ChannelIcon, rsvpChannels } from './kit/party'
 import type { InviteTheme } from './kit/theme'
@@ -854,7 +854,7 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
   const story = useMemo(() => parseLines(data.bombeStory), [data.bombeStory])
   const photos = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
   const familyPhoto = data.familyPhoto && /^(https?:)?\//.test(data.familyPhoto) ? data.familyPhoto : ''
-  const music = /^https?:\/\//i.test(data.musicUrl || '') ? data.musicUrl : ''
+  const music = musicSrc(data.musicUrl)
   const banni = data.banniWish?.trim() || ''
 
   const days: Day[] = useMemo(() => {
@@ -1014,7 +1014,7 @@ export default function DasaraAmbari({ data, eventId, isPreview = false }: Invit
           onClick={toggleMusic}
           aria-label={playing ? 'Pause music' : 'Play music'}
           aria-pressed={playing}
-          className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-3 z-40 flex h-10 items-center gap-2 rounded-full px-3.5 text-[12px] backdrop-blur`}
+          className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-[calc(var(--invite-top,0px)+0.75rem)] z-40 flex h-10 items-center gap-2 rounded-full px-3.5 text-[12px] backdrop-blur`}
           style={{ color: P.cream, background: 'rgba(11,7,48,0.6)', border: `1px solid ${P.creamRule}` }}
         >
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden>

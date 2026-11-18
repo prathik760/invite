@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useRef, useState, type CSSProperties, type ElementType, type ReactNode } from 'react'
+import { musicSrc } from './core'
 
 /**
  * A quiet entrance for content below the fold: 14px rise and fade, once.
@@ -79,7 +80,8 @@ export function MusicToggle({
 }) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [playing, setPlaying] = useState(false)
-  if (!src || !/^https?:\/\//i.test(src)) return null
+  const song = musicSrc(src)
+  if (!song) return null
 
   const toggle = async () => {
     const audio = audioRef.current
@@ -97,10 +99,12 @@ export function MusicToggle({
     }
   }
 
+  // --invite-top: a page that puts its own bar over the invitation (the full-page demo) moves the
+  // button below it. Unset everywhere else.
   return (
-    <div className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-3 z-40`}>
+    <div className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-[calc(var(--invite-top,0px)+0.75rem)] z-40`}>
       {/* Follows the audio itself, so a pause from elsewhere (a design playing its film) shows here too. */}
-      <audio ref={audioRef} src={src} loop preload="none" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
+      <audio ref={audioRef} src={song} loop preload="none" onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
       <button
         type="button"
         onClick={toggle}

@@ -1,4 +1,5 @@
 import { cache } from 'react'
+import FreeBranding from '@/components/e/FreeBranding'
 import { notFound } from 'next/navigation'
 import { coupleLine, eventTitle } from '@/lib/inviteCardText'
 import type { Metadata } from 'next'
@@ -8,9 +9,10 @@ import TemplateRenderer from '@/components/templates/TemplateRenderer'
 import { getTemplateData } from '@/modules/templates/data'
 import { getLocalEventBySlug, shouldUseLocalStore } from '@/lib/local-store'
 import ExpiredInvitation from '@/components/e/ExpiredInvitation'
-import FreePlanBanner from '@/components/e/FreePlanBanner'
-import { deletionDate, isEnded } from '@/lib/retention'
+import FreePlanBanner, { FREE_BANNER_PX } from '@/components/e/FreePlanBanner'
+import { deletionDate, isEnded, isInternalSlug } from '@/lib/retention'
 import { templateSeoSlug } from '@/lib/seo'
+import { guestLink } from '@/lib/guestLink'
 
 interface PageProps {
   params: { slug: string }
@@ -60,9 +62,9 @@ function getEventNames(data: Record<string, string>, templateId: string): string
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  // Block the sentinel slug before hitting the DB — the page component returns notFound()
-  // for this slug, so its robots meta should also be noindex to prevent any mismatch.
-  if (params.slug === '__custom-requests__') {
+  // Internal records (custom requests, done-for-you requests: slugs starting "__") are never pages.
+  // The page component returns notFound() for them, so their robots meta is noindex too.
+  if (isInternalSlug(params.slug)) {
     return { robots: { index: false, follow: false } }
   }
 
@@ -101,8 +103,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 
 export default async function EventPage({ params }: PageProps) {
-  // Block the internal sentinel slug used for custom template requests
-  if (params.slug === '__custom-requests__') notFound()
+  // Internal records: custom requests and done-for-you requests (lib/doneForYou.ts).
+  if (isInternalSlug(params.slug)) notFound()
 
   const event = await loadEvent(params.slug)
 
@@ -165,16 +167,26 @@ export default async function EventPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {!event.isPaid && <FreePlanBanner />}
+      {/* Published free: ShareInvite branding until the design is bought (lib/freeInvites.ts). The
+          banner is pinned, so the page starts below it, and --invite-top moves the design's music
+          button below it too. */}
+      {!event.isPaid && (
+        <>
+          <FreePlanBanner pinned />
+          <div aria-hidden style={{ height: FREE_BANNER_PX }} />
+          <FreeBranding />
+        </>
+      )}
       {/* Recordings never load on a guest's first page here, but a host who
           opens their invitation from the dashboard carries one in; keep the
           invitation's details out of it. */}
-      <div data-clarity-mask="true" style={{ display: 'contents' }}>
+      <div data-clarity-mask="true" style={{ display: 'contents', ...(!event.isPaid ? { ['--invite-top' as string]: `${FREE_BANNER_PX}px` } : {}) }}>
         <TemplateRenderer
           templateId={event.templateId}
           data={data}
           eventId={event.id}
-          designHref={`${APP_URL}/templates/${templateSeoSlug(event.templateId)}?src=invite_footer`}
+          // Credited to invitations in GA4: each invitation bringing its next customer.
+          designHref={`${APP_URL}${guestLink(`/templates/${templateSeoSlug(event.templateId)}?src=invite_footer`, 'make_one_like_this')}`}
         />
       </div>
     </>

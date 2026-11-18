@@ -1,6 +1,7 @@
 'use client'
 
-import { useCallback, useEffect, useId, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { gilda } from './kit/fonts/gilda'
 import { jost } from './kit/fonts/jost'
@@ -760,7 +761,9 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '')
   const bride = data.brideName?.trim() || 'Maya'
   const groom = data.groomName?.trim() || 'Daniel'
-  const couple = `${bride} & ${groom}`
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'signature-garden', bride, groom)
+  const couple = `${nameA} & ${nameB}`
   const date = dateParts(data.date)
   const venue = data.venue?.trim() || ''
   const guessed = placeFrom(data.venueAddress, venue)
@@ -779,10 +782,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
   const photos = useMemo(() => galleryImages(data.galleryImages, 8), [data.galleryImages])
   const isImg = (u?: string) => Boolean(u && /^(https?:)?\//.test(u))
   const cover = isImg(data.couplePhoto) ? data.couplePhoto : ''
-  const portraits = [
-    { src: data.bridePhoto, alt: bride },
-    { src: data.groomPhoto, alt: groom },
-  ].filter((p) => isImg(p.src)) as { src: string; alt: string }[]
+  const portraits = inOrder(data, 'signature-garden', { src: data.bridePhoto, alt: bride }, { src: data.groomPhoto, alt: groom }).filter((p) => isImg(p.src)) as { src: string; alt: string }[]
 
   const functions: Fn[] = useMemo(() => {
     const rows = parseRows(data.events, ['name', 'date', 'time', 'venue', 'dress'] as const).map((r) => ({
@@ -1025,11 +1025,13 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
                 <Label>Together with their families</Label>
                 {/* Its own container: each name is sized by its longest word, so a long surname shrinks instead of overflowing the card. */}
                 <h1 className="mt-5" style={{ fontFamily: display, fontWeight: 400, color: G.ink, containerType: 'inline-size', width: '100%' }}>
-                  <span className="block text-balance leading-[1.02]" style={{ fontSize: `clamp(20px, ${fitCqi(bride, { em: 0.62, max: 20 })}cqi, 58px)` }}>{bride}</span>
-                  {data.brideParents?.trim() && <span className="mt-1.5 block text-balance leading-[1.4]" style={{ fontFamily: text, fontSize: 15, color: G.soft }}>{data.brideParents}</span>}
-                  <span className="my-2 block leading-none" style={{ fontSize: 'clamp(26px, 8cqi, 34px)', color: G.terra }}>&amp;</span>
-                  <span className="block text-balance leading-[1.02]" style={{ fontSize: `clamp(20px, ${fitCqi(groom, { em: 0.62, max: 20 })}cqi, 58px)` }}>{groom}</span>
-                  {data.groomParents?.trim() && <span className="mt-1.5 block text-balance leading-[1.4]" style={{ fontFamily: text, fontSize: 15, color: G.soft }}>{data.groomParents}</span>}
+                  {inOrder(data, 'signature-garden', { name: bride, parents: data.brideParents?.trim() }, { name: groom, parents: data.groomParents?.trim() }).map((p, i) => (
+                    <Fragment key={i}>
+                      {i === 1 && <span className="my-2 block leading-none" style={{ fontSize: 'clamp(26px, 8cqi, 34px)', color: G.terra }}>&amp;</span>}
+                      <span className="block text-balance leading-[1.02]" style={{ fontSize: `clamp(20px, ${fitCqi(p.name, { em: 0.62, max: 20 })}cqi, 58px)` }}>{p.name}</span>
+                      {p.parents && <span className="mt-1.5 block text-balance leading-[1.4]" style={{ fontFamily: text, fontSize: 15, color: G.soft }}>{p.parents}</span>}
+                    </Fragment>
+                  ))}
                 </h1>
                 <p className="mx-auto mt-6 max-w-[17rem] text-balance leading-[1.5]" style={{ fontSize: 17, fontWeight: 300, color: G.ink }}>
                   invite you to celebrate their marriage
@@ -1367,7 +1369,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
                   <Stamp place={place || venue} year={date?.year} className="absolute right-4 top-4 w-[44px]" style={{ transform: 'rotate(4deg)' }} />
                   <Label color={G.terra}>{reply ? 'RSVP' : 'Save the date'}</Label>
                   <h2 className="mt-3 leading-[1.05]" style={{ fontFamily: display, fontSize: 'clamp(32px, 10cqi, 40px)' }}>
-                    {reply ? 'Kindly reply' : `${bride} & ${groom}`}
+                    {reply ? 'Kindly reply' : `${nameA} & ${nameB}`}
                   </h2>
                   {reply && rsvpBy && <p className="mt-2" style={{ fontSize: 16.5, color: G.soft }}>by {rsvpBy.weekday}, {rsvpBy.day} {rsvpBy.month}</p>}
                   <p className="mt-5 leading-[1.3]" style={{ fontFamily: display, fontSize: 22 }}>
@@ -1400,7 +1402,7 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
               eventId={eventId}
               theme={WISHES_THEME}
               title="Notes for the couple"
-              intro={`Leave a few words for ${bride} and ${groom}. They will appear here for every guest.`}
+              intro={`Leave a few words for ${nameA} and ${nameB}. They will appear here for every guest.`}
               noun="note"
             />
           )}
@@ -1410,9 +1412,9 @@ export default function SignatureGarden({ data, eventId, isPreview = false }: In
             <div className="relative mx-auto h-[150px] w-[150px]">
               <Wreath className="absolute inset-0 h-full w-full" />
               <span className="absolute inset-0 flex items-center justify-center" style={{ fontFamily: display, fontSize: 38 }}>
-                {bride.charAt(0)}
+                {nameA.charAt(0)}
                 <span className="mx-1" style={{ fontSize: 22, color: G.terra }}>&amp;</span>
-                {groom.charAt(0)}
+                {nameB.charAt(0)}
               </span>
             </div>
             {date && (

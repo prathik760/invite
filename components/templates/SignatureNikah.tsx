@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { amiri } from './kit/fonts/amiri'
 import {
@@ -773,7 +774,9 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '')
   const bride = data.brideName?.trim() || 'Ayesha'
   const groom = data.groomName?.trim() || 'Imran'
-  const couple = `${bride} & ${groom}`
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'signature-nikah', bride, groom)
+  const couple = `${nameA} & ${nameB}`
   const date = dateParts(data.date)
   const venue = data.venue?.trim() || ''
   const countdown = useCountdown(data.date, data.time, !isPreview)
@@ -952,9 +955,9 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
               <p className="mt-4 italic" style={{ fontSize: 19, color: C.onDarkSoft }}>the Nikah of</p>
               {/* Its own container: each name is sized by its longest word, so a long surname shrinks instead of overflowing. */}
               <h1 className="mt-2" style={{ fontWeight: 400, color: C.onDark, containerType: 'inline-size', width: '100%' }}>
-                <span className="block text-balance leading-[1.08]" style={{ fontSize: `clamp(20px, ${fitCqi(bride, { em: 0.52, max: 20 })}cqi, 60px)` }}>{bride}</span>
+                <span className="block text-balance leading-[1.08]" style={{ fontSize: `clamp(20px, ${fitCqi(nameA, { em: 0.52, max: 20 })}cqi, 60px)` }}>{nameA}</span>
                 <span className="my-1 block italic leading-none" style={{ fontSize: 'clamp(24px, 7cqi, 30px)', color: C.goldLight }}>&amp;</span>
-                <span className="block text-balance leading-[1.08]" style={{ fontSize: `clamp(20px, ${fitCqi(groom, { em: 0.52, max: 20 })}cqi, 60px)` }}>{groom}</span>
+                <span className="block text-balance leading-[1.08]" style={{ fontSize: `clamp(20px, ${fitCqi(nameB, { em: 0.52, max: 20 })}cqi, 60px)` }}>{nameB}</span>
               </h1>
               <Divider color={C.gold} width={128} className="mt-6" />
               <div className="mt-5">
@@ -1014,8 +1017,8 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
               >
                 <div className="px-6 pb-7 pt-3 text-center">
                   <p className="italic" style={{ fontSize: 16, color: C.soft }}>the Nikah of</p>
-                  <p className="mt-1 text-balance leading-[1.15]" style={{ fontSize: `clamp(16px, ${fitCqi(`${bride} & ${groom}`, { em: 0.52, room: 78, max: 7.6 })}cqi, 30px)`, color: C.ink }}>
-                    {bride} <span className="italic" style={{ color: C.gold }}>&amp;</span> {groom}
+                  <p className="mt-1 text-balance leading-[1.15]" style={{ fontSize: `clamp(16px, ${fitCqi(`${nameA} & ${nameB}`, { em: 0.52, room: 78, max: 7.6 })}cqi, 30px)`, color: C.ink }}>
+                    {nameA} <span className="italic" style={{ color: C.gold }}>&amp;</span> {nameB}
                   </p>
                   {date && <p className="mt-2 tabular-nums" style={{ fontSize: 16, letterSpacing: '0.12em', color: C.gold }}>{date.dayPadded} · {pad2(Number(data.date.slice(5, 7)))} · {date.year}</p>}
                   <p className="mt-4 italic" style={{ fontSize: 16, color: C.ink }}>Tap to open the doors</p>
@@ -1063,10 +1066,12 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
                     )}
                     {(data.brideParents?.trim() || data.groomParents?.trim()) && (
                       <Reveal disabled={isPreview} className={data.message?.trim() ? 'mt-9' : ''}>
-                        {[
+                        {inOrder(
+                          data,
+                          'signature-nikah',
                           { name: bride, parents: data.brideParents, photo: data.bridePhoto },
                           { name: groom, parents: data.groomParents, photo: data.groomPhoto },
-                        ].map((p, i) => (
+                        ).map((p, i) => (
                           <div key={i}>
                             {i === 1 && <p className="my-4 italic" style={{ fontSize: 20, color: C.gold }}>with</p>}
                             {isImg(p.photo) && (
@@ -1350,7 +1355,7 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
               eventId={eventId}
               theme={WISHES_THEME}
               title="Duas for the couple"
-              intro={`Leave a dua for ${bride} and ${groom}. It will appear here for every guest.`}
+              intro={`Leave a dua for ${nameA} and ${nameB}. It will appear here for every guest.`}
               noun="dua"
             />
           )}
@@ -1361,7 +1366,7 @@ export default function SignatureNikah({ data, eventId, isPreview = false }: Inv
             <Lantern chain={34} variant={1} className="pointer-events-none absolute top-0 w-[27px]" style={{ left: 'calc(50% + 58px)' }} />
             <svg viewBox="0 0 40 40" className="mx-auto w-[34px]" aria-hidden><Crescent cx={20} cy={20} R={13} fill={C.goldLight} /></svg>
             <p className="mt-4" style={{ fontSize: 26 }}>
-              {bride} <span className="italic" style={{ color: C.goldLight }}>&amp;</span> {groom}
+              {nameA} <span className="italic" style={{ color: C.goldLight }}>&amp;</span> {nameB}
             </p>
             {date && <p className="mt-1 tabular-nums" style={{ fontSize: 16, letterSpacing: '0.14em', color: C.onDarkFaint }}>{date.dayPadded} · {pad2(Number(data.date.slice(5, 7)))} · {date.year}</p>}
             <div className="mt-10">

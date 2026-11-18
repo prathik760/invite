@@ -1,6 +1,7 @@
 'use client'
 
 import { useId, useMemo, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { bodoniDisplay } from './kit/fonts/bodoniDisplay'
 import { jost } from './kit/fonts/jost'
@@ -398,8 +399,8 @@ function website(value?: string): { href: string; label: string } | null {
 
 export default function SaveTheDate({ data, eventId, isPreview = false }: InviteProps) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '')
-  const a = data.brideName?.trim() || 'Hattie'
-  const b = data.groomName?.trim() || 'Sam'
+  // The couple in the invitation's order: the host's choice, else bride first (lib/nameOrder.ts).
+  const [a, b] = inOrder(data, 'save-the-date', data.brideName?.trim() || 'Hattie', data.groomName?.trim() || 'Sam')
   const date = dateParts(data.date)
   const [y, m, d] = (data.date || '').split('-').map(Number)
   const city = data.city?.trim() || ''

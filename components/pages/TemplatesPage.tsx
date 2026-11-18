@@ -15,7 +15,7 @@ import { buildCatalogItems, localiseItem } from '@/lib/catalogItems'
 import { localeMeta } from '@/lib/pageMeta'
 import { serverLang, serverT, tFor } from '@/lib/serverLang'
 import { rich } from '@/lib/translate'
-import { EDITORS_PICKS } from '@/lib/editorsPicks'
+import { editorsPicks } from '@/lib/editorsPicks'
 import { designPlaceholder } from '@/lib/designPlaceholders'
 import { templateImage } from '@/lib/templateMedia'
 import { ENDS_AFTER_DAYS } from '@/lib/retention'
@@ -58,7 +58,7 @@ export default function TemplatesIndexPage() {
   const t = serverT()
   const english = serverLang() === 'en'
   // Recommended order: the editor's selection first (lib/editorsPicks), then the rest of the catalogue.
-  const base = buildCatalogItems(EDITORS_PICKS, { keepOrder: true })
+  const base = buildCatalogItems(editorsPicks(), { keepOrder: true })
   const items = english ? base : base.map((i) => localiseItem(i, t))
   // The English words too, so a reader of a translated page can search in either language.
   const englishWords = Object.fromEntries(base.map((i) => [i.id, english ? '' : [i.description, i.occasionLabel, i.style].join(' ')]))

@@ -155,6 +155,8 @@ export interface LiveDetails {
   example?: string
   /** Opens this invitation in the builder to change it (lib/editKey.ts). Anyone with it can edit, so it goes only to the owner. */
   editUrl?: string
+  /** Published free: the design's price, to remove the ShareInvite branding (lib/freeInvites.ts). */
+  freePrice?: number
 }
 
 export function invitationLiveEmail(l: LiveDetails): Mail {
@@ -169,6 +171,9 @@ export function invitationLiveEmail(l: LiveDetails): Mail {
       : '',
     l.editUrl
       ? `Something to change? <a href="${esc(l.editUrl)}" style="color:${C.emerald};">Edit your invitation</a>. The link stays the same, and guests see the change the next time they open it. Keep this email private: the edit link works without signing in.`
+      : '',
+    l.freePrice
+      ? `It is a free invitation, so it shows ShareInvite branding. To remove it, pay ₹${l.freePrice.toLocaleString('en-IN')} once for the design from <a href="${APP_URL}/dashboard" style="color:${C.emerald};">your invitations</a>. The link stays the same.`
       : '',
     'Guests can leave their wishes on the invitation, and everyone who opens it can read them.',
     l.dateLabel ? `It stays online until ${ENDS_AFTER_DAYS} days after the day, so latecomers can still find the address.` : '',

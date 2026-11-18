@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { gloock } from './kit/fonts/gloock'
 import { hindMadurai } from './kit/fonts/hindMadurai'
@@ -18,6 +19,7 @@ import {
   useCountdown,
   whatsappHref,
   type InviteProps,
+  musicSrc,
 } from './kit/core'
 import { Credit, MusicToggle, useOpenWhileEditing } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
@@ -255,7 +257,9 @@ type Phase = 'sealed' | 'part' | 'done'
 export default function SignatureKalyanam({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Lakshmi'
   const groom = data.groomName?.trim() || 'Karthik'
-  const couple = `${bride} & ${groom}`
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'signature-kalyanam', bride, groom)
+  const couple = `${nameA} & ${nameB}`
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const venue = data.venue?.trim() || ''
@@ -357,7 +361,7 @@ export default function SignatureKalyanam({ data, eventId, isPreview = false }: 
   const lb = useLightbox(photos.length)
   // 0.62: Gloock's widest letters; a low floor so a long surname fits a narrow phone.
   const nameSize = fit([bride, groom], 58, 0.62, 20, 58)
-  const music = Boolean(data.musicUrl && /^https?:\/\//i.test(data.musicUrl))
+  const music = Boolean(musicSrc(data.musicUrl))
 
   return (
     <div
@@ -410,13 +414,13 @@ export default function SignatureKalyanam({ data, eventId, isPreview = false }: 
 
                 <h1 className="relative mt-[5cqi]" style={{ fontFamily: display, fontWeight: 400 }}>
                   <span className="kl-rise kl-name block text-balance leading-[1.02]" style={{ fontSize: nameSize, ['--d' as string]: '500ms' }}>
-                    {bride}
+                    {nameA}
                   </span>
                   <span className="kl-rise kl-amp my-[1.5cqi] block leading-none" style={{ fontSize: 'clamp(26px, 8cqi, 34px)', color: K.turmeric, ['--d' as string]: '620ms' }}>
                     &amp;
                   </span>
                   <span className="kl-rise kl-name block text-balance leading-[1.02]" style={{ fontSize: nameSize, ['--d' as string]: '740ms' }}>
-                    {groom}
+                    {nameB}
                   </span>
                 </h1>
 
@@ -565,10 +569,12 @@ export default function SignatureKalyanam({ data, eventId, isPreview = false }: 
                       <circle cx={60} cy={55} r={2.6} fill={K.kumkum} />
                     </g>
                   </svg>
-                  {[
-                    { name: bride, parents: data.brideParents?.trim(), photo: portraits.bride, side: 'l' },
-                    { name: groom, parents: data.groomParents?.trim(), photo: portraits.groom, side: 'r' },
-                  ].map((p) => (
+                  {inOrder(
+                    data,
+                    'signature-kalyanam',
+                    { name: bride, parents: data.brideParents?.trim(), photo: portraits.bride },
+                    { name: groom, parents: data.groomParents?.trim(), photo: portraits.groom },
+                  ).map((p, i) => ({ ...p, side: i ? 'r' : 'l' })).map((p) => (
                     <div key={p.name} className={`kl-fam-${p.side}`}>
                       <span className="relative mx-auto block h-[132px] w-[132px]">
                         <DotRing size={132} r={62} n={28} dot={1.8} color={K.kumkum} className="kl-spin absolute inset-0" />
@@ -881,7 +887,7 @@ export default function SignatureKalyanam({ data, eventId, isPreview = false }: 
 
           {eventId && (
             <div id="kl-wishes" style={{ scrollMarginTop: 56 }}>
-              <WishesSection eventId={eventId} theme={WISHES_THEME} title="Blessings" intro={`Leave a few words for ${bride} and ${groom}. Your blessing appears here for every guest.`} noun="blessing" />
+              <WishesSection eventId={eventId} theme={WISHES_THEME} title="Blessings" intro={`Leave a few words for ${nameA} and ${nameB}. Your blessing appears here for every guest.`} noun="blessing" />
             </div>
           )}
 

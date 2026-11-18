@@ -105,6 +105,17 @@ const nextConfig = {
         destination: `/${occasion}-invitation`,
         permanent: true,
       })),
+      // The "KGF" wedding design was renamed Gold Saga (14 Nov 2026): a film's name is not ours to
+      // sell under. Its old page, in English and in each Indian language, moves to the new one; the
+      // second address is the id-based one the old blog post pointed at.
+      ...['kgf-royal-empire-wedding-invitation-template', 'kgf-wedding', 'kgf-wedding-invitation-template'].flatMap((old) => [
+        { source: `/templates/${old}`, destination: '/templates/gold-saga-epic-wedding-invitation-template', permanent: true },
+        {
+          source: `/:lang(hi|ta|te|kn|ml|mr|bn|gu)/templates/${old}`,
+          destination: '/:lang/templates/gold-saga-epic-wedding-invitation-template',
+          permanent: true,
+        },
+      ]),
       // Retitled: the post explains what "free" invitation makers charge, but the
       // old title and URL read as a promise that ShareInvite is free.
       {

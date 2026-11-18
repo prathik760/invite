@@ -137,6 +137,17 @@ export function mapsHref(mapsUrl?: string, ...place: (string | undefined)[]): st
   return q ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}` : null
 }
 
+/**
+ * The music address a design may play, or '' for none: a web address (a host's upload, a pasted
+ * link) or a file on this site (the demos' own songs, lib/showcaseData.ts). Everything else, such
+ * as a protocol-relative "//" address or a "javascript:" link, is ignored. Until 14 Nov 2026 only
+ * web addresses passed, so 38 of the 49 live demos had no music although every design supports it.
+ */
+export function musicSrc(url?: string): string {
+  const u = (url || '').trim()
+  return /^https?:\/\//i.test(u) || (u.startsWith('/') && !u.startsWith('//')) ? u : ''
+}
+
 /** Only http(s) image URLs are rendered; anything else is ignored. */
 export function galleryImages(value?: string, max = 8): string[] {
   return parseLines(value)

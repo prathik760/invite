@@ -1,3 +1,4 @@
+import { seasonAt } from '@/lib/season'
 import { MetadataRoute } from 'next'
 import { blogCategories, blogDrafts, categorySlug, indexablePostCount, MIN_INDEXABLE_POSTS } from '@/content/blog'
 import { hasFullArticle } from '@/content/blog-articles'
@@ -51,7 +52,7 @@ const SKIP_LANDING_SLUGS = new Set([
 const INDEXED_CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 'pune', 'kolkata', 'ahmedabad']
 
 /**
- * The live seasonal campaign — currently Diwali.
+ * The live seasonal campaign (lib/season.ts).
  *
  * Tiers 6 and 7 give every template page and every blog post the same
  * 0.65/monthly, which is right for a stable catalogue and wrong for a page that
@@ -61,15 +62,13 @@ const INDEXED_CITIES = ['bengaluru', 'mumbai', 'delhi', 'hyderabad', 'chennai', 
  * filtered out of the generic spreads below so no URL appears twice.
  *
  * Priority and changeFrequency are hints, not instructions — the real work is
- * done by the internal links from the homepage and the template page. Point
- * these at the next festival when the campaign moves on, or set them to null.
+ * done by the internal links from the homepage and the template page.
  */
-// Moved from Ganesh Chaturthi (over by October) to Diwali, 8 November 2026.
-// The Diwali wording guide itself is listed weekly in Tier 5.
-const SEASONAL_TEMPLATE_ID: string | null = 'diwali-party'
-const SEASONAL_BLOG_SLUG: string | null = null
+// Since 15 Nov 2026 the season picks them by date (lib/season.ts): the New Year's Eve design and
+// messages until 31 December, the Valentine's confession letter and post until 14 February, then none.
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const { templateId: SEASONAL_TEMPLATE_ID, blogSlug: SEASONAL_BLOG_SLUG } = seasonAt()
   const templateCategories = Array.from(new Set(TEMPLATES.map((t) => t.category || 'digital')))
 
   return [
@@ -88,6 +87,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/wedding-invitation', 0.88),
     entry('/engagement-invitation', 0.84),
     entry('/birthday-invitation', 0.82),
+    entry('/kids-birthday-invitation', 0.8),
     entry('/griha-pravesh-invitation', 0.80),
     entry('/namakaran-invitation', 0.78),
     entry('/anniversary-invitation', 0.78),
@@ -170,10 +170,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // reaches these through the sitemap, the switcher links and hreflang.
     ...PREFIXED_LOCALES.map((l) => entry(`/${l.code}`, 0.80, 'weekly')),
     // The Indian languages also have the selling pages and every design's page (app/l/[lang]).
-    ...INDIAN_LOCALES.flatMap((l) => [
-      ...['/templates', '/pricing', '/how-it-works', '/faq', '/contact'].map((p) => entry(`/${l}${p}`, 0.6)),
-      ...TEMPLATES.map((t) => entry(`/${l}/templates/${templateSeoSlug(t.id)}`, 0.5)),
-    ]),
+    // Only the main pages are listed (14 Nov 2026). With every design's page in 8 languages the
+    // sitemap held 432 translated design pages beside ~210 English ones, on a site with a handful of
+    // linking domains: Google crawls and indexes few pages for such a site, and spent it on these.
+    // They stay live, reachable from the language switcher and hreflang, and can return to the list
+    // once the English design pages rank.
+    ...INDIAN_LOCALES.flatMap((l) => ['/templates', '/pricing', '/how-it-works', '/faq', '/contact'].map((p) => entry(`/${l}${p}`, 0.6))),
 
     // ─── Tier 10: Template category pages ─────────────────────────────────────
     // Single-template categories duplicate the template's own page, so they are

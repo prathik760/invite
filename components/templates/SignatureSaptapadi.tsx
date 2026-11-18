@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { yeseva } from './kit/fonts/yeseva'
 import { laila } from './kit/fonts/laila'
@@ -21,6 +22,7 @@ import {
   useCountdown,
   whatsappHref,
   type InviteProps,
+  musicSrc,
 } from './kit/core'
 import { Credit, MusicToggle, Reveal, useOpenWhileEditing } from './kit/ui'
 import { numberWords, ordinalWords } from './kit/words'
@@ -364,8 +366,9 @@ type Phase = 'veiled' | 'lowering' | 'done'
 export default function SignatureSaptapadi({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Gauri'
   const groom = data.groomName?.trim() || 'Siddharth'
-  const couple = `${bride} & ${groom}`
-  const letters: [string, string] = [first(bride), first(groom)]
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'signature-saptapadi', bride, groom)
+  const couple = `${nameA} & ${nameB}`
   const date = dateParts(data.date)
   const time = timeLabel(data.time)
   const venue = data.venue?.trim() || ''
@@ -439,7 +442,7 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
 
   const lb = useLightbox(photos.length)
   const nameSize = fit([bride, groom], 70, 0.64, 30, 74)
-  const music = Boolean(data.musicUrl && /^https?:\/\//i.test(data.musicUrl))
+  const music = Boolean(musicSrc(data.musicUrl))
   const heroH = isPreview ? 'max(560px, 210cqi)' : '100svh'
   const cream: CSSProperties = { background: S.cream, ...grain(0.05) }
 
@@ -551,7 +554,7 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
             </p>
             <h1 className="mt-[3cqi]" style={{ fontFamily: display, fontWeight: 400 }}>
               <span className="sp-rise sp-foil block text-balance leading-[1.02]" style={{ fontSize: nameSize, ['--d' as string]: '480ms' }}>
-                {bride}
+                {nameA}
               </span>
               <span className="sp-rise my-[2cqi] flex items-center justify-center gap-3" style={{ ['--d' as string]: '620ms' }}>
                 <span aria-hidden className="h-px w-[12cqi]" style={{ background: S.ruleOnRed }} />
@@ -559,7 +562,7 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
                 <span aria-hidden className="h-px w-[12cqi]" style={{ background: S.ruleOnRed }} />
               </span>
               <span className="sp-rise sp-foil block text-balance leading-[1.02]" style={{ fontSize: nameSize, ['--d' as string]: '760ms' }}>
-                {groom}
+                {nameB}
               </span>
             </h1>
 
@@ -707,10 +710,12 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
 
                 {(data.brideParents?.trim() || data.groomParents?.trim() || portraits.bride || portraits.groom) && (
                   <Reveal disabled={isPreview} className="sp-fam mt-12 grid items-start gap-x-4 gap-y-10">
-                    {[
-                      { name: bride, parents: data.brideParents?.trim(), photo: portraits.bride, letter: letters[0] },
-                      { name: groom, parents: data.groomParents?.trim(), photo: portraits.groom, letter: letters[1] },
-                    ].map((p) => (
+                    {inOrder(
+                      data,
+                      'signature-saptapadi',
+                      { name: bride, parents: data.brideParents?.trim(), photo: portraits.bride, letter: first(bride) },
+                      { name: groom, parents: data.groomParents?.trim(), photo: portraits.groom, letter: first(groom) },
+                    ).map((p) => (
                       <div key={p.name} className="text-center">
                         <div className="mx-auto w-[min(100%,148px)] p-[4px]" style={{ background: `linear-gradient(135deg, ${S.goldLight}, ${S.goldDeep})`, borderRadius: '999px 999px 6px 6px' }}>
                           <div className="relative aspect-[3/4] w-full overflow-hidden" style={{ borderRadius: '999px 999px 3px 3px', background: S.red, ...bandhani('rgba(255,214,140,0.25)', 12) }}>
@@ -1077,7 +1082,7 @@ export default function SignatureSaptapadi({ data, eventId, isPreview = false }:
                 eventId={eventId}
                 theme={WISHES_THEME}
                 title="Ashirvad"
-                intro={`Leave a blessing for ${bride} and ${groom}. It appears here for every guest.`}
+                intro={`Leave a blessing for ${nameA} and ${nameB}. It appears here for every guest.`}
                 noun="blessing"
               />
             </div>

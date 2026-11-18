@@ -6,7 +6,7 @@ import { bodoniDisplay } from './kit/fonts/bodoniDisplay'
 import { italiana } from './kit/fonts/italiana'
 import { pinyon } from './kit/fonts/pinyon'
 import { jost } from './kit/fonts/jost'
-import { calendarHref, dateParts, galleryImages, mapsHref, pad2, parseLines, parseSchedule, timeLabel, type InviteProps } from './kit/core'
+import { calendarHref, dateParts, galleryImages, mapsHref, pad2, parseLines, parseSchedule, timeLabel, type InviteProps, musicSrc } from './kit/core'
 import { Credit, DirectionsLink, Reveal, useOpenWhileEditing } from './kit/ui'
 import { ChannelIcon, rsvpChannels } from './kit/party'
 import type { InviteTheme } from './kit/theme'
@@ -648,7 +648,7 @@ export default function NewYearMidnight({ data, eventId, isPreview = false }: In
   const note = useMemo(() => parseLines(data.message), [data.message])
   const night = useMemo(() => parseSchedule(data.schedule), [data.schedule])
   const photos = useMemo(() => galleryImages(data.galleryImages, 8), [data.galleryImages])
-  const music = /^https?:\/\//i.test(data.musicUrl || '') ? data.musicUrl : ''
+  const music = musicSrc(data.musicUrl)
   const homeNote = data.afterNote?.trim() || ''
   const what = /new year/i.test(title) ? title : `${title} on New Year’s Eve`
 
@@ -774,7 +774,7 @@ export default function NewYearMidnight({ data, eventId, isPreview = false }: In
           onClick={toggleMusic}
           aria-label={playing ? 'Pause music' : 'Play music'}
           aria-pressed={playing}
-          className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-3 z-40 flex h-10 items-center gap-2 px-3.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur`}
+          className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-[calc(var(--invite-top,0px)+0.75rem)] z-40 flex h-10 items-center gap-2 px-3.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur`}
           style={{ color: P.goldLight, background: 'rgba(7,7,12,0.6)', border: `1px solid ${P.rule}` }}
         >
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden>

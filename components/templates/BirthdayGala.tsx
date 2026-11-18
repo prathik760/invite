@@ -6,7 +6,7 @@ import { playfair } from './kit/fonts/playfair'
 import { pinyon } from './kit/fonts/pinyon'
 import { baloo } from './kit/fonts/baloo'
 import { jost } from './kit/fonts/jost'
-import { calendarHref, dateParts, galleryImages, grain, mapsHref, pad2, parseLines, parseRows, telHref, timeLabel, useCountdown, whatsappHref, type DateParts, type InviteProps, fitCqi } from './kit/core'
+import { calendarHref, dateParts, galleryImages, grain, mapsHref, pad2, parseLines, parseRows, telHref, timeLabel, useCountdown, whatsappHref, type DateParts, type InviteProps, fitCqi, musicSrc } from './kit/core'
 import { Credit, DirectionsLink, Reveal, useOpenWhileEditing } from './kit/ui'
 import { numberWords, ordinalWords } from './kit/words'
 import { ChannelIcon, ageOf, canReply, partyName, rsvpChannels } from './kit/party'
@@ -632,7 +632,7 @@ export default function BirthdayGala({ data, eventId, isPreview = false }: Invit
     return [...own, ...galleryImages(data.galleryImages, 8)].slice(0, 9)
   }, [data.celebrantPhoto, data.galleryImages])
   const registry = /^https?:\/\//i.test(data.registryUrl || '') ? data.registryUrl : ''
-  const music = /^https?:\/\//i.test(data.musicUrl || '') ? data.musicUrl : ''
+  const music = musicSrc(data.musicUrl)
 
   // The guest a personal link was made for: ?to=Sarah+Tom
   const [guest, setGuest] = useState('')
@@ -750,7 +750,7 @@ export default function BirthdayGala({ data, eventId, isPreview = false }: Invit
           onClick={toggleMusic}
           aria-label={playing ? 'Pause music' : 'Play music'}
           aria-pressed={playing}
-          className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-3 z-40 flex h-10 items-center gap-2 rounded-full px-3.5 text-[12px] backdrop-blur`}
+          className={`${isPreview ? 'absolute' : 'fixed'} right-3 top-[calc(var(--invite-top,0px)+0.75rem)] z-40 flex h-10 items-center gap-2 rounded-full px-3.5 text-[12px] backdrop-blur`}
           style={{ color: P.cream, background: 'rgba(6,28,23,0.7)', border: `1px solid ${P.creamRule}` }}
         >
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} aria-hidden>

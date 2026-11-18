@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import CopiedPanel, { copyText, trackWordingCopy } from '@/components/wording/CopiedPanel'
+import CopiedPanel, { copyText, selectedMessage, trackWordingCopy } from '@/components/wording/CopiedPanel'
 
 interface WordingSampleProps {
   title: React.ReactNode
@@ -17,6 +17,8 @@ export default function WordingSample({ title, templateId, tag, children }: Word
   const linesRef = useRef<HTMLQuoteElement>(null)
   const [copied, setCopied] = useState(false)
   const [copiedText, setCopiedText] = useState<string | null>(null)
+  // Set while the Copy button copies: its fallback selects and copies the text itself.
+  const copyingRef = useRef(false)
 
   async function handleCopy() {
     const el = linesRef.current
@@ -24,7 +26,8 @@ export default function WordingSample({ title, templateId, tag, children }: Word
     // Join the lines ourselves: innerText puts a blank line after every <p>.
     const lines = Array.from(el.querySelectorAll('p'), (p) => p.innerText.trim())
     const text = lines.length ? lines.join('\n') : el.innerText.trim()
-    const ok = await copyText(text, el)
+    copyingRef.current = true
+    const ok = await copyText(text, el).finally(() => { copyingRef.current = false })
     if (!ok) return
     setCopied(true)
     setCopiedText(text)
@@ -32,9 +35,18 @@ export default function WordingSample({ title, templateId, tag, children }: Word
     setTimeout(() => setCopied(false), 2200)
   }
 
+  /** The reader selected the words and copied them (a long press on a phone): the same panel. */
+  function handleOwnCopy() {
+    if (copyingRef.current) return
+    const text = selectedMessage(linesRef.current)
+    if (!text) return
+    setCopiedText(text)
+    trackWordingCopy(templateId, 'select')
+  }
+
   return (
     <div>
-      <figure className="relative rounded-3xl border border-line bg-paper p-6 shadow-soft sm:p-7">
+      <figure onCopy={handleOwnCopy} className="relative rounded-3xl border border-line bg-paper p-6 shadow-soft sm:p-7">
         <figcaption className="flex flex-wrap items-center gap-x-3 gap-y-2 pr-20">
           <h3 className="font-editorial text-[1.3rem] font-semibold leading-snug text-charcoal">{title}</h3>
           {tag && <span className="pill py-0.5 text-[0.72rem] text-burnished-deep">{tag}</span>}

@@ -1,5 +1,5 @@
 import Image from '@/components/ui/Image'
-import Link from '@/components/ui/Link'
+import { guestLink } from '@/lib/guestLink'
 import Logo, { LogoMark } from '@/components/brand/Logo'
 import { templateImage } from '@/lib/templateMedia'
 import { templatePrice } from '@/lib/plans'
@@ -36,7 +36,7 @@ const TEMPLATE_CARDS: Record<string, TemplateCard> = {
   'indian-birthday':  { id: 'indian-birthday',  name: 'Janamdin',                  tagline: 'Festive birthday',             gradient: 'linear-gradient(135deg,#1A0500,#3A1000)', accent: '#FF8C00', rgb: '255,140,0' },
   'griha-pravesh':    { id: 'griha-pravesh',     name: 'Griha Pravesh',             tagline: 'Auspicious housewarming',      gradient: 'linear-gradient(135deg,#0F0500,#2A1000)', accent: '#FFB300', rgb: '255,179,0' },
   'namakaran':        { id: 'namakaran',         name: 'Namakaran',                 tagline: 'Celestial naming ceremony',    gradient: 'linear-gradient(135deg,#040F22,#0A1E44)', accent: '#4FC3F7', rgb: '79,195,247' },
-  'kgf-wedding':      { id: 'kgf-wedding',       name: 'KGF Royal Empire',          tagline: 'Cinematic blockbuster style',  gradient: 'linear-gradient(135deg,#0A0500,#1A0A00)', accent: '#D4A017', rgb: '212,160,23' },
+  'kgf-wedding':      { id: 'kgf-wedding',       name: 'Gold Saga',                 tagline: 'An epic in black and gold',    gradient: 'linear-gradient(135deg,#0A0500,#1A0A00)', accent: '#D4A017', rgb: '212,160,23' },
   'royal-deco':       { id: 'royal-deco',        name: 'Royal Deco',                tagline: 'Art Deco palace edition',      gradient: 'linear-gradient(135deg,#03060F,#060B1E)', accent: '#BFA060', rgb: '191,160,96' },
   'anniversary':      { id: 'anniversary',       name: 'Saalgirah',                 tagline: 'Cinematic anniversary',        gradient: 'linear-gradient(135deg,#0A0008,#180012)', accent: '#CE93D8', rgb: '206,147,216' },
   'luxury-wedding':   { id: 'luxury-wedding',    name: 'Luxury Wedding',            tagline: 'Premium multi-function',       gradient: 'linear-gradient(135deg,#1C1008,#2E1A0A)', accent: '#C9A84C', rgb: '201,168,76' },
@@ -113,10 +113,10 @@ export default function ExpiredInvitation({ templateId, data, deletesOn }: Expir
       {/* Header */}
       <header className="border-b border-line bg-champagne/95 backdrop-blur-sm">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-          <Link href="/" aria-label="ShareInvite home"><Logo markClassName="h-8 w-8" /></Link>
-          <Link href="/create" className="btn-outline rounded-full px-4 py-2 text-[0.82rem] font-semibold">
+          <a href={guestLink('/', 'ended_invitation')} aria-label="ShareInvite home"><Logo markClassName="h-8 w-8" /></a>
+          <a href={guestLink('/create', 'ended_invitation')} className="btn-outline rounded-full px-4 py-2 text-[0.82rem] font-semibold">
             Create yours
-          </Link>
+          </a>
         </div>
       </header>
 
@@ -147,9 +147,9 @@ export default function ExpiredInvitation({ templateId, data, deletesOn }: Expir
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             {recommendations.map((tpl) => (
-              <Link
+              <a
                 key={tpl.id}
-                href={`/create?template=${tpl.id}`}
+                href={guestLink(`/create?template=${tpl.id}`, 'ended_invitation')}
                 className="lift group flex flex-col overflow-hidden rounded-3xl border border-line bg-champagne"
               >
                 <span className="relative block aspect-[4/5] overflow-hidden bg-peach">
@@ -162,17 +162,17 @@ export default function ExpiredInvitation({ templateId, data, deletesOn }: Expir
                   <span className="block truncate font-editorial text-[1.25rem] font-semibold leading-tight">{tpl.name}</span>
                   <span className="mt-0.5 block truncate text-[0.78rem] text-muted">{tpl.tagline}</span>
                 </span>
-              </Link>
+              </a>
             ))}
           </div>
 
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/create" className="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
+            <a href={guestLink('/create', 'ended_invitation')} className="btn-primary inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
               Start your invitation
-            </Link>
-            <Link href="/templates" className="btn-outline inline-flex w-full items-center justify-center rounded-full px-7 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
+            </a>
+            <a href={guestLink('/templates', 'ended_invitation')} className="btn-outline inline-flex w-full items-center justify-center rounded-full px-7 py-3.5 text-[0.95rem] font-semibold sm:w-auto">
               Browse designs
-            </Link>
+            </a>
           </div>
           <p className="mt-5 text-center text-[0.8rem] text-muted">
             Preview before you pay · One price per design, paid once · Share via WhatsApp

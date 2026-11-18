@@ -17,7 +17,7 @@ import {
   useCountdown,
   type InviteProps,
 } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
 
 /*
@@ -238,6 +238,7 @@ export default function EidMilan({ data, eventId, isPreview = false }: InvitePro
       className="em relative overflow-x-hidden"
       style={{ background: C.ivory, color: C.ink, fontFamily: sans, containerType: 'inline-size' }}
     >
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.emeraldDeep} background="rgba(255,252,244,0.92)" border="rgba(194,154,69,0.45)" />
       <style>{`
         .em .em-hang { transform-origin: 50% 0; transform: translateY(-38%); animation: em-hang 2.2s cubic-bezier(.3,.8,.3,1) forwards; }
         .em .em-lit { opacity: 0; animation: em-lit 1.2s ease forwards 1.5s; }

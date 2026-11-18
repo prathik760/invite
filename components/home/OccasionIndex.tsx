@@ -4,6 +4,7 @@ import { Price } from '@/components/price/Price'
 import { OCCASIONS } from '@/lib/catalog'
 import { templatePrice } from '@/lib/plans'
 import { templateImage } from '@/lib/templateMedia'
+import { seasonAt } from '@/lib/season'
 import { TEMPLATES } from '@/modules/templates/data'
 
 /** One real design to stand for each occasion in the index. */
@@ -14,8 +15,7 @@ const COVER: Record<string, string> = {
   anniversary: 'anniversary',
   baby: 'baby-shower',
   home: 'griha-pravesh',
-  festival: 'diwali-party',
-  love: 'greeting-love',
+  // festival and love follow the season (lib/season.ts), read while rendering
   friends: 'greeting-friendship',
   congrats: 'retirement',
 }
@@ -37,9 +37,11 @@ const INDEXABLE_HREF: Record<string, string> = {
  * true as designs are added.
  */
 export default function OccasionIndex() {
+  const season = seasonAt()
+  const cover: Record<string, string> = { ...COVER, festival: season.festivalCover, love: season.loveCover }
   const rows = OCCASIONS.map((o) => {
     const ids = o.templateIds.filter((id) => LIVE.has(id))
-    return { ...o, href: INDEXABLE_HREF[o.key] ?? o.href, count: ids.length, from: Math.min(...ids.map(templatePrice)), cover: COVER[o.key] ?? ids[0] }
+    return { ...o, href: INDEXABLE_HREF[o.key] ?? o.href, count: ids.length, from: Math.min(...ids.map(templatePrice)), cover: cover[o.key] ?? ids[0] }
   }).filter((o) => o.count > 0)
 
   return (

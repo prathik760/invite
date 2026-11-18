@@ -15,7 +15,7 @@ import {
   useCountdown,
   type InviteProps,
 } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
 
 /*
@@ -295,6 +295,7 @@ export default function PoojaInvite({ data, eventId, isPreview = false }: Invite
 
   return (
     <div className="pj relative overflow-x-hidden" style={{ backgroundColor: C.paper, color: C.ink, fontFamily: text, containerType: 'inline-size' }}>
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.kumkumDeep} background="rgba(255,251,244,0.92)" border="rgba(156,110,34,0.35)" />
       <style>{`
         .pj .pj-kolam { stroke-dasharray: 1; stroke-dashoffset: 1; animation: pj-draw 2300ms cubic-bezier(.45,.1,.35,1) 300ms forwards; }
         .pj .pj-flame { transform-origin: 118.5px 159px; transform-box: view-box; animation: pj-light 800ms cubic-bezier(.3,1.3,.5,1) 2500ms both, pj-flicker 3.2s ease-in-out 3300ms infinite; }

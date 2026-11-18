@@ -28,7 +28,8 @@ import { hreflangAlternates } from '@/lib/i18n'
 import { HIGHEST_PAID_PRICE, LOWEST_PAID_PRICE } from '@/lib/plans'
 import { FEATURES, TIERS, type FeatureKey, type TierKey } from '@/lib/tiers'
 import { TEMPLATES } from '@/modules/templates/data'
-import { EDITORS_PICKS } from '@/lib/editorsPicks'
+import { editorsPicks } from '@/lib/editorsPicks'
+import { seasonAt } from '@/lib/season'
 import { homeSample, homeSampleFields } from '@/lib/homeSample'
 import { designPlaceholder } from '@/lib/designPlaceholders'
 
@@ -105,7 +106,6 @@ export function homeMetadata(lang: string): Metadata {
 // ─── Content ───────────────────────────────────────────────────────────────────
 
 // The collection opens on the editor's selection (lib/editorsPicks); every filter then leads with its own picks.
-const FEATURED_FIRST = EDITORS_PICKS
 
 /** The Signature wedding suites, most elaborate first, each with a line on what makes it. */
 const SUITES: [string, string][] = [
@@ -135,7 +135,8 @@ const commonFeatures = (list: CatalogItem[]) => FEATURES.map((f) => f.key).filte
 export default function LandingPage() {
   const tr = serverT()
   const english = serverLang() === 'en'
-  const all = buildCatalogItems(FEATURED_FIRST, { keepOrder: true }).map((i) => (english ? i : localiseItem(i, tr)))
+  const season = seasonAt()
+  const all = buildCatalogItems(editorsPicks(), { keepOrder: true }).map((i) => (english ? i : localiseItem(i, tr)))
   // The collection opens with designs the Signature spread just below does not show (13 Nov 2026):
   // both used to open with Two Worlds, The Royal Edit, Rajwada and Aquarelle, so the second read as
   // a repeat of the first. The suites stay in the collection, after the rest, and under "Signature".
@@ -283,9 +284,18 @@ export default function LandingPage() {
                 ganesh: <Link prefetch={false} href="/blog/ganesh-chaturthi-invitation-card-online-digital-ganpati-invitation-template">{tr('Ganesh Chaturthi invitation card online')}</Link>,
                 price: <Price inr={LOWEST_PAID_PRICE} />,
               })}{' '}
-              {rich(tr('Hosting a Diwali party? Start with our {diwali}, or find the right words for a {birthday}.'), {
-                diwali: <Link prefetch={false} href="/diwali-invitation-wording">{tr('Diwali invitation messages')}</Link>,
+              {/* The season's sentence (lib/season.ts): New Year's Eve until 31 December, then Valentine's Day. */}
+              {season.key === 'newyear' && rich(tr('Hosting a New Year’s Eve party? Start with our {newyear}, or find the right words for a {birthday}.'), {
+                newyear: <Link prefetch={false} href="/blog/new-year-party-invitation-message-new-years-eve-invitation-wording">{tr('New Year party invitation messages')}</Link>,
                 birthday: <Link prefetch={false} href="/birthday-invitation-wording">{tr('birthday invitation message')}</Link>,
+              })}
+              {season.key === 'valentine' && <>{rich(tr('Saying it this Valentine’s Day? Write a {confession} that asks the question.'), {
+                confession: <Link prefetch={false} href="/blog/valentines-day-card-online-send-a-3d-animated-valentine-on-whatsapp">{tr('Valentine confession letter')}</Link>,
+              })}{' '}</>}
+              {/* The wording guides are the site's most-read pages; the New Year sentence links the birthday one itself. */}
+              {season.key !== 'newyear' && rich(tr('Need the words first? Copy a {birthday} or a {wedding} for WhatsApp.'), {
+                birthday: <Link prefetch={false} href="/birthday-invitation-wording">{tr('birthday invitation message')}</Link>,
+                wedding: <Link prefetch={false} href="/wedding-invitation-wording">{tr('wedding invitation message')}</Link>,
               })}
             </p>
             <p>

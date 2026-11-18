@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import OccasionPage from '@/components/landing/OccasionPage'
 import { CakeIcon, ClockIcon, MapPinIcon, CameraIcon, MusicIcon, SparklesIcon } from '@/components/ui/Icons'
 import { templatePrice } from '@/lib/plans'
+import { priceAnswer } from '@/lib/occasionPrices'
+import { FREE_LIMIT } from '@/lib/freeOffer'
 
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
@@ -45,6 +47,14 @@ const faqSchema = {
     },
     {
       '@type': 'Question',
+      name: 'Can I make a digital birthday invitation for free?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `Yes. You can build, preview and publish any birthday design free: a free invitation carries ShareInvite branding across the page and a banner at the top, and an account can publish up to ${FREE_LIMIT} free invitations a year. To remove the branding, pay once for the design (₹${templatePrice('indian-birthday')} for Janamdin); the link stays the same.`,
+      },
+    },
+    {
+      '@type': 'Question',
       name: 'Can I add photos to a digital birthday invitation?',
       acceptedAnswer: {
         '@type': 'Answer',
@@ -68,11 +78,17 @@ const faqSchema = {
       },
     },
     {
+      // Asked before choosing a design; the answer is worked out from the catalogue's prices.
+      '@type': 'Question',
+      name: 'How much does a digital birthday invitation cost?',
+      acceptedAnswer: { '@type': 'Answer', text: priceAnswer('birthday', 'birthday invitation') },
+    },
+    {
       '@type': 'Question',
       name: 'Is there a design for a first birthday?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. Pehla Janamdin is made for a first birthday (it works for a second or fifth too): the child\'s name and age, the parents\' names, the party theme, the plan for the day, photos and a map. The Janamdin design suits any age.',
+        text: 'Yes. Pehla Janamdin is made for a first birthday (it works for a second or fifth too): the child\'s name and age, the parents\' names, the party theme, the plan for the day, photos and a map. For older children there are six themed kids designs, Dino Roar (dinosaurs), Blast Off (space), Super Squad (superheroes), Rainbow Dream (unicorns), Wild One (jungle safari) and Race Day (race cars), with original artwork and an RSVP that tells you how many children are coming. The Janamdin design suits any age.',
       },
     },
     {
@@ -88,7 +104,7 @@ const faqSchema = {
       name: 'Can guests RSVP on the birthday invitation?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes, on the Gala, Mirrorball, Dirty Martini, Champagne and Long Lunch designs. Guests tap “I’m in” or “Can’t make it”, and a reply to you opens on WhatsApp, as a text or by email, ready to send. You choose which in the builder, and can add a reply-by date. Replies come to your phone or inbox; there is no automatic headcount. Every design also lets guests leave a birthday wish on the invitation.',
+        text: 'Yes, on the Gala, Mirrorball, Dirty Martini, Champagne and Long Lunch designs and the six kids designs (where parents also say how many children and grown-ups are coming). Guests tap “I’m in” or “Can’t make it”, and a reply to you opens on WhatsApp, as a text or by email, ready to send. You choose which in the builder, and can add a reply-by date. Replies come to your phone or inbox; there is no automatic headcount. Every design also lets guests leave a birthday wish on the invitation.',
       },
     },
   ],
@@ -123,10 +139,13 @@ export default function Page() {
           { title: 'Add the celebrant\'s details', copy: 'Name, milestone age, date, venue, schedule and photos. The preview updates as you type.' },
           { title: 'Pay once & share', copy: 'Publish for a one-time price and send the link to every family and friends group.' },
         ]}
+        compare={{ noun: 'birthday invitation', guests: 40 }}
+        prices={{ noun: 'birthday invitation' }}
         faqTitle="Digital birthday invitation questions"
         faqs={faqs}
         cities={{ base: '/birthday-invitation', title: 'Birthday invitations by city', list: ['bengaluru','mumbai','delhi','hyderabad','chennai','pune','kolkata','ahmedabad'] }}
         related={[
+          { href: '/kids-birthday-invitation', label: 'Kids birthday invitations' },
           { href: '/birthday-invitation-wording', label: 'Birthday invitation wording' },
           { href: '/templates/category/birthday', label: 'Birthday designs' },
           { href: '/blog/category/birthday', label: 'Birthday ideas' },

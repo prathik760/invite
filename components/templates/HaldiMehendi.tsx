@@ -1,6 +1,7 @@
 'use client'
 
 import { useId, useMemo, type CSSProperties, type ReactNode } from 'react'
+import { inOrder } from '@/lib/nameOrder'
 import WishesSection from './WishesSection'
 import { shrikhand } from './kit/fonts/shrikhand'
 import { cormorant } from './kit/fonts/cormorant'
@@ -530,7 +531,9 @@ function Detail({ label, children, color }: { label: string; children: ReactNode
 export default function HaldiMehendi({ data, eventId, isPreview = false }: InviteProps) {
   const bride = data.brideName?.trim() || 'Sana'
   const groom = data.groomName?.trim() || 'Rahul'
-  const couple = `${bride} & ${groom}`
+  // The couple in the invitation's order: the host's choice, else this design's own (lib/nameOrder.ts).
+  const [nameA, nameB] = inOrder(data, 'haldi-mehendi', bride, groom)
+  const couple = `${nameA} & ${nameB}`
   const animate = !isPreview
 
   const hDate = dateParts(data.date)
@@ -565,7 +568,7 @@ export default function HaldiMehendi({ data, eventId, isPreview = false }: Invit
   const photos = useMemo(() => galleryImages(data.galleryImages, 6), [data.galleryImages])
   // The programme turns green from the first Mehendi item on.
   const turn = schedule.findIndex((s) => /mehe?n?di|mehndi|henna/i.test(s.title))
-  const initials = `${bride.charAt(0)}${groom.charAt(0)}`
+  const initials = `${nameA.charAt(0)}${nameB.charAt(0)}`
 
   const mTimeText = mTime || (sameDay ? 'After the Haldi' : 'Time to follow')
 
@@ -884,7 +887,7 @@ export default function HaldiMehendi({ data, eventId, isPreview = false }: Invit
             eventId={eventId}
             theme={WISHES_THEME}
             title="Blessings for the couple"
-            intro={`Leave a few words for ${bride} and ${groom}. Your blessing appears here for every guest.`}
+            intro={`Leave a few words for ${nameA} and ${nameB}. Your blessing appears here for every guest.`}
             noun="blessing"
           />
         </div>

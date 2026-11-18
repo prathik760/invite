@@ -17,7 +17,7 @@ import {
   useCountdown,
   type InviteProps,
 } from './kit/core'
-import { Credit, DirectionsLink, Reveal } from './kit/ui'
+import { Credit, DirectionsLink, MusicToggle, Reveal } from './kit/ui'
 import type { InviteTheme } from './kit/theme'
 
 /*
@@ -279,6 +279,7 @@ export default function HouseWarming({ data, eventId, isPreview = false }: Invit
       className="hw relative overflow-x-hidden"
       style={{ background: C.paper, color: C.ink, fontFamily: text, containerType: 'inline-size', ...grain(0.055) }}
     >
+      <MusicToggle src={data.musicUrl} isPreview={isPreview} color={C.terraDeep} background="rgba(251,246,235,0.92)" border="rgba(58,36,23,0.18)" />
       <style>{`
         .hw .hw-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: hw-draw 1.3s cubic-bezier(.45,.1,.3,1) forwards; }
         .hw .hw-fill { opacity: 0; animation: hw-fade 600ms ease forwards; }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { FREE_LIMIT, freeInvitesUsed } from '@/lib/freeInvites'
 import { isDeliverable, sendLater, sendMail } from '@/lib/mail'
 import { invitationLiveEmail } from '@/lib/emails'
 import { eventTitle, groomFirst } from '@/lib/inviteCardText'
@@ -12,6 +13,7 @@ import { owns, templatePrice, type Owned } from '@/lib/plans'
 import { ownedBy } from '@/lib/entitlements'
 import { sanitizeData } from '@/lib/eventData'
 import { editKey, editUrl } from '@/lib/editKey'
+import { updateRequest } from '@/lib/doneForYou'
 
 /** The first word of the link for designs that name only their hosts. */
 const OCCASION_SLUG: Record<string, string> = {
@@ -31,6 +33,8 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null)
   const templateId = body?.templateId
   const data = body?.data
+  // "Publish free, with ShareInvite branding" (lib/freeInvites.ts). Ignored for a design already owned.
+  const free = body?.free === true
 
   if (!templateId || typeof templateId !== 'string' || !data || typeof data !== 'object') {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -68,7 +72,26 @@ export async function POST(req: NextRequest) {
   // could reach this endpoint without paying — signing out, or choosing
   // "Continue without account" in the login prompt, skipped the upgrade modal
   // entirely and published a paid template for free.
-  if (!owns(templateId, owned)) {
+  if (!owns(templateId, owned) && free) {
+    // A free page is capped per account: free pages that can carry links attract spammers.
+    let used = 0
+    try {
+      used = await freeInvitesUsed(userId)
+    } catch (err) {
+      console.error('[POST /api/events] free count', err)
+      return NextResponse.json({ error: 'We could not publish just now. Please try again in a moment.' }, { status: 503 })
+    }
+    if (used >= FREE_LIMIT) {
+      return NextResponse.json(
+        {
+          error: `You have ${FREE_LIMIT} free invitations already. Remove the branding from one of them, or pay once for this design to publish it without branding.`,
+          code: 'FREE_LIMIT',
+          limit: FREE_LIMIT,
+        },
+        { status: 429 },
+      )
+    }
+  } else if (!owns(templateId, owned)) {
     return NextResponse.json(
       {
         error: 'This template requires a one-time purchase before publishing.',
@@ -80,12 +103,9 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // `isPaid` drives the "Made with ShareInvite" banner on the published page.
-  // Every template is now a purchase, so reaching this line already means the
-  // author owns the design — the check is kept explicit rather than
-  // hard-coded to `true` so the banner logic stays honest if a free tier ever
-  // returns. Legacy events published under the old free tier keep isPaid=false
-  // and continue to show the banner.
+  // `isPaid` decides the ShareInvite branding on the published page (FreePlanBanner, FreeBranding):
+  // false for a free publish, true whenever the account owns the design. Buying the design later
+  // turns its free invitations paid (lib/freeInvites.ts unbrandDesign).
   const isPaid = owns(templateId, owned)
 
   try {
@@ -102,9 +122,10 @@ export async function POST(req: NextRequest) {
 
     const d = sanitizedData as Record<string, string>
     const prefix =
-      d.brideName && d.groomName ? (groomFirst(templateId) ? `${d.groomName}-${d.brideName}` : `${d.brideName}-${d.groomName}`) :
+      d.brideName && d.groomName ? (groomFirst(templateId, d) ? `${d.groomName}-${d.brideName}` : `${d.brideName}-${d.groomName}`) :
       d.partner1Name && d.partner2Name ? `${d.partner1Name}-${d.partner2Name}` :
       d.celebrantName ? d.celebrantName :
+      templateId.startsWith('confession-') && d.recipientName ? `for-${d.recipientName}` :
       // Designs that name only their hosts say what the occasion is; they all
       // used to start "griha-", so a Christmas party's link read like a housewarming.
       OCCASION_SLUG[templateId] ? OCCASION_SLUG[templateId] :
@@ -125,8 +146,8 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    // Congratulations, with the link, once the invitation is live.
-    if (isPaid && userId) {
+    // Congratulations, with the link and the edit link, once the invitation is live: free or paid.
+    if (userId) {
       const owner = userId
       sendLater(async () => {
         const user = await prisma.user.findUnique({ where: { id: owner }, select: { email: true, name: true } })
@@ -142,13 +163,18 @@ export async function POST(req: NextRequest) {
             personalLinks: templateId in PERSONAL_LINK_EXAMPLE,
             example: PERSONAL_LINK_EXAMPLE[templateId],
             editUrl: editUrl(getAppUrl().replace(/\/$/, ''), event.slug, event.id),
+            ...(isPaid ? {} : { freePrice: templatePrice(templateId) }),
           }),
         )
       })
     }
 
+    // Published from a done-for-you link (lib/doneForYou.ts): the request is done, with the link to it.
+    const requestToken = typeof body?.request === 'string' ? body.request : ''
+    if (requestToken) sendLater(() => updateRequest(requestToken, (r) => ({ ...r, status: 'published', publishedSlug: event.slug })))
+
     // The publishing device keeps this key, so the host can change the invitation later without signing in.
-    return NextResponse.json({ slug: event.slug, id: event.id, editKey: editKey(event.id) }, { status: 201 })
+    return NextResponse.json({ slug: event.slug, id: event.id, editKey: editKey(event.id), isPaid }, { status: 201 })
   } catch (err) {
     if (shouldUseLocalStore(err)) {
       const event = await createLocalEvent(templateId, sanitizedData as Record<string, string>)

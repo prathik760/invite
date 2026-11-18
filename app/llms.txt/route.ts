@@ -37,6 +37,7 @@ const PAGES: Array<[string, string, string]> = [
   ['Digital wedding invitations', '/wedding-invitation', 'every wedding design, from palace suites to Nikah and Kalyanam'],
   ['Engagement invitations', '/engagement-invitation', 'ring ceremony designs'],
   ['Birthday invitations', '/birthday-invitation', 'kids, milestone and adult party designs'],
+  ['Kids birthday invitations', '/kids-birthday-invitation', 'dinosaur, space, superhero, unicorn, jungle safari and race car themes with original artwork'],
   ['Anniversary invitations', '/anniversary-invitation', 'anniversary designs'],
   ['Griha pravesh invitations', '/griha-pravesh-invitation', 'housewarming designs'],
   ['Namakaran invitations', '/namakaran-invitation', 'naming ceremony and baby shower designs'],

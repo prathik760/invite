@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { WISHES, blankHidden, hiddenSet } from '@/lib/hiddenParts'
 import type { ComponentType } from 'react'
 import { DesignLinkContext } from './kit/ui'
 
@@ -62,6 +63,13 @@ const TEMPLATE_COMPONENTS: Record<string, TemplateComponent> = {
   'signature-aquarelle': dynamic(() => import('./SignatureAquarelle')),
   'baby-shower': dynamic(() => import('./BabyShower')),
   'first-birthday': dynamic(() => import('./FirstBirthday')),
+  // Kids' party themes (KidsParty.tsx), one page in six looks.
+  'kids-dinosaur': dynamic(() => import('./KidsParty').then((m) => ({ default: m.KidsDinosaur }))),
+  'kids-space': dynamic(() => import('./KidsParty').then((m) => ({ default: m.KidsSpace }))),
+  'kids-superhero': dynamic(() => import('./KidsParty').then((m) => ({ default: m.KidsSuperhero }))),
+  'kids-unicorn': dynamic(() => import('./KidsParty').then((m) => ({ default: m.KidsUnicorn }))),
+  'kids-jungle': dynamic(() => import('./KidsParty').then((m) => ({ default: m.KidsJungle }))),
+  'kids-cars': dynamic(() => import('./KidsParty').then((m) => ({ default: m.KidsCars }))),
   'haldi-mehendi': dynamic(() => import('./HaldiMehendi')),
   'sangeet-night': dynamic(() => import('./SangeetNight')),
   'pooja-invite': dynamic(() => import('./PoojaInvite')),
@@ -79,6 +87,9 @@ const TEMPLATE_COMPONENTS: Record<string, TemplateComponent> = {
   'newyear-midnight': dynamic(() => import('./NewYearMidnight')),
   'greeting-love': greeting('GreetingLove'),
   'greeting-valentine': greeting('GreetingValentine'),
+  // Valentine's love letters (Confession.tsx), one design in two voices.
+  'confession-for-her': dynamic(() => import('./Confession').then((m) => ({ default: m.ConfessionForHer }))),
+  'confession-for-him': dynamic(() => import('./Confession').then((m) => ({ default: m.ConfessionForHim }))),
   'greeting-anniversary': greeting('GreetingAnniversary'),
   'greeting-propose': greeting('GreetingPropose'),
   'greeting-promise': greeting('GreetingPromise'),
@@ -100,6 +111,12 @@ export default function TemplateRenderer({
 }) {
   const Component = TEMPLATE_COMPONENTS[templateId]
   if (!Component) return null
+  // What the host removed in the builder (lib/hiddenParts.ts): its fields arrive blank, and with the
+  // wishes switched off the design is not given the invitation's id, which is what it shows the wall for.
+  const hidden = hiddenSet(props.data)
+  if (hidden.size) {
+    props = { ...props, data: blankHidden(props.data), ...(hidden.has(WISHES) ? { eventId: undefined } : {}) }
+  }
   if (!designHref) return <Component {...props} />
   return (
     <DesignLinkContext.Provider value={designHref}>

@@ -1,4 +1,5 @@
 import Link from '@/components/ui/Link'
+import { FREE_LIMIT } from '@/lib/freeOffer'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/landing/SiteFooter'
 import PageHero from '@/components/brand/PageHero'
@@ -47,7 +48,7 @@ function faqGroups(t: T): { id: string; title: string; items: PricingQuestion[] 
     id: 'account',
     title: t('Your account'),
     items: [
-      { question: t('Do I need an account?'), answer: t('Only to customize. Browsing, searching and previewing are open to everyone. When you choose Customize, sign in or create a free account with Google or your email, and you return straight to the design you picked.') },
+      { question: t('Do I need an account?'), answer: t('Only to publish. Browsing, previews and building your whole invitation need no account. When you publish, sign in or create a free account with Google or your email, and you come straight back to your invitation with everything you typed.') },
       { question: t('What does an account give me?'), answer: t('Your invitations in one place, the wishes your guests leave, and the ability to change the details of a published invitation until your event, on the same link.') },
       { question: t('I forgot my password. What do I do?'), answer: t('Choose "Forgot password?" on the sign-in page and enter your email. If it has an account, we send a link to choose a new password. The link works once and for {minutes} minutes.', { minutes: RESET_TTL_MS / 60000 }), link: { href: '/auth/forgot', label: t('Reset your password') } },
     ],
@@ -56,7 +57,7 @@ function faqGroups(t: T): { id: string; title: string; items: PricingQuestion[] 
     id: 'customizing',
     title: t('Customizing'),
     items: [
-      { question: t('How do I create an invitation?'), answer: t('Choose a design and sign in or create a free account. Then type your names, date, venue and message, and add your photos. The preview updates as you type. When you are happy, pay once to publish and you get your own link to send.') },
+      { question: t('How do I create an invitation?'), answer: t('Choose a design and start typing: no account needed. Add your names, date, venue and message, and your photos. The preview updates as you type. When you are happy, sign in, pay once to publish and you get your own link to send.') },
       { question: t('Can I customize every detail?'), answer: t('Every word, name, date and photo is yours, in any language you write in. Wedding suites take every function of the week, each with its own time, venue and dress code.') },
       { question: t('Can I add music and photos?'), answer: t('Yes, on the designs that have them: {music} of {total} play background music you add, and {photos} have a photo gallery. Every design\'s preview shows exactly what it includes.', { music: has('music'), total: COUNT, photos: has('photos') }) },
       { question: t('Can I add a Google Maps location?'), answer: t('Yes, on {map} of {total} designs. Paste your venue\'s Google Maps link, or type the venue and address, and guests get a Directions button.', { map: has('map'), total: COUNT }) },
@@ -67,6 +68,8 @@ function faqGroups(t: T): { id: string; title: string; items: PricingQuestion[] 
     title: t('Pricing and payment'),
     items: [
       { question: t('How much does an invitation cost?'), answer: t('Each design has one fixed price, shown on the design: {ladder}.', { ladder: ladder(t) }), link: { href: '/pricing', label: t('See every price') } },
+      // The free option (lib/freeInvites.ts), since 15 Nov 2026.
+      { question: t('Can I publish an invitation for free?'), answer: t('Yes. Any design can be published free, with ShareInvite branding across the invitation and a small badge. To remove the branding, pay once for the design, when you publish or later from your invitations; the link stays the same. An account can publish up to {limit} free invitations a year.', { limit: FREE_LIMIT }) },
       { question: t('Is it a one-time payment or a subscription?'), answer: t('A one-time payment. You pay once for the design you publish. There is no subscription, no renewal and nothing charged again later.') },
       { question: t('Is the payment secure?'), answer: t('Yes. All payments are processed by Razorpay, and ShareInvite never sees or stores your card details. In India you can pay by UPI, credit or debit card, or net banking.') },
       { question: t('What is the refund policy?'), answer: t('Refunds are for genuine problems: a double charge, a payment taken without your invitation being delivered, or a fault on our side we cannot fix. Ask within 7 days of paying, and approved refunds go back to your original payment method through Razorpay. A change of mind after publishing is not covered, since you can see the whole invitation before you pay. The full terms are in our'), link: { href: '/refund-policy', label: t('Refund & Cancellation Policy') } },

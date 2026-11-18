@@ -159,7 +159,7 @@ export function hreflangAlternates(path: string, siteUrl: string): Record<string
  * The ten animated greetings and the non-ceremony wedding designs are
  * culturally universal — love, an apology, congratulations and a wedding exist
  * everywhere. The rest of the catalogue (Griha Pravesh, Namakaran, Mangni,
- * Raksha Bandhan, Ganesh Chaturthi, Shaadi, KGF) is specific to Indian
+ * Raksha Bandhan, Ganesh Chaturthi, Shaadi) is specific to Indian
  * ceremonies and is intentionally excluded from localised pages: a Namakaran
  * template shown to a Vietnamese visitor is noise, and a page targeting
  * "Namakaran" in Spanish targets a keyword with no search volume.
@@ -172,6 +172,8 @@ export const GLOBAL_TEMPLATE_IDS = [
   'surprise-journey',
   'greeting-love',
   'greeting-valentine',
+  'confession-for-her',
+  'confession-for-him',
   'greeting-anniversary',
   'greeting-propose',
   'greeting-promise',

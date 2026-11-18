@@ -16,6 +16,8 @@ import JsonLd from '@/components/seo/JsonLd'
 import TemplateCard from '@/components/catalog/TemplateCard'
 import { WEDDING_SECTIONS } from '@/content/wording/wedding'
 import { buildCatalogItems } from '@/lib/catalogItems'
+import { WordingDesigns } from '@/components/wording/WordingDesigns'
+import { wordingDesignProps } from '@/lib/wordingDesigns'
 import { breadcrumbJsonLd } from '@/lib/seo'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shareinvite.in'
@@ -145,8 +147,11 @@ const TOC = [...tocFrom(WEDDING_SECTIONS), { id: 'quotes-captions', label: 'Quot
 
 export default function WeddingInvitationWordingPage() {
   const DESIGNS = buildCatalogItems(DESIGN_IDS, { keepOrder: true }).slice(0, DESIGN_IDS.length)
+  // After a copy, the panel offers each section's design and two that suit the same words.
+  const COPY_DESIGNS = wordingDesignProps([TEMPLATE_ID, ...Object.values(SECTION_TEMPLATES)])
   return (
     <main className="min-h-screen bg-champagne text-foreground">
+      <WordingDesigns {...COPY_DESIGNS}>
       <JsonLd id="wedding-wording-faq" data={faqSchema} />
       <JsonLd
         id="wedding-wording-breadcrumb"
@@ -397,6 +402,9 @@ export default function WeddingInvitationWordingPage() {
               { href: '/engagement-invitation-wording', label: 'Engagement invitation messages' },
               { href: '/blog/indian-wedding-invitation-wording-for-whatsapp', label: 'Wedding wording for WhatsApp groups' },
               { href: '/blog/how-to-create-a-whatsapp-wedding-invitation', label: 'How to create a WhatsApp wedding invitation' },
+              { href: '/blog/marathi-wedding-invitation-message-lagna-patrika-for-whatsapp', label: 'Marathi wedding invitation messages (lagna patrika)' },
+              { href: '/blog/tamil-wedding-invitation-message-thirumana-pathirikai-wording', label: 'Tamil wedding invitation messages (pathirikai)' },
+              { href: '/blog/telugu-wedding-invitation-message-pelli-shubhalekha-wording', label: 'Telugu wedding invitation messages (shubhalekha)' },
             ].map((l) => (
               <Link key={l.href} href={l.href} className="rounded-xl border border-line bg-champagne p-4 text-sm font-medium text-foreground hover:border-burnished/50 transition-colors">
                 {l.label} →
@@ -424,6 +432,7 @@ export default function WeddingInvitationWordingPage() {
       <StickyCTA templateId={TEMPLATE_ID} afterId={WEDDING_SECTIONS[0].id} />
 
       <SiteFooter />
+      </WordingDesigns>
     </main>
   )
 }
